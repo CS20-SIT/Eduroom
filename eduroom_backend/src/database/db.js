@@ -9,18 +9,18 @@ const pool = new Pool({
 })
 
 pool.on("connect", (err, client) => {
-  console.log(`Connecting to DB "${process.env.DB_NAME}"`.blue);
+  console.log(`Connecting to DB "${process.env.DB_NAME}"`);
 });
 
 pool.on('error', (err, client) => {
-  console.log(`Connection failed ${err}`.red)
+  console.log(`Connection failed ${err}`)
 })
 
 pool.query("SELECT NOW()", (err, res) => {
   if (err) {
-    console.error(`${err}`.red)
+    console.error(`${err}`)
   } else {
-    console.log(`at: ${res.rows[0].now}`.blue)
+    console.log(`at: ${res.rows[0].now}`)
   }
 })
 

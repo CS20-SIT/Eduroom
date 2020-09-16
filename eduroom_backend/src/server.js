@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const errorHandler = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const { test } = require('./controllers/test');
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: `${__dirname}/config/config.env` });
@@ -33,9 +34,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
-app.get('/api/test', (req, res) => {
-  res.status(200).json({ success: true, msg: 'test page from backend' });
-});
+app.get('/api/test', test);
 
 app.use(errorHandler);
 module.exports = app
