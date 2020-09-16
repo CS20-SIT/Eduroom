@@ -1,0 +1,21 @@
+{
+  "name": "eduroom_frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development PORT=3000 node server.js",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "GGolfz",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "cross-env": "^7.0.2",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.5",
+    "next": "9.5.3",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  }
+}
