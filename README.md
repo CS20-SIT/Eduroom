@@ -11,5 +11,5 @@ docker-compose -f docker-compose.dev.yml up
 ### if you want to remove log you can use 
 docker-compose -f docker-compose.dev.yml up -d  
 ### for stop service
-docker-compose down
+docker-compose -f docker-compose.dev.yml down
 ```
