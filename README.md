@@ -2,6 +2,18 @@
 
 Tools: NextJS + Material UI, ExpressJS, PostgreSQL
 
+## Prerequisites
+```
+### Install Docker
+### Download Docker Desktop from
+### https://www.docker.com/get-started
+### Create account and Login
+### Run the below command (Docker Compose)
+### Use localhost:3000 for seeing result
+### For api you can use localhost:3000/api 
+### Have fun on coding
+```
+
 ## Docker Compose
 
 ```
