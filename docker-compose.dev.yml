@@ -44,6 +44,8 @@ services:
       - DB_HOST=eduroom_postgres
       - DB_PORT=5432
       - DB_NAME=test_db
+      - GOOGLE_CLIENT_ID=915718814816-au5njmbt31b0g4lctg8edqm3rs53vvcn.apps.googleusercontent.com
+      - GOOGLE_SECRET_KEY=dDwssvp5-CCfvXs7vhlNhxIi
     ports:
       - "5000:5000"
 
