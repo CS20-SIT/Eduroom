@@ -1,6 +1,6 @@
 # Eduroom Project
 
-Tools: NextJS + Material UI, ExpressJS, PostgreSQL
+Tools: NextJS + Material UI, ExpressJS, PostgreSQL, Docker, Nginx
 
 ## Prerequisites
 ```
