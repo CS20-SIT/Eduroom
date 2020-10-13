@@ -41,18 +41,18 @@ services:
       - CLIENT_URL=http://localhost:3000
       - DB_USER=postgres
       - DB_PASSWORD=213456
-      - DB_HOST=eduroom_postgres
+      - DB_HOST=eduroom_user
       - DB_PORT=5432
-      - DB_NAME=test_db
+      - DB_NAME=eduroom_db
     ports:
       - "5000:5000"
 
   eduroom_postgres:
     image: "postgres:12"
     environment:
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=eduroom_user
       - POSTGRES_PASSWORD=213456
-      - POSTGRES_DB=test_db
+      - POSTGRES_DB=eduroom_db
     volumes:
       - database-data:/var/lib/postgresql/data/
       - ./eduroom_backend/src/database/database.sql:/docker-entrypoint-initdb.d/database.sql
