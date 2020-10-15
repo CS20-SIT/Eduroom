@@ -1,5 +1,6 @@
-import React,{Fragment} from 'react'
-import {AppBar, Toolbar, Button} from '@material-ui/core'
+import React, { Fragment } from 'react';
+import Link from 'next/link';
+import { AppBar, Toolbar, Button } from '@material-ui/core';
 const Navbar = () => {
     return (
         <Fragment>
@@ -8,10 +9,10 @@ const Navbar = () => {
                     <div className="navStyle">
                     <span className="navHeader">eduroom</span>
                     <div className="navItemLayout">
-                    <div className="navItem">Exam</div>
-                    <div className="navItem">Course</div>
-                    <div className="navItem">Forum</div>
-                    <div className="navItem">Home</div>
+                    <div className="navItem"><Link href="/exam">Exam</Link></div>
+                    <div className="navItem"><Link href="/course">Course</Link></div>
+                    <div className="navItem"><Link href="/forum">Forum</Link></div>
+                    <div className="navItem"><Link href="/">Home</Link></div>
                     <div className="navAction">
                         <button className="navLogin">
                             <span className="navLoginText">Login</span>
@@ -33,42 +34,47 @@ const Navbar = () => {
                         cursor: default;
                     }
                     .navHeader {
-                        color: #3D467F;
+                        color: #3d467f;
                         font-size: 2em;
                         font-weight: bold;
                         font-family: 'Quicksand', sans-serif;
                         cursor: pointer;
                     }
-                    .navItemLayout{
+                    .navItemLayout {
                         width: 35vw;
                         display: flex;
                         justify-content: space-around;
                         align-items: center;
                     }
-                    .navItem { 
-                        color: #5B5B5B;
+                    .navItem {
+                        color: #5b5b5b;
                         font-weight: 500;
                         font-size: 1.2em;
                         font-family: 'Quicksand', sans-serif;
                         cursor: pointer;
                     }
                     .navLogin {
-                        background: #FE75B7;
+                        background: #fe75b7;
                         border-radius: 25px;
-                        padding: .5rem 1.5rem;
+                        padding: 0.5rem 1.5rem;
                         border: none;
                         cursor: pointer;
+                        transition: 0.25s;
                     }
-                    .navLoginText{
+                    .navLogin:hover {
+                        cursor: pointer;
+                        opacity: 0.8;
+                        transition: 0.25s;
+                    }
+                    .navLoginText {
                         color: white;
                         font-weight: 700;
                         font-size: 1.2em;
                         font-family: 'Quicksand', sans-serif;
                     }
-                    `
-                }
+                `}
             </style>
         </Fragment>
-    )
-}
-export default Navbar
+    );
+};
+export default Navbar;
