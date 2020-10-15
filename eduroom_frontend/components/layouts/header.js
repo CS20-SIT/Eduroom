@@ -14,6 +14,7 @@ const Header = () => {
           href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
           rel="stylesheet"
         ></link>
+        <script src="https://kit.fontawesome.com/89b052f8c2.js" crossorigin="anonymous"></script>
       </Head>
     </Fragment>
   )

@@ -18,7 +18,7 @@ const Content = () => {
         </div>
         <img className="landing-img" alt="landing-img" src="images/landing_img.svg" />
       </div>
-      <style>
+      <style jsx>
         {`      
             .landing {
                 width: 100vw;
