@@ -163,6 +163,7 @@ const Register = () => {
             border-radius: 25px;
             padding: 0.75rem 5.3rem;
             margin-bottom: 5%;
+            margin-top: 2.5%;
             border: none;
             outline: none;
           }
@@ -184,7 +185,6 @@ const Register = () => {
             border: 2px solid rgba(0, 0, 0, 0.3);
             cursor: pointer;
             outline: none;
-            margin-bottom: 5%;
           }
           .register-google-button:hover {
             cursor: pointer;
