@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react'
 import GeneralTemplate from '../components/template/general'
-import LandingContent from '../components/landing/content'
-const Home = () => {
+
+const Login = () => {
   return (
     <Fragment>
       <GeneralTemplate>
-        <LandingContent />
+          <div>
+              
+          </div>
       </GeneralTemplate>
     </Fragment>
   )
 }
-export default Home
+export default Login
