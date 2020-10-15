@@ -90,7 +90,7 @@ const Register = () => {
             display: flex;
             justify-content: flex-start;
             padding: 2% 0% 0% 0%;
-            cursor: default;
+						cursor: default;
           }
           .register-textfield {
             background: #eff0f6;
@@ -98,7 +98,6 @@ const Register = () => {
             width: 100%;
             padding: 4%;
             border: none;
-            font-size: 1.1em;
             color: #3d467f;
             margin-bottom: 3%;
           }
@@ -112,13 +111,11 @@ const Register = () => {
           .register-content {
             width: 38vw;
             position: absolute;
-            right: 12%;
+            right: 8%;
             top: 15%;
-            font-family: 'Quicksand', sans-serif;
           }
           .register-link {
             font-size: 1em;
-            font-family: 'Quicksand', sans-serif;
             font-weight: bold;
             color: #fe75b7;
             text-decoration-line: underline;
@@ -143,12 +140,11 @@ const Register = () => {
             background: rgba(255, 255, 255, 0.6);
             box-shadow: 6px 4px 19px rgba(0, 0, 0, 0.25);
             border-radius: 25px;
-            padding: 20px;
+            padding: 30px 20px 30px 20px;
           }
           .register-description {
             padding: 5% 0% 5% 0%;
             font-size: 1em;
-            font-family: 'Quicksand', sans-serif;
             font-weight: normal;
             color: #3d467f;
           }

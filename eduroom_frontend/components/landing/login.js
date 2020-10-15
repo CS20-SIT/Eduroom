@@ -1,12 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { TextField } from '@material-ui/core'
+import { TextField } from '@material-ui/core';
 const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  useEffect(() => {
-    
-  },[email]);
+  useEffect(() => {}, [email]);
   return (
     <Fragment>
       <div className="login">
@@ -26,13 +24,13 @@ const Content = () => {
                 className="login-textfield"
                 type="text"
                 placeholder="Email"
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 className="login-textfield"
                 type="password"
                 placeholder="Password"
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <button className="login-button">
@@ -44,7 +42,14 @@ const Content = () => {
                 <div className="striaght-line"></div>
               </div>
               <button className="login-google-button">
-                <div className="login-google-button-text"><img src="images/google-logo.png" alt="google-icon" className="google-logo"/><span>Sign Up With Google</span></div>
+                <div className="login-google-button-text">
+                  <img
+                    src="images/google-logo.png"
+                    alt="google-icon"
+                    className="google-logo"
+                  />
+                  <span>Sign Up With Google</span>
+                </div>
               </button>
             </form>
           </div>
@@ -95,6 +100,7 @@ const Content = () => {
             color: #fe75b7;
             text-decoration-line: underline;
             cursor: pointer;
+            margin-left: 5px;
           }
           .striaght-line {
             border-bottom: 1px solid rgba(71, 63, 71, 0.6);
@@ -123,7 +129,12 @@ const Content = () => {
             padding: 0.75rem 5.3rem;
             margin-bottom: 5%;
             border: none;
+            transition: 0.25s;
+          }
+          .login-button:hover {
             cursor: pointer;
+            opacity: 0.9;
+            transition: 0.2s;
           }
           .login-button-text {
             color: white;
@@ -136,8 +147,13 @@ const Content = () => {
             border-radius: 25px;
             padding: 0.75rem 2rem;
             border: 2px solid rgba(0, 0, 0, 0.3);
-            cursor: pointer;
             margin-bottom: 5%;
+            transition: 0.25s;
+          }
+          .login-google-button:hover {
+            cursor: pointer;
+            opacity: 0.7;
+            transition: 0.25s;
           }
           .or-text {
             color: rgba(71, 63, 71, 0.6);
@@ -146,7 +162,7 @@ const Content = () => {
             font-weight: bold;
           }
           .or-text-text {
-            margin: 0% 2%;  
+            margin: 0% 2%;
           }
           .google-logo {
             width: 20px;
@@ -163,6 +179,6 @@ const Content = () => {
         `}
       </style>
     </Fragment>
-  )
-}
-export default Content
+  );
+};
+export default Content;
