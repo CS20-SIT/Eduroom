@@ -1,21 +1,28 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { TextField } from '@material-ui/core';
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  useEffect(() => {}, [email]);
+  const [user, setUser] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+  });
+  const register = async () => {
+    console.log(user);
+  };
   return (
     <Fragment>
       <div className="register">
         <div className="register-content">
           <div className="register-form">
-            <form style={{ width: '80%' }}>
+            <form style={{ width: '80%' }} onSubmit={(e) => e.preventDefault()}>
               <label className="label-text">Firstname</label>
               <input
                 className="register-textfield"
                 type="text"
                 placeholder="Firstname"
+                onChange={(e) =>
+                  setUser({ ...user, firstname: e.target.value })
+                }
               />
 
               <label className="label-text">Lastname</label>
@@ -23,6 +30,7 @@ const Register = () => {
                 className="register-textfield"
                 type="text"
                 placeholder="Lastname"
+                onChange={(e) => setUser({ ...user, lastname: e.target.value })}
               />
 
               <label className="label-text">Email</label>
@@ -30,6 +38,7 @@ const Register = () => {
                 className="register-textfield"
                 type="email"
                 placeholder="Email"
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
 
               <label className="label-text">Password</label>
@@ -37,9 +46,10 @@ const Register = () => {
                 className="register-textfield"
                 type="password"
                 placeholder="Password"
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
               />
               <div style={{ textAlign: 'center' }}>
-                <button className="register-button">
+                <button className="register-button" onClick={register}>
                   <span className="register-button-text">Register</span>
                 </button>
                 <div className="or-text">
@@ -90,7 +100,7 @@ const Register = () => {
             display: flex;
             justify-content: flex-start;
             padding: 2% 0% 0% 0%;
-						cursor: default;
+            cursor: default;
           }
           .register-textfield {
             background: #eff0f6;
@@ -154,7 +164,12 @@ const Register = () => {
             padding: 0.75rem 5.3rem;
             margin-bottom: 5%;
             border: none;
+            outline: none;
+          }
+          .register-button:hover {
             cursor: pointer;
+            opacity: 0.9;
+            transition: 0.2s;
           }
           .register-button-text {
             color: white;
@@ -168,7 +183,13 @@ const Register = () => {
             padding: 0.75rem 2rem;
             border: 2px solid rgba(0, 0, 0, 0.3);
             cursor: pointer;
+            outline: none;
             margin-bottom: 5%;
+          }
+          .register-google-button:hover {
+            cursor: pointer;
+            opacity: 0.7;
+            transition: 0.25s;
           }
           .or-text {
             color: rgba(71, 63, 71, 0.6);
