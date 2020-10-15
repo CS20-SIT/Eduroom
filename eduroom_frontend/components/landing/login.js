@@ -1,6 +1,12 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
+import Link from 'next/link';
 import { TextField } from '@material-ui/core'
 const Content = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  useEffect(() => {
+    
+  },[email]);
   return (
     <Fragment>
       <div className="login">
@@ -9,7 +15,10 @@ const Content = () => {
             WELCOME BACK <br />
           </div>
           <div className="login-description">
-            new here? <span className="register-link">create an account</span>
+            new here?
+            <Link href="/register">
+              <span className="register-link">create an account</span>
+            </Link>
           </div>
           <div className="login-form">
             <form>
@@ -17,11 +26,13 @@ const Content = () => {
                 className="login-textfield"
                 type="text"
                 placeholder="Email"
+                onChange={(e)=>setEmail(e.target.value)}
               />
               <input
                 className="login-textfield"
                 type="password"
                 placeholder="Password"
+                onChange={(e)=>setPassword(e.target.value)}
               />
 
               <button className="login-button">
