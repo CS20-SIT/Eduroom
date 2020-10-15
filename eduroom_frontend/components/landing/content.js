@@ -14,7 +14,10 @@ const Content = () => {
             Neque porro quisquam est qui dolorem <br />
             ipsum quia dolor sit amet, consectetur, adipisci
           </div>
-          <button className="landing-button" onClick={()=>router.push('/login')}>
+          <button
+            className="landing-button"
+            onClick={() => router.push('/login')}
+          >
             <a className="landing-button-text">GET STARTED</a>
           </button>
         </div>
@@ -60,8 +63,13 @@ const Content = () => {
             border-radius: 25px;
             padding: 0.5rem 1.5rem;
             border: none;
-            outline:none;
+            outline: none;
+            transition: 0.25s;
+          }
+          .landing-button:hover {
             cursor: pointer;
+            opacity: 0.8;
+            transition: 0.25s;
           }
           .landing-button-text {
             color: white;

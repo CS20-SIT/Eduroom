@@ -19,7 +19,7 @@ const Content = () => {
             </Link>
           </div>
           <div className="login-form">
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <input
                 className="login-textfield"
                 type="text"
