@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "macbigduck",
+  "private_key_id": "da5e855befd0b1d40d8c4e2967122b8d0d50ed3e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCsjBzmAJcGFnM1\ns/YWVmY7cP38vlHr9HCxujtcjPjSj8mTfoi8SpsUTzmIKZRub0CoKwkxK41vW3XX\nlqOURVZ/K4JtUCETl12UVyjtE30zASF1rY9nwOkkUJx0Ix1aqcSs/CBNMOANnLyN\nMm4hfQRY/o79ZJJPwvdlvUm8API2qVYPvxnbQIaHay7P7Ee2gh7PX73b/G+KG6lM\nOJ7bvKCRzq0Dz/QhlIFFFkH72kPc9f+JMUlmgypjxXLdMgFqBaAKTeGDV3fuRCrc\nJOoGAiufT4B+9YudvlAjdGv92cy3OQ2/3k2XgQQRM7tyIc5kwsmuTANGoUOICUtn\nYZE6pIVzAgMBAAECggEAAjGQCG+cpWwnPOOAvo85sHHZa5YrjqQKtbR6Omw+Rn3T\n7/atbzuX9P3G9gULJLq1YSRs+eH1QTvNhu2SRd3C4aD6XmMacPrR/cGYBZA2jgeX\nqfC4zkK4oCssMBMI27QzLIjZKyUVXrZ/+1IY9SvYEqus8uoJ9Y0QkPNutmvaHhNp\nO6NZ6xt/cafmUEDiMdhcbuX6SvaySHDRxyWa8CpkoeImc6q8BTmGFBwObB3InOTN\n9rQe1sCA6X3isU9CRqTYcRncRWzr7pxwKEJF3rzGjiI62GaRSGaLsu5YEeFFMYcZ\nEpogDRLfAVmPHaKsHf5af87A+YdTzhvhuN6hyOnG1QKBgQDeDG6kFhd1GAakkoGh\ns5wAqeAPZXgIciTNBXuwCav+aP+jBxxAL2mk6GaHMxF3lGitcQZlqvypLnLM097S\nXbldRh7StsJK22amXPEzntEP8RAfNvPnU+ptySSKF8Hcc3BnEeM4+0B/yUmTNajG\nniLKYStSGI0D6UJC+DMRCXY6FQKBgQDG7hItX63Kv2LSdwd7eRW1AmhImZkGfDgq\nHlP1FPIKUFiEXpGX+z4tyTgfJYNWSIX/o4ZW/Ub46FRl6tR2nXTnluL659YTgurZ\nxWUCMnoqmivt9hQMyFZ89vm+/ll+rK9okZG26hZD5Xwwqda3YHy+YgfbzmZiGS/1\no6Sec5NLZwKBgBheFOY85mYbNN9qlH9CTqRkAAqwf/OtUwyMxX4UEaPhsewaI6eH\njHhkaJv9prUQvEwMUz9k/EU0q7R+q706O9VYlJlbJQdB/InVOUMI8rhlI/fI+Asy\n0k8p+7CL2uJuaK9m7yCZsgJT/JcDFHp3cCn1b+Oafh8nwfXHdxMvjqHhAoGAfA5f\nm5g9Y2DzGdlM+z1JwjYcHppbCeZRiEKdjQtg3fm5GeN33FW8MwV3UEUuoJJdrkym\nLH2K0xLf/ybxFH+hNgOszVfi8wwDtYcaNMKR2RuIJb/+RPJyrT/AA9HOseazBP0y\n5+UXuYPVbOudkYJEiN3NlNAknSyj8gX5VS8yPiUCgYEA2lAqpTLjuGIf1u/PGzJB\nNKHPdbNHGjFp2IwvJL98eXHBiy3wgeJxlgTl12k7xN2E0P6/NAbU5BLRuz7HvWCn\np4w4Dxg7IInFlR1N1s/rcT4p0Y6xLWd5n0ETchNPm0UfCHGWmj62xf0vDDqGGaeH\nDYZXc/M/NHVIHgzUSaCpo9M=\n-----END PRIVATE KEY-----\n",
+  "client_email": "eduroom-dev@macbigduck.iam.gserviceaccount.com",
+  "client_id": "104355521550331148510",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/eduroom-dev%40macbigduck.iam.gserviceaccount.com"
+}
