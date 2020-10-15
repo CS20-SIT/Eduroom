@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import Link from 'next/link';
 const Content = () => {
   return (
     <Fragment>
@@ -13,7 +14,7 @@ const Content = () => {
             ipsum quia dolor sit amet, consectetur, adipisci
           </div>
           <button className="landing-button">
-            <span className="landing-button-text">GET STARTED</span>
+            <Link href="/login"><a className="landing-button-text">GET STARTED</a></Link>
           </button>
         </div>
         <img className="landing-img" alt="landing-img" src="images/landing_img.svg" />
