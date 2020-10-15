@@ -25,6 +25,7 @@ const Content = () => {
                 display: flex;
                 justify-content: flex-end;
                 padding: 2% 5% 0% 5%;
+                cursor: default;
             }
             .landing-img {
                 width: 55%;
@@ -53,6 +54,7 @@ const Content = () => {
                 border-radius: 25px;
                 padding: .5rem 1.5rem;
                 border: none;
+                cursor: pointer;
             }
             .landing-button-text{
                 color: white;
