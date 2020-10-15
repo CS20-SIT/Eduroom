@@ -44,6 +44,9 @@ services:
       - DB_HOST=eduroom_postgres
       - DB_PORT=5432
       - DB_NAME=eduroom_db
+      - JWT_SECRET=jwtsecret
+      - JWT_EXPIRE=30d
+      - JWT_COOKIE_EXPIRE=30
       - GOOGLE_CLIENT_ID=915718814816-au5njmbt31b0g4lctg8edqm3rs53vvcn.apps.googleusercontent.com
       - GOOGLE_SECRET_KEY=dDwssvp5-CCfvXs7vhlNhxIi
     ports:
