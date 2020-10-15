@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const errorHandler = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { test } = require('./controllers/test');
+const testRoute = require('./routes/testRoute')
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: `${__dirname}/config/config.env` });
@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
-app.get('/api/test', test);
-
+app.use(testRoute)
 app.use(errorHandler);
+
 module.exports = app
