@@ -98,6 +98,7 @@ const Content = () => {
             font-family: 'Quicksand', sans-serif;
             font-weight: bold;
             color: #fe75b7;
+            padding-left: 2%;
             text-decoration-line: underline;
             cursor: pointer;
             margin-left: 5px;
