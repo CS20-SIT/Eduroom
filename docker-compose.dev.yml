@@ -12,6 +12,9 @@ services:
       - /usr/src/app/.next
     environment:
       - BACKEND_API=http://eduroom_backend:5000
+      - GRADER_URL=http://eduroom_grading_server:3050
+      - CHAT_SERVER=http://eduroom_socket_chat:5050
+      - KAHOOT_URL=http://eduroom_socket_kahoot:8000
     ports:
       - "3000:3000"
   nginx:
@@ -19,6 +22,9 @@ services:
     depends_on:
       - eduroom_frontend
       - eduroom_backend
+      - eduroom_grading_server
+      - eduroom_socket_chat
+      - eduroom_socket_kahoot
     build:
       dockerfile: Dockerfile.dev
       context: ./nginx
@@ -44,11 +50,52 @@ services:
       - DB_HOST=eduroom_postgres
       - DB_PORT=5432
       - DB_NAME=eduroom_db
+      - JWT_SECRET=jwtsecret
+      - JWT_EXPIRE=30d
+      - JWT_COOKIE_EXPIRE=30
       - GOOGLE_CLIENT_ID=915718814816-au5njmbt31b0g4lctg8edqm3rs53vvcn.apps.googleusercontent.com
       - GOOGLE_SECRET_KEY=dDwssvp5-CCfvXs7vhlNhxIi
     ports:
       - "5000:5000"
-
+  eduroom_grading_server:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./eduroom_grading_server
+    volumes:
+      - /usr/src/app/node_modules
+      - ./eduroom_grading_server:/usr/src/app
+    environment:
+      - NODE_ENV=development
+      - PORT=3050
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "3050:3050"
+  eduroom_socket_chat:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./eduroom_socket_chat
+    volumes:
+      - /usr/src/app/node_modules
+      - ./eduroom_socket_chat:/usr/src/app
+    environment:
+      - NODE_ENV=development
+      - PORT=5050
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "5050:5050"
+  eduroom_socket_kahoot:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./eduroom_socket_kahoot
+    volumes:
+      - /usr/src/app/node_modules
+      - ./eduroom_socket_kahoot:/usr/src/app
+    environment:
+      - NODE_ENV=development
+      - PORT=8000
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "8000:8000"
   eduroom_postgres:
     image: "postgres:12"
     environment:

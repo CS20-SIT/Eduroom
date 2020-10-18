@@ -1,19 +1,13 @@
-import Head from 'next/head'
-import Navbar from '../components/layouts/navbar';
+import React, { Fragment } from 'react'
+import GeneralTemplate from '../components/template/general'
 import LandingContent from '../components/landing/content'
-export default function Home() {
+const Home = () => {
   return (
-    <div>
-      <Head>
-        <title>Eduroom Project</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet"></link>
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet"></link>
-      </Head>
-      <main>
-        <Navbar />
+    <Fragment>
+      <GeneralTemplate>
         <LandingContent />
-      </main>
-    </div>
+      </GeneralTemplate>
+    </Fragment>
   )
 }
+export default Home
