@@ -11,7 +11,7 @@ data:
   KAHOOT_URL: eduroom-socket-kahoot-clusterip:8000
   # DB
   POSTGRES_HOST: "34.87.81.70"
-  POSTGRES_USER: eduroom_user
+  POSTGRES_USER: eduroom
   POSTGRES_DB: eduroom_db
   POSTGRES_PORT: "5432"
   # Backend
