@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
-import style from '../../styles/landing/login'
+import style from '../../styles/admin/login'
 const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -8,15 +8,19 @@ const Content = () => {
   return (
     <Fragment>
       <div className="login">
+        <div className="admin-login-page-img">
+        <img
+          className="admin-login-img"
+          alt="admin-login-page-img"
+          src="/images/admin-login-img.svg"
+        />
+        </div>
         <div className="login-content">
           <div className="login-header">
-            WELCOME BACK <br />
+            WELCOME ADMIN <br />
           </div>
           <div className="login-description">
-            new here?
-            <Link href="/register">
-              <span className="register-link">create an account</span>
-            </Link>
+            hope you enjoy!
           </div>
           <div className="login-form">
             <form onSubmit={(e) => e.preventDefault()}>
@@ -36,29 +40,9 @@ const Content = () => {
               <button className="login-button">
                 <span className="login-button-text">Log In</span>
               </button>
-              <div className="or-text">
-                <div className="striaght-line"></div>
-                <span className="or-text-text">or</span>
-                <div className="striaght-line"></div>
-              </div>
-              <button className="login-google-button">
-                <div className="login-google-button-text">
-                  <img
-                    src="/images/google-logo.png"
-                    alt="google-icon"
-                    className="google-logo"
-                  />
-                  <span>Sign Up With Google</span>
-                </div>
-              </button>
             </form>
           </div>
         </div>
-        <img
-          className="login-page-img"
-          alt="login-page-img"
-          src="/images/login-img.svg"
-        />
       </div>
       <style jsx>
         {style}
