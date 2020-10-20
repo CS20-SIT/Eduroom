@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eduroom-frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: eduroom-frontend-deployment
+  template:
+    metadata:
+      labels:
+        app: eduroom-frontend-deployment
+    spec:
+      containers:
+      - name: eduroom-frontend-deployment
+        image: asia.gcr.io/macbigduck/eduroom-frontend
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 3000

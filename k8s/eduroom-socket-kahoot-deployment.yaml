@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eduroom-socket-kahoot-deployment
+spec:
+  selector:
+    matchLabels:
+      app: eduroom-socket-kahoot-deployment
+  template:
+    metadata:
+      labels:
+        app: eduroom-socket-kahoot-deployment
+    spec:
+      containers:
+      - name: eduroom-socket-kahoot-deployment
+        image: asia.gcr.io/macbigduck/eduroom-socket-kahoot
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 8000
