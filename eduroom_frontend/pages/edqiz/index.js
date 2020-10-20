@@ -66,7 +66,6 @@ const Content = () => {
           }
           .landing-content {
             position: absolute;
-           
             font-family: "Quicksand", sans-serif;
           }
         
