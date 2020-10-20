@@ -20,3 +20,28 @@ spec:
         #     cpu: "500m"
         ports:
         - containerPort: 3000
+        env:
+            - name: BACKEND_API
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: BACKEND_API
+                  optional: false
+            - name: GRADER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: CLIENT_URL
+                  optional: false
+            - name: CHAT_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: CHAT_SERVER
+                  optional: false
+            - name: KAHOOT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: KAHOOT_URL
+                  optional: false

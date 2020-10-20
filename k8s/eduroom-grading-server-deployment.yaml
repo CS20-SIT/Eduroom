@@ -20,3 +20,15 @@ spec:
         #     cpu: "500m"
         ports:
         - containerPort: 3050
+        env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: NODE_ENV
+            - name: CLIENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: CLIENT_URL
+                  optional: false
