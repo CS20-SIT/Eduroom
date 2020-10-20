@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prod-configmap
+data:
+  BACKEND_API: eduroom-backend-clusterip:5000
+  CLIENT_URL: eduroom-frontend-clusterip:3000
+  GRADER_URL: eduroom-grading-server-clusterip:3050
+  CHAT_SERVER: eduroom-socket-chat-clusterip:5050
+  KAHOOT_URL: eduroom-socket-kahoot-clusterip:8000
+  POSTGRES_USER: eduroom_user
+  POSTGRES_DB: eduroom_db
+  NODE_ENV: production
