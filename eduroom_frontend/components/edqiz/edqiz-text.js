@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import style from '../../styles/edqiz/edquizText'
 const CreateText = () => {
   return (
     <Fragment>
@@ -9,24 +10,7 @@ const CreateText = () => {
         <span className="pink-text">I</span>
         <span className="navy-text">Z!</span>
       </span>
-      <style jsx>
-          {
-              `
-              .text-title {
-                font-family: "Quicksand", sans-serif;
-              }
-              .navy-text {
-                color:#3D467F
-              }
-              .purple-text {
-                color: #A880F7;
-              }
-              .pink-text {
-                color: #F39AC4;
-              }
-              `
-          }
-      </style>
+      <style jsx>{style}</style>
     </Fragment>
   )
 }

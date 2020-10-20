@@ -9,12 +9,12 @@ export default css`
   }
   .content {
     width: 100vw;
-    padding: 5%;
-    height: 85vh;
+    padding: 3% 5%;
+    height: 82vh;
   }
   .col-12 {
-      width: 100%;
-      padding-bottom: 2.5%;
+    width: 100%;
+    padding: 1% 0%;
   }
   .row {
     display: flex;
@@ -26,16 +26,16 @@ export default css`
   .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
     background: white;
-    padding:3%;
+    padding: 3%;
     border-radius: 2vh;
     transition: 0.3s;
     width: 100%;
     height: 100%;
     text-align: center;
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
     flex-flow: column;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
@@ -54,7 +54,7 @@ export default css`
     width: 100vw;
     height: 100vh;
 
-    background-image: url('../images/edqiz/Frame1.svg');
+    background-image: url('/images/edqiz/create-bg.svg');
     background-repeat: no-repeat;
 
     background-size: cover;
@@ -73,6 +73,7 @@ export default css`
     padding-top: 5%;
     font-size: 2.5em;
     font-weight: bold;
+    cursor: default;
   }
   .landing-button {
     background: #a880f7;
