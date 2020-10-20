@@ -1,0 +1,6 @@
+.div{
+    display:grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 30px;
+    width: 100vw;
+}
