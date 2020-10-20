@@ -6,8 +6,7 @@ const Register = () => {
     <Fragment>
       <GeneralTemplate>
           <RegisterContent />
-      </GeneralTemplate>
-      
+      </GeneralTemplate>      
     </Fragment>
   )
 }
