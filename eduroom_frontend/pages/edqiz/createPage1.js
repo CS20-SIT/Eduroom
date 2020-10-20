@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 const Content = () => {
   const router = useRouter();
   return (
-    //Elevationl1.svg
+  
     <Fragment>
       <div className="landing">
         <div>
