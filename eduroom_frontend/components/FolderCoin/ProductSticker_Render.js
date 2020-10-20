@@ -1,23 +1,30 @@
+import React, {Fragment} from 'react'
 import Link from 'next/link';
-import Styles from '../../styles/CoinStyles/ProductSticker_Render.module.css';
+import style from '../../styles/CoinStyles/product_sticker_render';
 const Name = props => {
-
     return (
-        <div className={Styles.cardContainer}>
+        <Fragment>
+        <div className="cardContainer">
             <div style={{ padding: '20px' }}>
-                <div className={Styles.container}>
-                    <h1 className={Styles.text}>
+                <div className="container">
+                    <h1 className="text">
                         Name Sticker : {props.title}
                     </h1>
-                    <h1 className={Styles.text}>
+                    <h1 className="text">
                         Price of Sticker :{props.price} Coin
                     </h1>
                     <Link href={`/coin-shop/payment/${props.id}`}>
-                        <a className={Styles.btn}>Buy!</a>
+                        <a className="btn">Buy!</a>
                     </Link>
                 </div>
             </div>
         </div>
+        <style jsx>
+            {
+                style
+            }
+        </style>
+        </Fragment>
     );
 };
 export default Name;
