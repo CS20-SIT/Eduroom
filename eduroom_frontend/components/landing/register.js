@@ -60,7 +60,7 @@ const Register = () => {
                 <button className="register-google-button">
                   <div className="register-google-button-text">
                     <img
-                      src="images/google-logo.png"
+                      src="/images/google-logo.png"
                       alt="google-icon"
                       className="google-logo"
                     />
@@ -86,7 +86,7 @@ const Register = () => {
           <img
             className="register-page-img"
             alt="register-page-img"
-            src="images/campaign_img.svg"
+            src="/images/campaign_img.svg"
           />
         </div>
       </div>

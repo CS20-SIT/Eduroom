@@ -24,7 +24,7 @@ const Content = () => {
         <img
           className="landing-img"
           alt="landing-img"
-          src="images/landing_img.svg"
+          src="/images/landing_img.svg"
         />
       </div>
       <style jsx>
