@@ -4,9 +4,13 @@ const morgan = require('morgan');
 const errorHandler = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const ConfigRoute = require('./routes/configRoute')
 const passport = require('passport')
+
+const ConfigRoute = require('./routes/configRoute')
+const AnalysisRoute = require('./routes/analysisRoute')
+
 const passportConfig = require('./config/passport')
+
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: `${__dirname}/config/config.env` });
 }
@@ -37,6 +41,7 @@ passportConfig(passport)
 app.use(passport.initialize());
 
 app.use('/api',ConfigRoute)
+app.use(AnalysisRoute)
 app.use(errorHandler);
 
 module.exports = app
