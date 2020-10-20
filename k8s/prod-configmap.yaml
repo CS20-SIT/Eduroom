@@ -3,11 +3,20 @@ kind: ConfigMap
 metadata:
   name: prod-configmap
 data:
+  # Frontend 
   BACKEND_API: eduroom-backend-clusterip:5000
   CLIENT_URL: eduroom-frontend-clusterip:3000
   GRADER_URL: eduroom-grading-server-clusterip:3050
   CHAT_SERVER: eduroom-socket-chat-clusterip:5050
   KAHOOT_URL: eduroom-socket-kahoot-clusterip:8000
+  # DB
+  POSTGRES_HOST: "34.87.81.70"
   POSTGRES_USER: eduroom_user
   POSTGRES_DB: eduroom_db
+  POSTGRES_PORT: "5432"
+  # Backend
   NODE_ENV: production
+  WAIT_HOSTS: 34.87.81.70:5432
+  JWT_SECRET: jwtsecret
+  JWT_EXPIRE: 30d
+  JWT_COOKIE_EXPIRE: "30"
