@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import EdquizPagination from './edqiz-create-pagination'
 import style from '../../styles/edqiz/createPage'
-const Page3 = ({ goto }) => {
+const Page3 = ({ name, goto }) => {
   return (
     <Fragment>
       <div className="col-12">
@@ -13,7 +13,7 @@ const Page3 = ({ goto }) => {
         <div className="row row-content">
           <div className="col-12">
             <p className="landing-header">
-              QUIZ NAME <i className="fas fa-pen"></i>
+              COVER IMAGE
             </p>
           </div>
         </div>

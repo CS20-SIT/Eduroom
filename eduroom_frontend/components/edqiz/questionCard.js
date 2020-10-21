@@ -1,6 +1,16 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import QuestionAnswer from './questionAnswer'
 const QuiztionCard = ({ data, index, add, remove, change }) => {
+
+  useEffect(()=>{
+    if(data.image){
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('show-image'+index).src = e.target.result;
+      }
+      reader.readAsDataURL(data.image);
+    }
+},[])
   const handleChangeQuestion = (e) => {
     let newValue = e.target.value
     change({ index, type: 'question', newValue })

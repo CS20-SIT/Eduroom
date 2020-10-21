@@ -56,6 +56,7 @@ const Answer = ({ans,index,correct,handleChange,handleCorrect}) => {
                 border:none;
                 font-size: 1.2em;
                 background: #EFF0F6;
+                outline: none;
               }
               .correct-choice {
                 color:#27AE60;
