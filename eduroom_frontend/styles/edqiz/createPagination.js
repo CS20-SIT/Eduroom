@@ -16,12 +16,13 @@ export default css`
     align-items: center;
     justify-content: center;
     padding: 2%;
-    width: 36px;
-    height: 36px;
-    border-radius: 36px;
+    width: 20px;
+    height: 20px;
+    border-radius: 40px;
     color: white;
     font-size: 1.2em;
     font-weight: 600;
+    cursor:pointer;
     background: #5b5b5b;
   }
   .current {
