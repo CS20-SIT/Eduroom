@@ -6,15 +6,13 @@ metadata:
     kubernetes.io/ingress.class: nginx
     # nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
-  # tls:
-  #   - hosts:
-  #     - cs21.cscms.me
-  #     secretName: cs21-cf
-  #   - hosts:
-  #     - cs21socket.cscms.me
-  #     secretName: cs21-socket-cf
+  tls:
+    - hosts:
+      - eduroom.cscms.me
+      secretName: eduroom-cscms-cf
   rules:
-    - http:
+    - host: eduroom.cscms.me
+      http:
         paths:
           - path: /socket-chat
             backend:
