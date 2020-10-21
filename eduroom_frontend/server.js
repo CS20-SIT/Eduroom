@@ -9,17 +9,17 @@ const devProxy = {
   },
   '/grader': {
     target: `${process.env.GRADER_URL || 'http://localhost:3050'}`,
-    pathRewrite: { '^/grader': '/' },
+    pathRewrite: { '^/grader': '/grader' },
     changeOrigin: true,
   },
-  '/chat-server': {
+  '/socket-chat': {
     target: `${process.env.CHAT_SERVER || 'http://localhost:5050'}`,
-    pathRewrite: { '^/chat-server': '/' },
+    pathRewrite: { '^/socket-chat': '/socket-chat' },
     changeOrigin: true,
   },
   '/kahoot': {
     target: `${process.env.KAHOOT_URL || 'http://localhost:8000'}`,
-    pathRewrite: { '^/kahoot': '/' },
+    pathRewrite: { '^/kahoot': '/kahoot' },
     changeOrigin: true,
   }
 }
