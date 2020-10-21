@@ -11,7 +11,23 @@ spec:
       labels:
         app: eduroom-backend-deployment
     spec:
+      volumes:
+        - name: pg-cloud-sql-sa
+          secret:
+            secretName: pg-cloud-sql-service-account
       containers:
+      - name: cloud-sql-proxy-deployment
+        image: gcr.io/cloudsql-docker/gce-proxy:1.17
+        command:
+          - "/cloud_sql_proxy"
+          - "-instances=macbigduck:asia-southeast1:eduroom-postgres=tcp:5432"
+          - "-credential_file=/secrets/service_account.json"
+        securityContext:
+          runAsNonRoot: true
+        volumeMounts:
+            - name: pg-cloud-sql-sa
+              mountPath: /secrets/
+              readOnly: true
       - name: eduroom-backend-deployment
         image: asia.gcr.io/macbigduck/eduroom-backend
         # resources:

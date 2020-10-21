@@ -10,13 +10,13 @@ data:
   CHAT_SERVER: eduroom-socket-chat-clusterip:5050
   KAHOOT_URL: eduroom-socket-kahoot-clusterip:8000
   # DB
-  POSTGRES_HOST: "34.87.81.70"
+  POSTGRES_HOST: "127.0.0.1"
   POSTGRES_USER: eduroom
   POSTGRES_DB: eduroom_db
   POSTGRES_PORT: "5432"
   # Backend
   NODE_ENV: production
-  WAIT_HOSTS: 34.87.81.70:5432
+  WAIT_HOSTS: 127.0.0.1:5432
   JWT_SECRET: jwtsecret
   JWT_EXPIRE: 30d
   JWT_COOKIE_EXPIRE: "30"
