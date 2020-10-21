@@ -30,7 +30,6 @@ export default css`
     border-radius: 2vh;
     transition: 0.3s;
     width: 100%;
-    height: 100%;
     text-align: center;
     display: flex;
     flex-wrap: wrap;
@@ -53,11 +52,10 @@ export default css`
     justify-content: center;
     width: 100vw;
     height: 100vh;
-
     background-image: url('/images/edqiz/create-bg.svg');
     background-repeat: no-repeat;
-
     background-size: cover;
+    overflow: auto;
   }
   .landing-content {
     position: absolute;
