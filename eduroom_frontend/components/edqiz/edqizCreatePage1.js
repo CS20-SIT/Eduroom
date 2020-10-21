@@ -1,12 +1,22 @@
 import React, { Fragment } from 'react'
 import EdquizPagination from './edqiz-create-pagination'
 import style from '../../styles/edqiz/createPage'
-const Page1 = ({goto}) => {
+const Page1 = ({goto,name,change}) => {
+  const handleGo = (val)=>{
+    if(name == ''){
+      alert('Please Input quiz name')
+    } else {
+      goto(val)
+    }
+  }
+  const handleChange = (e)=>{
+    change(e.target.value)
+  }
   return (
     <Fragment>
       <div className="col-12">
         <div className="row">
-          <EdquizPagination current={1} goto={goto}/>
+          <EdquizPagination current={1} goto={handleGo}/>
         </div>
       </div>
       <div className="col-12">
@@ -25,12 +35,14 @@ const Page1 = ({goto}) => {
               id="fname"
               name="firstname"
               placeholder="QUIZ NAME . . ."
+              onChange={handleChange}
+              value={name}
             />
           </div>
           <div className="col-12">
             <button
               className="landing-button"
-              onClick={() => goto(2)}
+              onClick={()=>{handleGo(2)}}
             >
               <span className="landing-button-text">GO!</span>
             </button>
