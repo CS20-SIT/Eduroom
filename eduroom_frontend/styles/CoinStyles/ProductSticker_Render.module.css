@@ -1,24 +1,17 @@
 .container {
-    border-style: solid;
-    border-color: black;
-    padding: 30px;
-    background-color: #f0ffff;
+ 
+    padding: 20px;
+
     color: black;
 }
 .cardContainer {
     text-align: center;
     font-size: 20px;
+    margin:auto;
+    margin-top:10px;
+    margin-bottom: 10px;
 }
 .text{
     font-size:20px;
 }
-.btn{
-    background-color: #c1E3FE; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-}
+
