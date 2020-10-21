@@ -30,3 +30,21 @@ docker-compose -f docker-compose.dev.yml up -d
 ```
 docker-compose -f docker-compose.dev.yml down
 ```
+
+## Git Command
+
+### Add upstream
+```
+git remote add upstream https://github.com/CS20-SIT/Eduroom.git
+```
+
+### Pulling from master
+```
+git fetch upstream
+git pull upstream master
+```
+
+### Push pulling to your repo
+```
+git push -u origin master
+```
