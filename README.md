@@ -1,5 +1,7 @@
 # Eduroom Project
 
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/CS20-SIT/Eduroom/blob/master/LICENSE)
+
 Tools: NextJS + Material UI, ExpressJS, PostgreSQL, Docker, Nginx
 
 ## Prerequisites
@@ -47,4 +49,10 @@ git pull upstream master
 ### Push pulling to your repo
 ```
 git push -u origin master
+```
+
+### Run Benchmark
+
+```
+cd eduroom_benchmark && npm start && cd ..
 ```
