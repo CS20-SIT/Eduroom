@@ -48,3 +48,9 @@ git pull upstream master
 ```
 git push -u origin master
 ```
+
+### Run Benchmark
+
+```
+cd eduroom_benchmark && npm start && cd ..
+```

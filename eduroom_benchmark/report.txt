@@ -1,0 +1,30 @@
+URL: https://eduroom.cscms.me/
+Performance: 97
+Accessibility: 89
+Best Practices: 100
+SEO: 83
+Average:  92.25
+URL: https://eduroom.cscms.me/login
+Performance: 97
+Accessibility: 75
+Best Practices: 100
+SEO: 83
+Average:  88.75
+URL: https://eduroom.cscms.me/register
+Performance: 97
+Accessibility: 76
+Best Practices: 100
+SEO: 81
+Average:  88.5
+URL: https://eduroom.cscms.me/edqiz
+Performance: 98
+Accessibility: 75
+Best Practices: 100
+SEO: 86
+Average:  89.75
+URL: https://eduroom.cscms.me/edqiz/create
+Performance: 99
+Accessibility: 75
+Best Practices: 100
+SEO: 91
+Average:  91.25
