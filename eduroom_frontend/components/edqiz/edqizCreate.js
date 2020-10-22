@@ -8,6 +8,7 @@ import Page3 from './edqizCreatePage3'
 const Content = () => {
   const router = useRouter()
   const [current, setCurrent] = useState(1)
+  const [name,setName] = useState('')
   const [questionList, setQuestionList] = useState([
     {
       question: '',
@@ -16,15 +17,7 @@ const Content = () => {
       ans: ['', '', '', ''],
       correct: 0,
       image: null,
-    },
-    {
-      question: '',
-      time: '',
-      point: '',
-      ans: ['', '', '', ''],
-      correct: 1,
-      image: null,
-    },
+    }
   ])
   const addQuestion = (val) => {
     let temp = questionList.splice(0, val + 1)
@@ -39,6 +32,9 @@ const Content = () => {
     temp.push(...questionList)
     setQuestionList(temp)
   }
+  const handleChangeQuizName = (val) => {
+    setName(val)
+  }
   const changeQuestion = (val) => {
     let temp = [...questionList]
     if(val.type == 'question'){
@@ -51,11 +47,9 @@ const Content = () => {
       temp[val.index].ans[val.opt] = val.newValue
     } else if(val.type == 'correct'){
       temp[val.index].correct = val.newValue
-
     } else if(val.type == 'image'){
       if(val.newValue){
         temp[val.index].image = val.newValue
-        console.log(val.newValue)
         var reader = new FileReader();
         reader.onload = function(e) {
           document.getElementById('show-image'+val.index).src = e.target.result;
@@ -78,11 +72,11 @@ const Content = () => {
   const renderPage = () => {
     switch (current) {
       case 1:
-        return <Page1 goto={goto} />
+        return <Page1 goto={goto} name={name} change={handleChangeQuizName}/>
       case 2:
-        return <Page2 goto={goto} questionList={questionList} add={addQuestion} remove={removeQuestion} change={changeQuestion} />
+        return <Page2 goto={goto} name={name} questionList={questionList} add={addQuestion} remove={removeQuestion} change={changeQuestion} changeName={handleChangeQuizName}/>
       case 3:
-        return <Page3 goto={goto} />
+        return <Page3 goto={goto} name={name} />
     }
   }
   return (
