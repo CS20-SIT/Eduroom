@@ -1,10 +1,21 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import style from '../../styles/landing/login'
+import style from '../../styles/landing/login';
 const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  useEffect(() => {}, [email]);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const handleEmail = (e) => {
+    if (e.target.value.length === 0) setEmailError('Email are required');
+    else setEmailError('');
+    setEmail(e.target.value);
+  };
+  const handlePassword = (e) => {
+    if (e.target.value.length === 0) setPasswordError('Password are required');
+    else setPasswordError('');
+    setEmail(e.target.value);
+  };
   return (
     <Fragment>
       <div className="login">
@@ -24,14 +35,16 @@ const Content = () => {
                 className="login-textfield"
                 type="text"
                 placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => handleEmail(e)}
               />
+              <div className="error">{emailError}</div>
               <input
                 className="login-textfield"
                 type="password"
                 placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => handlePassword(e)}
               />
+              <div className="error">{passwordError}</div>
 
               <button className="login-button">
                 <span className="login-button-text">Log In</span>
@@ -60,9 +73,7 @@ const Content = () => {
           src="/images/login-img.svg"
         />
       </div>
-      <style jsx>
-        {style}
-      </style>
+      <style jsx>{style}</style>
     </Fragment>
   );
 };
