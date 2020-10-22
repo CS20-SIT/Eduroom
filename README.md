@@ -1,5 +1,10 @@
 # Eduroom Project
 
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/CS20-SIT/Eduroom/blob/master/LICENSE)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/Naereen/StrapDown.js.svg)](https://GitHub.com/CS20-SIT/Eduroom/pulls/)
+[![GitHub pull-requests closed](https://img.shields.io/github/issues-pr/Naereen/StrapDown.js.svg)](https://GitHub.com/CS20-SIT/Eduroom/pulls/)
+[![Generic badge](https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)](https://shields.io/)
+
 Tools: NextJS + Material UI, ExpressJS, PostgreSQL, Docker, Nginx
 
 ## Prerequisites
