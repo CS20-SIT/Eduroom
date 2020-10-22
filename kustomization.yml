@@ -13,3 +13,5 @@ resources:
 - k8s/eduroom-socket-kahoot-clusterip.yaml
 - k8s/eduroom-socket-kahoot-deployment.yaml
 - k8s/ingress-service.yaml
+
+# docker build -f eduroom_backend/Dockerfile eduroom_backend
