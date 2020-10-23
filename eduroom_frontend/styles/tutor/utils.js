@@ -26,7 +26,7 @@ export default css`
     font-size: 0.75rem;
   }
   .text-sm {
-    font-size: 0.5rem;
+    font-size: 0.65rem;
   }
 
   /* Font Weight */
