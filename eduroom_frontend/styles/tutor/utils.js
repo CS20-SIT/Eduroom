@@ -4,6 +4,7 @@ export default css`
     max-width: 1024px;
     min-height: 100vh;
     margin: 4rem auto;
+    padding: 0 4rem;
   }
   /* Font Family */
   *,
@@ -92,6 +93,9 @@ export default css`
   .text-underline {
     text-decoration: underline;
   }
+  .letter-spacing {
+    letter-spacing: 1.125px;
+  }
 
   /* Opacity */
   .opacity-50 {
@@ -114,7 +118,7 @@ export default css`
 
   /* Shadow */
   .shadow {
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   }
 
   /* Display */
