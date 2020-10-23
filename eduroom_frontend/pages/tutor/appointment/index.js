@@ -1,7 +1,7 @@
 import React,{Fragment} from 'react'
 const Temp = () => {
     return <Fragment>
-        <div>Instructor List</div>
+        <div>Student's Appointments</div>
     </Fragment>
 }
 export default Temp
