@@ -29,5 +29,5 @@ app.use(
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-app.get('/test',(req,res)=>{return res.status(200).json({success:true})})
+app.get('/kahoot/test',(req,res)=>{return res.status(200).json({success:true})})
 module.exports = app

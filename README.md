@@ -1,5 +1,7 @@
 # Eduroom Project
 
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/CS20-SIT/Eduroom/blob/master/LICENSE)
+
 Tools: NextJS + Material UI, ExpressJS, PostgreSQL, Docker, Nginx
 
 ## Prerequisites
@@ -29,4 +31,28 @@ docker-compose -f docker-compose.dev.yml up -d
 ### for stop service
 ```
 docker-compose -f docker-compose.dev.yml down
+```
+
+## Git Command
+
+### Add upstream
+```
+git remote add upstream https://github.com/CS20-SIT/Eduroom.git
+```
+
+### Pulling from master
+```
+git fetch upstream
+git pull upstream master
+```
+
+### Push pulling to your repo
+```
+git push -u origin master
+```
+
+### Run Benchmark
+
+```
+cd eduroom_benchmark && npm start && cd ..
 ```
