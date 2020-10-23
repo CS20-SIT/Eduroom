@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- k8s/prod-configmap.yaml
+- k8s/eduroom-backend-clusterip.yaml
+- k8s/eduroom-backend-deployment.yaml
+- k8s/eduroom-frontend-clusterip.yaml
+- k8s/eduroom-frontend-deployment.yaml
+- k8s/eduroom-grading-server-clusterip.yaml
+- k8s/eduroom-grading-server-deployment.yaml
+- k8s/eduroom-socket-chat-clusterip.yaml
+- k8s/eduroom-socket-chat-deployment.yaml
+- k8s/eduroom-socket-kahoot-clusterip.yaml
+- k8s/eduroom-socket-kahoot-deployment.yaml
+- k8s/ingress-service.yaml
+
+# docker build -f eduroom_backend/Dockerfile eduroom_backend
