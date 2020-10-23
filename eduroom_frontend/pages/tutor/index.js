@@ -5,25 +5,43 @@ const Tutor = ({ instructors }) => {
   return (
     <Fragment>
       <div className='container'>
-        <div className='flex'>
-          <span className='font-lato font-bold text-md text-navy mx-1 px-1'>
+        <div className='flex' style={{ justifyContent: 'flex-end' }}>
+          <span className='font-lato font-bold text-md text-navy mx-1 px-1 pointer'>
             Instructors
           </span>
-          <span className='font-lato font-bold text-md text-navy mx-1 px-1'>
+          <span className='font-lato font-bold text-md text-navy mx-1 px-1 pointer'>
             My Appointments
           </span>
         </div>
+        <div>
+          <div className='text-lg font-bold text-secondary letter-spacing'>
+            INSTRUCTORS
+          </div>
+        </div>
         {instructors.map((e) => (
           <div>
-            <div className='px-2 py-1 mx-2 my-2 shadow rounded-md flex'>
+            <div className='px-8 py-4 my-8 shadow rounded-md flex pointer'>
               <div
-                className='rounded-full bg-navy'
+                className='rounded-full bg-yellow'
                 style={{ width: 4 + 'rem', height: 4 + 'rem' }}
               ></div>
-              <div className='my-auto mx-1'>
-                <div className='font-lato font-bold text-xl text-primary'>
-                  {' '}
-                  {e.name}
+              <div className='my-auto mx-4'>
+                <div className='flex'>
+                  <div className='font-lato font-bold text-xl text-primary'>
+                    {' '}
+                    {e.name}
+                  </div>
+                  <div className='mx-2 flex items-center text-yellow'>
+                    <i class='fas fa-star'></i>
+                    <div className='text-sm mx-1 text-yellow'>{e.rating}</div>
+                    <div className='text-sm text-secondary'>
+                      (
+                      {e.ratingCount > 1000
+                        ? e.ratingCount / 1000 + 'k'
+                        : e.ratingCount}
+                      )
+                    </div>
+                  </div>
                 </div>
                 <div className='font-lato font-bold text-md text-secondary'>
                   {' '}
