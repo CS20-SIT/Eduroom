@@ -33,6 +33,18 @@ docker-compose -f docker-compose.dev.yml up -d
 docker-compose -f docker-compose.dev.yml down
 ```
 
+## Commit Template for this Project
+
+```
+[Group Number] : [Type] message && [Type] message ...
+```
+### Example
+
+```
+[G00] : [ADD] User Page && [FIX] Bug in Course Bundle 
+```
+
+
 ## Git Command
 
 ### Add upstream
