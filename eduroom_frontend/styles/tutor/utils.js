@@ -93,7 +93,10 @@ export default css`
   .text-underline {
     text-decoration: underline;
   }
-  .letter-spacing {
+  .spacing-sm {
+    letter-spacing: 1.1px;
+  }
+  .spacing-md {
     letter-spacing: 1.125px;
   }
 
@@ -305,5 +308,13 @@ export default css`
   /* border */
   .border {
     border: 1px solid #535353;
+  }
+
+  /* animation */
+  .animation {
+    transition: all 200ms;
+  }
+  .bigger {
+    transform: scale(1.05);
   }
 `;
