@@ -16,11 +16,17 @@ const getAnn = async (req, res, next) => {
 };
 const postAnn = async (req, res, next) => {
   const title = req.body.title;
-
+  const description = req.body.description;
+  const adminId = req.body.adminId;
+  //   await pool.query("INSERT INTO users(email,password) VALUES($1,$2)", [
+  //     email,
+  //     hashedPassword,
+  //   ]);
   await pool.query(
-    "INSERT INTO announcements VALUES (DEFAULT, '" + title + "' , 'Hello' ,0 )"
+    'INSERT INTO announcements(title,description,"adminId") VALUES ($1 , $2, $3)',
+    [title, description, adminId]
   );
 
-  res.send({ success: true, title });
+  res.send({ success: true, title, description, adminId });
 };
 module.exports = { getAnn, test, postAnn };
