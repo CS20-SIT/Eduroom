@@ -2,6 +2,8 @@ import React, { Fragment, useState } from 'react';
 import utils from '../../styles/tutor/utils';
 import GeneralNoNav from '../../components/template/generalnonav';
 
+import { timeFormatter } from '../../components/tutor/lib/utils';
+
 import Link from 'next/link';
 const Temp = ({ instructor }) => {
   const [booking, setBooking] = useState(true);
@@ -90,8 +92,8 @@ const Temp = ({ instructor }) => {
                 </div>
               </div>
             </div>
-            <div>
-              <div className='calendar px-8 py-4' style={{ width: 40 + '%' }}>
+            <div style={{ width: 40 + '%' }} className={` px-8 py-4`}>
+              <div className='calendar'>
                 {dates.map((i, index) => (
                   <span
                     className={`text-sm font-bold`}
@@ -105,10 +107,32 @@ const Temp = ({ instructor }) => {
                   </span>
                 ))}
               </div>
+              <div className='my-8'>
+                <div className='my-2 text-md font-bold text-secondary font-lato'>
+                  Available Time
+                </div>
+                <div className='grid'>
+                  {instructor.times[selected - 1].time.map((e) => (
+                    <div
+                      className={`text-sm text-secondary font-bold border rounded-md px-1 py-1 flex justify-center`}
+                    >
+                      {timeFormatter(e)} - {timeFormatter(e + 1)}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <style jsx>{utils}</style>
+        <style jsx>{`
+          .grid {
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+          }
+        `}</style>
       </GeneralNoNav>
     </Fragment>
   );
@@ -138,35 +162,38 @@ export async function getStaticProps({ params }) {
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac sit suspendisse viverra mattis varius eget sagittis. Lacus aenean dictum suspendisse consequat. Dignissim orci libero malesuada est. Porta id eu quam duis ornare lobortis ridiculus.',
     rating: 4.5,
     ratingCount: 2000,
-    availabilities: [
-      { day: 0, startTime: 9, endTime: 10 },
-      { day: 0, startTime: 10, endTime: 11 },
-      { day: 0, startTime: 11, endTime: 12 },
-      { day: 0, startTime: 12, endTime: 13 },
-      { day: 0, startTime: 15, endTime: 16 },
-      { day: 0, startTime: 16, endTime: 17 },
-      { day: 1, startTime: 10, endTime: 11 },
-      { day: 1, startTime: 11, endTime: 12 },
-      { day: 1, startTime: 14, endTime: 15 },
-      { day: 1, startTime: 15, endTime: 16 },
-      { day: 1, startTime: 16, endTime: 17 },
-      { day: 2, startTime: 12, endTime: 13 },
-      { day: 2, startTime: 13, endTime: 14 },
-      { day: 2, startTime: 14, endTime: 15 },
-      { day: 2, startTime: 15, endTime: 16 },
-      { day: 2, startTime: 16, endTime: 17 },
-      { day: 3, startTime: 9, endTime: 10 },
-      { day: 3, startTime: 10, endTime: 11 },
-      { day: 3, startTime: 11, endTime: 12 },
-      { day: 4, startTime: 12, endTime: 13 },
-      { day: 4, startTime: 15, endTime: 16 },
-      { day: 4, startTime: 16, endTime: 17 },
-      { day: 5, startTime: 10, endTime: 11 },
-      { day: 5, startTime: 11, endTime: 12 },
-      { day: 5, startTime: 14, endTime: 15 },
-      { day: 6, startTime: 15, endTime: 16 },
-      { day: 6, startTime: 16, endTime: 17 },
-      { day: 6, startTime: 17, endTime: 18 },
+    times: [
+      { date: 1, time: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
+      { date: 2, time: [9, 12, 13, 15, 16, 17] },
+      { date: 3, time: [11, 12, 15, 16, 17] },
+      { date: 4, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 5, time: [9, 12, 13, 14, 15, 17] },
+      { date: 6, time: [9, 10, 11, 12, 15, 16, 17] },
+      { date: 7, time: [9, 12, 13, 15, 16, 17] },
+      { date: 8, time: [11, 12, 15, 16, 17] },
+      { date: 9, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 10, time: [9, 12, 13, 14, 15, 17] },
+      { date: 11, time: [9, 10, 11, 12, 15, 16, 17] },
+      { date: 12, time: [9, 12, 13, 15, 16, 17] },
+      { date: 13, time: [11, 12, 15, 16, 17] },
+      { date: 14, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 15, time: [9, 12, 13, 14, 15, 17] },
+      { date: 16, time: [9, 10, 11, 12, 15, 16, 17] },
+      { date: 17, time: [9, 12, 13, 15, 16, 17] },
+      { date: 18, time: [11, 12, 15, 16, 17] },
+      { date: 19, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 20, time: [9, 12, 13, 14, 15, 17] },
+      { date: 21, time: [9, 10, 11, 12, 15, 16, 17] },
+      { date: 22, time: [9, 12, 13, 15, 16, 17] },
+      { date: 23, time: [11, 12, 15, 16, 17] },
+      { date: 24, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 25, time: [9, 12, 13, 14, 15, 17] },
+      { date: 26, time: [9, 10, 11, 12, 15, 16, 17] },
+      { date: 27, time: [9, 12, 13, 15, 16, 17] },
+      { date: 28, time: [11, 12, 15, 16, 17] },
+      { date: 29, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 30, time: [9, 12, 13, 14, 15, 17] },
+      { date: 31, time: [9, 10, 11, 12, 14, 15, 16, 17] },
     ],
     price: 2000,
   };
