@@ -3,8 +3,8 @@ export default css`
   .container {
     max-width: 1024px;
     min-height: 100vh;
-    margin: 4rem auto;
-    padding: 0 4rem;
+    margin: 0 auto;
+    padding: 4rem;
   }
   /* Font Family */
   *,
@@ -87,6 +87,16 @@ export default css`
   }
   .bg-white {
     background-color: #ffffff;
+  }
+  .bg-white-faded {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+  .bg-tutor {
+    width: 100vw;
+    min-height: 100vh;
+    background-image: url('/images/tutor/tutorBG.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   /* Text Style */
