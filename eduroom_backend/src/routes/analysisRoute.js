@@ -2,9 +2,10 @@ const express = require('express')
 const Router = express.Router()
 
 const {
-    getNumberOfCourse
+    getAmountOfCourse,
+    getAmountOfSpecificCourse
 } = require('../controllers/analysisControllers')
 
-Router.get('/getNumberOfCourse', getNumberOfCourse)
+Router.get('/getAmountOfSpecificCourse', getAmountOfSpecificCourse)
 
 module.exports = Router
