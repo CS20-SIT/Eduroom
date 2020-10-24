@@ -10,4 +10,5 @@ const {
 
 Router.get('/getAmountOfSpecificCourse', getAmountOfSpecificCourse)
 Router.get('/soldOutCourse' , getSoldOutCourse)
+Router.get('/amountOfCourse', getAmountOfCourse)
 module.exports = Router
