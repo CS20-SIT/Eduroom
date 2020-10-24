@@ -1,26 +1,53 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import utils from '../../styles/tutor/utils';
 
 const Tutor = ({ instructors }) => {
+  const [isInstructor, setIsInstructor] = useState(true);
+  const [hoverIns, setHoverIns] = useState(-1);
+
   return (
     <Fragment>
       <div className='container'>
         <div className='flex' style={{ justifyContent: 'flex-end' }}>
-          <span className='font-lato font-bold text-md text-navy mx-1 px-1 pointer'>
-            Instructors
+          <span
+            onClick={() => {
+              setIsInstructor(true);
+            }}
+            className={`font-lato font-bold text-md mx-2 px-1 pointer spacing-sm ${
+              isInstructor ? 'text-navy' : 'text-secondary'
+            }`}
+          >
+            INSTRUCTORS
           </span>
-          <span className='font-lato font-bold text-md text-navy mx-1 px-1 pointer'>
-            My Appointments
+          <span
+            onClick={() => {
+              setIsInstructor(false);
+            }}
+            className={`font-lato font-bold text-md mx-2 px-1 pointer spacing-sm ${
+              isInstructor ? 'text-secondary' : 'text-navy'
+            }`}
+          >
+            MY APPOINTMENTS
           </span>
         </div>
         <div>
-          <div className='text-lg font-bold text-secondary letter-spacing'>
+          <div className='text-lg font-bold text-secondary spacing-md'>
             INSTRUCTORS
           </div>
         </div>
-        {instructors.map((e) => (
+        {instructors.map((e, index) => (
           <div>
-            <div className='px-8 py-4 my-8 shadow rounded-md flex pointer'>
+            <div
+              className={`px-8 py-4 my-8 shadow rounded-md flex pointer animation ${
+                hoverIns == index ? 'bigger' : ''
+              }`}
+              onPointerEnter={() => {
+                setHoverIns(index);
+              }}
+              onPointerLeave={() => {
+                setHoverIns(-1);
+              }}
+            >
               <div
                 className='rounded-full bg-yellow'
                 style={{ width: 4 + 'rem', height: 4 + 'rem' }}
