@@ -5,7 +5,16 @@ const pool = require('../database/db')
 
 //GET Method
 const getAmountOfCourse = async (req, res) => {
+    try {
+        const NumberOfCourse = await pool.auery('SELECT COUNT(*) FROM COURSE ')
 
+        if(!NumberOfCourse)
+        res.status(404).send({ msg: 'Not Found' })
+
+        res.status(200).send(NumberOfCourse)
+    } catch(err){
+        res.status(500).send(err.massage)
+    }
 }
 
 const getAmountOfSpecificCourse = async (req, res) => {
