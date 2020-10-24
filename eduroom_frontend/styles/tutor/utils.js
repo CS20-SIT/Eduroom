@@ -31,10 +31,10 @@ export default css`
 
   /* Font Weight */
   .font-bold {
-    font-weight: 400;
+    font-weight: 700;
   }
   .font-normal {
-    font-weight: 300;
+    font-weight: 400;
   }
 
   /* Text Color */
@@ -292,7 +292,7 @@ export default css`
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
+    gap: 10px 5px;
   }
   .calendar > * {
     color: #535353;
@@ -306,8 +306,8 @@ export default css`
     background-color: #fb9ccb;
     opacity: 0.6;
     border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
     position: absolute;
     left: 50%;
     top: 50%;
