@@ -287,6 +287,9 @@ export default css`
   .pointer {
     cursor: pointer;
   }
+  .disabled {
+    cursor: not-allowed;
+  }
 
   /* My Calendar */
   .calendar {
@@ -300,7 +303,6 @@ export default css`
     justify-content: center;
     align-items: center;
     position: relative;
-    cursor: pointer;
   }
   .selected {
     background-color: #fb9ccb;
