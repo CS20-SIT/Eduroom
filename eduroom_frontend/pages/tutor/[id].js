@@ -13,8 +13,9 @@ const Temp = ({ instructor }) => {
   const [booking, setBooking] = useState(true);
   var date = new Date();
   const [month, setMonth] = useState(date.getMonth());
-  var first = new Date(date.getFullYear(), month, 1);
-  var last = new Date(date.getFullYear(), month + 1, 0);
+  const [year, setYear] = useState(date.getFullYear());
+  var first = new Date(year, month, 1);
+  var last = new Date(year, month + 1, 0);
   var firstDate = first.getDate();
   var lastDate = last.getDate();
   var firstDay = first.getDay();
@@ -104,10 +105,15 @@ const Temp = ({ instructor }) => {
             </div>
             <div style={{ width: 40 + '%' }} className={`px-8 py-2`}>
               <div className='flex'>
-                {month > 0 ? (
+                {month != date.getMonth() || year != date.getFullYear() ? (
                   <div
                     onClick={() => {
-                      setMonth(month - 1);
+                      if (month == 0) {
+                        setMonth(11);
+                        setYear(year - 1);
+                      } else {
+                        setMonth(month - 1);
+                      }
                     }}
                     className='px-2 pointer'
                   >{`<`}</div>
@@ -115,25 +121,29 @@ const Temp = ({ instructor }) => {
                   ''
                 )}
                 <div className='w-full flex justify-center font-lato'>
-                  {monthConverter(month)}
+                  {monthConverter(month)} {year}
                 </div>
-                {month < 11 ? (
-                  <div
-                    onClick={() => {
+                <div
+                  onClick={() => {
+                    if (month == 11) {
+                      setMonth(0);
+                      setYear(year + 1);
+                    } else {
                       setMonth(month + 1);
-                    }}
-                    className='px-2 pointer'
-                  >{`>`}</div>
-                ) : (
-                  ''
-                )}
+                    }
+                  }}
+                  className='px-2 pointer'
+                >{`>`}</div>
               </div>
               <div className='calendar my-4'>
                 {dates.map((i, index) => (
                   <span
-                    className={`text-sm font-bold`}
+                    className={`text-sm font-bold ${
+                      i < today ? 'disabled' : 'pointer'
+                    }`}
                     key={index}
                     onClick={() => {
+                      if (i < today) return;
                       setSelected(i);
                       setTimeSelected([]);
                     }}
