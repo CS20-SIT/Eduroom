@@ -2,14 +2,19 @@ import React, { Fragment, useState } from 'react';
 import utils from '../../styles/tutor/utils';
 import GeneralNoNav from '../../components/template/generalnonav';
 
-import { timeFormatter } from '../../components/tutor/lib/utils';
+import {
+  timeFormatter,
+  monthConverter,
+} from '../../components/tutor/lib/utils';
 
 import Link from 'next/link';
+
 const Temp = ({ instructor }) => {
   const [booking, setBooking] = useState(true);
   var date = new Date();
-  var first = new Date(date.getFullYear(), date.getMonth(), 1);
-  var last = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  const [month, setMonth] = useState(date.getMonth());
+  var first = new Date(date.getFullYear(), month, 1);
+  var last = new Date(date.getFullYear(), month + 1, 0);
   var firstDate = first.getDate();
   var lastDate = last.getDate();
   var firstDay = first.getDay();
@@ -31,12 +36,17 @@ const Temp = ({ instructor }) => {
   }
 
   const [selected, setSelected] = useState(date.getDate());
+  const today = date.getDate();
+
+  let timeSelectedTmp = [];
+  const [timeSelected, setTimeSelected] = useState([]);
+
   return (
     <Fragment>
       <GeneralNoNav>
         <div className='bg-tutor'>
           <div className='container'>
-            <div className='flex my-8'>
+            <div className='flex my-4'>
               <div>
                 <div
                   className='rounded-full bg-yellow'
@@ -92,18 +102,54 @@ const Temp = ({ instructor }) => {
                 </div>
               </div>
             </div>
-            <div style={{ width: 40 + '%' }} className={` px-8 py-4`}>
-              <div className='calendar'>
+            <div style={{ width: 40 + '%' }} className={`px-8 py-2`}>
+              <div className='flex'>
+                {month > 0 ? (
+                  <div
+                    onClick={() => {
+                      setMonth(month - 1);
+                    }}
+                    className='px-2 pointer'
+                  >{`<`}</div>
+                ) : (
+                  ''
+                )}
+                <div className='w-full flex justify-center font-lato'>
+                  {monthConverter(month)}
+                </div>
+                {month < 11 ? (
+                  <div
+                    onClick={() => {
+                      setMonth(month + 1);
+                    }}
+                    className='px-2 pointer'
+                  >{`>`}</div>
+                ) : (
+                  ''
+                )}
+              </div>
+              <div className='calendar my-4'>
                 {dates.map((i, index) => (
                   <span
                     className={`text-sm font-bold`}
                     key={index}
                     onClick={() => {
                       setSelected(i);
+                      setTimeSelected([]);
                     }}
                   >
                     {index > 6 ? (i > 0 ? i : ' ') : i}
-                    <span className={i == selected ? 'selected' : ''} />
+                    <span
+                      className={
+                        i == selected || i == today
+                          ? i == selected
+                            ? 'selected'
+                            : month == date.getMonth()
+                            ? 'today'
+                            : ''
+                          : ''
+                      }
+                    />
                   </span>
                 ))}
               </div>
@@ -111,10 +157,37 @@ const Temp = ({ instructor }) => {
                 <div className='my-2 text-md font-bold text-secondary font-lato'>
                   Available Time
                 </div>
-                <div className='grid'>
+                <div className='grid my-4'>
                   {instructor.times[selected - 1].time.map((e) => (
                     <div
-                      className={`text-sm text-secondary font-bold border rounded-md px-1 py-1 flex justify-center`}
+                      onClick={() => {
+                        timeSelectedTmp = [...timeSelected];
+                        if (timeSelectedTmp[0] - e > 1) {
+                          alert('Please select consecutive time slots');
+                          return;
+                        }
+                        if (
+                          e - timeSelectedTmp[timeSelectedTmp.length - 1] >
+                          1
+                        ) {
+                          alert('Please select consecutive time slots');
+                          return;
+                        }
+                        timeSelectedTmp.includes(e)
+                          ? timeSelectedTmp.splice(
+                              timeSelectedTmp.findIndex((x) => x == e),
+                              1
+                            )
+                          : timeSelectedTmp.push(e);
+                        timeSelectedTmp.sort(function (a, b) {
+                          return +a - +b;
+                        });
+                        setTimeSelected(timeSelectedTmp);
+                        console.log(timeSelected);
+                      }}
+                      className={`pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
+                        timeSelected.includes(e) ? 'time-selected' : 'border'
+                      }`}
                     >
                       {timeFormatter(e)} - {timeFormatter(e + 1)}
                     </div>
@@ -131,6 +204,10 @@ const Temp = ({ instructor }) => {
             grid-template-rows: repeat(4, 1fr);
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
+          }
+          .time-selected {
+            border: 1px solid #fb9ccb;
+            box-shadow: 0px 0px 0px 1px rgba(251, 156, 203, 0.8);
           }
         `}</style>
       </GeneralNoNav>
