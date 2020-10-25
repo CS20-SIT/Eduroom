@@ -123,9 +123,9 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
 };
 
 export async function getStaticProps(context) {
+  // GET /tutor/student/appointment
   const appointments = [
     {
-      appointmentID: 1,
       id: 1,
       name: 'Thanawat Benjachatriroj',
       info: 'Frontend Developer',
@@ -135,7 +135,6 @@ export async function getStaticProps(context) {
       isAgree: 'Approved',
     },
     {
-      appointmentID: 2,
       id: 2,
       name: 'Passawat Wetchasart',
       info: 'Web Disigner',
@@ -145,7 +144,6 @@ export async function getStaticProps(context) {
       isAgree: 'Pending',
     },
     {
-      appointmentID: 3,
       id: 3,
       name: 'Thanaphong phatthanaphaisarnsin',
       info: 'Backend Developer',
@@ -155,7 +153,6 @@ export async function getStaticProps(context) {
       isAgree: 'Rejected',
     },
     {
-      appointmentID: 4,
       id: 4,
       name: 'Thanawat Benjachatriroj',
       info: 'Frontend Developer',
@@ -165,7 +162,6 @@ export async function getStaticProps(context) {
       isAgree: 'Rejected',
     },
     {
-      appointmentID: 5,
       id: 5,
       name: 'Thanawat Benjachatriroj',
       info: 'Frontend Developer',
