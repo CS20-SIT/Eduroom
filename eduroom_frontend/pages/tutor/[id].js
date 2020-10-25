@@ -77,7 +77,7 @@ const Temp = ({ instructor }) => {
                   {instructor.info}
                 </div>
                 <div className='font-lato font-bold text-md mx-1 my-2'>
-                  {instructor.lorem}
+                  {instructor.text}
                 </div>
                 <div className='flex my-2'>
                   <div
@@ -103,105 +103,155 @@ const Temp = ({ instructor }) => {
                 </div>
               </div>
             </div>
-            <div style={{ width: 40 + '%' }} className={`px-8 py-2`}>
-              <div className='flex'>
-                {month != date.getMonth() || year != date.getFullYear() ? (
+            <div className='w-full flex justify-center'>
+              <div style={{ width: 45 + '%' }} className={`px-4 py-2 mx-4`}>
+                <div className='flex my-2'>
+                  {month != date.getMonth() || year != date.getFullYear() ? (
+                    <div
+                      onClick={() => {
+                        if (month == 0) {
+                          setMonth(11);
+                          setYear(year - 1);
+                        } else {
+                          setMonth(month - 1);
+                        }
+                      }}
+                      className='px-2 pointer'
+                    >{`<`}</div>
+                  ) : (
+                    ''
+                  )}
+                  <div className='w-full flex justify-center font-lato font-bold'>
+                    {monthConverter(month)} {year}
+                  </div>
                   <div
                     onClick={() => {
-                      if (month == 0) {
-                        setMonth(11);
-                        setYear(year - 1);
+                      if (month == 11) {
+                        setMonth(0);
+                        setYear(year + 1);
                       } else {
-                        setMonth(month - 1);
+                        setMonth(month + 1);
                       }
                     }}
                     className='px-2 pointer'
-                  >{`<`}</div>
-                ) : (
-                  ''
-                )}
-                <div className='w-full flex justify-center font-lato'>
-                  {monthConverter(month)} {year}
+                  >{`>`}</div>
                 </div>
-                <div
-                  onClick={() => {
-                    if (month == 11) {
-                      setMonth(0);
-                      setYear(year + 1);
-                    } else {
-                      setMonth(month + 1);
-                    }
-                  }}
-                  className='px-2 pointer'
-                >{`>`}</div>
-              </div>
-              <div className='calendar my-4'>
-                {dates.map((i, index) => (
-                  <span
-                    className={`text-sm font-bold ${
-                      i < today ? 'disabled' : 'pointer'
-                    }`}
-                    key={index}
-                    onClick={() => {
-                      if (i < today) return;
-                      setSelected(i);
-                      setTimeSelected([]);
-                    }}
-                  >
-                    {index > 6 ? (i > 0 ? i : ' ') : i}
+                <div className='calendar my-6'>
+                  {dates.map((i, index) => (
                     <span
-                      className={
-                        i == selected || i == today
-                          ? i == selected
-                            ? 'selected'
-                            : month == date.getMonth()
-                            ? 'today'
-                            : ''
-                          : ''
-                      }
-                    />
-                  </span>
-                ))}
-              </div>
-              <div className='my-8'>
-                <div className='my-2 text-md font-bold text-secondary font-lato'>
-                  Available Time
-                </div>
-                <div className='grid my-4'>
-                  {instructor.times[selected - 1].time.map((e) => (
-                    <div
-                      onClick={() => {
-                        timeSelectedTmp = [...timeSelected];
-                        if (timeSelectedTmp[0] - e > 1) {
-                          alert('Please select consecutive time slots');
-                          return;
-                        }
-                        if (
-                          e - timeSelectedTmp[timeSelectedTmp.length - 1] >
-                          1
-                        ) {
-                          alert('Please select consecutive time slots');
-                          return;
-                        }
-                        timeSelectedTmp.includes(e)
-                          ? timeSelectedTmp.splice(
-                              timeSelectedTmp.findIndex((x) => x == e),
-                              1
-                            )
-                          : timeSelectedTmp.push(e);
-                        timeSelectedTmp.sort(function (a, b) {
-                          return +a - +b;
-                        });
-                        setTimeSelected(timeSelectedTmp);
-                        console.log(timeSelected);
-                      }}
-                      className={`pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
-                        timeSelected.includes(e) ? 'time-selected' : 'border'
+                      className={`text-sm font-bold ${
+                        i < today ? 'disabled' : 'pointer'
                       }`}
+                      key={index}
+                      onClick={() => {
+                        if (i < today) return;
+                        setSelected(i);
+                        setTimeSelected([]);
+                      }}
                     >
+                      {index > 6 ? (i > 0 ? i : ' ') : i}
+                      <span
+                        className={
+                          i == selected || i == today
+                            ? i == selected
+                              ? 'selected'
+                              : month == date.getMonth()
+                              ? 'today'
+                              : ''
+                            : ''
+                        }
+                      />
+                    </span>
+                  ))}
+                </div>
+                <div className='my-8'>
+                  <div className='my-2 text-md font-bold text-secondary font-lato'>
+                    Available Time
+                  </div>
+                  <div className='grid my-4'>
+                    {instructor.times[selected - 1].time.map((e) => (
+                      <div
+                        onClick={() => {
+                          timeSelectedTmp = [...timeSelected];
+                          if (timeSelectedTmp[0] - e > 1) {
+                            alert('Please select consecutive time slots');
+                            return;
+                          }
+                          if (
+                            e - timeSelectedTmp[timeSelectedTmp.length - 1] >
+                            1
+                          ) {
+                            alert('Please select consecutive time slots');
+                            return;
+                          }
+                          timeSelectedTmp.includes(e)
+                            ? timeSelectedTmp.splice(
+                                timeSelectedTmp.findIndex((x) => x == e),
+                                1
+                              )
+                            : timeSelectedTmp.push(e);
+                          timeSelectedTmp.sort(function (a, b) {
+                            return +a - +b;
+                          });
+                          setTimeSelected(timeSelectedTmp);
+                        }}
+                        className={`pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
+                          timeSelected.includes(e) ? 'time-selected' : 'border'
+                        }`}
+                      >
+                        {timeFormatter(e)} - {timeFormatter(e + 1)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{ width: 40 + '%', height: 100 + '%' }}
+                className={`px-8 py-8 mx-4 shadow rounded-md bg-white-faded`}
+              >
+                <div className='text-lg font-bold font-lato spacing-md'>
+                  BOOK AND PAY
+                </div>
+                <div className='text-md font-bold font-lato my-4 spacing-sm'>
+                  Your Enrollment
+                </div>
+                <div className='px-2 my-4'>
+                  <div className='text-sm font-bold font-lato my-2 spacing-sm'>
+                    Date
+                  </div>
+                  <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                    {selected} {monthConverter(month)} {year}
+                  </div>
+                </div>
+                <div className='px-2 my-4'>
+                  <div className='text-sm font-bold font-lato my-2 spacing-sm'>
+                    Time
+                  </div>
+                  {timeSelected.map((e) => (
+                    <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
                       {timeFormatter(e)} - {timeFormatter(e + 1)}
                     </div>
                   ))}
+                </div>
+                <div className='px-2 my-4'>
+                  <div className='text-sm font-bold font-lato my-2 spacing-sm'>
+                    Cost
+                  </div>
+                  <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                    {timeSelected.length * instructor.price} THB
+                  </div>
+                </div>
+                <div
+                  className={`font-lato font-bold text-md border rounded-md py-2 mx-8 flex justify-center pointer`}
+                  onClick={() => {
+                    // POST  /tutor/student/appointment
+                    console.log(instructor.id);
+                    console.log(timeSelected);
+                    console.log(selected, month + 1, year);
+                    console.log(timeSelected.length * instructor.price);
+                  }}
+                >
+                  Book!
                 </div>
               </div>
             </div>
@@ -245,7 +295,7 @@ export async function getStaticProps({ params }) {
     id,
     name: 'Thanawat Benjachatriroj',
     info: 'Frontend Developer',
-    lorem:
+    text:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac sit suspendisse viverra mattis varius eget sagittis. Lacus aenean dictum suspendisse consequat. Dignissim orci libero malesuada est. Porta id eu quam duis ornare lobortis ridiculus.',
     rating: 4.5,
     ratingCount: 2000,
