@@ -314,6 +314,18 @@ export default css`
     z-index: -1;
     transform: translate(-50%, -50%);
   }
+  .today {
+    background-color: #fca92c;
+    opacity: 0.6;
+    border-radius: 50%;
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+  }
 
   /* border */
   .border {
