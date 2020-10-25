@@ -3,6 +3,8 @@ import utils from '../../../styles/tutor/utils';
 import Header from '../../../components/tutor/main-header';
 import GeneralNoNav from '../../../components/template/generalnonav';
 
+import Link from 'next/link';
+
 const Appointment = ({ appointments, approved, rejected, pending }) => {
   const [hoverIns, setHoverIns] = useState(-1);
   const [hoverReview, setHoverReview] = useState(-1);
@@ -78,21 +80,23 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
                         {e.startTime} - {e.endTime}
                       </div>
                       {e.isAgree == 'Approved' ? (
-                        <div
-                          className={`text-sm px-3 py-1 border rounded-md opacity-50 pointer animation ${
-                            hoverReview == index
-                              ? 'bg-secondary text-white'
-                              : ''
-                          }`}
-                          onPointerEnter={() => {
-                            setHoverReview(index);
-                          }}
-                          onPointerLeave={() => {
-                            setHoverReview(-1);
-                          }}
-                        >
-                          Leave Review
-                        </div>
+                        <Link href={`/tutor/appointment/${e.id}`}>
+                          <div
+                            className={`text-sm px-3 py-1 border rounded-md opacity-50 pointer animation ${
+                              hoverReview == index
+                                ? 'bg-secondary text-white'
+                                : ''
+                            }`}
+                            onPointerEnter={() => {
+                              setHoverReview(index);
+                            }}
+                            onPointerLeave={() => {
+                              setHoverReview(-1);
+                            }}
+                          >
+                            Leave Review
+                          </div>
+                        </Link>
                       ) : (
                         ''
                       )}
