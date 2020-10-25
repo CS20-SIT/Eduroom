@@ -295,7 +295,7 @@ export default css`
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px 5px;
+    gap: 15px 20px;
   }
   .calendar > * {
     color: #535353;
