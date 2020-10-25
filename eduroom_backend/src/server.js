@@ -8,7 +8,7 @@ const ConfigRoute = require("./routes/configRoute");
 const passport = require("passport");
 const passportConfig = require("./config/passport");
 
-const { test, getAnn, postAnn } = require("./controllers/test");
+const { test, getAnn, postAnn } = require("./controllers/graderCreate/test");
 
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({ path: `${__dirname}/config/config.env` });
@@ -42,7 +42,6 @@ app.use("/api", ConfigRoute);
 app.use(errorHandler);
 
 app.get("/api/08", test);
-
 app.get("/api/08/ann", getAnn);
 app.post("/api/08/cann", postAnn);
 
