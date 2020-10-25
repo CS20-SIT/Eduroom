@@ -227,11 +227,17 @@ const Temp = ({ instructor }) => {
                   <div className='text-sm font-bold font-lato my-2 spacing-sm'>
                     Time
                   </div>
-                  {timeSelected.map((e) => (
+                  {timeSelected.length == 0 ? (
                     <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                      {timeFormatter(e)} - {timeFormatter(e + 1)}
+                      Please select appointment times
                     </div>
-                  ))}
+                  ) : (
+                    timeSelected.map((e) => (
+                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                        {timeFormatter(e)} - {timeFormatter(e + 1)}
+                      </div>
+                    ))
+                  )}
                 </div>
                 <div className='px-2 my-4'>
                   <div className='text-sm font-bold font-lato my-2 spacing-sm'>
