@@ -1,5 +1,5 @@
-import React,{Fragment} from 'react'
+import React, { Fragment } from "react"
 const Temp = () => {
-    return <Fragment></Fragment>
+  return <Fragment>Ranking!</Fragment>
 }
 export default Temp
