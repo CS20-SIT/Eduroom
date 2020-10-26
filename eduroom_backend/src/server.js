@@ -11,20 +11,21 @@ const AnalysisRoute = require('./routes/analysisRoute')
 
 const passportConfig = require('./config/passport')
 
+const { test, getAnn, postAnn } = require('./controllers/graderCreate/test')
+
 if (process.env.NODE_ENV !== 'production') {
-  dotenv.config({ path: `${__dirname}/config/config.env` });
+  dotenv.config({ path: `${__dirname}/config/config.env` })
 }
 
+const app = express()
 
-const app = express();
+app.use(express.json())
 
-app.use(express.json());
+app.use(cookieParser())
 
-app.use(cookieParser());
-
-let originURL = 'http://localhost:3000';
+let originURL = 'http://localhost:3000'
 if (process.env.NODE_ENV === 'production') {
-  originURL = process.env.CLIENT_URL;
+  originURL = process.env.CLIENT_URL
 }
 
 app.use(
@@ -32,16 +33,20 @@ app.use(
     credentials: true,
     origin: originURL,
   })
-);
+)
 
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+  app.use(morgan('dev'))
 }
 passportConfig(passport)
-app.use(passport.initialize());
+app.use(passport.initialize())
 
-app.use('/api',ConfigRoute)
-app.use(AnalysisRoute)
-app.use(errorHandler);
+app.use('/api', ConfigRoute)
+app.use(errorHandler)
+
+app.get('/api/08', test)
+app.get('/api/08/ann', getAnn)
+app.post('/api/08/cann', postAnn)
+
 
 module.exports = app
