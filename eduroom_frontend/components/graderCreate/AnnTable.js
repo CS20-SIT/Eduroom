@@ -29,7 +29,7 @@ const AnnTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios("http://localhost:3000/api/08/ann");
+      const result = await axios("http://localhost:3000/api/grader/ann");
       setData(result.data);
     };
     GetData();
