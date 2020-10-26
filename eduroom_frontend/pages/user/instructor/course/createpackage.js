@@ -14,8 +14,8 @@ const CreatePackage = () => {
                     <div><input type="text" placeholder="Package Name" id="name" name="name"></input></div>
                     <div style={{ width: '50%' }}><input type="text" placeholder="Package Price" id="price" name="price"></input></div>
                     <div style={{ width: '50%' }}>
-                        <select name="categories">
-                            <option value="default" disabled selected >Categories</option>
+                        <select name="categories" defaultValue="default">
+                            <option value="default" disabled >Categories</option>
                             <option value="business">Business</option>
                             <option value="development">Development</option>
                             <option value="software">IT+Software</option>
