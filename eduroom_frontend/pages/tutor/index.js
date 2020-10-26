@@ -46,7 +46,7 @@ const Tutor = ({ instructors }) => {
                           {e.name}
                         </div>
                         <div className='mx-2 flex items-center text-yellow'>
-                          <i class='fas fa-star'></i>
+                          <i className='fas fa-star'></i>
                           <div className='text-sm mx-1 text-yellow'>
                             {e.rating}
                           </div>
