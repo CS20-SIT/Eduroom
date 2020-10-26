@@ -1,11 +1,14 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const morgan = require('morgan')
-const errorHandler = require('./middleware/error')
-const cookieParser = require('cookie-parser')
-const cors = require('cors')
-const ConfigRoute = require('./routes/configRoute')
+const express = require('express');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
+const errorHandler = require('./middleware/error');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const passport = require('passport')
+
+const ConfigRoute = require('./routes/configRoute')
+const AnalysisRoute = require('./routes/analysisRoute')
+
 const passportConfig = require('./config/passport')
 
 const { test, getAnn, postAnn } = require('./controllers/graderCreate/test')
