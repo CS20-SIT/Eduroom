@@ -9,6 +9,7 @@ const passport = require("passport");
 const passportConfig = require("./config/passport");
 
 const { test, getAnn, postAnn } = require("./controllers/graderCreate/test");
+const { getcontestAnn, postcontestAnn } = require("./controllers/graderCreate/contestAnn");
 
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({ path: `${__dirname}/config/config.env` });
@@ -44,5 +45,8 @@ app.use(errorHandler);
 app.get("/api/08", test);
 app.get("/api/08/ann", getAnn);
 app.post("/api/08/cann", postAnn);
+app.get("/api/08/conann", getcontestAnn);
+app.post("/api/08/cconann", postcontestAnn);
+
 
 module.exports = app;
