@@ -3,3 +3,4 @@
 /register
 /edqiz
 /edqiz/create
+/support
