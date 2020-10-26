@@ -6,11 +6,13 @@ const AuthRoute = require('./authRoute')
 const SupportRoute = require('./supportRoute')
 const ForumRoute = require('./forumRoute')
 const AnalysisRoute = require('./analysisRoute')
+const GraderRoute = require('./graderRoute')
 
-router.use('/test',TestRoute)
-router.use('/auth',AuthRoute)
+router.use('/test', TestRoute)
+router.use('/auth', AuthRoute)
 router.use('/support', SupportRoute)
-router.use('/forum',ForumRoute)
+router.use('/forum', ForumRoute)
 router.use('/analysis', AnalysisRoute)
+router.use('/grader', GraderRoute)
 
 module.exports = router
