@@ -3,8 +3,8 @@ export default css`
   .container {
     max-width: 1024px;
     min-height: 100vh;
-    margin: 4rem auto;
-    padding: 0 4rem;
+    margin: 0 auto;
+    padding: 4rem;
   }
   /* Font Family */
   *,
@@ -31,10 +31,10 @@ export default css`
 
   /* Font Weight */
   .font-bold {
-    font-weight: 400;
+    font-weight: 700;
   }
   .font-normal {
-    font-weight: 300;
+    font-weight: 400;
   }
 
   /* Text Color */
@@ -87,6 +87,16 @@ export default css`
   }
   .bg-white {
     background-color: #ffffff;
+  }
+  .bg-white-faded {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+  .bg-tutor {
+    width: 100vw;
+    min-height: 100vh;
+    background-image: url('/images/tutor/tutorBG.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   /* Text Style */
@@ -277,12 +287,15 @@ export default css`
   .pointer {
     cursor: pointer;
   }
+  .disabled {
+    cursor: not-allowed;
+  }
 
   /* My Calendar */
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
+    gap: 15px 20px;
   }
   .calendar > * {
     color: #535353;
@@ -290,14 +303,25 @@ export default css`
     justify-content: center;
     align-items: center;
     position: relative;
-    cursor: pointer;
   }
   .selected {
     background-color: #fb9ccb;
     opacity: 0.6;
     border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+  }
+  .today {
+    background-color: #fca92c;
+    opacity: 0.6;
+    border-radius: 50%;
+    width: 1.2rem;
+    height: 1.2rem;
     position: absolute;
     left: 50%;
     top: 50%;

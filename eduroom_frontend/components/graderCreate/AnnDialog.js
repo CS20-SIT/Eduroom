@@ -46,7 +46,7 @@ const AnnDialog = (props) => {
 
   const handleSubmit = () => {
     axios
-      .post("http://localhost:3000/api/08/cann", {
+      .post("http://localhost:3000/api/grader/cann", {
         title: ann.title,
         description: ann.description,
         adminid: ann.adminid,
