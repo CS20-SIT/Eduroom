@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react'
-import GeneralTemplate from '../components/template/general'
+import GeneralTemplate from '../../components/template/generalnonav'; 
+import CalendarCom from '../../components/calendar/calendar'
 const Calendar = () => {
   return (
     <Fragment>
       <GeneralTemplate>
-        <h1>Hello Calendar</h1>
+        <CalendarCom />
       </GeneralTemplate>
     </Fragment>
   )
-}
-export default Calendar
+};
+export default Calendar;
