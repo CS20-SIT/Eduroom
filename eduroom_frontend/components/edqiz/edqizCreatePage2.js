@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from 'react'
-import EdquizPagination from './edqiz-create-pagination'
-import style from '../../styles/edqiz/createPage'
-import QuestionCard from './questionCard'
-import QuestionPreview from './questionPreview'
+import React, { Fragment, useState } from "react";
+import EdquizPagination from "./edqiz-create-pagination";
+import style from "../../styles/edqiz/createPage";
+import QuestionCard from "./questionCard";
+import Input from "../../pages/edqiz/input";
 const Page2 = ({
   name,
   goto,
@@ -11,8 +11,9 @@ const Page2 = ({
   remove,
   change,
   changeName,
+  val,
+  // checkNull
 }) => {
-  const [step, setStep] = useState(1)
   const renderQuestion = () => {
     return questionList.map((el, index) => {
       return (
@@ -24,23 +25,63 @@ const Page2 = ({
           remove={remove}
           change={change}
         />
-      )
-    })
-  }
-  const renderPreview = () => {
-    return questionList.map((el, index) => {
+      );
+    });
+  };
+
+  const [check, setCheck] = useState(false);
+  let i = 0;
+  const checkNull = () => {
+    for (i = 0; i < questionList.length; i++) {
+      if (questionList[i].question == "" && questionList[i].time == "" && questionList[i].point == "" &&
+      questionList[i].ans[0] == "" && questionList[i].ans[1] == "" && questionList[i].ans[2] == ""&& questionList[i].ans[3] == "") {
+        setCheck(false);
+       
+
+        break
+      } else if (questionList[i].question != "" && questionList[i].time != "" && questionList[i].point != "" &&
+      questionList[i].ans[0] != "" && questionList[i].ans[1] != "" && questionList[i].ans[2] != "" && questionList[i].ans[3] != "") {
+        console.log(questionList[i].ans[0])
+        setCheck(true);
+      }
+    }
+  };
+  
+
+  const [className, setClassName] = useState(name);
+  const [edited, setEdited] = useState(false);
+  const myClick = () => {
+    setEdited(true);
+  };
+
+  const renderText = () => {
+    if (edited == true) {
       return (
-        <QuestionPreview
-          key={index}
-          data={el}
-          index={index}
-        />
-      )
-    })
-  }
-  const handleChangeName = () => {
-    changeName('TEST22')
-  }
+        <div>
+          <Input name={className} changeName={(e) => setClassName(e)}></Input>
+          <i
+            className="fas fa-save"
+            style={{ marginLeft: "20px" }}
+            onClick={() => {
+              setEdited(false);
+              changeName(className);
+            }}
+          ></i>
+        </div>
+      );
+    } else {
+      return (
+        <Fragment>
+          {className}
+          <i
+            className="fas fa-pen"
+            style={{ marginLeft: "20px", marginTop: "5px" }}
+            onClick={myClick}
+          ></i>
+        </Fragment>
+      );
+    }
+  };
 
   return (
     <Fragment>
@@ -51,72 +92,52 @@ const Page2 = ({
       </div>
       <div className="col-12">
         <div className="row row-content">
-          {step == 1 ? (
-            <Fragment>
+          <Fragment>
             <div className="col-12">
-              <p className="landing-header">
-                {name} <i className="fas fa-pen" onClick={handleChangeName}></i>
-              </p>
+              <div className="landing-header">
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {renderText()}
+                </div>
+              </div>
             </div>
-              <div className="col-12">{renderQuestion()}</div>
-              <div className="col-12">
+            <div className="col-12">{renderQuestion()}</div>
+            <div className="col-12">
               <button
                 className="prevConButton"
                 onClick={() => {
-                  goto(1)
+                  goto(1);
                 }}
               >
                 Previous
               </button>
               <button
+                onMouseMove={() => {
+                  if (check == true) {
+                    console.log("check=" + check);
+                    i = 0;
+                  } else if (check == false) {
+                    checkNull();
+                    i = 0;
+                  }
+                }}
                 className="prevConButton"
                 onClick={() => {
-                  setStep(2)
+                  if(check==true){
+                  goto(3);}
+                  else{
+                    alert("Please complete the question, fill in a detailed question.");
+                  }
                 }}
               >
                 Continue
+           
               </button>
-              </div>
-            </Fragment>
-          ) : (
-            <Fragment>
-          <div className="col-12">
-            <p className="landing-header">
-              PREVIEW
-            </p>
-          </div>
-          <div className="col-12">
-            <p className="landing-header">
-              {name} <i className="fas fa-pen" onClick={handleChangeName}></i>
-            </p>
-          </div>
-          <div className="col-12" style={{padding:'0% 20%'}}>
-            {renderPreview()}
-          </div>
-              <div className="col-12">
-              <button
-                className="prevConButton"
-                onClick={() => {
-                  setStep(1)
-                }}
-              >
-                Previous
-              </button>
-              <button
-                className="prevConButton"
-                onClick={() => {
-                  goto(3)
-                }}
-              >
-                Continue
-              </button>
-              </div>
-            </Fragment>
-          )}
+            </div>
+          </Fragment>
         </div>
       </div>
       <style jsx>{style}</style>
     </Fragment>
-  )
-}
-export default Page2
+  );
+};
+export default Page2;
