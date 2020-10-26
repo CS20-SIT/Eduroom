@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import React, { Fragment, useState, useEffect, useContext } from 'react'
 import { Container, Button, TextField } from '@material-ui/core'
+import api from '../../api'
 
 const Support = () => {
   const [supportForm, setForm] = useState({
@@ -9,6 +10,9 @@ const Support = () => {
     email: '',
     title: '',
     content: '',
+    priority: '',
+    subCat: '',
+    cat: '',
   })
   const [alert, setAlert] = useState({
     name: false,
@@ -16,6 +20,9 @@ const Support = () => {
     email: false,
     title: false,
     content: false,
+    priority: false,
+    cat: false,
+    subCat: false,
   })
   const handleChange = (e) => {
     e.preventDefault()
@@ -48,6 +55,7 @@ const Support = () => {
     Purchases: [
       'Fraudulent / Unauthorized charges',
       'Course Purchase',
+        'Sticker Purchase',
       'Discount Code',
     ],
     'etc.': ['Other Problem'],
@@ -55,25 +63,31 @@ const Support = () => {
   const [subCat, setSubCat] = useState([])
   const handleSelect = (e) => {
     setSubCat(subCategory[e.target.value] ?? [])
+    setForm({ ...supportForm, [e.target.name]: e.target.value })
   }
   const handleSubmit = (e) => {
     if (validator()) {
-      console.log(supportForm)
-    } else {
-      console.log('This form is not valid')
-    }
+      api.post('/api/support',{name:supportForm.name,username:supportForm.username,email:supportForm.email,title:supportForm.title,content:supportForm.content,priority:supportForm.priority,cat:supportForm.cat,subCat:supportForm.subCat}).then(
+        res=>{
+          console.log(res.data)
+        }
+      )
   }
+}
   const validator = () => {
     let keys = Object.keys(supportForm);
     let temp = {...alert}
+    let check = true
     for(let key of keys){
         if(supportForm[key] == ''){
             temp[key] = true
+          check = false
         } else {
             temp[key] = false
         }
     }
     setAlert(temp)
+    return check
   }
   return (
     <Fragment>
@@ -146,10 +160,15 @@ const Support = () => {
                     return <option value={el} key={el}>{el}</option>
                   })}
                 </select>
+                {alert.cat ? (
+                    <span style={{ color: 'red', fontSize: '0.8em' }}>
+                  category is required
+                </span>
+                ) : null}
               </div>
               <div>
                 <label>Sub Category</label>
-                <select name={'subCat'} defaultValue="default">
+                <select name={'subCat'} defaultValue="default" onChange={handleChange}>
                   <option disabled value="default">
                     --None--
                   </option>
@@ -157,6 +176,11 @@ const Support = () => {
                     return <option value={el} key={el}>{el}</option>
                   })}
                 </select>
+                {alert.subCat ? (
+                    <span style={{ color: 'red', fontSize: '0.8em' }}>
+                  sub category is required
+                </span>
+                ) : null}
               </div>
               <div>
                 <label>Title</label>
@@ -192,7 +216,7 @@ const Support = () => {
               </div>
               <div>
                 <label>Priority</label>
-                <select name={'priority'} defaultValue="default">
+                <select name={'priority'} defaultValue="default" onChange={handleChange}>
                   <option disabled value="default">
                     --None--
                   </option>
@@ -200,6 +224,11 @@ const Support = () => {
                     return <option value={el} key={el}>{el}</option>
                   })}
                 </select>
+                {alert.priority ? (
+                    <span style={{ color: 'red', fontSize: '0.8em' }}>
+                  priority is required
+                </span>
+                ) : null}
               </div>
             <div>
               <Button
@@ -216,5 +245,4 @@ const Support = () => {
     </Fragment>
   )
 }
-
 export default Support
