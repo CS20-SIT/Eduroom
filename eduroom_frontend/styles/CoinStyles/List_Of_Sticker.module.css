@@ -4,3 +4,13 @@
     grid-gap: 30px;
     width: 100vw;
 }
+.slide{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    
+
+}
+.text{
+    margin: 20px;
+}

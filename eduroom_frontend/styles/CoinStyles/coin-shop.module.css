@@ -7,3 +7,31 @@
     display:flex;
     align-items:space-between;
 }
+.animation{
+    animation-name:MoveOut;
+    animation-duration: 0.5s;
+}
+.animation2{
+    animation-name:MoveIn;
+    animation-duration: 1s;
+}
+@keyframes MoveOut{
+    25%{
+        opacity: 1;
+        transform: translate(0);
+    }
+    100%{
+        opacity: 0;
+        transform: translateY(-500px);
+    }
+}
+@keyframes MoveIn {
+    0% {
+        opacity: 0;
+        transform: translateY(1000px);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
