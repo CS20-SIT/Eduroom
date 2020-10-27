@@ -9,34 +9,26 @@ const Navbar = () => {
     <Fragment>
       <AppBar
         position="sticky"
-        style={{ background: '#FFFFFFAA' }}
+        style={{ background: '#F4F5F7AA' }}
         elevation={0}
       >
         <Toolbar>
           <div className="navStyle">
-            <span className="navHeader">eduroom</span>
-            <div className="navItemLayout">
+              
               <div className="navItem">
-                <Link href="/exam">Exam</Link>
+                <i className="fas fa-shopping-cart" />
               </div>
               <div className="navItem">
-                <Link href="/course">Course</Link>
-              </div>
-              <div className="navItem">
-                <Link href="/forum">Forum</Link>
-              </div>
-              <div className="navItem">
-                <Link href="/">Home</Link>
+                <Link href="/login">Login</Link>
               </div>
               <div className="navAction">
                 <button
                   className="navLogin"
-                  onClick={() => router.push('/login')}
+                  onClick={() => router.push('/register')}
                 >
-                  <a className="navLoginText">Login</a>
+                  <a className="navLoginText">Sign In</a>
                 </button>
               </div>
-            </div>
           </div>
         </Toolbar>
       </AppBar>

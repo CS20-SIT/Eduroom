@@ -1,7 +1,7 @@
 import css from 'styled-jsx/css';
 export default css`
   .login {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     padding: 2% 5% 0% 5%;
