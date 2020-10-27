@@ -81,6 +81,7 @@ const SideNav = () => {
           {items.map((el) => {
             return (
               <Item
+                key={el.text}
                 data={el}
                 isExpand={expand}
                 expand={handleExpand}
