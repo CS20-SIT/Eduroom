@@ -1,16 +1,13 @@
 import css from "styled-jsx/css";
 export default css`
-  .test {
-    color: blue;
-  }
   .grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    background-color: #2196f3;
+    background-color: #6ba292;
     padding: 10px;
   }
   .gridItem {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #e4fde1;
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 20px;
   font-size: 30px;
@@ -18,7 +15,7 @@ export default css`
   }
 
   .currentDate {
-  background-color: yellow;
+  background-color: #ffdc7c;
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 20px;
   font-size: 30px;
