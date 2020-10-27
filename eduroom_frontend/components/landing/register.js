@@ -72,7 +72,7 @@ const Register = () => {
             </form>
           </div>
         </div>
-        <div style={{width:'50%'}}>
+        <div style={{width:'50%',zIndex:'50'}}>
           <div style={{ width: '100%' }}>
             <div style={{ paddingLeft: '5%' }}>
               <div>
@@ -82,6 +82,7 @@ const Register = () => {
                 </span>
               </div>
             </div>
+            <img style={{paddingTop:'10%'}} alt="register-img" src="/images/register_img.svg"/>
           </div>
         </div>
       </div>

@@ -37,7 +37,6 @@ const General = (props) => {
             position: absolute;
             bottom: 0;
             width: 100vw;
-            z-index: -50;
           }
         `}
       </style>
