@@ -28,6 +28,7 @@ export default css`
     position: absolute;
     right: 8%;
     top: 15%;
+    z-index:50;
   }
   .register-link {
     font-size: 1em;
