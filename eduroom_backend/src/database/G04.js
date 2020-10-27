@@ -1,5 +1,6 @@
 const pool = require('../database/db');
-const createUUIDExtensionQuery = `
+
+const financialTransaction = `
 
 CREATE TABLE IF NOT EXISTS Financial_Transaction
 (
@@ -8,6 +9,10 @@ CREATE TABLE IF NOT EXISTS Financial_Transaction
  description   varchar(100) NOT NULL,
  CONSTRAINT PK_financial PRIMARY KEY ( transactionId )
 );
+
+`;
+
+const transcationUser = `
 
 CREATE TABLE IF NOT EXISTS Transaction_user
 (
@@ -28,24 +33,9 @@ CREATE INDEX fkIdx_3799 ON Transaction_user
  userId
 );
 
-CREATE TABLE IF NOT EXISTS Transaction_instructor
-(
- transactionId uuid NOT NULL,
- InstructorId  uuid NOT NULL,
- CONSTRAINT PK_transaction_instructor PRIMARY KEY ( transactionId ),
- CONSTRAINT FK_3784 FOREIGN KEY ( transactionId ) REFERENCES Financial_Transaction ( transactionId ),
- CONSTRAINT FK_3796 FOREIGN KEY ( InstructorId ) REFERENCES Instructor ( InstructorId )
-);
+`;
 
-CREATE INDEX fkIdx_3784 ON Transaction_instructor
-(
- transactionId
-);
-
-CREATE INDEX fkIdx_3796 ON Transaction_instructor
-(
- InstructorId
-);
+const transcationAd = `
 
 CREATE TABLE IF NOT EXISTS Transaction_ad
 (
@@ -68,17 +58,99 @@ CREATE INDEX fkIdx_3793 ON Transaction_ad
 
 `;
 
-const createUUIDExtension = async (req, res, next) => {
+const transcationInstructor = `
+
+CREATE TABLE IF NOT EXISTS Transaction_instructor
+(
+ transactionId uuid NOT NULL,
+ InstructorId  uuid NOT NULL,
+ CONSTRAINT PK_transaction_instructor PRIMARY KEY ( transactionId ),
+ CONSTRAINT FK_3784 FOREIGN KEY ( transactionId ) REFERENCES Financial_Transaction ( transactionId ),
+ CONSTRAINT FK_3796 FOREIGN KEY ( InstructorId ) REFERENCES Instructor ( InstructorId )
+);
+
+CREATE INDEX fkIdx_3784 ON Transaction_instructor
+(
+ transactionId
+);
+
+CREATE INDEX fkIdx_3796 ON Transaction_instructor
+(
+ InstructorId
+);
+
+`;
+
+exports.createG04Table = async (req, res) => {
+  try{
+    await createTable_FinancialTransaction
+    await createTable_TransactionUser
+    await createTable_TransactionInsructor
+    await createTable_TransactionAd
+    console.log('Create G04 Table Successfully');
+  } catch (err) {
+    console.error(err.stack.red);
+  }
+
+}
+
+const createTable_FinancialTransaction = async (req, res, next) => {
     try {
-      const job = await pool.query(createUUIDExtensionQuery);
-      console.log('Create UUID Extension Successfully');
+      const job = await pool.query(financialTransaction);
+      console.log('Create Financial_Transaction Successfully');
     } catch (err) {
       console.error(err.stack.red);
     }
 };
 if (process.argv[2] === '-i') {
     (async () => {
-        createUUIDExtension(); 
-        process.exit();
+      createTable_FinancialTransaction(); 
+      process.exit();
     })();
+} 
+
+const createTable_TransactionUser = async (req, res, next) => {
+  try {
+    const job = await pool.query(transcationUser);
+    console.log('Create Financial_user Successfully');
+  } catch (err) {
+    console.error(err.stack.red);
+  }
+};
+if (process.argv[2] === '-i') {
+  (async () => {
+    createTable_TransactionUser(); 
+    process.exit();
+  })();
+} 
+
+const createTable_TransactionInsructor = async (req, res, next) => {
+  try {
+    const job = await pool.query(transcationInstructor);
+    console.log('Create Transaction_instructor Successfully');
+  } catch (err) {
+    console.error(err.stack.red);
+  }
+};
+if (process.argv[2] === '-i') {
+  (async () => {
+    createTable_TransactionInsructor(); 
+    process.exit();
+  })();
+} 
+
+const createTable_TransactionAd = async (req, res, next) => {
+  try {
+    const job = await pool.query(transcationAd);
+    console.log('Create Transaction_ad Successfully');
+  } catch (err) {
+    console.error(err.stack.red);
+  }
+};
+if (process.argv[2] === '-i') {
+  (async () => {
+    createTable_TransactionAd(); 
+    process.exit();
+  })();
+
 } 
