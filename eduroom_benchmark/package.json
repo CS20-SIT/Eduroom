@@ -1,0 +1,16 @@
+{
+  "name": "eduroom_benchmark",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "lighthouse": "^6.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js > report.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "GGolfz",
+  "license": "ISC"
+}
