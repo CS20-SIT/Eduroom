@@ -37,6 +37,7 @@ export default css`
     display: flex;
     flex-flow: column;
     padding-top: 1%;
+    z-index:1000;
   }
   .side-icon.expand {
     width: 72px;
