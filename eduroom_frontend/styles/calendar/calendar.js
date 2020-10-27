@@ -16,4 +16,12 @@ export default css`
   font-size: 30px;
   text-align: center;
   }
+
+  .currentDate {
+  background-color: yellow;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  }
 `;

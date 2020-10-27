@@ -23,13 +23,14 @@ const Content = () => {
         blank.push("");
     }
 
-
     let daysInMonth = [];
-    for(let d = 1; d<= moment(day.dateObject).daysInMonth(); d++){
+    for(let d = 1; d<= day.dateObject.daysInMonth(); d++){
         daysInMonth.push(d);
     }
 
-    console.log(firstDayOfMonth());
+    const currentDay = ()=>{
+        return day.dateObject.format("D");
+    }
 
     return (
         <Fragment>
@@ -37,13 +38,13 @@ const Content = () => {
 
                 <div className="grid">
                     {days.map((day) => {
-                        return <Cell Content={day} />
+                        return <Cell currentDate={currentDay} Content={day} />
                     })}
                     {blank.map((day) => {
-                        return <Cell Content={day} />
+                        return <Cell currentDate={currentDay} Content={day} />
                     })}
                     {daysInMonth.map((day) => {
-                        return <Cell Content={day} />
+                        return <Cell currentDate={currentDay} Content={day} />
                     })}
                 </div>
 
