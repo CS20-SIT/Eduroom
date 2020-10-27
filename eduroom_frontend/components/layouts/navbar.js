@@ -9,7 +9,7 @@ const Navbar = () => {
     <Fragment>
       <AppBar
         position="sticky"
-        style={{ background: '#FFFFFFAA' }}
+        style={{ background: '#F4F5F7AA' }}
         elevation={0}
       >
         <Toolbar>
