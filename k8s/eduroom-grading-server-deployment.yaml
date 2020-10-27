@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eduroom-grading-server-deployment
+spec:
+  selector:
+    matchLabels:
+      app: eduroom-grading-server-deployment
+  template:
+    metadata:
+      labels:
+        app: eduroom-grading-server-deployment
+    spec:
+      containers:
+      - name: eduroom-grading-server-deployment
+        image: asia.gcr.io/macbigduck/eduroom-grading-server
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 3050
+        env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: NODE_ENV
+            - name: CLIENT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: CLIENT_URL
+                  optional: false
