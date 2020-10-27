@@ -7,7 +7,11 @@ import moment from 'moment';
 const Content = () => {
     //   const router = useRouter();
     const days = moment.weekdaysShort();
-    const [day] = useState({dateObject: moment()})
+    const [day] = useState({
+        dateObject: moment()
+    })
+
+    console.log(moment.months());
 
 
     const firstDayOfMonth = ()=>{
@@ -28,23 +32,26 @@ const Content = () => {
         daysInMonth.push(d);
     }
 
-    const currentDay = ()=>{
+    const currentDate = ()=>{
         return day.dateObject.format("D");
     }
+
+    const currentMonth = day.dateObject.format("MMMM")
 
     return (
         <Fragment>
             <div>
-
+                <h1>{currentMonth}</h1>
                 <div className="grid">
+
                     {days.map((day) => {
-                        return <Cell currentDate={currentDay} Content={day} />
+                        return <Cell currentDate={currentDate} Content={day} />
                     })}
                     {blank.map((day) => {
-                        return <Cell currentDate={currentDay} Content={day} />
+                        return <Cell currentDate={currentDate} Content={day} />
                     })}
                     {daysInMonth.map((day) => {
-                        return <Cell currentDate={currentDay} Content={day} />
+                        return <Cell currentDate={currentDate} Content={day} />
                     })}
                 </div>
 
