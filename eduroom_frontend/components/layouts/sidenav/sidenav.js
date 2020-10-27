@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import Item from './item'
 import Link from 'next/link'
+import style from '../../../styles/layout/sidebar'
 const SideNav = () => {
   const items = [
     {
@@ -62,20 +63,20 @@ const SideNav = () => {
   ]
   const [expand, setExpand] = useState(false)
   const handleExpand = () => {
-    document.getElementById('side-nav').style.width = "16%";
+    document.getElementById('side-nav').style.width = '16%'
     setExpand(true)
   }
   const handleReduce = () => {
-    document.getElementById('side-nav').style.width = "5%";
+    document.getElementById('side-nav').style.width = '5%'
     setExpand(false)
   }
   return (
     <Fragment>
       <div id="side-nav">
         <Link href="/">
-        <div className={expand?"side-icon expand":"side-icon"}>
-          <img src="/images/sidenav/eduroom_logo.svg" />
-        </div>
+          <div className={expand ? 'side-icon expand' : 'side-icon'}>
+            <img src="/images/sidenav/eduroom_logo.svg" />
+          </div>
         </Link>
         <div className="side-nav-list" onMouseLeave={handleReduce}>
           {items.map((el) => {
@@ -91,33 +92,7 @@ const SideNav = () => {
           })}
         </div>
       </div>
-      <style jsx>
-        {`
-          #side-nav {
-            width: 5%;
-            background: white;
-            display:flex;
-            flex-flow:column;
-            padding-top: 1%;
-          }
-          .side-icon.expand {
-            width: 72px;
-          }
-          .side-icon {
-            width: 72px;
-            justify-content: center;
-            align-items: center;
-            display: flex;
-            cursor: pointer;
-          }
-          .side-nav-list {
-            display: flex;
-            flex-flow: column;
-            height: 100%;
-            justify-content: space-evenly;
-          }
-        `}
-      </style>
+      <style jsx>{style}</style>
     </Fragment>
   )
 }
