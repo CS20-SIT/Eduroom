@@ -4,7 +4,7 @@ import RegisterContent from '../components/landing/register'
 const Register = () => {
   return (
     <Fragment>
-      <GeneralTemplate>
+      <GeneralTemplate img={'/images/campaign_img.svg'}>
           <RegisterContent />
       </GeneralTemplate>      
     </Fragment>
