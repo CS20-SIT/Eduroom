@@ -7,11 +7,27 @@ import moment from 'moment';
 const Content = () => {
     //   const router = useRouter();
     const days = moment.weekdaysShort();
-    const [day] = useState({
+    const [day, setDay] = useState({
         dateObject: moment()
     })
 
-    console.log(moment.months());
+    // const monthsList = moment.months();
+    // const monthNo = day.dateObject.month();
+
+    const addMonth = ()=>{
+        // const dateObject = moment(day.dateObject).set("month", monthNo);
+        const dateObject = day.dateObject.add(1,"M")
+        setDay(
+            {...day, dateObject: dateObject}
+        )
+    }
+    const minusMonth = ()=>{
+        // const dateObject = moment(day.dateObject).set("month", monthNo);
+        const dateObject = day.dateObject.add(-1,"M")
+        setDay(
+            {...day, dateObject: dateObject}
+        )
+    }
 
 
     const firstDayOfMonth = ()=>{
@@ -42,6 +58,8 @@ const Content = () => {
         <Fragment>
             <div>
                 <h1>{currentMonth}</h1>
+                <button onClick={minusMonth}>-</button><button onClick={addMonth}>+</button>
+                
                 <div className="grid">
 
                     {days.map((day) => {
