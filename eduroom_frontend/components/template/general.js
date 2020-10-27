@@ -11,7 +11,6 @@ const General = (props) => {
           display: 'flex',
           flex: '1 1 auto',
           justifyContent: 'space-between',
-          height: '100vh',
           background: '#F4F5F7'
         }}
       >
@@ -37,7 +36,6 @@ const General = (props) => {
             position: absolute;
             bottom: 0;
             width: 100vw;
-            z-index: -50;
           }
         `}
       </style>

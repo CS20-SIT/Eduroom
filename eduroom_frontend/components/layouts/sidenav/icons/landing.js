@@ -15,8 +15,8 @@ const LandingIcon = ({ icon, isHover }) => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M13.5 1.5C13.5 0.671575 14.1716 0 15 0H22.5C23.3285 0 24 0.671573 24 1.5V9.00001C24 9.82844 23.3285 10.5 22.5 10.5H15C14.1716 10.5 13.5 9.82844 13.5 9.00001V1.5ZM0 15C0 14.1716 0.671573 13.5 1.5 13.5H9.00001C9.82844 13.5 10.5 14.1716 10.5 15V22.5C10.5 23.3285 9.82844 24 9.00001 24H1.5C0.671574 24 0 23.3285 0 22.5V15ZM15 13.5C14.1716 13.5 13.5 14.1716 13.5 15V22.5C13.5 23.3285 14.1716 24 15 24H22.5C23.3285 24 24 23.3285 24 22.5V15C24 14.1716 23.3285 13.5 22.5 13.5H15Z"
             fill={isHover ? hoverSubColor : defaultSubColor}
           />
@@ -39,20 +39,20 @@ const LandingIcon = ({ icon, isHover }) => {
         >
           <path
             opacity="0.14"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M2.4 0H21.6C22.9255 0 24 1.34315 24 3V21C24 22.6569 22.9255 24 21.6 24H2.4C1.07452 24 0 22.6569 0 21V3C0 1.34315 1.07452 0 2.4 0Z"
             fill={isHover ? hoverMainColor : defaultMainColor}
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M19.2188 10H3.78125C2.79749 10 2 11.0074 2 12.25V13H7.44562C7.76057 13 8.06261 13.158 8.28531 13.4393L9.47281 14.9393C10.0105 15.6185 10.7397 16 11.5 16C12.2603 16 12.9895 15.6185 13.5272 14.9393L14.7147 13.4393C14.9374 13.158 15.2394 13 15.5544 13H21V12.25C21 11.0074 20.2025 10 19.2188 10Z"
             fill={isHover ? hoverMainColor : defaultMainColor}
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M3.78125 3C2.79749 3 2 4.00736 2 5.25V6H21V5.25C21 4.00736 20.2025 3 19.2188 3H3.78125Z"
             fill={isHover ? hoverMainColor : defaultMainColor}
           />
@@ -111,14 +111,14 @@ const LandingIcon = ({ icon, isHover }) => {
         >
           <path
             opacity="0.3"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M0 5.75304C0.130071 5.6044 0.294244 5.47877 0.485651 5.38651L11.3198 0.164417C11.7746 -0.0548055 12.3201 -0.0548055 12.7749 0.164417L23.6091 5.38651C23.7566 5.45763 23.888 5.54858 24 5.65461L12.1216 11.8609C12.0434 11.9017 11.9714 11.9484 11.9058 12C11.8402 11.9484 11.7682 11.9017 11.6901 11.8609L0 5.75304Z"
             fill={isHover ? hoverMainColor : defaultMainColor}
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M0 8.13533L10.3204 13.4896C10.4315 13.5473 10.548 13.589 10.6667 13.6154V23.9998L0.736052 18.7188C0.279827 18.4761 0 18.0351 0 17.5588V8.13533ZM24.0002 7.99316V17.559C24.0002 18.0353 23.7203 18.4763 23.2641 18.7189L13.3335 24V13.5246C13.3577 13.5137 13.3817 13.5021 13.4054 13.4898L24.0002 7.99316Z"
             fill={isHover ? hoverMainColor : defaultMainColor}
           />
@@ -245,14 +245,14 @@ const LandingIcon = ({ icon, isHover }) => {
         >
           <path
             opacity="0.3"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M2.20874 4.33057C0.988887 4.33057 0 5.31945 0 6.53931C0 7.75916 0.988889 8.74804 2.20874 8.74804H9.08534C10.3052 8.74804 11.2941 7.75916 11.2941 6.53931C11.2941 5.31945 10.3052 4.33057 9.08534 4.33057H2.20874ZM14.9143 16.1105C13.6945 16.1105 12.7056 17.0994 12.7056 18.3192C12.7056 19.5391 13.6945 20.528 14.9143 20.528H21.7909C23.0108 20.528 23.9996 19.5391 23.9996 18.3192C23.9996 17.0994 23.0108 16.1105 21.7909 16.1105H14.9143Z"
             fill={isHover ? hoverMainColor : defaultMainColor}
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M23.9999 5.80273C23.9999 8.24244 22.1037 10.2202 19.7646 10.2202C17.4255 10.2202 15.5293 8.24244 15.5293 5.80273C15.5293 3.36303 17.4255 1.38525 19.7646 1.38525C22.1037 1.38525 23.9999 3.36303 23.9999 5.80273ZM8.47056 17.5826C8.47056 20.0224 6.57436 22.0001 4.23528 22.0001C1.8962 22.0001 0 20.0224 0 17.5826C0 15.1429 1.8962 13.1652 4.23528 13.1652C6.57436 13.1652 8.47056 15.1429 8.47056 17.5826Z"
             fill={isHover ? hoverMainColor : defaultMainColor}
           />
