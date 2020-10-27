@@ -14,7 +14,7 @@ const Item = ({ data, expand, isExpand }) => {
               setHover(true)
             }}>
           <div
-            className="side-icon-expand"
+            className={isExpand?"side-icon-expand expand":"side-icon-expand"}
           >
             <Icon isHover={hover} icon={data.icon}/>
           </div>
@@ -31,17 +31,20 @@ const Item = ({ data, expand, isExpand }) => {
             align-items: center;
             justify-content: center;
             display: flex;
-            padding: 0% 4%;
             cursor: pointer;
           }
           .side-item-expand {
             display: flex;
             flex: 1 1 auto;
           }
+          .side-icon-expand.expand {
+            width: 72px;
+          }
           .side-icon-expand {
-            width: 26%;
+            width: 72px;
             padding: 1% 0%;
-            text-align: center;
+            justify-content: center;
+            display:flex;
           }
           .side-text {
             display:flex;

@@ -12,7 +12,7 @@ export default css`
   }
   .landing-content {
     position: absolute;
-    left: 15%;
+    left: 19%;
     top: 24%;
     font-family: 'Quicksand', sans-serif;
   }
