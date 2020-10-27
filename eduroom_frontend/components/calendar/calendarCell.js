@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import style from '../../styles/calendar/calendar'
 const Content = (props) => {
     //   const router = useRouter();
-    console.log(props.Content);
+    // console.log(props.Content);
     return (
         <Fragment>
             <div className="gridItem">{props.Content}</div>
