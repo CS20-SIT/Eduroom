@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import Icon from './icons/landing'
+import style from '../../../styles/layout/sidebar'
 const Item = ({ data, expand, isExpand }) => {
   const [hover,setHover] = useState(false);
   return (
@@ -26,39 +27,7 @@ const Item = ({ data, expand, isExpand }) => {
         </div>
       </div>
       <style jsx>
-        {`
-          .side-item {
-            align-items: center;
-            justify-content: center;
-            display: flex;
-            cursor: pointer;
-          }
-          .side-item-expand {
-            display: flex;
-            flex: 1 1 auto;
-          }
-          .side-icon-expand.expand {
-            width: 72px;
-          }
-          .side-icon-expand {
-            width: 72px;
-            padding: 1% 0%;
-            justify-content: center;
-            display:flex;
-          }
-          .side-text {
-            display:flex;
-            justify-content: center;
-            align-items: center;
-            padding-left: 8px;
-            color: #9593A0;
-            font-weight: 500;
-          }
-          .side-text.hover {
-            color: #A880F7;
-            font-weight: bold;
-          }
-        `}
+        {style}
       </style>
     </Fragment>
   )
