@@ -13,14 +13,27 @@ import { useState, useEffect } from 'react'
 
 const useStyles = makeStyles({
   root: {
+   
     margin: '10%',
     width: '80%',
+    
   },
   container: {
+    
     maxHeight: 440,
   },
+  test : {
+    'font-family': 'Quicksand , sans-serif',
+    borderBottom: "none"
+  }
 })
+const shorten = (text, maxLength) => {
+  if (text && text.length > maxLength) {
+    return text.substr(0, maxLength) + "...";
+  }
 
+  return text;
+};
 const AnnTable = (props) => {
   const classes = useStyles()
   const [page, setPage] = useState(0)
@@ -56,7 +69,7 @@ const AnnTable = (props) => {
 
               <TableCell align="right">Title</TableCell>
 
-              <TableCell align="right">Description</TableCell>
+              <TableCell className={classes.test} align="right">Description</TableCell>
 
               <TableCell align="right">Admin ID</TableCell>
             </TableRow>
@@ -67,6 +80,7 @@ const AnnTable = (props) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
+                 
                   <TableRow key={row.id}>
                     <TableCell component="th" scope="row">
                       {row.id}
@@ -74,7 +88,7 @@ const AnnTable = (props) => {
 
                     <TableCell align="right">{row.title}</TableCell>
 
-                    <TableCell align="right">{row.description}</TableCell>  
+                    <TableCell align="right">{shorten(row.description,30)}</TableCell>  
 
                     <TableCell align="right">{row.adminid}</TableCell>
                   </TableRow>
