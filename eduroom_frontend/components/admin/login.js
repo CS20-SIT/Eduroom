@@ -14,6 +14,8 @@ const Content = () => {
           className="admin-login-img"
           alt="admin-login-page-img"
           src="/images/admin-login-img.svg"
+          width="731"
+          height="605"        
         />
         </div>
         <div className="login-content">

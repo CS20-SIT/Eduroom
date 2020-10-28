@@ -27,6 +27,8 @@ const Content = () => {
           className="landing-img"
           alt="landing-img"
           src="/images/landing_img.svg"
+          width="600"
+          height="525"
         />
       </div>
       <style jsx>
