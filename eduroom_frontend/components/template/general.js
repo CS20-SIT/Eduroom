@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import Navbar from '../layouts/navbar'
 import Header from '../layouts/header'
 import SideNav from '../layouts/sidenav/sidenav'
+import Image from 'next/image'
 const General = (props) => {
   return (
     <Fragment>
@@ -20,11 +21,11 @@ const General = (props) => {
           <main>{props.children}</main>
         </div>
         {props.img ? (
-          <img
+          <Image
             alt="background-img"
             src={props.img}
             className="background-img"
-          ></img>
+          />
         ) : null}
       </div>
       <style jsx>
