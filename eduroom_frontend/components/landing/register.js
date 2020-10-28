@@ -72,9 +72,9 @@ const Register = () => {
             </form>
           </div>
         </div>
-        <div>
-          <div style={{ width: '50%' }}>
-            <div style={{ paddingLeft: '20%' }}>
+        <div style={{width:'50%',zIndex:'50'}}>
+          <div style={{ width: '100%' }}>
+            <div style={{ paddingLeft: '5%' }}>
               <div>
                 <h1 className="register-header">CREATE AN ACCOUNT</h1>
                 <span style={{ color: '#3d467f', fontSize: '1.4em' }}>
@@ -82,13 +82,8 @@ const Register = () => {
                 </span>
               </div>
             </div>
+            <img style={{paddingTop:'10%'}} alt="register-img" src="/images/register_img.svg"/>
           </div>
-
-          <img
-            className="register-page-img"
-            alt="register-page-img"
-            src="/images/campaign_img.svg"
-          />
         </div>
       </div>
       <style jsx>

@@ -1,7 +1,7 @@
-import css from 'styled-jsx/css'
+import css from 'styled-jsx/css';
 export default css`
   .login {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     padding: 2% 5% 0% 5%;
@@ -15,7 +15,7 @@ export default css`
     border: none;
     font-size: 1.1em;
     color: #3d467f;
-    margin-bottom: 5%;
+    margin-top: 2%;
   }
   .login-textfield ::placeholder {
     color: #3d467f;
@@ -56,11 +56,17 @@ export default css`
     text-align: center;
   }
   .login-description {
-    padding: 5% 0% 5% 0%;
+    padding: 5% 0% 0 0%;
     font-size: 1em;
     font-family: 'Quicksand', sans-serif;
     font-weight: normal;
     color: #3d467f;
+  }
+  .error {
+    color: red;
+    display: flex;
+    justify-content: flex-end;
+    margin: 4px 0 4px 0;
   }
   .login-button {
     background: #3d467f;
@@ -69,6 +75,8 @@ export default css`
     margin-bottom: 5%;
     border: none;
     transition: 0.25s;
+    outline: none;
+    margin-top: 5px;
   }
   .login-button:hover {
     cursor: pointer;
@@ -88,6 +96,7 @@ export default css`
     border: 2px solid rgba(0, 0, 0, 0.3);
     margin-bottom: 5%;
     transition: 0.25s;
+    outline: none;
   }
   .login-google-button:hover {
     cursor: pointer;
@@ -115,4 +124,4 @@ export default css`
     font-size: 1em;
     font-family: 'Quicksand', sans-serif;
   }
-`
+`;
