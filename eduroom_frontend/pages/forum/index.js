@@ -21,7 +21,7 @@ const Forum = () => {
         <h1>Forum</h1>
         {
             forum.map((el)=>{
-                return (<ForumBlock data={el}/>)
+                return (<ForumBlock key={el} data={el}/>)
             })
         }
         <div>
