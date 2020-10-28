@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import style from '../../styles/landing/login';
+import Image from 'next/image';
 const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -56,7 +57,7 @@ const Content = () => {
               </div>
               <button className="login-google-button">
                 <div className="login-google-button-text">
-                  <img
+                  <Image
                     src="/images/google-logo.png"
                     alt="google-icon"
                     className="google-logo"
@@ -67,7 +68,7 @@ const Content = () => {
             </form>
           </div>
         </div>
-        <img
+        <Image
           className="login-page-img"
           alt="login-page-img"
           src="/images/login-img.svg"
