@@ -1,10 +1,30 @@
 import React, { Fragment, useState } from "react";
 import GeneralNoNav from "../../components/template/generalnonav";
 import Grid from "@material-ui/core/Grid";
-import EdquizText from "../../components/edqiz/edqiz-text";
 
 const Content = () => {
   const student = [
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
+    { name: "NICKNAME" },
     { name: "NICKNAME" },
     { name: "NICKNAME" },
     { name: "NICKNAME" },
@@ -76,7 +96,7 @@ const Content = () => {
                   alignItems: "center",
                 }}
               >
-                <button className="player">39 players</button>
+                <button className="player">{student.length} players</button>
               </Grid>
               <Grid item xs={4}>
                 <span className="text-title">
