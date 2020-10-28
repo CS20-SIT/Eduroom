@@ -4,14 +4,11 @@ orbs:
   docker: circleci/docker@1.5.0
 workflows:
   build-docker-images-test:
-    triggers:
-      - schedule:
-          cron: "* * * * *"
-          filters:
-             branches:
-               only:
-                 - dev
     jobs:
+      filters:
+        branches:
+          only:
+            - dev
       - docker/publish:
           deploy: false
           dockerfile: Dockerfile
