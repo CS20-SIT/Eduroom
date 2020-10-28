@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react'
-const LeaderBoard = () => {
+const SubmissionList = () => {
     return <Fragment></Fragment>
 }
-export default LeaderBoard
+export default SubmissionList
