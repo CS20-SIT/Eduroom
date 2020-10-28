@@ -1,7 +1,8 @@
 import React, { Fragment } from "react"
 import GraderNav from "../../components/graderSubmit/GraderNav"
-import style from "../../styles/graderSubmit/problems"
+import style from "../../styles/graderSubmit/problems/problems"
 import Head from "next/head"
+
 const Problems = () => {
   return (
     <Fragment>

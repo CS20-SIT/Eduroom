@@ -1,8 +1,8 @@
 import React, { Fragment } from "react"
 import Head from "next/head"
 import style from "../../styles/graderSubmit/home"
-import AnnounceBox from "../../components/graderSubmit/AnnounceBox"
 import Layout from "../../components/graderSubmit/Layout"
+import AnnounceBox from "../../components/graderSubmit/announcements/AnnounceBox"
 
 const Home = () => {
   return (
@@ -17,13 +17,16 @@ const Home = () => {
             <img src="../../images/graderSubmit/pr_monochromatic.svg" />
           </div>
           <div className="content">
-            <h2 style={{ color: "#5B5B5B", paddingTop: "20px" }}>
-              ANNOUNCEMENTS
-            </h2>
-            <AnnounceBox />
+            <div className="detail">
+              <h2 style={{ color: "#5B5B5B", paddingTop: "20px" }}>
+                ANNOUNCEMENTS
+              </h2>
+              <AnnounceBox />
+            </div>
           </div>
         </div>
       </Layout>
+
       <style jsx>{style}</style>
     </Fragment>
   )
