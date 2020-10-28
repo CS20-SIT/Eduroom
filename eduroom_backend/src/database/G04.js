@@ -83,74 +83,49 @@ CREATE INDEX fkIdx_3796 ON Transaction_instructor
 
 exports.createG04Table = async (req, res) => {
   try{
-    await createTable_FinancialTransaction
-    await createTable_TransactionUser
-    await createTable_TransactionInsructor
-    await createTable_TransactionAd
-    console.log('Create G04 Table Successfully');
+    await createTable_Financial_Transaction;
+    await createTable_Transaction_User;
+    await createTable_Transaction_Insructor;
+    await createTable_Transaction_Ad;
+    console.log('Create ALL G04 Tables Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 
 }
 
-const createTable_FinancialTransaction = async (req, res, next) => {
+const createTable_Financial_Transaction = async (req, res, next) => {
     try {
       const job = await pool.query(financialTransaction);
-      console.log('Create Financial_Transaction Successfully');
+      console.log('Create table financial_Transaction Successfully');
     } catch (err) {
       console.error(err.stack.red);
     }
 };
-if (process.argv[2] === '-i') {
-    (async () => {
-      createTable_FinancialTransaction(); 
-      process.exit();
-    })();
-} 
 
-const createTable_TransactionUser = async (req, res, next) => {
+const createTable_Transaction_User = async (req, res, next) => {
   try {
     const job = await pool.query(transcationUser);
-    console.log('Create Financial_user Successfully');
+    console.log('Create table financial_user Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
-if (process.argv[2] === '-i') {
-  (async () => {
-    createTable_TransactionUser(); 
-    process.exit();
-  })();
-} 
 
-const createTable_TransactionInsructor = async (req, res, next) => {
+const createTable_Transaction_Insructor = async (req, res, next) => {
   try {
     const job = await pool.query(transcationInstructor);
-    console.log('Create Transaction_instructor Successfully');
+    console.log('Create table Transaction_instructor Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
-if (process.argv[2] === '-i') {
-  (async () => {
-    createTable_TransactionInsructor(); 
-    process.exit();
-  })();
-} 
 
-const createTable_TransactionAd = async (req, res, next) => {
+const createTable_Transaction_Ad = async (req, res, next) => {
   try {
     const job = await pool.query(transcationAd);
-    console.log('Create Transaction_ad Successfully');
+    console.log('Create table Transaction_ad Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
-if (process.argv[2] === '-i') {
-  (async () => {
-    createTable_TransactionAd(); 
-    process.exit();
-  })();
-
-} 
