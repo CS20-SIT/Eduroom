@@ -1,53 +1,79 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-const Content = () => {
-  const room={name:'room1',PIN:'99999'};
-  const [questionNum,setQuestionNum]=useState('0');
-  const [player, setPlayer] = useState([
-    {
-    
-    }
-  ]);
+const axios = require("axios");
+const Page1 = ({ goto, data, questionNumber }) => {
+  const room = { name: "room1", PIN: "99999" };
+  console.log(questionNumber);
+  console.log(data[questionNumber]);
 
-  const question = [
-    {
-      question: "test system",
-      time: "45",
-      point: "2000",
-      ans: ["a", "b", "c", "d"],
-      correct: 0,
-      image: null,
-    },{
-      question: "test system1",
-      time: "90",
-      point: "2000",
-      ans: ["a1", "b2", "c3", "d4"],
-      correct: 2,
-      image: null,
+  const Correct = [];
+  const getCorrectAnswer = () => {
+    if (data[questionNumber].correct == 0) {
+      Correct.push(
+        <div>
+          <Grid
+            container
+            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{ backgroundColor: "#F39AC4" ,width: '30vw',height: '10vh',border: 'none',color:'white',fontSize:'1.2rem'}}
+                onClick={() => {}}
+              >
+                {data[questionNumber].ans[0]}
+              </button>
+            </Grid>
+            <Grid item xs={6}>
+              <button
+                className="buttonAnswer"
+                style={{ backgroundColor: "#D5C1FC" ,opacity:'0.6',width: '30vw',height: '10vh',border: 'none',color:'white',fontSize:'1.2rem'}}
+              >
+                {data[questionNumber].ans[1]}
+              </button>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            style={{ marginTop: "1vh", display: "flex", alignItems: "center" }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{ backgroundColor: "#FDD4C1",opacity:'0.6' ,width: '30vw',height: '10vh',border: 'none',color:'white',fontSize:'1.2rem'}}
+              >
+                {data[questionNumber].ans[2]}
+              </button>
+            </Grid>
+            <Grid item xs={6}>
+              <button
+                className="buttonAnswer"
+                style={{ backgroundColor: "#A6CEEE",opacity:'0.6',width: '30vw',height: '10vh',border: 'none',color:'white',fontSize:'1.2rem'}}
+              >
+                {data[questionNumber].ans[3]}
+              </button>
+            </Grid>
+          </Grid>
+        </div>
+      );
     }
-  ];
-  const addHistory=(choice)=>{
-    let temp=[];
-    let getScore=0;
-    if(choice==question[questionNum].correct){
-      getScore=question[questionNum].point;
-    }
-    temp.push({questionNo:questionNum,
-      answer:question[questionNum].ans[choice],
-      score:getScore
-    })
-    setPlayer(temp);
-    temp=[];
-    console.log(player);
-    
-  }
-  function questionNext(){
-    var num=questionNum;
-    num++;
-    setQuestionNum(num);
-
-  }
-
+  };
   return (
     <Fragment>
       <div className="landing">
@@ -62,13 +88,19 @@ const Content = () => {
             xs={2}
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <button className="landing-button"  onClick={() => {
+            <button
+              className="landing-button"
+              onClick={() => {
                 questionNext();
-              }}>SKIP </button>
+              }}
+            >
+              NEXT{" "}
+            </button>
           </Grid>
         </Grid>
         <br />
-        <div className="text">QUESTION</div>
+
+        <div className="text">{data[questionNumber].question}</div>
         <Grid
           container
           style={{
@@ -78,83 +110,14 @@ const Content = () => {
             alignItems: "center",
           }}
         >
+          <Grid item xs={4}></Grid>
           <Grid item xs={4}>
-            <div className="text-time">TIME</div>
-        <div className="text-timeNum">{question[questionNum].time}</div>
+            picture
           </Grid>
-          <Grid item xs={4}>
-            {/* picture */}
-          </Grid>
-          <Grid item xs={4}>
-            <div className="text-time">ANSWER</div>
-            <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
-              0
-            </div>
-          </Grid>
+          <Grid item xs={4}></Grid>
         </Grid>
-
-        <Grid
-          container
-          style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
-        >
-          <Grid
-            item
-            xs={6}
-            style={{
-              justifyContent: "flex-end",
-              display: "flex",
-              padding: "1vw",
-            }}
-          >
-            <button
-              className="buttonAnswer"
-              style={{ backgroundColor: "#F39AC4" }}
-              onClick={() => {
-                addHistory(0);
-               
-              }}
-            >
-              {question[questionNum].ans[0]}
-            </button>
-          </Grid>
-          <Grid item xs={6}>
-            <button
-              className="buttonAnswer"
-              style={{ backgroundColor: "#D5C1FC" }}
-            >
-               {question[questionNum].ans[1]}
-            </button>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          style={{ marginTop: "1vh", display: "flex", alignItems: "center" }}
-        >
-          <Grid
-            item
-            xs={6}
-            style={{
-              justifyContent: "flex-end",
-              display: "flex",
-              padding: "1vw",
-            }}
-          >
-            <button
-              className="buttonAnswer"
-              style={{ backgroundColor: "#FDD4C1" }}
-            >
-               {question[questionNum].ans[2]}
-            </button>
-          </Grid>
-          <Grid item xs={6}>
-            <button
-              className="buttonAnswer"
-              style={{ backgroundColor: "#A6CEEE" }}
-            >
-               {question[questionNum].ans[3]}
-            </button>
-          </Grid>
-        </Grid>
+        {getCorrectAnswer()}
+        {Correct}
       </div>
       <style jsx>
         {`
@@ -228,9 +191,9 @@ const Content = () => {
 
           .landing {
             padding: 0px;
-            width: 100vw;
-            height: 100vh;
-            background-image: url("/images/edqiz/BG game.svg");
+            width: 100%;
+            height: 100%;
+
             background-size: cover;
             overflow: auto;
           }
@@ -258,4 +221,4 @@ const Content = () => {
     </Fragment>
   );
 };
-export default Content;
+export default Page1;
