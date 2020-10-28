@@ -102,12 +102,6 @@ const createTable_FinancialTransaction = async (req, res, next) => {
       console.error(err.stack.red);
     }
 };
-if (process.argv[2] === '-i') {
-    (async () => {
-      createTable_FinancialTransaction(); 
-      process.exit();
-    })();
-} 
 
 const createTable_TransactionUser = async (req, res, next) => {
   try {
@@ -117,12 +111,6 @@ const createTable_TransactionUser = async (req, res, next) => {
     console.error(err.stack.red);
   }
 };
-if (process.argv[2] === '-i') {
-  (async () => {
-    createTable_TransactionUser(); 
-    process.exit();
-  })();
-} 
 
 const createTable_TransactionInsructor = async (req, res, next) => {
   try {
@@ -132,12 +120,6 @@ const createTable_TransactionInsructor = async (req, res, next) => {
     console.error(err.stack.red);
   }
 };
-if (process.argv[2] === '-i') {
-  (async () => {
-    createTable_TransactionInsructor(); 
-    process.exit();
-  })();
-} 
 
 const createTable_TransactionAd = async (req, res, next) => {
   try {
@@ -147,10 +129,3 @@ const createTable_TransactionAd = async (req, res, next) => {
     console.error(err.stack.red);
   }
 };
-if (process.argv[2] === '-i') {
-  (async () => {
-    createTable_TransactionAd(); 
-    process.exit();
-  })();
-
-} 
