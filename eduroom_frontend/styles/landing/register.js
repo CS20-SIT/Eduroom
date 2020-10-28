@@ -4,7 +4,7 @@ export default css`
     color: #473f47;
   }
   .register {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     padding: 2% 0% 0% 0%;
@@ -23,14 +23,12 @@ export default css`
     color: #3d467f;
     opacity: 0.75;
   }
-  .register-page-img {
-    width: 100%;
-  }
   .register-content {
     width: 38vw;
     position: absolute;
     right: 8%;
     top: 15%;
+    z-index:50;
   }
   .register-link {
     font-size: 1em;
