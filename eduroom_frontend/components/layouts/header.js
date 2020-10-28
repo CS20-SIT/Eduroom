@@ -23,8 +23,8 @@ const Header = () => {
           property="og:description"
           content="Eduroom Online Learning platform"
         />
-        <meta property="og:image" content="http://eduroom.cscms.me/images/sidenav/eduroom_logo.svg" />
-<meta property="og:image:secure_url" content="https://eduroom.cscms.me/images/sidenav/eduroom_logo.svg" /> 
+        <meta property="og:image" content="http://eduroom.cscms.me/images/sidenav/eduroom_logo.png" />
+<meta property="og:image:secure_url" content="https://eduroom.cscms.me/images/sidenav/eduroom_logo.png" /> 
 <meta property="og:image:type" content="image/jpeg" /> 
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://eduroom.cscms.me" />
@@ -35,7 +35,7 @@ const Header = () => {
         />
         <meta
           property="twitter:image"
-          content="https://eduroom.cscms.me/images/sidenav/eduroom_logo.svg"
+          content="https://eduroom.cscms.me/images/sidenav/eduroom_logo.png"
         />
       </Head>
     </Fragment>
