@@ -74,8 +74,8 @@ const Register = () => {
           </div>
         </div>
         <div style={{width:'50%',zIndex:'50'}}>
-          <div style={{ width: '100%' }}>
-            <div style={{ paddingLeft: '5%',paddingBottom:'5%' }}>
+          <div style={{ width: '100%',paddingLeft:'10%' }}>
+            <div style={{ paddingBottom:'5%' }}>
               <div>
                 <h1 className="register-header">CREATE AN ACCOUNT</h1>
                 <span style={{ color: '#3d467f', fontSize: '1.4em' }}>
