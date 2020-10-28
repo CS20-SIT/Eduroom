@@ -34,11 +34,13 @@ const General = (props) => {
             width: 95%;
             position: fixed;
             left: 5%;
+            z-index: 20;
           }
           .background-img {
             position: absolute;
             bottom: 0;
             width: 100vw;
+            z-index: 5;
           }
         `}
       </style>
