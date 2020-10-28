@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import style from '../../styles/landing/register'
+import Image from 'next/image'
 const Register = () => {
   const [user, setUser] = useState({
     firstname: '',
@@ -60,7 +61,7 @@ const Register = () => {
                 </div>
                 <button className="register-google-button">
                   <div className="register-google-button-text">
-                    <img
+                    <Image
                       src="/images/google-logo.png"
                       alt="google-icon"
                       className="google-logo"
@@ -82,7 +83,7 @@ const Register = () => {
                 </span>
               </div>
             </div>
-            <img style={{paddingTop:'10%'}} alt="register-img" src="/images/register_img.svg"/>
+            <Image style={{paddingTop:'10%'}} alt="register-img" src="/images/register_img.svg"/>
           </div>
         </div>
       </div>
