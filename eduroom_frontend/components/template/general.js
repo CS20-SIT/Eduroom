@@ -21,7 +21,7 @@ const General = (props) => {
           <main>{props.children}</main>
         </div>
         {props.img ? (
-          <Image
+          <img
             alt="background-img"
             src={props.img}
             className="background-img"
@@ -31,7 +31,9 @@ const General = (props) => {
       <style jsx>
         {`
           #content {
-            width: 84%;
+            width: 95%;
+            position: fixed;
+            left: 5%;
           }
           .background-img {
             position: absolute;
