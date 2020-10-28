@@ -58,9 +58,9 @@ CREATE TABLE IF NOT EXISTS Admin_Login
 
 exports.createG00Table = async (req, res) => {
   try{
-    await createTable_local_Auth
-    await createTable_oAuth
-    await createTable_adminLogin
+    await createTable_local_Auth;
+    await createTable_oAuth;
+    await createTable_adminLogin;
     console.log('Create G00 Table Successfully');
   } catch (err) {
     console.error(err.stack.red);

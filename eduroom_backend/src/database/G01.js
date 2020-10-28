@@ -66,9 +66,9 @@ CREATE INDEX fkIdx_3718 ON Appointment_Review
 
 exports.createG01Table = async (req, res) => {
   try{
-    await createTable_instructorAvailabilities
-    await createTable_tutorAppointmentForm
-    await createTable_appointmentReview
+    await createTable_instructorAvailabilities;
+    await createTable_tutorAppointmentForm;
+    await createTable_appointmentReview;
     console.log('Create G01 Table Successfully');
   } catch (err) {
     console.error(err.stack.red);
