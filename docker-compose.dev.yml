@@ -55,6 +55,14 @@ services:
       - JWT_COOKIE_EXPIRE=30
       - GOOGLE_CLIENT_ID=915718814816-au5njmbt31b0g4lctg8edqm3rs53vvcn.apps.googleusercontent.com
       - GOOGLE_SECRET_KEY=dDwssvp5-CCfvXs7vhlNhxIi
+      - SMTP_SECURE=false
+      - SMTP_HOST=eduroom_smtp
+      - SMTP_PORT=1025
+      - SMTP_EMAIL=
+      - SMTP_PASSWORD=
+      - FROM_EMAIL=admin@eduroom.com
+      - FROM_NAME=Eduroom Admin
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
     ports:
       - "5000:5000"
   eduroom_grading_server:
@@ -107,5 +115,10 @@ services:
       - ./eduroom_backend/src/database/database.sql:/docker-entrypoint-initdb.d/database.sql
     ports:
       - "5432:5432"
+  eduroom_smtp:
+    image: reachfive/fake-smtp-server
+    ports:
+      - "1025:1025"
+      - "1080:1080"
 volumes:
   database-data: 
