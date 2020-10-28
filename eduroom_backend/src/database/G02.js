@@ -152,15 +152,15 @@ CREATE INDEX fkIdx_3643 ON User_student_Verification
 
 exports.createG02Table = async (req, res) => {
   try{
-    await createTable_adType;
+    await createTable_ad_Type;
     await createTable_ad;
-    await createTable_adPayment;
+    await createTable_ad_Payment;
     await createTable_promotionCode;
-    await createTable_publicCodeUsage;
-    await createTable_codeOwner;
-    await createTable_universityWhitelist;
-    await createTable_userStudentVerification;
-    console.log('Create G02 Table Successfully');
+    await createTable_public_Code_Usage;
+    await createTable_code_Owner;
+    await createTable_whitelist_University;
+    await createTable_user_Student_Verification;
+    console.log('Create ALL G02 Tables Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
@@ -170,25 +170,25 @@ exports.createG02Table = async (req, res) => {
 const createTable_promotionCode = async (req, res, next) => {
     try {
       const job = await pool.query(promotionCode);
-      console.log('Create promotionCode Successfully');
+      console.log('Create table promotionCode Successfully');
     } catch (err) {
       console.error(err.stack.red);
     }
 };
 
-const createTable_publicCodeUsage = async (req, res, next) => {
+const createTable_public_Code_Usage = async (req, res, next) => {
   try {
     const job = await pool.query(publicCodeUsage);
-    console.log('Create publicCodeUsage Successfully');
+    console.log('Create table public_Code_Usage Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
 
-const createTable_codeOwner = async (req, res, next) => {
+const createTable_code_Owner = async (req, res, next) => {
   try {
     const job = await pool.query(codeOwner);
-    console.log('Create codeOwner Successfully');
+    console.log('Create table code_Owner Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
@@ -203,37 +203,37 @@ const createTable_ad = async (req, res, next) => {
   }
 };
 
-const createTable_adType = async (req, res, next) => {
+const createTable_ad_Type = async (req, res, next) => {
   try {
     const job = await pool.query(adType);
-    console.log('Create adType Successfully');
+    console.log('Create table ad_Type Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
 
-const createTable_adPayment = async (req, res, next) => {
+const createTable_ad_Payment = async (req, res, next) => {
   try {
     const job = await pool.query(adPayment);
-    console.log('Create adPayment Successfully');
+    console.log('Create table ad_Payment Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
 
-const createTable_whitelistUniversity = async (req, res, next) => {
+const createTable_whitelist_University = async (req, res, next) => {
   try {
     const job = await pool.query(whitelistUniversity);
-    console.log('Create whitelistUniversity Successfully');
+    console.log('Create table whitelist_University Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
 
-const createTable_userStudentVerification = async (req, res, next) => {
+const createTable_user_Student_Verification = async (req, res, next) => {
   try {
     const job = await pool.query(userStudentVerification);
-    console.log('Create userStudentVerification Successfully');
+    console.log('Create table user_Student_Verification Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
