@@ -71,7 +71,7 @@ CREATE INDEX fkIdx_3621 ON Review_course
 
 
 
-exports.createG04Table = async (req, res) => {
+exports.createG13Table = async (req, res) => {
   try{
     await createTable_package
     await createTable_packageCourses

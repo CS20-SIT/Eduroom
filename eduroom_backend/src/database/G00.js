@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Admin_Login
 
 
 
-exports.createG04Table = async (req, res) => {
+exports.createG00Table = async (req, res) => {
   try{
     await createTable_local_Auth
     await createTable_oAuth
