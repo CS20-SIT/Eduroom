@@ -61,7 +61,7 @@ const Register = () => {
                 </div>
                 <button className="register-google-button">
                   <div className="register-google-button-text">
-                    <Image
+                    <img
                       src="/images/google-logo.png"
                       alt="google-icon"
                       className="google-logo"
@@ -75,7 +75,7 @@ const Register = () => {
         </div>
         <div style={{width:'50%',zIndex:'50'}}>
           <div style={{ width: '100%' }}>
-            <div style={{ paddingLeft: '5%' }}>
+            <div style={{ paddingLeft: '5%',paddingBottom:'5%' }}>
               <div>
                 <h1 className="register-header">CREATE AN ACCOUNT</h1>
                 <span style={{ color: '#3d467f', fontSize: '1.4em' }}>
@@ -83,7 +83,7 @@ const Register = () => {
                 </span>
               </div>
             </div>
-            <Image style={{paddingTop:'10%'}} alt="register-img" src="/images/register_img.svg"/>
+            <Image alt="register-img" src="/images/register_img.svg" width="510" height="432"/>
           </div>
         </div>
       </div>
