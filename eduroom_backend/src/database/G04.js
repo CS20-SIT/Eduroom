@@ -83,10 +83,10 @@ CREATE INDEX fkIdx_3796 ON Transaction_instructor
 
 exports.createG04Table = async (req, res) => {
   try{
-    await createTable_FinancialTransaction
-    await createTable_TransactionUser
-    await createTable_TransactionInsructor
-    await createTable_TransactionAd
+    await createTable_FinancialTransaction;
+    await createTable_TransactionUser;
+    await createTable_TransactionInsructor;
+    await createTable_TransactionAd;
     console.log('Create G04 Table Successfully');
   } catch (err) {
     console.error(err.stack.red);

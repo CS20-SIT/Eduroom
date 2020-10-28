@@ -73,9 +73,9 @@ CREATE INDEX fkIdx_3621 ON Review_course
 
 exports.createG13Table = async (req, res) => {
   try{
-    await createTable_package
-    await createTable_packageCourses
-    await createTable_reviewCourses
+    await createTable_package;
+    await createTable_packageCourses;
+    await createTable_reviewCourses;
     console.log('Create G13 Table Successfully');
   } catch (err) {
     console.error(err.stack.red);
