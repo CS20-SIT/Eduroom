@@ -5,7 +5,7 @@ const Header = () => {
     <Fragment>
       <Head>
         <title>Eduroom Project</title>
-        <link rel="icon" href="/images/sidenav/eduroom_logo.svg" />
+        <link rel="icon" href="/images/sidenav/eduroom_logo.png" />
         <link
           href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
@@ -25,7 +25,7 @@ const Header = () => {
         />
         <meta
           property="og:image"
-          content="https://eduroom.cscms.me/images/eduroom_logo.svg"
+          content="https://eduroom.cscms.me/images/eduroom_logo.png"
         />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://eduroom.cscms.me" />
@@ -36,7 +36,7 @@ const Header = () => {
         />
         <meta
           property="twitter:image"
-          content="https://eduroom.cscms.me/images/eduroom_logo.svg"
+          content="https://eduroom.cscms.me/images/eduroom_logo.png"
         />
       </Head>
     </Fragment>
