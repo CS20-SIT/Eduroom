@@ -8,7 +8,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js > report.txt",
+    "start": "node index.js > README.md",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "GGolfz",
