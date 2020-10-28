@@ -111,4 +111,16 @@ export default css`
     border-radius: 2vh;
     box-sizing: border-box;
   }
+  .prevConButton {
+    background: transparent;
+    outline: none;
+    border: 3px solid #FB9CCB;
+    border-radius: 30px;
+    padding: .5rem 2.5rem;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #FB9CCB;
+    margin: 0% 1%;
+    cursor: pointer;
+  }
 `
