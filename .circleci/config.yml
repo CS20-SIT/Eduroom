@@ -15,25 +15,25 @@ workflows:
       - docker/publish:
           deploy: false
           dockerfile: Dockerfile
-          path: eduroom_backend/
+          path: eduroom_backend
           image: eduroom-backend:$CIRCLE_PROJECT_REPONAME
       - docker/publish:
           deploy: false
           dockerfile: Dockerfile
-          path: eduroom_frontend/
+          path: eduroom_frontend
           image: eduroom-frontend:$CIRCLE_PROJECT_REPONAME
       - docker/publish:
           deploy: false
           dockerfile: Dockerfile
-          path: eduroom_grading_server/
+          path: eduroom_grading_server
           image: eduroom-grading-server:$CIRCLE_PROJECT_REPONAME
       - docker/publish:
           deploy: false
           dockerfile: Dockerfile
-          path: eduroom_socket_chat/
+          path: eduroom_socket_chat
           image: eduroom-socket-chat:$CIRCLE_PROJECT_REPONAME
       - docker/publish:
           deploy: false
           dockerfile: Dockerfile
-          path: eduroom_socket_kahoot/
+          path: eduroom_socket_kahoot
           image: eduroom-socket-kahoot:$CIRCLE_PROJECT_REPONAME
