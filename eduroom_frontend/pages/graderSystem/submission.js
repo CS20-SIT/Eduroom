@@ -1,5 +1,4 @@
 import React, { Fragment } from "react"
-import Head from "react"
 import GraderNav from "../../components/graderSubmit/GraderNav"
 import Head from "next/head"
 
