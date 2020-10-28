@@ -116,7 +116,7 @@ const Content = () => {
                   alignItems: "center",
                 }}
               >
-                <button className="startButton">39 players</button>
+                <button className="startButton">start ></button>
               </Grid>
             </Grid>
             <br />
