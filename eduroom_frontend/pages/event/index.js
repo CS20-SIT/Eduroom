@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import GeneralNonav from '../../components/template/generalnonav'; 
-import EventComp from '../../components/event/event'
+import EventComp from '../../components/event/createEvent'
 const Event = () => {
   return (
     <Fragment>
