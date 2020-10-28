@@ -14,7 +14,7 @@ const Home = () => {
       <Layout>
         <div className="page">
           <div className="graphic">
-            <Image src="../../images/graderSubmit/pr_monochromatic.svg" />
+            <Image src="/images/graderSubmit/pr_monochromatic.svg" width="479" height="440"/>
           </div>
           <div className="content">
             <h2 style={{ color: "#5B5B5B", paddingTop: "20px" }}>

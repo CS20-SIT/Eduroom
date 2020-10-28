@@ -57,7 +57,7 @@ const Content = () => {
               </div>
               <button className="login-google-button">
                 <div className="login-google-button-text">
-                  <Image
+                  <img
                     src="/images/google-logo.png"
                     alt="google-icon"
                     className="google-logo"
@@ -72,6 +72,8 @@ const Content = () => {
           className="login-page-img"
           alt="login-page-img"
           src="/images/login-img.svg"
+          width="544"
+          height="450"
         />
       </div>
       <style jsx>{style}</style>
