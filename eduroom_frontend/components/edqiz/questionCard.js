@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import QuestionAnswer from "./questionAnswer";
-
+import Image from 'next/image'
 const QuiztionCard = ({ data, index, add, remove, change}) => {
   useEffect(() => {
     if (data.image) {
@@ -108,7 +108,7 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
                         display: "contents",
                       }}
                     >
-                      <img
+                      <Image
                         src=""
                         id={"show-image" + index}
                         style={{ maxWidth: "600px", maxHeight: "300px" }}
