@@ -9,7 +9,7 @@ workflows:
           deploy: false
           dockerfile: Dockerfile
           path: eduroom_backend
-          image: eduroom-backend:$CIRCLE_PROJECT_REPONAME
+          image: eduroom-backend
           filters:
             branches:
               only:
@@ -18,7 +18,7 @@ workflows:
           deploy: false
           dockerfile: Dockerfile
           path: eduroom_frontend
-          image: eduroom-frontend:$CIRCLE_PROJECT_REPONAME
+          image: eduroom-frontend
           filters:
             branches:
               only:
@@ -27,7 +27,7 @@ workflows:
           deploy: false
           dockerfile: Dockerfile
           path: eduroom_grading_server
-          image: eduroom-grading-server:$CIRCLE_PROJECT_REPONAME
+          image: eduroom-grading-server
           filters:
             branches:
               only:
@@ -36,7 +36,7 @@ workflows:
           deploy: false
           dockerfile: Dockerfile
           path: eduroom_socket_chat
-          image: eduroom-socket-chat:$CIRCLE_PROJECT_REPONAME
+          image: eduroom-socket-chat
           filters:
             branches:
               only:
@@ -45,7 +45,7 @@ workflows:
           deploy: false
           dockerfile: Dockerfile
           path: eduroom_socket_kahoot
-          image: eduroom-socket-kahoot:$CIRCLE_PROJECT_REPONAME
+          image: eduroom-socket-kahoot
           filters:
             branches:
               only:
