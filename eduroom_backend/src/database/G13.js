@@ -74,9 +74,9 @@ CREATE INDEX fkIdx_3621 ON Review_course
 exports.createG13Table = async (req, res) => {
   try{
     await createTable_package;
-    await createTable_packageCourses;
-    await createTable_reviewCourses;
-    console.log('Create G13 Table Successfully');
+    await createTable_package_Courses;
+    await createTable_review_Courses;
+    console.log('Create ALL G13 Tables Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
@@ -86,25 +86,25 @@ exports.createG13Table = async (req, res) => {
 const createTable_package = async (req, res, next) => {
     try {
       const job = await pool.query(package);
-      console.log('Create package Successfully');
+      console.log('Create table package Successfully');
     } catch (err) {
       console.error(err.stack.red);
     }
 };
 
-const createTable_packageCourses = async (req, res, next) => {
+const createTable_package_Courses = async (req, res, next) => {
   try {
     const job = await pool.query(packageCourses);
-    console.log('Create package_Courses Successfully');
+    console.log('Create table package_Courses Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
 
-const createTable_reviewCourses= async (req, res, next) => {
+const createTable_review_Courses = async (req, res, next) => {
   try {
     const job = await pool.query(reviewCourses);
-    console.log('Create review_Courses Successfully');
+    console.log('Create table review_Courses Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }

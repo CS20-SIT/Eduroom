@@ -60,8 +60,8 @@ exports.createG00Table = async (req, res) => {
   try{
     await createTable_local_Auth;
     await createTable_oAuth;
-    await createTable_adminLogin;
-    console.log('Create G00 Table Successfully');
+    await createTable_admin_Login;
+    console.log('Create ALL G00 Tables Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
@@ -71,7 +71,7 @@ exports.createG00Table = async (req, res) => {
 const createTable_local_Auth = async (req, res, next) => {
     try {
       const job = await pool.query(local_Auth);
-      console.log('Create local_Auth Successfully');
+      console.log('Create table local_Auth Successfully');
     } catch (err) {
       console.error(err.stack.red);
     }
@@ -81,17 +81,17 @@ const createTable_local_Auth = async (req, res, next) => {
 const createTable_oAuth = async (req, res, next) => {
   try {
     const job = await pool.query(oAuth);
-    console.log('Create oAuth Successfully');
+    console.log('Create table oAuth Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
 
 
-const createTable_adminLogin = async (req, res, next) => {
+const createTable_admin_Login = async (req, res, next) => {
   try {
     const job = await pool.query(adminLogin);
-    console.log('Create admin_Login Successfully');
+    console.log('Create table admin_Login Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
