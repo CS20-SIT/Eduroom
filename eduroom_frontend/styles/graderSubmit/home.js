@@ -10,16 +10,21 @@ export default css`
   .content {
   }
   .graphic {
-    width: 45vw;
+    width: 35%;
     display: flex;
     justify-content: center;
   }
   img {
-    height: fit-content;
+    left: 0;
+    width: 32%;
     position: absolute;
     top: 15%;
   }
+  .detail {
+    width: 83%;
+    padding: 0px;
+  }
   .content {
-    width: 55vw;
+    width: 60%;
   }
 `

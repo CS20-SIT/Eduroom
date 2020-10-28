@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import Announcements from "./Announcements"
-import style from "../../styles/graderSubmit/announceBox"
+import style from "../../../styles/graderSubmit/announcements/announceBox"
 
 const AnnounceBox = () => {
   return (
