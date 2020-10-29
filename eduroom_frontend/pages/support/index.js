@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect, useContext } from 'react'
 import { Container, Button, TextField, Grid, Typography, CssBaseline, makeStyles, Select, MenuItem, Paper, createMuiTheme, ThemeProvider } from '@material-ui/core'
 import api from '../../api'
 import GeneralNoNav from '../../components/template/generalnonav'
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import {Autocomplete} from '@material-ui/lab';
 import Chip from '@material-ui/core/Chip';
 
 const Support = () => {

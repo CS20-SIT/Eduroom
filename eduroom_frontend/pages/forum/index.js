@@ -6,7 +6,7 @@ import SideNav from "../../components/layouts/sidenav/sidenav";
 import NavForum from "../../components/forum/searchForum";
 import style from '../../styles/forum/showForum';
 const Forum = () => {
-  //   const [forum, setForum] = useState([]);
+    const [forum, setForum] = useState([]);
   //   useEffect(() => {
   //     queryData();
   //   }, []);
@@ -32,6 +32,7 @@ const Forum = () => {
             </Link>
             
         </div>
+        </Container>
         <style jsx>{style}</style>
         <style jsx>
         {`
@@ -45,7 +46,6 @@ const Forum = () => {
           }
         `}
       </style>
-     </div>
     </Fragment>
   );
 };
