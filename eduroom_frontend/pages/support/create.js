@@ -1,5 +1,9 @@
-import React,{Fragment} from 'react'
-const SupportCreate = () => {
-    return <Fragment></Fragment>
+import React, {Fragment } from 'react'
+const Create  = () => {
+    return (
+        <Fragment>
+
+        </Fragment>
+    )
 }
-export default SupportCreate
+export default Create
