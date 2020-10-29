@@ -47,4 +47,27 @@ export default css`
     font-size: 1.2em;
     font-family: 'Quicksand', sans-serif;
   }
+  .navforumStyle {
+    padding: 1% 4% 0% 4%;
+    display: flex;
+    flex: 1 0 0;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+    cursor: default;
+  }
+  .buttonAdd{
+    padding: 1% 4% 0% 4%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    cursor: default;
+  }
+  .searchBox{
+    width: 300px;
+    heigh: 500 px;
+    padding: 8px 48px 8px 12px
+  }
+  
 `
