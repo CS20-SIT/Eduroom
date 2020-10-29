@@ -17,7 +17,7 @@ const Register = () => {
         <div className="register-content">
           <div className="register-form">
             <form style={{ width: '80%' }} onSubmit={(e) => e.preventDefault()}>
-              <label className="label-text">Firstname</label>
+              <label className="label-text">Firstname
               <input
                 className="register-textfield"
                 type="text"
@@ -25,31 +25,31 @@ const Register = () => {
                 onChange={(e) =>
                   setUser({ ...user, firstname: e.target.value })
                 }
-              />
+              /></label>
 
-              <label className="label-text">Lastname</label>
+              <label className="label-text">Lastname
               <input
                 className="register-textfield"
                 type="text"
                 placeholder="Lastname"
                 onChange={(e) => setUser({ ...user, lastname: e.target.value })}
-              />
+              /></label>
 
-              <label className="label-text">Email</label>
+              <label className="label-text">Email
               <input
                 className="register-textfield"
                 type="email"
                 placeholder="Email"
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-              />
+              /></label>
 
-              <label className="label-text">Password</label>
+              <label className="label-text">Password
               <input
                 className="register-textfield"
                 type="password"
                 placeholder="Password"
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
-              />
+              /></label>
               <div style={{ textAlign: 'center' }}>
                 <button className="register-button" onClick={register}>
                   <span className="register-button-text">Register</span>
@@ -61,7 +61,7 @@ const Register = () => {
                 </div>
                 <button className="register-google-button">
                   <div className="register-google-button-text">
-                    <Image
+                    <img
                       src="/images/google-logo.png"
                       alt="google-icon"
                       className="google-logo"
@@ -74,8 +74,8 @@ const Register = () => {
           </div>
         </div>
         <div style={{width:'50%',zIndex:'50'}}>
-          <div style={{ width: '100%' }}>
-            <div style={{ paddingLeft: '5%' }}>
+          <div style={{ width: '100%',paddingLeft:'10%' }}>
+            <div style={{ paddingBottom:'5%' }}>
               <div>
                 <h1 className="register-header">CREATE AN ACCOUNT</h1>
                 <span style={{ color: '#3d467f', fontSize: '1.4em' }}>
@@ -83,7 +83,7 @@ const Register = () => {
                 </span>
               </div>
             </div>
-            <Image style={{paddingTop:'10%'}} alt="register-img" src="/images/register_img.svg"/>
+            <Image alt="register-img" src="/images/register_img.svg" width="510" height="432"/>
           </div>
         </div>
       </div>

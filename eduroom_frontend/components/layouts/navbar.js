@@ -21,12 +21,13 @@ const Navbar = () => {
               <Link href="/login">Login</Link>
             </div>
             <div className="navAction">
+            <Link href="/register">
               <button
                 className="navLogin"
-                onClick={() => router.push('/register')}
               >
-                <a className="navLoginText">Sign In</a>
+                <span className="navLoginText">Sign In</span>
               </button>
+              </Link>
             </div>
           </div>
         </Toolbar>
