@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 const axios = require("axios");
-const Page1 = ({ goto, data, questionNumber }) => {
+const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,}) => {
   const room = { name: "room1", PIN: "99999" };
-  console.log(questionNumber);
-  console.log(data[questionNumber]);
+  let number=questionNumber;
 
+  
   const Correct = [];
   const getCorrectAnswer = () => {
     if (data[questionNumber].correct == 0) {
@@ -26,16 +26,37 @@ const Page1 = ({ goto, data, questionNumber }) => {
             >
               <button
                 className="buttonAnswer"
-                style={{ backgroundColor: "#F39AC4" ,width: '30vw',height: '10vh',border: 'none',color:'white',fontSize:'1.2rem'}}
+                style={{
+                  backgroundColor: "#EB7DB1",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
                 onClick={() => {}}
               >
                 {data[questionNumber].ans[0]}
               </button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
               <button
                 className="buttonAnswer"
-                style={{ backgroundColor: "#D5C1FC" ,opacity:'0.6',width: '30vw',height: '10vh',border: 'none',color:'white',fontSize:'1.2rem'}}
+                style={{
+                  backgroundColor: "#D5C1FC",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
               >
                 {data[questionNumber].ans[1]}
               </button>
@@ -43,7 +64,12 @@ const Page1 = ({ goto, data, questionNumber }) => {
           </Grid>
           <Grid
             container
-            style={{ marginTop: "1vh", display: "flex", alignItems: "center" }}
+            style={{
+              marginTop: "1vh",
+              display: "flex",
+              alignItems: "center",
+              outline: "none",
+            }}
           >
             <Grid
               item
@@ -56,15 +82,382 @@ const Page1 = ({ goto, data, questionNumber }) => {
             >
               <button
                 className="buttonAnswer"
-                style={{ backgroundColor: "#FDD4C1",opacity:'0.6' ,width: '30vw',height: '10vh',border: 'none',color:'white',fontSize:'1.2rem'}}
+                style={{
+                  backgroundColor: "#FDD4C1",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
               >
                 {data[questionNumber].ans[2]}
               </button>
             </Grid>
-            <Grid item xs={6}>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
               <button
                 className="buttonAnswer"
-                style={{ backgroundColor: "#A6CEEE",opacity:'0.6',width: '30vw',height: '10vh',border: 'none',color:'white',fontSize:'1.2rem'}}
+                style={{
+                  backgroundColor: "#A6CEEE",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[3]}
+              </button>
+            </Grid>
+          </Grid>
+        </div>
+      );
+    }
+    //////////////////////////111111111//////////////////////////////////////////////////////////////////
+    if (data[questionNumber].correct == 1) {
+      Correct.push(
+        <div>
+          <Grid
+            container
+            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#F39AC4",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  opacity: "0.5",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+                onClick={() => {}}
+              >
+                {data[questionNumber].ans[0]}
+              </button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#A27CEF",
+                  opacity: "1",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[1]}
+              </button>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            style={{
+              marginTop: "1vh",
+              display: "flex",
+              alignItems: "center",
+              outline: "none",
+            }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#FDD4C1",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[2]}
+              </button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#A6CEEE",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[3]}
+              </button>
+            </Grid>
+          </Grid>
+        </div>
+      );
+    }
+    //////////////////////////22222222222222222222//////////////////////////////////////////////////////////////////
+    if (data[questionNumber].correct == 2) {
+      Correct.push(
+        <div>
+          <Grid
+            container
+            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#F39AC4",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  opacity: "0.5",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+                onClick={() => {}}
+              >
+                {data[questionNumber].ans[0]}
+              </button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#A27CEF",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[1]}
+              </button>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            style={{
+              marginTop: "1vh",
+              display: "flex",
+              alignItems: "center",
+              outline: "none",
+            }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#F3B496",
+                  opacity: "1",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[2]}
+              </button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#A6CEEE",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[3]}
+              </button>
+            </Grid>
+          </Grid>
+        </div>
+      );
+    }
+     //////////////////////////33333333333333333//////////////////////////////////////////////////////////////////
+     if (data[questionNumber].correct == 3) {
+      Correct.push(
+        <div>
+          <Grid
+            container
+            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#F39AC4",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  opacity: "0.5",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+                onClick={() => {}}
+              >
+                {data[questionNumber].ans[0]}
+              </button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#A27CEF",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[1]}
+              </button>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            style={{
+              marginTop: "1vh",
+              display: "flex",
+              alignItems: "center",
+              outline: "none",
+            }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#F3B496",
+                  opacity: "0.5",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
+              >
+                {data[questionNumber].ans[2]}
+              </button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{
+                  backgroundColor: "#8CC0EA",
+                  opacity: "1",
+                  width: "30vw",
+                  height: "10vh",
+                  border: "none",
+                  color: "white",
+                  fontSize: "1.2rem",
+                  outline: "none",
+                }}
               >
                 {data[questionNumber].ans[3]}
               </button>
@@ -91,10 +484,13 @@ const Page1 = ({ goto, data, questionNumber }) => {
             <button
               className="landing-button"
               onClick={() => {
-                questionNext();
+                goto(1) ;number++  ;ChangeQuestionNumber(number);
+               console.log(number) 
+               
               }}
             >
-              NEXT{" "}
+             
+              NEXT
             </button>
           </Grid>
         </Grid>
@@ -106,13 +502,22 @@ const Page1 = ({ goto, data, questionNumber }) => {
           style={{
             marginTop: "4vh",
             display: "flex",
-            height: "15vh",
+            height: "40vh",
             alignItems: "center",
           }}
         >
           <Grid item xs={4}></Grid>
           <Grid item xs={4}>
-            picture
+            <div
+              style={{
+                backgroundColor: "#EFF0F6",
+                padding: "20px",
+                fontSize: "1.3rem",
+                fontWeight: 600,
+              }}
+            >
+              {data[questionNumber].ans[data[questionNumber].correct]}
+            </div>
           </Grid>
           <Grid item xs={4}></Grid>
         </Grid>
@@ -193,7 +598,7 @@ const Page1 = ({ goto, data, questionNumber }) => {
             padding: 0px;
             width: 100%;
             height: 100%;
-
+            background-image: url("/images/edqiz/BGgame.svg");
             background-size: cover;
             overflow: auto;
           }
