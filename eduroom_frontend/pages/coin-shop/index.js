@@ -22,8 +22,8 @@ const Temp = () => {
                         Welcome to Sticker Store!
                     </span>
                     <span className={Styles.detail}>
-                        Neque porro quisquam est qui dolorem ipsum
-                        <br /> quia dolor sit amet, consectetur, adipisci
+                        This is Store for exchange coin to the sticker
+                        <br />Sticker that's Prize for the people who has Ambition
                     </span>
                     
                     <div className={Styles.posball2}>
