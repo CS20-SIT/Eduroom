@@ -80,3 +80,5 @@
 /graderSystem/contest/id/problem/probID
 /graderSystem/contest/id/
 /graderSystem/contests
+/edqiz
+/edqiz/create
