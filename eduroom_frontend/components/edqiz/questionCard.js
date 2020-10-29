@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import QuestionAnswer from "./questionAnswer";
-
+import Image from 'next/image'
 const QuiztionCard = ({ data, index, add, remove, change}) => {
   useEffect(() => {
     if (data.image) {
