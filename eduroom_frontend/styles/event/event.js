@@ -35,6 +35,7 @@ export default css`
   box-shadow: 6px 4px 19px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
   padding: 30px 20px 30px 20px;
+  margin-top : 30px;
 }
 
 .create-textfield {
@@ -52,8 +53,12 @@ export default css`
   font-weight : bold;
   font-size   : 22px;
   margin : 0px;
+  color :#3d467f;
+
 }
 .input-box {
-  border-radius : 10px
+  border-radius : 10px;
+  border-color : black;
+    margin-top: -4px;
 }
 `;
