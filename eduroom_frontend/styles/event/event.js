@@ -61,4 +61,56 @@ export default css`
   border-color : black;
     margin-top: -4px;
 }
+.button{
+  text-align : center;
+  margin-top : 30px;
+}
+.create-button {
+  background: #fe75b7;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  outline: none;
+  transition: 0.25s;
+}
+.create-button-create {
+  color: white;
+  font-weight: 700;
+  font-size: 1.2em;
+  font-family: 'Quicksand', sans-serif;
+}
+.create-button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.25s;
+}
+
+
+
+.cancel-button {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  
+  outline: none;
+  transition: 0.25s;
+}
+.cancel-button-cancel {
+  border-color : #3D467F;
+  color: 3D467F;
+  font-weight: 700;
+  font-size: 1.2em;
+  font-family: 'Quicksand', sans-serif;
+}
+.cancel-button:hover {
+  background-color :#3D467F;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.25s;
+  color : #FFFFFF
+}
+
+
+
+
 `;
