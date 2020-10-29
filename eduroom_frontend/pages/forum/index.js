@@ -18,21 +18,19 @@ const Forum = () => {
   //   const [create, setCreate] = useState();
   return (
     <Fragment>
-      <div
-        style={{
-          display: "flex",
-          flex: "1 1 auto",
-          justifyContent: "space-between",
-          background: "#EFF0F6",
-        }}
-      >
-          <SideNav />
-          
-        <div id = 'nav'>
-          <NavForum />
-          <div className = 'content'>
-          <strong className='topic'>CHOOSE ROOM</strong>
-          </div>
+        <Container>
+        <h1>Forum</h1>
+        {
+            forum.map((el)=>{
+                return (<ForumBlock key={el} data={el}/>)
+            })
+        }
+        <div>
+            <br></br>
+            <Link href='/forum/create'>
+            <Button variant="outlined" color="primary">create new post</Button>
+            </Link>
+            
         </div>
         <style jsx>{style}</style>
         <style jsx>
