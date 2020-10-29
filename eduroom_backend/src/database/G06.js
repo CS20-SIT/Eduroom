@@ -271,6 +271,43 @@ CREATE INDEX fkIdx_90 ON User_Achievement
 
 `;
 
+const User_badge = `
+
+CREATE TABLE IF NOT EXISTS User_badge
+(
+ BadgeId int NOT NULL,
+ userId  uuid NOT NULL,
+ CONSTRAINT PK_user_badge PRIMARY KEY ( BadgeId, userId ),
+ CONSTRAINT FK_3067 FOREIGN KEY ( userId ) REFERENCES User_Profile ( userId ),
+ CONSTRAINT FK_945 FOREIGN KEY ( BadgeId ) REFERENCES Badge ( BadgeId )
+);
+
+CREATE INDEX fkIdx_3067 ON User_badge
+(
+ userId
+);
+
+CREATE INDEX fkIdx_945 ON User_badge
+(
+ BadgeId
+);
+
+`;
+
+const Badge = `
+
+CREATE TABLE IF NOT EXISTS Badge
+(
+ BadgeId int NOT NULL,
+ Cost    int NOT NULL,
+ Details int NOT NULL,
+ CONSTRAINT PK_badge PRIMARY KEY ( BadgeId )
+);
+
+
+`;
+
+
 
 exports.createG06Table = async (req, res) => {
   try{
@@ -287,6 +324,8 @@ exports.createG06Table = async (req, res) => {
     await createTable_User_Path;
     await createTable_User_Progress;
     await createTable_User_XP;
+    await createTable_Badge;
+    await createTable_User_badge;
     console.log('Create G06 Table Successfully');
   } catch (err) {
     console.error(err.stack.red);
@@ -394,6 +433,22 @@ const createTable_User_Achievement = async (req, res, next) => {
   try {
     const job = await pool.query(User_Achievement);
     console.log('Create table User_Achievement Successfully');
+  } catch (err) {
+    console.error(err.stack.red);
+  }
+};
+const createTable_User_badge = async (req, res, next) => {
+  try {
+    const job = await pool.query(User_badge);
+    console.log('Create table User_badge Successfully');
+  } catch (err) {
+    console.error(err.stack.red);
+  }
+};
+const createTable_Badge = async (req, res, next) => {
+  try {
+    const job = await pool.query(Badge);
+    console.log('Create table Badge Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
