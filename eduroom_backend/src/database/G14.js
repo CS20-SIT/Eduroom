@@ -1,4 +1,4 @@
-const pool = require('../database/db');
+const pool = require('../database/db')
 
 const TagColor = `
 
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS TagColor
 );
 
 
-`;
+`
 const Global_Event_color = `
 
 CREATE TABLE IF NOT EXISTS Global_Event_color
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Global_Event_color
  userId  uuid NOT NULL,
  EventId int NOT NULL,
  tagId   int NOT NULL,
- CONSTRAINT PK_event_color PRIMARY KEY ( userId, EventId ),
+ CONSTRAINT PK_event_color_global PRIMARY KEY ( userId, EventId ),
  CONSTRAINT FK_1528 FOREIGN KEY ( tagId ) REFERENCES TagColor ( tagId ),
  CONSTRAINT FK_1531 FOREIGN KEY ( EventId ) REFERENCES Global_Event ( EventId ),
  CONSTRAINT FK_2642 FOREIGN KEY ( userId ) REFERENCES User_Profile ( userId )
@@ -39,7 +39,7 @@ CREATE INDEX fkIdx_2642 ON Global_Event_color
  userId
 );
 
-`;
+`
 const Course_Event_color = `
 
 CREATE TABLE IF NOT EXISTS Course_Event_color
@@ -69,7 +69,7 @@ CREATE INDEX fkIdx_2639 ON Course_Event_color
 );
 
 
-`;
+`
 const Global_Event = `
 
 CREATE TABLE IF NOT EXISTS Global_Event
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS Global_Event
  lastUpdate timestamp NOT NULL,
  typeId     int NOT NULL,
  adminId    uuid NOT NULL,
- CONSTRAINT PK_event PRIMARY KEY ( EventId ),
+ CONSTRAINT PK_event_global PRIMARY KEY ( EventId ),
  CONSTRAINT FK_1519 FOREIGN KEY ( typeId ) REFERENCES Category_Event ( typeId ),
  CONSTRAINT FK_3843 FOREIGN KEY ( adminId ) REFERENCES Admin_Login ( adminId )
 );
@@ -101,7 +101,7 @@ CREATE INDEX fkIdx_3843 ON Global_Event
  adminId
 );
 
-`;
+`
 const Course_Event = `
 
 CREATE TABLE IF NOT EXISTS Course_Event
@@ -147,7 +147,7 @@ CREATE INDEX fkIdx_3846 ON Course_Event
  adminId
 );
 
-`;
+`
 const Category_Event = `
 
 CREATE TABLE IF NOT EXISTS Category_Event
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS Category_Event
  CONSTRAINT PK_categoryeventt PRIMARY KEY ( typeId )
 );
 
-`;
+`
 const Reminder = `
 
 CREATE TABLE IF NOT EXISTS Reminder
@@ -179,77 +179,76 @@ CREATE INDEX fkIdx_2632 ON Reminder
  userId
 );
 
-`;
+`
 
-exports.createG14Table = async (req, res) => {
-  try{
-    await createTable_TagColor;
-    await createTable_Category_Event;
-    await createTable_Course_Event;
-    await createTable_Course_Event_color;
-    await createTable_Global_Event;
-    await createTable_Global_Event_color;
-    await createTable_Reminder;
-    console.log('Create G14 Table Successfully');
+exports.createG14Table = async () => {
+  try {
+    await createTable_TagColor()
+    await createTable_Category_Event()
+    await createTable_Course_Event()
+    await createTable_Course_Event_color()
+    await createTable_Global_Event()
+    await createTable_Global_Event_color()
+    await createTable_Reminder()
+    console.log('Create G14 Table Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-
 }
 
-const createTable_TagColor = async (req, res, next) => {
-    try {
-      const job = await pool.query(TagColor);
-      console.log('Create table TagColor Successfully');
-    } catch (err) {
-      console.error(err.stack.red);
-    }
-};
-const createTable_Global_Event_color = async (req, res, next) => {
+const createTable_TagColor = async () => {
   try {
-    const job = await pool.query(Global_Event_color);
-    console.log('Create table Global_Event_color Successfully');
+    const job = await pool.query(TagColor)
+    console.log('Create table TagColor Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Global_Event = async (req, res, next) => {
+}
+const createTable_Global_Event_color = async () => {
   try {
-    const job = await pool.query(Global_Event);
-    console.log('Create table Global_Event Successfully');
+    const job = await pool.query(Global_Event_color)
+    console.log('Create table Global_Event_color Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Course_Event_color = async (req, res, next) => {
+}
+const createTable_Global_Event = async () => {
   try {
-    const job = await pool.query(Course_Event_color);
-    console.log('Create table Course_Event_color Successfully');
+    const job = await pool.query(Global_Event)
+    console.log('Create table Global_Event Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Course_Event = async (req, res, next) => {
+}
+const createTable_Course_Event_color = async () => {
   try {
-    const job = await pool.query(Course_Event);
-    console.log('Create table Course_Event Successfully');
+    const job = await pool.query(Course_Event_color)
+    console.log('Create table Course_Event_color Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Category_Event = async (req, res, next) => {
+}
+const createTable_Course_Event = async () => {
   try {
-    const job = await pool.query(Category_Event);
-    console.log('Create table Category_Event Successfully');
+    const job = await pool.query(Course_Event)
+    console.log('Create table Course_Event Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Reminder = async (req, res, next) => {
+}
+const createTable_Category_Event = async () => {
   try {
-    const job = await pool.query(Reminder);
-    console.log('Create table Reminder Successfully');
+    const job = await pool.query(Category_Event)
+    console.log('Create table Category_Event Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
+const createTable_Reminder = async () => {
+  try {
+    const job = await pool.query(Reminder)
+    console.log('Create table Reminder Successfully')
+  } catch (err) {
+    console.error(err)
+  }
+}
