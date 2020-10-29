@@ -1,4 +1,4 @@
-const pool = require('../database/db');
+const pool = require('../database/db')
 
 const Kahoot_room = `
 
@@ -25,7 +25,7 @@ CREATE INDEX fkIdx_2403 ON Kahoot_room
  InstructorId
 );
 
-`;
+`
 const Kahoot_Type = `
 
 CREATE TABLE IF NOT EXISTS Kahoot_Type
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Kahoot_Type
  CONSTRAINT PK_tpye PRIMARY KEY ( id )
 );
 
-`;
+`
 const Kahoot_Question_Topic = `
 
 CREATE TABLE IF NOT EXISTS Kahoot_Question_Topic
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS Kahoot_Question_Topic
  CONSTRAINT PK_topic PRIMARY KEY ( id )
 );
 
-`;
+`
 const Kahoot_question = `
 
 CREATE TABLE IF NOT EXISTS Kahoot_question
@@ -69,12 +69,12 @@ CREATE INDEX fkIdx_128 ON Kahoot_question
  roomId
 );
 
-CREATE INDEX fkIdx_59 ON Kahoot_question
+CREATE INDEX fkIdx_60 ON Kahoot_question
 (
  topicId
 );
 
-`;
+`
 const Kahoot_answer = `
 
 CREATE TABLE IF NOT EXISTS Kahoot_answer
@@ -92,7 +92,7 @@ CREATE INDEX fkIdx_132 ON Kahoot_answer
  questionId
 );
 
-`;
+`
 const Kahoot_roomHistory_PlayerAnswer = `
 
 CREATE TABLE IF NOT EXISTS Kahoot_roomHistory_PlayerAnswer
@@ -118,7 +118,7 @@ CREATE INDEX fkIdx_141 ON Kahoot_roomHistory_PlayerAnswer
  questionId
 );
 
-`;
+`
 const Kahoot_roomHistory = `
 
 CREATE TABLE IF NOT EXISTS Kahoot_roomHistory
@@ -135,7 +135,7 @@ CREATE INDEX fkIdx_111 ON Kahoot_roomHistory
  roomId
 );
 
-`;
+`
 const Kahoot_roomHistoryPlayer = `
 
 CREATE TABLE IF NOT EXISTS Kahoot_roomHistoryPlayer
@@ -153,12 +153,12 @@ CREATE INDEX fkIdx_118 ON Kahoot_roomHistoryPlayer
  SessionId
 );
 
-CREATE INDEX fkIdx_123 ON Kahoot_roomHistoryPlayer
+CREATE INDEX fkIdx_122 ON Kahoot_roomHistoryPlayer
 (
  userId
 );
 
-`;
+`
 const Kahoot_player = `
 
 CREATE TABLE IF NOT EXISTS Kahoot_player
@@ -174,95 +174,94 @@ CREATE INDEX fkIdx_2398 ON Kahoot_player
  userId
 );
 
-`;
+`
 
-exports.createG03Table = async (req, res) => {
-  try{
-    await createTable_Kahoot_player;
-    await createTable_Kahoot_Type;
-    await createTable_Kahoot_Question_Topic;
-    await createTable_Kahoot_room;
-    await createTable_Kahoot_question;
-    await createTable_Kahoot_answer;
-    await createTable_Kahoot_roomHistory;
-    await createTable_Kahoot_roomHistoryPlayer;
-    await createTable_Kahoot_roomHistory_PlayerAnswer;
-    console.log('Create G03 Table Successfully');
+exports.createG03Table = async () => {
+  try {
+    await createTable_Kahoot_player()
+    await createTable_Kahoot_Type()
+    await createTable_Kahoot_Question_Topic()
+    await createTable_Kahoot_room()
+    await createTable_Kahoot_question()
+    await createTable_Kahoot_answer()
+    await createTable_Kahoot_roomHistory()
+    await createTable_Kahoot_roomHistoryPlayer()
+    await createTable_Kahoot_roomHistory_PlayerAnswer()
+    console.log('Create G03 Table Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-
 }
 
-const createTable_Kahoot_Type = async (req, res, next) => {
-    try {
-      const job = await pool.query(Kahoot_Type);
-      console.log('Create table Kahoot_Type Successfully');
-    } catch (err) {
-      console.error(err.stack.red);
-    }
-};
-const createTable_Kahoot_player = async (req, res, next) => {
+const createTable_Kahoot_Type = async () => {
   try {
-    const job = await pool.query(Kahoot_player);
-    console.log('Create table Kahoot_player Successfully');
+    const job = await pool.query(Kahoot_Type)
+    console.log('Create table Kahoot_Type Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Kahoot_room = async (req, res, next) => {
+}
+const createTable_Kahoot_player = async () => {
   try {
-    const job = await pool.query(Kahoot_room);
-    console.log('Create table Kahoot_room Successfully');
+    const job = await pool.query(Kahoot_player)
+    console.log('Create table Kahoot_player Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Kahoot_Question_Topic = async (req, res, next) => {
+}
+const createTable_Kahoot_room = async () => {
   try {
-    const job = await pool.query(Kahoot_Question_Topic);
-    console.log('Create table Kahoot_Question_Topic Successfully');
+    const job = await pool.query(Kahoot_room)
+    console.log('Create table Kahoot_room Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Kahoot_question = async (req, res, next) => {
+}
+const createTable_Kahoot_Question_Topic = async () => {
   try {
-    const job = await pool.query(Kahoot_question);
-    console.log('Create table Kahoot_question Successfully');
+    const job = await pool.query(Kahoot_Question_Topic)
+    console.log('Create table Kahoot_Question_Topic Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Kahoot_answer = async (req, res, next) => {
+}
+const createTable_Kahoot_question = async () => {
   try {
-    const job = await pool.query(Kahoot_answer);
-    console.log('Create table Kahoot_answer Successfully');
+    const job = await pool.query(Kahoot_question)
+    console.log('Create table Kahoot_question Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Kahoot_roomHistory = async (req, res, next) => {
+}
+const createTable_Kahoot_answer = async () => {
   try {
-    const job = await pool.query(Kahoot_roomHistory);
-    console.log('Create table Kahoot_roomHistory Successfully');
+    const job = await pool.query(Kahoot_answer)
+    console.log('Create table Kahoot_answer Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Kahoot_roomHistoryPlayer = async (req, res, next) => {
+}
+const createTable_Kahoot_roomHistory = async () => {
   try {
-    const job = await pool.query(Kahoot_roomHistoryPlayer);
-    console.log('Create table Kahoot_roomHistoryPlayer Successfully');
+    const job = await pool.query(Kahoot_roomHistory)
+    console.log('Create table Kahoot_roomHistory Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Kahoot_roomHistory_PlayerAnswer = async (req, res, next) => {
+}
+const createTable_Kahoot_roomHistoryPlayer = async () => {
   try {
-    const job = await pool.query(Kahoot_roomHistory_PlayerAnswer);
-    console.log('Create table Kahoot_roomHistory_PlayerAnswer Successfully');
+    const job = await pool.query(Kahoot_roomHistoryPlayer)
+    console.log('Create table Kahoot_roomHistoryPlayer Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
+const createTable_Kahoot_roomHistory_PlayerAnswer = async () => {
+  try {
+    const job = await pool.query(Kahoot_roomHistory_PlayerAnswer)
+    console.log('Create table Kahoot_roomHistory_PlayerAnswer Successfully')
+  } catch (err) {
+    console.error(err)
+  }
+}
