@@ -63,13 +63,15 @@ const content = () => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid container style={{marginTop:"3.5%"}}>
-                                <Grid item xs={3}>
+                            <Grid container style={{ marginTop: "3.5%" }}>
+                                <Grid item xs={2}>
                                     <p className="create-topic">Description :</p>
                                 </Grid>
                                 <Grid item xs={9}>
-                                    <input className="input-box"
-                                        style={{ width: "260px", height: "39px" }} />
+                                    <div style={{ marginLeft: "-40px" }}>
+                                        <input className="input-box"
+                                            style={{ width: "923px", height: "88px" }} />
+                                    </div>
                                 </Grid>
                             </Grid>
 
