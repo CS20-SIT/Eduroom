@@ -1,17 +1,15 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Page2 from "./gamePage2";
-
+// import image from ""
 
 const axios = require("axios");
-const Page1 = ({ goto, data ,questionNumber}) => {
+const Page1 = ({ goto, data, questionNumber }) => {
   const room = { name: "room1", PIN: "99999" };
-  
+
   function questionNext() {
     setquestionNumber(questionNumber + 1);
   }
-
-   
 
   return (
     <Fragment>
@@ -27,106 +25,125 @@ const Page1 = ({ goto, data ,questionNumber}) => {
             xs={2}
             style={{ display: "flex", justifyContent: "center" }}
           >
-              
             <button
               className="landing-button"
               onClick={() => {
-               goto(2);
-               
+                goto(2);
               }}
             >
-              SKIP{" "}
+              SKIP
             </button>
-            
           </Grid>
         </Grid>
         <br />
-
-        <div className="text">{data[questionNumber].question}</div>
-        <Grid
-          container
-          style={{
-            marginTop: "4vh",
-            display: "flex",
-            height: "15vh",
-            alignItems: "center",
-          }}
-        >
-          <Grid item xs={4}>
-            <div className="text-time">TIME</div>
-            <div className="text-timeNum">{45}</div>
-          </Grid>
-          <Grid item xs={4}>
-            picture
-          </Grid>
-          <Grid item xs={4}>
-            <div className="text-time">ANSWER</div>
-            <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
-              0
-            </div>
-          </Grid>
-        </Grid>
-
-        <Grid
-          container
-          style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
-        >
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{display:'flex',justifyContent:'center'}}>
+            <div className="text">{data[questionNumber].question}</div>
+          </div>
           <Grid
-            item
-            xs={6}
+            container
             style={{
-              justifyContent: "flex-end",
+              marginTop: "4vh",
               display: "flex",
-              padding: "1vw",
+              height: "45vh",
+              alignItems: "center",
             }}
           >
-            <button
-              className="buttonAnswer"
-              style={{ backgroundColor: "#F39AC4" }}
-              onClick={() => {}}
-            >
-              {data[questionNumber].ans[0]}
-            </button>
+            <Grid item xs={4}>
+              <div className="text-time">TIME</div>
+              <div className="text-timeNum">{45}</div>
+            </Grid>
+            <Grid item xs={4}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <img
+                  src="/images/questionPic.jpg "
+                  alt="my image"
+                  style={{
+                    width: "90%",
+                    borderStyle: "dotted",
+                    padding: "20px",
+                    borderRadius: "20px",
+                    borderColor: "#B3ABBC",
+                  }}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className="text-time">ANSWER</div>
+              <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
+                0
+              </div>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            
-            <button
-              className="buttonAnswer" 
-              style={{ backgroundColor: "#D5C1FC" }}
-            >
-              {data[questionNumber].ans[1]}
-            </button>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          style={{ marginTop: "1vh", display: "flex", alignItems: "center" }}
-        >
+
           <Grid
-            item
-            xs={6}
-            style={{
-              justifyContent: "flex-end",
-              display: "flex",
-              padding: "1vw",
-            }}
+            container
+            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
           >
-            <button
-              className="buttonAnswer"
-              style={{ backgroundColor: "#FDD4C1" }}
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
             >
-              {data[questionNumber].ans[2]}
-            </button>
-          </Grid>
-          <Grid item xs={6}>
-            <button
-              className="buttonAnswer"
-              style={{ backgroundColor: "#A6CEEE" }}
+              <button
+                className="buttonAnswer"
+                style={{ backgroundColor: "#F39AC4" }}
+                onClick={() => {}}
+              >
+                {data[questionNumber].ans[0]}
+              </button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
             >
-              {data[questionNumber].ans[3]}
-            </button>
+              <button
+                className="buttonAnswer"
+                style={{ backgroundColor: "#D5C1FC" }}
+              >
+                {data[questionNumber].ans[1]}
+              </button>
+            </Grid>
           </Grid>
-        </Grid>
+          <Grid
+            container
+            style={{ marginTop: "1vh", display: "flex", alignItems: "center" }}
+          >
+            <Grid
+              item
+              xs={6}
+              style={{
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
+              }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{ backgroundColor: "#FDD4C1" }}
+              >
+                {data[questionNumber].ans[2]}
+              </button>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <button
+                className="buttonAnswer"
+                style={{ backgroundColor: "#A6CEEE" }}
+              >
+                {data[questionNumber].ans[3]}
+              </button>
+            </Grid>
+          </Grid>
+        </div>
       </div>
       <style jsx>
         {`
@@ -153,6 +170,9 @@ const Page1 = ({ goto, data ,questionNumber}) => {
             padding: 0px;
             display: flex;
             justify-content: center;
+            width: 95vw;
+            
+            
           }
           .text-time {
             font-family: "Quicksand", sans-serif;
@@ -202,6 +222,7 @@ const Page1 = ({ goto, data ,questionNumber}) => {
             padding: 0px;
             width: 100%;
             height: 100%;
+            background-image: url("/images/edqiz/BGgame.svg");
 
             background-size: cover;
             overflow: auto;
@@ -218,7 +239,7 @@ const Page1 = ({ goto, data ,questionNumber}) => {
             outline: none;
             justify: center;
             align-content: center;
-            position: absolute;
+            // position: absolute;
             margin: 0px;
           }
           .landing-button:hover {

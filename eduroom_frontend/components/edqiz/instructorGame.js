@@ -4,31 +4,50 @@ import Page2 from "./gamePage2";
 const Content = () => {
   const [current, setCurrent] = useState(1);
   const [questionNumber, setquestionNumber] = useState(0);
-    console.log(questionNumber)
+  const handleChangeQuestionNumber = (val) => {
+    setquestionNumber(val);
+  };
+ 
 
   const data = [
     {
-      question: "Question1",
+      question:
+        "directory anything else. The name cannot be changed and is the only directory used to serve static assets?",
+      time: "90",
+      point: "2000",
+      ans: [
+        "have a static file with the same",
+        "directory at build time will be served",
+        "Files added at runtime won't be available",
+        "ecommend using a third party service ",
+      ],
+      correct: 0,
+      image: null,
+    },
+    {
+      question: "Question2",
       time: "90",
       point: "2000",
       ans: ["a", "b", "c", "d"],
-      correct: 0,
+      correct: 1,
       image: null,
-    },{
-        question: "Question2",
-        time: "90",
-        point: "2000",
-        ans: ["a", "b", "c", "d"],
-        correct: 0,
-        image: null,
-      },{
-        question: "Question3",
-        time: "90",
-        point: "2000",
-        ans: ["a", "b", "c", "d"],
-        correct: 0,
-        image: null,
-      },
+    },
+    {
+      question: "Question3",
+      time: "90",
+      point: "2000",
+      ans: ["a", "b", "c", "d"],
+      correct: 2,
+      image: null,
+    },
+    {
+      question: "Question4",
+      time: "90",
+      point: "2000",
+      ans: ["a", "b", "c", "d"],
+      correct: 3,
+      image: null,
+    },
   ];
   const goto = (val) => {
     setCurrent(val);
@@ -37,18 +56,20 @@ const Content = () => {
   const renderPage = () => {
     switch (current) {
       case 1:
-        return <Page1 goto={goto} data={data} questionNumber={questionNumber}/>;
+        return (
+          <Page1 goto={goto} data={data} questionNumber={questionNumber}  />
+        );
       case 2:
-        return <Page2 goto={goto} data={data} questionNumber={questionNumber} />;
+        return (
+          <Page2 goto={goto} data={data} questionNumber={questionNumber} ChangeQuestionNumber={handleChangeQuestionNumber} />
+        );
     }
   };
   return (
     <Fragment>
       <div className="landing">
         <div>
-
-            <div className="card">{renderPage()}</div>
-          
+          <div className="card">{renderPage()}</div>
         </div>
       </div>
       <style jsx>{`

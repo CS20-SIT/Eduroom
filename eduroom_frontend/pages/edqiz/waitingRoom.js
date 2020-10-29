@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import GeneralNoNav from "../../components/template/generalnonav";
 import Grid from "@material-ui/core/Grid";
-
+import Link from 'next/link'
 const Content = () => {
   const student = [
     { name: "NICKNAME" },
@@ -116,7 +116,7 @@ const Content = () => {
                   alignItems: "center",
                 }}
               >
-                <button className="startButton">start ></button>
+                <Link  href={'./game'}><button className="startButton">start></button></Link >
               </Grid>
             </Grid>
             <br />
