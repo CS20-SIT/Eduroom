@@ -18,4 +18,4 @@ jobs:
       - name: run Lighthouse CI
         run: |
           npm install -g @lhci/cli
-          npx lhci autorun
+          /home/thetkpark/.npm-global/bin/lhci autorun
