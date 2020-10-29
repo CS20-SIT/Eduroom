@@ -108,7 +108,7 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
                         display: "contents",
                       }}
                     >
-                      <Image
+                      <img
                         src=""
                         id={"show-image" + index}
                         style={{ maxWidth: "600px", maxHeight: "300px" }}

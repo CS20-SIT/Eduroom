@@ -232,8 +232,8 @@ const Temp = ({ instructor }) => {
                       Please select appointment times
                     </div>
                   ) : (
-                    timeSelected.map((e) => (
-                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                    timeSelected.map((e,index) => (
+                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm' key={index}>
                         {timeFormatter(e)} - {timeFormatter(e + 1)}
                       </div>
                     ))
