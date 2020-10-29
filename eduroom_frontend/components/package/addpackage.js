@@ -4,12 +4,9 @@ import Link from 'next/link'
 const Addpackage = () => {
   return (
     <Fragment>
-      <div className="center">
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Link href="/user/instructor/course/createpackage">
-          <button
-            className="addpackbutton"
-            style={{ backgroundColor: 'white' }}
-          >
+          <button className="addpackbutton">
             <i className="fas fa-plus-circle"></i>
             <br></br>
             Add new package
