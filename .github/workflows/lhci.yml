@@ -1,0 +1,23 @@
+name: LHCI
+on:
+  push:
+    branches:
+    - master
+env:
+  LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+  LHCI_BUILD_CONTEXT__CURRENT_HASH: $GITHUB_SHA
+jobs:
+  lhci:
+    name: Lighthouse
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli
+          echo $LHCI_BUILD_CONTEXT__CURRENT_HASH
+          /home/thetkpark/.npm-global/bin/lhci autorun
