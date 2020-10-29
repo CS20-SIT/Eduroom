@@ -14,7 +14,7 @@ const Home = () => {
       <Layout>
         <div className="page">
           <div className="graphic">
-            <Image src="../../images/graderSubmit/pr_monochromatic.svg" />
+            <img src="../../images/graderSubmit/pr_monochromatic.svg" />
           </div>
           <div className="content">
             <div className="detail">
