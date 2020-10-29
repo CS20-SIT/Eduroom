@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import style from '../../styles/landing/login';
+import Image from 'next/image';
 const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +32,7 @@ const Content = () => {
           </div>
           <div className="login-form">
             <form onSubmit={(e) => e.preventDefault()}>
+              <label>
               <input
                 className="login-textfield"
                 type="text"
@@ -38,6 +40,8 @@ const Content = () => {
                 onChange={(e) => handleEmail(e)}
               />
               <div className="error">{emailError}</div>
+              </label>
+              <label>
               <input
                 className="login-textfield"
                 type="password"
@@ -45,6 +49,7 @@ const Content = () => {
                 onChange={(e) => handlePassword(e)}
               />
               <div className="error">{passwordError}</div>
+              </label>
 
               <button className="login-button">
                 <span className="login-button-text">Log In</span>
@@ -67,10 +72,12 @@ const Content = () => {
             </form>
           </div>
         </div>
-        <img
+        <Image
           className="login-page-img"
           alt="login-page-img"
           src="/images/login-img.svg"
+          width="544"
+          height="450"
         />
       </div>
       <style jsx>{style}</style>
