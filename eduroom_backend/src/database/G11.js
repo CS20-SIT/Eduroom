@@ -322,16 +322,16 @@ exports.createG11Table = async (req, res) => {
     await createTable_Course;
     await createTable_Course_Collaborator;
     await createTable_Course_Log;
-    await createTable_Course_Quiz;
     await createTable_Course_Section;
+    await createTable_Section_Part;
+    await createTable_Course_Quiz;
     await createTable_Course_Section_Part_Material;
     await createTable_Course_Section_Part_Video;
     await createTable_Course_categories;
-    await createTable_Quiz_Correct_Choice;
     await createTable_Quiz_Question;
-    await createTable_Quiz_Question_Answer;
     await createTable_Quiz_Question_Choice;
-    await createTable_Section_Part;
+    await createTable_Quiz_Question_Answer;
+    await createTable_Quiz_Correct_Choice;
     await createTable_User_Interact_Part;
     console.log('Create G11 Table Successfully');
   } catch (err) {
