@@ -28,7 +28,7 @@ const GraderNav = () => {
             <Link href="/graderSystem/profile">Profile</Link>
           </span>
           <Link href="/graderSystem/profile">
-            <Image src="../../images/graderSubmit/profile.svg" />
+            <Image src="/images/graderSubmit/profile.svg" width="50" height="50"/>
           </Link>
         </div>
       </div>
