@@ -53,11 +53,12 @@ const Content = () => {
     }
 
     const currentMonth = day.dateObject.format("MMMM")
+    const currentYear = day.dateObject.format("YYYY")
 
     return (
         <Fragment>
             <div>
-                <h1>{currentMonth}</h1>
+                <h1>{currentMonth + " "+currentYear}</h1>
                 <button onClick={minusMonth}>-</button><button onClick={addMonth}>+</button>
                 
                 <div className="grid">
