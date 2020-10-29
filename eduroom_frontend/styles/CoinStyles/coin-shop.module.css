@@ -9,6 +9,7 @@
 .animation2 {
     animation-name: MoveIn;
     animation-duration: 1s;
+    margin-right:100px ;
 }
 .btn {
     position: absolute;
@@ -36,11 +37,12 @@
     left: 10%;
     color: #5b5b5b;
     font-weight: 20px;
+    z-index: 1000;
 }
 .detail {
     position: absolute;
     font-size: 20px;
-    top: 50%;
+    top: 51%;
     left: 12%;
     color: #5b5b5b;
 }
@@ -94,7 +96,7 @@
 }
 
 @keyframes MoveOut {
-    25% {
+    0% {
         opacity: 1;
         transform: translate(0);
     }
@@ -155,7 +157,7 @@
     display: inline-block;
     top: 153px;
     position: absolute;
-    height: 300px;
+    height: 210px;
     width: 4px;
     margin: 150px 123px;
     content: '';
@@ -203,7 +205,7 @@
     display: inline-block;
     top: 153px;
     position: absolute;
-    height: 300px;
+    height: 210px;
     width: 4px;
     margin: 150px 123px;
     content: '';
