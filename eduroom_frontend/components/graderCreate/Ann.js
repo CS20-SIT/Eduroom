@@ -1,8 +1,8 @@
 import React from "react";
-import AnnDialog from "../graderCreate/AnnDialog";
-import AnnTable from "./AnnTable";
+import AnnDialog from "./AnnCom/AnnDialog";
+import AnnTable from "./AnnCom/AnnTable";
 import { useState, useEffect } from "react";
-
+//prepare for adding abmin log wheen create / edit ann
 const Test = () => {
   const [refresh, setRefresh] = useState(false);
   const handleUpdate = () => {
