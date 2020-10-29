@@ -6,10 +6,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import style from "../../styles/graderCreate/CreateAnnouncement";
+import style from "../../../styles/graderCreate/CreateAnnouncement";
 import Divider from "@material-ui/core/Divider";
 import axios from "axios";
 
+//on button , change that to chips 
+// https://material-ui.com/components/chips/#chip
 const AnnDialog = (props) => {
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
@@ -77,7 +79,7 @@ const AnnDialog = (props) => {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
+        Create
       </Button>
 
       <Dialog

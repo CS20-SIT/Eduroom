@@ -25,7 +25,12 @@ const useStyles = makeStyles({
   test : {
     'font-family': 'Quicksand , sans-serif',
     borderBottom: "none"
+  },
+  tableRow : {
+    'font-family': 'Quicksand , sans-serif',
+    borderBottom: "none"
   }
+
 })
 const shorten = (text, maxLength) => {
   if (text && text.length > maxLength) {
@@ -62,7 +67,7 @@ const AnnTable = (props) => {
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table className={classes.tableRow}  stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell>Id</TableCell>
