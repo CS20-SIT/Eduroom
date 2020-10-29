@@ -70,12 +70,33 @@ CREATE INDEX fkIdx_3621 ON Review_course
 `;
 
 
+const User_SearchHistory = `
+
+CREATE TABLE IF NOT EXISTS User_SearchHistory
+(
+ userId     uuid NOT NULL,
+ keyword    varchar(50) NOT NULL,
+ searchTime timestamp NOT NULL,
+ CONSTRAINT PK_user_searchhistory PRIMARY KEY ( userId, keyword ),
+ CONSTRAINT FK_3463 FOREIGN KEY ( userId ) REFERENCES User_Profile ( userId )
+);
+
+CREATE INDEX fkIdx_3463 ON User_SearchHistory
+(
+ userId
+);
+
+
+`;
+
+
 
 exports.createG13Table = async (req, res) => {
   try{
     await createTable_Package;
     await createTable_Package_courses;
     await createTable_Review_course;
+    await createTable_User_SearchHistory
     console.log('Create ALL G13 Tables Successfully');
   } catch (err) {
     console.error(err.stack.red);
@@ -105,6 +126,14 @@ const createTable_Review_course = async (req, res, next) => {
   try {
     const job = await pool.query(Review_course);
     console.log('Create table Review_course Successfully');
+  } catch (err) {
+    console.error(err.stack.red);
+  }
+};
+const createTable_User_SearchHistory = async (req, res, next) => {
+  try {
+    const job = await pool.query(User_SearchHistory);
+    console.log('Create table User_SearchHistory Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
