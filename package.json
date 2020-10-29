@@ -1,0 +1,12 @@
+{
+  "name": "eduroom",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "docker-compose -f docker-compose.dev.yml up",
+    "clear" : "docker-compose -f docker-compose.dev.yml down",
+    "benchmark": "cd eduroom_benchmark && npm start && cd .."
+  },
+  "author": "GGolfz",
+  "license": "ISC"
+}
