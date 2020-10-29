@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
 import style from '../../styles/admin/login'
+import Image from 'next/image'
 const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -9,10 +10,12 @@ const Content = () => {
     <Fragment>
       <div className="login">
         <div className="admin-login-page-img">
-        <img
+        <Image
           className="admin-login-img"
           alt="admin-login-page-img"
           src="/images/admin-login-img.svg"
+          width="731"
+          height="605"        
         />
         </div>
         <div className="login-content">
