@@ -1,6 +1,5 @@
 const JwtStrategy = require('passport-jwt').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const ExtractJwt = require('passport-jwt').ExtractJwt
 const pool = require('../database/db')
 
 const fromCookieCustom = () => (req) => { // tell passport to read JWT from cookies
