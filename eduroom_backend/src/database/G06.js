@@ -1,4 +1,4 @@
-const pool = require('../database/db');
+const pool = require('../database/db')
 
 const Path = `
 
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Path
 );
 
 
-`;
+`
 const Path_node = `
 
 CREATE TABLE IF NOT EXISTS Path_node
@@ -36,7 +36,7 @@ CREATE INDEX fkIdx_922 ON Path_node
  Parent_Node_id
 );
 
-`;
+`
 
 const Node_Question = `
 
@@ -55,7 +55,7 @@ CREATE INDEX fkIdx_3729 ON Node_Question
  nodeId
 );
 
-`;
+`
 
 const Node_Question_choice = `
 
@@ -75,7 +75,7 @@ CREATE INDEX fkIdx_3737 ON Node_Question_choice
  questionNo
 );
 
-`;
+`
 
 const Node_Question_Correct_Answer = `
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS Kahoot_roomHistoryPlayer
  CONSTRAINT FK_123 FOREIGN KEY ( userId ) REFERENCES Kahoot_player ( userId )
 );
 
-CREATE INDEX fkIdx_118 ON Kahoot_roomHistoryPlayer
+CREATE INDEX fkIdx_119 ON Kahoot_roomHistoryPlayer
 (
  SessionId
 );
@@ -99,7 +99,7 @@ CREATE INDEX fkIdx_123 ON Kahoot_roomHistoryPlayer
  userId
 );
 
-`;
+`
 
 const User_Path = `
 
@@ -122,7 +122,7 @@ CREATE INDEX fkIdx_925 ON User_Path
  pathId
 );
 
-`;
+`
 
 const User_Progress = `
 
@@ -149,7 +149,7 @@ CREATE INDEX fkIdx_935 ON User_Progress
  nodeId
 );
 
-`;
+`
 
 const Achievement = `
 
@@ -168,7 +168,7 @@ CREATE INDEX fkIdx_956 ON Achievement
  nodeId
 );
 
-`;
+`
 
 const Achieve_Problem = `
 
@@ -191,7 +191,7 @@ CREATE INDEX fkIdx_97 ON Achieve_Problem
  achieveId
 );
 
-`;
+`
 
 const Leaderboard_Title = `
 
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS Leaderboard_Title
  CONSTRAINT PK_title PRIMARY KEY ( titleId )
 );
 
-`;
+`
 
 const User_XP = `
 
@@ -221,7 +221,7 @@ CREATE INDEX fkIdx_3763 ON User_XP
  userId
 );
 
-`;
+`
 
 const Leaderboard = `
 
@@ -240,12 +240,12 @@ CREATE INDEX fkIdx_3058 ON Leaderboard
  userId
 );
 
-CREATE INDEX fkIdx_61 ON Leaderboard
+CREATE INDEX fkIdx_62 ON Leaderboard
 (
  titleId
 );
 
-`;
+`
 
 const User_Achievement = `
 
@@ -269,7 +269,7 @@ CREATE INDEX fkIdx_90 ON User_Achievement
  achieveId
 );
 
-`;
+`
 
 const User_badge = `
 
@@ -292,7 +292,7 @@ CREATE INDEX fkIdx_945 ON User_badge
  BadgeId
 );
 
-`;
+`
 
 const Badge = `
 
@@ -305,151 +305,148 @@ CREATE TABLE IF NOT EXISTS Badge
 );
 
 
-`;
+`
 
-
-
-exports.createG06Table = async (req, res) => {
-  try{
-    await createTable_Path;
-    await createTable_Path_node;
-    await createTable_Achieve_Problem;
-    await createTable_Achievement;
-    await createTable_Leaderboard_Title;
-    await createTable_Leaderboard;
-    await createTable_Node_Question;
-    await createTable_Node_Question_choice;
-    await createTable_Node_Question_Correct_Answer;
-    await createTable_User_Achievement;
-    await createTable_User_Path;
-    await createTable_User_Progress;
-    await createTable_User_XP;
-    await createTable_Badge;
-    await createTable_User_badge;
-    console.log('Create G06 Table Successfully');
+exports.createG06Table = async () => {
+  try {
+    await createTable_Path()
+    await createTable_Path_node()
+    await createTable_Achievement()
+    await createTable_Achieve_Problem()
+    await createTable_Leaderboard_Title()
+    await createTable_Leaderboard()
+    await createTable_Node_Question()
+    await createTable_Node_Question_choice()
+    await createTable_Node_Question_Correct_Answer()
+    await createTable_User_Achievement()
+    await createTable_User_Path()
+    await createTable_User_Progress()
+    await createTable_User_XP()
+    await createTable_Badge()
+    await createTable_User_badge()
+    console.log('Create G06 Table Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-
 }
 
-const createTable_Path = async (req, res, next) => {
-    try {
-      const job = await pool.query(Path);
-      console.log('Create table Path Successfully');
-    } catch (err) {
-      console.error(err.stack.red);
-    }
-};
-const createTable_Path_node = async (req, res, next) => {
+const createTable_Path = async () => {
   try {
-    const job = await pool.query(Path_node);
-    console.log('Create table Path_node Successfully');
+    const job = await pool.query(Path)
+    console.log('Create table Path Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Node_Question = async (req, res, next) => {
+}
+const createTable_Path_node = async () => {
   try {
-    const job = await pool.query(Node_Question);
-    console.log('Create table Node_Question Successfully');
+    const job = await pool.query(Path_node)
+    console.log('Create table Path_node Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Node_Question_choice = async (req, res, next) => {
+}
+const createTable_Node_Question = async () => {
   try {
-    const job = await pool.query(Node_Question_choice);
-    console.log('Create table Node_Question_choice Successfully');
+    const job = await pool.query(Node_Question)
+    console.log('Create table Node_Question Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Node_Question_Correct_Answer = async (req, res, next) => {
+}
+const createTable_Node_Question_choice = async () => {
   try {
-    const job = await pool.query(Node_Question_Correct_Answer);
-    console.log('Create table Node_Question_Correct_Answer Successfully');
+    const job = await pool.query(Node_Question_choice)
+    console.log('Create table Node_Question_choice Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_User_Path = async (req, res, next) => {
+}
+const createTable_Node_Question_Correct_Answer = async () => {
   try {
-    const job = await pool.query(User_Path);
-    console.log('Create table User_Path Successfully');
+    const job = await pool.query(Node_Question_Correct_Answer)
+    console.log('Create table Node_Question_Correct_Answer Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_User_Progress = async (req, res, next) => {
+}
+const createTable_User_Path = async () => {
   try {
-    const job = await pool.query(User_Progress);
-    console.log('Create table User_Progress Successfully');
+    const job = await pool.query(User_Path)
+    console.log('Create table User_Path Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Achievement = async (req, res, next) => {
+}
+const createTable_User_Progress = async () => {
   try {
-    const job = await pool.query(Achievement);
-    console.log('Create table Achievement Successfully');
+    const job = await pool.query(User_Progress)
+    console.log('Create table User_Progress Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Achieve_Problem = async (req, res, next) => {
+}
+const createTable_Achievement = async () => {
   try {
-    const job = await pool.query(Achieve_Problem);
-    console.log('Create table Achieve_Problem Successfully');
+    const job = await pool.query(Achievement)
+    console.log('Create table Achievement Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Leaderboard_Title = async (req, res, next) => {
+}
+const createTable_Achieve_Problem = async () => {
   try {
-    const job = await pool.query(Leaderboard_Title);
-    console.log('Create table Leaderboard_Title Successfully');
+    const job = await pool.query(Achieve_Problem)
+    console.log('Create table Achieve_Problem Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_User_XP = async (req, res, next) => {
+}
+const createTable_Leaderboard_Title = async () => {
   try {
-    const job = await pool.query(User_XP);
-    console.log('Create table User_XP Successfully');
+    const job = await pool.query(Leaderboard_Title)
+    console.log('Create table Leaderboard_Title Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Leaderboard = async (req, res, next) => {
+}
+const createTable_User_XP = async () => {
   try {
-    const job = await pool.query(Leaderboard);
-    console.log('Create table Leaderboard Successfully');
+    const job = await pool.query(User_XP)
+    console.log('Create table User_XP Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_User_Achievement = async (req, res, next) => {
+}
+const createTable_Leaderboard = async () => {
   try {
-    const job = await pool.query(User_Achievement);
-    console.log('Create table User_Achievement Successfully');
+    const job = await pool.query(Leaderboard)
+    console.log('Create table Leaderboard Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_User_badge = async (req, res, next) => {
+}
+const createTable_User_Achievement = async () => {
   try {
-    const job = await pool.query(User_badge);
-    console.log('Create table User_badge Successfully');
+    const job = await pool.query(User_Achievement)
+    console.log('Create table User_Achievement Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Badge = async (req, res, next) => {
+}
+const createTable_User_badge = async () => {
   try {
-    const job = await pool.query(Badge);
-    console.log('Create table Badge Successfully');
+    const job = await pool.query(User_badge)
+    console.log('Create table User_badge Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
+const createTable_Badge = async () => {
+  try {
+    const job = await pool.query(Badge)
+    console.log('Create table Badge Successfully')
+  } catch (err) {
+    console.error(err)
+  }
+}

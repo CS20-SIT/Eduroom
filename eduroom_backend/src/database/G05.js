@@ -1,4 +1,4 @@
-const pool = require('../database/db');
+const pool = require('../database/db')
 
 const Chat = `
 
@@ -18,7 +18,7 @@ CREATE INDEX fkIdx_3340 ON Chat
  Creator
 );
 
-`;
+`
 const User_chatColor = `
 
 CREATE TABLE IF NOT EXISTS User_chatColor
@@ -41,7 +41,7 @@ CREATE INDEX fkIdx_3355 ON User_chatColor
  userId
 );
 
-`;
+`
 const Chat_Message_Readtime = `
 
 CREATE TABLE IF NOT EXISTS Chat_Message_Readtime
@@ -64,7 +64,7 @@ CREATE INDEX fkIdx_3870 ON Chat_Message_Readtime
  userId
 );
 
-`;
+`
 const User_hideMessage = `
 
 CREATE TABLE IF NOT EXISTS User_hideMessage
@@ -87,7 +87,7 @@ CREATE INDEX fkIdx_3352 ON User_hideMessage
  userId
 );
 
-`;
+`
 const Chat_systemMessage = `
 
 CREATE TABLE IF NOT EXISTS Chat_systemMessage
@@ -104,7 +104,7 @@ CREATE INDEX fkIdx_100 ON Chat_systemMessage
  chatRoomId
 );
 
-`;
+`
 const Chat_invitation = `
 
 CREATE TABLE IF NOT EXISTS Chat_invitation
@@ -128,7 +128,7 @@ CREATE INDEX fkIdx_80 ON Chat_invitation
  chatRoomId
 );
 
-`;
+`
 const User_hideChatRoom = `
 
 CREATE TABLE IF NOT EXISTS User_hideChatRoom
@@ -151,7 +151,7 @@ CREATE INDEX fkIdx_3343 ON User_hideChatRoom
  userId
 );
 
-`;
+`
 const Chat_roomMember = `
 
 CREATE TABLE IF NOT EXISTS Chat_roomMember
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS Chat_roomMember
  CONSTRAINT FK_3346 FOREIGN KEY ( userId ) REFERENCES User_Profile ( userId )
 );
 
-CREATE INDEX fkIdx_104 ON Chat_roomMember
+CREATE INDEX fkIdx_105 ON Chat_roomMember
 (
  chatRoomId
 );
@@ -174,7 +174,7 @@ CREATE INDEX fkIdx_3346 ON Chat_roomMember
  userId
 );
 
-`;
+`
 const Invite_invitees = `
 
 CREATE TABLE IF NOT EXISTS Invite_invitees
@@ -196,128 +196,126 @@ CREATE INDEX fkIdx_89 ON Invite_invitees
  invitationId
 );
 
-`;
+`
 const Chat_Message = `
 
-CREATE TABLE IF NOT EXISTS Chat_Message_Readtime
+CREATE TABLE IF NOT EXISTS Chat_Message
 (
- messageId int NOT NULL,
- readTime  timestamp NOT NULL,
- userId    uuid NOT NULL,
- CONSTRAINT PK_chat_message_readtime PRIMARY KEY ( messageId, userId ),
- CONSTRAINT FK_3866 FOREIGN KEY ( messageId ) REFERENCES Chat_Message ( messageId ),
- CONSTRAINT FK_3870 FOREIGN KEY ( userId ) REFERENCES User_Profile ( userId )
+ messageId  int NOT NULL,
+ message    text NULL,
+ sendTime   timestamp NOT NULL,
+ chatRoomId int NOT NULL,
+ userId     uuid NOT NULL,
+ CONSTRAINT PK_message PRIMARY KEY ( messageId ),
+ CONSTRAINT FK_3337 FOREIGN KEY ( userId ) REFERENCES User_Profile ( userId ),
+ CONSTRAINT FK_58 FOREIGN KEY ( chatRoomId ) REFERENCES Chat ( chatRoomId )
 );
-
-CREATE INDEX fkIdx_3866 ON Chat_Message_Readtime
-(
- messageId
-);
-
-CREATE INDEX fkIdx_3870 ON Chat_Message_Readtime
+CREATE INDEX fkIdx_3337 ON Chat_Message
 (
  userId
 );
+CREATE INDEX fkIdx_57 ON Chat_Message
+(
+ chatRoomId
+);
 
-`;
+`
 
-
-exports.createG05Table = async (req, res) => {
-  try{
-    await createTable_Chat;
-    await createTable_Chat_Message;
-    await createTable_Chat_Message_Readtime;
-    await createTable_Chat_invitation;
-    await createTable_Chat_roomMember;
-    await createTable_Chat_systemMessage;
-    await createTable_Invite_invitees;
-    await createTable_User_chatColor;
-    await createTable_User_hideChatRoom;
-    await createTable_User_hideMessage;
-    console.log('Create G05 Table Successfully');
+exports.createG05Table = async () => {
+  try {
+    await createTable_Chat()
+    await createTable_Chat_Message()
+    await createTable_Chat_Message_Readtime()
+    await createTable_Chat_invitation()
+    await createTable_Chat_roomMember()
+    await createTable_Chat_systemMessage()
+    await createTable_Invite_invitees()
+    await createTable_User_chatColor()
+    await createTable_User_hideChatRoom()
+    await createTable_User_hideMessage()
+    console.log('Create G05 Table Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-
 }
 
-const createTable_User_chatColor = async (req, res, next) => {
-    try {
-      const job = await pool.query(User_chatColor);
-      console.log('Create table User_chatColor Successfully');
-    } catch (err) {
-      console.error(err.stack.red);
-    }
-};
-const createTable_Chat_Message_Readtime = async (req, res, next) => {
+const createTable_User_chatColor = async () => {
   try {
-    const job = await pool.query(Chat_Message_Readtime);
-    console.log('Create table Chat_Message_Readtime Successfully');
+    const job = await pool.query(User_chatColor)
+    console.log('Create table User_chatColor Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_User_hideMessage = async (req, res, next) => {
+}
+const createTable_Chat_Message_Readtime = async () => {
   try {
-    const job = await pool.query(User_hideMessage);
-    console.log('Create table User_hideMessage Successfully');
+    const job = await pool.query(Chat_Message_Readtime)
+    console.log('Create table Chat_Message_Readtime Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Chat_systemMessage = async (req, res, next) => {
+}
+const createTable_User_hideMessage = async () => {
   try {
-    const job = await pool.query(Chat_systemMessage);
-    console.log('Create table Chat_systemMessage Successfully');
+    const job = await pool.query(User_hideMessage)
+    console.log('Create table User_hideMessage Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Chat_invitation = async (req, res, next) => {
+}
+const createTable_Chat_systemMessage = async () => {
   try {
-    const job = await pool.query(Chat_invitation);
-    console.log('Create table Chat_invitation Successfully');
+    const job = await pool.query(Chat_systemMessage)
+    console.log('Create table Chat_systemMessage Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_User_hideChatRoom = async (req, res, next) => {
+}
+const createTable_Chat_invitation = async () => {
   try {
-    const job = await pool.query(User_hideChatRoom);
-    console.log('Create table User_hideChatRoom Successfully');
+    const job = await pool.query(Chat_invitation)
+    console.log('Create table Chat_invitation Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Chat_roomMember = async (req, res, next) => {
+}
+const createTable_User_hideChatRoom = async () => {
   try {
-    const job = await pool.query(Chat_roomMember);
-    console.log('Create table Chat_roomMember Successfully');
+    const job = await pool.query(User_hideChatRoom)
+    console.log('Create table User_hideChatRoom Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Invite_invitees = async (req, res, next) => {
+}
+const createTable_Chat_roomMember = async () => {
   try {
-    const job = await pool.query(Invite_invitees);
-    console.log('Create table Invite_invitees Successfully');
+    const job = await pool.query(Chat_roomMember)
+    console.log('Create table Chat_roomMember Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Chat_Message = async (req, res, next) => {
+}
+const createTable_Invite_invitees = async () => {
   try {
-    const job = await pool.query(Chat_Message);
-    console.log('Create table Chat_Message Successfully');
+    const job = await pool.query(Invite_invitees)
+    console.log('Create table Invite_invitees Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Chat = async (req, res, next) => {
+}
+const createTable_Chat_Message = async () => {
   try {
-    const job = await pool.query(Chat);
-    console.log('Create table Chat Successfully');
+    const job = await pool.query(Chat_Message)
+    console.log('Create table Chat_Message Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
+const createTable_Chat = async () => {
+  try {
+    const job = await pool.query(Chat)
+    console.log('Create table Chat Successfully')
+  } catch (err) {
+    console.error(err)
+  }
+}

@@ -1,4 +1,4 @@
-const pool = require('../database/db');
+const pool = require('../database/db')
 
 const problem_types = `
 
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS problem_types
  CONSTRAINT PK_problem_types PRIMARY KEY ( typeId )
 );
 
-`;
+`
 const subProblemTypes = `
 
 CREATE TABLE IF NOT EXISTS subProblemTypes
@@ -26,7 +26,7 @@ CREATE INDEX fkIdx_169 ON subProblemTypes
  typeId
 );
 
-`;
+`
 const help_forum = `
 
 CREATE TABLE IF NOT EXISTS help_forum
@@ -50,7 +50,7 @@ CREATE INDEX fkIdx_455 ON help_forum
  subProblemId
 );
 
-`;
+`
 const Support_Answer_form = `
 
 CREATE TABLE IF NOT EXISTS Support_Answer_form
@@ -75,7 +75,7 @@ CREATE INDEX fkIdx_3824 ON Support_Answer_form
  adminId
 );
 
-`;
+`
 const support_form = `
 
 CREATE TABLE IF NOT EXISTS support_form
@@ -102,7 +102,7 @@ CREATE INDEX fkIdx_3675 ON support_form
  subProblemId
 );
 
-`;
+`
 const Forum_Form = `
 
 CREATE TABLE IF NOT EXISTS Forum_Form
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS Forum_Form
  CONSTRAINT FK_69 FOREIGN KEY ( typeId ) REFERENCES Forum_Type ( typeId )
 );
 
-CREATE INDEX fkIdx_104 ON Forum_Form
+CREATE INDEX fkIdx_106 ON Forum_Form
 (
  subCategoryIId
 );
@@ -135,7 +135,7 @@ CREATE INDEX fkIdx_69 ON Forum_Form
  typeId
 );
 
-`;
+`
 const Edit_history = `
 
 CREATE TABLE IF NOT EXISTS Edit_history
@@ -152,7 +152,7 @@ CREATE INDEX fkIdx_113 ON Edit_history
  forumId
 );
 
-`;
+`
 const Forum_Answer_from = `
 
 CREATE TABLE IF NOT EXISTS Forum_Answer_from
@@ -177,7 +177,7 @@ CREATE INDEX fkIdx_445 ON Forum_Answer_from
  forumId
 );
 
-`;
+`
 const Sub_category = `
 
 CREATE TABLE IF NOT EXISTS Sub_category
@@ -194,7 +194,7 @@ CREATE INDEX fkIdx_107 ON Sub_category
  categoryTypeId
 );
 
-`;
+`
 const Forum_Type = `
 
 CREATE TABLE IF NOT EXISTS Forum_Type
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS Forum_Type
  CONSTRAINT PK_forum_type PRIMARY KEY ( typeId )
 );
 
-`;
+`
 const Category_Type = `
 
 CREATE TABLE IF NOT EXISTS Category_Type
@@ -214,114 +214,113 @@ CREATE TABLE IF NOT EXISTS Category_Type
  CONSTRAINT PK_category_type PRIMARY KEY ( categoryTypeId )
 );
 
-`;
+`
 
-exports.createG12Table = async (req, res) => {
-  try{
-    await createTable_Category_Type;
-    await createTable_Sub_category;
-    await createTable_Edit_history;
-    await createTable_problem_types;
-    await createTable_subProblemTypes;
-    await createTable_Forum_Type;
-    await createTable_Forum_Form;
-    await createTable_Forum_Answer_from;
-    await createTable_support_form;
-    await createTable_Support_Answer_form;
-    await createTable_help_forum;
+exports.createG12Table = async () => {
+  try {
+    await createTable_Category_Type()
+    await createTable_Sub_category()
+    await createTable_problem_types()
+    await createTable_subProblemTypes()
+    await createTable_Forum_Type()
+    await createTable_Forum_Form()
+    await createTable_Forum_Answer_from()
+    await createTable_support_form()
+    await createTable_Support_Answer_form()
+    await createTable_help_forum()
+    await createTable_Edit_history()
 
-    console.log('Create G12 Table Successfully');
+    console.log('Create G12 Table Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-
 }
 
-const createTable_problem_types = async (req, res, next) => {
-    try {
-      const job = await pool.query(problem_types);
-      console.log('Create table problem_types Successfully');
-    } catch (err) {
-      console.error(err.stack.red);
-    }
-};
-const createTable_subProblemTypes = async (req, res, next) => {
+const createTable_problem_types = async () => {
   try {
-    const job = await pool.query(subProblemTypes);
-    console.log('Create table subProblemTypes Successfully');
+    const job = await pool.query(problem_types)
+    console.log('Create table problem_types Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_help_forum = async (req, res, next) => {
+}
+const createTable_subProblemTypes = async () => {
   try {
-    const job = await pool.query(help_forum);
-    console.log('Create table help_forum Successfully');
+    const job = await pool.query(subProblemTypes)
+    console.log('Create table subProblemTypes Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Support_Answer_form = async (req, res, next) => {
+}
+const createTable_help_forum = async () => {
   try {
-    const job = await pool.query(Support_Answer_form);
-    console.log('Create table Support_Answer_form Successfully');
+    const job = await pool.query(help_forum)
+    console.log('Create table help_forum Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_support_form = async (req, res, next) => {
+}
+const createTable_Support_Answer_form = async () => {
   try {
-    const job = await pool.query(support_form);
-    console.log('Create table support_form Successfully');
+    const job = await pool.query(Support_Answer_form)
+    console.log('Create table Support_Answer_form Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Forum_Form = async (req, res, next) => {
+}
+const createTable_support_form = async () => {
   try {
-    const job = await pool.query(Forum_Form);
-    console.log('Create table Forum_Form Successfully');
+    const job = await pool.query(support_form)
+    console.log('Create table support_form Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Edit_history = async (req, res, next) => {
+}
+const createTable_Forum_Form = async () => {
   try {
-    const job = await pool.query(Edit_history);
-    console.log('Create table Edit_history Successfully');
+    const job = await pool.query(Forum_Form)
+    console.log('Create table Forum_Form Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Forum_Answer_from = async (req, res, next) => {
+}
+const createTable_Edit_history = async () => {
   try {
-    const job = await pool.query(Forum_Answer_from);
-    console.log('Create table Forum_Answer_from Successfully');
+    const job = await pool.query(Edit_history)
+    console.log('Create table Edit_history Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Sub_category = async (req, res, next) => {
+}
+const createTable_Forum_Answer_from = async () => {
   try {
-    const job = await pool.query(Sub_category);
-    console.log('Create table Sub_category Successfully');
+    const job = await pool.query(Forum_Answer_from)
+    console.log('Create table Forum_Answer_from Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Forum_Type = async (req, res, next) => {
+}
+const createTable_Sub_category = async () => {
   try {
-    const job = await pool.query(Forum_Type);
-    console.log('Create table Forum_Type Successfully');
+    const job = await pool.query(Sub_category)
+    console.log('Create table Sub_category Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Category_Type = async (req, res, next) => {
+}
+const createTable_Forum_Type = async () => {
   try {
-    const job = await pool.query(Category_Type);
-    console.log('Create table Category_Type Successfully');
+    const job = await pool.query(Forum_Type)
+    console.log('Create table Forum_Type Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
+const createTable_Category_Type = async () => {
+  try {
+    const job = await pool.query(Category_Type)
+    console.log('Create table Category_Type Successfully')
+  } catch (err) {
+    console.error(err)
+  }
+}

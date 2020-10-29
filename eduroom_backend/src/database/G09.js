@@ -1,4 +1,4 @@
-const pool = require('../database/db');
+const pool = require('../database/db')
 
 const Coin_Owner = `
 
@@ -15,7 +15,7 @@ CREATE INDEX fkIdx_2732 ON Coin_Owner
  userId
 );
 
-`;
+`
 const Coin_Transaction = `
 
 CREATE TABLE IF NOT EXISTS Coin_Transaction
@@ -32,7 +32,7 @@ CREATE INDEX fkIdx_124 ON Coin_Transaction
  userId
 );
 
-`;
+`
 const DailyReward_History = `
 
 CREATE TABLE IF NOT EXISTS DailyReward_History
@@ -49,7 +49,7 @@ CREATE INDEX fkIdx_2743 ON DailyReward_History
  userId
 );
 
-`;
+`
 const Sticker_Owner = `
 
 CREATE TABLE IF NOT EXISTS Sticker_Owner
@@ -71,7 +71,7 @@ CREATE INDEX fkIdx_2746 ON Sticker_Owner
  userId
 );
 
-`;
+`
 const Sticker_All = `
 
 CREATE TABLE IF NOT EXISTS Sticker_All
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS Sticker_All
  CONSTRAINT PK_sticker_all PRIMARY KEY ( StickerId )
 );
 
-`;
+`
 const Pack_Sticker = `
 
 CREATE TABLE IF NOT EXISTS Pack_Sticker
@@ -101,68 +101,67 @@ CREATE INDEX fkIdx_147 ON Pack_Sticker
  StickerId
 );
 
-`;
+`
 
-exports.createG09Table = async (req, res) => {
-  try{
-    await createTable_Coin_Owner;
-    await createTable_Coin_Transaction;
-    await createTable_DailyReward_History;
-    await createTable_Pack_Sticker;
-    await createTable_Sticker_All;
-    await createTable_Sticker_Owner;
-    console.log('Create G09 Table Successfully');
+exports.createG09Table = async () => {
+  try {
+    await createTable_Coin_Owner()
+    await createTable_Coin_Transaction()
+    await createTable_DailyReward_History()
+    await createTable_Sticker_All()
+    await createTable_Pack_Sticker()
+    await createTable_Sticker_Owner()
+    console.log('Create G09 Table Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-
 }
 
-const createTable_Coin_Owner = async (req, res, next) => {
-    try {
-      const job = await pool.query(Coin_Owner);
-      console.log('Create table Coin_Owner Successfully');
-    } catch (err) {
-      console.error(err.stack.red);
-    }
-};
-const createTable_Coin_Transaction = async (req, res, next) => {
+const createTable_Coin_Owner = async () => {
   try {
-    const job = await pool.query(Coin_Transaction);
-    console.log('Create table Coin_Transaction Successfully');
+    const job = await pool.query(Coin_Owner)
+    console.log('Create table Coin_Owner Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_DailyReward_History = async (req, res, next) => {
+}
+const createTable_Coin_Transaction = async () => {
   try {
-    const job = await pool.query(DailyReward_History);
-    console.log('Create table DailyReward_History Successfully');
+    const job = await pool.query(Coin_Transaction)
+    console.log('Create table Coin_Transaction Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Sticker_Owner = async (req, res, next) => {
+}
+const createTable_DailyReward_History = async () => {
   try {
-    const job = await pool.query(Sticker_Owner);
-    console.log('Create table Sticker_Owner Successfully');
+    const job = await pool.query(DailyReward_History)
+    console.log('Create table DailyReward_History Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Sticker_All = async (req, res, next) => {
+}
+const createTable_Sticker_Owner = async () => {
   try {
-    const job = await pool.query(Sticker_All);
-    console.log('Create table Sticker_All Successfully');
+    const job = await pool.query(Sticker_Owner)
+    console.log('Create table Sticker_Owner Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
-const createTable_Pack_Sticker = async (req, res, next) => {
+}
+const createTable_Sticker_All = async () => {
   try {
-    const job = await pool.query(Pack_Sticker);
-    console.log('Create table Pack_Sticker Successfully');
+    const job = await pool.query(Sticker_All)
+    console.log('Create table Sticker_All Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
+const createTable_Pack_Sticker = async () => {
+  try {
+    const job = await pool.query(Pack_Sticker)
+    console.log('Create table Pack_Sticker Successfully')
+  } catch (err) {
+    console.error(err)
+  }
+}
