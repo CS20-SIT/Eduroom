@@ -1,9 +1,10 @@
 name: LHCI
 on:
   pull_request:
+    types: 
+      - opened
     branches: 
       - dev
-      - master
 env:
   LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
