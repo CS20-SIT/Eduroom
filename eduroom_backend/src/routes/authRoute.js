@@ -2,6 +2,7 @@ const express = require('express')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 const jwtSecret = process.env.JWT_SECRET
 const jwtSignOption = {
@@ -28,14 +29,14 @@ router.get('/google/callback', passport.authenticate('google', {session: false})
     console.log(user)
     // Find or add user in db
     const token = jwt.sign({
-        user: 'userid'
+        user: 'userid' + user.name
     }, jwtSecret, jwtSignOption)
 
     res.cookie('jwt', token)
     res.redirect(process.env.CLIENT_URL)
 })
 
-router.get('/profile', passport.authenticate('jwt', { session: false }) ,(req,res)=>{
+router.get('/profile', jwtAuthenicate ,(req,res)=>{
     res.send(`Wellcome user ${JSON.stringify(req.user)}`)
 })
 
