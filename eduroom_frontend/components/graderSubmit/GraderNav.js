@@ -1,5 +1,6 @@
 import style from "../../styles/graderSubmit/graderNav"
 import Link from "next/link"
+import Image from 'next/image'
 
 const GraderNav = () => {
   return (
@@ -27,7 +28,7 @@ const GraderNav = () => {
             <Link href="/graderSystem/profile">Profile</Link>
           </span>
           <Link href="/graderSystem/profile">
-            <img src="../../images/graderSubmit/profile.svg" />
+            <Image src="/images/graderSubmit/profile.svg" width="50" height="50"/>
           </Link>
         </div>
       </div>

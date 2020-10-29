@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import Item from './item';
 import Link from 'next/link';
 import style from '../../../styles/layout/sidebar';
+import Image from 'next/image'
 const SideNav = () => {
   const items = [
     {
@@ -89,7 +90,7 @@ const SideNav = () => {
       <div id="side-nav">
         <Link href="/">
           <div className={expand ? 'side-icon expand' : 'side-icon'}>
-            <img src="/images/sidenav/eduroom_logo.svg" />
+            <Image src="/images/sidenav/eduroom_logo.svg" width="41" height="46"/>
           </div>
         </Link>
         <div className="side-nav-list" onMouseLeave={handleReduce}>

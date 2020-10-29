@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import style from '../../styles/landing/login';
+import Image from 'next/image';
 const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,10 +68,12 @@ const Content = () => {
             </form>
           </div>
         </div>
-        <img
+        <Image
           className="login-page-img"
           alt="login-page-img"
           src="/images/login-img.svg"
+          width="544"
+          height="450"
         />
       </div>
       <style jsx>{style}</style>

@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-f', 'eduroom_backend/Dockerfile', '-t', 'eduroom-backend', 'eduroom_backend' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-f', 'eduroom_frontend/Dockerfile', '-t', 'eduroom-frontend', 'eduroom_frontend' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-f', 'eduroom_grading_server/Dockerfile', '-t', 'eduroom-grading-server', 'eduroom_grading_server' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-f', 'eduroom_socket_chat/Dockerfile', '-t', 'eduroom-socket-chat', 'eduroom_socket_chat' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-f', 'eduroom_socket_kahoot/Dockerfile', '-t', 'eduroom-socket-kahoot', 'eduroom_socket_kahoot' ]

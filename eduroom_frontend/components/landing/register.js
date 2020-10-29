@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import style from '../../styles/landing/register'
+import Image from 'next/image'
 const Register = () => {
   const [user, setUser] = useState({
     firstname: '',
@@ -73,8 +74,8 @@ const Register = () => {
           </div>
         </div>
         <div style={{width:'50%',zIndex:'50'}}>
-          <div style={{ width: '100%' }}>
-            <div style={{ paddingLeft: '5%' }}>
+          <div style={{ width: '100%',paddingLeft:'10%' }}>
+            <div style={{ paddingBottom:'5%' }}>
               <div>
                 <h1 className="register-header">CREATE AN ACCOUNT</h1>
                 <span style={{ color: '#3d467f', fontSize: '1.4em' }}>
@@ -82,7 +83,7 @@ const Register = () => {
                 </span>
               </div>
             </div>
-            <img style={{paddingTop:'10%'}} alt="register-img" src="/images/register_img.svg"/>
+            <Image alt="register-img" src="/images/register_img.svg" width="510" height="432"/>
           </div>
         </div>
       </div>
