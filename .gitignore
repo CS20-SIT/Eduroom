@@ -154,3 +154,9 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,react
+k8s/prod-secret.yaml
+k8s/pg-cloud-sql-service-account.json
+k8s/eduroom-cscms-me.crt
+k8s/eduroom-cscms-me.key
+
+.idea

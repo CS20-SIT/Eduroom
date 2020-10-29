@@ -1,7 +1,12 @@
 import '../styles/globals.css'
-
-const MyApp = ({ Component, pageProps }) =>{
-  return <Component {...pageProps} />
+import '../styles/all.css'
+import React, { Fragment } from 'react'
+const MyApp = ({ Component, pageProps }) => {
+  return (
+    <Fragment>
+      <Component {...pageProps} />
+    </Fragment>
+  )
 }
 
 export default MyApp
