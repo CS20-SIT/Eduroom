@@ -4,7 +4,7 @@ export default css`
     padding: 1% 4% 0% 4%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
     cursor: default;
   }
@@ -15,14 +15,9 @@ export default css`
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
   }
-  .navItemLayout {
-    width: 35vw;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
   .navItem {
     color: #5b5b5b;
+    margin-right: 2%;
     font-weight: 500;
     font-size: 1.2em;
     transition: 0.25s;
