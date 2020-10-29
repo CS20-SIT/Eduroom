@@ -1,6 +1,6 @@
 const pool = require('../database/db');
 
-const package = `
+const Package = `
 
 CREATE TABLE IF NOT EXISTS Package
 (
@@ -20,7 +20,7 @@ CREATE INDEX fkIdx_3630 ON Package
 
 `;
 
-const packageCourses = `
+const Package_courses = `
 
 CREATE TABLE IF NOT EXISTS Package_courses
 (
@@ -43,7 +43,7 @@ CREATE INDEX fkIdx_466 ON Package_courses
 
 `;
 
-const reviewCourses = `
+const Review_course = `
 
 CREATE TABLE IF NOT EXISTS Review_course
 (
@@ -73,9 +73,9 @@ CREATE INDEX fkIdx_3621 ON Review_course
 
 exports.createG13Table = async (req, res) => {
   try{
-    await createTable_package;
-    await createTable_package_Courses;
-    await createTable_review_Courses;
+    await createTable_Package;
+    await createTable_Package_courses;
+    await createTable_Review_course;
     console.log('Create ALL G13 Tables Successfully');
   } catch (err) {
     console.error(err.stack.red);
@@ -83,28 +83,28 @@ exports.createG13Table = async (req, res) => {
 
 }
 
-const createTable_package = async (req, res, next) => {
+const createTable_Package = async (req, res, next) => {
     try {
-      const job = await pool.query(package);
-      console.log('Create table package Successfully');
+      const job = await pool.query(Package);
+      console.log('Create table Package Successfully');
     } catch (err) {
       console.error(err.stack.red);
     }
 };
 
-const createTable_package_Courses = async (req, res, next) => {
+const createTable_Package_courses = async (req, res, next) => {
   try {
-    const job = await pool.query(packageCourses);
-    console.log('Create table package_Courses Successfully');
+    const job = await pool.query(Package_courses);
+    console.log('Create table Package_courses Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
 };
 
-const createTable_review_Courses = async (req, res, next) => {
+const createTable_Review_course = async (req, res, next) => {
   try {
-    const job = await pool.query(reviewCourses);
-    console.log('Create table review_Courses Successfully');
+    const job = await pool.query(Review_course);
+    console.log('Create table Review_course Successfully');
   } catch (err) {
     console.error(err.stack.red);
   }
