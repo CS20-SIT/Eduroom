@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
-import GeneralNonav from '../../components/template/generalnonav'; 
+import General from '../../components/template/general'; 
 import EventComp from '../../components/event/createEvent'
 const Event = () => {
   return (
     <Fragment>
-      <GeneralNonav>
+      <General>
         <EventComp/>
-      </GeneralNonav>
+      </General>
     </Fragment>
   )
 };
