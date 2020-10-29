@@ -34,6 +34,7 @@ const content = () => {
                 <Grid container>
                     <Grid item xs={11}>
                         <div className="create-form">
+                            {/* --------------------------------------- Title --------------------------------------------------*/}
                             <Grid container>
                                 <Grid item xs={7}>
                                     <Grid container>
@@ -63,6 +64,9 @@ const content = () => {
                                     </Grid>
                                 </Grid>
                             </Grid>
+
+                            {/* ---------------------------------------Description --------------------------------------------------*/}
+
                             <Grid container style={{ marginTop: "3.5%" }}>
                                 <Grid item xs={2}>
                                     <p className="create-topic">Description :</p>
@@ -74,6 +78,74 @@ const content = () => {
                                     </div>
                                 </Grid>
                             </Grid>
+
+                            {/* ---------------------------------------Date time--------------------------------------------------*/}
+
+                            <Grid container style={{ marginTop: "3.5%" }}>
+                                <Grid item xs={6}>
+                                    <Grid container>
+                                        <Grid item xs={2}>
+                                            <p className="create-topic">Start :</p>
+                                        </Grid>
+                                        <Grid item xs={5}>
+                                            <div style={{ marginLeft: "" }}>
+                                                <input className="input-box"
+                                                    style={{ width: "207px", height: "39px" }} />
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={5}>
+                                            <div style={{ marginLeft: "" }}>
+                                                <input className="input-box"
+                                                    style={{ width: "207px", height: "39px" }} />
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Grid container>
+                                        <Grid item xs={2}>
+                                            <p className="create-topic">End :</p>
+                                        </Grid>
+                                        <Grid item xs={5}>
+                                            <div style={{ marginLeft: "" }}>
+                                                <input className="input-box"
+                                                    style={{ width: "207px", height: "39px" }} />
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={5}>
+                                            <div style={{ marginLeft: "" }}>
+                                                <input className="input-box"
+                                                    style={{ width: "207px", height: "39px" }} />
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+
+
+                            {/* --------------------------------------- Place --------------------------------------------------*/}
+                            <Grid container style={{ marginTop: "3.5%" }}>
+                                <Grid item xs={1}>
+                                    <p className="create-topic">Place :</p>
+                                </Grid>
+                                <Grid item xs={9}>
+                                    <div style={{ marginLeft: "" }}>
+                                        <input className="input-box"
+                                            style={{ width: "983px", height: "39px" }} />
+                                    </div>
+                                </Grid>
+                            </Grid>
+                            <div className="button">
+                                <button className="create-button" style={{ width: "122px", height: "39px" }}>
+                                    <a className="create-button-create">Confirm</a>
+                                </button>
+
+                                <button className="cancel-button" style={{ width: "122px", height: "39px", marginLeft:"45px"}}>
+                                    <a className="cancel-button-cancel">Cancel</a>
+                                </button>
+                            </div>
+
 
                         </div>
                     </Grid>
