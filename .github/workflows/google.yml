@@ -124,7 +124,7 @@ jobs:
         kubectl get services -o wide
   lhci:
     name: Lighthouse on production
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ubuntu:latest
     needs: [setup-build-publish-deploy]
     env:
       LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
@@ -139,4 +139,4 @@ jobs:
       - name: run Lighthouse CI
         run: |
           npm install -g @lhci/cli
-          ~/.npm-global/bin/lhci autorun
+          lhci autorun
