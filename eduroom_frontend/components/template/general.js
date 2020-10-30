@@ -32,7 +32,6 @@ const General = (props) => {
         {`
           #content {
             width: 95%;
-            position: fixed;
             left: 5%;
             z-index: 20;
           }
