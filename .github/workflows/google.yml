@@ -139,4 +139,4 @@ jobs:
       - name: run Lighthouse CI
         run: |
           npm install -g @lhci/cli
-          lhci autorun
+          ~/.npm-global/bin/lhci autorun
