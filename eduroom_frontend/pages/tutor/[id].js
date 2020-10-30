@@ -280,7 +280,7 @@ const Instructor = ({ instructor }) => {
               <div style={{ width: 54 + '%', height: 100 + '%' }}>
                 {memberMode ? (
                   <div
-                    className={`w-full px-8 py-8 mx-4 shadow rounded-md bg-white-faded relative`}
+                    className={`w-full px-8 my-2 py-8 mx-4 shadow rounded-md bg-white-faded relative`}
                   >
                     <div
                       className='text-lg font-bold font-lato absolute top-0 right-0 mx-4 my-2 px-2 py-2 pointer text-secondary'
@@ -290,8 +290,18 @@ const Instructor = ({ instructor }) => {
                     >
                       x
                     </div>
-                    <div className='text-lg font-bold font-lato spacing-md'>
-                      Members
+                    <div className='flex relative'>
+                      <div className='text-lg font-bold font-lato spacing-md'>
+                        Members
+                      </div>
+                      <div style={{ flexGrow: 1 }} className='my-auto'>
+                        <div className='tooltip'>
+                          <div>?</div>
+                          <div className='tips'>
+                            The members are not including yourself
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div className='relative'>
                       <form>
@@ -358,7 +368,7 @@ const Instructor = ({ instructor }) => {
                   ''
                 )}
                 <div
-                  className={`w-full px-8 py-8 mx-4 shadow rounded-md bg-white-faded`}
+                  className={`w-full px-8 py-8 my-2 mx-4 shadow rounded-md bg-white-faded`}
                 >
                   <div className='text-lg font-bold font-lato spacing-md'>
                     BOOK AND PAY
