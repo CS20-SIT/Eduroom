@@ -1,6 +1,6 @@
-const pool = require('../database/db');
+const pool = require('../database/db')
 
-const financialTransaction = `
+const Financial_Transaction = `
 
 CREATE TABLE IF NOT EXISTS Financial_Transaction
 (
@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS Financial_Transaction
  CONSTRAINT PK_financial PRIMARY KEY ( transactionId )
 );
 
-`;
+`
 
-const transcationUser = `
+const Transaction_user = `
 
 CREATE TABLE IF NOT EXISTS Transaction_user
 (
@@ -33,9 +33,9 @@ CREATE INDEX fkIdx_3799 ON Transaction_user
  userId
 );
 
-`;
+`
 
-const transcationAd = `
+const Transaction_ad = `
 
 CREATE TABLE IF NOT EXISTS Transaction_ad
 (
@@ -56,9 +56,9 @@ CREATE INDEX fkIdx_3793 ON Transaction_ad
  adId
 );
 
-`;
+`
 
-const transcationInstructor = `
+const Transaction_instructor = `
 
 CREATE TABLE IF NOT EXISTS Transaction_instructor
 (
@@ -79,53 +79,52 @@ CREATE INDEX fkIdx_3796 ON Transaction_instructor
  InstructorId
 );
 
-`;
+`
 
-exports.createG04Table = async (req, res) => {
-  try{
-    await createTable_Financial_Transaction;
-    await createTable_Transaction_User;
-    await createTable_Transaction_Insructor;
-    await createTable_Transaction_Ad;
-    console.log('Create ALL G04 Tables Successfully');
+exports.createG04Table = async () => {
+  try {
+    await createTable_Financial_Transaction()
+    await createTable_Transaction_User()
+    await createTable_Transaction_instructor()
+    await createTable_Transaction_ad()
+    console.log('Create ALL G04 Tables Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-
 }
 
-const createTable_Financial_Transaction = async (req, res, next) => {
-    try {
-      const job = await pool.query(financialTransaction);
-      console.log('Create table financial_Transaction Successfully');
-    } catch (err) {
-      console.error(err.stack.red);
-    }
-};
-
-const createTable_Transaction_User = async (req, res, next) => {
+const createTable_Financial_Transaction = async () => {
   try {
-    const job = await pool.query(transcationUser);
-    console.log('Create table financial_user Successfully');
+    const job = await pool.query(Financial_Transaction)
+    console.log('Create table Financial_Transaction Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
 
-const createTable_Transaction_Insructor = async (req, res, next) => {
+const createTable_Transaction_User = async () => {
   try {
-    const job = await pool.query(transcationInstructor);
-    console.log('Create table Transaction_instructor Successfully');
+    const job = await pool.query(Transaction_user)
+    console.log('Create table Transaction_user Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
 
-const createTable_Transaction_Ad = async (req, res, next) => {
+const createTable_Transaction_instructor = async () => {
   try {
-    const job = await pool.query(transcationAd);
-    console.log('Create table Transaction_ad Successfully');
+    const job = await pool.query(Transaction_instructor)
+    console.log('Create table Transaction_instructor Successfully')
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err)
   }
-};
+}
+
+const createTable_Transaction_ad = async () => {
+  try {
+    const job = await pool.query(Transaction_ad)
+    console.log('Create table Transaction_ad Successfully')
+  } catch (err) {
+    console.error(err)
+  }
+}

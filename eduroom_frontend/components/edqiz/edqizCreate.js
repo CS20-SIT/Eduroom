@@ -43,6 +43,7 @@ const Content = () => {
       temp[val.index].question = val.newValue;
     } else if (val.type == "time") {
       temp[val.index].time = val.newValue;
+
     } else if (val.type == "point") {
       temp[val.index].point = val.newValue;
     } else if (val.type == "answer") {
@@ -70,6 +71,7 @@ const Content = () => {
       let temp = [...questionList];
 
       temp.splice(val, 1);
+      
       setQuestionList(temp);
     }
   };
