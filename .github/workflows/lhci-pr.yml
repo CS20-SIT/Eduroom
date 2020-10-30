@@ -1,9 +1,10 @@
 name: LHCI
 on:
   pull_request:
+    types: 
+      - opened
     branches: 
       - dev
-      - master
 env:
   LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
@@ -17,6 +18,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+      - name: Build Eduroom Frontend Image
+        run: |-
+          docker build -f eduroom_frontend/Dockerfile \
+            --tag "frontend" \
+            --build-arg GITHUB_SHA="$GITHUB_SHA" \
+            --build-arg GITHUB_REF="$GITHUB_REF" \
+            eduroom_frontend
+      - name: Run Eduroom Frontend for LHCI
+        run: docker run -p 3000:3000 -d frontend
       - name: run Lighthouse CI
         run: |
           npm install -g @lhci/cli

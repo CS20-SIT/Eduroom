@@ -15,8 +15,9 @@ const Temp = () => {
     };
     return (
         <Fragment>
-            <General></General>
             <div className={divClass}>
+            <General></General>
+            
                 <div className={Styles.img}>
                     <span className={Styles.text}>
                         Welcome to Sticker Store!
