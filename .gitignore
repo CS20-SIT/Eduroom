@@ -160,3 +160,5 @@ k8s/eduroom-cscms-me.crt
 k8s/eduroom-cscms-me.key
 
 .idea
+k8s/lhci-cscms-me.crt
+k8s/lhci-cscms-me.key
