@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react'
-import Payment from '../../../components/course/payment'
+import Payment from '../../../components/payment/paymentDetail'
 import GeneralNoNav from '../../../components/template/generalnonav'
+
+
 
 const checkout = () => {
     return(
     <Fragment>
-        <GeneralNoNav>
+        <GeneralNoNav>     
         <Payment />
         </GeneralNoNav>
     </Fragment>
