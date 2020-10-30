@@ -126,6 +126,10 @@ jobs:
     name: Lighthouse on production
     runs-on: [self-hosted, linux, x64]
     needs: [setup-build-publish-deploy]
+    env:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
+      LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 12.x
