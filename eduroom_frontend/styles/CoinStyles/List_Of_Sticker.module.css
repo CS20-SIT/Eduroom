@@ -1,12 +1,25 @@
 .div{
     display:grid;
     grid-template-columns: auto auto auto;
-    grid-gap: 30px;
-    width: 100vw;
-    padding-left: 100px;
-    padding-right: 100px;
+    grid-gap: 8px 20px;
+    width: 95vw;
+    padding-left: 150px;
+    padding-right: 150px;
+    margin-top:20px ;
 }
-.text{
+
+.btn{
+    background-color: #a880f7;
+    border: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 12px;
+    
+}
+.box{
 
 }
+
 
