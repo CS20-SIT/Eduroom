@@ -9,7 +9,7 @@ import {
 
 import Link from 'next/link';
 
-const Temp = ({ instructor }) => {
+const Instructor = ({ instructor }) => {
   const [booking, setBooking] = useState(true);
   var date = new Date();
   const [month, setMonth] = useState(date.getMonth());
@@ -36,16 +36,84 @@ const Temp = ({ instructor }) => {
     dates[i] = i - firstDay + 1 - 7;
   }
 
+  // SET Date Selected
   const [selected, setSelected] = useState(date.getDate());
   const today = date.getDate();
 
+  // SET Time Selected
   let timeSelectedTmp = [];
   const [timeSelected, setTimeSelected] = useState([]);
+
+  // SET members group
+  const [memberMode, setMemberMode] = useState(false);
+  const [members, setMembers] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [input, setInput] = useState('');
+  const typingMember = (e) => {
+    const key = e.target.value;
+    if (key.length == 0) {
+      setMembers([]);
+      return;
+    }
+    // setInput(key);
+    const filtered = mockup.filter((x) => {
+      return (
+        x.firstname.toLowerCase().includes(key.toLowerCase()) ||
+        x.lastname.toLowerCase().includes(key.toLowerCase())
+      );
+    });
+    // console.log(JSON.stringify(filtered));
+    setMembers(filtered);
+    // console.log(members);
+  };
+  const [focus, setFocus] = useState(false);
+  const mockup = [
+    {
+      id: 1,
+      firstname: 'Thanawat',
+      lastname: 'Benjachatriroj',
+    },
+    {
+      id: 2,
+      firstname: 'Alphav',
+      lastname: 'Benjachatriroj',
+    },
+    {
+      id: 3,
+      firstname: 'Bravo',
+      lastname: 'Benjachatriroj',
+    },
+    {
+      id: 4,
+      firstname: 'Charlie',
+      lastname: 'Benjachatriroj',
+    },
+    {
+      id: 5,
+      firstname: 'Delta',
+      lastname: 'Benjachatriroj',
+    },
+    {
+      id: 6,
+      firstname: 'Echo',
+      lastname: 'Benjachatriroj',
+    },
+  ];
 
   return (
     <Fragment>
       <GeneralNoNav>
         <div className='bg-tutor'>
+          {focus ? (
+            <div
+              className='fixed top-0 left-0 right-0 bottom-0 z-5'
+              onClick={() => {
+                setFocus(false);
+              }}
+            ></div>
+          ) : (
+            ''
+          )}
           <div className='container'>
             <div className='flex my-4'>
               <div>
@@ -103,8 +171,8 @@ const Temp = ({ instructor }) => {
                 </div>
               </div>
             </div>
-            <div className='w-full flex justify-center'>
-              <div style={{ width: 45 + '%' }} className={`px-4 py-2 mx-4`}>
+            <div className='w-full flex justify-between'>
+              <div style={{ width: 44 + '%' }} className={`px-4 py-2`}>
                 <div className='flex my-2'>
                   {month != date.getMonth() || year != date.getFullYear() ? (
                     <div
@@ -164,11 +232,11 @@ const Temp = ({ instructor }) => {
                     </span>
                   ))}
                 </div>
-                <div className='my-8'>
-                  <div className='my-2 text-md font-bold text-secondary font-lato'>
+                <div className='my-4'>
+                  <div className='my-4 text-md font-bold text-secondary font-lato'>
                     Available Time
                   </div>
-                  <div className='grid my-4'>
+                  <div className='grid'>
                     {instructor.times[selected - 1].time.map((e) => (
                       <div
                         onClick={() => {
@@ -203,61 +271,160 @@ const Temp = ({ instructor }) => {
                       </div>
                     ))}
                   </div>
+                  <div className='text-error text-md my-4'>
+                    * Please Select Consecutive Appointment Time Slots
+                  </div>
                 </div>
               </div>
-              <div
-                style={{ width: 40 + '%', height: 100 + '%' }}
-                className={`px-8 py-8 mx-4 shadow rounded-md bg-white-faded`}
-              >
-                <div className='text-lg font-bold font-lato spacing-md'>
-                  BOOK AND PAY
-                </div>
-                <div className='text-md font-bold font-lato my-4 spacing-sm'>
-                  Your Enrollment
-                </div>
-                <div className='px-2 my-4'>
-                  <div className='text-sm font-bold font-lato my-2 spacing-sm'>
-                    Date
-                  </div>
-                  <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                    {selected} {monthConverter(month)} {year}
-                  </div>
-                </div>
-                <div className='px-2 my-4'>
-                  <div className='text-sm font-bold font-lato my-2 spacing-sm'>
-                    Time
-                  </div>
-                  {timeSelected.length == 0 ? (
-                    <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                      Please select appointment times
+              {/* ------------------------------------------------------------- */}
+              <div style={{ width: 54 + '%', height: 100 + '%' }}>
+                {memberMode ? (
+                  <div
+                    className={`w-full px-8 py-8 mx-4 shadow rounded-md bg-white-faded relative`}
+                  >
+                    <div
+                      className='text-lg font-bold font-lato absolute top-0 right-0 mx-4 my-2 px-2 py-2 pointer text-secondary'
+                      onClick={() => {
+                        setMemberMode(false);
+                      }}
+                    >
+                      x
                     </div>
-                  ) : (
-                    timeSelected.map((e) => (
-                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                        {timeFormatter(e)} - {timeFormatter(e + 1)}
-                      </div>
-                    ))
-                  )}
-                </div>
-                <div className='px-2 my-4'>
-                  <div className='text-sm font-bold font-lato my-2 spacing-sm'>
-                    Cost
+                    <div className='text-lg font-bold font-lato spacing-md'>
+                      Members
+                    </div>
+                    <div className='relative'>
+                      <form>
+                        <input
+                          className='input--members'
+                          type='text'
+                          id='searchbar'
+                          placeholder='Firstname or Lastname'
+                          autoComplete='off'
+                          onChange={typingMember}
+                          onFocus={(e) => {
+                            typingMember(e);
+                            setFocus(true);
+                          }}
+                        />
+                      </form>
+                      {focus && members.length > 0 ? (
+                        <div className='dropdown--list'>
+                          {members.map((m) => (
+                            <div
+                              className='dropdown--item pointer'
+                              onClick={() => {
+                                setMembers([]);
+                                setFocus(false);
+                                document.getElementById('searchbar').value = '';
+                                const tmp = [...students];
+                                const check = tmp.findIndex((s) => {
+                                  return s.firstname == m.firstname;
+                                });
+                                if (check != -1) return;
+                                tmp.push(m);
+                                setStudents(tmp);
+                              }}
+                            >
+                              {m.firstname} {m.lastname}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                    <div className='flex flex-wrap'>
+                      {students.map((s, i) => (
+                        <span className='shadow rounded-md px-2 py-1 mx-1 my-1'>
+                          <span className='text-md font-bold text-secondary opacity-80'>
+                            {s.firstname} {s.lastname}{' '}
+                            <span
+                              className='font-light px-1 pointer'
+                              onClick={() => {
+                                let tmp = [...students];
+                                tmp.splice(i, 1);
+                                setStudents(tmp);
+                              }}
+                            >
+                              x
+                            </span>
+                          </span>
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                    {timeSelected.length * instructor.price} THB
-                  </div>
-                </div>
+                ) : (
+                  ''
+                )}
                 <div
-                  className={`font-lato font-bold text-md border rounded-md py-2 mx-8 flex justify-center pointer`}
-                  onClick={() => {
-                    // POST  /tutor/student/appointment
-                    console.log(instructor.id);
-                    console.log(timeSelected);
-                    console.log(selected, month + 1, year);
-                    console.log(timeSelected.length * instructor.price);
-                  }}
+                  className={`w-full px-8 py-8 mx-4 shadow rounded-md bg-white-faded`}
                 >
-                  Book!
+                  <div className='text-lg font-bold font-lato spacing-md'>
+                    BOOK AND PAY
+                  </div>
+                  {memberMode ? (
+                    ''
+                  ) : (
+                    <div className='text-md font-bold font-lato my-4 spacing-sm'>
+                      Your Enrollment
+                    </div>
+                  )}
+
+                  <div className='px-2 my-4'>
+                    <div className='text-sm font-bold font-lato my-2 spacing-sm'>
+                      Date
+                    </div>
+                    <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                      {selected} {monthConverter(month)} {year}
+                    </div>
+                  </div>
+                  <div className='px-2 my-4'>
+                    <div className='text-sm font-bold font-lato my-2 spacing-sm'>
+                      Time
+                    </div>
+                    {timeSelected.length == 0 ? (
+                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                        Please select appointment times
+                      </div>
+                    ) : (
+                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                        {timeFormatter(timeSelected[0])} -{' '}
+                        {timeFormatter(
+                          timeSelected[timeSelected.length - 1] + 1
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div className='px-2 my-4'>
+                    <div className='text-sm font-bold font-lato my-2 spacing-sm'>
+                      Cost
+                    </div>
+                    <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                      {timeSelected.length * instructor.price} THB
+                    </div>
+                  </div>
+                  {memberMode ? (
+                    ''
+                  ) : (
+                    <div
+                      className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 my-4 mx-8 flex justify-center pointer text-navy`}
+                      onClick={() => {
+                        // SET Group Mode
+                        setMemberMode(true);
+                      }}
+                    >
+                      Book with Friends
+                    </div>
+                  )}
+                  <div
+                    className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 mx-8 flex justify-center pointer text-navy`}
+                    onClick={() => {
+                      // POST  /tutor/student/appointment
+                    }}
+                  >
+                    Book!
+                  </div>
                 </div>
               </div>
             </div>
@@ -344,4 +511,4 @@ export async function getStaticProps({ params }) {
   return { props: { instructor } };
 }
 
-export default Temp;
+export default Instructor;
