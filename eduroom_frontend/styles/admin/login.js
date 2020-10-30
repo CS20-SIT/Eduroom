@@ -9,20 +9,6 @@ export default css`
     padding: 2% 5% 0% 5%;
     cursor: default;
   }
-  .login-textfield {
-    background: #eff0f6;
-    border-radius: 10px;
-    width: 100%;
-    padding: 5%;
-    border: none;
-    font-size: 1.1em;
-    color: #3d467f;
-    margin-bottom: 5%;
-  }
-  .login-textfield ::placeholder {
-    color: #3d467f;
-    opacity: 0.75;
-  }
   .admin-login-page-img {
     width: 60%;
     padding: 4%;
