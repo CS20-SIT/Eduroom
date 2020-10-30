@@ -15,8 +15,9 @@ const Temp = () => {
     };
     return (
         <Fragment>
+            <General>
             <div className={divClass}>
-            <General></General>
+            
             
                 <div className={Styles.img}>
                     <span className={Styles.text}>
@@ -39,7 +40,9 @@ const Temp = () => {
                         </button>
                     </div>
                 </div>
+                
             </div>
+            </General>
         </Fragment>
     );
 };
