@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lhci-server-deployment
+spec:
+  selector:
+    matchLabels:
+      app: lhci-server-deployment
+  template:
+    metadata:
+      labels:
+        app: lhci-server-deployment
+    spec:
+      volumes:
+        - name: lhci-data-volume
+          persistentVolumeClaim:
+            claimName: lhci-data-claim
+      containers:
+        - name: lhci-server-deployment
+          image: docker.io/patrickhulce/lhci-server:0.6.0
+          volumeMounts:
+            - mountPath: '/data'
+              name: lhci-data-volume
+          ports:
+            - containerPort: 9001
