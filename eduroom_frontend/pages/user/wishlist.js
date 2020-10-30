@@ -33,22 +33,30 @@ const Wishlist = () => {
         const temp=totalList.slice();
         temp.splice(index+count,1);
         setTotalList(temp);
-        changeCount(0);
+        changeList(0);
 
         // return console.log(wishlist[index].id,index);
     }
-    const changeCount=(num)=>{
-        if(count+num<totalList.length+Math.abs(num)&&count+num>=0){
-            SetCount(count+num);
+    const changeList=(num)=>{
+        if(num<0&&count+num<=totalList.length){
+            changeCount(num);
+        }else if(num>0&&count+num>=0){
+            changeCount(num);
+        }else{
             const temp=totalList.slice(count,count+perPage);
             setWishlist(temp);
         }
     }
+    const changeCount=(num)=>{
+        SetCount(count+num);
+        const temp=totalList.slice(count,count+perPage);
+        setWishlist(temp);
+    }
     return (
         <Fragment>
             <h1>Wishlist</h1>
-            <button onClick={()=>{changeCount(-1*perPage)}}>Prev</button>
-            <button onClick={()=>{changeCount(perPage)}}>Next</button>
+            <button onClick={()=>{changeList(-1*perPage)}}>Prev</button>
+            <button onClick={()=>{changeList(perPage)}}>Next</button>
             {count}
             <Wishlists item={wishlist} remove={del}></Wishlists>
         </Fragment>
