@@ -16,7 +16,10 @@ module.exports = {
       url: [
         'https://eduroom.cscms.me', 
         'https://eduroom.cscms.me/login', 
-        'https://eduroom.cscms.me/register'
+        'https://eduroom.cscms.me/register',
+        // GROUP 9
+        'https://eduroom.cscms.me/coin-shop',
+        'https://eduroom.cscms.me/coin-shop/StoreSticker',
       ]
     },
     upload: {
