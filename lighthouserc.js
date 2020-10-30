@@ -4,7 +4,12 @@ module.exports = {
       numberOfRuns: 3,
       headful: false,
       settings: {
-        emulatedFormFactor: 'desktop'
+        emulatedFormFactor: 'desktop',
+        throttlingMethod: 'devtools',
+        chromeFlags: '--window-size=1440,900',
+        throttling: {
+          cpuSlowdownMultiplier: 1
+        }
       },
       url: [
         'https://eduroom.cscms.me', 
