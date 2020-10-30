@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import style from '../../styles/landing/register'
+import Image from 'next/image'
 const Register = () => {
   const [user, setUser] = useState({
     firstname: '',
@@ -16,7 +17,7 @@ const Register = () => {
         <div className="register-content">
           <div className="register-form">
             <form style={{ width: '80%' }} onSubmit={(e) => e.preventDefault()}>
-              <label className="label-text">Firstname</label>
+              <label className="label-text">Firstname
               <input
                 className="register-textfield"
                 type="text"
@@ -24,31 +25,31 @@ const Register = () => {
                 onChange={(e) =>
                   setUser({ ...user, firstname: e.target.value })
                 }
-              />
+              /></label>
 
-              <label className="label-text">Lastname</label>
+              <label className="label-text">Lastname
               <input
                 className="register-textfield"
                 type="text"
                 placeholder="Lastname"
                 onChange={(e) => setUser({ ...user, lastname: e.target.value })}
-              />
+              /></label>
 
-              <label className="label-text">Email</label>
+              <label className="label-text">Email
               <input
                 className="register-textfield"
                 type="email"
                 placeholder="Email"
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-              />
+              /></label>
 
-              <label className="label-text">Password</label>
+              <label className="label-text">Password
               <input
                 className="register-textfield"
                 type="password"
                 placeholder="Password"
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
-              />
+              /></label>
               <div style={{ textAlign: 'center' }}>
                 <button className="register-button" onClick={register}>
                   <span className="register-button-text">Register</span>
@@ -72,9 +73,9 @@ const Register = () => {
             </form>
           </div>
         </div>
-        <div>
-          <div style={{ width: '50%' }}>
-            <div style={{ paddingLeft: '20%' }}>
+        <div style={{width:'50%',zIndex:'50'}}>
+          <div style={{ width: '100%',paddingLeft:'10%' }}>
+            <div style={{ paddingBottom:'5%' }}>
               <div>
                 <h1 className="register-header">CREATE AN ACCOUNT</h1>
                 <span style={{ color: '#3d467f', fontSize: '1.4em' }}>
@@ -82,13 +83,8 @@ const Register = () => {
                 </span>
               </div>
             </div>
+            <Image alt="register-img" src="/images/register_img.svg" width="510" height="432"/>
           </div>
-
-          <img
-            className="register-page-img"
-            alt="register-page-img"
-            src="/images/campaign_img.svg"
-          />
         </div>
       </div>
       <style jsx>
