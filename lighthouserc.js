@@ -6,14 +6,10 @@ module.exports = {
       settings: {
         emulatedFormFactor: 'desktop'
       },
-      // staticDistDir: './eduroom_frontend',
-      // startServerCommand: 'npm start',
-      // startServerReadyPattern: 'started server on',
-      // isSinglePageApplication: true,
       url: [
-        'http://localhost:3000', 
-        'http://localhost:3000/login', 
-        'http://localhost:3000/register'
+        'https://eduroom.cscms.me', 
+        'https://eduroom.cscms.me/login', 
+        'https://eduroom.cscms.me/register'
       ]
     },
     upload: {
