@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from "../../components/template/generalnonav";
+import GeneralNoSide from "../../components/template/generalnoside";
 import Grid from "@material-ui/core/Grid";
 const Content = () => {
   return (
     <Fragment>
-      <GeneralNoNav />
+      <GeneralNoSide />
       <Grid
         container
         style={{ height: "7vh", display: "flex", alignItems: "center" }}

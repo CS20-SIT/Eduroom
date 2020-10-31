@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lhci-server-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: lhci-server-deployment
+  ports:
+  - port: 9001
+    targetPort: 9001
