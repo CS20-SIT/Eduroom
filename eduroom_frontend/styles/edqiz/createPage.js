@@ -8,7 +8,7 @@ export default css`
     margin: 0;
   }
   .content {
-    width: 100vw;
+    width: 100%;
     padding: 3% 5%;
     height: 82vh;
   }
@@ -27,6 +27,7 @@ export default css`
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
     background: white;
     padding: 3%;
+    margin-bottom: 3%;
     border-radius: 2vh;
     transition: 0.3s;
     width: 100%;
@@ -41,16 +42,16 @@ export default css`
   }
 
   .landing-img {
-    width: 35vw;
+    width: 35%;
     transition: 0.3s;
     pointer-events: none;
-    margin-left: 33vw;
+    margin-left: 33%;
     margin-top: 10vh;
     position: absolute;
   }
   .landing {
     justify-content: center;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     background-image: url('/images/edqiz/create-bg.svg');
     background-repeat: no-repeat;

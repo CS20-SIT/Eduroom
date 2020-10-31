@@ -1,48 +1,57 @@
-import React, { Fragment, useEffect } from "react";
-import QuestionAnswer from "./questionAnswer";
+import React, { Fragment, useEffect } from 'react'
+import QuestionAnswer from './questionAnswer'
 import Image from 'next/image'
-const QuiztionCard = ({ data, index, add, remove, change}) => {
+const QuiztionCard = ({ data, index, add, remove, change }) => {
   useEffect(() => {
     if (data.image) {
-      var reader = new FileReader();
+      var reader = new FileReader()
       reader.onload = function (e) {
-        document.getElementById("show-image" + index).src = e.target.result;
-      };
-      reader.readAsDataURL(data.image);
+        document.getElementById('show-image' + index).src = e.target.result
+      }
+      reader.readAsDataURL(data.image)
     }
-  }, []);
+  }, [])
   const handleChangeQuestion = (e) => {
-    let newValue = e.target.value;
-    change({ index, type: "question", newValue });
-  };
+    let newValue = e.target.value
+    change({ index, type: 'question', newValue })
+  }
   const handleChangeSelect = (e) => {
-    let newValue = e.target.value;
-    let type = e.target.name;
-    change({ index, type, newValue });
-  };
+    let newValue = e.target.value
+    let type = e.target.name
+    change({ index, type, newValue })
+  }
   const handleChangeAnswer = (val) => {
-    let newValue = val.newValue;
-    let opt = val.opt;
-    let type = "answer";
-    change({ index, type, newValue, opt });
-  };
+    let temp = [...data.answer]
+    temp[val.opt] = val.newValue
+    let newValue = temp
+    let type = 'answer'
+    change({ index, type, newValue })
+  }
   const selectCorrect = (val) => {
-    let newValue = val;
-    let type = "correct";
-    change({ index, type, newValue });
-  };
+    let newValue = val
+    let type = 'correct'
+    change({ index, type, newValue })
+  }
   const renderAnswer = () => {
-    let temp = [0,1,2,3];
-    return temp.map(el=>{
-        return <QuestionAnswer key={el} handleChange={handleChangeAnswer} handleCorrect={selectCorrect} correct={data.correct==el} index={el} ans={data.ans[el]} />
+    let temp = [0, 1, 2, 3]
+    return temp.map((el) => {
+      return (
+        <QuestionAnswer
+          key={el}
+          handleChange={handleChangeAnswer}
+          handleCorrect={selectCorrect}
+          correct={data.correct == el}
+          index={el}
+          ans={data.answer[el]}
+        />
+      )
     })
-}         
+  }
   const handleUplaodFile = (e) => {
-    let newValue = e.target.files[0];
-    let type = "image";
-    change({ index, type, newValue });
-  };
- 
+    let newValue = e.target.files[0]
+    let type = 'image'
+    change({ index, type, newValue })
+  }
 
   return (
     <Fragment>
@@ -54,7 +63,7 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
           <div className="col-6 right">
             <button
               onClick={() => {
-                add(index);
+                add(index)
               }}
               className="addReButton"
             >
@@ -62,8 +71,7 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
             </button>
             <button
               onClick={() => {
-                remove(index);
-          
+                remove(index)
               }}
               className="addReButton"
             >
@@ -73,11 +81,11 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
           <div className="col-8">
             <div
               className="question-row"
-              style={{ flexFlow: "column", height: "100%" }}
+              style={{ flexFlow: 'column', height: '100%' }}
             >
               <div
                 className="col-12"
-                style={{ paddingBottom: "3%", height: "fit-content" }}
+                style={{ paddingBottom: '3%', height: 'fit-content' }}
               >
                 <input
                   type="text"
@@ -86,15 +94,15 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
                   onChange={handleChangeQuestion}
                 />
               </div>
-              <div className="col-12" style={{ flex: "1" }}>
+              <div className="col-12" style={{ flex: '1' }}>
                 <div
                   className="imageUpload"
                   onClick={() => {
-                    document.getElementById("image" + index).click();
+                    document.getElementById('image' + index).click()
                   }}
                 >
                   <input
-                    id={"image" + index}
+                    id={'image' + index}
                     type="file"
                     accept="image/*"
                     hidden={true}
@@ -103,20 +111,20 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
                   {data.image ? (
                     <div
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "contents",
+                        width: '100%',
+                        height: '100%',
+                        display: 'contents',
                       }}
                     >
                       <img
                         src=""
-                        id={"show-image" + index}
-                        style={{ maxWidth: "600px", maxHeight: "300px" }}
+                        id={'show-image' + index}
+                        style={{ maxWidth: '600px', maxHeight: '300px' }}
                       />
                     </div>
                   ) : (
                     <div>
-                      <span style={{ fontSize: "1.3em" }}>
+                      <span style={{ fontSize: '1.3em' }}>
                         <i className="far fa-file"></i>
                       </span>
                       <br />
@@ -129,14 +137,14 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
           </div>
           <div className="col-4">
             <div className="question-row">
-              <div className="col-12" style={{ paddingBottom: "6%" }}>
+              <div className="col-12" style={{ paddingBottom: '6%' }}>
                 <select
                   name="time"
                   onChange={handleChangeSelect}
                   defaultValue="default"
                 >
                   <option value="default" disabled>
-                    {data.time == "" ? "Times" : data.time}
+                    {data.time == '' ? 'Times' : data.time}
                   </option>
                   <option value="30">30</option>
                   <option value="45">45</option>
@@ -144,14 +152,14 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
                   <option value="90">90</option>
                 </select>
               </div>
-              <div className="col-12" style={{ paddingBottom: "6%" }}>
+              <div className="col-12" style={{ paddingBottom: '6%' }}>
                 <select
                   name="point"
                   onChange={handleChangeSelect}
                   defaultValue="default"
                 >
                   <option value="default" disabled>
-                    {data.point == "" ? "Points" : data.point}
+                    {data.point == '' ? 'Points' : data.point}
                   </option>
                   <option value="500">500</option>
                   <option value="1000">1000</option>
@@ -257,6 +265,6 @@ const QuiztionCard = ({ data, index, add, remove, change}) => {
                     `}
       </style>
     </Fragment>
-  );
-};
-export default QuiztionCard;
+  )
+}
+export default QuiztionCard
