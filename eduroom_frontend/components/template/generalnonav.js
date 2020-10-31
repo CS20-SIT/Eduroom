@@ -41,6 +41,6 @@ const GeneralNonav = (props) => {
         `}
       </style>
     </Fragment>
-  )
-}
-export default GeneralNonav
+  );
+};
+export default GeneralNonav;
