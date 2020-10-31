@@ -115,6 +115,9 @@ export default css`
   .spacing-md {
     letter-spacing: 1.125px;
   }
+  .text-center {
+    text-align: center;
+  }
 
   /* Opacity */
   .opacity-80 {
