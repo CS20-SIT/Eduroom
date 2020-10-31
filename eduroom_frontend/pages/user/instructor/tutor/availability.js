@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import utils from '../../../../styles/tutor/utils';
 
 import {
@@ -12,6 +12,28 @@ const Temp = () => {
     t = t / 6 + 8;
     return timeFormatter(t);
   };
+  const [timeSlots, setTimeSlots] = useState({
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+  });
+  const timeSelect = (i) => {
+    const day = Math.floor(i % 6);
+    const time = Math.floor(i / 6 + 8);
+    let tmp = timeSlots;
+    if (tmp[day].includes(time)) tmp[day].splice(tmp[day].indexOf(time), 1);
+    else tmp[day].push(time);
+    tmp[1].sort();
+    tmp[2].sort();
+    tmp[3].sort();
+    tmp[4].sort();
+    tmp[5].sort();
+    setTimeSlots(tmp);
+    console.log(JSON.stringify(timeSlots));
+  };
+  const [hoverSlot, setHoverSlot] = useState(-1);
   return (
     <Fragment>
       <GeneralNoNav>
@@ -54,13 +76,43 @@ const Temp = () => {
                       </div>
                     ) : (
                       <div
-                        className='flex px-4 py-2 justify-center items-center bg-white-faded'
+                        // className={`flex px-4 py-2 justify-center items-center pointer ${
+                        //   timeSlots[Math.floor(i % 6)].includes(
+                        //     Math.floor(i / 6 + 8)
+                        //   )
+                        //     ? 'bg-red'
+                        //     : 'bg-white-faded'
+                        // } ${hoverSlot == i ? 'bg-pink' : ''} `}
+                        className={`flex px-4 py-2 justify-center items-center pointer ${
+                          timeSlots[Math.floor(i % 6)].includes(
+                            Math.floor(i / 6 + 8)
+                          )
+                            ? hoverSlot == i
+                              ? 'bg-yellow-faded'
+                              : 'bg-pink'
+                            : hoverSlot == i
+                            ? 'bg-yellow-faded'
+                            : 'bg-white-faded'
+                        } `}
                         style={{
                           borderRadius: 5 + 'px',
                           border: 1 + 'px solid rgba(87, 87, 87, 0.4)',
                         }}
+                        onMouseEnter={() => {
+                          setHoverSlot(i);
+                        }}
+                        onMouseLeave={() => {
+                          setHoverSlot(-1);
+                        }}
+                        onClick={() => timeSelect(i)}
                       >
-                        <div>+</div>
+                        <div>
+                          {timeSlots[Math.floor(i % 6)].includes(
+                            Math.floor(i / 6 + 8)
+                          )
+                            ? ''
+                            : '+'}
+                        </div>
                       </div>
                     )
                   )}
@@ -85,6 +137,9 @@ const Temp = () => {
         <style jsx>{`
           .left-pink {
             border-left: 5px solid #fb9ccb;
+          }
+          .bg-yellow-faded {
+            background-color: rgba(252, 169, 34, 0.2);
           }
           .grid-container {
             display: grid;
