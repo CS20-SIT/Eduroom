@@ -80,23 +80,21 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
                         {e.startTime} - {e.endTime}
                       </div>
                       {e.isAgree == 'Approved' ? (
-                        <Link href={`/tutor/appointment/${e.id}`}>
-                          <div
-                            className={`text-sm px-3 py-1 border rounded-md opacity-50 pointer animation ${
-                              hoverReview == index
-                                ? 'bg-secondary text-white'
-                                : ''
-                            }`}
-                            onPointerEnter={() => {
-                              setHoverReview(index);
-                            }}
-                            onPointerLeave={() => {
-                              setHoverReview(-1);
-                            }}
-                          >
-                            Leave Review
-                          </div>
-                        </Link>
+                        <div
+                          className={`text-sm px-3 py-1 border rounded-md opacity-50 pointer animation ${
+                            hoverReview == index
+                              ? 'bg-secondary text-white'
+                              : ''
+                          }`}
+                          onPointerEnter={() => {
+                            setHoverReview(index);
+                          }}
+                          onPointerLeave={() => {
+                            setHoverReview(-1);
+                          }}
+                        >
+                          Leave Review
+                        </div>
                       ) : (
                         ''
                       )}
