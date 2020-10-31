@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
-import Header from '../layouts/header';
-import SideNav from '../layouts/sidenav/sidenav';
+import React, { Fragment } from 'react'
+import Header from '../layouts/header'
+import SideNav from '../layouts/sidenav/sidenav'
 const GeneralNonav = (props) => {
   return (
     <Fragment>
@@ -10,18 +10,18 @@ const GeneralNonav = (props) => {
           display: 'flex',
           flex: '1 1 auto',
           justifyContent: 'space-between',
-          background: '#F4F5F7',
+          background: '#F4F5F7'
         }}
       >
         <SideNav />
-        <div id='content'>
+        <div id="content">
           <main>{props.children}</main>
         </div>
         {props.img ? (
           <img
-            alt='background-img'
+            alt="background-img"
             src={props.img}
-            className='background-img'
+            className="background-img"
           />
         ) : null}
       </div>
