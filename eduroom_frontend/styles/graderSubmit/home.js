@@ -1,8 +1,8 @@
 import css from "styled-jsx/css"
 export default css`
   .page {
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
     display: flex;
     position: fixed;
   }
@@ -12,13 +12,15 @@ export default css`
   .graphic {
     width: 35%;
     display: flex;
-    justify-content: center;
+    left: 50%;
   }
   img {
     left: 0;
-    width: 32%;
-    position: absolute;
-    top: 15%;
+    width: 90%;
+    height: fit-content;
+    position: relative;
+    top: 18%;
+    left: 5%;
   }
   .detail {
     width: 83%;

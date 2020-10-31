@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
-import GraderNav from "../../components/graderSubmit/GraderNav"
 import Head from "next/head"
+import Layout from "../../../components/graderSubmit/Layout"
 
 const Submission = () => {
   return (
@@ -9,8 +9,7 @@ const Submission = () => {
         <title>Submissions</title>
         <meta property="og:title" content="Submissions" key="Submissions" />
       </Head>
-      <GraderNav></GraderNav>
-      This is submission Page
+      <Layout>This is submission Page</Layout>
     </Fragment>
   )
 }

@@ -8,7 +8,7 @@ export default css`
   }
 
   .nav {
-    margin: 10px 0 0px 0;
+    margin: 40px 0 20px 0;
     position: sticky;
   }
 

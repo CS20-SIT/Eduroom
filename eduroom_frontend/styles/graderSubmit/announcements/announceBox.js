@@ -2,7 +2,8 @@ import css from "styled-jsx/css"
 export default css`
   .box {
     width: 95%;
-    padding: 25px;
+    height: 30%;
+    padding: 1.5rem;
     background-color: #ffffff;
     border: 1px solid #ffffff;
     border-radius: 10px;
@@ -13,19 +14,36 @@ export default css`
     display: flex;
     justify-content: space-between;
   }
-  .left,
+  .left {
+    width: 60%;
+  }
   .right {
-    width: 50%;
+    width: 40%;
   }
   p {
+    margin-top: 0;
+    font-size: 1.125rem;
     font-weight: bold;
     color: #f39ac4;
   }
-  .admins {
+  .admins,
+  .times {
     display: flex;
-    justify-content: flex-end;
+  }
+  .admins {
+    width: 30%;
+  }
+  .times {
+    width: 70%;
   }
   .left {
     align-items: center;
+  }
+  h2 {
+    margin-top: 0;
+  }
+  .announceList {
+    height: 80%;
+    overflow: auto;
   }
 `

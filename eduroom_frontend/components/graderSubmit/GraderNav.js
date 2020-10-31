@@ -16,13 +16,13 @@ const GraderNav = () => {
           <Link href="/graderSystem">Home</Link>
         </div>
         <div className="link problems">
-          <Link href="/graderSystem/problems">Problems</Link>
+          <Link href="/graderSystem/problem/">Problems</Link>
         </div>
         <div className="link contents">
-          <Link href="/graderSystem/contests">Contests</Link>
+          <Link href="/graderSystem/contest/">Contests</Link>
         </div>
         <div className="link ranks">
-          <Link href="/graderSystem/ranks">Ranks</Link>
+          <Link href="/graderSystem/rank/">Ranks</Link>
         </div>
         <div className="link">
           <div
