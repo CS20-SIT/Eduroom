@@ -22,8 +22,8 @@ const Tutor = ({ instructors }) => {
               </div>
             </div>
             {instructors.map((e, index) => (
-              <Link href={`/tutor/${e.id}`}>
-                <div key={index}>
+              <Link href={`/tutor/${e.id}`} key={index}>
+                <div>
                   <div
                     className={`px-8 py-4 my-8 bg-white-faded shadow rounded-md flex pointer animation ${
                       hoverIns == index ? 'bigger' : ''
