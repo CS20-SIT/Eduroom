@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react'
-import ManageEdqiz from '../../components/edqiz/edqizManage'
+import List from "../../components/edqiz/list";
 import GeneralNoSide from "../../components/template/generalnoside";
+
 const CreatePage = () => {
   return (
     <Fragment>
-      <GeneralNoSide>
-      {/* <ManageEdqiz mode="create"/> */}
-      </GeneralNoSide>
+ <GeneralNoSide/>
+      <List/>
+      <GeneralNoSide/>
+
     </Fragment>
   )
 }

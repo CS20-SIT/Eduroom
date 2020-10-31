@@ -26,6 +26,29 @@ const edqiz = [
       value: '!',
     },
 ]
+const edqizNormal = [
+  {
+    color: 'navy',
+    value: 'E',
+  },
+  {
+    color: 'purple',
+    value: 'D',
+  },
+  {
+    color: 'navy',
+    value: 'Q',
+  },
+  {
+    color: 'pink',
+    value: 'I',
+  },
+  {
+    color: 'navy',
+    value: 'Z ',
+  },
+ 
+]
 const toNavyText = (val) => {
     return {color:'navy',value:val}
 }
@@ -38,8 +61,16 @@ const toNavyWord = (word) => {
 const edit = toNavyWord("EDIT ")
 const create = toNavyWord("CREATE ")
 const newWord = toNavyWord("NEW ")
+const list = toNavyWord("List ")
+
+
+
+
 exports.word = {
   edqiz: edqiz,
   create: [...create,...newWord,...edqiz],
-  edit: [...edit,...edqiz]
+  edit: [...edit,...edqiz],
+  list: [...edqizNormal,...list],
+
+
 }
