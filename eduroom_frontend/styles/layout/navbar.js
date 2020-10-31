@@ -4,7 +4,7 @@ export default css`
     padding: 1% 4% 0% 4%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
     cursor: default;
   }
@@ -15,14 +15,9 @@ export default css`
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
   }
-  .navItemLayout {
-    width: 35vw;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
   .navItem {
     color: #5b5b5b;
+    margin-right: 2%;
     font-weight: 500;
     font-size: 1.2em;
     transition: 0.25s;
@@ -52,4 +47,27 @@ export default css`
     font-size: 1.2em;
     font-family: 'Quicksand', sans-serif;
   }
+  .navforumStyle {
+    padding: 1% 4% 0% 4%;
+    display: flex;
+    flex: 1 0 0;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+    cursor: default;
+  }
+  .buttonAdd{
+    padding: 1% 4% 0% 4%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    cursor: default;
+  }
+  .searchBox{
+    width: 300px;
+    heigh: 500 px;
+    padding: 8px 48px 8px 12px
+  }
+  
 `

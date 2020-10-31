@@ -1,49 +1,39 @@
-import React, { Fragment } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { AppBar, Toolbar } from '@material-ui/core';
+import React, { Fragment } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { AppBar, Toolbar } from '@material-ui/core'
 import style from '../../styles/layout/navbar'
 const Navbar = () => {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <Fragment>
       <AppBar
         position="sticky"
-        style={{ background: '#FFFFFFAA' }}
+        style={{ background: '#F4F5F7AA' }}
         elevation={0}
       >
         <Toolbar>
           <div className="navStyle">
-            <span className="navHeader">eduroom</span>
-            <div className="navItemLayout">
-              <div className="navItem">
-                <Link href="/exam">Exam</Link>
-              </div>
-              <div className="navItem">
-                <Link href="/course">Course</Link>
-              </div>
-              <div className="navItem">
-                <Link href="/forum">Forum</Link>
-              </div>
-              <div className="navItem">
-                <Link href="/">Home</Link>
-              </div>
-              <div className="navAction">
-                <button
-                  className="navLogin"
-                  onClick={() => router.push('/login')}
-                >
-                  <a className="navLoginText">Login</a>
-                </button>
-              </div>
+            <div className="navItem">
+              <i className="fas fa-shopping-cart" />
+            </div>
+            <div className="navItem">
+              <Link href="/login">Login</Link>
+            </div>
+            <div className="navAction">
+            <Link href="/register">
+              <button
+                className="navLogin"
+              >
+                <span className="navLoginText">Sign In</span>
+              </button>
+              </Link>
             </div>
           </div>
         </Toolbar>
       </AppBar>
-      <style jsx>
-        {style}
-      </style>
+      <style jsx>{style}</style>
     </Fragment>
-  );
-};
-export default Navbar;
+  )
+}
+export default Navbar
