@@ -1,15 +1,17 @@
-.container {
+import css from 'styled-jsx/css'
+export default css`
+  .container {
     padding: 20px;
     color: black;
-}
-.cardContainer {
+  }
+  .cardContainer {
     text-align: center;
     font-size: 20px;
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-}
-.btn {
+  }
+  .btn {
     margin-top: 50px;
     position: relative;
     top: 20px;
@@ -21,4 +23,5 @@
     text-align: center;
     font-size: 18px;
     border-radius: 12px;
-}
+  }
+`
