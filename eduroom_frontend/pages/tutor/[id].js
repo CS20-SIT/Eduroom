@@ -218,11 +218,13 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                     {dates.map((i, index) => (
                       <span
                         className={`text-sm font-bold ${
-                          i < today ? 'disabled' : 'pointer'
+                          i < today && month == date.getMonth()
+                            ? 'disabled'
+                            : 'pointer'
                         }`}
                         key={index}
                         onClick={() => {
-                          if (i < today) return;
+                          if (i < today && month == date.getMonth()) return;
                           setSelected(i);
                           setTimeSelected([]);
                         }}
@@ -232,7 +234,9 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                           className={
                             i == selected || i == today
                               ? i == selected
-                                ? 'selected'
+                                ? month == date.getMonth()
+                                  ? ''
+                                  : 'selected'
                                 : month == date.getMonth()
                                 ? 'today'
                                 : ''
@@ -623,37 +627,37 @@ export async function getStaticProps({ params }) {
     rating: 4.5,
     ratingCount: 2000,
     times: [
-      { date: 1, time: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
+      { date: 1, time: [9, 10, 11, 12, 13, 14, 15, 16] },
       { date: 2, time: [9, 12, 13, 15, 16, 17] },
       { date: 3, time: [11, 12, 15, 16, 17] },
-      { date: 4, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 4, time: [9, 10, 11, 12, 14, 15, 16] },
       { date: 5, time: [9, 12, 13, 14, 15, 17] },
-      { date: 6, time: [9, 10, 11, 12, 15, 16, 17] },
+      { date: 6, time: [9, 10, 11, 12, 15, 16] },
       { date: 7, time: [9, 12, 13, 15, 16, 17] },
       { date: 8, time: [11, 12, 15, 16, 17] },
-      { date: 9, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 9, time: [9, 10, 11, 12, 14, 15, 16] },
       { date: 10, time: [9, 12, 13, 14, 15, 17] },
-      { date: 11, time: [9, 10, 11, 12, 15, 16, 17] },
+      { date: 11, time: [9, 10, 11, 12, 15, 16] },
       { date: 12, time: [9, 12, 13, 15, 16, 17] },
       { date: 13, time: [11, 12, 15, 16, 17] },
-      { date: 14, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 14, time: [9, 10, 11, 12, 14, 15, 16] },
       { date: 15, time: [9, 12, 13, 14, 15, 17] },
       { date: 16, time: [9, 10, 11, 12, 15, 16, 17] },
       { date: 17, time: [9, 12, 13, 15, 16, 17] },
       { date: 18, time: [11, 12, 15, 16, 17] },
-      { date: 19, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 19, time: [9, 10, 11, 12, 14, 15, 16] },
       { date: 20, time: [9, 12, 13, 14, 15, 17] },
       { date: 21, time: [9, 10, 11, 12, 15, 16, 17] },
       { date: 22, time: [9, 12, 13, 15, 16, 17] },
       { date: 23, time: [11, 12, 15, 16, 17] },
-      { date: 24, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 24, time: [9, 10, 11, 12, 14, 15, 16] },
       { date: 25, time: [9, 12, 13, 14, 15, 17] },
       { date: 26, time: [9, 10, 11, 12, 15, 16, 17] },
       { date: 27, time: [9, 12, 13, 15, 16, 17] },
       { date: 28, time: [11, 12, 15, 16, 17] },
-      { date: 29, time: [9, 10, 11, 12, 14, 15, 16, 17] },
-      { date: 30, time: [9, 12, 13, 14, 15, 17] },
-      { date: 31, time: [9, 10, 11, 12, 14, 15, 16, 17] },
+      { date: 29, time: [9, 10, 11, 12, 14, 15, 16] },
+      { date: 30, time: [9, 12, 13, 14, 15] },
+      { date: 31, time: [9, 10, 11, 12, 13, 14, 15, 16] },
     ],
     price: 2000,
   };
