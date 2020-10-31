@@ -1,22 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import style from '../../styles/edqiz/createPage'
-import EdquizText from './CreateEdqiz-Text'
+import EdqizText from './edqizText'
 import Page1 from './edqizCreatePage1'
 import Page2 from './edqizCreatePage2'
 import Page3 from './edqizCreatePage3'
 import Page4 from './edqizCreatePage4'
 import Page5 from './edqizCreatePage5'
-import QuestionCard from './questionCard'
 const Content = () => {
-  // Current State for the current page
   const [current, setCurrent] = useState(1)
-  // Name of Quiz
   const [name, setName] = useState('')
-  // Description of Quiz
   const [description, setDescription] = useState('')
-  // Image of Quiz
   const [image, setImage] = useState(null)
-  // Question Template
   const questionTemplate = {
     question: '',
     time: '',
@@ -25,9 +19,8 @@ const Content = () => {
     correct: 0,
     image: null,
   }
-  // Question List in the Quiz
   const [questionList, setQuestionList] = useState([questionTemplate])
-  // Handle Render Image when QuestionList is changed
+
   useEffect(() => {
     questionList.map((el, index) => {
       if (el.image) {
@@ -39,8 +32,7 @@ const Content = () => {
       }
     })
   }, [questionList])
-
-  // Handle Change Quiz Name
+  
   const handleChangeQuizName = (val) => {
     setName(val)
   }
@@ -59,7 +51,6 @@ const Content = () => {
       reader.readAsDataURL(val)
     }
   }
-  // Use for Add new Question
 
   const addQuestion = (val) => {
     let temp = questionList.splice(0, val + 1)
@@ -68,14 +59,11 @@ const Content = () => {
     setQuestionList(temp)
   }
 
-  // Use for Edit information of question
-
   const changeQuestion = (val) => {
     let temp = [...questionList]
     temp[val.index][val.type] = val.newValue
     setQuestionList(temp)
   }
-  // Use for Remove Question
 
   const removeQuestion = (val) => {
     if (questionList.length > 1) {
@@ -84,8 +72,6 @@ const Content = () => {
       setQuestionList(temp)
     }
   }
-
-  // Use for change Page
 
   const isEmpty = (val) => {
     return val == ''
@@ -111,6 +97,7 @@ const Content = () => {
     }
     return true
   }
+
   const goto = (val) => {
     const data = { name, description, image, questionList }
     console.log(data)
@@ -120,8 +107,6 @@ const Content = () => {
       }
     }
   }
-
-  // Use for Render Page
 
   const renderPage = () => {
     switch (current) {
@@ -170,7 +155,7 @@ const Content = () => {
       <div className="landing">
         <div className="landing-title">
           <span className="navy-text"></span>
-          <EdquizText />
+          <EdqizText type="create"/>
         </div>
         <div className="content">
           <div className="card">{renderPage()}</div>
