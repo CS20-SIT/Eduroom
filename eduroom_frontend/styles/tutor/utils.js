@@ -33,6 +33,9 @@ export default css`
   .font-bold {
     font-weight: 700;
   }
+  .font-normal {
+    font-weight: 400;
+  }
   .font-light {
     font-weight: 300;
   }
