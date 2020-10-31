@@ -10,26 +10,49 @@ import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
+import AnnEdit from '../AnnCom/AnnEdit';
 
 const useStyles = makeStyles({
   root: {
    
-    margin: '10%',
-    width: '80%',
+    
+    width: '100%',
     
   },
   container: {
     
     maxHeight: 440,
   },
-  test : {
+  tableHeader : {
     'font-family': 'Quicksand , sans-serif',
-    borderBottom: "none"
+    borderBottom: "none",
+    'font-size': '1.2em' ,  color: '#3d467f','font-weight': 'bold'
+    
   },
   tableRow : {
     'font-family': 'Quicksand , sans-serif',
     borderBottom: "none"
-  }
+  },
+  tableCell : {
+    'font-family': 'Quicksand , sans-serif',
+    borderBottom: "none",
+    'font-size': '1em'
+    ,color: '#5b5b5b'
+  },
+  caption: {
+    'font-family': 'Quicksand , sans-serif',
+    color: '#5b5b5b',
+    fontSize: "0.875rem",
+    'font-weight': 'bold'
+  },
+  toolbar: {
+    "& > p:nth-of-type(2)": {
+      'font-family': 'Quicksand , sans-serif',
+    color: '#5b5b5b',
+    fontSize: "0.875rem",
+    'font-weight': 'bold'
+  }}
+
 
 })
 const shorten = (text, maxLength) => {
@@ -52,6 +75,7 @@ const AnnTable = (props) => {
     }
     GetData()
     console.log(data)
+    console.log(props.onSuccess);
   }, [props.update])
 
   const handleChangePage = (event, newPage) => {
@@ -70,13 +94,12 @@ const AnnTable = (props) => {
         <Table className={classes.tableRow}  stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
-
-              <TableCell align="right">Title</TableCell>
-
-              <TableCell className={classes.test} align="right">Description</TableCell>
-
-              <TableCell align="right">Admin ID</TableCell>
+              <TableCell className={classes.tableHeader}> Id</TableCell>
+              <TableCell width="25%" className={classes.tableHeader} align="left">Title</TableCell>
+              <TableCell width="45%" className={classes.tableHeader} align="left">Description</TableCell>
+              <TableCell className={classes.tableHeader} align="left">Admin </TableCell>
+              <TableCell className={classes.tableHeader} align="left">Created At </TableCell>
+              <TableCell className={classes.tableHeader} align="left">Edit </TableCell>
             </TableRow>
           </TableHead>
 
@@ -87,15 +110,16 @@ const AnnTable = (props) => {
                 return (
                  
                   <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
+                    <TableCell className={classes.tableCell}  component="th" scope="row">
                       {row.id}
                     </TableCell>
-
-                    <TableCell align="right">{row.title}</TableCell>
-
-                    <TableCell align="right">{shorten(row.description,30)}</TableCell>  
-
-                    <TableCell align="right">{row.adminid}</TableCell>
+                    <TableCell className={classes.tableCell}  width="25%"align="left">{row.title}</TableCell>
+                    <TableCell className={classes.tableCell} width="45%" align="left">{shorten(row.description,150)}</TableCell>  
+                    <TableCell className={classes.tableCell} align="left">{row.displayname}</TableCell>
+                    <TableCell className={classes.tableCell} align="left">{row.time}</TableCell>
+                    <TableCell className={classes.tableCell}  align="left">
+                      <AnnEdit onSuccess={props.onSuccess} id ={row.id} title ={row.title} description={row.description} visible={row.isvisible} adminid={row.adminid}> 
+                      </AnnEdit></TableCell>
                   </TableRow>
                 )
               })}
@@ -111,6 +135,10 @@ const AnnTable = (props) => {
         page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
+        classes={{
+          toolbar: classes.toolbar,
+          caption: classes.caption
+        }}
       />
     </Paper>
   )
