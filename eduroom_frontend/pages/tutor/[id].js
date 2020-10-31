@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import utils from '../../styles/tutor/utils';
 import GeneralNoNav from '../../components/template/generalnonav';
-
 import {
   timeFormatter,
   monthConverter,
