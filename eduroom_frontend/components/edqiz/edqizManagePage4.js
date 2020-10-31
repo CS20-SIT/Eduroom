@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import EdquizPagination from './edqiz-create-pagination'
-import style from '../../styles/edqiz/createPage'
+import EdquizPagination from './edqizPagination'
+import style from '../../styles/edqiz/managePage'
 import InputText from '../utils/InputText'
 const Page4 = ({
   goto,
@@ -21,7 +21,7 @@ const Page4 = ({
   const handleChange = (e) => {
     changeDescription(e.target.value)
   }
-  const handleUplaodFile = (e) => {
+  const handleUploadFile = (e) => {
     changeImage(e.target.files[0])
   }
   return (
@@ -35,13 +35,10 @@ const Page4 = ({
         <div className="row row-content">
           <Fragment>
             <div className="col-12">
-              <p className="landing-header">COVER IMAGE</p>
+              <p className="edqiz-manage-header">COVER IMAGE</p>
               <p className="">Give your quiz a cover image and description</p>
             </div>
-            <div
-              className="col-12"
-              style={{ display: 'flex', justifyContent: 'center' }}
-            >
+            <div className="col-12 cflex">
               <div
                 className="imageUpload"
                 onClick={() => {
@@ -53,25 +50,20 @@ const Page4 = ({
                   type="file"
                   accept="image/*"
                   hidden={true}
-                  onChange={handleUplaodFile}
+                  onChange={handleUploadFile}
                 />
                 {image ? (
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'contents',
-                    }}
-                  >
+                  <div className="show-img">
                     <img
+                      className="mw-600 mh-240"
                       src=""
+                      alt="cover-image"
                       id="cover-image"
-                      style={{ maxWidth: '600px', maxHeight: '240px' }}
                     />
                   </div>
                 ) : (
                   <div>
-                    <span style={{ fontSize: '1.3em' }}>
+                    <span className="fs-13">
                       <i className="far fa-file"></i>
                     </span>
                     <br />
@@ -80,15 +72,8 @@ const Page4 = ({
                 )}
               </div>
             </div>
-            <div
-              className="col-12"
-              style={{ display: 'flex', justifyContent: 'center' }}
-            >
-              <div
-                style={{
-                  width: '600px',
-                }}
-              >
+            <div className="col-12 cflex">
+              <div className="w-600">
                 <InputText
                   placeholder="Description"
                   value={description}
@@ -99,30 +84,18 @@ const Page4 = ({
             </div>
             <div className="col-12">
               <button
-                className="prevConButton"
+                className="edqiz-manage-button purple big-button"
                 onClick={() => {
                   goto(5)
                 }}
               >
-                Done
+                <span className="edqiz-manage-button-text">Done</span>
               </button>
             </div>
           </Fragment>
         </div>
       </div>
       <style jsx>{style}</style>
-      <style jsx>{`
-        .imageUpload {
-          width: 600px;
-          height: 250px;
-          border: 1px dashed #b3abbc;
-          border-radius: 8px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
-        }
-      `}</style>
     </Fragment>
   )
 }

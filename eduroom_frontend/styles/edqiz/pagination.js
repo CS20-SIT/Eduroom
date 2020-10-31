@@ -28,4 +28,15 @@ export default css`
   .current {
     background: #f39ac4;
   }
+  .mw600 {
+    max-width: 600px;
+  }
+  .mh240 {
+    mex-height: 240px;
+  }
+  .show-img {
+    width: 100%;
+    height: 100%;
+    display: contents;
+  }
 `
