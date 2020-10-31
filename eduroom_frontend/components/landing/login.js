@@ -32,6 +32,7 @@ const Content = () => {
           </div>
           <div className="login-form">
             <form onSubmit={(e) => e.preventDefault()}>
+              <label>
               <input
                 className="login-textfield"
                 type="text"
@@ -39,6 +40,8 @@ const Content = () => {
                 onChange={(e) => handleEmail(e)}
               />
               <div className="error">{emailError}</div>
+              </label>
+              <label>
               <input
                 className="login-textfield"
                 type="password"
@@ -46,6 +49,7 @@ const Content = () => {
                 onChange={(e) => handlePassword(e)}
               />
               <div className="error">{passwordError}</div>
+              </label>
 
               <button className="login-button">
                 <span className="login-button-text">Log In</span>

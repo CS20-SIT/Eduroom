@@ -17,7 +17,7 @@ const Register = () => {
         <div className="register-content">
           <div className="register-form">
             <form style={{ width: '80%' }} onSubmit={(e) => e.preventDefault()}>
-              <label className="label-text">Firstname</label>
+              <label className="label-text">Firstname
               <input
                 className="register-textfield"
                 type="text"
@@ -25,31 +25,31 @@ const Register = () => {
                 onChange={(e) =>
                   setUser({ ...user, firstname: e.target.value })
                 }
-              />
+              /></label>
 
-              <label className="label-text">Lastname</label>
+              <label className="label-text">Lastname
               <input
                 className="register-textfield"
                 type="text"
                 placeholder="Lastname"
                 onChange={(e) => setUser({ ...user, lastname: e.target.value })}
-              />
+              /></label>
 
-              <label className="label-text">Email</label>
+              <label className="label-text">Email
               <input
                 className="register-textfield"
                 type="email"
                 placeholder="Email"
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-              />
+              /></label>
 
-              <label className="label-text">Password</label>
+              <label className="label-text">Password
               <input
                 className="register-textfield"
                 type="password"
                 placeholder="Password"
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
-              />
+              /></label>
               <div style={{ textAlign: 'center' }}>
                 <button className="register-button" onClick={register}>
                   <span className="register-button-text">Register</span>

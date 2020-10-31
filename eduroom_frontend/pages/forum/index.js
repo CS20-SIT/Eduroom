@@ -1,27 +1,28 @@
-import React,{Fragment, useEffect, useState} from 'react'
-import api from '../../api'
-import ForumBlock from '../../components/forum/forumBlock'
-import {Container,Button} from '@material-ui/core'
-import Link from 'next/link'
+import React, { Fragment, useEffect, useState } from "react";
+import api from "../../api";
+import { Container, Button } from "@material-ui/core";
+import Link from "next/link";
+import SideNav from "../../components/layouts/sidenav/sidenav";
+import NavForum from "../../components/forum/searchForum";
+import style from '../../styles/forum/showForum';
 const Forum = () => {
-    const [forum,setForum] = useState([])
-    useEffect(()=>{
-        queryData()
-    },[])
-    const queryData = () =>{
-        api.get('/api/forum').then((res)=>{
-            setForum(res.data.data);
-            
-        })
-    }
-    const [create,setCreate] = useState()
-    return (
+    const [forum, setForum] = useState([]);
+  //   useEffect(() => {
+  //     queryData();
+  //   }, []);
+  //   const queryData = () => {
+  //     api.get("/api/forum").then((res) => {
+  //       setForum(res.data.data);
+  //     });
+  //   };
+  //   const [create, setCreate] = useState();
+  return (
     <Fragment>
         <Container>
         <h1>Forum</h1>
         {
             forum.map((el)=>{
-                return (<ForumBlock data={el}/>)
+                return (<ForumBlock key={el} data={el}/>)
             })
         }
         <div>
@@ -32,7 +33,20 @@ const Forum = () => {
             
         </div>
         </Container>
+        <style jsx>{style}</style>
+        <style jsx>
+        {`
+          #nav {
+            width: 100%;
+          }
+          .background-img {
+            position: absolute;
+            bottom: 0;
+            width: 100vw;
+          }
+        `}
+      </style>
     </Fragment>
-    )
-}
-export default Forum
+  );
+};
+export default Forum;
