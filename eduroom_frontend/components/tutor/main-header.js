@@ -12,7 +12,6 @@ const Header = () => {
 
   return (
     <Fragment>
-      <GeneralNoNav>
         <div className='flex' style={{ justifyContent: 'flex-end' }}>
           <Link href='/tutor'>
             <span
@@ -40,7 +39,6 @@ const Header = () => {
           </Link>
         </div>
         <style jsx>{utils}</style>
-      </GeneralNoNav>
     </Fragment>
   );
 };
