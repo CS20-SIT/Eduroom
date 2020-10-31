@@ -9,7 +9,7 @@ services:
     volumes:
       - ./eduroom_frontend:/usr/src/app
       - /usr/src/app/node_modules
-      - /usr/src/app/.next
+      - ./eduroom_frontend/.next:/usr/src/app/.next
     environment:
       - BACKEND_API=http://eduroom_backend:5000
       - GRADER_URL=http://eduroom_grading_server:3050

@@ -1,10 +1,43 @@
 import Head from 'next/head'
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import style from '../../styles/event/event'
 import { Button, Grid, Container, TextField } from '@material-ui/core'
 import Image from 'next/image'
-
+import api from '../../api'
 const content = () => {
+    const [user, setUser] = useState({
+        title: '',
+        type: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        startTime: '',
+        endTime: '',
+        place: ''
+    });
+    const createEvent = async () => {
+        console.log(user);
+    };
+    const handleCreate = (e) => {
+        if (validator()) {
+            api
+                .post('/api/event/createEvent', {
+                    title: user.title,
+                    type: user.type,
+                    description: user.description,
+                    startDate: user.startDate,
+                    endDate: user.endDate,
+                    startTime: user.startTime,
+                    endTime: user.endTime,
+                    place: user.place
+                })
+
+        }
+    }
+
+    const validator = () => {
+        
+    }
 
     return (
         <Fragment>
@@ -46,6 +79,8 @@ const content = () => {
                                         <Grid item xs={9}>
                                             <div style={{ marginLeft: "-18px" }}>
                                                 <input className="input-box"
+                                                    name="title"
+                                                    onChange={(e) => setUser({ ...user, title: e.target.value })}
                                                     style={{ width: "417px", height: "39px" }} />
                                             </div>
 
@@ -59,6 +94,9 @@ const content = () => {
                                         </Grid>
                                         <Grid item xs={8}>
                                             <input className="input-box"
+                                                name="type"
+                                                onChange={(e) => setUser({ ...user, type: e.target.value })}
+                                                type="text"
                                                 style={{ width: "260px", height: "39px" }} />
                                         </Grid>
                                     </Grid>
@@ -74,6 +112,8 @@ const content = () => {
                                 <Grid item xs={9}>
                                     <div style={{ marginLeft: "-40px" }}>
                                         <input className="input-box"
+                                            name="description"
+                                            onChange={(e) => setUser({ ...user, decription: e.target.value })}
                                             style={{ width: "923px", height: "88px" }} />
                                     </div>
                                 </Grid>
@@ -90,12 +130,16 @@ const content = () => {
                                         <Grid item xs={5}>
                                             <div style={{ marginLeft: "" }}>
                                                 <input className="input-box"
+                                                    name="startTime"
+                                                    onChange={(e) => setUser({ ...user, startTime: e.target.value })}
                                                     style={{ width: "207px", height: "39px" }} />
                                             </div>
                                         </Grid>
                                         <Grid item xs={5}>
                                             <div style={{ marginLeft: "" }}>
                                                 <input className="input-box"
+                                                    name="startDate"
+                                                    onChange={(e) => setUser({ ...user, startDate: e.target.value })}
                                                     style={{ width: "207px", height: "39px" }} />
                                             </div>
                                         </Grid>
@@ -109,12 +153,16 @@ const content = () => {
                                         <Grid item xs={5}>
                                             <div style={{ marginLeft: "" }}>
                                                 <input className="input-box"
+                                                    name="endTime"
+                                                    onChange={(e) => setUser({ ...user, endTime: e.target.value })}
                                                     style={{ width: "207px", height: "39px" }} />
                                             </div>
                                         </Grid>
                                         <Grid item xs={5}>
                                             <div style={{ marginLeft: "" }}>
                                                 <input className="input-box"
+                                                    name="endDate"
+                                                    onChange={(e) => setUser({ ...user, endDate: e.target.value })}
                                                     style={{ width: "207px", height: "39px" }} />
                                             </div>
                                         </Grid>
@@ -132,16 +180,18 @@ const content = () => {
                                 <Grid item xs={9}>
                                     <div style={{ marginLeft: "" }}>
                                         <input className="input-box"
+                                            name="place"
+                                            onChange={(e) => setUser({ ...user, place: e.target.value })}
                                             style={{ width: "983px", height: "39px" }} />
                                     </div>
                                 </Grid>
                             </Grid>
                             <div className="button">
-                                <button className="create-button" style={{ width: "122px", height: "39px" }}>
+                                <button className="create-button" onClick={handleCreate} style={{ width: "122px", height: "39px" }}>
                                     <a className="create-button-create">Confirm</a>
                                 </button>
 
-                                <button className="cancel-button" style={{ width: "122px", height: "39px", marginLeft:"45px"}}>
+                                <button className="cancel-button" style={{ width: "122px", height: "39px", marginLeft: "45px" }}>
                                     <a className="cancel-button-cancel">Cancel</a>
                                 </button>
                             </div>
