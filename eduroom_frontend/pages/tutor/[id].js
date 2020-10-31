@@ -124,7 +124,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
             ''
           )}
           <div className='container'>
-            <div className='flex my-4'>
+            <div className='flex'>
               <div>
                 <div
                   className='rounded-full bg-yellow'
@@ -325,7 +325,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         </div>
                       </div>
                       <div className='relative'>
-                        <form>
+                        <form className='relative'>
                           <input
                             className='input--members'
                             type='text'
@@ -338,6 +338,14 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                               setFocus(true);
                             }}
                           />
+
+                          <i
+                            className='fa fa-search absolute my-3 '
+                            style={{
+                              marginLeft: -2 + 'rem',
+                              color: 'rgba(83, 83, 83, 0.4)',
+                            }}
+                          ></i>
                         </form>
                         {focus && members.length > 0 ? (
                           <div className='dropdown--list'>
