@@ -98,7 +98,7 @@ export default css`
     background-color: rgba(255, 255, 255, 0.6);
   }
   .bg-tutor {
-    width: 100vw;
+    max-width: 100vw;
     min-height: 100vh;
     background-image: url('/images/tutor/tutorBG.svg');
     background-repeat: no-repeat;
