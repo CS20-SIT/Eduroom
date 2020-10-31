@@ -67,6 +67,7 @@ const Instructor = ({ instructor }) => {
     // console.log(members);
   };
   const [focus, setFocus] = useState(false);
+  const [hoverSelection, setHoverSelection] = useState(false);
   const mockup = [
     {
       id: 1,
@@ -320,9 +321,11 @@ const Instructor = ({ instructor }) => {
                       </form>
                       {focus && members.length > 0 ? (
                         <div className='dropdown--list'>
-                          {members.map((m) => (
+                          {members.map((m, i) => (
                             <div
-                              className='dropdown--item pointer'
+                              className={`dropdown--item pointer ${
+                                hoverSelection == i ? 'bg-secondary-faded ' : ''
+                              }`}
                               onClick={() => {
                                 setMembers([]);
                                 setFocus(false);
@@ -334,6 +337,12 @@ const Instructor = ({ instructor }) => {
                                 if (check != -1) return;
                                 tmp.push(m);
                                 setStudents(tmp);
+                              }}
+                              onMouseEnter={() => {
+                                setHoverSelection(i);
+                              }}
+                              onMouseLeave={() => {
+                                setHoverSelection(-1);
                               }}
                             >
                               {m.firstname} {m.lastname}
