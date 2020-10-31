@@ -4,17 +4,13 @@ const Pagination = ({ current,goto }) => {
   return (
     <Fragment>
       <div className="pagination">
-        <div className={current == 1 ? 'current circle' : 'circle'} onClick={()=>{goto(1)}}>
-          <span>1</span>
-        </div>
-        <div className="line"></div>
-        <div className={current == 2 ? 'current circle' : 'circle'} onClick={()=>{goto(2)}}>
-          <span>2</span>
-        </div>
-        <div className="line"></div>
-        <div className={current == 3 ? 'current circle' : 'circle'} onClick={()=>{goto(3)}}>
-          <span>3</span>
-        </div>
+        {
+          [...Array(3)].map((el,index)=>{
+            return <div className={'circle '+`${current == index+1 ?'current':''}`} onClick={()=>{goto(index+1)}}>
+              <span>{index+1}</span>
+              </div>
+          }).reduce((prev,curr)=>{return [prev,(<div className="line"></div>),curr]})
+        }
       </div>
       <style jsx>{style}</style>
     </Fragment>
