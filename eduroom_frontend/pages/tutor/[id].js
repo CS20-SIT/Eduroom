@@ -224,6 +224,11 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         }`}
                         key={index}
                         onClick={() => {
+                          console.log(i);
+                          console.log(today);
+                          console.log(selected);
+                          console.log(month == date.getMonth());
+
                           if (i < today && month == date.getMonth()) return;
                           setSelected(i);
                           setTimeSelected([]);
@@ -232,16 +237,25 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         {index > 6 ? (i > 0 ? i : ' ') : i}
                         <span
                           className={
-                            i == selected || i == today
-                              ? i == selected
-                                ? month == date.getMonth()
-                                  ? ''
-                                  : 'selected'
-                                : month == date.getMonth()
+                            i == today
+                              ? month == date.getMonth()
                                 ? 'today'
                                 : ''
+                              : i == selected && month != date.getMonth()
+                              ? 'selected'
                               : ''
                           }
+                          // className={
+                          //   i == selected || i == today
+                          //     ? i == selected
+                          //       ? month == date.getMonth()
+                          //         ? ''
+                          //         : 'selected'
+                          //       : month == date.getMonth()
+                          //       ? 'today'
+                          //       : ''
+                          //     : ''
+                          // }
                         />
                       </span>
                     ))}
