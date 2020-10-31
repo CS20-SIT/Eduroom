@@ -237,25 +237,16 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         {index > 6 ? (i > 0 ? i : ' ') : i}
                         <span
                           className={
-                            i == today
-                              ? month == date.getMonth()
-                                ? 'today'
-                                : ''
-                              : i == selected && month != date.getMonth()
-                              ? 'selected'
+                            i == selected
+                              ? i == today
+                                ? 'selected'
+                                : month == date.getMonth()
+                                ? ''
+                                : 'selected'
+                              : i == today && month == date.getMonth()
+                              ? 'today'
                               : ''
                           }
-                          // className={
-                          //   i == selected || i == today
-                          //     ? i == selected
-                          //       ? month == date.getMonth()
-                          //         ? ''
-                          //         : 'selected'
-                          //       : month == date.getMonth()
-                          //       ? 'today'
-                          //       : ''
-                          //     : ''
-                          // }
                         />
                       </span>
                     ))}
@@ -452,7 +443,10 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         Cost
                       </div>
                       <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                        {timeSelected.length * instructor.price} THB
+                        {timeSelected.length *
+                          instructor.price *
+                          (students.length + 1)}{' '}
+                        THB
                       </div>
                     </div>
                     {memberMode ? (
