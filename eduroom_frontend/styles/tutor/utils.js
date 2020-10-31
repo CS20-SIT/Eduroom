@@ -429,9 +429,9 @@ export default css`
     position: absolute;
     z-index: 9999;
     background-color: white;
-    width: 100%;
+    width: 70%;
     border-radius: 5px;
-    border: 1px solid rgba(83, 83, 83, 0.4);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   }
   .dropdown--item {
     padding: 0.3rem 0.5rem;
