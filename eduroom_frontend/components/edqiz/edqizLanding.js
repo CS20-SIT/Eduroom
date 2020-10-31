@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { useRouter } from 'next/router'
-import EdquizText from './edqiz-text'
+import EdqizText from './edqizText'
 import style from '../../styles/edqiz/landing'
 const Content = () => {
   const router = useRouter()
@@ -10,7 +10,7 @@ const Content = () => {
         <div className="landing-content">
           <div className="col-12">
             <div className="landing-title">
-              <EdquizText />
+              <EdqizText type="edqiz"/>
             </div>
             <div className="row">
               <input

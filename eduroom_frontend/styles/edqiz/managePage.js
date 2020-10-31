@@ -1,6 +1,6 @@
 import css from 'styled-jsx/css'
 export default css`
-  .landing-header {
+  .edqiz-manage-header {
     font-size: 2em;
     font-family: 'Quicksand', sans-serif;
     font-weight: bold;
@@ -41,7 +41,7 @@ export default css`
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
   }
 
-  .landing-img {
+  .edqiz-manage-img {
     width: 35%;
     transition: 0.3s;
     pointer-events: none;
@@ -49,7 +49,7 @@ export default css`
     margin-top: 10vh;
     position: absolute;
   }
-  .landing {
+  .edqiz-manage {
     justify-content: center;
     width: 100%;
     height: 100vh;
@@ -58,14 +58,14 @@ export default css`
     background-size: cover;
     overflow: auto;
   }
-  .landing-content {
+  .edqiz-manage-content {
     position: absolute;
     font-family: 'Quicksand', sans-serif;
   }
   .navy-text {
     color: #3d467f;
   }
-  .landing-title {
+  .edqiz-manage-title {
     font-family: 'Quicksand', sans-serif;
     display: flex;
     justify-content: center;
@@ -74,11 +74,8 @@ export default css`
     font-weight: bold;
     cursor: default;
   }
-  .landing-button {
-    background: #a880f7;
+  .edqiz-manage-button {
     border-radius: 25px;
-    height: 6.5vh;
-    width: 18%;
     transition: 0.3s;
     padding: 0.5rem 1.5rem;
     border: none;
@@ -86,15 +83,21 @@ export default css`
     justify: center;
     align-content: center;
   }
-  .landing-button:hover {
+  .edqiz-manage-button.pink{
+    background: #FB9CCB;
+  }
+  .edqiz-manage-button.purple{
+    background: #a880f7;
+  }
+  .edqiz-manage-button:hover {
     cursor: pointer;
     opacity: 0.8;
     transition: 0.25s;
   }
-  .landing-button-text {
+  .edqiz-manage-button-text {
     color: white;
     font-weight: 540;
-    font-size: 3vh;
+    font-size: 1.6em;
     font-family: 'Quicksand', sans-serif;
   }
 
@@ -112,16 +115,82 @@ export default css`
     border-radius: 2vh;
     box-sizing: border-box;
   }
-  .prevConButton {
+  .edqiz-manage-outline-button {
     background: transparent;
     outline: none;
-    border: 3px solid #FB9CCB;
     border-radius: 30px;
     padding: .5rem 2.5rem;
     font-size: 1.3em;
     font-weight: 700;
-    color: #FB9CCB;
     margin: 0% 1%;
     cursor: pointer;
+  }
+  .big-button {
+    height: 6.5vh;
+    width: 18%;
+  }
+  .edqiz-manage-outline-button.pink{
+    color: #FB9CCB;
+    border: 3px solid #FB9CCB;
+  }
+  .edqiz-manage-outline-button.pink:hover{
+    color: white;
+    background: #FB9CCB;
+  }
+  .edqiz-manage-outline-button.purple{
+    color: #a880f7;
+    border: 2px solid #a880f7;
+  }
+  .edqiz-manage-outline-button.purple:hover{
+    color: white;
+    background: #a880f7;
+  }
+  .cflex{
+    display: flex;
+    justify-content: center;
+  }
+  .navy-text {
+    color: #3d467f;
+  }
+  .w-300 {
+    width: 300px;
+  }
+  .h-600 {
+    height: 600px;
+  }
+  .py-20 {
+    padding: 0% 20%;
+  }
+  .name-text {
+    border: 3px solid #5B5B5B;
+    width: 60%;
+    height: 100%;
+    border-radius: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    font-size: 1.3em;
+    color: #5B5B5B;
+    font-weight: 500;
+  }
+  .preview-box {
+
+  }
+  .imageUpload {
+    width: 600px;
+    height: 250px;
+    border: 1px dashed #b3abbc;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .w-600 {
+    width: 600px;
+  }
+  .fs-13 {
+    font-size: 1.3em;
   }
 `
