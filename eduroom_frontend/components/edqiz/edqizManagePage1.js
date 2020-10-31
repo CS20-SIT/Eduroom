@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import EdquizPagination from './edqiz-create-pagination'
+import EdquizPagination from './edqizPagination'
 import style from '../../styles/edqiz/createPage'
 import InputText from '../utils/InputText'
 const Page1 = ({ goto, name, change }) => {
