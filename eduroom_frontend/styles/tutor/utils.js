@@ -70,6 +70,9 @@ export default css`
   .bg-secondary {
     background-color: #535353;
   }
+  .bg-secondary-faded {
+    background-color: rgba(87, 87, 87, 0.1);
+  }
   .bg-error {
     background-color: #ee5959;
   }
