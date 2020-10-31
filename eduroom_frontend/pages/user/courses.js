@@ -1,6 +1,6 @@
 import React,{Fragment,useState,useEffect} from 'react';
 import MyCourses from '../../components/user/myCourses';
-import General from '../../components/user/general';
+import General from '../../components/template/generalnonav';
 import axios from 'axios';
 const UserCourse = () => {
     useEffect(()=>{
