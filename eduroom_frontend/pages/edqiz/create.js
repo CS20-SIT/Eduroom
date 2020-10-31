@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
-import ManageEdqiz from '../../components/edqiz/edqizManage'
+import CreatePage from '../../components/edqiz/edqizCreate'
 import GeneralNoSide from "../../components/template/generalnoside";
-const CreatePage = () => {
+const Content = () => {
   return (
     <Fragment>
       <GeneralNoSide>
-      <ManageEdqiz mode="create"/>
+      <CreatePage />
       </GeneralNoSide>
     </Fragment>
   )
 }
-export default CreatePage
+export default Content
