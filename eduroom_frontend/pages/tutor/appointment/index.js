@@ -13,7 +13,7 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
 
   const [reviewModal, setReviewModal] = useState(-1);
 
-  const [starHover, setStarHover] = useState(-1);
+  const [starHover, setStarHover] = useState(0);
 
   return (
     <Fragment>
