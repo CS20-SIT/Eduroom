@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import style from '../../styles/edqiz/createPage'
 import EdqizText from './edqizText'
-import Page1 from './edqizCreatePage1'
-import Page2 from './edqizCreatePage2'
-import Page3 from './edqizCreatePage3'
-import Page4 from './edqizCreatePage4'
-import Page5 from './edqizCreatePage5'
-const Content = () => {
+import Page1 from './edqizManagePage1'
+import Page2 from './edqizManagePage2'
+import Page3 from './edqizManagePage3'
+import Page4 from './edqizManagePage4'
+import Page5 from './edqizManagePage5'
+const Content = ({mode}) => {
   const [current, setCurrent] = useState(1)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -20,7 +20,13 @@ const Content = () => {
     image: null,
   }
   const [questionList, setQuestionList] = useState([questionTemplate])
-
+  useEffect(() => {
+    if (mode == 'edit'){
+      setName("Test Edqiz");
+      setDescription("Test Description");
+      setQuestionList([questionTemplate,questionTemplate])
+    }
+  },[])
   useEffect(() => {
     questionList.map((el, index) => {
       if (el.image) {
@@ -155,7 +161,7 @@ const Content = () => {
       <div className="landing">
         <div className="landing-title">
           <span className="navy-text"></span>
-          <EdqizText type="create"/>
+          <EdqizText type={mode}/>
         </div>
         <div className="content">
           <div className="card">{renderPage()}</div>
