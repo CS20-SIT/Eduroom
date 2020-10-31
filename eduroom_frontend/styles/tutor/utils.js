@@ -389,6 +389,12 @@ export default css`
   .border-navy {
     border: 1px solid #3d467f;
   }
+  .border-none {
+    border-width: 0px;
+  }
+  .outline-none {
+    outline: none;
+  }
 
   /* animation */
   .animation {
