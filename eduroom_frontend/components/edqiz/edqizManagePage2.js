@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import EdquizPagination from './edqizPagination'
-import style from '../../styles/edqiz/createPage'
+import style from '../../styles/edqiz/managePage'
 import QuestionCard from './questionCard'
 import QuizName from './edqizEditName'
 const Page2 = ({
@@ -12,7 +12,6 @@ const Page2 = ({
   change,
   changeName,
 }) => {
-  // Use for render question
 
   const renderQuestion = () => {
     return questionList.map((el, index) => {
@@ -90,7 +89,7 @@ const Page2 = ({
             <div className="col-12">{renderQuestion()}</div>
             <div className="col-12">
               <button
-                className="prevConButton"
+                className="edqiz-manage-outline-button pink"
                 onClick={() => {
                   goto(1)
                 }}
@@ -98,7 +97,7 @@ const Page2 = ({
                 Previous
               </button>
               <button
-                className="prevConButton"
+                className="edqiz-manage-outline-button pink"
                 onClick={() => {
                   handleNext()
                 }}

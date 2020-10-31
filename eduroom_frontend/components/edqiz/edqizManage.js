@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import style from '../../styles/edqiz/createPage'
+import style from '../../styles/edqiz/managePage'
 import EdqizText from './edqizText'
 import Page1 from './edqizManagePage1'
 import Page2 from './edqizManagePage2'
@@ -158,8 +158,8 @@ const Content = ({mode}) => {
   }
   return (
     <Fragment>
-      <div className="landing">
-        <div className="landing-title">
+      <div className="edqiz-manage">
+        <div className="edqiz-manage-title">
           <span className="navy-text"></span>
           <EdqizText type={mode}/>
         </div>

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import EdquizPagination from './edqizPagination'
-import style from '../../styles/edqiz/createPage'
+import style from '../../styles/edqiz/managePage'
 import InputText from '../utils/InputText'
 const Page1 = ({ goto, name, change }) => {
   const [error, setError] = useState(false)
@@ -29,18 +29,15 @@ const Page1 = ({ goto, name, change }) => {
       <div className="col-12">
         <div className="row row-content">
           <div className="col-12">
-            <p className="landing-header">QUIZ NAME</p>
+            <p className="edqiz-manage-header">QUIZ NAME</p>
           </div>
           <div className="col-12">
-            <span style={{ color: '#3d467f' }}>
+            <span className="navy-text">
               let's start by giving the quiz a name
             </span>
           </div>
-          <div
-            className="col-12"
-            style={{ display: 'flex', justifyContent: 'center' }}
-          >
-            <div style={{ width: '300px' }}>
+          <div className="col-12 cflex">
+            <div className="w-300">
               <InputText
                 type="text"
                 placeholder="QUIZ NAME . . ."
@@ -54,12 +51,12 @@ const Page1 = ({ goto, name, change }) => {
           </div>
           <div className="col-12">
             <button
-              className="landing-button"
+              className="edqiz-manage-button purple big-button"
               onClick={() => {
                 handleGo(2)
               }}
             >
-              <span className="landing-button-text">GO!</span>
+              <span className="edqiz-manage-button-text">GO!</span>
             </button>
           </div>
         </div>
