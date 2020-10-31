@@ -53,12 +53,12 @@ const SideNav = () => {
     {
       icon: 'edqiz',
       text: 'Edqiz',
-      link: '/edquiz',
+      link: '/edqiz',
     },
     {
       icon: 'grader',
       text: 'Grader',
-      link: '/grader',
+      link: '/graderSystem',
     },
     {
       icon: 'calendar',

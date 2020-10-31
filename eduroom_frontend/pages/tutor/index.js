@@ -13,7 +13,6 @@ const Tutor = ({ instructors }) => {
   return (
     <Fragment>
       <GeneralNoNav>
-        {' '}
         <div className='bg-tutor'>
           <div className='container'>
             <Header />
