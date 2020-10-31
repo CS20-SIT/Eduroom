@@ -1,17 +1,9 @@
-import React, { Fragment, useState } from "react";
-import EdquizPagination from "./edqiz-create-pagination";
-import style from "../../styles/edqiz/createPage";
-import QuestionCard from "./questionCard";
-import QuestionPreview from "./questionPreview";
-const Page3 = ({
-  name,
-  goto,
-  questionList,
-  add,
-  remove,
-  change,
-  changeName,
-}) => {
+import React, { Fragment, useState } from 'react'
+import EdquizPagination from './edqiz-create-pagination'
+import style from '../../styles/edqiz/createPage'
+import QuestionCard from './questionCard'
+import QuestionPreview from './questionPreview'
+const Page3 = ({ name, goto, questionList, add, remove, change }) => {
   const renderQuestion = () => {
     return questionList.map((el, index) => {
       return (
@@ -23,20 +15,20 @@ const Page3 = ({
           remove={remove}
           change={change}
         />
-      );
-    });
-  };
+      )
+    })
+  }
   const renderPreview = () => {
     return questionList.map((el, index) => {
-      return <QuestionPreview key={index} data={el} index={index} />;
-    });
-  };
+      return <QuestionPreview key={index} data={el} index={index} />
+    })
+  }
 
   return (
     <Fragment>
       <div className="col-12">
         <div className="row">
-          <EdquizPagination current={3} goto={goto} />
+          <EdquizPagination current={2} goto={goto} />
         </div>
       </div>
       <div className="col-12">
@@ -47,27 +39,38 @@ const Page3 = ({
             </div>
             <div
               className="col-12"
-              style={{ display: "flex", justifyContent: "center" }}
+              style={{ display: 'flex', justifyContent: 'center' }}
             >
               <div
                 style={{
-                  border: "3px solid #5B5B5B",
-                  width: "50vw",
-                  height: "10vh",
-                  borderRadius: "2vh",display:'flex',alignItems:'center',justifyContent:'center'
+                  border: '3px solid #5B5B5B',
+                  width: '50vw',
+                  height: '10vh',
+                  borderRadius: '2vh',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
-               <p style={{fontSize:'23px',color:'#5B5B5B',fontWeight:'500'}}> {name}</p>
+                <p
+                  style={{
+                    fontSize: '23px',
+                    color: '#5B5B5B',
+                    fontWeight: '500',
+                  }}
+                >
+                  {name}
+                </p>
               </div>
             </div>
-            <div className="col-12" style={{ padding: "0% 20%" }}>
+            <div className="col-12" style={{ padding: '0% 20%' }}>
               {renderPreview()}
             </div>
             <div className="col-12">
               <button
                 className="prevConButton"
                 onClick={() => {
-                  goto(2);
+                  goto(2)
                 }}
               >
                 Previous
@@ -75,7 +78,7 @@ const Page3 = ({
               <button
                 className="prevConButton"
                 onClick={() => {
-                  goto(3);
+                  goto(4)
                 }}
               >
                 Continue
@@ -86,6 +89,6 @@ const Page3 = ({
       </div>
       <style jsx>{style}</style>
     </Fragment>
-  );
-};
-export default Page3;
+  )
+}
+export default Page3
