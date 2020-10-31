@@ -34,6 +34,10 @@ const Temp = () => {
     console.log(JSON.stringify(timeSlots));
   };
   const [hoverSlot, setHoverSlot] = useState(-1);
+  const [cost, setCost] = useState(0);
+  const costTyping = () => {
+    console.log(cost);
+  };
   return (
     <Fragment>
       <GeneralNoNav>
@@ -48,6 +52,10 @@ const Temp = () => {
                 <div
                   className='w-full bg-navy text-white py-2 pointer'
                   style={{ textAlign: 'center', borderRadius: 4 + 'px' }}
+                  onClick={() => {
+                    console.log(timeSlots);
+                    console.log(cost);
+                  }}
                 >
                   Publish
                 </div>
@@ -121,7 +129,11 @@ const Temp = () => {
                 <form className='flex my-2'>
                   <input
                     type='number'
+                    min='0'
                     className='border py-1 px-2'
+                    onChange={(e) => {
+                      setCost(e.target.value);
+                    }}
                     style={{ borderRadius: 5 + 'px', width: 16 + '%' }}
                   />
                   <div className='text-lg font-bold text-secondary py-1 mx-4'>
