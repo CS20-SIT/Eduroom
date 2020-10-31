@@ -32,9 +32,12 @@ const toNavyText = (val) => {
 const toPinkText = (val) => {
     return {color:'pink',value:val}
 }
-const edit = "EDIT ".split('').map(el=>{return toNavyText(el)})
-const create = "CREATE ".split('').map(el=>{return toNavyText(el)})
-const newWord = "NEW ".split('').map(el=>{return toNavyText(el)})
+const toNavyWord = (word) => {
+    return word.split('').map(el=>{return toNavyText(el)})
+}
+const edit = toNavyWord("EDIT ")
+const create = toNavyWord("CREATE ")
+const newWord = toNavyWord("NEW ")
 exports.word = {
   edqiz: edqiz,
   create: [...create,...newWord,...edqiz],

@@ -1,23 +1,8 @@
 import React, { Fragment, useState } from 'react'
 import EdquizPagination from './edqizPagination'
-import style from '../../styles/edqiz/createPage'
-import QuestionCard from './questionCard'
+import style from '../../styles/edqiz/managePage'
 import QuestionPreview from './questionPreview'
-const Page3 = ({ name, goto, questionList, add, remove, change }) => {
-  const renderQuestion = () => {
-    return questionList.map((el, index) => {
-      return (
-        <QuestionCard
-          key={index}
-          data={el}
-          index={index}
-          add={add}
-          remove={remove}
-          change={change}
-        />
-      )
-    })
-  }
+const Page3 = ({ name, goto, questionList }) => {
   const renderPreview = () => {
     return questionList.map((el, index) => {
       return <QuestionPreview key={index} data={el} index={index} />
@@ -35,40 +20,19 @@ const Page3 = ({ name, goto, questionList, add, remove, change }) => {
         <div className="row row-content">
           <Fragment>
             <div className="col-12">
-              <p className="landing-header">PREVIEW</p>
+              <p className="edqiz-manage-header">PREVIEW</p>
             </div>
-            <div
-              className="col-12"
-              style={{ display: 'flex', justifyContent: 'center' }}
-            >
-              <div
-                style={{
-                  border: '3px solid #5B5B5B',
-                  width: '50vw',
-                  height: '10vh',
-                  borderRadius: '2vh',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: '23px',
-                    color: '#5B5B5B',
-                    fontWeight: '500',
-                  }}
-                >
-                  {name}
-                </p>
+            <div className="col-12 cflex">
+              <div className="name-text">
+                <p>{name}</p>
               </div>
             </div>
-            <div className="col-12" style={{ padding: '0% 20%' }}>
+            <div className="col-12 py-20">
               {renderPreview()}
             </div>
             <div className="col-12">
               <button
-                className="prevConButton"
+                className="edqiz-manage-outline-button pink"
                 onClick={() => {
                   goto(2)
                 }}
@@ -76,7 +40,7 @@ const Page3 = ({ name, goto, questionList, add, remove, change }) => {
                 Previous
               </button>
               <button
-                className="prevConButton"
+                className="edqiz-manage-outline-button pink"
                 onClick={() => {
                   goto(4)
                 }}

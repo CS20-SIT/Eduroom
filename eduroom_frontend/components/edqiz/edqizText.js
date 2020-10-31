@@ -7,9 +7,9 @@ const CreateText = ({type}) => {
       <div className="text-box">
       <span className="text-title">
         {
-          word[type].map(el=>{
+          word[type].map((el,index)=>{
             return (
-              <span className={`${el.color}-text`}>{el.value}</span>
+              <span key={index} className={`${el.color}-text`}>{el.value}</span>
             )
           })
         }
