@@ -6,11 +6,9 @@ const Page5 = ({ name }) => {
       <div className="col-12">
         <div className="row row-content">
           <Fragment>
-            <div className="col-12">
+            <div className="col-12 fs-13">
               <p className="edqiz-manage-header">DONE!</p>
-            </div>
-            <div className="col-12">
-              <p className="">" {name} "</p>
+              <p className="navy-text">" {name} "</p>
             </div>
             <div
               className="col-12 cflex"
