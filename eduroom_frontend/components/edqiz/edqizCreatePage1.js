@@ -1,22 +1,29 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import EdquizPagination from './edqiz-create-pagination'
 import style from '../../styles/edqiz/createPage'
-const Page1 = ({goto,name,change}) => {
-  const handleGo = (val)=>{
-    if(name == ''){
-      alert('Please Input quiz name')
-    } else {
-      goto(val)
+import InputText from '../utils/InputText'
+const Page1 = ({ goto, name, change }) => {
+  const [error, setError] = useState(false)
+  const handleGo = (val) => {
+    if (val != 1) {
+      if (name == '') {
+        setError(true)
+      } else {
+        goto(val)
+      }
     }
   }
-  const handleChange = (e)=>{
+  const handleChange = (e) => {
+    if (e.target.value != '') {
+      setError(false)
+    }
     change(e.target.value)
   }
   return (
     <Fragment>
       <div className="col-12">
         <div className="row">
-          <EdquizPagination current={1} goto={handleGo}/>
+          <EdquizPagination current={1} goto={handleGo} />
         </div>
       </div>
       <div className="col-12">
@@ -29,20 +36,28 @@ const Page1 = ({goto,name,change}) => {
               let's start by giving the quiz a name
             </span>
           </div>
-          <div className="col-12">
-            <input
-              type="text"
-              id="fname"
-              name="firstname"
-              placeholder="QUIZ NAME . . ."
-              onChange={handleChange}
-              value={name}
-            />
+          <div
+            className="col-12"
+            style={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <div style={{ width: '300px' }}>
+              <InputText
+                type="text"
+                placeholder="QUIZ NAME . . ."
+                handleChange={handleChange}
+                error={error}
+                errorText="Quiz name is Required"
+                value={name}
+                style={{ padding: '5%' }}
+              />
+            </div>
           </div>
           <div className="col-12">
             <button
               className="landing-button"
-              onClick={()=>{handleGo(2)}}
+              onClick={() => {
+                handleGo(2)
+              }}
             >
               <span className="landing-button-text">GO!</span>
             </button>

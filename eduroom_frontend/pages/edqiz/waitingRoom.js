@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import GeneralNoNav from "../../components/template/generalnonav";
+import GeneralNoSide from "../../components/template/generalnoside";
 import Grid from "@material-ui/core/Grid";
 import Link from 'next/link'
 const Content = () => {
@@ -76,8 +76,8 @@ const Content = () => {
   }
   return (
     <Fragment>
+    <GeneralNoSide>
       <div className="landing">
-        <GeneralNoNav />
         <div className="main">
           <br />
           <div className="font">JOIN WITH GAME-PIN</div>
@@ -116,7 +116,7 @@ const Content = () => {
                   alignItems: "center",
                 }}
               >
-                <Link  href={'./game'}><button className="startButton">start></button></Link >
+                <Link href={'./game'}><button className="startButton">start</button></Link >
               </Grid>
             </Grid>
             <br />
@@ -129,6 +129,7 @@ const Content = () => {
            <br/>
         </div>
       </div>
+      </GeneralNoSide>
       <style jsx>{`
         .startButton {
           border-radius: 1.2vw;
