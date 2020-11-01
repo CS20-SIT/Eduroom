@@ -60,7 +60,7 @@ const RoomTab = () => {
           <Grid
             container
             item
-            xs={14}
+            xs={12}
             spacing={1}
             style={{ display: "flex", flexWrap: "nowrap" }}
           >
