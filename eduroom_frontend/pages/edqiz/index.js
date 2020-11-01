@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import LandingPage from '../../components/edqiz/edqizLanding'
-import GeneralNoNav from '../../components/template/generalnonav'
+import GeneralNoSide from "../../components/template/generalnoside";
 const Content = () => {
   return (
     <Fragment>
-      <GeneralNoNav>
+      <GeneralNoSide>
       <LandingPage />
-      </GeneralNoNav>
+      </GeneralNoSide>
     </Fragment>
   )
 }

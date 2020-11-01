@@ -6,21 +6,21 @@ const table = `
 
 `;
 
-exports.createG00Table = async (req, res) => {
+exports.createGXXTable = async () => {
   try{
-    await XX;
+    await createTable_XX();
     console.log('Create GXX Table Successfully');
   } catch (err) {
-    console.error(err.stack.red);
+    console.error(err);
   }
 
 }
 
-const createTable_XX = async (req, res, next) => {
+const createTable_XX = async () => {
     try {
       const job = await pool.query(table);
       console.log('Create XX Successfully');
     } catch (err) {
-      console.error(err.stack.red);
+      console.error(err);
     }
 };
