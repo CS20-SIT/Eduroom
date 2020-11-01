@@ -5,12 +5,13 @@ import Button from '@material-ui/core/Button'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
-import Link from 'next/link'
 import OrderDetail from './orderDetail'
 import CreditBox from './creditBox'
 import PaypalBox from './paypalBox'
+import {useRouter} from 'next/router'
 
-const checkout = () => {
+const Checkout = () => {
+    const router = useRouter();
     const [open, setOpen] = useState(false)
     const [type, setType] = useState("credit");
     const handleOpenDialog = (e) => {
@@ -33,8 +34,7 @@ const checkout = () => {
 
     return (
         <Fragment>
-            <div className="bg">
-                <div className="CheckoutBar"> checkout</div>
+            
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <div className="card">
@@ -60,6 +60,7 @@ const checkout = () => {
                                                     <img
                                                             src="/images/package/vesa.svg"
                                                             className="vesa"
+                                                            
                                                             style={{ width: 50, height: 50, paddingTop: 30, marginLeft: 10 }}
                                                         />
                                                         <img
@@ -122,7 +123,7 @@ const checkout = () => {
                                         </Grid>
 
                                         </Grid>
-                                        <hr></hr>
+                                        <hr style={{width: 300}}></hr>
 
                                         <Grid container style={{ paddingTop: 20 }}>
                                             <Grid item xs={6} style={{ paddingLeft: 20, paddingBottom: 10 }}>
@@ -160,8 +161,8 @@ const checkout = () => {
                                                 </DialogContent>
 
                                                 <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 30 }}>
-                                                    <Link href="/edqiz/create"><Button variant="contained" style={{ backgroundColor: '#FB9CCB', color: 'white', borderRadius: 24, width: 200, height: 40 }}
-                                                        onClick={handleOpenDialog}>Go to course</Button></Link>
+                                                    <Button variant="contained" style={{ backgroundColor: '#FB9CCB', color: 'white', borderRadius: 24, width: 200, height: 40 }}
+                                                        onClick={()=> router.push("/course")}>Go to course</Button>
                                                 </div>
                                                 </div>
                                                 </div>
@@ -174,7 +175,7 @@ const checkout = () => {
                         <OrderDetail />
                     </div>
                 </div>
-            </div>
+            
             <style jsx>
                 {
                     style
@@ -183,4 +184,4 @@ const checkout = () => {
         </Fragment>
     )
 }
-export default checkout;
+export default Checkout;
