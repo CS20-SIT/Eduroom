@@ -33,7 +33,7 @@ const Course = ({ courseDes }) => {
                 {/* Box of each course */}
                 <div className='text-center my-10'>
                 {courseDes.map((e, index) => (
-                  <Link href={`/course/${e.id}/reviews`}>
+                  <Link href={`/course/${e.id}`}>
                     <div className='mx-6 my-6 box-1 bg-white inline-block shadow rounded-lg pointer'>
                       <div className="w-full h-60"><img className="pic-1" alt="python" src={`${e.src}`} width="100%" height="100%"></img></div>
                       <div className="w-full h-40 font-quicksand">
@@ -56,7 +56,7 @@ const Course = ({ courseDes }) => {
   );
 };
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(contex) {
   // GET /course/review
   const courseDes = [
     {
@@ -69,21 +69,21 @@ export async function getStaticProps(context) {
     {
       id: 2,
       name: 'Learn To Code With C',
-      instructor: 'Bill Gates',
+      instructor: 'Bill Joe',
       price: 30,
       src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png'
     },
     {
       id: 3,
       name: 'Learn To Code With Java',
-      instructor: 'Bill Gates',
+      instructor: 'Billy Elish',
       price: 30,
       src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
     },
     {
       id: 4,
       name: 'Basic for Python',
-      instructor: 'Bill Gates',
+      instructor: 'Billie Armstrong',
       price: 30,
       src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
     },

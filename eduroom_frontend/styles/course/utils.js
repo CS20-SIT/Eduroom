@@ -171,6 +171,9 @@ export default css`
   .inline-block {
     display: inline-block;
   }
+  .position-ab {
+    position: absolute;
+  }
 
   /* Dimension */
   .w-full {
@@ -221,7 +224,19 @@ export default css`
 
 
 
+/* Box of Description */
+.box-des {
+  width:270px;
+  margin-left: 70px;
+  position: absolute;
+}
 
+/* Go to study butt */
+.go-study-butt {
+  margin-left: 12rem;
+  height: 1.75rem;
+  width: 6rem;
+}
 /* Share Icon */
 .share-icon {
   margin-left: 1rem;
@@ -251,6 +266,26 @@ export default css`
     width: 120px;
     height: 30px;
   }
+
+
+  /* Position of instructor name */
+  .instruc-name {
+    margin-top: 30px;
+    margin-left: 20px;
+  }
+  /* Position of instructor university */
+  .instruc-uni {
+    margin-top: 50px;
+    margin-left: 20px;
+  }
+  /* Position of description head */
+  .des-head {
+    margin-top: 40px
+  }
+
+
+
+
 
 
   /* Margin */
@@ -413,6 +448,9 @@ export default css`
   }
   .border-red {
     border 1px solid #ee5959;
+  }
+  .border-navy {
+    border 1px solid #3d467f;
   }
   .border-pink {
     border 1px solid #fffaf4;
