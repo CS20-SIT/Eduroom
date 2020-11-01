@@ -18,6 +18,7 @@ import {
 import GeneralNonav from "../../components/template/generalnonav";
 import StudentSupport from "../support/studentSupport";
 import InstructorSupport from "../support/InstructorSupport";
+import create from '../../pages/support/getstart'
 
 const SupportPage = () => {
   const theme = createMuiTheme({
@@ -80,7 +81,6 @@ const SupportPage = () => {
   };
   return (
     <Fragment>
-      <GeneralNonav/>
       <Head>Help and Support</Head>
       <Container>
         <ThemeProvider theme={theme}>
