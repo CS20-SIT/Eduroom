@@ -5,12 +5,13 @@ import Button from '@material-ui/core/Button'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
-import Link from 'next/link'
 import OrderDetail from './orderDetail'
 import CreditBox from './creditBox'
 import PaypalBox from './paypalBox'
+import {useRouter} from 'next/router'
 
-const checkout = () => {
+const Checkout = () => {
+    const router = useRouter();
     const [open, setOpen] = useState(false)
     const [type, setType] = useState("credit");
     const handleOpenDialog = (e) => {
@@ -33,8 +34,7 @@ const checkout = () => {
 
     return (
         <Fragment>
-            <div className="bg">
-                <div className="CheckoutBar"> checkout</div>
+            
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <div className="card">
@@ -60,6 +60,7 @@ const checkout = () => {
                                                     <img
                                                             src="/images/package/vesa.svg"
                                                             className="vesa"
+                                                            
                                                             style={{ width: 50, height: 50, paddingTop: 30, marginLeft: 10 }}
                                                         />
                                                         <img
@@ -122,7 +123,7 @@ const checkout = () => {
                                         </Grid>
 
                                         </Grid>
-                                        <hr></hr>
+                                        <hr style={{width: 300}}></hr>
 
                                         <Grid container style={{ paddingTop: 20 }}>
                                             <Grid item xs={6} style={{ paddingLeft: 20, paddingBottom: 10 }}>
@@ -144,6 +145,7 @@ const checkout = () => {
 
                                             <Dialog open={open} onClose={handleCloseDialog} >
                                                 <div >
+<<<<<<< HEAD
                                                     <div style={{ backgroundColor: 'white', border: '5px solid #F2ECFE' }}>
                                                         <DialogTitle style={{ textAlign: 'center' }}>
                                                             <div style={{ fontSize: '2em', color: '#A880F7', fontWeight: 700, marginTop: 20 }}>PURECHASED!</div>
@@ -164,6 +166,28 @@ const checkout = () => {
                                                                 onClick={handleOpenDialog}>Go to course</Button></Link>
                                                         </div>
                                                     </div>
+=======
+                                                    <div style={{backgroundColor: 'white', border:'5px solid #F2ECFE'}}>
+                                                <DialogTitle style={{ textAlign: 'center' }}>
+                                                    <div style={{ fontSize: '2em', color: '#A880F7', fontWeight: 700, marginTop: 20 }}>PURECHASED!</div>
+                                                </DialogTitle>
+
+                                                <DialogContent style={{ width: '450px', height: '400px', display: 'flex', justifyContent: 'center' }}>
+
+                                                    <img
+                                                        src="/images/package/purchesed.svg"
+                                                        className="google-logo"
+                                                        style={{ width: 350, height: 350 }}
+                                                    />
+
+                                                </DialogContent>
+
+                                                <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 30 }}>
+                                                    <Button variant="contained" style={{ backgroundColor: '#FB9CCB', color: 'white', borderRadius: 24, width: 200, height: 40 }}
+                                                        onClick={()=> router.push("/course")}>Go to course</Button>
+                                                </div>
+                                                </div>
+>>>>>>> 57e346b6dbc9ecf39fd29e83c55e19308995ed0c
                                                 </div>
                                             </Dialog>
                                         </div>
@@ -174,7 +198,7 @@ const checkout = () => {
                         <OrderDetail />
                     </div>
                 </div>
-            </div>
+            
             <style jsx>
                 {
                     style
@@ -183,4 +207,4 @@ const checkout = () => {
         </Fragment>
     )
 }
-export default checkout;
+export default Checkout;

@@ -11,6 +11,7 @@ const creditBox = () => {
         e.preventDefault();
         setForm({ ...createForm, [e.target.name]: e.target.value });
     };
+    
     return (
         <Fragment>
             <div className="purplebox" >
