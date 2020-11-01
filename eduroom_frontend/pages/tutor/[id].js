@@ -494,7 +494,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         console.log('price', instructor.price);
                         console.log('members', students);
 
-                        // location.reload();
+                        location.reload();
                       }}
                     >
                       Book!
