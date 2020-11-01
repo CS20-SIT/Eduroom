@@ -30,7 +30,7 @@ export default css`
     color: #5b5b5b;
   }
   .landing-button {
-    background: #fe75b7;
+    background: #FB9CCB;
     border-radius: 25px;
     padding: 0.5rem 1.5rem;
     border: none;
