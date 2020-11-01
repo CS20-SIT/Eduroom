@@ -20,7 +20,7 @@ const Forum = () => {
   //   const [create, setCreate] = useState();
   return (
     <Fragment>
-      <GeneralNoNav />
+      <GeneralNoNav >
       <div
         style={{
           display: "flex",
@@ -52,6 +52,7 @@ const Forum = () => {
         `}
       </style>
       </div>
+      </GeneralNoNav>
     </Fragment>
   );
 };
