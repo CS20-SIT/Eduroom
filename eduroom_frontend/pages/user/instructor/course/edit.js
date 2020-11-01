@@ -5,12 +5,12 @@ import Courses from '../../../../components/package/courses'
 import style from '../../../../styles/package/createpackage'
 import Link from 'next/link'
 
-const CreatePackage = () => {
+const Edit = () => {
     return (
         <Fragment>
             <General>
                 <div style={{ backgroundColor: "#f4f5f7" }}>
-                    <div className="package-header">Create New Package</div>
+                    <div className="package-header">Edit Package</div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                         <div className="container">
                             <div style={{ padding: "4% 28%" }}>
@@ -44,8 +44,8 @@ const CreatePackage = () => {
                         </div>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Link href="/user/instructor/course/confirmcreate">
-                            <button onClick={() => console.log('Clicked')} className="createbutton">Create</button></Link>
+                        <Link href="/user/instructor/course/confirmedit">
+                            <button onClick={() => console.log('Clicked')} className="createbutton">Edit</button></Link>
                     </div>
                 </div>
                 <style jsx>{style}</style>
@@ -54,4 +54,4 @@ const CreatePackage = () => {
         </Fragment>
     )
 }
-export default CreatePackage
+export default Edit
