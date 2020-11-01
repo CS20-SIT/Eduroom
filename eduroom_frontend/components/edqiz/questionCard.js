@@ -47,7 +47,7 @@ const QuiztionCard = ({ data, index, add, remove, change }) => {
       )
     })
   }
-  const handleuploadFile = (e) => {
+  const handleUploadFile = (e) => {
     let newValue = e.target.files[0]
     let type = 'image'
     change({ index, type, newValue })
@@ -100,7 +100,7 @@ const QuiztionCard = ({ data, index, add, remove, change }) => {
                     type="file"
                     accept="image/*"
                     hidden={true}
-                    onChange={handleuploadFile}
+                    onChange={handleUploadFile}
                   />
                   {data.image ? (
                     <div className="show-img">
