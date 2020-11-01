@@ -19,30 +19,26 @@ const sBigTitle ={'font-family': 'Quicksand , sans-serif' ,  'font-size': '2em' 
 
   return (
     <div style={sBig}>
-        <Grid  spacing={3} container
-  direction="row"
-  justify="flex-start"
-  alignItems="baseline"
->
-        <Grid item xl={2} md={3} >
-       
-         <span style={sBigTitle}> Announcement</span>
-        </Grid>
-        <Grid item xl={2} md={3} >
-       <span style={{backgroundColor:'red',paddingTop:7}}>
-        <AnnDialog  onSuccess={handleUpdate} /></span>
-        </Grid>
-       
-        
-        <Grid item xl={12} md={12}>
-        <AnnTable  onSuccess={handleUpdate}  update={refresh} />
-         
-        </Grid>
-      
-      </Grid>
+    <Grid  spacing={3} containerdirection="row" justify="flex-start" alignItems="baseline">
+    <Grid  >
    
-      
-    </div>
+     <span style={sBigTitle}>Announcement</span>
+     <div style={{height:20}} ></div>
+    </Grid>
+    <Grid  >
+   <span style={{paddingTop:7}}>
+    <AnnDialog  onSuccess={handleUpdate} /></span>
+    </Grid>
+    <div style={{height:20}} ></div>
+    <Grid item xl={12} md={12}>
+    <AnnTable  onSuccess={handleUpdate}  update={refresh} />
+    <div style={{height:100}} ></div>
+    </Grid>
+  
+  </Grid>
+
+  
+</div>
   );
 };
 export default Test;

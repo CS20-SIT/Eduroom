@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -120,14 +120,14 @@ style={{backgroundColor:'#FC8FC3',marginBottom:10,color:'white',height:30,width:
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">  <span style={sTitle} >Make Announcement</span></DialogTitle>
+        <DialogTitle id="form-dialog-title">  <span style={sTitle} >Make Contest Announcement</span></DialogTitle>
       
         <DialogContent>
           <DialogContentText>
           <span style={sText} >
-          To let our precious students know about the upcoming contest, your
-          brand-new questions, or even just to show off your new iphone,           
-          please enter your detail here.
+          Anything to tell to our precious students?
+          Maybe add some hints?, or tell them that this Contest is too hard.          
+          Please enter your detail here.
             </span>
           
           </DialogContentText>
