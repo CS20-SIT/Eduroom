@@ -152,13 +152,13 @@ style={{backgroundColor:'#FC8FC3',marginBottom:10,color:'white',height:30,width:
             id="standard-multiline-static"
             label="Description"
             multiline
-            rows={4}
+            rows={10}
             fullWidth
 
             value={ann.description}
             onChange={setDesc}
             required
-            inputProps={{ maxLength: 50 ,style:sInputfield}}
+            inputProps={{ style:sInputfield}}
             InputLabelProps={{style: sInput}}
           />
            <div style={{ height:30}} ></div>
