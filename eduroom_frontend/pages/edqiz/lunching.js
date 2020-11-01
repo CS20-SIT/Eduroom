@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
-import EdqizLunching from '../../components/edqiz/edqizLunching'
+import EdqizLunching from '../../components/edqiz/edlunch'
 import GeneralNoSide from "../../components/template/generalnoside";
 const Content = () => {
   return (
     <Fragment>
       <GeneralNoSide>
-      <EdqizLunching />
+        <EdqizLunching />
       </GeneralNoSide>
     </Fragment>
   )
