@@ -118,7 +118,6 @@ const CreateBlock = () => {
   });
   return (
     <Fragment>
-      <GeneralNoNav />
       <Container component="main" xs={12}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
