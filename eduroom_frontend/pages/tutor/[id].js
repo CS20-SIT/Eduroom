@@ -10,6 +10,8 @@ import {
 import Link from 'next/link';
 
 const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
+  console.log(instructor.id);
+
   const [booking, setBooking] = useState(true);
   var date = new Date();
   const [month, setMonth] = useState(date.getMonth());
@@ -435,9 +437,15 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                       <div className='text-sm font-bold font-lato my-2 spacing-sm'>
                         Date
                       </div>
-                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                        {selected} {monthConverter(month)} {year}
-                      </div>
+                      {selected == -1 ? (
+                        <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                          Please select date
+                        </div>
+                      ) : (
+                        <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                          {selected} {monthConverter(month)} {year}
+                        </div>
+                      )}
                     </div>
                     <div className='px-2 my-4'>
                       <div className='text-sm font-bold font-lato my-2 spacing-sm'>
@@ -641,23 +649,12 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
     </Fragment>
   );
 };
-export async function getStaticPaths() {
-  // Get every possible [id]
-  const paths = [
-    { params: { id: '1' } },
-    { params: { id: '2' } },
-    { params: { id: '3' } },
-    { params: { id: '4' } },
-    { params: { id: '5' } },
-  ];
 
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps(ctx) {
   // ID for fetching instructor information
-  const id = params.id;
-  // GET /tutor/instructor/info
+  const id = ctx.query.id;
+
+  // GET /tutor/instructor/info -> id
   const instructor = {
     id,
     name: 'Thanawat Benjachatriroj',
