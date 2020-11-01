@@ -75,6 +75,7 @@ const Appointment = ({ appointments }) => {
                 onClick={() => {
                   // POST /tutor/instructor/appointment -> true
                   location.reload();
+                  console.log(true);
                 }}
               >
                 Approve
@@ -85,6 +86,7 @@ const Appointment = ({ appointments }) => {
                 onClick={() => {
                   // POST /tutor/instructor/appointment -> false
                   location.reload();
+                  console.log(false);
                 }}
               >
                 Reject
