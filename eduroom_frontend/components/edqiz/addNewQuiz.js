@@ -39,6 +39,7 @@ const Page1 = () => {
           flex-direction: column;
           outline: none;
           font-weight: 600;
+          margin:20px;
         }
         .card:hover {
           color: black;
