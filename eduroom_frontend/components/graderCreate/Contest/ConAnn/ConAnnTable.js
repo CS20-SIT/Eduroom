@@ -10,11 +10,11 @@ import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import AnnEdit from '../AnnCom/AnnEdit';
+import AnnEdit from '../ConAnn/ConAnnEdit';
 
 const useStyles = makeStyles({
   root: {
-   
+
     
     width: '100%',
     
