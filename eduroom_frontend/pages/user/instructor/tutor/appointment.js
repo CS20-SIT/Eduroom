@@ -276,7 +276,7 @@ const Appointment = ({ appointments }) => {
   );
 };
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(ctx) {
   // GET /tutor/instructor/appointment
   const appointment = [
     {
