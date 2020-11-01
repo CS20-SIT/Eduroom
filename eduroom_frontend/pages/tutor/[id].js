@@ -76,6 +76,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
     return stars;
   };
 
+  // GET /tutor/utils/id
   const mockup = [
     {
       id: 1,
@@ -124,7 +125,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
             ''
           )}
           <div className='container'>
-            <div className='flex my-4'>
+            <div className='flex'>
               <div>
                 <div
                   className='rounded-full bg-yellow'
@@ -193,6 +194,8 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                           } else {
                             setMonth(month - 1);
                           }
+                          setSelected(-1);
+                          setTimeSelected([]);
                         }}
                         className='px-2 pointer'
                       >{`<`}</div>
@@ -210,6 +213,8 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         } else {
                           setMonth(month + 1);
                         }
+                        setSelected(-1);
+                        setTimeSelected([]);
                       }}
                       className='px-2 pointer'
                     >{`>`}</div>
@@ -224,6 +229,11 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         }`}
                         key={index}
                         onClick={() => {
+                          console.log(i);
+                          console.log(today);
+                          console.log(selected);
+                          console.log(month == date.getMonth());
+
                           if (i < today && month == date.getMonth()) return;
                           setSelected(i);
                           setTimeSelected([]);
@@ -232,14 +242,10 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         {index > 6 ? (i > 0 ? i : ' ') : i}
                         <span
                           className={
-                            i == selected || i == today
-                              ? i == selected
-                                ? month == date.getMonth()
-                                  ? ''
-                                  : 'selected'
-                                : month == date.getMonth()
-                                ? 'today'
-                                : ''
+                            i == selected
+                              ? 'selected'
+                              : i == today && month == date.getMonth()
+                              ? 'today'
                               : ''
                           }
                         />
@@ -250,43 +256,52 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                     <div className='my-4 text-md font-bold text-secondary font-lato'>
                       Available Time
                     </div>
-                    <div className='grid'>
-                      {instructor.times[selected - 1].time.map((e) => (
-                        <div
-                          onClick={() => {
-                            timeSelectedTmp = [...timeSelected];
-                            if (timeSelectedTmp[0] - e > 1) {
-                              alert('Please select consecutive time slots');
-                              return;
-                            }
-                            if (
-                              e - timeSelectedTmp[timeSelectedTmp.length - 1] >
-                              1
-                            ) {
-                              alert('Please select consecutive time slots');
-                              return;
-                            }
-                            timeSelectedTmp.includes(e)
-                              ? timeSelectedTmp.splice(
-                                  timeSelectedTmp.findIndex((x) => x == e),
-                                  1
-                                )
-                              : timeSelectedTmp.push(e);
-                            timeSelectedTmp.sort(function (a, b) {
-                              return +a - +b;
-                            });
-                            setTimeSelected(timeSelectedTmp);
-                          }}
-                          className={`pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
-                            timeSelected.includes(e)
-                              ? 'time-selected'
-                              : 'border'
-                          }`}
-                        >
-                          {timeFormatter(e)} - {timeFormatter(e + 1)}
+                    {selected == -1 ? (
+                      <div className='flex justify-center items-center border-dashed px-4 py-3'>
+                        <div className='font-quicksand font-bold text-secondary text-md'>
+                          Please select date before select time slots
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ) : (
+                      <div className='grid'>
+                        {instructor.times[selected - 1].time.map((e) => (
+                          <div
+                            onClick={() => {
+                              timeSelectedTmp = [...timeSelected];
+                              if (timeSelectedTmp[0] - e > 1) {
+                                alert('Please select consecutive time slots');
+                                return;
+                              }
+                              if (
+                                e -
+                                  timeSelectedTmp[timeSelectedTmp.length - 1] >
+                                1
+                              ) {
+                                alert('Please select consecutive time slots');
+                                return;
+                              }
+                              timeSelectedTmp.includes(e)
+                                ? timeSelectedTmp.splice(
+                                    timeSelectedTmp.findIndex((x) => x == e),
+                                    1
+                                  )
+                                : timeSelectedTmp.push(e);
+                              timeSelectedTmp.sort(function (a, b) {
+                                return +a - +b;
+                              });
+                              setTimeSelected(timeSelectedTmp);
+                            }}
+                            className={`pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
+                              timeSelected.includes(e)
+                                ? 'time-selected'
+                                : 'border'
+                            }`}
+                          >
+                            {timeFormatter(e)} - {timeFormatter(e + 1)}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     <div className='text-error text-md my-4'>
                       * Please Select Consecutive Appointment Time Slots
                     </div>
@@ -320,7 +335,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         </div>
                       </div>
                       <div className='relative'>
-                        <form>
+                        <form className='relative'>
                           <input
                             className='input--members'
                             type='text'
@@ -333,6 +348,14 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                               setFocus(true);
                             }}
                           />
+
+                          <i
+                            className='fa fa-search absolute my-3 '
+                            style={{
+                              marginLeft: -2 + 'rem',
+                              color: 'rgba(83, 83, 83, 0.4)',
+                            }}
+                          ></i>
                         </form>
                         {focus && members.length > 0 ? (
                           <div className='dropdown--list'>
@@ -438,7 +461,10 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         Cost
                       </div>
                       <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                        {timeSelected.length * instructor.price} THB
+                        {timeSelected.length *
+                          instructor.price *
+                          (students.length + 1)}{' '}
+                        THB
                       </div>
                     </div>
                     {memberMode ? (
@@ -455,9 +481,23 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                       </div>
                     )}
                     <div
-                      className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 mx-8 flex justify-center pointer text-navy`}
+                      className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 mx-8 flex justify-center text-navy ${
+                        timeSelected.length == 0 ? 'disabled' : 'pointer'
+                      }`}
                       onClick={() => {
+                        if (timeSelected.length == 0) return;
                         // POST  /tutor/student/appointment
+                        console.log('id', instructor.id);
+                        console.log('startTime', timeSelected[0]);
+                        console.log(
+                          'endTime',
+                          timeSelected[timeSelected.length - 1] + 1
+                        );
+                        console.log('date', `${selected}-${month + 1}-${year}`);
+                        console.log('price', instructor.price);
+                        console.log('members', students);
+
+                        location.reload();
                       }}
                     >
                       Book!
