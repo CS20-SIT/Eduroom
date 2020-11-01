@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: '90%',
   },
 });
 
@@ -23,7 +23,7 @@ const ConEach = (p) => {
       <CardHeader
       
         action={
-          <div><span>test</span><span>test</span></div> 
+          <div><span>starttime </span><span>endtime</span></div> 
         }
         title= {p.title}
         // subheader=   {p.description}

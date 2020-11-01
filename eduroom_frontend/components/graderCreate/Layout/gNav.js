@@ -17,7 +17,7 @@ const Navbar = () => {
         <Toolbar>
           <div className="navStyle">
           <div className="navItem">
-          <Link href="//admin/grader/">Home</Link>
+          <Link href="/admin/grader/">Home</Link>
             </div>
             <div className="navItem">
           <Link href="/login">Admin Log</Link>
