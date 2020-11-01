@@ -3,7 +3,7 @@ export default css`
 .package-header {
     display: flex;
     font-size: 1.7em;
-    padding: 3% 6%;
+    padding: 0 6% 3% 6%;
     font-weight: bold;
 }
 .container {
@@ -33,12 +33,10 @@ input[type=checkbox] {
     width: 20px;
     background-color: #3d467f;
 }
-input:checked {
-    background-color: #3d467f;
-}
 
 ::placeholder {
     color: #3d467f;
+    font-weight: 400;
 }
 
 .imageupload {
@@ -49,9 +47,10 @@ input:checked {
     align-items: center;
     cursor: pointer;
     color: grey;
-    padding: 15%;
+    padding: 20px;
     background-color: white;
     margin-bottom: 25px;
+    height: 250px;
 }
 .fa-camera {
     display: flex;
@@ -95,12 +94,15 @@ input:checked {
   }
 .list {
     border: 1px solid #EFF0F6;
-    box-sizing: border-box;
     border-radius: 10px;
-    padding: 6%;
+    padding: 2%;
     margin-bottom: 2%;
     background-color: #EFF0F6;
     text-align: left;
+    display: flex;
+    align-items: center;
+    
+    
 }
 .createbutton {
     background: #FFAAE7;
@@ -112,7 +114,36 @@ input:checked {
     font-weight: 550;
     cursor: pointer;
     margin-bottom: 5%;
-    
+}
+.backbutton {
+    padding: 0 40px ;
+    margin: 0;
+    font-size: 21px;
+}
+.courseno {
+    margin: 0 20px;
+    text-align: center;
+    font-weight: 550;
+    font-size: 20px;
+}
+.dialog {
+    margin: 20px;
+    border: 2px solid #F2ECFE;
+    width: 460px;
+    height: 300px;
+    text-align: center;
+    align-content: center;
+    justify-content: center; 
+    flex-wrap: wrap; 
+    display: flex
+}
+.indialog {
+    text-align: center;
+    align-content: center;
+    justify-content: center; 
+    flex-wrap: wrap; 
+    display: flex
+    flex-direction: column-reverse;
 }
 
 `

@@ -55,7 +55,7 @@ const checkout = () => {
                                             <div onChange={(event) => setType(event.target.value)}>
                                                 <div >
 
-                                                    <input type="radio" name="Transaction" value="credit" checked={type === 'credit'} style={{ cursor: 'pointer', height:18, width:18}}></input>
+                                                    <input type="radio" name="Transaction" value="credit" checked={type === 'credit'} style={{ cursor: 'pointer', height: 18, width: 18 }}></input>
                                                     <label for="credit" style={{ fontWeight: 550, fontSize: 18, paddingBottom: 20 }}>Credit or Debit
                                                     <img
                                                             src="/images/package/vesa.svg"
@@ -70,9 +70,9 @@ const checkout = () => {
                                                     </label>
 
                                                 </div>
-                                                <div style={{ marginBottom: 20}}>
+                                                <div style={{ marginBottom: 20 }}>
 
-                                                    <input type="radio" name="Transaction" value="paypal" checked={type == "paypal"} style={{ cursor: 'pointer', height:18, width: 18}} />
+                                                    <input type="radio" name="Transaction" value="paypal" checked={type == "paypal"} style={{ cursor: 'pointer', height: 18, width: 18 }} />
                                                     <label for="paypal" style={{ fontWeight: 550, fontSize: 18, marginRight: 20 }}>Paypal
                                                     <img
                                                             src="/images/package/paypal.svg"
@@ -88,7 +88,7 @@ const checkout = () => {
 
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                                         {
-                                            type == 'credit' ? (<CreditBox/>) : (<PaypalBox/>)
+                                            type == 'credit' ? (<CreditBox />) : (<PaypalBox />)
                                         }
                                     </div>
 
@@ -144,26 +144,26 @@ const checkout = () => {
 
                                             <Dialog open={open} onClose={handleCloseDialog} >
                                                 <div >
-                                                    <div style={{backgroundColor: 'white', border:'5px solid #F2ECFE'}}>
-                                                <DialogTitle style={{ textAlign: 'center' }}>
-                                                    <div style={{ fontSize: '2em', color: '#A880F7', fontWeight: 700, marginTop: 20 }}>PURECHASED!</div>
-                                                </DialogTitle>
+                                                    <div style={{ backgroundColor: 'white', border: '5px solid #F2ECFE' }}>
+                                                        <DialogTitle style={{ textAlign: 'center' }}>
+                                                            <div style={{ fontSize: '2em', color: '#A880F7', fontWeight: 700, marginTop: 20 }}>PURECHASED!</div>
+                                                        </DialogTitle>
 
-                                                <DialogContent style={{ width: '450px', height: '400px', display: 'flex', justifyContent: 'center' }}>
+                                                        <DialogContent style={{ width: '450px', height: '400px', display: 'flex', justifyContent: 'center' }}>
 
-                                                    <img
-                                                        src="/images/package/purchesed.svg"
-                                                        className="google-logo"
-                                                        style={{ width: 350, height: 350 }}
-                                                    />
+                                                            <img
+                                                                src="/images/package/purchesed.svg"
+                                                                className="google-logo"
+                                                                style={{ width: 350, height: 350 }}
+                                                            />
 
-                                                </DialogContent>
+                                                        </DialogContent>
 
-                                                <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 30 }}>
-                                                    <Link href="/edqiz/create"><Button variant="contained" style={{ backgroundColor: '#FB9CCB', color: 'white', borderRadius: 24, width: 200, height: 40 }}
-                                                        onClick={handleOpenDialog}>Go to course</Button></Link>
-                                                </div>
-                                                </div>
+                                                        <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 30 }}>
+                                                            <Link href="/edqiz/create"><Button variant="contained" style={{ backgroundColor: '#FB9CCB', color: 'white', borderRadius: 24, width: 200, height: 40 }}
+                                                                onClick={handleOpenDialog}>Go to course</Button></Link>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </Dialog>
                                         </div>
