@@ -1,13 +1,9 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState} from 'react'
 import style from '../../styles/universityEmail/Uregister'
-import Typography from '@material-ui/core/Typography'
-import {InputBase,Link} from '@material-ui/core'
+import {Link,Typography,InputBase, Paper, Grid} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import FormControl from '@material-ui/core/FormControl';
-import Checkbox from '@material-ui/core/Checkbox'
-import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
 import General from '../template/general'
+
 import api from "../../api";
 
 
@@ -30,8 +26,7 @@ const useStyles = makeStyles({
 
 const Content = () => {
   const [createinfo, setinfo] = useState({
-    localPart: "",
-    domainName: ""
+    verifyCode: "",
   }); 
   const handleSubmit = (e) => {
       console.log(createinfo);
@@ -40,6 +35,7 @@ const Content = () => {
       //   router.push("/registerUemail");
       //   console.log("PASSPUSH");
       // });
+     
       
   };
   const classes = useStyles();
@@ -67,7 +63,7 @@ const Content = () => {
             <div style={{ padding: 50, background: 'rgba(196, 196, 196, 0.5)' }}>
 
               <Typography variant="h4" component="h2" style={{ paddingRight: 200, color: '#3D467F' }}>
-                Please inform your university E-mail
+                Activate UniversityEmail
             </Typography>
 
               <br></br>
@@ -77,77 +73,51 @@ const Content = () => {
               }}></Paper>
 
               <Typography variant="body2" style={{ paddingTop: 15, color: '#979797' }}>
-                Inform a university E-mail to get a code to verify your account
+                Type the verify code sent to your university email.
               </Typography>
 
               <br></br>
-              <Grid container spacing={3}>
-                <Grid item xs={6} >
+             
+              <Grid container spacing={3} direction="column" alignItems="center"
+                justify="center">
+                  <Grid item xs={6} >
                   <Paper style={{ padding: 10 }}>
                     <form>
                       <InputBase
                         onChange={handleChange}
-                        name = "localPart"
+                        name = "verifyCode"
                         fullWidth
                         autoFocus
                         type={"text"}
                         value={createinfo.localPart}
                         className={classes.margin}
+                        placeholder = {"XXXXXXXXXX"}
                         inputProps={{ 'aria-label': 'naked' }}
                       />
                     </form>
                   </Paper>
+                  </Grid>
 
-                </Grid>
-                <img src="https://www.flaticon.com/svg/static/icons/svg/159/159036.svg" width="30px"></img>
-                <Grid item xs={4} >
-                  <Paper style={{ padding: 10 }}>
-                    <FormControl fullWidth className={classes.margin}>
-                      <InputBase
-                        onChange={handleChange}
-                        name = "domainName"
-                        fullWidth
-                        autoFocus
-                        type={"text"}
-                        value={createinfo.domainName}
-                        className={classes.margin}
-                        inputProps={{ 'aria-label': 'naked' }}
-                      />
-                    </FormControl>
-                  </Paper>
-                </Grid>
-              </Grid>
-
-              <Typography variant="body2" style={{ paddingTop: 15, color: '#979797' }} >
-                example  :  anya858@mail.kmutt.ac.th
-    </Typography>
-              <Grid container spacing={3} direction="column" alignItems="center"
-                justify="center">
-
-                <Grid container spacing={3} direction="row"
+                <Grid container spacing={3} direction="column"
                   alignItems="center"
-                  justify="center" style={{ marginTop: '20px' }}>
+                  justify="center" style={{ marginTop: '15px' }}>
 
-                  <Grid item xs={1} >
-                    <Checkbox
-                      defaultChecked
-                      color="primary"
-                      inputProps={{ 'aria-label': 'secondary checkbox' }}
-                    />
-                  </Grid>
-                  <Grid item xs={5} >
-                    <Typography variant="body2">I have read and accept <a >the term of service.</a></Typography>
+                 
+                  <Grid item xs={4} >
+                    <Typography variant="body2">Didn't get the verify email? <a >Resend the verify code</a></Typography>
                   </Grid>
                 </Grid>
-                <Link href = "/universityemail/verifycodesent">
+
                 <Grid item xs={6} >
+                  <Link href = "/universityemail/verifysuccess">
                   <button className="register-button"
                    type="submit"
                    onClick={handleSubmit}>
-                    <span className="register-button-text">Submit</span>
+                    <span className="register-button-text">Activate</span>
                   </button>
+                  </Link>
+          
                 </Grid>
-                </Link>
 
               </Grid>
             </div>
