@@ -437,9 +437,15 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                       <div className='text-sm font-bold font-lato my-2 spacing-sm'>
                         Date
                       </div>
-                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                        {selected} {monthConverter(month)} {year}
-                      </div>
+                      {selected == -1 ? (
+                        <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                          Please select date
+                        </div>
+                      ) : (
+                        <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
+                          {selected} {monthConverter(month)} {year}
+                        </div>
+                      )}
                     </div>
                     <div className='px-2 my-4'>
                       <div className='text-sm font-bold font-lato my-2 spacing-sm'>
