@@ -33,7 +33,7 @@ const SideNav = () => {
     {
       icon: 'support',
       text: 'Support',
-      link: '/supprt',
+      link: '/support',
     },
     {
       icon: 'message',
