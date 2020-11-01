@@ -8,7 +8,6 @@ const CreatePage = () => {
  <GeneralNoSide/>
       <List/>
       <GeneralNoSide/>
-
     </Fragment>
   )
 }

@@ -5,7 +5,7 @@ const CreatePage = () => {
   return (
     <Fragment>
       <GeneralNoSide>
-      {/* <ManageEdqiz mode="create"/> */}
+      <ManageEdqiz mode="create"/>
       </GeneralNoSide>
     </Fragment>
   )
