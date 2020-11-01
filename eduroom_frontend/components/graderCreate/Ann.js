@@ -4,6 +4,7 @@ import AnnTable from "./AnnCom/AnnTable";
 import { useState, useEffect } from "react";
 import Grid from '@material-ui/core/Grid';
 //prepare for adding abmin log wheen create / edit ann
+// toggle for visiblity https://material-ui.com/components/switches/
 const Test = () => {
   const [refresh, setRefresh] = useState(false);
   const handleUpdate = () => {
