@@ -206,7 +206,7 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
   );
 };
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(ctx) {
   // GET /tutor/student/appointment
   const appointments = [
     {
