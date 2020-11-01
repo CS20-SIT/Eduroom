@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -6,11 +6,18 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import style from "../../styles/graderCreate/CreateAnnouncement";
+
 import Divider from "@material-ui/core/Divider";
 import axios from "axios";
+import Image from 'next/image'
 
-const AnnDialog = (props) => {
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+
+//on button , change that to chips 
+// https://material-ui.com/components/chips/#chip
+const AnnEdit = (props) => {
+  
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
     success: false,
@@ -26,16 +33,17 @@ const AnnDialog = (props) => {
 
   const handleClickOpen = () => {
     setOpen(true);
+   
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
+//// admind id here!!!!!!!
   const [ann, setAnn] = useState({
-    title: "",
-    description: "",
-    adminid: 0,
+    title: props.title,
+    description: props.description,
+    adminid: props.id,
   });
   const setDesc = (event) => {
     setAnn({ ...ann, description: event.target.value });
@@ -43,19 +51,27 @@ const AnnDialog = (props) => {
   const setTitle = (event) => {
     setAnn({ ...ann, title: event.target.value });
   };
+  const [visible, setVisible] = React.useState(props.visible);
+
+  const handleChange = (event) => {
+    setVisible(event.target.checked);
+  };
 
   const handleSubmit = () => {
     axios
-      .post("http://localhost:3000/api/grader/cann", {
+      .put("http://localhost:3000/api/grader/eann", {
+        id: props.id,
         title: ann.title,
         description: ann.description,
         adminid: ann.adminid,
+        isvisible : visible
       })
       .then(function (response) {
         console.log(response);
         setOpen(false);
+        
         setTimeout(() => {
-          console.log(props);
+          console.log('this is when we call prop on sucess')
           props.onSuccess();
           setSubmitStatus({ ...submitStatus, success: true });
         }, 450);
@@ -67,30 +83,49 @@ const AnnDialog = (props) => {
         }, 450);
       });
 
-    setAnn({
-      title: "",
-      description: "",
-      adminid: 0,
-    });
+    // setAnn({
+    //   title: "",
+    //   description: "",
+    //   adminid: 0,
+    // });
+    // setVisible(true);
   };
+
+
+
+
+const sTitle = {'font-family': 'Quicksand , sans-serif' ,  'font-size': '1.2em' ,  color: '#3d467f','font-weight': 'bold'}
+const sText ={'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b'};
+const sInputfield = {'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b'}
+const sInput  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-weight': 'bold'}
+const sButtionandVisbile =  { color: '#3d467f', 'font-family': 'Quicksand , sans-serif','font-weight': 'bold' }
+
+
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
+        <button style={{
+         padding: 0,
+         border: 'none',
+         background: 'none',
+         cursor: 'pointer'
+        }}  onClick={handleClickOpen} >  <Image src="/images/graderCreate/edit.svg" width="20" height="20" /></button>
+  
+    
 
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Make Announcement</DialogTitle>
+        <DialogTitle id="form-dialog-title">  <span style={sTitle} >Edit Announcement</span></DialogTitle>
+      
         <DialogContent>
           <DialogContentText>
-            To let our precious students know about the upcoming contest, your
-            brand-new questions, or even just to show off your new iphone,
-            please enter your information here.
+          <span style={sText} >
+          Modify what you want here , remember to check everything before submitting
+            </span>
+          
           </DialogContentText>
           <TextField
             autoFocus
@@ -99,63 +134,75 @@ const AnnDialog = (props) => {
             label="Title"
             type="text"
             fullWidth
+            defaultValue={ann.title}
             value={ann.title}
             onChange={setTitle}
+            required
+           
+            inputProps={{ maxLength: 50 ,style:sInputfield }}
+            InputLabelProps={{style: sInput}}
           />
 
-          {/* <TextField
-            id="standard-multiline-flexible"
-            label="Description"
-            multiline
-            rowsMax={4}
-            fullWidth
-          /> */}
+<div style={{ height:20}} ></div>
           <TextField
             id="standard-multiline-static"
             label="Description"
             multiline
             rows={4}
             fullWidth
+            defaultValue={ann.description}
             value={ann.description}
             onChange={setDesc}
+            inputProps={{ maxLength: 50 ,style:sInputfield}}
+            InputLabelProps={{style: sInput}}
+            required
           />
+           <div style={{ height:30}} ></div>
+           <FormControlLabel
+      control={
+        <Switch color='primary' checked={visible} onChange={handleChange} name="visible" />
+      }
+      label={<span style={sButtionandVisbile}>Visible</span>}
+    />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+          <span style={sButtionandVisbile}>Cancel</span>
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            Submit
+          <span style={sButtionandVisbile}>Submit</span> 
           </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={submitStatus.success} onClose={statusClose}>
-        <DialogTitle>{"Success!"}</DialogTitle>
+        <DialogTitle><span style={sTitle} >Success!</span></DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Your announcement have been published.
+          <span style={sText} > Your announcement have been edited.</span>
+           
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={statusClose} color="primary" autoFocus>
-            Ok
+          <span style={sButtionandVisbile}>Ok</span>
           </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={submitStatus.failed} onClose={statusClose}>
-        <DialogTitle>{"Opps.... Something went wrong!"}</DialogTitle>
+        <DialogTitle><span style={sTitle} >Opps.... Something went wrong!</span></DialogTitle>
         <DialogContent>
-          <DialogContentText>Come back again later..</DialogContentText>
+          <DialogContentText>
+          <span style={sText} >  Come back again later...</span></DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={statusClose} color="primary" autoFocus>
-            Ok
+          <span style={sButtionandVisbile}>Ok</span>
           </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 };
-export default AnnDialog;
+export default AnnEdit;
