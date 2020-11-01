@@ -115,6 +115,9 @@ export default css`
   .spacing-md {
     letter-spacing: 1.125px;
   }
+  .text-center {
+    text-align: center;
+  }
 
   /* Opacity */
   .opacity-80 {
@@ -426,9 +429,9 @@ export default css`
     position: absolute;
     z-index: 9999;
     background-color: white;
-    width: 100%;
+    width: 70%;
     border-radius: 5px;
-    border: 1px solid rgba(83, 83, 83, 0.4);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   }
   .dropdown--item {
     padding: 0.3rem 0.5rem;
@@ -469,5 +472,39 @@ export default css`
   }
   .tooltip:hover > .tips {
     opacity: 1;
+  }
+
+  // modal
+  .modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 9000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-container {
+    position: relative;
+    width: 40rem;
+    height: 25rem;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 3rem 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .modal-close {
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
+    font-weight: 700;
+    cursor: pointer;
   }
 `;
