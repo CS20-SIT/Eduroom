@@ -4,7 +4,7 @@ import Avatar from "@material-ui/core/Avatar";
 import AddMember from "./addMember";
 import CancelIcon from "./icons/CancelIcon";
 import CameraAltIcon from "./icons/CameraAlt";
-import BlueInput from "./BlueInput";
+import BlueInput from "./blueInput";
 import Submit from "./submit";
 import ExitIcon from "./icons/ExitIcon";
 
