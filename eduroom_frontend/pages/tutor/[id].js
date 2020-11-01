@@ -124,7 +124,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
             ''
           )}
           <div className='container'>
-            <div className='flex my-4'>
+            <div className='flex'>
               <div>
                 <div
                   className='rounded-full bg-yellow'
@@ -224,6 +224,11 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         }`}
                         key={index}
                         onClick={() => {
+                          console.log(i);
+                          console.log(today);
+                          console.log(selected);
+                          console.log(month == date.getMonth());
+
                           if (i < today && month == date.getMonth()) return;
                           setSelected(i);
                           setTimeSelected([]);
@@ -232,14 +237,14 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         {index > 6 ? (i > 0 ? i : ' ') : i}
                         <span
                           className={
-                            i == selected || i == today
-                              ? i == selected
-                                ? month == date.getMonth()
-                                  ? ''
-                                  : 'selected'
+                            i == selected
+                              ? i == today
+                                ? 'selected'
                                 : month == date.getMonth()
-                                ? 'today'
-                                : ''
+                                ? ''
+                                : 'selected'
+                              : i == today && month == date.getMonth()
+                              ? 'today'
                               : ''
                           }
                         />
@@ -320,7 +325,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         </div>
                       </div>
                       <div className='relative'>
-                        <form>
+                        <form className='relative'>
                           <input
                             className='input--members'
                             type='text'
@@ -333,6 +338,14 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                               setFocus(true);
                             }}
                           />
+
+                          <i
+                            className='fa fa-search absolute my-3 '
+                            style={{
+                              marginLeft: -2 + 'rem',
+                              color: 'rgba(83, 83, 83, 0.4)',
+                            }}
+                          ></i>
                         </form>
                         {focus && members.length > 0 ? (
                           <div className='dropdown--list'>
@@ -438,7 +451,10 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         Cost
                       </div>
                       <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                        {timeSelected.length * instructor.price} THB
+                        {timeSelected.length *
+                          instructor.price *
+                          (students.length + 1)}{' '}
+                        THB
                       </div>
                     </div>
                     {memberMode ? (
