@@ -404,6 +404,9 @@ export default css`
   .outline-none {
     outline: none;
   }
+  .border-dashed {
+    border: 1px dashed #535353;
+  }
 
   /* animation */
   .animation {
