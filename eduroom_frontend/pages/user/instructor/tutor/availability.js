@@ -174,7 +174,7 @@ const Availability = ({ availabilities, price }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps(ctx) {
   // GET /tutor/instructor/availability
   const availabilities = {
     1: [15, 16],
