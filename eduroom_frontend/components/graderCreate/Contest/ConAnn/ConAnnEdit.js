@@ -117,7 +117,7 @@ const sButtionandVisbile =  { color: '#3d467f', 'font-family': 'Quicksand , sans
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">  <span style={sTitle} >Edit Announcement</span></DialogTitle>
+        <DialogTitle id="form-dialog-title">  <span style={sTitle} >Edit Contest Announcement</span></DialogTitle>
       
         <DialogContent>
           <DialogContentText>
@@ -147,12 +147,12 @@ const sButtionandVisbile =  { color: '#3d467f', 'font-family': 'Quicksand , sans
             id="standard-multiline-static"
             label="Description"
             multiline
-            rows={4}
+            rows={10}
             fullWidth
             defaultValue={ann.description}
             value={ann.description}
             onChange={setDesc}
-            inputProps={{ maxLength: 50 ,style:sInputfield}}
+            inputProps={{ style:sInputfield}}
             InputLabelProps={{style: sInput}}
             required
           />
