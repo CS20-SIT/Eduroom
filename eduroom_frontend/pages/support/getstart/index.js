@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, Paper,Typography } from "@material-ui/core";
-import style from "../../styles/forum/showForum";
-import SupportForm from "../../components/support/supportform"
+import style from "../../../styles/forum/showForum";
+import GetStart from "../../../components/support/gettingstart"
 import { useRouter } from "next/router";
-import GeneralNonav from "../../components/template/generalnonav";
+import GeneralNonav from "../../../components/template/generalnonav";
 
 const create = () => {
     const router = useRouter();
@@ -16,19 +16,16 @@ const create = () => {
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
-                    background: "#EFF0F6",
                 }}
             >
-                
-                <div id="nav">
+            <div id="nav">
                     <div className="top">
                     <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Submit Support Form</label>
+                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
+                    <GetStart/>
                     </div>
-                    <SupportForm />
+                    
                 </div>
-                <main></main>
-
                 <style jsx>{style}</style>
                 <style jsx>
                     {`
@@ -56,7 +53,7 @@ const create = () => {
             }
           `}
                 </style>
-            </div>
+                </div>
             </GeneralNonav>
         </Fragment>
     );

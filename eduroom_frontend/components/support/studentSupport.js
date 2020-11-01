@@ -20,6 +20,7 @@ const StudentSupport = () => {
       <Grid container spacing={7} justify="center">
           <Grid item >
           <Paper style={{width: '260px', height: '220px',backgroundColor:"#eff0f6"}} elevation={3}>
+          <Link href='/support/getstart'>
               <Button style={{width: '260px', height: '220px'}} variant="outlined">
                   <Grid container sm={12}><Grid item sm={12}>
                   <img src="https://www.flaticon.com/svg/static/icons/svg/2164/2164598.svg" style={{height:'80px'}}/><br></br>
@@ -27,6 +28,7 @@ const StudentSupport = () => {
                   <Grid item sm={12}>
                       Getting Started</Grid></Grid>
               </Button>
+              </Link>
               </Paper>
           </Grid>
           <Grid item >
