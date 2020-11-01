@@ -4,8 +4,6 @@ import EdqizText from './edqizText'
 import style from '../../styles/edqiz/landing'
 const Page3 = ({data,questionNumber}) => {
   const router = useRouter()
- 
-
   return (
     <Fragment>  
       <div className="landing">
@@ -22,7 +20,6 @@ const Page3 = ({data,questionNumber}) => {
                 type="text"
                 id="fname"
                 name="firstname"
-
                 placeholder={data[questionNumber].quizname}
               />
             </div>
