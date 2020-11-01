@@ -24,7 +24,7 @@ const sBigTitle ={'font-family': 'Quicksand , sans-serif' ,  'font-size': '2em' 
 }
 
   return (
-    <ConEach title = 'Do or Die' description="bla bla blabla bla bla bla bla blabla bla bla bla bla blabla bla blabla bla blabla bla blabla bla blabla bla bla "></ConEach>
+    <ConEach title = 'Do or Die' description="This contest is created for preparing yourself to do the Do or Die exam."></ConEach>
          
   );
 };
