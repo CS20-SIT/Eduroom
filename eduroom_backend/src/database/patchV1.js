@@ -94,8 +94,16 @@ const drop_idenitiy = `
 ALTER  table if exists announcements
     ALTER COLUMN  id drop identity if exists  ;
 
-Alter table if exists contest
-    ALTER column examno drop identity if exists  ;
+do $$
+begin
+    if EXISTS(SELECT *
+        FROM information_schema.columns
+        WHERE table_name='contest' and column_name='examno')
+    then
+        Alter table if exists contest
+            ALTER column examno drop identity if exists;
+    end if;
+end $$;
 
 alter table if exists contest_question
     alter column id drop identity if exists  ;

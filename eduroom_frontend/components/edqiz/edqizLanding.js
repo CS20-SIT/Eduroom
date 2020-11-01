@@ -5,7 +5,7 @@ import style from '../../styles/edqiz/landing'
 const Content = () => {
   const router = useRouter()
   return (
-    <Fragment>
+    <Fragment>  
       <div className="landing">
         <div className="landing-content">
           <div className="col-12">
