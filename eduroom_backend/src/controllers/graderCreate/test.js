@@ -37,7 +37,7 @@ const editAnn = async (req, res, next) => {
   const title = req.body.title
   const description = req.body.description
   // const adminid = req.body.adminid
-  const adminid = 'df3b7cb7-6a95-11e7-8846-b05adad3f0ae'
+  const adminid = '12345678-1234-1234-1234-123456789123'
   const visible = req.body.isvisible
   const id = req.body.id
 
