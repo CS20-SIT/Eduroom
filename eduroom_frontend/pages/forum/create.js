@@ -36,11 +36,8 @@ const create = () => {
           <div className="content">
             <strong className="topic">CREATE FORUM</strong>
           </div>
-          <div className="paper">
-            <Paper>
               <CreateBlock />
-            </Paper>
-          </div>
+            
         </div>
         <main></main>
 
