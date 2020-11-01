@@ -20,7 +20,7 @@ select{
     textAlign: justify;
     width:300;
     padding: 20px 30px;
-    // margin-bottom: 10%;
+    
 
 
 }
@@ -53,7 +53,8 @@ input[type='radio']:after {
 
 .bg{
     background-color: #F4F5F7;
-    height: "100vh";
+    height: 100%;
+    overflow-y: auto;
 }
 
 .card{
