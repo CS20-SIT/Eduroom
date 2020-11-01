@@ -481,8 +481,11 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                       </div>
                     )}
                     <div
-                      className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 mx-8 flex justify-center pointer text-navy`}
+                      className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 mx-8 flex justify-center text-navy ${
+                        timeSelected.length == 0 ? 'disabled' : 'pointer'
+                      }`}
                       onClick={() => {
+                        if (timeSelected.length == 0) return;
                         // POST  /tutor/student/appointment
                         console.log('id', instructor.id);
                         console.log('startTime', timeSelected[0]);
