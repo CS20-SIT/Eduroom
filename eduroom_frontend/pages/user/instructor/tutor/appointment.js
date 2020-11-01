@@ -74,6 +74,7 @@ const Appointment = ({ appointments }) => {
                 className='pointer text-center font-quicksand text-white py-2 rounded-md my-4'
                 onClick={() => {
                   // POST /tutor/instructor/appointment -> true
+                  location.reload();
                 }}
               >
                 Approve
@@ -83,6 +84,7 @@ const Appointment = ({ appointments }) => {
                 className='pointer text-center font-quicksand py-2 border-secondary text-secondary bg-white-faded rounded-md'
                 onClick={() => {
                   // POST /tutor/instructor/appointment -> false
+                  location.reload();
                 }}
               >
                 Reject

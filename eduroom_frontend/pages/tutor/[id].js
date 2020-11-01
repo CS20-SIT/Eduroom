@@ -484,6 +484,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                       className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 mx-8 flex justify-center pointer text-navy`}
                       onClick={() => {
                         // POST  /tutor/student/appointment
+                        location.reload();
                       }}
                     >
                       Book!
