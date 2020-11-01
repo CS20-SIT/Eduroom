@@ -47,6 +47,9 @@ export default css`
   .text-secondary {
     color: #535353;
   }
+  .text-secondary-faded {
+    color: rgba(87, 87, 87, 0.5);
+  }
   .text-error {
     color: #ee5959;
   }
@@ -392,11 +395,17 @@ export default css`
   .border-navy {
     border: 1px solid #3d467f;
   }
+  .border-secondary {
+    border: 1px solid rgba(87, 87, 87, 1);
+  }
   .border-none {
     border-width: 0px;
   }
   .outline-none {
     outline: none;
+  }
+  .border-dashed {
+    border: 1px dashed #535353;
   }
 
   /* animation */
