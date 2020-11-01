@@ -5,7 +5,7 @@ module.exports = {
       headful: false,
       settings: {
         emulatedFormFactor: 'desktop',
-        throttlingMethod: 'devtools',
+        throttlingMethod: 'simulate',
         chromeFlags: '--window-size=1440,900',
         throttling: {
           rttMs: 40,

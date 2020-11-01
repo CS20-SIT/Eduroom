@@ -137,7 +137,7 @@ const Support = () => {
   })
   return (
     <Fragment>
-      <GeneralNoNav />
+      <GeneralNoNav >
       <Head>
         <title>Submit Support Form</title>
       </Head>
@@ -356,6 +356,7 @@ const Support = () => {
           </div>
         </ThemeProvider>
       </Container>
+      </GeneralNoNav>
     </Fragment>
   )
 }

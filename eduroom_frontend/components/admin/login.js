@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import Link from 'next/link';
 import style from '../../styles/admin/login'
 import Image from 'next/image'
-import InputField from '../utils/InputText'
+import InputText from '../utils/InputText'
 const Login = () => {
   const [data,setData] = useState({email:{
     label: 'Email',
@@ -74,7 +74,7 @@ const Login = () => {
               {
                 Object.keys(data).map(el=>{
                   return (
-                    <InputField key={data[el].name} label={data[el].label} name={data[el].name} placeholder={data[el].placeholder} error={data[el].error} type={data[el].type} value={data[el].value} errorText={data[el].errorText} handleChange={handleChange} />
+                    <InputText key={data[el].name} label={data[el].label} name={data[el].name} placeholder={data[el].placeholder} error={data[el].error} type={data[el].type} value={data[el].value} errorText={data[el].errorText} handleChange={handleChange} style={{padding:'5%',margin:'3% 0%'}} />
                   )
                 })
               }
