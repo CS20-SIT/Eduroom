@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import style from '../../styles/universityEmail/Uregister'
-import Typography from '@material-ui/core/Typography'
+import {Typography,Link} from '@material-ui/core'
 import InputBase from '@material-ui/core/InputBase'
 import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl';
@@ -91,7 +91,7 @@ const Content = () => {
                 justify="center">
 
                 
-
+              <Link href = "/course">
                 <Grid item xs={12} >
                   <button className="register-button"
                    type="submit"
@@ -99,6 +99,7 @@ const Content = () => {
                     <span className="register-button-text">Shop now!</span>
                   </button>
                 </Grid>
+                </Link>
 
               </Grid>
             </div>
