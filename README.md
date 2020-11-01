@@ -74,6 +74,7 @@ git push -u origin master
 ```
 docker-compose -f docker-compose.dev.yml run eduroom_backend sh 
 node src/database/seeder.js -i
+node src/database/seeder_patch.js -i
 exit
 ```
 
