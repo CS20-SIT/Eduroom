@@ -1,4 +1,4 @@
 import React,{Fragment} from 'react'
-export default chat = () => {
+export default function Chat(){
     return <Fragment></Fragment>
 }
