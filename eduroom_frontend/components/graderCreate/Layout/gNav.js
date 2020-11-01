@@ -17,7 +17,7 @@ const Navbar = () => {
         <Toolbar>
           <div className="navStyle">
           <div className="navItem">
-          <Link href="/admin/grader/">Home</Link>
+          <Link href="//admin/grader/">Home</Link>
             </div>
             <div className="navItem">
           <Link href="/login">Admin Log</Link>
@@ -26,7 +26,7 @@ const Navbar = () => {
           <Link href="/admin/grader/announcement">Announcement</Link>
             </div>
           <div className="navItem">
-          <Link href="/login">Contest</Link>
+          <Link href="/admin/grader/contest">Contest</Link>
             </div>
         
             <div className="navItem">
