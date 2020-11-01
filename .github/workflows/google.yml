@@ -1,0 +1,142 @@
+name: Build, Deploy to GKE and Lighthouse on production
+
+on:
+  push:
+    branches:
+    - master
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: eduroom-cluster
+  GKE_ZONE: asia-southeast1-b
+
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: [self-hosted, linux, x64]
+    env:
+      DOCKER_BUILDKIT: '1'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Setup gcloud CLI
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.3
+      with:
+        service_account_key: ${{ secrets.GKE_SA_KEY }}
+        project_id: ${{ secrets.GKE_PROJECT }}
+
+    # Configure Docker to use the gcloud command-line tool as a credential
+    # helper for authentication
+    - run: |-
+        gcloud --quiet auth configure-docker
+
+    # Get the GKE credentials so we can deploy to the cluster
+    - run: |-
+        gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+
+    # Build the Docker image
+    - name: Build Eduroom Backend Image
+      run: |-
+        docker build -f eduroom_backend/Dockerfile \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-backend:$GITHUB_SHA" \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
+          eduroom_backend
+
+    - name: Build Eduroom Frontend Image
+      run: |-
+        docker build -f eduroom_frontend/Dockerfile \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-frontend:$GITHUB_SHA" \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
+          eduroom_frontend
+
+    - name: Build Eduroom Grading Server Image
+      run: |-
+        docker build -f eduroom_grading_server/Dockerfile \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-grading-server:$GITHUB_SHA" \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
+          eduroom_grading_server
+
+    - name: Build Eduroom Socket Chat Image
+      run: |-
+        docker build -f eduroom_socket_chat/Dockerfile \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat:$GITHUB_SHA" \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat" \
+          eduroom_socket_chat
+
+    - name: Build Eduroom Socket Kahoot Image
+      run: |-
+        docker build -f eduroom_socket_kahoot/Dockerfile \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot:$GITHUB_SHA" \
+          --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot" \
+          eduroom_socket_kahoot
+          
+    
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |-
+        docker push "asia.gcr.io/$PROJECT_ID/eduroom-backend"
+        docker push "asia.gcr.io/$PROJECT_ID/eduroom-frontend"
+        docker push "asia.gcr.io/$PROJECT_ID/eduroom-grading-server"
+        docker push "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat"
+        docker push "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot"
+
+    # Set up kustomize
+    - name: Set up Kustomize
+      run: |-
+        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+        chmod u+x ./kustomize
+
+    # Deploy the Docker image to the GKE cluster
+    - name: Deploy
+      run: |-
+        ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-backend=asia.gcr.io/$PROJECT_ID/eduroom-backend:$GITHUB_SHA
+        ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-frontend=asia.gcr.io/$PROJECT_ID/eduroom-frontend:$GITHUB_SHA
+        ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-grading-server=asia.gcr.io/$PROJECT_ID/eduroom-grading-server:$GITHUB_SHA
+        ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-socket-chat=asia.gcr.io/$PROJECT_ID/eduroom-socket-chat:$GITHUB_SHA
+        ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot=asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot:$GITHUB_SHA
+        ./kustomize build . | kubectl apply -f -
+        kubectl rollout status deployment/eduroom-backend-deployment
+        kubectl rollout status deployment/eduroom-frontend-deployment
+        kubectl rollout status deployment/eduroom-grading-server-deployment
+        kubectl rollout status deployment/eduroom-socket-chat-deployment
+        kubectl rollout status deployment/eduroom-socket-kahoot-deployment
+        kubectl get services -o wide
+  lhci:
+    name: Lighthouse on production
+    runs-on: [self-hosted, linux, x64]
+    needs: [setup-build-publish-deploy]
+    env:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
+      LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli
+          ~/.npm-global/bin/lhci autorun
