@@ -10,9 +10,10 @@ import {
   ThemeProvider,
   Select,
   Paper,
-  MenuItem
+  MenuItem,
 } from "@material-ui/core";
-import TextField from '@material-ui/core/TextField';
+import GeneralNoNav from "../../components/template/generalnonav";
+import TextField from "@material-ui/core/TextField";
 import api from "../../api";
 
 const CreateBlock = () => {
@@ -57,11 +58,12 @@ const CreateBlock = () => {
     setForm({ ...createForm, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (validator()) {
       console.log(createForm);
       api.post("/api/forum/create", createForm).then((res) => {
         console.log(res);
-        router.push("/forum");
+        // router.push("/forum");
       });
     } else {
       console.log("This form is not valid");
@@ -75,26 +77,26 @@ const CreateBlock = () => {
       if (createForm[key] == "") {
         temp[key] = true;
         check = false;
+        console.log(key)
       } else {
         temp[key] = false;
       }
     }
     setAlert(temp);
     return check;
-  }
+  };
   const useStyles = makeStyles((theme) => ({
     page: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
+      display: "flex",
+      flexDirection: "column",
     },
     form: {
-      width: '100%',
+      width: "100%",
       marginTop: theme.spacing(3),
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      background: '#3D467F',
+      background: "#3D467F",
     },
     paper: {
       marginTop: theme.spacing(3),
@@ -111,18 +113,19 @@ const CreateBlock = () => {
 
   const theme = createMuiTheme({
     typography: {
-      fontFamily: 'Quicksand',
+      fontFamily: "Quicksand",
     },
-  })
+  });
   return (
     <Fragment>
+      <GeneralNoNav />
       <Container component="main" xs={12}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <div className={classes.page}>
-            <Paper className={classes.paper}>
+            <Paper>
               <form className={classes.form}>
-                <Grid container spacing={2}>
+                <Grid container spacing={2} id="form">
                   <Grid item xs={12} sm={12}>
                     <TextField
                       name="title"
@@ -169,7 +172,7 @@ const CreateBlock = () => {
                       onChange={handleSelect}
                       defaultValue="default"
                       fullWidth
-                      placeholder='category'
+                      placeholder="category"
                       variant="outlined"
                     >
                       <MenuItem disabled value="default">
@@ -190,14 +193,13 @@ const CreateBlock = () => {
                     ) : null}
                   </Grid>
 
-            
                   <Grid item xs={12}>
                     <Select
-                      name={"subCat"}
+                      name={"subcat"}
                       defaultValue="default"
                       fullWidth
                       variant="outlined"
-                      placeholder='Subcategory'
+                      placeholder="Subcategory"
                       onChange={handleChange}
                     >
                       <MenuItem disabled value="default">
@@ -217,7 +219,9 @@ const CreateBlock = () => {
                       </span>
                     ) : null}
                   </Grid>
-                </Grid>
+                  <Grid container spacing={0}
+                  alignItems="center"
+                  justify="center">
                 <Grid item xs={2} sm={2}>
                   <Button
                     type="submit"
@@ -229,12 +233,21 @@ const CreateBlock = () => {
                   >
                     Submit
                   </Button>
+                  </Grid>
+                  </Grid>
                 </Grid>
               </form>
             </Paper>
           </div>
         </ThemeProvider>
       </Container>
+      <style>
+        {`
+         #form {
+             padding:2% 20% 2% 20%;
+            }
+            `}
+      </style>
     </Fragment>
   );
 };
