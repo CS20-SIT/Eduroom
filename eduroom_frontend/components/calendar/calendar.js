@@ -3,6 +3,8 @@ import Cell from '../../components/calendar/calendarCell'
 // import { useRouter } from 'next/router';
 import style from '../../styles/calendar/calendar'
 import moment from 'moment';
+import Link from 'next/link';
+import { Button } from '@material-ui/core'
 
 const Content = () => {
     //   const router = useRouter();
@@ -59,7 +61,8 @@ const Content = () => {
         <Fragment>
             <div>
                 <h1>{currentMonth + " "+currentYear}</h1>
-                <button onClick={minusMonth}>-</button><button onClick={addMonth}>+</button>
+                <button className="addEvent-button" onClick={minusMonth}>-</button>
+                <button className="addEvent-button" onClick={addMonth}>+</button>
                 
                 <div className="grid">
 
@@ -73,6 +76,11 @@ const Content = () => {
                         return <Cell currentDate={currentDate} Content={day} />
                     })}
                 </div>
+
+                <Link href="/event">
+                    <button className="addEvent-button">Add Event</button>
+                </Link>
+                
 
             </div>
             <style jsx>
