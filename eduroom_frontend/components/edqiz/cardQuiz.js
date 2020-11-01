@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-const Page1 = ({quizname,description}) => {
+const Page2 = ({ quizname, description, goto,handleQuestionNumber,index }) => {
   return (
     <Fragment>
       <div>
@@ -26,20 +26,40 @@ const Page1 = ({quizname,description}) => {
                 <div className="x">x</div>
               </button>
             </Grid>
-            <Grid item xs={12}>
-            <div className="quizName">{quizname}</div>
-            </Grid>
-            <Grid item xs={12} style={{marginTop:'5px'}}>
-            <div className="description">{description}</div>
+            <Grid
+              item
+              xs={12}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <div className="quizName">{quizname}</div>
             </Grid>
             <Grid
               item
-              xs={4}
+              xs={12}
+              style={{
+                marginTop: "5px",
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
+            >
+              <div className="description">{description}</div>
+            </Grid>
+            <Grid
+              item
+              xs={3}
               style={{ marginTop: "1vh", padding: "0 0 0 20px" }}
             >
-              <button className="playButton">play</button>
+              <button
+                className="playButton"
+                onClick={() => {
+                  goto(2),handleQuestionNumber(index)
+                }}
+
+              >
+                play
+              </button>
             </Grid>
-            <Grid item xs={6} style={{ marginTop: "3vh" }}>
+            <Grid item xs={2} style={{ marginTop: "3vh" }}>
               <button className="button">
                 <i
                   className="fas fa-pen"
@@ -52,7 +72,6 @@ const Page1 = ({quizname,description}) => {
                   Edit{" "}
                 </span>
               </button>
-             
             </Grid>
           </Grid>
         </div>
@@ -161,9 +180,10 @@ const Page1 = ({quizname,description}) => {
           border-radius: 2vh;
           border: 2px solid black;
           padding: 0 20px 10px 0;
+          margin:20px;
         }
       `}</style>
     </Fragment>
   );
 };
-export default Page1;
+export default Page2;

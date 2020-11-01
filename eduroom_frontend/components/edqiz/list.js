@@ -2,62 +2,47 @@ import React, { Fragment, useState } from "react";
 import EdqizText from "../edqiz/edqizText";
 import CardQuiz from "../edqiz/cardQuiz";
 import AddNewQuiz from "../edqiz/addNewQuiz";
-import Link from 'next/link'
 import Grid from "@material-ui/core/Grid";
+const Page1 = ({ data, goto, handleQuestionNumber }) => {
+  const renderQuestion = () => {
+    return data.map((el, index) => {
+      return (
+        <CardQuiz
+          key={index}
+          data={el}
+          index={index}
+          quizname={data[index].quizname}
+          description={data[index].description}
+          goto={goto}
+          handleQuestionNumber={(val) => {
+            handleQuestionNumber(val);
+          }}
+        />
+      );
+    });
+  };
 
-const Page1 = () => {
-  const data = [
-    { quizname: "quizname1", description: "this is a test of description1" },
-    { quizname: "quizname2", description: "this is a test of description2" },
-    { quizname: "quizname3", description: "this is a test of description3" },
-    { quizname: "quizname4", description: "this is a test of description4" },
-  ];
-  let getData = [];
-  function Getdata() {
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        getData.push(
-          <Grid
-            item
-            xs={6}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              padding: "10px",
-            }}
-          >
-            <CardQuiz
-              quizname={data[key].quizname}
-              description={data[key].description}
-            />
-          </Grid>
-        );
-      }
-    }
-    getData.push(
-      <Grid
-        item
-        xs={6}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          padding: "10px",
-        }}
-      >
-        <Link href="/create"><AddNewQuiz /></Link>
-      </Grid>
-    );
-  }
   return (
     <Fragment>
       <div className="landing">
-        <div style={{ marginTop: "5vh", width:'98vw' }}>
+        <div style={{ marginTop: "5vh", width: "100vw" }}>
           <EdqizText type="list" />
         </div>
         <div className="title">
           <div className="card">
-            <div style={{ color: "#3D467F", fontWeight: 600 }}>
-              <Grid container>{(Getdata(), getData)}</Grid>
+            <div
+              style={{
+                color: "#3D467F",
+                fontWeight: 600,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Grid container style={{display:'flex',justifyContent:'center'}}>
+                {renderQuestion()}
+                <AddNewQuiz />
+              </Grid>
+
               <br />
             </div>
           </div>
