@@ -22,7 +22,7 @@ const create = () => {
                 <div id="nav">
                     <div className="top">
                     <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Submit Support Form</label>
+                    </label></Link><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Submit Support Form</label>
                     </div>
                     <SupportForm />
                 </div>

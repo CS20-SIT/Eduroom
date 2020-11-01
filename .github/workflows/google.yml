@@ -1,4 +1,4 @@
-name: Build and Deploy to GKE
+name: Build, Deploy to GKE and Lighthouse on production
 
 on:
   push:
@@ -16,7 +16,6 @@ jobs:
     runs-on: [self-hosted, linux, x64]
     env:
       DOCKER_BUILDKIT: '1'
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -123,3 +122,21 @@ jobs:
         kubectl rollout status deployment/eduroom-socket-chat-deployment
         kubectl rollout status deployment/eduroom-socket-kahoot-deployment
         kubectl get services -o wide
+  lhci:
+    name: Lighthouse on production
+    runs-on: [self-hosted, linux, x64]
+    needs: [setup-build-publish-deploy]
+    env:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
+      LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli
+          ~/.npm-global/bin/lhci autorun

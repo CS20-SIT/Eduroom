@@ -10,7 +10,17 @@ spec:
     - hosts:
       - eduroom.cscms.me
       secretName: eduroom-cscms-cf
+    - hosts:
+      - lhci.cscms.me
+      secretName: lhci-cscms-me-tls
   rules:
+    - host: lhci.cscms.me
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: lhci-server-clusterip
+              servicePort: 9001
     - host: eduroom.cscms.me
       http:
         paths:
