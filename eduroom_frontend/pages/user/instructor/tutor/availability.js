@@ -48,6 +48,7 @@ const Availability = ({ availabilities, price }) => {
                     // POST /tutor/instructor/availability
                     console.log(timeSlots);
                     console.log(cost);
+                    location.reload();
                   }}
                 >
                   Publish
