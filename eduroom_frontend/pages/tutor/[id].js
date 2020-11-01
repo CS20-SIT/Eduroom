@@ -238,11 +238,7 @@ const Instructor = ({ instructor, highReview, lowReview, latestReview }) => {
                         <span
                           className={
                             i == selected
-                              ? i == today
-                                ? 'selected'
-                                : month == date.getMonth()
-                                ? ''
-                                : 'selected'
+                              ? 'selected'
                               : i == today && month == date.getMonth()
                               ? 'today'
                               : ''
