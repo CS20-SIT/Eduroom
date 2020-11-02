@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Fragment, useState } from "react"
 import Item from "./item"
 import Link from "next/link"
@@ -77,6 +78,16 @@ const SideNav = () => {
     },
   ]
   const [expand, setExpand] = useState(false)
+=======
+import React, { Fragment, useState } from 'react';
+import Item from './item';
+import Link from 'next/link';
+import style from '../../../styles/layout/sidebar';
+import Image from 'next/image'
+import {items} from './data/item'
+const SideNav = () => {
+  const [expand, setExpand] = useState(false);
+>>>>>>> 44ca582f53a29cec9a3ea9946ced9eee71ea3b21
   const handleExpand = () => {
     document.getElementById("side-nav").style.width = "16%"
     setExpand(true)
@@ -114,6 +125,12 @@ const SideNav = () => {
       </div>
       <style jsx>{style}</style>
     </Fragment>
+<<<<<<< HEAD
   )
 }
 export default SideNav
+=======
+  );
+};
+export default SideNav;
+>>>>>>> 44ca582f53a29cec9a3ea9946ced9eee71ea3b21

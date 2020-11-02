@@ -1,5 +1,4 @@
 import React,{Fragment} from 'react'
-const Temp = () => {
+export default function Chat(){
     return <Fragment></Fragment>
 }
-export default Temp
