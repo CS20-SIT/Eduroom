@@ -5,17 +5,18 @@ import Page3 from "./edqizLunching";
 
 const Content = () => {
   const data = [
-    { quizname: "quizname1", description: "this is a test of description1" },
-    { quizname: "quizname2", description: "this is a test of description2" },
-    { quizname: "quizname3", description: "this is a test of description3" },
-    { quizname: "quizname4", description: "this is a test of description4" },    
+    { id:'1', quizname: "quizname1", description: "this is a test of description1" },
+    { id:'2', quizname: "quizname2", description: "this is a test of description2" },
+    { id:'3', quizname: "quizname3", description: "this is a test of description3" },
+    { id:'4', quizname: "quizname4", description: "this is a test of description4" },    
   ];
+  
   const [current, setCurrent] = useState(1);
   const [questionNumber, setquestionNumber] = useState(0);
-
+  console.log("edlunch"+data[questionNumber].id);
   const handleQuestionNumber = (val) => {
     setquestionNumber(val);
-    console.log("questionNumber");
+
   };
 
   const goto = (val) => {
@@ -25,9 +26,9 @@ const Content = () => {
   const renderPage = () => {
     switch (current) {
       case 1:
-        return <Page1 data={data} goto={goto} handleQuestionNumber={handleQuestionNumber} questionNumber={questionNumber}/>;
+        return <Page1 data={data} goto={goto} handleQuestionNumber={handleQuestionNumber} questionNumber={questionNumber} id={data[questionNumber].id}/>;//แก้ไอดี เอามาจากอีกหน้า
       case 2:
-        return <Page3 data={data} goto={goto} handleQuestionNumber={handleQuestionNumber} questionNumber={questionNumber}/>;
+        return <Page3 data={data} goto={goto} handleQuestionNumber={handleQuestionNumber} questionNumber={questionNumber} id={data[questionNumber].id}/>;
     }
   };
   return (
