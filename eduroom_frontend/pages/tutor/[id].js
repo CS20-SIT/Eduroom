@@ -4,7 +4,6 @@ import GeneralNoNav from '../../components/template/generalnonav';
 import {
   timeFormatter,
   monthConverter,
-  dateFormatter,
 } from '../../components/tutor/lib/utils';
 
 import Link from 'next/link';
@@ -12,6 +11,8 @@ import Link from 'next/link';
 import Calendar from '../../components/tutor/booking/calendar';
 import Rating from '../../components/tutor/booking/rating';
 import GroupBooking from '../../components/tutor/booking/group-booking';
+import InstructorInfo from '../../components/tutor/booking/instructor-info';
+import BookingSection from '../../components/tutor/booking/booking-section';
 
 const Instructor = ({ instructor, reviews }) => {
   // console.log('instructorID', instructor.id);
@@ -19,7 +20,7 @@ const Instructor = ({ instructor, reviews }) => {
   // console.log('reviews', reviews);
 
   // BOOKING MODE SELECTION
-  const [booking, setBooking] = useState(true);
+  const [booking, setBooking] = useState(0);
 
   // DATE & TIME SELECTION
   const now = new Date();
@@ -49,63 +50,9 @@ const Instructor = ({ instructor, reviews }) => {
             ''
           )}
           <div className='container'>
-            <div className='flex'>
-              <div>
-                <div
-                  className='rounded-full bg-yellow'
-                  style={{ width: 4 + 'rem', height: 4 + 'rem' }}
-                ></div>
-              </div>
-              <div className='flex flex-col mx-3'>
-                <div className='flex'>
-                  <div className='font-lato font-bold text-xl text-primary'>
-                    {instructor.name}
-                  </div>
-                  <div className='mx-2 flex items-center text-yellow'>
-                    <i className='fas fa-star'></i>
-                    <div className='text-sm mx-1 text-yellow'>
-                      {instructor.rating}
-                    </div>
-                    <div className='text-sm text-secondary'>
-                      (
-                      {instructor.ratingCount > 1000
-                        ? instructor.ratingCount / 1000 + 'k'
-                        : instructor.ratingCount}
-                      )
-                    </div>
-                  </div>
-                </div>
-                <div className='font-lato font-bold text-md text-secondary mx-1'>
-                  {instructor.info}
-                </div>
-                <div className='font-lato font-bold text-md mx-1 my-2'>
-                  {instructor.text}
-                </div>
-                <div className='flex my-2'>
-                  <div
-                    className={`mx-1 text-md font-bold pointer ${
-                      booking ? 'text-navy text-underline' : 'text-secondary'
-                    }`}
-                    onClick={() => {
-                      setBooking(true);
-                    }}
-                  >
-                    Booking
-                  </div>
-                  <div
-                    className={`mx-1 text-md font-bold pointer ${
-                      !booking ? 'text-navy text-underline' : 'text-secondary'
-                    }`}
-                    onClick={() => {
-                      setBooking(false);
-                    }}
-                  >
-                    Reviews
-                  </div>
-                </div>
-              </div>
-            </div>
-            {booking ? (
+            <InstructorInfo instructor={instructor} />
+            <BookingSection booking={booking} setBooking={setBooking} />
+            {booking == 0 ? (
               <div className='w-full flex justify-between'>
                 <Calendar
                   instructor={instructor}
