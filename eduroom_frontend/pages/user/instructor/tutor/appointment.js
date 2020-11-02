@@ -83,28 +83,44 @@ const Appointment = ({ appointments }) => {
               ))}
             </div>
             <div className='my-auto'></div>
-            <div
-              style={{ width: '10rem', backgroundColor: '#EB7DB1' }}
-              className='pointer text-center font-quicksand text-white py-2 rounded-md my-4'
-              onClick={() => {
-                // POST /tutor/instructor/appointment -> true
-                location.reload();
-                console.log(true);
-              }}
-            >
-              Approve
-            </div>
-            <div
-              style={{ width: '10rem' }}
-              className='pointer text-center font-quicksand py-2 border-secondary text-secondary bg-white-faded rounded-md'
-              onClick={() => {
-                // POST /tutor/instructor/appointment -> false
-                location.reload();
-                console.log(false);
-              }}
-            >
-              Reject
-            </div>
+            {appointment.status == 'Pending' ? (
+              <div>
+                <div
+                  style={{ width: '10rem', backgroundColor: '#EB7DB1' }}
+                  className='pointer text-center font-quicksand text-white py-2 rounded-md my-4'
+                  onClick={() => {
+                    // POST /tutor/instructor/appointment -> true
+                    location.reload();
+                    console.log(true);
+                  }}
+                >
+                  Approve
+                </div>
+                <div
+                  style={{ width: '10rem' }}
+                  className='pointer text-center font-quicksand py-2 border-secondary text-secondary bg-white-faded rounded-md'
+                  onClick={() => {
+                    // POST /tutor/instructor/appointment -> false
+                    location.reload();
+                    console.log(false);
+                  }}
+                >
+                  Reject
+                </div>
+              </div>
+            ) : appointment.status == 'Rejected' ? (
+              <div
+                className={`font-bold text-md my-auto font-quicksand text-error my-4`}
+              >
+                {appointment.status}
+              </div>
+            ) : (
+              <div
+                className={`font-bold text-md my-auto font-quicksand text-navy my-4`}
+              >
+                {appointment.status}
+              </div>
+            )}
           </div>
         </CSSTransition>
 
