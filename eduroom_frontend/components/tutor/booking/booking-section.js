@@ -9,6 +9,7 @@ const BookingSection = ({ booking, setBooking }) => {
       <div className='flex my-4'>
         {section.map((s, i) => (
           <div
+            key={i}
             className={`mx-2 text-md font-bold pointer ${
               booking == i ? 'text-navy text-underline' : 'text-secondary'
             }`}

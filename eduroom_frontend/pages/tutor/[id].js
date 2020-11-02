@@ -13,6 +13,7 @@ import Rating from '../../components/tutor/booking/rating';
 import GroupBooking from '../../components/tutor/booking/group-booking';
 import InstructorInfo from '../../components/tutor/booking/instructor-info';
 import BookingSection from '../../components/tutor/booking/booking-section';
+import BookingInfo from '../../components/tutor/booking/booking-info';
 
 const Instructor = ({ instructor, reviews }) => {
   // console.log('instructorID', instructor.id);
@@ -76,88 +77,16 @@ const Instructor = ({ instructor, reviews }) => {
                       setFocus={setFocus}
                     />
                   ) : null}
-                  <div
-                    className={`w-full px-8 py-8 my-2 mx-4 shadow rounded-md bg-white-faded`}
-                  >
-                    <div className='text-lg font-bold font-lato spacing-md'>
-                      BOOK AND PAY
-                    </div>
-                    <div className='text-md font-bold font-lato my-4 spacing-sm'>
-                      Your Enrollment
-                    </div>
-                    <div className='px-2 my-4'>
-                      <div className='text-sm font-bold font-lato my-2 spacing-sm'>
-                        Date
-                      </div>
-                      {date == -1 ? (
-                        <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                          Please select date
-                        </div>
-                      ) : (
-                        <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                          {date} {monthConverter(month)} {year}
-                        </div>
-                      )}
-                    </div>
-                    <div className='px-2 my-4'>
-                      <div className='text-sm font-bold font-lato my-2 spacing-sm'>
-                        Time
-                      </div>
-                      {times.length == 0 ? (
-                        <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                          Please select appointment times
-                        </div>
-                      ) : (
-                        <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                          {timeFormatter(times[0])} -{' '}
-                          {timeFormatter(times[times.length - 1] + 1)}
-                        </div>
-                      )}
-                    </div>
-                    <div className='px-2 my-4'>
-                      <div className='text-sm font-bold font-lato my-2 spacing-sm'>
-                        Cost
-                      </div>
-                      <div className='text-sm font-quicksand font-bold text-secondary my-1 spacing-sm'>
-                        {times.length *
-                          instructor.price *
-                          (students.length + 1)}{' '}
-                        THB
-                      </div>
-                    </div>
-                    {bookingGroup ? (
-                      ''
-                    ) : (
-                      <div
-                        className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 my-4 mx-8 flex justify-center pointer text-navy`}
-                        onClick={() => {
-                          // SET Group Mode
-                          setBookingGroup(true);
-                        }}
-                      >
-                        Book with Friends
-                      </div>
-                    )}
-                    <div
-                      className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 mx-8 flex justify-center text-navy ${
-                        times.length == 0 ? 'disabled' : 'pointer'
-                      }`}
-                      onClick={() => {
-                        if (times.length == 0) return;
-                        // POST  /tutor/student/appointment
-                        console.log('id', instructor.id);
-                        console.log('startTime', times[0]);
-                        console.log('endTime', times[times.length - 1] + 1);
-                        console.log('date', `${date}-${month + 1}-${year}`);
-                        console.log('price', instructor.price);
-                        console.log('members', students);
-
-                        location.reload();
-                      }}
-                    >
-                      Book!
-                    </div>
-                  </div>
+                  <BookingInfo
+                    instructor={instructor}
+                    date={date}
+                    month={month}
+                    year={year}
+                    times={times}
+                    students={students}
+                    bookingGroup={bookingGroup}
+                    setBookingGroup={setBookingGroup}
+                  />
                 </div>
               </div>
             ) : (
@@ -186,33 +115,33 @@ export async function getServerSideProps(ctx) {
     ratingCount: 2000,
     times: [
       { date: 1, time: [9, 10, 11, 12, 13, 14, 15, 16] },
-      { date: 2, time: [9, 12, 13, 15, 16, 17] },
-      { date: 3, time: [11, 12, 15, 16, 17] },
+      { date: 2, time: [9, 12, 13, 15, 16] },
+      { date: 3, time: [11, 12, 15, 16] },
       { date: 4, time: [9, 10, 11, 12, 14, 15, 16] },
-      { date: 5, time: [9, 12, 13, 14, 15, 17] },
+      { date: 5, time: [9, 12, 13, 14, 15] },
       { date: 6, time: [9, 10, 11, 12, 15, 16] },
-      { date: 7, time: [9, 12, 13, 15, 16, 17] },
-      { date: 8, time: [11, 12, 15, 16, 17] },
+      { date: 7, time: [9, 12, 13, 15, 16] },
+      { date: 8, time: [11, 12, 15, 16] },
       { date: 9, time: [9, 10, 11, 12, 14, 15, 16] },
-      { date: 10, time: [9, 12, 13, 14, 15, 17] },
+      { date: 10, time: [9, 12, 13, 14, 15] },
       { date: 11, time: [9, 10, 11, 12, 15, 16] },
-      { date: 12, time: [9, 12, 13, 15, 16, 17] },
-      { date: 13, time: [11, 12, 15, 16, 17] },
+      { date: 12, time: [9, 12, 13, 15, 16] },
+      { date: 13, time: [11, 12, 15, 16] },
       { date: 14, time: [9, 10, 11, 12, 14, 15, 16] },
-      { date: 15, time: [9, 12, 13, 14, 15, 17] },
-      { date: 16, time: [9, 10, 11, 12, 15, 16, 17] },
-      { date: 17, time: [9, 12, 13, 15, 16, 17] },
-      { date: 18, time: [11, 12, 15, 16, 17] },
+      { date: 15, time: [9, 12, 13, 14, 15] },
+      { date: 16, time: [9, 10, 11, 12, 15, 16] },
+      { date: 17, time: [9, 12, 13, 15, 16] },
+      { date: 18, time: [11, 12, 15, 16] },
       { date: 19, time: [9, 10, 11, 12, 14, 15, 16] },
-      { date: 20, time: [9, 12, 13, 14, 15, 17] },
-      { date: 21, time: [9, 10, 11, 12, 15, 16, 17] },
-      { date: 22, time: [9, 12, 13, 15, 16, 17] },
-      { date: 23, time: [11, 12, 15, 16, 17] },
+      { date: 20, time: [9, 12, 13, 14, 15] },
+      { date: 21, time: [9, 10, 11, 12, 15, 16] },
+      { date: 22, time: [9, 12, 13, 15, 16] },
+      { date: 23, time: [11, 12, 15, 16] },
       { date: 24, time: [9, 10, 11, 12, 14, 15, 16] },
-      { date: 25, time: [9, 12, 13, 14, 15, 17] },
-      { date: 26, time: [9, 10, 11, 12, 15, 16, 17] },
-      { date: 27, time: [9, 12, 13, 15, 16, 17] },
-      { date: 28, time: [11, 12, 15, 16, 17] },
+      { date: 25, time: [9, 12, 13, 14, 15] },
+      { date: 26, time: [9, 10, 11, 12, 15, 16] },
+      { date: 27, time: [9, 12, 13, 15, 16] },
+      { date: 28, time: [11, 12, 15, 16] },
       { date: 29, time: [9, 10, 11, 12, 14, 15, 16] },
       { date: 30, time: [9, 12, 13, 14, 15] },
       { date: 31, time: [9, 10, 11, 12, 13, 14, 15, 16] },
