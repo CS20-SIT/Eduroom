@@ -3,7 +3,7 @@ import utils from '../../../styles/tutor/utils';
 
 import { dateFormatter } from '../lib/utils';
 
-const Calendar = ({ ratingSection, setRatingSection, reviews }) => {
+const Rating = ({ reviews }) => {
   const ratingHead = ['Highest Rated', 'Lowest Rated', 'Most Recent'];
   const [ratingSection, setRatingSection] = useState(0);
   const renderRating = (r) => {
@@ -68,4 +68,4 @@ const Calendar = ({ ratingSection, setRatingSection, reviews }) => {
   );
 };
 
-export default Calendar;
+export default Rating;
