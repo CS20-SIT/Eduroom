@@ -1,13 +1,13 @@
-import Nav from '../instructor/Nav'
+import Nav from '../../../components/user/instructor/Nav'
 import React,{Fragment} from 'react'
-import Bord from '../instructor/bord'
-import Course1 from '../instructor/Course1'
-import Course2 from '../instructor/Course2'
-import Course3 from '../instructor/Course3'
-import GoCreate from '../instructor/GoCreate'
+import Bord from '../../../components/user/instructor/bord'
+import Course1 from '../../../components/user/instructor/Course1'
+import Course2 from '../../../components/user/instructor/Course2'
+import Course3 from '../../../components/user/instructor/Course3'
+import GoCreate from '../../../components/user/instructor/GoCreate'
 import SideNav from '../../../components/layouts/sidenav/sidenav'
 
-function Home()
+function InstructorProfile()
 {
     return <Fragment>
     <div>
@@ -25,4 +25,4 @@ function Home()
     </div>
     </Fragment>
 }
-export default Home;
+export default InstructorProfile;
