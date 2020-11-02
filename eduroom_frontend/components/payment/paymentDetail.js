@@ -9,6 +9,7 @@ import OrderDetail from './orderDetail'
 import CreditBox from './creditBox'
 import PaypalBox from './paypalBox'
 import {useRouter} from 'next/router'
+import Link from 'next/link'
 
 const Checkout = () => {
     const router = useRouter();
