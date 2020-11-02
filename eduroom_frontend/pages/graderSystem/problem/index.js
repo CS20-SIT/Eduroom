@@ -1,7 +1,10 @@
 import React, { Fragment } from "react"
 import Head from "next/head"
+import Box from "../../../components/graderSubmit/Box"
 import Layout from "../../../components/graderSubmit/Layout"
 import style from "../../../styles/graderSubmit/problems/problems"
+import Tag from "../../../components/graderSubmit/problems/ProblemTag"
+import ProblemList from "../../../components/graderSubmit/problems/ProblemList"
 
 const Problems = () => {
   return (
@@ -10,7 +13,49 @@ const Problems = () => {
         <title>Problems</title>
         <meta property="og:title" content="Problems" key="Problems" />
       </Head>
-      <Layout>This is Problems Page</Layout>
+      <Layout>
+        <div className="container">
+          <div className="main">
+            <div className="size">
+              <Box>
+                <h2>Problem List</h2>
+                <div className="problem-list">
+                  <ProblemList />
+                  <ProblemList />
+                  <ProblemList />
+                  <ProblemList />
+                  <ProblemList />
+                  <ProblemList />
+                </div>
+              </Box>
+            </div>
+          </div>
+          <div className="tag">
+            <div className="size">
+              <Box>
+                <h2>Tags</h2>
+                <div className="tag-list">
+                  <Tag>Hard</Tag>
+                  <Tag>Easy</Tag>
+                  <Tag>Very Hard</Tag>
+                  <Tag>Impossible</Tag>
+                  <Tag>Challenging</Tag>
+                  <Tag>God</Tag>
+                  <Tag>Unsolvable</Tag>
+                  <Tag>Test</Tag>
+                  <Tag>Apple</Tag>
+                  <Tag>Interview</Tag>
+                  <Tag>Google</Tag>
+                  <Tag>Doom</Tag>
+                  <Tag>Exam</Tag>
+                  <Tag>AI</Tag>
+                  <Tag>OI</Tag>
+                </div>
+              </Box>
+            </div>
+          </div>
+        </div>
+      </Layout>
       <style jsx>{style}</style>
     </Fragment>
   )

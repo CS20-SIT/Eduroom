@@ -1,11 +1,15 @@
 import React, { Fragment } from "react"
-import style from "../../../styles/graderSubmit/contests/contests"
+import style from "../../../styles/graderSubmit/contests/contestList"
+import Link from "next/link"
+
 const Contests = () => {
   return (
-    <div className="contest">
+    <div>
       <div className="top">
         <div className="top-left">
-          <h2>Contests Name</h2>
+          <Link href="/graderSystem/contest">
+            <h2>Contests Name</h2>
+          </Link>
         </div>
         <div className="top-right">
           <div className="date">

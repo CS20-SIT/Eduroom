@@ -1,8 +1,10 @@
 import React, { Fragment } from "react"
 import Head from "next/head"
 import style from "../../../styles/graderSubmit/contests/contestPage"
+import Box from "../../../components/graderSubmit/Box"
 import Layout from "../../../components/graderSubmit/Layout"
-import ContestHeader from "../../../components/graderSubmit/contests/ContestHeader"
+import ContestHeader from "../../../components/graderSubmit/contests/ContestPageHeader"
+import ContestList from "../../../components/graderSubmit/contests/ContestPageList"
 
 const Contests = () => {
   return (
@@ -13,8 +15,16 @@ const Contests = () => {
       </Head>
       <Layout>
         <div className="main">
-          <div className="box">
-            <ContestHeader />
+          <div className="size">
+            <Box>
+              <ContestHeader>
+                <ContestList />
+                <ContestList />
+                <ContestList />
+                <ContestList />
+                <ContestList />
+              </ContestHeader>
+            </Box>
           </div>
         </div>
       </Layout>

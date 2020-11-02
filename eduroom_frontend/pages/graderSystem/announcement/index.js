@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import Head from "next/head"
-import GraderNav from "../../../components/graderSubmit/GraderNav"
+import Box from "../../../components/graderSubmit/Box"
 import Layout from "../../../components/graderSubmit/Layout"
 
 const Announcement = () => {
@@ -10,7 +10,9 @@ const Announcement = () => {
         <title>Announcements</title>
         <meta property="og:title" content="Announcements" key="Announcements" />
       </Head>
-      <Layout>This is an announcement Page</Layout>
+      <Layout>
+        <Box>This is an announcement Page</Box>
+      </Layout>
     </Fragment>
   )
 }

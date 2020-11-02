@@ -29,4 +29,14 @@ export default css`
   .content {
     width: 60%;
   }
+  ::-webkit-scrollbar {
+    width: 8px; /* width of the entire scrollbar */
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent; /* color of the tracking area */
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(91, 91, 91, 0.7); /* color of the scroll thumb */
+    border-radius: 50px; /* roundness of the scroll thumb */
+  }
 `

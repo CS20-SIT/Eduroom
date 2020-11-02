@@ -21,4 +21,7 @@ export default css`
     display: flex;
     justify-content: space-between;
   }
+  .click {
+    cursor: pointer;
+  }
 `
