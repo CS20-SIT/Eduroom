@@ -1,34 +1,42 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Link, Paper,Typography } from "@material-ui/core";
-import style from "../../styles/forum/showForum";
-import SupportForm from "../../components/support/supportform"
-import { useRouter } from "next/router";
-import GeneralNonav from "../../components/template/generalnonav";
-
-const create = () => {
-    const router = useRouter();
-
-    return (
-        <Fragment>
-            <GeneralNonav>
+import Head from "next/head";
+import React, { Fragment, useState, useEffect, useContext } from "react";
+import {
+  Container,
+  Button,
+  TextField,
+  Grid,
+  Typography,
+  CssBaseline,
+  makeStyles,
+  Select,
+  MenuItem,
+  Paper,
+  createMuiTheme,
+  ThemeProvider,
+  Link,
+} from "@material-ui/core";
+import Studentnav from "../../../components/support/studentsidenav";
+import Courseinstandteachingast from '../../../components/support/courseinstandteachingast';
+import style from "../../../styles/forum/showForum";
+import GeneralNonav from "../../../components/template/generalnonav";
+const courseinstandteaching = () => {
+  return <Fragment>
+      <GeneralNonav>
             <div
                 style={{
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
-                    background: "#EFF0F6",
                 }}
             >
-                
-                <div id="nav">
+            <div id="nav">
                     <div className="top">
                     <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Submit Support Form</label>
+                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
+                    <Courseinstandteachingast/>
                     </div>
-                    <SupportForm />
+                    
                 </div>
-                <main></main>
-
                 <style jsx>{style}</style>
                 <style jsx>
                     {`
@@ -56,9 +64,8 @@ const create = () => {
             }
           `}
                 </style>
-            </div>
+                </div>
             </GeneralNonav>
-        </Fragment>
-    );
+  </Fragment>;
 };
-export default create;
+export default courseinstandteaching;
