@@ -14,11 +14,10 @@ import GroupBooking from '../../components/tutor/booking/group-booking';
 import InstructorInfo from '../../components/tutor/booking/instructor-info';
 import BookingSection from '../../components/tutor/booking/booking-section';
 import BookingInfo from '../../components/tutor/booking/booking-info';
+import BackgroundDrop from '../../components/tutor/booking/background-drop';
 
 const Instructor = ({ instructor, reviews }) => {
   // console.log('instructorID', instructor.id);
-
-  // console.log('reviews', reviews);
 
   // BOOKING MODE SELECTION
   const [booking, setBooking] = useState(0);
@@ -34,22 +33,14 @@ const Instructor = ({ instructor, reviews }) => {
   const [bookingGroup, setBookingGroup] = useState(false);
   const [students, setStudents] = useState([]);
 
+  // SET Focus for background-dropdown-list
   const [focus, setFocus] = useState(false);
 
   return (
     <Fragment>
       <GeneralNoNav>
         <div className='bg-tutor'>
-          {focus ? (
-            <div
-              className='fixed top-0 left-0 right-0 bottom-0 z-5'
-              onClick={() => {
-                setFocus(false);
-              }}
-            ></div>
-          ) : (
-            ''
-          )}
+          <BackgroundDrop focus={focus} setFocus={setFocus} />
           <div className='container'>
             <InstructorInfo instructor={instructor} />
             <BookingSection booking={booking} setBooking={setBooking} />
@@ -66,7 +57,6 @@ const Instructor = ({ instructor, reviews }) => {
                   times={times}
                   setTimes={setTimes}
                 />
-                {/* ------------------------------------------------------------- */}
                 <div style={{ width: 54 + '%', height: 100 + '%' }}>
                   {bookingGroup ? (
                     <GroupBooking
