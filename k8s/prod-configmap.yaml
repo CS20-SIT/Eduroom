@@ -4,11 +4,11 @@ metadata:
   name: prod-configmap
 data:
   # Frontend 
-  BACKEND_API: eduroom-backend-clusterip:5000
-  CLIENT_URL: eduroom-frontend-clusterip:3000
-  GRADER_URL: eduroom-grading-server-clusterip:3050
-  CHAT_SERVER: eduroom-socket-chat-clusterip:5050
-  KAHOOT_URL: eduroom-socket-kahoot-clusterip:8000
+  BACKEND_API: https://eduroom.cscms.me/api
+  CLIENT_URL: https://eduroom.cscms.me
+  GRADER_URL: https://eduroom.cscms.me/grader
+  CHAT_SERVER: https://eduroom.cscms.me/socket-chat
+  KAHOOT_URL: https://eduroom.cscms.me/kahoot
   # DB
   POSTGRES_PORT: "5432"
   # Backend
