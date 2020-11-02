@@ -29,6 +29,12 @@ module.exports = {
         'https://eduroom.cscms.me/support',
         'https://eduroom.cscms.me/tutor',
         'https://eduroom.cscms.me/tutor/appointment',
+        'https://eduroom.cscms.me/graderSystem',
+        'https://eduroom.cscms.me/graderSystem/profile',
+        'https://eduroom.cscms.me/graderSystem/ranks',
+        'https://eduroom.cscms.me/graderSystem/announcements',
+        'https://eduroom.cscms.me/graderSystem/problems',
+        'https://eduroom.cscms.me/graderSystem/contests',
         // GROUP 9
         'https://eduroom.cscms.me/coin-shop',
         'https://eduroom.cscms.me/coin-shop/StoreSticker',
