@@ -1,7 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import utils from '../../../styles/tutor/utils';
 
-const GroupBooking = ({ setBookingGroup, students, setStudents }) => {
+const GroupBooking = ({
+  setBookingGroup,
+  students,
+  setStudents,
+  focus,
+  setFocus,
+}) => {
   // GET /tutor/utils/id
   const mockup = [
     {
@@ -103,6 +109,7 @@ const GroupBooking = ({ setBookingGroup, students, setStudents }) => {
             <div className='dropdown--list'>
               {members.map((m, i) => (
                 <div
+                  key={i}
                   className={`dropdown--item pointer ${
                     hoverSelection == i ? 'bg-secondary-faded ' : ''
                   }`}
@@ -135,7 +142,7 @@ const GroupBooking = ({ setBookingGroup, students, setStudents }) => {
         </div>
         <div className='flex flex-wrap'>
           {students.map((s, i) => (
-            <span className='shadow rounded-md px-2 py-1 mx-1 my-1'>
+            <span key={i} className='shadow rounded-md px-2 py-1 mx-1 my-1'>
               <span className='text-md font-bold text-secondary opacity-80'>
                 {s.firstname} {s.lastname}{' '}
                 <span
