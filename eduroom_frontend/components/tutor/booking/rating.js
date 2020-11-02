@@ -6,6 +6,7 @@ import { dateFormatter } from '../lib/utils';
 const Rating = ({ reviews }) => {
   const ratingHead = ['Highest Rated', 'Lowest Rated', 'Most Recent'];
   const [ratingSection, setRatingSection] = useState(0);
+
   const renderRating = (r) => {
     let stars = [];
     for (let i = 0; i < r; i++) {
