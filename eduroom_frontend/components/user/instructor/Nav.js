@@ -38,7 +38,7 @@ const Nav = () => {
         <li><img src="https://img.icons8.com/bubbles/50/000000/anonymous-mask.png"/></li>
         <li><Link href="/user/instructor/course"><a style={{marginRight:15}}>Package</a></Link></li>
         <li><Link href="/user/instructor/course/create"><a style={{marginRight:15}}>Create Course</a></Link></li>
-        <li><Link href="/InstructorProfile"><a style={{marginRight:15}}>Instructor</a></Link></li>
+        <li><Link href="/user/instructor"><a style={{marginRight:15}}>Instructor</a></Link></li>
     </ul>
     
     

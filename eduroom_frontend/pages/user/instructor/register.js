@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import GeneralNoNav from '../../../components/template/generalnonav'
-import Nav from '../instructor/Nav'
 const InstructorRegister = () => {
     return <Fragment>
     <GeneralNoNav>

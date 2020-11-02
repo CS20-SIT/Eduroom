@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react'
-import Nav from '../Nav';
+import Nav from '../../../../components/user/instructor/Nav';
 import SideNav from '../../../../components/layouts/sidenav/sidenav'
 const CourseCreate = () => {
     return <Fragment>
