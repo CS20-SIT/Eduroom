@@ -1,5 +1,39 @@
 import css from 'styled-jsx/css'
 export default css`
+select{
+    height: 40px;
+    border-radius: 1.5vh;
+}
+// input{
+//     background-color: white;
+// }
+.compay{
+    display: flex;
+    justify-content: center;
+    
+}
+.paypalText{
+    font-size: 18px;
+    display: flex;
+    align-item: center;
+    justify-content: center;
+    textAlign: justify;
+    width:300;
+    padding: 20px 30px;
+    
+
+
+}
+input[type='radio']:after {
+    background-color: #2196F3;
+}
+.purpleBox2{
+    border-radius: 10px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+    height: 180px;
+   width: 90%;
+   background-color: #3D467F;
+}
 .p{
     margin-left: 20px;
 }
@@ -8,6 +42,7 @@ export default css`
     display: flex;
     flexDirection: column;
     justify-content: center;
+
 }
 .test{
     display: flex;
@@ -15,9 +50,11 @@ export default css`
     border: black;
     
 }
+
 .bg{
     background-color: #F4F5F7;
-    height: "100vh";
+    height: 100%;
+    overflow-y: auto;
 }
 
 .card{
@@ -25,7 +62,8 @@ export default css`
             background: white;
             border-radius: 2vh;
             width: 70vw;
-            height: 75vh;
+            height: 85vh;
+            padding-top: 1%;
         
 }
 .CheckoutBar {
@@ -56,27 +94,31 @@ export default css`
     padding-left: 1.5%;
 }
 .billDiv{
-    // margin-botton: 20px;
+    color: #5B5B5B;
     font-size: 24px;
 }
 .text-title {
     font-family: 'Quicksand', sans-serif;
   }
 
-  input,select {
-    border: 1px solid #5B5B5B;
-    padding: .50rem;
-    border-radius: .5rem;
-    outline:none;
-    background: white;
-    -webkit-appearance: none;
-}
+//   input,select {
+//     border: 1px solid #5B5B5B;
+//     padding: .50rem;
+//     border-radius: .5rem;
+//     outline:none;
+//     // background: white;
+//     // -webkit-appearance: none;
+// }
 .country{
     margin-bottom: 10px;
 }
 .input-text {
     width: 100%;
     font-size: 0.8em;
+    height: 35px;
+    background-color: white;
+    border : none; 
+    
 }
 option{
     font-size: 0.7em;
@@ -103,9 +145,10 @@ option{
 .purplebox{
     border-radius: 10px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
-    height: 300px;
+    height: 230px;
    width: 90%;
    background-color: #3D467F;
+   
 }
 .name{
     height: 40px;
@@ -121,11 +164,11 @@ option{
    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
 }
 .whitebox{
-    // border-radius: 10px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
-    height: 450px;
+    height: 370px;
    width: 70%;
    background-color: white;
+   padding-top: 5%;
    
 }
 .text{
@@ -135,7 +178,19 @@ option{
     justify-content: center;
     textAlign: justify;
     width:300;
-    marginLeft:20;
+    padding: 0px 20px;
+    margin-bottom: 10%;
+}
+DialogContent{
+    backgroundColor: #FB9CCB;
+    color: white;
+    borderRadius: 24;
+}
+.buttonn{
+   backgroundColor: #FB9CCB
+   color: white;
+   borderRadius: 24;
+   width:200;
 }
 
 `
