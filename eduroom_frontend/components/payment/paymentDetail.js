@@ -145,7 +145,6 @@ const Checkout = () => {
 
                                             <Dialog open={open} onClose={handleCloseDialog} >
                                                 <div >
-<<<<<<< HEAD
                                                     <div style={{ backgroundColor: 'white', border: '5px solid #F2ECFE' }}>
                                                         <DialogTitle style={{ textAlign: 'center' }}>
                                                             <div style={{ fontSize: '2em', color: '#A880F7', fontWeight: 700, marginTop: 20 }}>PURECHASED!</div>
@@ -166,28 +165,6 @@ const Checkout = () => {
                                                                 onClick={handleOpenDialog}>Go to course</Button></Link>
                                                         </div>
                                                     </div>
-=======
-                                                    <div style={{backgroundColor: 'white', border:'5px solid #F2ECFE'}}>
-                                                <DialogTitle style={{ textAlign: 'center' }}>
-                                                    <div style={{ fontSize: '2em', color: '#A880F7', fontWeight: 700, marginTop: 20 }}>PURECHASED!</div>
-                                                </DialogTitle>
-
-                                                <DialogContent style={{ width: '450px', height: '400px', display: 'flex', justifyContent: 'center' }}>
-
-                                                    <img
-                                                        src="/images/package/purchesed.svg"
-                                                        className="google-logo"
-                                                        style={{ width: 350, height: 350 }}
-                                                    />
-
-                                                </DialogContent>
-
-                                                <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: 30 }}>
-                                                    <Button variant="contained" style={{ backgroundColor: '#FB9CCB', color: 'white', borderRadius: 24, width: 200, height: 40 }}
-                                                        onClick={()=> router.push("/course")}>Go to course</Button>
-                                                </div>
-                                                </div>
->>>>>>> 57e346b6dbc9ecf39fd29e83c55e19308995ed0c
                                                 </div>
                                             </Dialog>
                                         </div>
