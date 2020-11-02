@@ -24,6 +24,16 @@ export default css`
     align-items: flex-start;
     justify-content: space-between;
     width: auto;
-    cursor: default;
+    cursor: pointer;
+  }
+  .forumblock{
+    padding: 1% 3% 2% 1%;
+    margin: 1% 4% 0% 4%;
+    width: auto;
+  }
+  .idblock{
+    padding: 0% 3% 2% 1%;
+    margin: 0% 4% 0% 4%;
+    width: auto;
   }
 `;
