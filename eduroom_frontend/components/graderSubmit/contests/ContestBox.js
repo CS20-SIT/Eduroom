@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import Contests from "./Contests"
+import Contests from "./ContestList"
 import style from "../../../styles/graderSubmit/contests/contestBox"
 
 const ContestBox = () => {

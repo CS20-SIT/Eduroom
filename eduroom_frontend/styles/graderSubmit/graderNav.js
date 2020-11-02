@@ -25,7 +25,10 @@ export default css`
   .text:hover {
     cursor: pointer;
   }
-  .home {
+  .link:hover {
+    color: #f39ac4;
+  }
+  .link:visit {
     color: #f39ac4;
   }
   .profile {
