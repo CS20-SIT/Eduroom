@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import GeneralNoNav from '../../../../components/template/generalnonav'
+import General from '../../../../components/template/general'
 import Upload from '../../../../components/package/imageupload'
 import Courses from '../../../../components/package/courses'
 import style from '../../../../styles/package/createpackage'
@@ -8,14 +8,14 @@ import Link from 'next/link'
 const CreatePackage = () => {
     return (
         <Fragment>
-            <GeneralNoNav>
+            <General>
                 <div style={{ backgroundColor: "#f4f5f7" }}>
                     <div className="package-header">Create New Package</div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                         <div className="container">
-                            <div style={{ padding: "4% 25%" }}>
+                            <div style={{ padding: "4% 28%" }}>
                                 <div className="subtitle">Package Information</div>
-                                <div><Upload /></div>
+                                <div><Upload index={0}/></div>
                                 <div><input type="text" placeholder="Package Name" name="name" id="name"></input></div>
                                 <div><select name="price" defaultValue="default">
                                     <option disabled value="default" >Price</option>
@@ -44,12 +44,12 @@ const CreatePackage = () => {
                         </div>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Link href="/user/instructor/course/confirm">
+                        <Link href="/user/instructor/course/confirmcreate">
                             <button onClick={() => console.log('Clicked')} className="createbutton">Create</button></Link>
                     </div>
                 </div>
                 <style jsx>{style}</style>
-            </GeneralNoNav>
+            </General>
 
         </Fragment>
     )
