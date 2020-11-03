@@ -4,43 +4,56 @@ import EdqizText from './edqizText'
 import style from '../../styles/edqiz/landing'
 const Page3 = ({data,questionNumber}) => {
   const router = useRouter()
+  console.log(router.query.id)
   return (
-    <Fragment>  
+    <Fragment>
       <div className="landing">
         <div className="landing-content">
           <div className="col-12">
             <div className="landing-title">
-              <EdqizText type="edqiz"/>
+              <EdqizText type="edqiz" />
             </div>
             <div className="landing-title">
-             <div style={{fontWeight:600,fontSize:'2rem',color:'#3D467F'}}> Quiz name</div>
+              <div
+                style={{ fontWeight: 600, fontSize: "2rem", color: "#3D467F" }}
+              >
+                {" "}
+                Quiz name
+              </div>
             </div>
             <div className="row">
-              <input
-                type="text"
-                id="fname"
-                name="firstname"
-                placeholder={data[questionNumber].quizname}
-              />
+              <div
+                style={{
+                  backgroundColor: "#EFF0F6",
+                  height: "8vh",
+                  width: "25vw",
+                  borderRadius: "1rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontWeight: 600,
+                  fontSize: "1.5rem",
+                  color: "#5B5B5B",
+                }}
+              >
+                {" "}
+                {router.query.id}
+                {/* query database by using id */}
+              </div>
             </div>
             <div className="row">
               <button
                 className="landing-button"
-                onClick={() => router.push('/login')}
+                onClick={() => router.push("/login")}
               >
                 <span className="landing-button-text">Launch {">"}</span>
               </button>
             </div>
           </div>
         </div>
-        <div className="footer">
-          <span>
-            Do your own at <span className="purple">eduroom.me</span>
-          </span>
-        </div>
       </div>
       <style jsx>{style}</style>
     </Fragment>
-  )
-}
-export default Page3
+  );
+};
+export default Page3;
