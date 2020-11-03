@@ -75,7 +75,7 @@ const Tutor = ({ instructors }) => {
   );
 };
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(ctx) {
   // GET /tutor/instructor ​
   const instructors = [
     {

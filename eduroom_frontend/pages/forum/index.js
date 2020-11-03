@@ -5,6 +5,8 @@ import Link from "next/link";
 import SideNav from "../../components/layouts/sidenav/sidenav";
 import NavForum from "../../components/forum/searchForum";
 import style from '../../styles/forum/showForum';
+import GeneralNoNav from "../../components/template/generalnonav";
+import RoomTab from "../../components/forum/RoomTab";
 const Forum = () => {
     const [forum, setForum] = useState([]);
   //   useEffect(() => {
@@ -18,21 +20,24 @@ const Forum = () => {
   //   const [create, setCreate] = useState();
   return (
     <Fragment>
-        <Container>
-        <h1>Forum</h1>
-        {
-            forum.map((el)=>{
-                return (<ForumBlock key={el} data={el}/>)
-            })
-        }
-        <div>
-            <br></br>
-            <Link href='/forum/create'>
-            <Button variant="outlined" color="primary">create new post</Button>
-            </Link>
-            
+      <GeneralNoNav >
+      <div
+        style={{
+          display: "flex",
+          flex: "1 1 auto",
+          justifyContent: "space-between",
+          background: "#EFF0F6",
+        }}
+      >
+        <div id="nav">
+          <NavForum />
+          <div className="content">
+            <strong className="topic">CHOOSE ROOM</strong>
+          </div>
+          <div className="roomtab">
+          <RoomTab />
+          </div>
         </div>
-        </Container>
         <style jsx>{style}</style>
         <style jsx>
         {`
@@ -42,10 +47,12 @@ const Forum = () => {
           .background-img {
             position: absolute;
             bottom: 0;
-            width: 100vw;
+            width: 100%;
           }
         `}
       </style>
+      </div>
+      </GeneralNoNav>
     </Fragment>
   );
 };
