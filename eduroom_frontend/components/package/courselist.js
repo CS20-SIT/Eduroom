@@ -4,8 +4,8 @@ import style from '../../styles/package/createpackage'
 const Courselist = (props) => {
   return (
     <Fragment>
-      <div className="list">
-        <div><input type="checkbox" name="courseid" value="courseid"></input>
+      <div>
+        <div style={{display: "flex", alignItems: "center"}}>
           <label for="courseid"
             style={{
               border: "1px solid black",
@@ -15,7 +15,7 @@ const Courselist = (props) => {
           <label for="courseid"
             style={{
               fontWeight: "500",
-              fontSize: "20px",
+              fontSize: "19px",
               margin: "0 40px"
             }}
           >
