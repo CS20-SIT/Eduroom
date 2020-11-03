@@ -1,17 +1,20 @@
 name: Pull Request Building
 
 on:
-  pull_request:
+#   pull_request:
+#     branches: 
+#       - dev
+#       - master
+  push:
     branches: 
-      - dev
-      - master
+      - supertest
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: eduroom-cluster
   GKE_ZONE: asia-southeast1-b
 
 jobs:
-  setup-build:
+  setup-build-test:
     name: Setup and Build Frontend
     runs-on: [self-hosted, linux, x64]
     env:
@@ -40,3 +43,6 @@ jobs:
           --build-arg BUILDKIT_INLINE_CACHE=1 \
           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
           eduroom_frontend
+          
+    - name: Build, Test Eduroom Backend Image
+      run: docker-compose -f docker-compose.test.yml run eduroom_backend
