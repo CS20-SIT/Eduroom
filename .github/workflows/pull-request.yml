@@ -53,7 +53,7 @@ jobs:
       - name: Build and Test Eduroom Backend Image
         run: docker-compose -f docker-compose.test.yml run eduroom_backend
       - name: Build, Test Eduroom Grader Image
-        run: docker-compose -f docker-compose.test.yml runeduroom_grading_server
+        run: docker-compose -f docker-compose.test.yml run eduroom_grading_server
       - name: Build, Test Eduroom Socket Chat Image
         run: docker-compose -f docker-compose.test.yml run eduroom_socket_chat
       - name: Build, Test Eduroom Socket Kahoot Image
