@@ -4,16 +4,19 @@ export default css`
 .package-header {
     display: flex;
     font-size: 1.7em;
-    padding: 3% 6%;
+    padding: 0 6% 3% 6%;
     font-weight: bold;
 }
 .container {
     background-color: #ffffff;
     width: 88%;
-    margin: auto auto 5% auto;
+    margin-bottom: 5%;
+    padding-top: 4%;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25);
-    display: block;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 .package-content {
     text-align: center;

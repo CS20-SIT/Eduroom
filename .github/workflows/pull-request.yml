@@ -12,7 +12,7 @@ env:
 
 jobs:
   setup-build:
-    name: Setup, Build, Publish, and Deploy
+    name: Setup and Build Frontend
     runs-on: [self-hosted, linux, x64]
     env:
       DOCKER_BUILDKIT: '1'
