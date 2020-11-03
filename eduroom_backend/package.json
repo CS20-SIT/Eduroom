@@ -7,6 +7,9 @@
     "dev": "nodemon src/index.js",
     "test": "jest"
   },
+  "jest": {
+    "testMatch": ["**/tests/**/*.[jt]s?(x)"]
+  },
   "author": "GGolfz",
   "license": "ISC",
   "dependencies": {
