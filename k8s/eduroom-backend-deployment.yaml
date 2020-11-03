@@ -15,6 +15,9 @@ spec:
         - name: pg-cloud-sql-sa
           secret:
             secretName: pg-cloud-sql-service-account
+        - name: gcs-service-account-key
+          secret:
+            secretName: gcs-key
       containers:
       - name: cloud-sql-proxy-deployment
         image: gcr.io/cloudsql-docker/gce-proxy:1.17
@@ -36,40 +39,43 @@ spec:
         #     cpu: "500m"
         ports:
         - containerPort: 5000
+        volumeMounts:
+          - name: gcs-service-account-key
+            mountPath: /etc/secret
+            readOnly: true
         envFrom:
-            - secretRef:
-                name: prod-secret
-            - configMapRef:
-                name: prod-configmap
+          - secretRef:
+              name: prod-secret
+          - configMapRef:
+              name: prod-configmap
         env:
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                    name: prod-secret
-                    key: POSTGRES_USER
-                    optional: false
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                    name: prod-secret
-                    key: POSTGRES_PASSWORD
-                    optional: false
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                    name: prod-secret
-                    key: POSTGRES_HOST
-                    optional: false
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                    name: prod-configmap
-                    key: POSTGRES_PORT
-                    optional: false
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                    name: prod-secret
-                    key: POSTGRES_DB
-                    optional: false
-        
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                  name: prod-secret
+                  key: POSTGRES_USER
+                  optional: false
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                  name: prod-secret
+                  key: POSTGRES_PASSWORD
+                  optional: false
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                  name: prod-secret
+                  key: POSTGRES_HOST
+                  optional: false
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                  name: prod-configmap
+                  key: POSTGRES_PORT
+                  optional: false
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                  name: prod-secret
+                  key: POSTGRES_DB
+                  optional: false
