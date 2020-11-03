@@ -42,13 +42,19 @@ jobs:
           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
           eduroom_frontend
           
-  setup-build-test:
-    name: Setup and Build, and Test Backend
+  setup-build-test-the-rest:
+    name: Setup and Build, and Test Others
     runs-on: [self-hosted, linux, x64]
     env:
       DOCKER_BUILDKIT: '1'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build, Test Eduroom Backend Image
+      - name: Build and Test Eduroom Backend Image
         run: docker-compose -f docker-compose.test.yml run eduroom_backend
+      - name: Build, Test Eduroom Grader Image
+        run: docker-compose -f docker-compose.test.yml runeduroom_grading_server
+      - name: Build, Test Eduroom Socket Chat Image
+        run: docker-compose -f docker-compose.test.yml run eduroom_socket_chat
+      - name: Build, Test Eduroom Socket Kahoot Image
+        run: docker-compose -f docker-compose.test.yml run eduroom_socket_kahoot
