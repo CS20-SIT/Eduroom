@@ -4,9 +4,6 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./eduroom_backend
-    volumes:
-      - /usr/src/app/node_modules
-      - ./eduroom_backend:/usr/src/app
     entrypoint: ["npm", "run", "test"]
     environment:
       - WAIT_HOSTS=eduroom_postgres:5432
@@ -40,9 +37,6 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./eduroom_socket_kahoot
-    volumes:
-      - /usr/src/app/node_modules
-      - ./eduroom_socket_kahoot:/usr/src/app
     environment:
       - NODE_ENV=development
       - PORT=8000
