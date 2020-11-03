@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import GeneralTemplate from '../../components/template/generalnonav'; 
+import GeneralTemplate from '../../components/template/general'; 
 import CalendarCom from '../../components/calendar/calendar'
 const Calendar = () => {
   return (
