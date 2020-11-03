@@ -38,7 +38,10 @@ const Availability = ({ availabilities, price }) => {
             <div className='grid-container'>
               <div>
                 <div className='text-lg font-bold'>Plan Your Time</div>
-                <div className='text-md font-bold text-secondary left-pink px-4 py-1 my-4'>
+                <div
+                  className='text-md font-bold text-secondary px-4 py-1 my-4'
+                  style={{ borderLeft: '5px solid #fb9ccb' }}
+                >
                   Setup & Pricing
                 </div>
                 <div
@@ -135,9 +138,6 @@ const Availability = ({ availabilities, price }) => {
 
         <style jsx>{utils}</style>
         <style jsx>{`
-          .left-pink {
-            border-left: 5px solid #fb9ccb;
-          }
           .bg-yellow-faded {
             background-color: rgba(252, 169, 34, 0.2);
           }
