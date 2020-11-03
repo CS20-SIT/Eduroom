@@ -38,9 +38,6 @@ const Appointment = ({ appointments }) => {
 
         <div className='bg-tutor'>
           <div className='container'>
-            <div className='font-bold text-secondary  text-xl'>
-              Latest Request
-            </div>
             <RequestMode
               requestMode={requestMode}
               setRequestMode={setRequestMode}
