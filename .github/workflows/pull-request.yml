@@ -5,13 +5,14 @@ on:
     branches: 
       - dev
       - master
+  push:
+    branches: 
+      - dev
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: eduroom-cluster
-  GKE_ZONE: asia-southeast1-b
 
 jobs:
-  setup-build:
+  setup-build-frontend:
     name: Setup and Build Frontend
     runs-on: [self-hosted, linux, x64]
     env:
@@ -40,3 +41,20 @@ jobs:
           --build-arg BUILDKIT_INLINE_CACHE=1 \
           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
           eduroom_frontend
+          
+  setup-build-test-the-rest:
+    name: Setup and Build, and Test Others
+    runs-on: [self-hosted, linux, x64]
+    env:
+      DOCKER_BUILDKIT: '1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and Test Eduroom Backend Image
+        run: docker-compose -f docker-compose.test.yml run eduroom_backend
+      - name: Build, Test Eduroom Grader Image
+        run: docker-compose -f docker-compose.test.yml run eduroom_grading_server
+      - name: Build, Test Eduroom Socket Chat Image
+        run: docker-compose -f docker-compose.test.yml run eduroom_socket_chat
+      - name: Build, Test Eduroom Socket Kahoot Image
+        run: docker-compose -f docker-compose.test.yml run eduroom_socket_kahoot
