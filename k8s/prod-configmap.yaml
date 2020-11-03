@@ -14,6 +14,6 @@ data:
   # Backend
   NODE_ENV: production
   WAIT_HOSTS: 127.0.0.1:5432
-  JWT_SECRET: jwtsecret
   JWT_EXPIRE: 30d
   JWT_COOKIE_EXPIRE: "30"
+  GCS_SA_KEY_PATH: /etc/secret/gcs

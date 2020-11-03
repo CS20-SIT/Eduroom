@@ -64,6 +64,7 @@ services:
       - FROM_EMAIL=admin@eduroom.com
       - FROM_NAME=Eduroom Admin
       - NODE_TLS_REJECT_UNAUTHORIZED=0
+      - GCS_SA_KEY_PATH=gcs-eduroom.json
     ports:
       - "5000:5000"
   eduroom_grading_server:
