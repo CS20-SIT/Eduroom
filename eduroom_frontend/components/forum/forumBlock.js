@@ -1,11 +1,12 @@
-import React,{Fragment} from 'react'
+import React,{Fragment,useState} from 'react';
+import Icon from './Icon';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { useRouter} from "next/router";
 
+
 const forumBlock = (props) => {
-  
   // const [create, setCreate] = useState('');
   const router = useRouter()
   const handleClick = (e) =>{
@@ -29,13 +30,12 @@ const useStyles = makeStyles((theme) => ({
                 <Grid container spacing={3} onClick={handleClick} variant="outlined">
                     <Grid item xs={12}>
                        <Paper className={classes.paper} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
-                         
                          <div>
-
                          {props.createForm}
                          </div>
-                       <div className='like' style={{position: 'absolute', bottom: 0, right: 0, margin: '8pxç'}}>
-                        <img src="/images/forum/like_black.svg"></img>
+                       <div className='icon'   style={{position: 'absolute', bottom: 0, right: 0, margin: '8px'}}>
+                        <div style={{paddingRight:'15px'}}><Icon type="like"/></div>
+                        <div style={{paddingRight:'15px'}}><Icon type="comment"/></div>
                        </div>
                        </Paper>
                        
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
               flex-direction: row;
               align-items: flex-end;
             }
-            .like{
+            .icon{
               display: flex;
               justify-content: end;
               flex-direction: row;
