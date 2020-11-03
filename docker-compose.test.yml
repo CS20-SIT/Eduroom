@@ -33,10 +33,35 @@ services:
     ports:
       - "5000:5000"
 
+  eduroom_grading_server:
+    build:
+      dockerfile: Dockerfile
+      context: ./eduroom_grading_server
+    entrypoint: ["npm", "run", "test"]
+    environment:
+      - NODE_ENV=development
+      - PORT=3050
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "3050:3050"
+
+  eduroom_socket_chat:
+    build:
+      dockerfile: Dockerfile
+      context: ./eduroom_socket_chat
+    entrypoint: ["npm", "run", "test"]
+    environment:
+      - NODE_ENV=development
+      - PORT=5050
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "5050:5050"
+
   eduroom_socket_kahoot:
     build:
       dockerfile: Dockerfile
       context: ./eduroom_socket_kahoot
+    entrypoint: ["npm", "run", "test"]
     environment:
       - NODE_ENV=development
       - PORT=8000
