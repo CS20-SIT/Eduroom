@@ -50,11 +50,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build and Test Eduroom Backend Image
+      - name: Build Backend, Kahoot, Chat, Grader Images for Testing
+        run: docker-compose -f docker-compose.test.yml build
+      - name: Test Eduroom Backend Image
         run: docker-compose -f docker-compose.test.yml run eduroom_backend
-      - name: Build, Test Eduroom Grader Image
+      - name: Test Eduroom Grader Image
         run: docker-compose -f docker-compose.test.yml run eduroom_grading_server
-      - name: Build, Test Eduroom Socket Chat Image
+      - name: Test Eduroom Socket Chat Image
         run: docker-compose -f docker-compose.test.yml run eduroom_socket_chat
-      - name: Build, Test Eduroom Socket Kahoot Image
+      - name: Test Eduroom Socket Kahoot Image
         run: docker-compose -f docker-compose.test.yml run eduroom_socket_kahoot
