@@ -5,6 +5,7 @@ const Mode = ({ requestMode, setRequestMode }) => {
   const requestModeHeader = ['All', 'Pending', 'Approved', 'Rejected'];
   return (
     <Fragment>
+      <div className='font-bold text-secondary  text-xl'>Latest Request</div>
       <div className='flex my-6 '>
         {requestModeHeader.map((r, i) => (
           <div
