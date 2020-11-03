@@ -26,7 +26,7 @@ const Appointment = ({ AID, setAID, appointment }) => {
         mountOnEnter
         unmountOnExit
         in={AID > 0}
-        timeout={{ enter: 1000, exit: 1000 }}
+        timeout={{ enter: 600, exit: 600 }}
         classNames={{ enterActive: 'slide-in', exitActive: 'slide-out' }}
       >
         <div className='modal-container' onClick={() => {}}>
