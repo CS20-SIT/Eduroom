@@ -1,13 +1,13 @@
 name: Pull Request Building
 
 on:
-#   pull_request:
-#     branches: 
-#       - dev
-#       - master
+  pull_request:
+    branches: 
+      - dev
+      - master
   push:
     branches: 
-      - supertest
+      - dev
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
 
