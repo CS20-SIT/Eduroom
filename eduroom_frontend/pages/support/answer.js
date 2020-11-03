@@ -1,7 +1,9 @@
-import React, {Fragment} from 'react'
-const Answer = () => {
+import React, {Fragment } from 'react'
+const Answer  = () => {
     return (
-        <Fragment></Fragment>
+        <Fragment>
+
+        </Fragment>
     )
 }
 export default Answer
