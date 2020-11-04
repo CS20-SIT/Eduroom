@@ -38,17 +38,14 @@ services:
     volumes:
       - /usr/src/app/node_modules
       - ./eduroom_backend:/usr/src/app
-    depends_on:
-      - eduroom_postgres
     environment:
-      - WAIT_HOSTS=eduroom_postgres:5432
       - NODE_ENV=development
       - PORT=5000
       - CLIENT_URL=http://localhost:3000
       - BACKEND_API=http://localhost:5000
       - DB_USER=eduroom_user
-      - DB_PASSWORD=213456
-      - DB_HOST=eduroom_postgres
+      - DB_PASSWORD=dADKHgj86jQoRoff7xwC4TZ
+      - DB_HOST=34.87.5.23
       - DB_PORT=5432
       - DB_NAME=eduroom_db
       - JWT_SECRET=jwtsecret
@@ -64,6 +61,7 @@ services:
       - FROM_EMAIL=admin@eduroom.com
       - FROM_NAME=Eduroom Admin
       - NODE_TLS_REJECT_UNAUTHORIZED=0
+      - GCS_SA_KEY_PATH=gcs-eduroom.json
     ports:
       - "5000:5000"
   eduroom_grading_server:
@@ -105,21 +103,8 @@ services:
       - CLIENT_URL=http://localhost:3000
     ports:
       - "8000:8000"
-  eduroom_postgres:
-    image: "postgres:12"
-    environment:
-      - POSTGRES_USER=eduroom_user
-      - POSTGRES_PASSWORD=213456
-      - POSTGRES_DB=eduroom_db
-    volumes:
-      - database-data:/var/lib/postgresql/data/
-      - ./eduroom_backend/src/database/database.sql:/docker-entrypoint-initdb.d/database.sql
-    ports:
-      - "5432:5432"
   eduroom_smtp:
     image: reachfive/fake-smtp-server
     ports:
       - "1025:1025"
       - "1080:1080"
-volumes:
-  database-data: 
