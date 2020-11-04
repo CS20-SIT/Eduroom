@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
+import Link from 'next/link'
 const useStyles = makeStyles({
   root: {
     maxWidth: '90%',
@@ -38,14 +39,13 @@ const ConEach = (p) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
+
         <Button size="small" color="primary">
-          Info
+        <Link href="/admin/grader/contest/announcement">info</Link>
         </Button>
+        <Link href="/admin/grader/contest/announcement">Announcement</Link>
         <Button size="small" color="primary">
-          Announcement
-        </Button>
-        <Button size="small" color="primary">
-          Question
+        <Link href="/admin/grader/contest/announcement">question</Link>
         </Button>
       </CardActions>
     </Card>

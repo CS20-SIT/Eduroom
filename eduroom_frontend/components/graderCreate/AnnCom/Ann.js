@@ -1,6 +1,6 @@
 import React from "react";
-import AnnDialog from "./AnnCom/AnnDialog";
-import AnnTable from "./AnnCom/AnnTable";
+import AnnDialog from "./AnnDialog";
+import AnnTable from "./AnnTable";
 import { useState, useEffect } from "react";
 import Grid from '@material-ui/core/Grid';
 //prepare for adding abmin log wheen create / edit ann
@@ -13,13 +13,13 @@ const Test = () => {
     setRefresh(false);
   };
 const sBig = {marginLeft:'7.5%',marginRight:'7.5%',marginTop:'2.5%'}
-const sBigTitle ={'font-family': 'Quicksand , sans-serif' ,  'font-size': '2em' ,  color: '#5b5b5b','font-weight': 'bold'
+const sBigTitle ={'fontFamily': 'Quicksand , sans-serif' ,  'font-size': '2em' ,  color: '#5b5b5b','fontWeight': 'bold'
 , 
 }
 
   return (
     <div style={sBig}>
-    <Grid  spacing={3} containerdirection="row" justify="flex-start" alignItems="baseline">
+    <Grid >
     <Grid  >
    
      <span style={sBigTitle}>Announcement</span>
