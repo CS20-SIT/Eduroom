@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-const Page2 = ({ quizname, description, goto,handleQuestionNumber,index }) => {
+import Link from "next/link";
+const Page2 = ({ quizname, description, goto,handleQuestionNumber,index,id }) => {
+
   return (
     <Fragment>
       <div>
@@ -49,29 +51,35 @@ const Page2 = ({ quizname, description, goto,handleQuestionNumber,index }) => {
               xs={3}
               style={{ marginTop: "1vh", padding: "0 0 0 20px" }}
             >
+              <Link href={`/edqiz/launching/${id}`}>
               <button
-                className="playButton"
+                className="playButton" 
                 onClick={() => {
-                  goto(2),handleQuestionNumber(index)
+                 handleQuestionNumber(index)
                 }}
-
+              
               >
-                play
+                play 
               </button>
+              </Link>
             </Grid>
-            <Grid item xs={2} style={{ marginTop: "3vh" }}>
+            <Grid item xs={2} style={{ marginTop: "3vh" , backgroundColor:'transparent'}}>
+            <Link href={`/edqiz/${id}/edit`}>
               <button className="button">
                 <i
                   className="fas fa-pen"
                   style={{
                     color: "#EB7DB1",
                     fontSize: "1.5rem",
+                    backgroundColor:'transparent'
                   }}
                 ></i>
-                <span style={{ padding: "0 0 0 10px", fontSize: "1.1rem" }}>
+                <span style={{ padding: "0 0 0 10px", fontSize: "1.1rem", backgroundColor:'transparent' }}>
                   Edit{" "}
                 </span>
               </button>
+              </Link>
+
             </Grid>
           </Grid>
         </div>
