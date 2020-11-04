@@ -54,10 +54,13 @@ const Content = ({ mode }) => {
         return <Page3 goto={goto} />;
     }
   };
+  useEffect(()=>{
+    checkPinIsValid()
+  },[])
   return (
     <Fragment>
       <div>
-        {checkPinIsValid()}
+      
         <div>{renderPage()}</div>
       </div>
       <style jsx>{style}</style>
