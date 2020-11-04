@@ -1,31 +1,87 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import Cell from '../../components/calendar/calendarCell'
 // import { useRouter } from 'next/router';
 import style from '../../styles/calendar/calendar'
+import moment from 'moment';
+import Link from 'next/link';
+import { Button } from '@material-ui/core'
+
 const Content = () => {
     //   const router = useRouter();
+    const days = moment.weekdaysShort();
+    const [day, setDay] = useState({
+        dateObject: moment()
+    })
+
+    // const monthsList = moment.months();
+    // const monthNo = day.dateObject.month();
+
+    const addMonth = ()=>{
+        // const dateObject = moment(day.dateObject).set("month", monthNo);
+        const dateObject = day.dateObject.add(1,"M")
+        setDay(
+            {...day, dateObject: dateObject}
+        )
+    }
+    const minusMonth = ()=>{
+        // const dateObject = moment(day.dateObject).set("month", monthNo);
+        const dateObject = day.dateObject.add(-1,"M")
+        setDay(
+            {...day, dateObject: dateObject}
+        )
+    }
+
+
+    const firstDayOfMonth = ()=>{
+        let dateObj = day.dateObject
+        let firstDay = moment(dateObj)
+            .startOf("month")
+            .format("d");
+        return firstDay;
+    }
+
+    let blank = [];
+    for(let i=0; i<firstDayOfMonth(); i++){
+        blank.push("");
+    }
+
+    let daysInMonth = [];
+    for(let d = 1; d<= day.dateObject.daysInMonth(); d++){
+        daysInMonth.push(d);
+    }
+
+    const currentDate = ()=>{
+        return day.dateObject.format("D");
+    }
+
+    const currentMonth = day.dateObject.format("MMMM")
+    const currentYear = day.dateObject.format("YYYY")
 
     return (
         <Fragment>
             <div>
-                <h1 className="test">Hello Calendar</h1>
+                <h1>{currentMonth + " "+currentYear}</h1>
+                <button className="addEvent-button" onClick={minusMonth}>-</button>
+                <button className="addEvent-button" onClick={addMonth}>+</button>
+                
                 <div className="grid">
-                    <div className="gridItem">Mon</div>
-                    <div className="gridItem">Tue</div>
-                    <div className="gridItem">Wed</div>
-                    <div className="gridItem">Thu</div>
-                    <div className="gridItem">Fri</div>
-                    <div className="gridItem">Sat</div>
-                    <div className="gridItem">Sun</div>
 
-                    <div className="gridItem">1</div>
-                    <div className="gridItem">2</div>
-                    <div className="gridItem">3</div>
-                    <div className="gridItem">4</div>
-                    <div className="gridItem">5</div>
-                    <div className="gridItem">6</div>
-                    <div className="gridItem">7</div>
-                    
+                    {days.map((day) => {
+                        return <Cell currentDate={currentDate} Content={day} />
+                    })}
+                    {blank.map((day) => {
+                        return <Cell currentDate={currentDate} Content={day} />
+                    })}
+                    {daysInMonth.map((day) => {
+                        return <Cell currentDate={currentDate} Content={day} />
+                    })}
                 </div>
+
+                <Link href="/event">
+                    <button className="addEvent-button">Add Event</button>
+                </Link>
+                
+
             </div>
             <style jsx>
                 {style}

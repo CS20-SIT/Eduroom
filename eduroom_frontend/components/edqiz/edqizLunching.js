@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
-import { useRouter } from "next/router";
-import EdqizText from "./edqizText";
-import style from "../../styles/edqiz/landing";
-const Page3 = () => {
-  const router = useRouter();
-  console.log(router.query.id);
+import React, { Fragment } from 'react'
+import { useRouter } from 'next/router'
+import EdqizText from './edqizText'
+import style from '../../styles/edqiz/landing'
+const Page3 = ({data,questionNumber}) => {
+  const router = useRouter()
+  console.log(router.query.id)
   return (
     <Fragment>
       <div className="landing">
