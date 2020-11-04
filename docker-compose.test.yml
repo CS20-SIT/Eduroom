@@ -13,7 +13,7 @@ services:
       - BACKEND_API=http://localhost:5000
       - DB_USER=eduroom_user
       - DB_PASSWORD=dADKHgj86jQoRoff7xwC4TZ
-      - DB_HOST=34.87.5.23
+      - DB_HOST=35.198.234.48
       - DB_PORT=5432
       - DB_NAME=eduroom_db
       - JWT_SECRET=jwtsecret
