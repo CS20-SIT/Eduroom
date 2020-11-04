@@ -19,7 +19,12 @@ const generateVerifyJWT = (payload) => {
     return jwt.sign({ user: payload }, jwtSecret, jwtVerifySignOption)
 }
 
+const verifyVerificationJWT = (token) => {
+    return jwt.verify(token, jwtSecret, jwtVerifySignOption)
+}
+
 module.exports = {
     generateCookieJWT,
-    generateVerifyJWT
+    generateVerifyJWT,
+    verifyVerificationJWT
 }
