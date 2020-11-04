@@ -1,5 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import style from '../../styles/landing/register'
+import React, { Fragment, useContext, useEffect, useState } from 'react';
+import style from '../../styles/landing/register';
+import Image from 'next/image';
+import UserContext from '../../contexts/user/userContext';
 const Register = () => {
   const [user, setUser] = useState({
     firstname: '',
@@ -7,50 +9,70 @@ const Register = () => {
     email: '',
     password: '',
   });
-  const register = async () => {
-    console.log(user);
+  const userContext = useContext(UserContext);
+  const { registerUser } = userContext;
+  const newUser = userContext.user;
+  const handleRegister = async () => {
+    registerUser(user);
   };
+
+  useEffect(() => {
+    console.log(newUser);
+  }, [newUser]);
+
   return (
     <Fragment>
       <div className="register">
         <div className="register-content">
           <div className="register-form">
             <form style={{ width: '80%' }} onSubmit={(e) => e.preventDefault()}>
-              <label className="label-text">Firstname</label>
-              <input
-                className="register-textfield"
-                type="text"
-                placeholder="Firstname"
-                onChange={(e) =>
-                  setUser({ ...user, firstname: e.target.value })
-                }
-              />
+              <label className="label-text">
+                Firstname
+                <input
+                  className="register-textfield"
+                  type="text"
+                  placeholder="Firstname"
+                  onChange={(e) =>
+                    setUser({ ...user, firstname: e.target.value })
+                  }
+                />
+              </label>
 
-              <label className="label-text">Lastname</label>
-              <input
-                className="register-textfield"
-                type="text"
-                placeholder="Lastname"
-                onChange={(e) => setUser({ ...user, lastname: e.target.value })}
-              />
+              <label className="label-text">
+                Lastname
+                <input
+                  className="register-textfield"
+                  type="text"
+                  placeholder="Lastname"
+                  onChange={(e) =>
+                    setUser({ ...user, lastname: e.target.value })
+                  }
+                />
+              </label>
 
-              <label className="label-text">Email</label>
-              <input
-                className="register-textfield"
-                type="email"
-                placeholder="Email"
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-              />
+              <label className="label-text">
+                Email
+                <input
+                  className="register-textfield"
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
+                />
+              </label>
 
-              <label className="label-text">Password</label>
-              <input
-                className="register-textfield"
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-              />
+              <label className="label-text">
+                Password
+                <input
+                  className="register-textfield"
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
+                />
+              </label>
               <div style={{ textAlign: 'center' }}>
-                <button className="register-button" onClick={register}>
+                <button className="register-button" onClick={handleRegister}>
                   <span className="register-button-text">Register</span>
                 </button>
                 <div className="or-text">
@@ -72,9 +94,9 @@ const Register = () => {
             </form>
           </div>
         </div>
-        <div>
-          <div style={{ width: '50%' }}>
-            <div style={{ paddingLeft: '20%' }}>
+        <div style={{ width: '50%', zIndex: '50' }}>
+          <div style={{ width: '100%', paddingLeft: '10%' }}>
+            <div style={{ paddingBottom: '5%' }}>
               <div>
                 <h1 className="register-header">CREATE AN ACCOUNT</h1>
                 <span style={{ color: '#3d467f', fontSize: '1.4em' }}>
@@ -82,18 +104,16 @@ const Register = () => {
                 </span>
               </div>
             </div>
+            <Image
+              alt="register-img"
+              src="/images/register_img.svg"
+              width="510"
+              height="432"
+            />
           </div>
-
-          <img
-            className="register-page-img"
-            alt="register-page-img"
-            src="/images/campaign_img.svg"
-          />
         </div>
       </div>
-      <style jsx>
-        {style}
-      </style>
+      <style jsx>{style}</style>
     </Fragment>
   );
 };

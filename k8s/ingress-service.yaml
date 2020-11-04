@@ -10,23 +10,33 @@ spec:
     - hosts:
       - eduroom.cscms.me
       secretName: eduroom-cscms-cf
+    - hosts:
+      - lhci.cscms.me
+      secretName: lhci-cscms-me-tls
   rules:
+    - host: lhci.cscms.me
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: lhci-server-clusterip
+              servicePort: 9001
     - host: eduroom.cscms.me
       http:
         paths:
-          - path: /socket-chat
+          - path: /socket-chat/
             backend:
               serviceName: eduroom-socket-chat-clusterip
               servicePort: 5050
-          - path: /kahoot
+          - path: /kahoot/
             backend:
               serviceName: eduroom-socket-kahoot-clusterip
               servicePort: 8000
-          - path: /grader
+          - path: /grader/
             backend:
               serviceName: eduroom-grading-server-clusterip
               servicePort: 3050
-          - path: /api
+          - path: /api/
             backend:
               serviceName: eduroom-backend-clusterip
               servicePort: 5000

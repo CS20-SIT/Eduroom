@@ -7,11 +7,8 @@ const cors = require('cors');
 const passport = require('passport')
 
 const ConfigRoute = require('./routes/configRoute')
-const AnalysisRoute = require('./routes/analysisRoute')
 
 const passportConfig = require('./config/passport')
-
-const { test, getAnn, postAnn } = require('./controllers/graderCreate/test')
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: `${__dirname}/config/config.env` })
@@ -44,9 +41,6 @@ app.use(passport.initialize())
 app.use('/api', ConfigRoute)
 app.use(errorHandler)
 
-app.get('/api/08', test)
-app.get('/api/08/ann', getAnn)
-app.post('/api/08/cann', postAnn)
 
 
 module.exports = app

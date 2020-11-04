@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react'
 const ForumID = () => {
-    return <Fragment></Fragment>
+    return <Fragment> This is Page</Fragment>
 }
 export default ForumID
