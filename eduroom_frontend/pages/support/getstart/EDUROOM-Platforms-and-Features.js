@@ -16,14 +16,12 @@ import {
   Link,
 } from "@material-ui/core";
 import Studentnav from "../../../components/support/studentsidenav";
-import Courseinstandteachingast from '../../../components/support/courseinstandteachingast';
+import Platformandfeature from '../../../components/support/platformandfeatures';
 import style from "../../../styles/forum/showForum";
 import GeneralNonav from "../../../components/template/generalnonav";
 const courseinstandteaching = () => {
   return <Fragment>
-    
       <GeneralNonav>
-        
             <div
                 style={{
                     display: "flex",
@@ -34,10 +32,8 @@ const courseinstandteaching = () => {
             <div id="nav">
                     <div className="top">
                     <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;<Link href='/support/getstart'>Getting Started</Link></label>
-                    &nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Course Instructors and Teaching Assistantsd
-                    
-                    <Courseinstandteachingast/>
+                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
+                    <Platformandfeature/>
                     </div>
                     
                 </div>

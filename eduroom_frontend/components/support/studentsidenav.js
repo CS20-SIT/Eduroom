@@ -22,6 +22,8 @@ const Studentnav = () => {
       <Typography>
         <h3>Student Topics</h3>
       </Typography>
+      <Grid container>
+      <Grid item xs={12}>
       <Link href="/support/getstart">
       <Button>
         <img
@@ -30,42 +32,43 @@ const Studentnav = () => {
         />
         &nbsp;&nbsp;&nbsp;Getting Started
       </Button>
-      </Link>
-      <Button>
+      </Link></Grid>
+      <Grid item xs={12}><Button>
         <img
           src="https://www.flaticon.com/svg/static/icons/svg/2521/2521782.svg"
           style={{ height: "15px" }}
         />
         &nbsp;&nbsp;&nbsp;Account/Profile
-      </Button>
-      <Button>
+      </Button></Grid>
+      <Grid item xs={12}><Button>
         <img
           src="https://www.flaticon.com/svg/static/icons/svg/2920/2920249.svg"
           style={{ height: "15px" }}
         />
         &nbsp;&nbsp;&nbsp;Troubleshooting
-      </Button>
-      <Button>
+      </Button></Grid>
+      <Grid item xs={12}><Button>
         <img
           src="https://www.flaticon.com/svg/static/icons/svg/182/182321.svg"
           style={{ height: "15px" }}
         />
         &nbsp;&nbsp;&nbsp;Course Taking
-      </Button>
-      <Button>
+      </Button></Grid>
+      <Grid item xs={12}><Button>
         <img
           src="https://www.flaticon.com/svg/static/icons/svg/846/846023.svg"
           style={{ height: "15px" }}
         />
         &nbsp;&nbsp;&nbsp;Purchase/Refunds
-      </Button>
-      <Button>
+      </Button></Grid>
+      <Grid item xs={12}><Button>
         <img
           src="https://www.flaticon.com/svg/static/icons/svg/977/977411.svg"
           style={{ height: "15px" }}
         />
         &nbsp;&nbsp;&nbsp;Mobile
-      </Button>
+      </Button></Grid>
+      </Grid>
       <br/>
       <Link href="/support/create">
       <Button variant='contained' color="primary" style={{marginTop:'20px'}}>CONTACT US</Button></Link>
