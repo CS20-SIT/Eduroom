@@ -64,6 +64,7 @@ export default css`
   }
   button:hover {
     color: #eb7db1;
+    cursor: pointer;
     background-color: #ffffff;
   }
 
