@@ -1,7 +1,21 @@
 import React, { Fragment } from "react"
 import style from "../../../styles/graderSubmit/contests/contestPageHeader"
+import Button from "@material-ui/core/Button"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
+// import SearchAppBar from "../../../components/graderSubmit/SearchBar"
 
 const ContestHeader = (props) => {
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <Fragment>
       <div className="properties">
@@ -9,31 +23,45 @@ const ContestHeader = (props) => {
           <h2 className="title">ALL CONTESTS</h2>
           <div className="tools">
             <div className="left">
-              <select className="rule">
-                <option selected value>
-                  Rank
-                </option>
-                <option value="all">All</option>
-                <option value="OI">OI</option>
-                <option value="acm">ACM</option>
-              </select>
-              <select className="status">
-                <option selected value>
-                  Status
-                </option>
-                <option value="all">All</option>
-                <option value="not_started">Not Started</option>
-                <option value="underway">Underway</option>
-                <option value="ended">Ended</option>
-              </select>
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                Rule
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>OI</MenuItem>
+                <MenuItem onClick={handleClose}>ACM</MenuItem>
+              </Menu>
+
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                Status
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>All</MenuItem>
+                <MenuItem onClick={handleClose}>Underway</MenuItem>
+                <MenuItem onClick={handleClose}>Not started</MenuItem>
+                <MenuItem onClick={handleClose}>Ended</MenuItem>
+              </Menu>
             </div>
-            <div className="right">
-              <input
-                type="text"
-                className="search"
-                placeholder="Keyword"
-              ></input>
-            </div>
+            <div className="right">{/* <SearchAppBar /> */}</div>
           </div>
         </div>
       </div>

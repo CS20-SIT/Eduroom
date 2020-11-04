@@ -1,7 +1,10 @@
 import React, { Fragment } from "react"
+import { useRouter } from "next/router"
 import style from "../../../styles/graderSubmit/problems/problemList"
 
 const ProblemList = () => {
+  const router = useRouter()
+
   return (
     <Fragment>
       <div className="box">
@@ -19,7 +22,12 @@ const ProblemList = () => {
             <p className="difficulty">Easy</p>
           </div>
           <div className="right-bottom">
-            <button>Try</button>
+            <div
+              className="try-button"
+              onClick={() => router.push("/graderSystem/problem/id")}
+            >
+              <button id="myButton">Try</button>
+            </div>
           </div>
         </div>
       </div>
