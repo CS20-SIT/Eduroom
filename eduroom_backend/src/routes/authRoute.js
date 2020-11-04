@@ -3,7 +3,7 @@ const passport = require('passport')
 const router = express.Router()
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 const { getProfile, regisController, loginController, logoutController } = require('../controllers/authController')
-const { generateJWT } = require('../utils/jwt')
+const { generateCookieJWT } = require('../utils/jwt')
 
 
 
@@ -22,7 +22,7 @@ router.get('/google/callback', passport.authenticate('google', {session: false})
         provider: req.user.provider }
     console.log(user)
     // Find or add user in db
-    const token = generateJWT('userid' + user.name)
+    const token = generateCookieJWT('userid' + user.name)
 
     res.cookie('jwt', token)
     res.redirect(process.env.CLIENT_URL)
