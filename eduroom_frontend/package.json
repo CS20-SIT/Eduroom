@@ -11,14 +11,17 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.20.0",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.5",
     "material-ui": "^0.20.2",
-    "next": "9.5.3",
+    "moment": "^2.29.1",
+    "next": "^10.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-transition-group": "^4.4.1",
     "socket.io-client": "^2.3.1"
   }
 }
