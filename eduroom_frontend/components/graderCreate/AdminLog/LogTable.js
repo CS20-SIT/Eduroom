@@ -10,7 +10,7 @@ import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import AnnEdit from '../AnnCom/AnnEdit';
+
 
 const useStyles = makeStyles({
   root: {
@@ -63,7 +63,7 @@ const shorten = (text, maxLength) => {
 
   return text;
 };
-const AnnTable = (props) => {
+const LogTable = (props) => {
   const classes = useStyles()
   const [page, setPage] = useState(0)
   const [data, setData] = useState([])
@@ -71,7 +71,14 @@ const AnnTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios('http://localhost:3000/api/grader/ann')
+      const result = await axios('http://localhost:3000/api/grader/ann').catch(err => {
+        // what now?
+        
+         const requestFail = [{id:'0',title:'NO',description:'Test',displayname:'NUTTY',time:'2100-05-12'}]
+  
+        setData(requestFail)
+        
+    })
       setData(result.data)
     }
     GetData()
@@ -97,10 +104,10 @@ const AnnTable = (props) => {
             <TableRow>
               <TableCell className={classes.tableHeader}> Id</TableCell>
               <TableCell width="25%" className={classes.tableHeader} align="left">Title</TableCell>
-              <TableCell width="45%" className={classes.tableHeader} align="left">Description</TableCell>
+              <TableCell width="45%" className={classes.tableHeader} align="left">Detail</TableCell>
               <TableCell className={classes.tableHeader} align="left">Admin </TableCell>
-              <TableCell className={classes.tableHeader} align="left">Created At </TableCell>
-              <TableCell className={classes.tableHeader} align="left">Edit </TableCell>
+              <TableCell className={classes.tableHeader} align="left">Time Stamp </TableCell>
+           
             </TableRow>
           </TableHead>
 
@@ -118,9 +125,7 @@ const AnnTable = (props) => {
                     <TableCell className={classes.tableCell} width="45%" align="left">{shorten(row.description,130)}</TableCell>  
                     <TableCell className={classes.tableCell} align="left">{row.displayname}</TableCell>
                     <TableCell className={classes.tableCell} width="16%" align="left">{row.time}</TableCell>
-                    <TableCell className={classes.tableCell}  align="left">
-                      <AnnEdit onSuccess={props.onSuccess} id ={row.id} title ={row.title} description={row.description} visible={row.isvisible} adminid={row.adminid}> 
-                      </AnnEdit></TableCell>
+            
                   </TableRow>
                 )
               })}
@@ -144,4 +149,4 @@ const AnnTable = (props) => {
     </Paper>
   )
 }
-export default AnnTable
+export default LogTable
