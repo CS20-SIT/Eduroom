@@ -1,13 +1,15 @@
 import React, { Fragment } from "react";
-import GeneralTemplate from "../../../components/template/general";
+import GeneralNoNav from '../../../components/template/generalnonav';
+import GNav from "../../../components/graderCreate/Layout/gNav"
 
 import Ann from "../../../components/graderCreate/Ann";
 const Announcement = () => {
   return (
     <Fragment>
-      <GeneralTemplate>
+      <GeneralNoNav>
+        <GNav></GNav>
         <Ann />
-      </GeneralTemplate>
+      </GeneralNoNav>
     </Fragment>
   );
 };
