@@ -5,9 +5,47 @@ import HeadCell from '../../components/calendar/calendarHeader'
 import style from '../../styles/calendar/calendar'
 import moment from 'moment';
 import Link from 'next/link';
-import { Grid, Container } from '@material-ui/core'
-
+import { Grid, Container, DialogContent, Dialog, DialogTitle, Button } from '@material-ui/core'
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 const Content = () => {
+    // Pop-up-event
+    const useStyles = makeStyles((theme) => ({
+        typography: {
+            padding: theme.spacing(2),
+        },
+    }));
+    const classes = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //   const router = useRouter();
     const days = moment.weekdaysShort();
 
@@ -59,21 +97,45 @@ const Content = () => {
     const currentMonth = day.dateObject.format("MMMM")
     const currentYear = day.dateObject.format("YYYY")
 
+
+
+
+
+
     return (
         <Fragment>
+            {/* Pop up event content */}
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >
+                <Typography className={classes.typography}>This November.</Typography>
+            </Popover>
+
+
+
+
 
             <div className="month-color text-center" >
-
                 <div className="month-size">
                     <Container>
                         <Grid container spacing={0}>
-                        <Grid item xs={2}>
-                                
+                            <Grid item xs={2}>
                             </Grid>
                             <Grid item xs={1}>
                                 <div className="previous-m" onClick={minusMonth}> &lt; </div>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} onClick={handleClick}>
                                 {currentMonth + " " + currentYear}
 
                             </Grid>
@@ -88,6 +150,11 @@ const Content = () => {
 
                 </div>
                 <div className="grid">
+                    <div >
+
+                    </div>
+
+
 
 
                     {days.map((dayName) => {
@@ -114,6 +181,11 @@ const Content = () => {
 
 
             </div>
+
+
+
+
+
             <style jsx>
                 {style}
             </style>

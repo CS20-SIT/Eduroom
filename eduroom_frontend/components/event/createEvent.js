@@ -4,9 +4,19 @@ import style from '../../styles/event/event'
 import { Button, Grid, Container, TextField, } from '@material-ui/core'
 import { KeyboardTimePicker } from "@material-ui/pickers";
 
+
+
+
 import Image from 'next/image'
 import api from '../../api'
 const content = () => {
+    
+
+
+
+
+
+
     const [user, setUser] = useState({
         title: '',
         type: '',
@@ -42,6 +52,15 @@ const content = () => {
     }
     const [selectedDate, handleDateChange] = useState(new Date());
 
+
+
+
+
+
+
+
+
+
     return (
         <Fragment>
             <Head>
@@ -52,7 +71,7 @@ const content = () => {
                 <Grid container spacing={2}>
 
                     <Grid item xs={3} >
-                    
+
 
                         <Image alt="meeting-img" src="/images/createEvent/Meeting.svg" width="290" height="290" />
                     </Grid>
@@ -192,7 +211,7 @@ const content = () => {
                                 </Grid>
                             </Grid>
                             <div className="button">
-                                <button className="create-button" onClick={handleCreate} style={{ width: "122px", height: "39px" }}>
+                                <button className="create-button" onClick={createEvent} style={{ width: "122px", height: "39px" }}>
                                     <a className="create-button-create">Confirm</a>
                                 </button>
 
@@ -208,6 +227,10 @@ const content = () => {
 
                     </Grid>
                 </Grid>
+
+
+
+                
 
 
 
