@@ -1,7 +1,9 @@
 import Head from 'next/head'
 import React, { Fragment, useState } from 'react';
 import style from '../../styles/event/event'
-import { Button, Grid, Container, TextField } from '@material-ui/core'
+import { Button, Grid, Container, TextField, } from '@material-ui/core'
+import { KeyboardTimePicker } from "@material-ui/pickers";
+
 import Image from 'next/image'
 import api from '../../api'
 const content = () => {
@@ -38,6 +40,7 @@ const content = () => {
     const validator = () => {
         
     }
+    const [selectedDate, handleDateChange] = useState(new Date());
 
     return (
         <Fragment>
@@ -230,3 +233,18 @@ const content = () => {
     );
 }
 export default content;
+
+
+function KeyboardTimePickerExample() {
+    const [selectedDate, handleDateChange] = useState(new Date());
+  
+    return (
+      <KeyboardTimePicker
+        label="Masked timepicker"
+        placeholder="08:00 AM"
+        mask="__:__ _M"
+        value={selectedDate}
+        onChange={date => handleDateChange(date)}
+      />
+    );
+  }
