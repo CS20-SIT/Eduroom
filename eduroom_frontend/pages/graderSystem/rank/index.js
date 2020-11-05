@@ -1,6 +1,7 @@
 import React, { Fragment } from "react"
-import GraderNav from "../../components/graderSubmit/GraderNav"
 import Head from "next/head"
+import Box from "../../../components/graderSubmit/Box"
+import Layout from "../../../components/graderSubmit/Layout"
 
 const Ranks = () => {
   return (
@@ -9,8 +10,9 @@ const Ranks = () => {
         <title>Ranks</title>
         <meta property="og:title" content="Ranks" key="Ranks" />
       </Head>
-      <GraderNav></GraderNav>
-      This is rank page
+      <Layout>
+        <Box>This is rank page</Box>
+      </Layout>
     </Fragment>
   )
 }

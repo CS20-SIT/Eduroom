@@ -1,16 +1,30 @@
 const jwt = require('jsonwebtoken')
 
 const jwtSecret = process.env.JWT_SECRET
-const jwtSignOption = {
+const jwtCookieSignOption = {
     algorithm: 'HS256',
     expiresIn: '30d'
 }
 
-const generateJWT = (payload) => {
-    console.log(payload);
-    return jwt.sign({ user: payload }, jwtSecret, jwtSignOption)
+const jwtVerifySignOption = {
+    algorithm: 'HS256',
+    expiresIn: '1d'
+}
+
+const generateCookieJWT = (payload) => {
+    return jwt.sign({ user: payload }, jwtSecret, jwtCookieSignOption)
+}
+
+const generateVerifyJWT = (payload) => {
+    return jwt.sign({ user: payload }, jwtSecret, jwtVerifySignOption)
+}
+
+const verifyVerificationJWT = (token) => {
+    return jwt.verify(token, jwtSecret, jwtVerifySignOption)
 }
 
 module.exports = {
-    generateJWT
+    generateCookieJWT,
+    generateVerifyJWT,
+    verifyVerificationJWT
 }
