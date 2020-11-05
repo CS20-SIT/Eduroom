@@ -1,5 +1,12 @@
-import React,{Fragment} from 'react'
+import React, { Fragment } from 'react'
+import Link from 'next/link'
 const UserEdit = () => {
-    return <Fragment></Fragment>
+  return (
+    <Fragment>
+      <button>
+        <Link href="/user">Apply</Link>
+      </button>
+    </Fragment>
+  )
 }
 export default UserEdit
