@@ -20,7 +20,7 @@ router.get('/google/callback', passport.authenticate('google', {session: false})
         email: req.user._json.email,
         provider: req.user.provider }
     console.log(user)
-    // Find or add user in db
+    //TODO: Find or add user in db
     const token = generateCookieJWT('userid' + user.name)
 
     res.cookie('jwt', token)
