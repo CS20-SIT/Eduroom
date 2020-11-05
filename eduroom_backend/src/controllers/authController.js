@@ -9,25 +9,29 @@ exports.getProfile = (req, res) => {
 }
 
 exports.regisController = async (req, res) => {
-    //TODO: Find exist email in db
-    const user = req.body
-    const password = bcrypt.hashSync(req.body.password)
-    const userID = 'userIDfromRegis'
+    try {
+        //TODO: Find exist email in db
+        const user = req.body
+        const password = bcrypt.hashSync(req.body.password)
+        const userID = 'userIDfromRegis'
 
-    // Create verification token and send it in email
-    const verifyToken = Buffer.from(generateVerifyJWT(userID)).toString('base64')
-    const verifyUrl = `${process.env.BACKEND_API}/api/auth/verify/${verifyToken}`
-    const emailOptions = {
-        email: user.email,
-        subject: 'Eduroom Email Verification',
-        message: `Please Verify your email by click at ${verifyUrl}`
+        // Create verification token and send it in email
+        const verifyToken = Buffer.from(generateVerifyJWT(userID)).toString('base64')
+        const verifyUrl = `${process.env.BACKEND_API}/api/auth/verify/${verifyToken}`
+        const emailOptions = {
+            email: user.email,
+            subject: 'Eduroom Email Verification',
+            message: `Please Verify your email by click at ${verifyUrl}`
+        }
+        await sendEmail(emailOptions)
+
+        // Generate JWT for user to login
+        const token = generateCookieJWT(userID)
+        res.cookie('jwt', token)
+        res.status(201).send({ success: true })
+    } catch (error) {
+        errorHandler(error, req, res)
     }
-    await sendEmail(emailOptions)
-
-    // Generate JWT for user to login
-    const token = generateCookieJWT(userID)
-    res.cookie('jwt', token)
-    res.status(201).send({ success: true })
 }
 
 exports.verifyEmailController = async (req, res) => {
@@ -43,12 +47,17 @@ exports.verifyEmailController = async (req, res) => {
     }
 }
 
-exports.loginController = (req, res) => {
-    //TODO: Find user and compare password using bcrypt
-    const userID = 'userIDfromLogin'
-    const token = generateCookieJWT(userID)
-    res.cookie('jwt', token)
-    res.status(201).send({ success: true })
+exports.loginController = async (req, res) => {
+    try{
+        //TODO: Find user and compare password using bcrypt
+        const userID = 'userIDfromLogin'
+        const token = generateCookieJWT(userID)
+        res.cookie('jwt', token)
+        res.status(201).send({ success: true })
+    } catch (error) {
+        // TODO: Should redirect to verification error page
+        errorHandler(error, req, res)
+    }
 }
 
 exports.logoutController = (req, res) => {
