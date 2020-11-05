@@ -21,7 +21,7 @@ exports.regisController = async (req, res) => {
         const emailOptions = {
             email: user.email,
             subject: 'Eduroom Email Verification',
-            message: `Please Verify your email by click at ${verifyUrl}`
+            htmlMessage: `Please Verify your email by click <a href="${verifyUrl}">here</a>.`
         }
         await sendEmail(emailOptions)
 

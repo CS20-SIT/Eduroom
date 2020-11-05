@@ -6,7 +6,11 @@ const app = server.listen(port, () => {
   console.log(`Running on ${port}`);
 });
 
-const io = socketIO.listen(app);
+const socketOptions = {
+  path: '/kahoot'
+}
+
+const io = socketIO.listen(app, socketOptions);
 io.on('connection', (client) => {
   console.log('user connected');
 
