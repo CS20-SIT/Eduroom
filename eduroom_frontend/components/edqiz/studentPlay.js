@@ -11,41 +11,41 @@ import socketIOClient from 'socket.io-client';
 const Content = ({ mode }) => {
   const router = useRouter();
   // console.log(router.query.room);
+  const [name, setName] = useState('');
+  const mockData = [
+    { id: '1', pin: '3456' },
+    { id: '2', pin: '1234' },
+    { id: '3', pin: '2345' },
+    { id: '4', pin: '6789' },
+  ];
 
   const [current, setCurrent] = useState(1);
   const [inputMessage, setInputMessage] = useState('');
-  const [messages, setMessages] = useState(['hello1', 'hello2']);
+  const [messages, setMessages] = useState([]);
   const goto = (val) => {
-    const data = { name, description, image, questionList };
-    console.log(data);
     if (val != current) {
       if (val <= 2 || isValidForm()) {
         setCurrent(val);
       }
     }
   };
-  const checkPinIsValid = () => {
-    let temp = 0;
-    for (let i = 0; i < mockData.length; i++) {
-      temp++;
-      if (mockData[i].pin === router.query.room) {
-        break;
-      } else if (
-        temp === mockData.length &&
-        mockData[i].pin !== router.query.room
-      ) {
-        alert('ROOM IS NOT VALID');
-        router.push('/edqiz');
-      }
-    }
+  const handleChangeQuizName = (val) => {
+    console.log(val);
+    setName(val);
   };
 
   const renderPage = () => {
     switch (current) {
       case 1:
-        return <Page1 goto={goto} />;
+        return (
+          <Page1
+            goto={goto}
+            mockData={mockData}
+            change={handleChangeQuizName}
+          />
+        );
       case 2:
-        return <Page2 goto={goto} />;
+        return <Page2 goto={goto} mockData={mockData} name={name} />;
       case 3:
         return <Page3 goto={goto} />;
     }
@@ -55,15 +55,12 @@ const Content = ({ mode }) => {
     const socket = socketIOClient('http://localhost:8000/');
     const temp = messages.slice();
     socket.on('new-message', (newMessage) => {
-      console.log('we got new messgae ', newMessage);
       temp.push(newMessage);
-      console.log('temp is ', temp);
-      setMessages(temp);
+      setMessages(temp.slice());
     });
   };
   const sentMessage = () => {
     const socket = socketIOClient('http://localhost:8000/');
-    console.log('we sent new message ', inputMessage);
     socket.emit('sent-message', inputMessage);
   };
 
@@ -90,6 +87,7 @@ const Content = ({ mode }) => {
     // checkPinIsValid();
     response();
   }, []);
+  
   return (
     <Fragment>
       <div>
