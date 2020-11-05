@@ -16,17 +16,17 @@ const pQuestion= async (req, res, next) => {
     const adminid = '12345678-1234-1234-1234-123456789123'
   
     await pool.query(
-      'INSERT INTO announcements(title,description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',
+      'INSERT INTO Questions(title,description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',
       [title, description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType,adminid]
     )
     res.send({ success: true })
   }
 
   const pQuestionTag = async (req, res, next) => {
-  
+    res.send({ success: true })
   }
   const pTag = async (req, res, next) => {
-    const tagId = 123456
+    const tagId = 1
     const tagName = 'testName'
 
     await pool.query(
