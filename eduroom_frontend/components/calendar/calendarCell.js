@@ -10,7 +10,7 @@ const Content = (props) => {
 
     return (
         <Fragment>
-            {(content == currentDate)?(<div className="currentDate">{content}</div>):<div className="gridItem">{content}</div>}
+            {(content == currentDate)?(<div className="currentDate gridItem">{content}</div>):<div className="gridItem">{content}</div>}
             <style jsx>
                 {style}
             </style>
