@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-const Page1 = ({quizname,description}) => {
+import Link from "next/link";
+const Page2 = ({ quizname, description, goto,handleQuestionNumber,index,id }) => {
+  console.log(id);
   return (
     <Fragment>
       <div>
@@ -26,33 +28,58 @@ const Page1 = ({quizname,description}) => {
                 <div className="x">x</div>
               </button>
             </Grid>
-            <Grid item xs={12}>
-            <div className="quizName">{quizname}</div>
-            </Grid>
-            <Grid item xs={12} style={{marginTop:'5px'}}>
-            <div className="description">{description}</div>
+            <Grid
+              item
+              xs={12}
+              style={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <div className="quizName">{quizname}</div>
             </Grid>
             <Grid
               item
-              xs={4}
-              style={{ marginTop: "1vh", padding: "0 0 0 20px" }}
+              xs={12}
+              style={{
+                marginTop: "5px",
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
             >
-              <button className="playButton">play</button>
+              <div className="description">{description}</div>
             </Grid>
-            <Grid item xs={6} style={{ marginTop: "3vh" }}>
+            <Grid
+              item
+              xs={3}
+              style={{ marginTop: "1vh", padding: "0 0 0 20px" }}
+            > 
+              <Link href={`/edqiz/launching/${index}`}>
+              <button
+                className="playButton" 
+                onClick={() => {
+                 handleQuestionNumber(index)
+                }}
+              
+              >
+                play 
+              </button>
+              </Link>
+            </Grid>
+            <Grid item xs={2} style={{ marginTop: "3vh" , backgroundColor:'transparent'}}>
+            <Link href={`/edqiz/${index}/edit`}>
               <button className="button">
                 <i
                   className="fas fa-pen"
                   style={{
                     color: "#EB7DB1",
                     fontSize: "1.5rem",
+                    backgroundColor:'transparent'
                   }}
                 ></i>
-                <span style={{ padding: "0 0 0 10px", fontSize: "1.1rem" }}>
+                <span style={{ padding: "0 0 0 10px", fontSize: "1.1rem", backgroundColor:'transparent' }}>
                   Edit{" "}
                 </span>
               </button>
-             
+              </Link>
+
             </Grid>
           </Grid>
         </div>
@@ -161,9 +188,10 @@ const Page1 = ({quizname,description}) => {
           border-radius: 2vh;
           border: 2px solid black;
           padding: 0 20px 10px 0;
+          margin:20px;
         }
       `}</style>
     </Fragment>
   );
 };
-export default Page1;
+export default Page2;

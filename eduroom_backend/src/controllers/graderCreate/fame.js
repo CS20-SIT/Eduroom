@@ -6,7 +6,7 @@ const pool = require('../../database/db')
 const pAdminLog = async (req, res, next) => {
     const title = 'mockup data here'
     const description =  'mockup data here'
-    const adminid = 'df3b7cb7-6a95-11e7-8846-b05adad3f0ae'
+    const adminid = '12345678-1234-1234-1234-123456789123'
     const visible =  false
   
     await pool.query(

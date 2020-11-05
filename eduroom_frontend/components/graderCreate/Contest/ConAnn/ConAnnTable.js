@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   tableHeader : {
     'font-family': 'Quicksand , sans-serif',
     borderBottom: "none",
-    'font-size': '1.2em' ,  color: '#3d467f','font-weight': 'bold'
+    'font-size': '1.2em' ,  color: '#3d467f','font-weight': 'bold',backgroundColor: 'white'
     
   },
   tableRow : {

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import List from "../../components/edqiz/list";
+import List from "../../components/edqiz/edlunch";
 import GeneralNoSide from "../../components/template/generalnoside";
 
 const CreatePage = () => {
