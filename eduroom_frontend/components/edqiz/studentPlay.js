@@ -30,9 +30,15 @@ const Content = ({ mode }) => {
     }
   };
   const handleChangeQuizName = (val) => {
+<<<<<<< Updated upstream
     console.log(val);
     setName(val);
   };
+=======
+    // console.log(val);
+    setName(val)
+  }
+>>>>>>> Stashed changes
 
   const renderPage = () => {
     switch (current) {

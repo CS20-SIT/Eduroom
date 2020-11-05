@@ -1,10 +1,22 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect,useState } from "react";
 import { useRouter } from "next/router";
 import style from "../../styles/edqiz/landing";
-const Page1 = ({ goto, mockData,change }) => {
+import socketIOClient from "socket.io-client";
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:8000");
 
+const Page1 = ({ goto, mockData, change }) => {
+  const [seconds, setSeconds] = useState(11);
+  useEffect(() => {
+    socket.on("seconds", seconds => {
+      console.log("new sec is ", seconds);
+      setSeconds(seconds);
+  
+    });
+    console.log(seconds)
+   
+  }, []);
   const router = useRouter();
-  // console.log(router.query.room)
   return (
     <Fragment>
       <div className="landing">
@@ -79,7 +91,7 @@ const Page1 = ({ goto, mockData,change }) => {
               />
             </div>
             <div className="row">
-              <button className="landing-button" onClick={() => goto(2)} >
+              <button className="landing-button" onClick={() => goto(2)}>
                 <span className="landing-button-text">JOIN GAME</span>
               </button>
             </div>
