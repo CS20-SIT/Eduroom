@@ -7,8 +7,8 @@ data:
   BACKEND_API: https://eduroom.cscms.me/api
   CLIENT_URL: https://eduroom.cscms.me
   GRADER_URL: https://eduroom.cscms.me/grader
-  CHAT_SERVER: https://eduroom.cscms.me/socket-chat
-  KAHOOT_URL: https://eduroom.cscms.me/kahoot
+  CHAT_SERVER: https://eduroom.cscms.me/socket-chat # Path option is seted
+  KAHOOT_URL: https://eduroom.cscms.me # Path option is seted
   # DB
   POSTGRES_PORT: "5432"
   # Backend
@@ -17,3 +17,6 @@ data:
   JWT_EXPIRE: 30d
   JWT_COOKIE_EXPIRE: "30"
   GCS_SA_KEY_PATH: /etc/secret/gcs
+  SMTP_SECURE: "true"
+  FROM_EMAIL: no-reply@eduroom.cscms.me
+  FROM_NAME: Eduroom
