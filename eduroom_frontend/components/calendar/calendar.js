@@ -10,7 +10,7 @@ import { Button } from '@material-ui/core'
 const Content = () => {
     //   const router = useRouter();
     const days = moment.weekdaysShort();
-    
+
     const [day, setDay] = useState({
         dateObject: moment()
     })
@@ -18,23 +18,23 @@ const Content = () => {
     // const monthsList = moment.months();
     // const monthNo = day.dateObject.month();
 
-    const addMonth = ()=>{
+    const addMonth = () => {
         // const dateObject = moment(day.dateObject).set("month", monthNo);
-        const dateObject = day.dateObject.add(1,"M")
+        const dateObject = day.dateObject.add(1, "M")
         setDay(
-            {...day, dateObject: dateObject}
+            { ...day, dateObject: dateObject }
         )
     }
-    const minusMonth = ()=>{
+    const minusMonth = () => {
         // const dateObject = moment(day.dateObject).set("month", monthNo);
-        const dateObject = day.dateObject.add(-1,"M")
+        const dateObject = day.dateObject.add(-1, "M")
         setDay(
-            {...day, dateObject: dateObject}
+            { ...day, dateObject: dateObject }
         )
     }
 
 
-    const firstDayOfMonth = ()=>{
+    const firstDayOfMonth = () => {
         let dateObj = day.dateObject
         let firstDay = moment(dateObj)
             .startOf("month")
@@ -43,16 +43,16 @@ const Content = () => {
     }
 
     let blank = [];
-    for(let i=0; i<firstDayOfMonth(); i++){
+    for (let i = 0; i < firstDayOfMonth(); i++) {
         blank.push("");
     }
 
     let daysInMonth = [];
-    for(let d = 1; d<= day.dateObject.daysInMonth(); d++){
+    for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
         daysInMonth.push(d);
     }
 
-    const currentDate = ()=>{
+    const currentDate = () => {
         return day.dateObject.format("D");
     }
 
@@ -61,29 +61,44 @@ const Content = () => {
 
     return (
         <Fragment>
-            <div className="month-color">
-                <h1>{currentMonth + " "+currentYear}</h1>
-                <button className="addEvent-button" onClick={minusMonth}>-</button>
-                <button className="addEvent-button" onClick={addMonth}>+</button>
-                
+
+            <div className="month-color text-center">
+
+                <div className="month-size">
+                    <span>
+
+                        <button className="addEvent-button" onClick={minusMonth}>-</button>
+                        {currentMonth + " " + currentYear}
+                        <button className="addEvent-button" onClick={addMonth}>+</button>
+
+                    </span>
+
+                </div>
                 <div className="grid">
+
+
                     {days.map((dayName) => {
                         return <HeadCell head={dayName} />
                     })}
 
-                    
+
                     {blank.map((day) => {
                         return <Cell currentDate={currentDate} Content={day} />
                     })}
                     {daysInMonth.map((day) => {
                         return <Cell currentDate={currentDate} Content={day} />
                     })}
+
+                    <div>
+                        <Link href="/event">
+                            <button className="addEvent-button">Add Event</button>
+                        </Link>
+                    </div>
+
                 </div>
 
-                <Link href="/event">
-                    <button className="addEvent-button">Add Event</button>
-                </Link>
-                
+
+
 
             </div>
             <style jsx>

@@ -38,7 +38,7 @@ const content = () => {
     }
 
     const validator = () => {
-        
+
     }
     const [selectedDate, handleDateChange] = useState(new Date());
 
@@ -52,6 +52,8 @@ const content = () => {
                 <Grid container spacing={2}>
 
                     <Grid item xs={3} >
+                    
+
                         <Image alt="meeting-img" src="/images/createEvent/Meeting.svg" width="290" height="290" />
                     </Grid>
                     <Grid item xs={9}>
@@ -237,14 +239,14 @@ export default content;
 
 function KeyboardTimePickerExample() {
     const [selectedDate, handleDateChange] = useState(new Date());
-  
+
     return (
-      <KeyboardTimePicker
-        label="Masked timepicker"
-        placeholder="08:00 AM"
-        mask="__:__ _M"
-        value={selectedDate}
-        onChange={date => handleDateChange(date)}
-      />
+        <KeyboardTimePicker
+            label="Masked timepicker"
+            placeholder="08:00 AM"
+            mask="__:__ _M"
+            value={selectedDate}
+            onChange={date => handleDateChange(date)}
+        />
     );
-  }
+}

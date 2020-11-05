@@ -5,7 +5,7 @@ export default css`
     grid-template-columns: repeat(7, 1fr);
     background-color: #FFFFFF;
     border-radius: 2px;
-    padding: 10px;
+    padding: 8rem;
     
   }
   .gridItem {
@@ -17,25 +17,36 @@ export default css`
     font-weight : bold;
     
   }
-  .month-color{
+  .month-size{
+   font-size :  100px
+  }  .month-color{
     color: #3D467F;
     font-weight : bold;
+    text-align : center;
   }
   .headerCell {
-    background-color: red;
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 30px;
-    text-align: right;
-  }
-
-  .currentDate {
-    background-color: #ffdc7c;
-    border-radius: 50%;
-    
+    background-color: #FFFFFF;
     padding: 20px;
     font-size: 30px;
     text-align: center;
+  }
+
+  .currentDate {
+    position: relative;
+    z-index: 0;
+  }
+  .currentDate::after {
+    content: '';
+    background-color: #ffdc7c;
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    
   }
 
   .addEvent-button {
