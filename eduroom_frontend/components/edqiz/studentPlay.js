@@ -52,7 +52,6 @@ const Content = ({ mode }) => {
   };
 
   const response = () => {
-    console.log(process.env.NEXT_PUBLIC_KAHOOT_URL);
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
     const temp = messages.slice();
     socket.on('new-message', (newMessage) => {
