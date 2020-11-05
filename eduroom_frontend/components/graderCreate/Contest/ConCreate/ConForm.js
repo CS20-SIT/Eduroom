@@ -15,15 +15,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from "@material-ui/core/TextField";
 import MenuItem from '@material-ui/core/MenuItem';
-// import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
+import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers"; 
+
+import { useState, useEffect } from "react";
 
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width:'80%',
-    margin:'10%'
+    width:'75%',
+    margin:'15%'
   },
   paper: {
     paddingTop:theme.spacing(1),
@@ -50,10 +52,13 @@ const useStyles = makeStyles((theme) => ({
     '&.Mui-selected': {'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-size': '1.2em', 'font-weight': 'bold'}
   },
   select: {
+    
       
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '25ch',
+      fontFamily: 'Quicksand , sans-serif' 
+      ,color: '#3d467f','font-size': '1.2em', 'font-weight': 'bold'
+     
     },
 
     
@@ -63,12 +68,15 @@ const useStyles = makeStyles((theme) => ({
 export default function FullWidthGrid() {
 const sTitle = {'font-family': 'Quicksand , sans-serif' ,  'font-size': '1.2em' ,  color: '#3d467f','font-weight': 'bold'}
 const sText ={'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b'};
-const sInputfield = {'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b','font-size': '1.2em','font-weight': 'bold',}
+const sInputfield = {'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b','font-size': '1.2em',}
 const sInput  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-weight': 'bold','font-size': '1.2em'}
 const sInputfieldDesc  ={'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b','font-size': '1.2em',paddingTop:12}
 const sInputTime  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-size': '1.5em', 'font-weight': 'bold'}
-const sInputSelect  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-size': '1.2em', 'font-weight': 'bold'}
+const sInputSelect  ={'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b','font-size': '1.2em',}
+const sInputfieldSelect  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-size': '1.4em', 'font-weight': 'bold'}
 const sButtionandVisbile =  { color: '#3d467f', 'font-family': 'Quicksand , sans-serif','font-weight': 'bold' }
+const sInputfieldTime  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-size': '1.2em'}
+const [selectedDate, handleDateChange] = useState(new Date("2018-01-01T00:00:00.000Z"));
 const rules = [
     {
       value: 'OI',
@@ -83,11 +91,11 @@ const rules = [
   const conStatusS  = [
     {
       value: true,
-      label: 'on',
+      label: 'ON',
     },
     {
       value: false,
-      label: 'off',
+      label: 'OFF',
     },]
   
 
@@ -107,7 +115,7 @@ const rules = [
    
       <Grid container spacing={3}>
         <Grid item xs={12}>
-         <h1>Create your  contest</h1>
+         <h1>Create your   contest</h1>
    
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -166,24 +174,23 @@ const rules = [
            />
       </Paper>
   </div>
-        {/* <DateTimePicker
-variant="inline"
-label="Basic example"
-value={selectedDate}
-onChange={handleDateChange}
-/>
-
-<KeyboardDateTimePicker
-variant="inline"
-ampm={false}
-label="With keyboard"
-value={selectedDate}
-onChange={handleDateChange}
-onError={console.log}
-disablePast
-format="yyyy/MM/dd HH:mm"
-/> */}
-        
+  {/* <KeyboardDateTimePicker
+        variant="inline"
+        ampm={false}
+        label="With keyboard"
+        value={selectedDate}
+        onChange={handleDateChange}
+        onError={console.log}
+        disablePast
+        format="yyyy/MM/dd HH:mm"
+      />
+         */}
+          <DateTimePicker
+        label="DateTimePicker"
+        inputVariant="outlined"
+        value={selectedDate}
+        onChange={handleDateChange}
+      />
         
         </Grid>
         <Grid item xs={6} >
@@ -195,7 +202,7 @@ format="yyyy/MM/dd HH:mm"
         defaultValue="2017-05-24T10:30"
         fullWidth
         required
-        className={classes.textField}
+    
         inputProps={{style:sInputfieldDesc }}
         InputLabelProps={{style: sInputTime}}
 
@@ -203,20 +210,22 @@ format="yyyy/MM/dd HH:mm"
          </Paper></div>
         </Grid>
         <Grid item xs={6} ><Paper className={classes.paper2} >
-        <div  className={classes.select} >
+        <div   >
         <TextField
-    
+          fullWidth
           select
-          label="Select"
+          required
+          label="Contest Rule Type"
           value={rule}
           onChange={handleChangeRule}
-          inputProps={{style:sInputfieldDesc }}
-          InputLabelProps={{style: sInputSelect}}
-     
+          // inputProps={{style:sInputfieldSelect }}
+          InputLabelProps={{style: sInputfieldSelect}}
+   
         >
           {rules.map((option) => (
             <MenuItem className={classes.menuitem} key={option.value} value={option.value}>
-              {option.label}
+                <span  style={sInputSelect} > {option.label}</span>
+             {/* <span style={{sInputTime}}> {option.label}</span> */}
             </MenuItem>
           ))}
         </TextField>
@@ -224,11 +233,40 @@ format="yyyy/MM/dd HH:mm"
       </div> </Paper>
         </Grid>
         <Grid item xs={6} >
-        <div>status</div>
+        <Paper className={classes.paper2} >
+        <div   >
+        <TextField
+          fullWidth
+          select
+          required
+          label="Status"
+          value={conStatus}
+          onChange={handleChangeStatus}
+          // inputProps={{style:sInputfieldSelect }}
+          InputLabelProps={{style: sInputfieldSelect}}
+   
+        >
+          {conStatusS.map((option) => (
+            <MenuItem className={classes.menuitem} key={option.value} value={option.value}>
+                <span  style={sInputSelect} > {option.label}</span>
+             {/* <span style={{sInputTime}}> {option.label}</span> */}
+            </MenuItem>
+          ))}
+        </TextField>
+
+      </div> </Paper>
+          
+       
         </Grid>
         <Grid item xs={12} >
-        <center><div>submit</div></center>
+              <div style={{height:20}}></div>
         </Grid>
+        <Grid item xs={12} >
+        <center><div>Submit</div></center>
+        </Grid>
+
+        
+        
       </Grid>
      
     </div>
