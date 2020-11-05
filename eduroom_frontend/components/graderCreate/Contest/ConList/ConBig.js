@@ -9,6 +9,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Grid from '@material-ui/core/Grid';
 import ConList from './ConList'
+import Link from 'next/link'
 //prepare for adding abmin log wheen create / edit ann
 const Test = () => {
   const [refresh, setRefresh] = useState(false);
@@ -25,14 +26,15 @@ const sBigTitle ={'fontFamily': 'Quicksand , sans-serif' ,  'font-size': '2em' ,
 
   return (
     <div style={sBig}>
-    <Grid  container spacing={3} containerdirection="row" justify="flex-start" alignItems="baseline">
+    <Grid  container spacing={3} direction="row" justify="flex-start" alignItems="baseline">
     <Grid  >  
      <span style={sBigTitle}>Contest</span>
      <div style={{height:20}} ></div>
     </Grid>
-{/* 
-    <Grid >
-    </Grid> */}
+
+    <Grid  >
+    <Link href="/admin/grader/contest/create">Create</Link>
+    </Grid>
     <div style={{height:20}} ></div>
     <Grid item xl={12} md={12}>
       <ConList></ConList>
