@@ -5,7 +5,7 @@ export default css`
     grid-template-columns: repeat(7, 1fr);
     background-color: #FFFFFF;
     border-radius: 2px;
-    padding: 8rem;
+    padding: 5rem;
     
   }
   .gridItem {
@@ -18,7 +18,7 @@ export default css`
     
   }
   .month-size{
-   font-size :  100px
+   font-size :  50px
   }  .month-color{
     color: #3D467F;
     font-weight : bold;
@@ -50,16 +50,32 @@ export default css`
   }
 
   .addEvent-button {
-    background: #fe75b7;
     border-radius: 10px;
     padding: 0.5rem 1.5rem;
     border: none;
     outline: none;
     transition: 0.25s;
+    background : #f4f5f7;
   }
   .addEvent-button:hover {
-    cursor: pointer;
-    opacity: 0.8;
+    background: #fe75b7;
+    
+    padding: 0.5rem 1.5rem;
+    outline: none;
     transition: 0.25s;
   }
+
+
+.previous-m {
+  border: none;
+  outline: none;
+  background : #f4f5f7;
+  cursor: pointer;
+}
+.forward-m {
+  border: none;
+  outline: none;
+  background : #f4f5f7;
+  cursor: pointer;
+}
 `;
