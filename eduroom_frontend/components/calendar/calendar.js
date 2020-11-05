@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import Cell from '../../components/calendar/calendarCell'
+import HeadCell from '../../components/calendar/calendarHeader'
 // import { useRouter } from 'next/router';
 import style from '../../styles/calendar/calendar'
 import moment from 'moment';
@@ -9,6 +10,7 @@ import { Button } from '@material-ui/core'
 const Content = () => {
     //   const router = useRouter();
     const days = moment.weekdaysShort();
+    
     const [day, setDay] = useState({
         dateObject: moment()
     })
@@ -65,10 +67,11 @@ const Content = () => {
                 <button className="addEvent-button" onClick={addMonth}>+</button>
                 
                 <div className="grid">
-
-                    {days.map((day) => {
-                        return <Cell currentDate={currentDate} Content={day} />
+                    {days.map((dayName) => {
+                        return <HeadCell head={dayName} />
                     })}
+
+                    
                     {blank.map((day) => {
                         return <Cell currentDate={currentDate} Content={day} />
                     })}
