@@ -17,3 +17,6 @@ data:
   JWT_EXPIRE: 30d
   JWT_COOKIE_EXPIRE: "30"
   GCS_SA_KEY_PATH: /etc/secret/gcs
+  SMTP_SECURE: "true"
+  FROM_EMAIL: no-reply@eduroom.cscms.me
+  FROM_NAME: Eduroom
