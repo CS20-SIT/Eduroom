@@ -3,15 +3,23 @@ export default css`
   .grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    background-color: #6ba292;
+    background-color: #FFFFFF;
+    border-radius: 2px;
     padding: 10px;
+    
   }
   .gridItem {
-    background-color: #e4fde1;
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    background-color: #FFFFFF;
     padding: 20px;
     font-size: 30px;
     text-align: center;
+    color: #3D467F;
+    font-weight : bold;
+    
+  }
+  .month-color{
+    color: #3D467F;
+    font-weight : bold;
   }
   .headerCell {
     background-color: red;
@@ -23,7 +31,8 @@ export default css`
 
   .currentDate {
     background-color: #ffdc7c;
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    
     padding: 20px;
     font-size: 30px;
     text-align: center;
