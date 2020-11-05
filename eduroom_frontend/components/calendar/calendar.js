@@ -5,7 +5,7 @@ import HeadCell from '../../components/calendar/calendarHeader'
 import style from '../../styles/calendar/calendar'
 import moment from 'moment';
 import Link from 'next/link';
-import { Button } from '@material-ui/core'
+import { Grid, Container } from '@material-ui/core'
 
 const Content = () => {
     //   const router = useRouter();
@@ -62,16 +62,29 @@ const Content = () => {
     return (
         <Fragment>
 
-            <div className="month-color text-center">
+            <div className="month-color text-center" >
 
                 <div className="month-size">
-                    <span>
+                    <Container>
+                        <Grid container spacing={0}>
+                        <Grid item xs={2}>
+                                
+                            </Grid>
+                            <Grid item xs={1}>
+                                <div className="previous-m" onClick={minusMonth}> &lt; </div>
+                            </Grid>
+                            <Grid item xs={6}>
+                                {currentMonth + " " + currentYear}
 
-                        <button className="addEvent-button" onClick={minusMonth}>-</button>
-                        {currentMonth + " " + currentYear}
-                        <button className="addEvent-button" onClick={addMonth}>+</button>
+                            </Grid>
+                            <Grid item xs={1}>
+                                <div className="forward-m" onClick={addMonth}>&gt;</div>
+                            </Grid>
+                            <Grid item xs={2}>
 
-                    </span>
+                            </Grid>
+                        </Grid>
+                    </Container>
 
                 </div>
                 <div className="grid">
@@ -89,11 +102,11 @@ const Content = () => {
                         return <Cell currentDate={currentDate} Content={day} />
                     })}
 
-                    <div>
+                    {/*  <div>
                         <Link href="/event">
                             <button className="addEvent-button">Add Event</button>
                         </Link>
-                    </div>
+                    </div> */}
 
                 </div>
 
