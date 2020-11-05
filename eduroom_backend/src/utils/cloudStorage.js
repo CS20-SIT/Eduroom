@@ -1,6 +1,6 @@
 const { Storage } = require('@google-cloud/storage');
 
-const storage = new Storage({ keyFilename: 'gcs-eduroom.json' })
+const storage = new Storage({ keyFilename: process.env.GCS_SA_KEY_PATH })
 const bucket = storage.bucket('eduroom')
 
 const uploadFile =  async(filePath, destination) => {

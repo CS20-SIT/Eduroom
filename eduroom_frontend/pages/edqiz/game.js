@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import GamePage from '../../components/edqiz/instructorGame'
-import GeneralNoNav from '../../components/template/generalnonav'
+import GeneralNoSide from "../../components/template/generalnoside";
 const Content = () => {
   return (
     <Fragment>
-      <GeneralNoNav>
+      <GeneralNoSide>
       <GamePage/>
-      </GeneralNoNav>
+      </GeneralNoSide>
     </Fragment>
   )
 }

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { test } = require('../controllers/test')
+const { test } = require('../controllers/testController')
 const sendEmail = require('../utils/sendMail.js')
 router.get('/', test)
 router.get('/mail',async(req,res,next)=>{
