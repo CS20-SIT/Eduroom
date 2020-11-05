@@ -13,6 +13,13 @@ export default css`
     font-size: 30px;
     text-align: center;
   }
+  .headerCell {
+    background-color: red;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: right;
+  }
 
   .currentDate {
     background-color: #ffdc7c;
