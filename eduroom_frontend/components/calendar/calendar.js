@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Cell from '../../components/calendar/calendarCell'
 import HeadCell from '../../components/calendar/calendarHeader'
+import BlankCell from '../../components/calendar/calendarBlankCell'
 // import { useRouter } from 'next/router';
 import style from '../../styles/calendar/calendar'
 import moment from 'moment';
@@ -141,10 +142,10 @@ const Content = () => {
                         return <HeadCell head={dayName} />
                     })}
 
-                    {blank.map((day) => {
-                        return <Cell currentDate={currentDate} Content={day} />
+                    {blank.map((blank) => {
+                        return <BlankCell Content={blank} />
                     })}
-                    
+
                     {daysInMonth.map((day) => {
                         return <Cell currentDate={currentDate} Content={day} />
                     })}
