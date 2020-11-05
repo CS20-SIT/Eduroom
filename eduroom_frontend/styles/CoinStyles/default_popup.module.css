@@ -1,0 +1,18 @@
+.div {
+    width: 100vw;
+    height: 100vh;
+
+    opacity: 0.7;
+    background-color: #000;
+    position: absolute;
+    top: 0%;
+}
+.white{
+    width: 50vw;
+    height: 70vh;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    background: #fff;
+    z-index: 100;
+}

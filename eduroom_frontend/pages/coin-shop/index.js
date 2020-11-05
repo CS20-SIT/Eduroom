@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Styles from '../../styles/CoinStyles/coin-shop.module.css';
 import General from '../../components/template/general';
 
-
 const Temp = () => {
     const router = useRouter();
     const [divClass, setDivClass] = useState('');
