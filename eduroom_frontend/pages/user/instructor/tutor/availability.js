@@ -2,6 +2,17 @@ import React, { Fragment, useState } from 'react';
 import utils from '../../../../styles/tutor/utils';
 
 import {
+  gridSections,
+  gridAreaDays,
+  gridAreaTimes,
+} from '../../../../components/tutor/data/grid-area';
+
+import {
+  defineGridTime,
+  createTable,
+} from '../../../../components/tutor/lib/time-availability';
+
+import {
   dayFormatter,
   timeFormatter,
 } from '../../../../components/tutor/lib/utils';
@@ -10,29 +21,8 @@ import GeneralNoNav from '../../../../components/template/generalnonav';
 import AvailabilityEdit from '../../../../components/tutor/instructor-availability/availability-edit';
 
 const Availability = ({ availabilities, price }) => {
-  const gridAreas = [[], [], [], [], []];
-
-  const gridSections = ['a', 'b', 'c', 'd', 'e'];
-
-  for (let i = 0; i < 40; i++) {
-    gridAreas[parseInt(i / 8)].push('q' + i);
-  }
-
-  const gridAreaDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-  const gridAreaTimes = [
-    { id: 'Ta', time: 9 },
-    { id: 'Tb', time: 10 },
-    { id: 'Tc', time: 11 },
-    { id: 'Td', time: 12 },
-    { id: 'Te', time: 13 },
-    { id: 'Tf', time: 14 },
-    { id: 'Tg', time: 15 },
-    { id: 'Th', time: 16 },
-  ];
-
-  const [timeSlots, setTimeSlots] = useState(gridAreas);
+  const [timeSlots, setTimeSlots] = useState(defineGridTime());
   const [timeSections, setTimeSections] = useState(availabilities);
-
   let tmp = [...timeSections];
   let table = [
     [[], [], [], []],
