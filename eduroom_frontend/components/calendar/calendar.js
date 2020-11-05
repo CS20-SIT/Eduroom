@@ -9,6 +9,9 @@ import { Grid, Container, DialogContent, Dialog, DialogTitle, Button } from '@ma
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+
+
+
 const Content = () => {
     // Pop-up-event
     const useStyles = makeStyles((theme) => ({
@@ -29,49 +32,30 @@ const Content = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //   const router = useRouter();
+    //Array of short names of the day.
+    //Mon Tue ...
     const days = moment.weekdaysShort();
 
     const [day, setDay] = useState({
         dateObject: moment()
     })
 
-    // const monthsList = moment.months();
-    // const monthNo = day.dateObject.month();
-
     const addMonth = () => {
-        // const dateObject = moment(day.dateObject).set("month", monthNo);
         const dateObject = day.dateObject.add(1, "M")
         setDay(
             { ...day, dateObject: dateObject }
         )
     }
+
     const minusMonth = () => {
-        // const dateObject = moment(day.dateObject).set("month", monthNo);
         const dateObject = day.dateObject.add(-1, "M")
         setDay(
             { ...day, dateObject: dateObject }
         )
     }
 
-
+    //return the first day of that month
+    // 0 = sun, 1 = mon , ... , 6 = sat
     const firstDayOfMonth = () => {
         let dateObj = day.dateObject
         let firstDay = moment(dateObj)
@@ -80,16 +64,20 @@ const Content = () => {
         return firstDay;
     }
 
+    //add black cell before the first day of the month
+    // i.e. first day is tuesday => fill blank in sunday and monday.
     let blank = [];
     for (let i = 0; i < firstDayOfMonth(); i++) {
         blank.push("");
     }
 
+    //array of days in that month start from 1 to 28,29,30,31 (up to that month)
     let daysInMonth = [];
     for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
         daysInMonth.push(d);
     }
 
+    //return currentDate (date of the current day)
     const currentDate = () => {
         return day.dateObject.format("D");
     }
@@ -124,8 +112,6 @@ const Content = () => {
 
 
 
-
-
             <div className="month-color text-center" >
                 <div className="month-size">
                     <Container>
@@ -150,21 +136,15 @@ const Content = () => {
 
                 </div>
                 <div className="grid">
-                    <div >
-
-                    </div>
-
-
-
 
                     {days.map((dayName) => {
                         return <HeadCell head={dayName} />
                     })}
 
-
                     {blank.map((day) => {
                         return <Cell currentDate={currentDate} Content={day} />
                     })}
+                    
                     {daysInMonth.map((day) => {
                         return <Cell currentDate={currentDate} Content={day} />
                     })}
