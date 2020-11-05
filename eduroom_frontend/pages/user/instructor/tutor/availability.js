@@ -107,7 +107,7 @@ const Availability = ({ availabilities, price }) => {
                   className='w-full bg-navy text-white py-2 pointer my-2'
                   style={{ textAlign: 'center', borderRadius: 4 + 'px' }}
                   onClick={() => {
-                    // POST /tutor/instructor/availability
+                    // POST api/tutor/instructor/availability
                     console.log(timeSlots);
                     console.log(cost);
                     // location.reload();
@@ -239,7 +239,7 @@ const Availability = ({ availabilities, price }) => {
 };
 
 export async function getServerSideProps(ctx) {
-  // GET /tutor/instructor/availability
+  // GET api/tutor/instructor/availability
   const availabilities = [
     [0, 1, 2, 3, 5, 6],
     [],
