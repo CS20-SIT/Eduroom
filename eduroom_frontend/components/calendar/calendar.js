@@ -59,7 +59,7 @@ const Content = () => {
 
     return (
         <Fragment>
-            <div>
+            <div className="month-color">
                 <h1>{currentMonth + " "+currentYear}</h1>
                 <button className="addEvent-button" onClick={minusMonth}>-</button>
                 <button className="addEvent-button" onClick={addMonth}>+</button>
