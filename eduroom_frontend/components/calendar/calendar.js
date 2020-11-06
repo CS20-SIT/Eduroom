@@ -1,17 +1,22 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import Cell from '../../components/calendar/calendarCell'
-import HeadCell from '../../components/calendar/calendarHeader'
-import BlankCell from '../../components/calendar/calendarBlankCell'
+import React, { Fragment, useState, useEffect } from "react";
+import Cell from "../../components/calendar/calendarCell";
+import HeadCell from "../../components/calendar/calendarHeader";
+import BlankCell from "../../components/calendar/calendarBlankCell";
 // import { useRouter } from 'next/router';
-import style from '../../styles/calendar/calendar'
-import moment from 'moment';
-import Link from 'next/link';
-import { Grid, Container, DialogContent, Dialog, DialogTitle, Button} from '@material-ui/core'
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-
-
+import style from "../../styles/calendar/calendar";
+import moment from "moment";
+import Link from "next/link";
+import {
+    Grid,
+    Container,
+    DialogContent,
+    Dialog,
+    DialogTitle,
+    Button,
+} from "@material-ui/core";
+import Popover from "@material-ui/core/Popover";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 const Content = () => {
     // Pop-up-event
@@ -29,9 +34,7 @@ const Content = () => {
         setAnchorEl(null);
     };
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
-
+    const id = open ? "simple-popover" : undefined;
 
     //Array of short names of the day.
     //Mon Tue ...
@@ -39,33 +42,27 @@ const Content = () => {
 
     //change when click next or before month
     const [day, setDay] = useState({
-        dateObject: moment()
-    })
+        dateObject: moment(),
+    });
     const [isToday, setIsToday] = useState(true);
-
+    //state chage 1 month per click
     const addMonth = () => {
-        const dateObject = day.dateObject.add(1, "M")
-        setDay(
-            { ...day, dateObject: dateObject }
-        )
-    }
+        const dateObject = day.dateObject.add(1, "M");
+        setDay({ ...day, dateObject: dateObject });
+    };
 
     const minusMonth = () => {
-        const dateObject = day.dateObject.add(-1, "M")
-        setDay(
-            { ...day, dateObject: dateObject }
-        )
-    }
+        const dateObject = day.dateObject.add(-1, "M");
+        setDay({ ...day, dateObject: dateObject });
+    };
 
     //return the first day of that month
     // 0 = sun, 1 = mon , ... , 6 = sat
     const firstDayOfMonth = () => {
-        let dateObj = day.dateObject
-        let firstDay = moment(dateObj)
-            .startOf("month")
-            .format("d");
+        let dateObj = day.dateObject;
+        let firstDay = moment(dateObj).startOf("month").format("d");
         return firstDay;
-    }
+    };
 
     //add black cell before the first day of the month
     // i.e. first day is tuesday => fill blank in sunday and monday.
@@ -80,36 +77,27 @@ const Content = () => {
         daysInMonth.push(d);
     }
 
-    const Today = new Date()
+    const Today = new Date();
     const TodayDate = Today.getDate();
-    const TodayMonth = Today.getMonth()+1;
+    const TodayMonth = Today.getMonth() + 1;
     const TodayYear = Today.getFullYear();
 
-    const currentDate =  parseInt(day.dateObject.format("D"));
-    const currentMonth = day.dateObject.format("MMMM")
+    const currentDate = parseInt(day.dateObject.format("D"));
+    const currentMonth = day.dateObject.format("MMMM");
     const currentMonthNo = parseInt(day.dateObject.format("M"));
     const currentYear = parseInt(day.dateObject.format("YYYY"));
 
     useEffect(() => {
-        isTodayInThisMonthAndYear()
+        isTodayInThisMonthAndYear();
     });
 
-    
-    
     const isTodayInThisMonthAndYear = () => {
-        if (TodayMonth === currentMonthNo && TodayYear === currentYear){
-            setIsToday(true)
-        }else{
-            setIsToday(false)
+        if (TodayMonth === currentMonthNo && TodayYear === currentYear) {
+            setIsToday(true);
+        } else {
+            setIsToday(false);
         }
-    }
-
-
-
-    
-
-
-
+    };
 
     return (
         <Fragment>
@@ -120,76 +108,63 @@ const Content = () => {
                 anchorEl={anchorEl}
                 onClose={handleClose}
                 anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
+                    vertical: "bottom",
+                    horizontal: "center",
                 }}
                 transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                    vertical: "top",
+                    horizontal: "center",
                 }}
             >
                 <Typography className={classes.typography}>This November.</Typography>
             </Popover>
 
-
-
-            <div className="month-color text-center" >
+            <div className="month-color text-center">
                 <div className="month-size">
                     <Container>
                         <Grid container spacing={0}>
-                            <Grid item xs={2}>
-                            </Grid>
+                            <Grid item xs={2}></Grid>
                             <Grid item xs={1}>
-                                <div className="previous-m" onClick={minusMonth}> &lt; </div>
+                                <div className="previous-m" onClick={minusMonth}>
+                                    {" "}
+                  &lt;{" "}
+                                </div>
                             </Grid>
                             <Grid item xs={6} onClick={handleClick}>
                                 {currentMonth + " " + currentYear}
-
                             </Grid>
                             <Grid item xs={1}>
-                                <div className="forward-m" onClick={addMonth}>&gt;</div>
+                                <div className="forward-m" onClick={addMonth}>
+                                    &gt;
+                </div>
                             </Grid>
-                            <Grid item xs={2}>
-
-                            </Grid>
+                            <Grid item xs={2}></Grid>
                         </Grid>
                     </Container>
-
                 </div>
                 <div className="grid">
-
                     {days.map((dayName) => {
-                        return <HeadCell head={dayName} />
+                        return <HeadCell head={dayName} />;
                     })}
 
                     {blank.map((blank) => {
-                        return <BlankCell Content={blank} />
+                        return <BlankCell Content={blank} />;
                     })}
 
                     {daysInMonth.map((day) => {
-                        return <Cell TodayDate={TodayDate} isNow={isToday} Content={day} />
+                        return <Cell TodayDate={TodayDate} isNow={isToday} Content={day} />;
                     })}
+
 
                     {/*  <div>
                         <Link href="/event">
                             <button className="addEvent-button">Add Event</button>
                         </Link>
                     </div> */}
-
                 </div>
-
-
-
-
             </div>
 
-
-
-
-
-            <style jsx>
-                {style}
-            </style>
+            <style jsx>{style}</style>
         </Fragment>
     );
 };

@@ -1,12 +1,59 @@
 import css from "styled-jsx/css";
 export default css`
+.BG{
+  background-image : url('/images/createEvent/BG.svg');
+  background-size : cover;
+  height : 100vh;
+  background-attachment: fixed;
+  
+}
+
+.space-top{
+  height : 10vh;
+}
+.margin-p {
+  margin-top:25px;
+}
 
 .topic-font{
-  font-size : 64px;
+  font-size : 36px;
   margin : 0px;
   font-weight: bold;
   text-shadow:  1px 7px 8px #aba8a8;
 
+}
+
+.head{
+  position : absolute;
+}
+.form{
+  position : absolute;
+  margin-top : 260px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 6px 4px 19px rgba(0, 0, 0, 0.10);
+  border-radius: 10px;
+  padding: 30px 20px 30px 20px;
+  height:50vh;
+  width : 130vh;
+}
+.event-title{
+  width: 482px;
+  height : 50px;
+  margin-left: 68px;
+
+  border-color :#A7ABC5;
+  border-radius: 5px;
+  opacity : .9;
+}
+.event-type{
+  width: 482px;
+  height : 50px;
+  margin-left: 16px;
+  border-color :#A7ABC5;
+  border-radius: 5px;
+  opacity : .9;
+  
 }
 
 .color-topic{
@@ -16,7 +63,7 @@ export default css`
 .color-p{
   color : #5b5b5b;
   letter-spacing: 1px;
-  font-size : 20px;
+  font-size : 14px;
   margin : 0px;
   font-weight: bold;
 }
@@ -29,14 +76,7 @@ export default css`
   
 }
 
-.create-form {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.6);
-  box-shadow: 6px 4px 19px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-  padding: 30px 20px 30px 20px;
-  margin-top : 30px;
-}
+
 
 .create-textfield {
   background: #eff0f6;
@@ -56,11 +96,7 @@ export default css`
   color :#3d467f;
 
 }
-.input-box {
-  border-radius : 10px;
-  border-color : black;
-    margin-top: -4px;
-}
+
 .button{
   text-align : center;
   margin-top : 30px;
