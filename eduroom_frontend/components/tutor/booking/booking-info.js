@@ -79,7 +79,7 @@ const BookingInfo = ({
           }`}
           onClick={() => {
             if (times.length == 0) return;
-            // POST  api/tutor/student/appointment
+            // POST  /api/tutor/student/appointment
             console.log('id', instructor.id);
             console.log(
               'startTime',
@@ -97,7 +97,6 @@ const BookingInfo = ({
               times.length * instructor.price * (students.length + 1)
             );
             console.log('members', students);
-
             // location.reload();
           }}
         >
