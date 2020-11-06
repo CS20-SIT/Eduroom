@@ -25,7 +25,7 @@ export default css`
     text-align : center;
   }
   .headerCell {
-    background-color: #FFFFFF;
+    background-color: rgba(255,0,0 ,.2);
     padding: 20px;
     font-size: 30px;
     text-align: center;
