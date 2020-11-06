@@ -13,6 +13,27 @@
     animation-duration: 1s;
     margin-right: 100px;
 }
+.btnPop{
+    position: absolute;
+    top: 0%;
+    left: 13%;
+    padding: 12px 50px;
+    background-color: #a880f7;
+    border: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        z-index: 10000;
+}
+.btnPop:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2),
+        0 17px 50px 0 rgba(0, 0, 0, 0.19);
+
+}
 .btn {
     position: absolute;
     top: 62%;
@@ -33,6 +54,12 @@
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2),
         0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
+.daily{
+    position: absolute;
+    top:62.8%;
+    left: 30%;
+    z-index: 100000;
+}
 .text {
     position: absolute;
     font-size: 70px;
@@ -44,8 +71,8 @@
 }
 .detail {
     position: absolute;
-    font-size: 20px;
-    top: 51%;
+    font-size: 17px;
+    top: 53%;
     left: 12%;
     color: #5b5b5b;
 }
@@ -105,11 +132,11 @@
 @keyframes MoveIn {
     0% {
         opacity: 0;
-        transform: translateY(1000px);
+        transform: translateY(500px);
     }
     80% {
         opacity: 1;
-        transform: translate(0);
+        transform: translateY(0px);
     }
 }
 

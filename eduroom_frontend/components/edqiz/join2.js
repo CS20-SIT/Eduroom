@@ -1,15 +1,19 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useRouter } from "next/router";
-import EdqizText from "./edqizText";
 import style from "../../styles/edqiz/landing";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+
 const Page2 = ({ name }) => {
-  // console.log(name);
   const nameUpperCase = name.toUpperCase();
   const router = useRouter();
-  // console.log(router.query.room)
 
+  let room = router.query.room;
+
+  // console.log(router.query.room);
+
+
+ 
   return (
     <Fragment>
       <div className="landing">
@@ -81,7 +85,7 @@ const Page2 = ({ name }) => {
                 color: "#3D467F",
                 display: "flex",
                 justifyContent: "center",
-                padding:'30px'
+                padding: "30px",
               }}
             >
               <CircularProgress />

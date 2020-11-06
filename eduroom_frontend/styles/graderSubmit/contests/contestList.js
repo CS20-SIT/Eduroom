@@ -54,6 +54,9 @@ export default css`
     overflow: auto;
     color: #bdbdbd;
   }
+  .contest-list:hover {
+    cursor: pointer;
+  }
   ::-webkit-scrollbar {
     width: 8px; /* width of the entire scrollbar */
   }
