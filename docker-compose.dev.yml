@@ -104,7 +104,7 @@ services:
     ports:
       - "8000:8000"
   eduroom_smtp:
-    image: reachfive/fake-smtp-server
+    image: reachfive/fake-smtp-serverc
     ports:
       - "1025:1025"
       - "1080:1080"
