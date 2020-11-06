@@ -28,7 +28,6 @@ const ListSticker = props => {
             return (
                 <div style={{ display: 'flex',position:'relative',marginLeft:40}}>
                   <button className={Styles.btn} disabled={page === 1} onClick={() => setPage(page - 1)}>
-                    {' < '}
                   </button>
                   <div style={{ width: '90%'}}>
                     <div
