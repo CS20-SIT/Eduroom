@@ -52,7 +52,7 @@ const Content = ({ mode }) => {
   };
 
   const response = () => {
-    const socket = socketIOClient('http://localhost:8000/');
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
     const temp = messages.slice();
     socket.on('new-message', (newMessage) => {
       temp.push(newMessage);
@@ -60,7 +60,7 @@ const Content = ({ mode }) => {
     });
   };
   const sentMessage = () => {
-    const socket = socketIOClient('http://localhost:8000/');
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
     socket.emit('sent-message', inputMessage);
   };
 
