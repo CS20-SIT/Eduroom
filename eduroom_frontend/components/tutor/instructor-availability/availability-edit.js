@@ -44,12 +44,6 @@ const AvailabilityEdit = ({
           <div style={{ gridArea: 'x' }}></div>
           {[...Array(40)].map((a, i) => (
             <div
-              onMouseEnter={() => {
-                setHoverSlot(i);
-              }}
-              onMouseEnter={() => {
-                setHoverSlot(-1);
-              }}
               onClick={() => {
                 const result = timeManagement(timeSections, i);
                 setTimeSections(result.timeTmp);
