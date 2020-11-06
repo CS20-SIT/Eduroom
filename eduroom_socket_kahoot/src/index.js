@@ -9,7 +9,7 @@ const app = server.listen(port, () => {
 const socketOptions = {
   path: '/kahoot'
 }
-
+let user = [];
 const io = socketIO.listen(app, socketOptions);
 io.on('connection', (client) => {
   console.log('user connected');
@@ -17,6 +17,9 @@ io.on('connection', (client) => {
   client.on('disconnect', () => {
     console.log('user disconnect');
   });
+
+  
+
 
   client.on('sent-message', (msg) => {
     console.log('This is a new messgae ', msg);
