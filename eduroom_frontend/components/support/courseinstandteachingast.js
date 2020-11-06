@@ -23,15 +23,11 @@ const Courseinstandteachingast = () => {
         <Fragment>
             
             <Grid container style={{ marginTop: "30px" }}>
-        <Grid item xs={12}>
-          <Typography>
-            <h1>Course Instructors and Teaching Assistantsd</h1>
-          </Typography>
-        </Grid>
+            
         <Grid container>
-          
+       <Typography style={{marginLeft:'20px'}}> <h1>Course Instructors and Teaching Assistantsd</h1></Typography>
           <Grid item xs={9} style={{paddingRight:'100px'}}>
-            <Typography><p>Udemy instructors work hard to provide students with high quality courses and compelling learning experiences. Depending on the course, it may have more than one instructor, as well as teaching assistants to help answer questions you may have.
+          <Paper style={{padding:'20px'}}><Typography> <p>Udemy instructors work hard to provide students with high quality courses and compelling learning experiences. Depending on the course, it may have more than one instructor, as well as teaching assistants to help answer questions you may have.
 
             </p>Instructors
 
@@ -42,8 +38,9 @@ const Courseinstandteachingast = () => {
 Instructors can also add teaching assistants to their courses, who can help them with their course materials and respond to student questions in the Q&A.</p><p>
 
 Even though a Teaching Assistant’s profile may not appear on the course landing page, they are also experts in the course subject, and can provide accurate answers to your questions.</p></Typography>
-            
+</Paper>
             </Grid>
+            
             <Grid item xs={3} >
             <Typography>
         <h3>Other articles</h3>

@@ -70,8 +70,7 @@ const Studentnav = () => {
       </Button></Grid>
       </Grid>
       <br/>
-      <Link href="/support/create">
-      <Button variant='contained' color="primary" style={{marginTop:'20px'}}>CONTACT US</Button></Link>
+      <Button variant='contained' style={{marginTop:'20px',backgroundColor:'#3D467F'}} href="/support/create">CONTACT US</Button>
     </Fragment>
   );
 };

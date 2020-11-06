@@ -16,7 +16,7 @@ import {
   Link,
 } from "@material-ui/core";
 import Studentnav from "../../../components/support/studentsidenav";
-import Platformandfeature from '../../../components/support/platformandfeatures';
+import HowDoesEduroomWork from '../../../components/support/howDoesEduroomWork';
 import style from "../../../styles/forum/showForum";
 import GeneralNonav from "../../../components/template/generalnonav";
 const courseinstandteaching = () => {
@@ -27,13 +27,14 @@ const courseinstandteaching = () => {
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
+                    marginBottom:'80px'
                 }}
             >
             <div id="nav">
                     <div className="top">
                     <Link href='/support'><label>Eduroom Support
                     </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
-                    <Platformandfeature/>
+                    <HowDoesEduroomWork/>
                     </div>
                     
                 </div>
