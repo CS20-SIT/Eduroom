@@ -1,10 +1,18 @@
 import React, { Fragment } from "react"
 import style from "../../../styles/graderSubmit/contests/contestList"
+import { useRouter } from "next/router"
 import Link from "next/link"
 
-const Contests = () => {
+const Contests = (props) => {
+  const router = useRouter()
+
   return (
-    <div>
+    <div
+      className="contest-list"
+      onClick={() => {
+        router.push(`/graderSystem/contest/${props.id}`)
+      }}
+    >
       <div className="top">
         <div className="top-left">
           <Link href="/graderSystem/contest">

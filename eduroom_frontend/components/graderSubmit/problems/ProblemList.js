@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from "react"
 import { useRouter } from "next/router"
 import style from "../../../styles/graderSubmit/problems/problemList"
-import { addProblemBoxClass } from "./animationBoxUtil"
+import { addProblemBoxClass } from "../animationBoxUtil"
 
-const ProblemList = () => {
+const ProblemList = (props) => {
   const router = useRouter()
   const [boxClass, setBoxClass] = useState(["box"])
 
@@ -31,7 +31,7 @@ const ProblemList = () => {
           <div className="right-bottom">
             <div
               className="try-button"
-              onClick={() => router.push("/graderSystem/problem/id")}
+              onClick={() => router.push(`/graderSystem/problem/${props.id}`)}
             >
               <button id="myButton">Try</button>
             </div>
