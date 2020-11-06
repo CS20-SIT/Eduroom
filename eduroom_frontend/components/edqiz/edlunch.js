@@ -11,10 +11,10 @@ const Content = () => {
   ])
   const [current, setCurrent] = useState(1)
   const [questionNumber, setquestionNumber] = useState(0)
-
+  // console.log(questionNumber);
   const handleQuestionNumber = (val) => {
     setquestionNumber(val)
-    console.log('questionNumber')
+    // console.log('questionNumber')
   }
 
   const goto = (val) => {

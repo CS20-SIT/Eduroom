@@ -4,27 +4,25 @@ import style from "../../../styles/forum/showForum";
 import GetStart from "../../../components/support/gettingstart"
 import { useRouter } from "next/router";
 import GeneralNonav from "../../../components/template/generalnonav";
-import supportbackground from "../../../public/images/supportbackground.png"
 
 const create = () => {
     const router = useRouter();
 
     return (
         <Fragment>
-            <GeneralNonav>
-{/* <body style="background-image: url('../../../public/images/supportbackground.png');"> */}
+            <GeneralNonav img={'/images/newbg.svg'}>
             <div
                 style={{
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
-                    backgroundImage:'url(${supportbackground})'
                 }}
+                className="background"
             >
             <div id="nav">
                     <div className="top">
                     <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
+                    </label></Link><label style={{marginLeft:'20px',marginRight:'20px'}}>></label><label>Getting Started</label>
                     <GetStart/>
                     </div>
                     
@@ -57,7 +55,6 @@ const create = () => {
           `}
                 </style>
                 </div>
-                {/* </body> */}
             </GeneralNonav>
         </Fragment>
     );
