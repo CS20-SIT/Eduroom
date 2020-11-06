@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Cell from '../../components/calendar/calendarCell'
 import HeadCell from '../../components/calendar/calendarHeader'
 import BlankCell from '../../components/calendar/calendarBlankCell'
@@ -6,7 +6,7 @@ import BlankCell from '../../components/calendar/calendarBlankCell'
 import style from '../../styles/calendar/calendar'
 import moment from 'moment';
 import Link from 'next/link';
-import { Grid, Container, DialogContent, Dialog, DialogTitle, Button } from '@material-ui/core'
+import { Grid, Container, DialogContent, Dialog, DialogTitle, Button} from '@material-ui/core'
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -37,9 +37,11 @@ const Content = () => {
     //Mon Tue ...
     const days = moment.weekdaysShort();
 
+    //change when click next or before month
     const [day, setDay] = useState({
         dateObject: moment()
     })
+    const [isToday, setIsToday] = useState(true);
 
     const addMonth = () => {
         const dateObject = day.dateObject.add(1, "M")
@@ -78,15 +80,34 @@ const Content = () => {
         daysInMonth.push(d);
     }
 
-    //return currentDate (date of the current day)
-    const currentDate = () => {
-        return day.dateObject.format("D");
+    const Today = new Date()
+    const TodayDate = Today.getDate();
+    const TodayMonth = Today.getMonth()+1;
+    const TodayYear = Today.getFullYear();
+
+    const currentDate =  parseInt(day.dateObject.format("D"));
+    const currentMonth = day.dateObject.format("MMMM")
+    const currentMonthNo = parseInt(day.dateObject.format("M"));
+    const currentYear = parseInt(day.dateObject.format("YYYY"));
+
+    useEffect(() => {
+        isTodayInThisMonthAndYear()
+    });
+
+    
+    
+    const isTodayInThisMonthAndYear = () => {
+        if (TodayMonth === currentMonthNo && TodayYear === currentYear){
+            setIsToday(true)
+        }else{
+            setIsToday(false)
+        }
     }
 
-    const currentMonth = day.dateObject.format("MMMM")
-    const currentYear = day.dateObject.format("YYYY")
+    console.log(isToday);
 
 
+    
 
 
 
@@ -147,7 +168,7 @@ const Content = () => {
                     })}
 
                     {daysInMonth.map((day) => {
-                        return <Cell currentDate={currentDate} Content={day} />
+                        return <Cell TodayDate={TodayDate} isNow={isToday} Content={day} />
                     })}
 
                     {/*  <div>
