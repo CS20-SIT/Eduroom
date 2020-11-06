@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment} from "react";
 import Grid from "@material-ui/core/Grid";
 import Link from "next/link";
-const Page2 = ({ quizname, description,handleQuestionNumber,index }) => {
-
+import { HardwareRouter } from "material-ui/svg-icons";
+const Page2 = ({data, quizname, description,handleQuestionNumber,index }) => {
+console.log("page2",data[index].roomid)
   return (
     <Fragment>
       <div>
@@ -51,7 +52,7 @@ const Page2 = ({ quizname, description,handleQuestionNumber,index }) => {
               xs={3}
               style={{ marginTop: "1vh", padding: "0 0 0 20px" }}
             > 
-              <Link href={`/edqiz/launching/${index}`}>
+              <Link href={`/edqiz/launching/${data[index].roomid}`}>
               <button
                 className="playButton" 
                 onClick={() => {
