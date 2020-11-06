@@ -1,8 +1,9 @@
 import style from "../../styles/graderSubmit/graderNav"
 import Link from "next/link"
-import Image from 'next/image'
+import { useRouter } from "next/router"
 
 const GraderNav = () => {
+  const router = useRouter()
   return (
     <div
       style={{
@@ -15,21 +16,24 @@ const GraderNav = () => {
           <Link href="/graderSystem">Home</Link>
         </div>
         <div className="link problems">
-          <Link href="/graderSystem/problems">Problems</Link>
+          <Link href="/graderSystem/problem/">Problems</Link>
         </div>
         <div className="link contents">
-          <Link href="/graderSystem/contests">Contests</Link>
+          <Link href="/graderSystem/contest/">Contests</Link>
         </div>
         <div className="link ranks">
-          <Link href="/graderSystem/ranks">Ranks</Link>
+          <Link href="/graderSystem/rank/">Ranks</Link>
         </div>
         <div className="link">
-          <span className="profile">
-            <Link href="/graderSystem/profile">Profile</Link>
-          </span>
-          <Link href="/graderSystem/profile">
-            <Image src="/images/graderSubmit/profile.svg" width="50" height="50"/>
-          </Link>
+          <div
+            className="text"
+            onClick={() => router.push("/graderSystem/profile")}
+          >
+            <span className="profile">
+              Profile
+              <img src="../../images/graderSubmit/profile.svg" />
+            </span>
+          </div>
         </div>
       </div>
       <style jsx>{style}</style>

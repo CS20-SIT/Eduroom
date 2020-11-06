@@ -1,7 +1,7 @@
 import css from 'styled-jsx/css';
 export default css`
   .container {
-    max-width: 1096px;
+    max-width: 1196px;
     min-height: 100vh;
     margin: 0 auto;
     padding: 4rem;
