@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import Cart from '../../../components/course/cart'
+import Cart from '../../../components/payment/cart'
 import GeneralNoNav from '../../../components/template/generalnonav'
 const checkout = () => {
     return(

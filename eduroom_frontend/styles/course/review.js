@@ -13,5 +13,11 @@ export default css`
                 justify-content: start;
                 background-color: white;
     }
-    
+    .myimg{
+        width:60px;
+        height:60px;
+        object-fit:cover;
+        border-radius:50%;
+       
+      }
 `

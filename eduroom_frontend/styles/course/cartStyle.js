@@ -51,7 +51,7 @@ export default css`
     .inputCoupon {
         padding: 4px;
         font-size: 17px;
-        color: #A880F7;
+        color: white;
        
       }
     .checkOut{
@@ -63,5 +63,6 @@ export default css`
         border: none;
         color: white;
         border-radius: 10px;
+       
     }
 `
