@@ -1,17 +1,17 @@
-import Edqiz from '../../../components/edqiz/studentPlay'
-import React, { Fragment, useState } from "react";
-import GeneralNoSide from "../../../components/template/generalnoside";
+import Edqiz from '../../../components/edqiz/studentPlay';
+import React, { Fragment, useState } from 'react';
+import GeneralNoSide from '../../../components/template/generalnoside';
 
 const Content = () => {
-    return (
-      <Fragment>
-        <GeneralNoSide>
-        <Edqiz/>
-        </GeneralNoSide>
-      </Fragment>
-    )
-  }
-  export default Content
+  return (
+    <Fragment>
+      <GeneralNoSide>
+        <Edqiz />
+      </GeneralNoSide>
+    </Fragment>
+  );
+};
+export default Content;
 ///////////////////////////////////////////////
 // import React, {useEffect,useState} from 'react'
 // import Router from 'next/router'
@@ -32,7 +32,7 @@ const Content = () => {
 //   const [roomdata,setRoomdata] = useState(data.room)
 //   const [notify,setNotify] = useState(0)
 //   const [hints,setHints] = useState(data.hint);
-  
+
 //   //Implement Socket
 //   useEffect(() => {
 //     var x = document.getElementById('chat-room')
@@ -157,7 +157,6 @@ const Content = () => {
 //   catch(err){
 //     return {props: {data:{err:true}}}
 //   }
-    
 
 // }
 
