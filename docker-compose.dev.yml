@@ -11,10 +11,10 @@ services:
       - /usr/src/app/node_modules
       - ./eduroom_frontend/.next:/usr/src/app/.next
     environment:
-      - NEXT_PUBLIC_BACKEND_API=http://localhost:5000
-      - NEXT_PUBLIC_GRADER_URL=http://localhost:3050
-      - NEXT_PUBLIC_CHAT_SERVER=http://localhost:5050
-      - NEXT_PUBLIC_KAHOOT_URL=http://localhost:8000
+      - BACKEND_API=http://eduroom_backend:5000
+      - GRADER_URL=http://eduroom_grading_server:3050
+      - CHAT_SERVER=http://eduroom_socket_chat:5050
+      - KAHOOT_URL=http://eduroom_socket_kahoot:8000
     ports:
       - "3000:3000"
   nginx:
@@ -104,7 +104,7 @@ services:
     ports:
       - "8000:8000"
   eduroom_smtp:
-    image: reachfive/fake-smtp-serverc
+    image: reachfive/fake-smtp-server
     ports:
       - "1025:1025"
       - "1080:1080"
