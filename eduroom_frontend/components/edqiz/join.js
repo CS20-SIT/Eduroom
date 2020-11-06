@@ -1,21 +1,11 @@
 import React, { Fragment, useEffect,useState } from "react";
 import { useRouter } from "next/router";
 import style from "../../styles/edqiz/landing";
-import socketIOClient from "socket.io-client";
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:8000");
+
+
 
 const Page1 = ({ goto, mockData, change }) => {
-  const [seconds, setSeconds] = useState(11);
-  useEffect(() => {
-    socket.on("seconds", seconds => {
-      console.log("new sec is ", seconds);
-      setSeconds(seconds);
-  
-    });
-    console.log(seconds)
-   
-  }, []);
+ 
   const router = useRouter();
   return (
     <Fragment>

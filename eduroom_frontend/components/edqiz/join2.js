@@ -2,21 +2,18 @@ import React, { Fragment, useEffect } from "react";
 import { useRouter } from "next/router";
 import style from "../../styles/edqiz/landing";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:8000");
+
 
 const Page2 = ({ name }) => {
   const nameUpperCase = name.toUpperCase();
   const router = useRouter();
 
   let room = router.query.room;
-  // console.log(router.query.room)
-  console.log(router.query.room);
-  useEffect(() => {
-    socket.on("seconds", (seconds) => {
-      console.log("new sec is ", seconds);
-    });
-  }, []);
+
+  // console.log(router.query.room);
+
+
+ 
   return (
     <Fragment>
       <div className="landing">
