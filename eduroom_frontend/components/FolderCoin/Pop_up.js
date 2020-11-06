@@ -5,9 +5,9 @@ const temp = (props) => {
     // };
     return (
         
-        <div className={Styles.modal}>
+        <div>
         <h1>
-            Kiki
+        
         </h1>
         </div>
     

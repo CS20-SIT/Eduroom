@@ -1,10 +1,17 @@
 import Styles from '../../styles/CoinStyles/default_popup.module.css';
-import White from '../FolderCoin/whiteField';
-const temp = () => {
+
+const temp = (props) => {
     return (
-        <div>
-            <White></White>
-            <div className={Styles.div}></div>
+        <div
+            className={Styles.div}
+            onClick={e => {
+                props.onClose();
+                e.stopPropagation();
+            }}
+        >
+            <div onClick={e => e.stopPropagation()} className={Styles.white}>
+
+            </div>
         </div>
     );
 };
