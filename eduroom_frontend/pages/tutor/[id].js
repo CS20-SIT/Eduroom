@@ -189,7 +189,7 @@ export async function getServerSideProps(ctx) {
 
   const reviews = [highReview, lowReview, latestReview];
 
-  return { props: { instructor, review, reviews } };
+  return { props: { instructor, reviews } };
 }
 
 export default Instructor;
