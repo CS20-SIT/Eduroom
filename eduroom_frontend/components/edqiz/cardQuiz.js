@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Link from "next/link";
-const Page2 = ({ quizname, description, goto,handleQuestionNumber,index,id }) => {
-  console.log(id);
+const Page2 = ({ quizname, description,handleQuestionNumber,index }) => {
+
   return (
     <Fragment>
       <div>
