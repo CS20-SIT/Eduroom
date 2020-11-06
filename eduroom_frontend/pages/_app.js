@@ -1,12 +1,15 @@
-import '../styles/globals.css'
-import '../styles/all.css'
-import React, { Fragment } from 'react'
+import '../styles/globals.css';
+import '../styles/all.css';
+import React, { Fragment } from 'react';
+import UserState from '../contexts/user/userState';
 const MyApp = ({ Component, pageProps }) => {
   return (
     <Fragment>
-      <Component {...pageProps} />
+      <UserState>
+        <Component {...pageProps} />
+      </UserState>
     </Fragment>
-  )
-}
+  );
+};
 
-export default MyApp
+export default MyApp;

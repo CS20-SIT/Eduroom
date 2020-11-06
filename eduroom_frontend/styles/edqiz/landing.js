@@ -95,5 +95,6 @@ export default css`
     border: 0.3vh solid #a6ceee;
     border-radius: 5vh;
     box-sizing: border-box;
+    outline:none;
   }
 `
