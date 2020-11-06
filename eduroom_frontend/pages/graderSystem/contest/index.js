@@ -13,16 +13,16 @@ const Contests = () => {
         <title>Contests</title>
         <meta property="og:title" content="Contests" key="Contests" />
       </Head>
-      <Layout>
+      <Layout page="contest">
         <div className="main">
           <div className="size">
             <Box>
               <ContestHeader>
-                <ContestList />
-                <ContestList />
-                <ContestList />
-                <ContestList />
-                <ContestList />
+                <ContestList id={1} />
+                <ContestList id={2} />
+                <ContestList id={3} />
+                <ContestList id={4} />
+                <ContestList id={5} />
               </ContestHeader>
             </Box>
           </div>

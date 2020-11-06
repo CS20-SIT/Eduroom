@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import utils from '../../../styles/tutor/utils';
 
 import { dayFormatter, timeFormatter } from '../lib/utils';
+import { timeManagement } from '../lib/time-availability';
 
 const AvailabilityEdit = ({
   timeSections,
@@ -49,55 +50,9 @@ const AvailabilityEdit = ({
           {[...Array(40)].map((a, i) => (
             <div
               onClick={() => {
-                let timeTmp = [...timeSections];
-                if (timeTmp[parseInt(i % 5)].includes(parseInt(i / 5))) {
-                  console.log('REMOVED');
-                  timeTmp[parseInt(i % 5)].splice(
-                    timeTmp[parseInt(i % 5)].indexOf(parseInt(i / 5)),
-                    1
-                  );
-                } else {
-                  console.log('ADDED');
-                  timeTmp[parseInt(i % 5)].push(parseInt(i / 5));
-                }
-                timeTmp[parseInt(i % 5)].sort();
-
-                let table = [
-                  [[], [], [], []],
-                  [[], [], [], []],
-                  [[], [], [], []],
-                  [[], [], [], []],
-                  [[], [], [], []],
-                ];
-                for (let x = 0; x < 5; x++) {
-                  let c = 0;
-                  if (timeTmp[x][0] || timeTmp[x][0] == 0)
-                    table[x][c].push(timeTmp[x][0]);
-                  for (let y = 0; y < timeTmp[x].length - 1; y++) {
-                    if (timeTmp[x][y] + 1 != timeTmp[x][y + 1]) {
-                      c++;
-                    }
-                    table[x][c].push(timeTmp[x][y + 1]);
-                  }
-                }
-
-                console.log(table);
-                const gridAreas = [[], [], [], [], []];
-                for (let i = 0; i < 40; i++) {
-                  gridAreas[parseInt(i / 8)].push('q' + i);
-                }
-                let tmp = [...gridAreas];
-                for (let z = 0; z < 5; z++) {
-                  table[z].forEach((x, i) => {
-                    x.forEach((y) => {
-                      tmp[z][y] = gridSections[z] + i;
-                    });
-                  });
-                }
-                console.log(tmp);
-
-                setTimeSections(timeTmp);
-                setTimeSlots(tmp);
+                const result = timeManagement(timeSections, i);
+                setTimeSections(result.timeTmp);
+                setTimeSlots(result.tmp);
               }}
               key={i}
               className={` px-4 py-6 shadow relative  ${
