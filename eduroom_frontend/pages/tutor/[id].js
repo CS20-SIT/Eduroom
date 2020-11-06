@@ -139,7 +139,7 @@ export async function getServerSideProps(ctx) {
     price: 2000,
   };
 
-  // GET /tutor/appointment/review
+  // GET /api/tutor/appointment/review
   const review = [
     {
       score: 5,
