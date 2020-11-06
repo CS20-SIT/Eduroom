@@ -57,7 +57,7 @@ const Content = ({ mode,room }) => {
   };
 
   const response = () => {
-    const socket = socketIOClient("http://localhost:8000/");
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
     const temp = messages.slice();
     socket.on("new-message", (newMessage,pin) => {
       temp.push([newMessage,pin]);
@@ -66,8 +66,8 @@ const Content = ({ mode,room }) => {
   };
   
   const sentMessage = () => {
-    const socket = socketIOClient("http://localhost:8000/");
-    socket.emit("sent-message",inputMessage,router.query.room);
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
+    socket.emit('sent-message', inputMessage);
   };
  
 

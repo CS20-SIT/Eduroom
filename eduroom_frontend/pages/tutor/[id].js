@@ -94,7 +94,7 @@ export async function getServerSideProps(ctx) {
   // ID for fetching instructor information
   const id = ctx.query.id;
 
-  // GET /tutor/instructor/info -> id
+  // GET api/tutor/instructor/info -> id
   const instructor = {
     id,
     name: 'Thanawat Benjachatriroj',
