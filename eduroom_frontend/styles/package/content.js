@@ -30,6 +30,7 @@ export default css`
     font-size: 1.5em;
     padding-bottom: 20px;
 }
+
 .addpackbutton {
     color: #3d467f;
     font-size: 19px;
