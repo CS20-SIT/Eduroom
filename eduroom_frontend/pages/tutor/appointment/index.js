@@ -207,7 +207,7 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
 };
 
 export async function getServerSideProps(ctx) {
-  // GET /tutor/student/appointment
+  // GET /tutor/student/appointments
   const appointments = [
     {
       id: 1,
