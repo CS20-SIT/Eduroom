@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react'
-import Payment from '../../../components/course/payment'
-import GeneralNoNav from '../../../components/template/generalnonav'
+import Payment from '../../../components/payment/paymentDetail'
+import General from '../../../components/template/general'
+
+
 
 const checkout = () => {
     return(
     <Fragment>
-        <GeneralNoNav>
+        <General>   
         <Payment />
-        </GeneralNoNav>
+        </General>
     </Fragment>
     )
 }

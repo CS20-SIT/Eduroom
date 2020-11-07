@@ -1,6 +1,7 @@
 .container {
-    padding: 20px;
+    padding: 15px;
     color: black;
+    min-height: 305px;
 }
 .cardContainer {
     text-align: center;
@@ -28,4 +29,5 @@
     text-align: center;
     font-size: 18px;
     border-radius: 12px;
+    outline: none;
 }
