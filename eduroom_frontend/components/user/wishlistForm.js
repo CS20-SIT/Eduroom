@@ -7,18 +7,18 @@ const WishlistForm = (props) => {
   // console.log(props.test);
   return (
     <Fragment>
-      <div className={Styles.cardContainer}>
+      <div className={style.cardContainer}>
       <Card>
       <CardContent>
-        <div  className={Styles.cardContainer}>
-        <div className={Styles.container}>
+        <div  className={style.cardContainer}>
+        <div className={style.container}>
           <Link href={`../../course/${props.id}`}>
               <span>
                   <div>Title: {props.title}</div>
                   <div>price: {props.price}</div>
               </span>
           </Link>
-          <button className={Styles.btn} onClick={()=>{props.remove(props.index)}} >Delete</button>
+          <button className={style.btn} onClick={()=>{props.remove(props.index)}} >Delete</button>
         </div>
         </div>
         </CardContent>

@@ -11,11 +11,11 @@ const MyCourseForm = (props) => {
   }
   return (
     <Fragment>
-      <div className={Styles.cardContainer}>
+      <div className={style.cardContainer}>
       <Card>
       <CardContent>
-        <div  className={Styles.cardContainer}>
-        <div className={Styles.container}>
+        <div  className={style.cardContainer}>
+        <div className={style.container}>
           <Link href={`../../course/${props.id}`}>
               <span>
                   <div>Title: {props.title}</div>
