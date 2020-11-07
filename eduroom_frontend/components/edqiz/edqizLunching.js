@@ -4,7 +4,6 @@ import EdqizText from './edqizText';
 import style from '../../styles/edqiz/landing';
 const Page3 = (props) => {
   const router = useRouter();
-  const { id } = router.query;
   const [data, setData] = useState([
     {
       roomid: '1',
@@ -58,8 +57,7 @@ const Page3 = (props) => {
                   color: '#5B5B5B',
                 }}
               >
-                {' '}
-                {id ? data[parseInt(id) - 1].quizname : null}
+                {data[parseInt(props.id) - 1].quizname}
                 {/* query database by using id */}
               </div>
             </div>
