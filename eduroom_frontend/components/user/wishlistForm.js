@@ -12,7 +12,7 @@ const WishlistForm = (props) => {
       <CardContent>
         <div  className={Styles.cardContainer}>
         <div className={Styles.container}>
-          <Link href={'../../course/'+props.id}>
+          <Link href={`../../course/${props.id}`}>
               <span>
                   <div>Title: {props.title}</div>
                   <div>price: {props.price}</div>
