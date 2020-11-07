@@ -13,12 +13,14 @@ export default css`
     border-radius: 10px;
     padding: 2rem;
     margin-bottom: 2rem;
-    animation-fill-mode: forwards;
+  }
+  .box-unhover {
+    animation: down 0.2s forwards;
   }
   .box:hover {
-    animation-name: up;
-    animation-duration: 0.3s;
+    animation: up 0.2s forwards ease-out;
   }
+
   .left,
   .right {
     height: 100%;
@@ -81,10 +83,25 @@ export default css`
 
   @keyframes up {
     0% {
-      top: 0px;
+      transform: translateY(0);
+    }
+    60% {
+      transform: translateY(-10px);
     }
     100% {
-      top: -10px;
+      transform: translateY(-10px);
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  @keyframes down {
+    0% {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+      transform: translateY(0px);
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0);
     }
   }
 `

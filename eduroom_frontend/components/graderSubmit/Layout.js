@@ -15,7 +15,7 @@ const Layout = (props) => {
       >
         <SideNav />
         <div id="content">
-          <GraderNavbar />
+          <GraderNavbar page={props.page} />
           <main className="main">{props.children}</main>
         </div>
         {props.img ? (

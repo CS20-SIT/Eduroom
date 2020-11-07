@@ -2,8 +2,21 @@ import style from "../../styles/graderSubmit/graderNav"
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-const GraderNav = () => {
+const GraderNav = (props) => {
   const router = useRouter()
+  const menus = [
+    { text: "Home", link: "/graderSystem", page: "home" },
+    { text: "Problems", link: "/graderSystem/problem", page: "problem" },
+    { text: "Contests", link: "/graderSystem/contest", page: "contest" },
+    { text: "Ranks", link: "/graderSystem/rank", page: "rank" },
+  ]
+  const getClass = (text) => {
+    if (text.toLowerCase() === props.page.toLowerCase()) {
+      return "link active"
+    } else {
+      return "link"
+    }
+  }
   return (
     <div
       style={{
@@ -12,18 +25,13 @@ const GraderNav = () => {
       }}
     >
       <div className="nav">
-        <div className="link home">
-          <Link href="/graderSystem">Home</Link>
-        </div>
-        <div className="link problems">
-          <Link href="/graderSystem/problem/">Problems</Link>
-        </div>
-        <div className="link contents">
-          <Link href="/graderSystem/contest/">Contests</Link>
-        </div>
-        <div className="link ranks">
-          <Link href="/graderSystem/rank/">Ranks</Link>
-        </div>
+        {menus.map((menu, idx) => {
+          return (
+            <div className={getClass(menu.page)} key={idx}>
+              <Link href={menu.link}>{menu.text}</Link>
+            </div>
+          )
+        })}
         <div className="link">
           <div
             className="text"
@@ -31,7 +39,7 @@ const GraderNav = () => {
           >
             <span className="profile">
               Profile
-              <img src="../../images/graderSubmit/profile.svg" />
+              <img src="../../../images/graderSubmit/profile.svg" />
             </span>
           </div>
         </div>
