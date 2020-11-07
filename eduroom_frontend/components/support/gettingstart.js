@@ -47,13 +47,15 @@ const GetStart = () => {
                   Course Instructors and Teaching Assistants
                 </Link>
               </p>
-              <p>
-                <Link href="/support/getstart/How_Does_Eduroom_Work">
+              
+                <Link href="/support/getstart/How-Does-Eduroom-Work">
+                <p>
                   How Does Eduroom Work? FAQ
+                  </p>
                 </Link>
-              </p>
-              <p>Add a Course to Your Wishlist</p>
-              <p>System Requirement</p>
+              
+                <Link href="/support/getstart/Add-a-Course-to-Your-Wishlist"><p>Add a Course to Your Wishlist</p></Link>
+                <Link href="/support/getstart/System-Requirements"><p>System Requirement</p></Link>
               <p>How to Preview And Compare Courses</p>
             </Paper>
           </Grid>
