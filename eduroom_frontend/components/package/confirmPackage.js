@@ -54,8 +54,14 @@ const ConfirmPackage = (props) => {
                         </div>
                     </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                    <button onClick={()=>props.changePage(1)}>Back</button>
-                        <button className="createbutton" onClick={handleOpenDialog}>Confirm and Create</button>
+                    <button onClick={()=>props.changePage(1)} style=
+                    {{
+                        border: 'none',
+                        backgroundColor: '#f4f5f7',
+                        padding: 0
+                    }}><i className="fas fa-arrow-left"></i>
+                    </button>
+                    <button className="createbutton" onClick={handleOpenDialog}>Confirm and Create</button>
                         
 
                         <Dialog open={open} onClose={handleCloseDialog} >

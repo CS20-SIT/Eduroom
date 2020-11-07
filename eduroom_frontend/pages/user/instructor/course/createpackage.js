@@ -1,9 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import General from '../../../../components/template/general'
-import Upload from '../../../../components/package/imageupload'
-import Courses from '../../../../components/package/courses'
 import style from '../../../../styles/package/createpackage'
-import Link from 'next/link'
 import CreatePackage from '../../../../components/package/createPackage';
 import ConfirmPackage from '../../../../components/package/confirmPackage';
 const CreatePackagePage = () => {

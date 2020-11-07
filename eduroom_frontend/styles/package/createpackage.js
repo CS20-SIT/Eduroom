@@ -149,5 +149,11 @@ input[type=checkbox] {
     display: flex
     flex-direction: column-reverse;
 }
+.fa-arrow-left {
+    color: #FFAAE7;
+    font-size: 3.5em;
+    border: none;
+    cursor: pointer;
+}
 
 `
