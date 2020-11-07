@@ -28,16 +28,27 @@ const Wishlist = () => {
         // setWishlist(temp);
 
         // const temp=wishlist.slice();
-        // temp.splice(index,1);
+        // temp.splice(index,1);s
         // setWishlist(temp);
-
-        const temp=totalList.slice();
-        temp.splice(index+count,1);
-        setTotalList(temp);
+        console.log('ll')
+        let temp=totalList;
+        console.log(temp)
+        const newArr = [];
+        for(let i=0;i<temp.length;i++){
+            if(i !== index) newArr.push(temp[i]);
+        }
+        // temp = temp.splice(index+count,1);
+        //temp = newArr;
+        let k = newArr.slice();
+        console.log(newArr)
+        setTotalList(k);
         changeList(0);
 
         // return console.log(wishlist[index].id,index);
     }
+    useEffect(()=>{
+        console.log('total was changed');
+    },[totalList]);
     const changeList=(num)=>{
         if(num>0&&count+num<totalList.length){
             changeCount(num);
@@ -94,7 +105,7 @@ const Wishlist = () => {
                 <button onClick={()=>{changeList(-1*perPage)}}>Prev</button>
                 <button onClick={()=>{changeList(perPage)}}>Next</button>
                 {count}
-            <Wishlists item={wishlist} remove={del}></Wishlists>
+            <Wishlists item={totalList} remove={del}></Wishlists>
         </General>
     </Fragment>
     )
