@@ -4,16 +4,19 @@ export default css`
 .package-header {
     display: flex;
     font-size: 1.7em;
-    padding: 3% 6%;
+    padding: 0 6% 3% 6%;
     font-weight: bold;
 }
 .container {
     background-color: #ffffff;
     width: 88%;
-    margin: auto auto 5% auto;
+    margin-bottom: 5%;
+    padding-top: 4%;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25);
-    display: block;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 .package-content {
     text-align: center;
@@ -27,6 +30,7 @@ export default css`
     font-size: 1.5em;
     padding-bottom: 20px;
 }
+
 .addpackbutton {
     color: #3d467f;
     font-size: 19px;
@@ -35,9 +39,14 @@ export default css`
     padding: 2% 30%;
     background-color: white;
     border: 1px dashed #9593A0;
-    margin-bottom: 25%;
+    margin: 5% auto 15%;
 }
 .addpackbutton:hover {background-color: #F4F5F7;}
-
+.background-img {
+    position: absolute;
+    top: 0%;
+    width: 100vw;
+    z-index: -1;
+  }
 
 `
