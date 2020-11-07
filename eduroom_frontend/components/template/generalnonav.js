@@ -30,7 +30,11 @@ const GeneralNonav = (props) => {
           #content {
             width: 95%;
             left: 5%;
+            top: 0;
             z-index: 20;
+            height:100vh;
+            overflow-y: auto;
+            position: fixed;
           }
           .background-img {
             position: absolute;

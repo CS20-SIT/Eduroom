@@ -4,6 +4,10 @@ import { AppBar, Toolbar, TextField } from "@material-ui/core";
 import style from "../../styles/layout/navbar";
 
 const navForum = () => {
+  const handleClick = (e) =>{
+    e.preventDefault()
+    router.push("/forum/create")
+  };
   const router = useRouter();
   return (
     <Fragment>
@@ -17,7 +21,7 @@ const navForum = () => {
               <div className="navAction">
                 <button
                   className="navLogin"
-                  onClick={() => router.push("/forum/create")}
+                  onClick={handleClick}
                 >
                   <a className="navLoginText">+ ADD FORUM</a>
                 </button>

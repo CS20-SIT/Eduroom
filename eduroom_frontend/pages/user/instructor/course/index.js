@@ -1,24 +1,38 @@
 import React, { Fragment } from 'react'
-import GeneralNoNav from '../../../../components/template/generalnonav'
+import General from '../../../../components/template/general'
 import style from '../../../../styles/package/content'
-import Addpackage from '../../../../components/package/addpackage'
+import Link from 'next/link'
+import Ownpackage from '../../../../components/package/ownpackage'
 
 const Index = () => {
     return (
         <Fragment>
-            <GeneralNoNav>
+            <General>
                 <div style={{ backgroundColor: "#f4f5f7" }}>
-                    <div className="package-header">Package Management</div>
+                    <div className="package-header">Package Management </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                         <div className="container" >
-                            <div className="package-content">You Have Not Create Package Yet</div>
-                            <Addpackage />
+                            {/* <div className="package-content">You Have Not Create Package Yet</div> */}
+                            <Ownpackage />
+                            <Ownpackage />
+                            <div style={{ display: "flex", justifyContent: "center" }}>
+                                <Link href="/user/instructor/course/createpackage">
+                                    <button className="addpackbutton">
+                                        <i className="fas fa-plus-circle"></i>
+                                        <br></br>
+                                        Add new package
+                                    </button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <style jsx>{style}</style>
-            </GeneralNoNav>
+            </General>
         </Fragment>
     )
 }
+
+
 export default Index
+
