@@ -14,9 +14,7 @@ const Test = () => {
     setRefresh(false);
   };
 const sBig = {marginLeft:'7.5%',marginRight:'7.5%',marginTop:'2.5%'}
-const sBigTitle ={'fontFamily': 'Quicksand , sans-serif' ,  'font-size': '2em' ,  color: '#5b5b5b','fontWeight': 'bold'
-, 
-}
+const sBigTitle ={'fontFamily': 'Quicksand , sans-serif' ,  'font-size': '2em' ,  color: '#5b5b5b','fontWeight': 'bold' }
 
   return (
     <div style={sBig}>
