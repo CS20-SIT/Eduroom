@@ -45,7 +45,7 @@ const AnnEdit = (props) => {
   const [ann, setAnn] = useState({
     title: "",
     description: "",
-    adminid: "df3b7cb7-6a95-11e7-8846-b05adad3f0ae",
+    adminid: "12345678-1234-1234-1234-123456789123",
   });
   const setDesc = (event) => {
     setAnn({ ...ann, description: event.target.value });
@@ -61,7 +61,7 @@ const AnnEdit = (props) => {
 
   const handleSubmit = () => {
     axios
-      .post("http://localhost:3000/api/grader/cann", {
+      .post("http://localhost:5000/api/grader/cann", {
         
         title: ann.title,
         description: ann.description,
@@ -88,7 +88,7 @@ const AnnEdit = (props) => {
     setAnn({
       title: "",
       description: "",
-      adminid: 'df3b7cb7-6a95-11e7-8846-b05adad3f0ae',
+      adminid: '12345678-1234-1234-1234-123456789123',
     });
     setVisible(true);
   };

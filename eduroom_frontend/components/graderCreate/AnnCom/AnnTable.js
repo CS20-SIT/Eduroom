@@ -10,11 +10,8 @@ import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-<<<<<<< Updated upstream
 import AnnEdit from '../AnnCom/AnnEdit';
-=======
 //add submit time here
->>>>>>> Stashed changes
 
 const useStyles = makeStyles({
   root: {
@@ -75,7 +72,7 @@ const AnnTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios('http://localhost:3000/api/grader/ann')
+      const result = await axios('http://localhost:5000/api/grader/ann')
       setData(result.data)
     }
     GetData()
