@@ -1,42 +1,38 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import GeneralNoSide from "../../components/template/generalnoside";
 import Grid from "@material-ui/core/Grid";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 const Content = () => {
+  //mockup data
+  const [kahoot_roomHistory, setHistory] = useState([
+    { sessionID: "1", roomid: "1", pin: "1234", available: true },
+    { sessionID: "2", roomid: "2", pin: "3456", available: false },
+    { sessionID: "3", roomid: "5", pin: "4567", available: false },
+  ]);
+  const [pinRandom, setPinRandom] = useState("00000");
+  async function randomPin() {
+    setPinRandom(Math.floor(Math.random() * 10000) + 100);
+  }
+
+  //update query session room id avilable: true
+  kahoot_roomHistory.map((el, index) => {
+    if (kahoot_roomHistory[index].pin == pinRandom) {
+      console.log("duplicate" + pinRandom);
+      if (kahoot_roomHistory[index].available == true) {
+        setPinRandom(Math.floor(Math.random() * 10000) + 100);
+        console.log("randomAgain" + pinRandom);
+        //insert pinRandom to database
+      }
+    }
+  });
+  useEffect(() => {
+    randomPin(pinRandom);
+  }, []);
+  const router = useRouter();
+  console.log(pinRandom)
   const student = [
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
     { name: "NICKNAME" },
     { name: "NICKNAME" },
     { name: "NICKNAME" },
@@ -50,7 +46,11 @@ const Content = () => {
   const renderQuestion = () => {
     return student.map((el, index) => {
       return (
-        <Grid item xs={4} style={{ padding: "1vw",display:'flex',justifyContent:'center'}}>
+        <Grid
+          item
+          xs={4}
+          style={{ padding: "1vw", display: "flex", justifyContent: "center" }}
+        >
           <div>{student[index].name}</div>
         </Grid>
       );
@@ -64,7 +64,7 @@ const Content = () => {
             <br />
             <div className="font">JOIN WITH GAME-PIN</div>
             <br />
-            <div className="div">00000</div>
+            <div className="div">{pinRandom}</div>
             <br />
             <div className="card">
               <br />
@@ -98,14 +98,15 @@ const Content = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Link href={"./game"}>
-                    <button className="startButton">start</button>
+                  <Link href={`/edqiz/gamePlay/${pinRandom}`}>
+                    <button className="startButton">start{">"}</button>
                   </Link>
+                 
                 </Grid>
               </Grid>
               <br />
               <br />
-              <div style={{ color: "#3D467F", fontWeight: 600}}>
+              <div style={{ color: "#3D467F", fontWeight: 600 }}>
                 <Grid container>{renderQuestion()}</Grid>
                 <br />
               </div>
