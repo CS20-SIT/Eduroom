@@ -20,7 +20,7 @@ const CreatePackage = (props) => {
                                 <div style={{ width: '60%'}}>
                                     <div><input type="text" placeholder="Package Name" name="name" id="name"></input></div>
                                     <div>
-                                        <select name="price" defaultValue="default">
+                                        <select name="discount" defaultValue="default">
                                             <option disabled value="default" >Discount</option>
                                             <option value="5">5%</option>
                                             <option value="10">10%</option>
