@@ -13,8 +13,8 @@ const Page1 = ({ goto, data, questionNumber,sentMessage,response}) => {
     setquestionNumber(questionNumber + 1);
   }
   useEffect(() => {
-    // sentMessage()
-    // response()
+    sentMessage()
+    response()
   }, []);
   return (
     <Fragment>

@@ -3,35 +3,53 @@ import GeneralNoSide from "../../components/template/generalnoside";
 import Grid from "@material-ui/core/Grid";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import socketIOClient from "socket.io-client";
 
-const Content = () => {
+const Content = ({ id }) => {
   //mockup data
+  // console.log('id',id)
   const [kahoot_roomHistory, setHistory] = useState([
-    { sessionID: "1", roomid: "1", pin: "1234", available: true },
+    { sessionID: "1", roomid: "1", pin: "1234", available: false },
     { sessionID: "2", roomid: "2", pin: "3456", available: false },
     { sessionID: "3", roomid: "5", pin: "4567", available: false },
   ]);
   const [pinRandom, setPinRandom] = useState("00000");
+
+  // let mockPin='1234'
   async function randomPin() {
-    setPinRandom(Math.floor(Math.random() * 10000) + 100);
+    setPinRandom(Math.floor(Math.random() * 10000) + 1000);
   }
 
   //update query session room id avilable: true
   kahoot_roomHistory.map((el, index) => {
     if (kahoot_roomHistory[index].pin == pinRandom) {
-      console.log("duplicate" + pinRandom);
+      // console.log("duplicate" + pinRandom);
+
       if (kahoot_roomHistory[index].available == true) {
         setPinRandom(Math.floor(Math.random() * 10000) + 100);
-        console.log("randomAgain" + pinRandom);
-        //insert pinRandom to database
+        // setPinRandom(mockPin);
       }
     }
   });
+  const setRoomIsOpen = () => {
+    const socket = socketIOClient("http://localhost:8000/");
+    socket.emit("set-openRoom", true,pinRandom);
+    console.log(pinRandom)
+  };
+  async function setRoom() {
+    const socket = socketIOClient("http://localhost:8000/");
+    setPinRandom("1234");
+    socket.emit("set-openRoom", true,pinRandom);
+    console.log(pinRandom)
+  }
+  
   useEffect(() => {
-    randomPin(pinRandom);
+    // randomPin(); 
+    setRoom();
   }, []);
+ 
   const router = useRouter();
-  console.log(pinRandom)
+  // console.log(pinRandom)
   const student = [
     { name: "NICKNAME" },
     { name: "NICKNAME" },
@@ -101,7 +119,6 @@ const Content = () => {
                   <Link href={`/edqiz/gamePlay/${pinRandom}`}>
                     <button className="startButton">start{">"}</button>
                   </Link>
-                 
                 </Grid>
               </Grid>
               <br />
