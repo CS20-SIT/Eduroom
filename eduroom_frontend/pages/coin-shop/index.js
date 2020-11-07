@@ -77,7 +77,7 @@ const Temp = () => {
                                             height: '89vh'
                                         }}
                                     >
-                                        <Daily></Daily>
+                                        <Daily onClose={()=>setOpen(false)}></Daily>
                                     </DialogContent>
                                 </Dialog>
                             </Container>
