@@ -8,9 +8,80 @@ import Link from 'next/link';
 const Appointment = ({ appointments, approved, rejected, pending }) => {
   const [hoverIns, setHoverIns] = useState(-1);
   const [hoverReview, setHoverReview] = useState(-1);
+
+  const [desc, setDesc] = useState(null);
+
+  const [reviewModal, setReviewModal] = useState(-1);
+
+  const [starHover, setStarHover] = useState(0);
+
   return (
     <Fragment>
       <GeneralNoNav>
+        {reviewModal >= 0 ? (
+          <div className='modal-bg'>
+            <div className='modal-container bg-pink'>
+              <div
+                className='modal-close'
+                onClick={() => {
+                  setReviewModal(-1);
+                }}
+              >
+                x
+              </div>
+              <div className='text-xl font-bold'>Share Your Feedback</div>
+              <div className='text-lg font-bold text-secondary my-4'>
+                Rate your Instructor
+              </div>
+              <div className='my-2'>
+                <div className='flex'>
+                  {[...Array(5)].map((s, i) => (
+                    <div
+                      className='relative mx-1 pointer'
+                      onMouseEnter={() => {
+                        setStarHover(i);
+                      }}
+                    >
+                      {i > starHover ? (
+                        <i
+                          className='fas fa-star star-in absolute text-white'
+                          style={{ margin: '0.25rem' }}
+                        ></i>
+                      ) : (
+                        ''
+                      )}
+                      <i className='fas fa-star star-out text-yellow'></i>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <textarea
+                cols='50'
+                rows='10'
+                placeholder='How is your experience'
+                style={{ resize: 'none' }}
+                className='outline-none my-4 rounded-sm px-4 py-4 text-md'
+                onChange={(e) => {
+                  setDesc(e.target.value);
+                }}
+              ></textarea>
+              <div
+                className='px-8 py-3 rounded-sm bg-navy text-md font-bold text-white pointer'
+                onClick={() => {
+                  // POST /tutor/appointment/review
+                  console.log(starHover + 1);
+                  console.log(desc);
+                  // Reload
+                  location.reload();
+                }}
+              >
+                Submit
+              </div>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
         <div className='bg-tutor'>
           <div className='container'>
             <Header />
@@ -92,6 +163,11 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
                           onPointerLeave={() => {
                             setHoverReview(-1);
                           }}
+                          onClick={() => {
+                            console.log(e.id);
+
+                            setReviewModal(e.id);
+                          }}
                         >
                           Leave Review
                         </div>
@@ -118,14 +194,20 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
             height: 0.5rem;
             border-radius: 50%;
           }
+          .star-out {
+            font-size: 2.5rem;
+          }
+          .star-in {
+            font-size: 2rem;
+          }
         `}</style>
       </GeneralNoNav>
     </Fragment>
   );
 };
 
-export async function getStaticProps(context) {
-  // GET /tutor/student/appointment
+export async function getServerSideProps(ctx) {
+  // GET /tutor/student/appointments
   const appointments = [
     {
       id: 1,

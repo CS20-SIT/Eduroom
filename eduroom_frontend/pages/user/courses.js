@@ -1,6 +1,6 @@
 import React,{Fragment,useState,useEffect} from 'react';
 import MyCourses from '../../components/user/myCourses';
-import General from '../../components/user/general';
+import UserGeneral from '../../components/user/usergeneral';
 import axios from 'axios';
 const UserCourse = () => {
     useEffect(()=>{
@@ -56,7 +56,7 @@ const UserCourse = () => {
 
     return (
     <Fragment>
-        <General>
+        <UserGeneral>
                 <h1>MyCourse</h1>
                 Sort by
                 <select id='sort' >
@@ -73,7 +73,7 @@ const UserCourse = () => {
                 {/* <button onClick={()=>{changeList(perPage)}}>Next</button> */}
                 {/* {count} */}
             <MyCourses item={filteredList}></MyCourses>
-        </General>
+        </UserGeneral>
     </Fragment>
     )
 }

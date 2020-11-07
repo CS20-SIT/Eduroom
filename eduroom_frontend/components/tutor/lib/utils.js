@@ -1,4 +1,4 @@
-const { month } = require('../data/month');
+const { month, days } = require('../data/month');
 export const timeFormatter = (time) => {
   let tmp = time;
   let ampm = ' AM';
@@ -19,4 +19,8 @@ export const dateFormatter = (date) => {
   const m = Math.floor((date % 10000) / 100);
   const d = Math.floor(date % 100);
   return d + ' ' + monthConverter(m).substring(0, 3) + ' ' + y;
+};
+
+export const dayFormatter = (day) => {
+  return days[day];
 };

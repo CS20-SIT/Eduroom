@@ -1,0 +1,70 @@
+version: "3"
+services:
+  eduroom_backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./eduroom_backend
+    entrypoint: ["npm", "run", "test"]
+    environment:
+      - WAIT_HOSTS=eduroom_postgres:5432
+      - NODE_ENV=development
+      - PORT=5000
+      - CLIENT_URL=http://localhost:3000
+      - BACKEND_API=http://localhost:5000
+      - DB_USER=eduroom_user
+      - DB_PASSWORD=dADKHgj86jQoRoff7xwC4TZ
+      - DB_HOST=35.198.234.48
+      - DB_PORT=5432
+      - DB_NAME=eduroom_db
+      - JWT_SECRET=jwtsecret
+      - JWT_EXPIRE=30d
+      - JWT_COOKIE_EXPIRE=30
+      - GOOGLE_CLIENT_ID=915718814816-au5njmbt31b0g4lctg8edqm3rs53vvcn.apps.googleusercontent.com
+      - GOOGLE_SECRET_KEY=dDwssvp5-CCfvXs7vhlNhxIi
+      - SMTP_SECURE=false
+      - SMTP_HOST=eduroom_smtp
+      - SMTP_PORT=1025
+      - SMTP_EMAIL=
+      - SMTP_PASSWORD=
+      - FROM_EMAIL=admin@eduroom.com
+      - FROM_NAME=Eduroom Admin
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
+      - GCS_SA_KEY_PATH=gcs-eduroom.json
+    ports:
+      - "5000:5000"
+
+  eduroom_grading_server:
+    build:
+      dockerfile: Dockerfile
+      context: ./eduroom_grading_server
+    entrypoint: ["npm", "run", "test"]
+    environment:
+      - NODE_ENV=development
+      - PORT=3050
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "3050:3050"
+
+  eduroom_socket_chat:
+    build:
+      dockerfile: Dockerfile
+      context: ./eduroom_socket_chat
+    entrypoint: ["npm", "run", "test"]
+    environment:
+      - NODE_ENV=development
+      - PORT=5050
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "5050:5050"
+
+  eduroom_socket_kahoot:
+    build:
+      dockerfile: Dockerfile
+      context: ./eduroom_socket_kahoot
+    entrypoint: ["npm", "run", "test"]
+    environment:
+      - NODE_ENV=development
+      - PORT=8000
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "8000:8000"
