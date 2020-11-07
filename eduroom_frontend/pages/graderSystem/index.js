@@ -12,7 +12,7 @@ const Home = () => {
         <title>Home</title>
         <meta property="og:title" content="Home" key="Home" />
       </Head>
-      <Layout>
+      <Layout page="home">
         <div className="page">
           <div className="graphic">
             <img
@@ -22,7 +22,7 @@ const Home = () => {
             />
           </div>
           <div className="content">
-            <ContestBox />
+            <ContestBox id={1} />
             <AnnounceBox />
           </div>
         </div>
