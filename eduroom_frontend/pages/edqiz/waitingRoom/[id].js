@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
-import WaitingRoom from '../../components/edqiz/waitingRoom'
-import GeneralNoSide from "../../components/template/generalnoside";
+import WaitingRoom from '../../../components/edqiz/waitingRoom'
+import GeneralNoSide from "../../../components/template/generalnoside";
 const Content = () => {
   return (
     <Fragment>
       <GeneralNoSide>
-      <WaitingRoom />
+      <WaitingRoom />ha
       </GeneralNoSide>
     </Fragment>
   )

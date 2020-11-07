@@ -3,9 +3,14 @@ import style from '../../styles/package/ownpackage'
 import Link from 'next/link'
 import Dialog from '@material-ui/core/Dialog'
 import { useRouter } from 'next/router'
+import api from '../../api'
 const Ownpackage = () => {
+    const handleClick = () => {
+        api
+        .post('/api/')
+    }
     const [open, setOpen] = useState(false)
-    const router = useRouter();
+   const router = useRouter();
     const [type] = useState("created");
     const handleOpenDialog = (e) => {
         e.preventDefault()
@@ -21,25 +26,27 @@ const Ownpackage = () => {
     }
     return (
         <Fragment>
-
             <div style={{ display: "flex", justifyContent: "center", paddingTop: "20px" }}>
                 <div className="package">
-                    <div>
-                        <div style={{ display: 'flex', justifyContent: 'left', alignItems: 'start' }}>
-                            <div style={{ width: 300, height: 85, marginRight: 40, border: "1px solid black" }}>Picture</div>
+                    <div style={{ display: 'flex' }}>
+                        <div style={{ width: '15%', alignItems: 'center' }}>
+                            <div style={{
+                                border: "1px solid black",
+                                height: 90,
+                                margin: 5
+                            }}>Picture</div>
+                        </div>
+                        <div style={{ width: '90%', marginLeft: '35px', padding: '4px 0' }}>
+                            <div style={{ display: 'flex' }}>
+                                <div style={{ width: "90%", fontSize: 20, fontWeight: 550 }}>Package Name</div>
 
-                            <div style={{ width: '100%' }}>
-                                <div style={{ fontSize: 20, fontWeight: 550 }}>Package Name</div>
-                                <div style={{ fontSize: 15, fontWeight: 500, paddingTop: 4 }}>฿<span>price</span></div>
-                                <div style={{ fontSize: 15, fontWeight: 500, paddingTop: 4 }}>Category</div>
-                            </div>
-                            <div style={{ display: "flex", justifyContent: "flex-end", width: "108%" }}>
-                                <div style={{ display: "flex", justifyContent: "center" }}>
+                                <div style={{ paddingLeft: '10%' }}>
                                     <button style={{
-                                        backgroundColor: "#fdecf4",
+                                        backgroundColor: "#e1eefb",
                                         border: "none",
                                         cursor: "pointer",
-                                        color: "#3D467F"
+                                        color: "#3D467F",
+                                        fontWeight: 600
                                     }} onClick={handleOpenDialog}>X</button>
                                     <Dialog open={open} onClose={handleCloseDialog} >
                                         <div className="dialog">
@@ -51,25 +58,34 @@ const Ownpackage = () => {
                                                 />
                                                 </div>
                                                 <div>
-                                                    <button style={{ cursor: "pointer", color: "#3D467F" }}
-                                                        onClick={() => router.push("/user/instructor/course")}>yes</button>
-                                                    <button style={{ cursor: "pointer", color: "#3D467F" }}
-                                                        onClick={() => router.push("/user/instructor/course")}>cancel</button>
+                                                    <button className="ycbutton"
+                                                        onClick={() => router.push("/user/instructor/course")}>Yes</button>
+                                                    <button className="ycbutton" style={{backgroundColor: '#5b5b5b'}}
+                                                        onClick={() => router.push("/user/instructor/course")}>Cancel</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </Dialog>
                                 </div>
                             </div>
+                            <div style={{ fontSize: 15, fontWeight: 500, paddingTop: 4 }}>฿<span>price</span></div>
+                            <div>
+                                <div style={{ fontSize: 15, fontWeight: 500, paddingTop: 4 }}>Category</div>
+                                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <button onClick={() => console.log('Clicked')} className="pebutton"><i className="fas fa-globe"></i>publish</button>
+                                    <Link href="/user/instructor/course/editpackage">
+                                        <button onClick={() => console.log('Clicked')} className="pebutton"><i className="fas fa-pen"></i>edit</button></Link>
+                                </div>
+                            </div>
                         </div>
-                        <div style={{ paddingLeft: '90%' }}>
-                            <button onClick={() => console.log('Clicked')} className="publishbutton">Publish</button>
-                            <Link href="/user/instructor/course/edit">
-                                <button onClick={() => console.log('Clicked')} className="editbutton">Edit</button></Link>
-                        </div>
+
                     </div>
                 </div>
             </div>
+
+                                    
+
+
             <style jsx>{style}</style>
 
         </Fragment>
