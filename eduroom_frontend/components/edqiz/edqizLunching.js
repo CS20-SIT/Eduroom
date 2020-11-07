@@ -1,11 +1,31 @@
-import React, { Fragment } from 'react'
+import React, { Fragment,useState } from 'react'
 import { useRouter } from 'next/router'
 import EdqizText from './edqizText'
 import style from '../../styles/edqiz/landing'
-const Page3 = ({question}) => {
+const Page3 = () => {
   const router = useRouter()
-  // console.log(router.query.id)
-  // console.log(question)
+  const [data, setData] = useState([
+    {
+      roomid: "1",
+      quizname: "quizname1",
+      description: "this is a test of description1",
+    },
+    {
+      roomid: "2",
+      quizname: "quizname2",
+      description: "this is a test of description2",
+    },
+    {
+      roomid: "5",
+      quizname: "quizname3",
+      description: "this is a test of description3",
+    },
+    {
+      roomid: "10",
+      quizname: "quizname4",
+      description: "this is a test of description4",
+    },
+  ]);
   return (
     <Fragment>
       <div className="landing">
@@ -38,7 +58,7 @@ const Page3 = ({question}) => {
                 }}
               >
                 {" "}
-                {router.query.id}
+                {data[router.query.id-1].quizname}
                 {/* query database by using id */}
               </div>
             </div>
