@@ -9,7 +9,7 @@ const Courselist = (props) => {
           <label for="courseid"
             style={{
               border: "1px solid black",
-              padding: "30px 35px",
+              padding: "25px 35px",
               marginLeft: "25px"
             }}>Picture</label>
           <label for="courseid"

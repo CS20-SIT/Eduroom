@@ -1,15 +1,15 @@
 import React, { Fragment, useState } from 'react'
 import General from '../../../../components/template/general'
 import style from '../../../../styles/package/createpackage'
-import CreatePackage from '../../../../components/package/createPackage';
-import ConfirmPackage from '../../../../components/package/confirmPackage';
-const CreatePackagePage = () => {
+import EditPackage from '../../../../components/package/editPackage';
+import ConfirmEdit from '../../../../components/package/editConfirm';
+const EditPackagePage = () => {
     const [page,setPage] = useState(1);
     const renderPage = () => {
         if(page === 1){
-            return <CreatePackage changePage={(page)=>setPage(page)}/>;
+            return <EditPackage changePage={(page)=>setPage(page)}/>;
         } else if(page === 2){
-            return <ConfirmPackage changePage={(page)=>setPage(page)}/>;
+            return <ConfirmEdit changePage={(page)=>setPage(page)}/>;
         }
     }
     return (
@@ -22,5 +22,5 @@ const CreatePackagePage = () => {
         </Fragment>
     )
 }
-export default CreatePackagePage
+export default EditPackagePage
 
