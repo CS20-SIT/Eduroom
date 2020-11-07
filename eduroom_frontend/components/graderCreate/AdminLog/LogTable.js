@@ -71,7 +71,7 @@ const LogTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios('http://localhost:3000/api/grader/ann').catch(err => {
+      const result = await axios('http://localhost:5000/api/grader/').catch(err => {
         // what now?
         
          const requestFail = [{id:'0',title:'NO',description:'Test',displayname:'NUTTY',time:'2100-05-12'}]

@@ -10,22 +10,33 @@
 //https://material-ui.com/components/pickers/
 
 
-import React from 'react';
+import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from "@material-ui/core/TextField";
 import MenuItem from '@material-ui/core/MenuItem';
-import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers"; 
-
+import { DateTimePicker, KeyboardDateTimePicker,MuiPickersUtilsProvider, } from "@material-ui/pickers"; 
+import DateFnsUtils from '@date-io/date-fns'
+import { compareAsc } from 'date-fns'
+import Chip from '@material-ui/core/Chip';
 import { useState, useEffect } from "react";
+import axios from 'axios'
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import Grid from '@material-ui/core/Grid';
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width:'75%',
-    margin:'15%'
+    marginLeft:'12%',
+    marginRight:'15%',
+    marginTop:'2.5%',
+    marginBottom:'10%'
   },
   paper: {
     paddingTop:theme.spacing(1),
@@ -60,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
       ,color: '#3d467f','font-size': '1.2em', 'font-weight': 'bold'
      
     },
+    error1 : {
+        'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b','font-size': '1.2em',
+    }
 
     
   },
@@ -73,17 +87,28 @@ const sInput  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-
 const sInputfieldDesc  ={'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b','font-size': '1.2em',paddingTop:12}
 const sInputTime  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-size': '1.5em', 'font-weight': 'bold'}
 const sInputSelect  ={'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b','font-size': '1.2em',}
+const sError  ={'font-family': 'Quicksand , sans-serif' ,color: 'white','font-size': '1em',}
 const sInputfieldSelect  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-size': '1.4em', 'font-weight': 'bold'}
 const sButtionandVisbile =  { color: '#3d467f', 'font-family': 'Quicksand , sans-serif','font-weight': 'bold' }
 const sInputfieldTime  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-size': '1.2em'}
-const [selectedDate, handleDateChange] = useState(new Date("2018-01-01T00:00:00.000Z"));
+
+const sBigTitle ={'fontFamily': 'Quicksand , sans-serif' ,  'font-size': '2em' ,  color: '#3d467f','fontWeight': 'bold' }
+
+
+// const handleEndDateChange = (event) => {
+//     let a = compareAsc(selectedStartDate,selectedEndDate) 
+//     if(a!=-1){
+//     setEndDate(event.target.value);
+//     }
+//   };
+
 const rules = [
     {
-      value: 'OI',
+      value: 'oi',
       label: 'OI',
     },
     {
-      value: 'ACM',
+      value: 'acm',
       label: 'ACM',
     },
    
@@ -100,22 +125,86 @@ const rules = [
   
 
   const classes = useStyles();
-  const [rule, setRule] = React.useState('OI');
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [rule, setRule] = React.useState('oi');
   const [conStatus, setConStatus] = React.useState(false);
+  const [selectedStartDate, handleStartDateChange] = useState(new Date());
+  const [selectedEndDate, handleEndDateChange] = useState(new Date());
+
+  const [erorvalid, seterorValid] = React.useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    seterorValid(false);
+  };
+    
+  const handleTitle =  (event) => {
+    setTitle(event.target.value);
+    };
+  const handleDesc =  (event) => {
+        setDescription(event.target.value);
+        };
+
   const handleChangeRule = (event) => {
     setRule(event.target.value);
   };
   const handleChangeStatus = (event) => {
     setConStatus(event.target.value);
+    console.log(compareAsc(selectedStartDate,selectedEndDate)!=-1)
   };
+  const handleSubmit = () => {
+
+    if( title=='' || (compareAsc(selectedStartDate,selectedEndDate)!=-1) ) {seterorValid(true)}
+    axios
+      .post("http://localhost:5000/api/grader/ccontest", {
+        title : title,
+        conRuleType :  rule,
+        description :  description ,
+        startTime : selectedStartDate,
+        endTime : selectedEndDate,
+        status : conStatus,
+        adminid : '12345678-1234-1234-1234-123456789123'
+      })
+    //   .then(function (response) {
+    //     console.log(response);
+    //     setOpen(false);
+        
+    //     setTimeout(() => {
+    //       console.log('this is when we call prop on sucess')
+    //       setSubmitStatus({ ...submitStatus, success: true });
+    //     }, 450);
+    //   })
+    //   .catch(function (error) {
+    //     setOpen(false);
+    //     setTimeout(() => {
+    //       setSubmitStatus({ ...submitStatus, failed: true });
+    //     }, 450);
+    //   })
+    }
+
+
+
+
+
 
 
   return (
     <div className={classes.root}>
+        <Snackbar 
+        
+             open={erorvalid} autoHideDuration={6000} onClose={handleClose}>
+        <Alert  style={sError} onClose={handleClose} severity="error">
+          Invalid Information detected, Please Review your submission !
+        </Alert>
+      </Snackbar>
+        
    
       <Grid container spacing={3}>
         <Grid item xs={12}>
-         <h1>Create your   contest</h1>
+        <span style={sBigTitle}>Create your Contest</span>
    
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -129,11 +218,13 @@ const rules = [
             label="Title"
             type="text"
             fullWidth
-            // value={ann.title}
-            // onChange={setTitle}
+            value={title}
+            onChange={handleTitle}
             required
             inputProps={{ maxLength: 50 ,style:sInputfield }}
             InputLabelProps={{style: sInput}}
+            error={title==''}
+            helperText={title==''? 'Title is Empty!' : ''}
           />
           </Paper> </div>
         </Grid>
@@ -147,8 +238,8 @@ const rules = [
             type="text"
             fullWidth
             rows={15}
-            // value={ann.title}
-            // onChange={setTitle}
+            value={description}
+            onChange={handleDesc}
             required
             inputProps={{ maxLength: 1000 ,style:sInputfieldDesc }}
             InputLabelProps={{style: sInput}}
@@ -160,53 +251,53 @@ const rules = [
         <Grid item xs={6} >
         <div>
         <Paper className={classes.paper2} >
-            <TextField
-             id="datetime-local"
-             label="Start"
-             type="datetime-local"
-             defaultValue="2017-05-24T10:30"
-             fullWidth
-             required
-             className={classes.textField}
-             inputProps={{ style:sInputfieldDesc }}
-             InputLabelProps={{style: sInputTime}}
-
-           />
+         
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDateTimePicker
+        
+            variant="inline"
+            ampm={false}
+            label="Start"
+            value={selectedStartDate}
+            onChange={handleStartDateChange}
+            onError={console.log}
+            disablePast
+            required
+            fullWidth
+            format="dd-MMM-yyyy 'AT' HH:mm"
+            error={compareAsc(selectedStartDate,selectedEndDate)!=-1}
+            helperText={(compareAsc(selectedStartDate,selectedEndDate)!=-1) ? 'Invaild Date!' : ''}
+            inputProps={{ style:sInputfieldDesc }}
+            InputLabelProps={{style: sInputTime}}
+             />
+            </MuiPickersUtilsProvider>
       </Paper>
   </div>
-  {/* <KeyboardDateTimePicker
-        variant="inline"
-        ampm={false}
-        label="With keyboard"
-        value={selectedDate}
-        onChange={handleDateChange}
-        onError={console.log}
-        disablePast
-        format="yyyy/MM/dd HH:mm"
-      />
-         */}
-          <DateTimePicker
-        label="DateTimePicker"
-        inputVariant="outlined"
-        value={selectedDate}
-        onChange={handleDateChange}
-      />
+         
         
         </Grid>
         <Grid item xs={6} >
         <div><Paper className={classes.paper2} >
-        <TextField
-        id="datetime-local"
-        label="End"
-        type="datetime-local"
-        defaultValue="2017-05-24T10:30"
-        fullWidth
-        required
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDateTimePicker
     
-        inputProps={{style:sInputfieldDesc }}
-        InputLabelProps={{style: sInputTime}}
-
-         />
+            variant="inline"
+            ampm={false}
+            label="End"
+            value={selectedEndDate}
+            onChange={handleEndDateChange}
+            onError={console.log}
+            disablePast
+            required
+            fullWidth
+            format="dd-MMM-yyyy 'AT' HH:mm"
+         
+            error={compareAsc(selectedStartDate,selectedEndDate)!=-1}
+            helperText={(compareAsc(selectedStartDate,selectedEndDate)!=-1) ? 'Invaild Date!' : ''}
+            inputProps={{ style:sInputfieldDesc }}
+            InputLabelProps={{style: sInputTime}}
+             />
+            </MuiPickersUtilsProvider>
          </Paper></div>
         </Grid>
         <Grid item xs={6} ><Paper className={classes.paper2} >
@@ -262,7 +353,12 @@ const rules = [
               <div style={{height:20}}></div>
         </Grid>
         <Grid item xs={12} >
-        <center><div>Submit</div></center>
+        <center><div> <Chip
+        label=" Create"
+        onClick={handleSubmit}
+        style={{backgroundColor:'#FC8FC3',marginBottom:10,color:'white',height:35,width:300,'font-family': 'Quicksand , sans-serif' ,  'font-size': '1.2em','font-weight': 'bold'}}
+
+        /></div></center>
         </Grid>
 
         
