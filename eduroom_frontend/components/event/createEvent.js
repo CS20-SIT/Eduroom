@@ -1,8 +1,9 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import React, { Fragment, useState } from 'react';
 import style from '../../styles/event/event'
 import { Button, Grid, Container, TextField, } from '@material-ui/core'
 import { KeyboardTimePicker } from "@material-ui/pickers";
+
 
 
 
@@ -53,6 +54,11 @@ const content = () => {
     }
     const [selectedDate, handleDateChange] = useState(new Date());
 
+    const eventType = [
+        "Holiday",
+        "Meeting",
+        "Seminar"
+    ]
 
     return (
 
@@ -91,12 +97,54 @@ const content = () => {
 
                 {/* ---------------------------------------Event Create Form --------------------------------------------------*/}
                 <div className="form">
-                    <Grid container>
+                    <Grid container justify="center">
+
                         <div>
-                            <input className="event-title"></input>
+                            <input className="event-title" placeholder="Event Title"></input>
                         </div>
                         <div>
-                            <input className="event-type"></input>
+                            <select className="event-type">
+                                <option value="default" disabled>Event Type</option>
+                                {eventType.map((type) => {
+                                    return (<option value={type} key={type}>{type}</option>)
+                                })}
+                            </select>
+                        </div>
+                        <div>
+                            <textarea className="event-des" rows="5" cols="30" placeholder="Description"></textarea>
+                        </div>
+                        <Grid container>
+                            <div style={{ marginTop: '10px' }}>
+                                <label className="startDate">Start Date:</label>
+                                <label className="startTime">Start Time:</label>
+                                <label className="endDate">End Date:</label>
+                                <label className="endTime">End Time:</label></div>
+                            <div>
+
+                                <input className="event-startDate" type='date'></input>
+                            </div>
+                            <div>
+                                <input className="event-startTime" type='time'></input>
+                            </div>
+                            <div>
+                                <input className="event-endDate" type='date'></input>
+                            </div>
+                            <div>
+                                <input className="event-endTime" type='time'></input>
+                            </div>
+                        </Grid>
+                        <div>
+                            <input className="event-place" placeholder="Place" />
+                        </div>
+                        <div>
+                            <button className="event-confirm">
+                                <a className="event-confirmText">CONFIRM</a>
+                            </button>
+                        </div>
+                        <div>
+                            <button className="event-cancel">
+                                <a className="event-cancelText">CANCEL</a>
+                            </button>
                         </div>
 
 
