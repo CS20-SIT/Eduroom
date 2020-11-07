@@ -8,8 +8,8 @@ import DialogContent from '@material-ui/core/DialogContent'
 import OrderDetail from './orderDetail'
 import CreditBox from './creditBox'
 import PaypalBox from './paypalBox'
-import {useRouter} from 'next/router'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
+import Link from 'next/link';
 
 const Checkout = () => {
     const router = useRouter();

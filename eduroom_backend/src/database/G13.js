@@ -37,7 +37,7 @@ CREATE INDEX fkIdx_3618 ON Package_courses
 );
 
 CREATE INDEX fkIdx_466 ON Package_courses
-(
+(n
  packageId
 );
 
