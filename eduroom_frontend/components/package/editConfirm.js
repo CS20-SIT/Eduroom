@@ -4,7 +4,7 @@ import Selected from './selectedcourse'
 import Dialog from '@material-ui/core/Dialog'
 import { useRouter } from 'next/router'
 
-const ConfirmPackage = (props) => {
+const ConfirmEdit = (props) => {
     const [open, setOpen] = useState(false)
     const router = useRouter();
     const [type] = useState("created");
@@ -25,7 +25,7 @@ const ConfirmPackage = (props) => {
         <Fragment>
 
             <div style={{ backgroundColor: "#f4f5f7" }}>
-                <div className="package-header">Confirm Create</div>
+                <div className="package-header">Confirm Edit</div>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     <div className="container">
                         <div style={{ padding: "4% 25%" }}>
@@ -58,30 +58,24 @@ const ConfirmPackage = (props) => {
                     <div style={{ textAlign: 'center' }}><button className="createbutton" onClick={handleOpenDialog}>Confirm and Create</button>
                     </div>
                     <div> </div>
-
                     <Dialog open={open} onClose={handleCloseDialog} >
                         <div className="dialog">
                             <div className="indialog">
-                                <div style={{ display: "flex", justifyContent: "flex-end", width: "108%" }}>
-                                    <button style={{
-                                        backgroundColor: "white",
-                                        border: "none",
-                                        cursor: "pointer",
-                                        color: "#3D467F"
-                                    }}
-                                        onClick={() => router.push("/user/instructor/course")}>X</button>
+                                <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
+                                    <button style={{ backgroundColor: "white", border: "none", cursor: "pointer", color: "#3D467F" }} onClick={() => router.push("/user/instructor/course")}>X</button>
                                 </div>
                                 <div><img
-                                    src="/images/package/createsuccess.svg"
+                                    src="/images/package/edited.svg"
                                     style={{ width: 200, height: 200 }}
                                 />
                                 </div>
 
-                                <div style={{ fontSize: "28px", color: "#3D467F", paddingBottom: "15px" }}>Create Package Successful !</div>
+                                <div style={{ fontSize: "28px", color: "#3D467F", paddingBottom: "15px" }}>Your package is already updated !</div>
                             </div>
                         </div>
                     </Dialog>
                 </div>
+
             </div>
             <style jsx>{style}</style>
 
@@ -89,4 +83,4 @@ const ConfirmPackage = (props) => {
         </Fragment >
     )
 }
-export default ConfirmPackage
+export default ConfirmEdit

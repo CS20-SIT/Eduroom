@@ -16,15 +16,16 @@ export default css`
 }
 
 input,select,textarea {
-    border: 1px solid #3D467F;
+    border: 1px solid #3d467f;
     width: 100%;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border-radius: 10px;
     font-size: 1em;
-    margin-bottom: 15px;
+    margin-bottom: 6px;
     background-color: #f4f5f7;
     cursor: pointer;
     color: #3d467f;
+    font-weight: 500;
 }
 input[type=checkbox] {
     width: 5%;
@@ -33,10 +34,9 @@ input[type=checkbox] {
     width: 20px;
     background-color: #3d467f;
 }
-
 ::placeholder {
     color: #3d467f;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .imageupload {
@@ -64,7 +64,7 @@ input[type=checkbox] {
     font-style: normal;
     font-weight: 550;
     font-size: 22px; 
-    margin-bottom: 20px;   
+    margin-bottom: 30px;   
 
 }
 .text {
@@ -97,7 +97,7 @@ input[type=checkbox] {
     border-radius: 10px;
     padding: 1% 2%;
     margin-bottom: 1.5%;
-    background-color: #fdecf4;
+    background-color: #e1eefb;
     text-align: left;
     display: flex;
     align-items: center;
@@ -113,16 +113,17 @@ input[type=checkbox] {
     padding: 13px 90px ;
     font-weight: 550;
     cursor: pointer;
-    margin-bottom: 5%;
+    
 }
 .createbutton:hover {
     cursor: pointer;
     opacity: 0.9;
   }
 .backbutton {
-    padding: 0 40px ;
-    margin: 0;
-    font-size: 21px;
+    font-size: 1em;
+    border: none;
+    background-color: #f4f5f7;
+    cursor: pointer;
 }
 .courseno {
     margin: 0 20px;
@@ -153,7 +154,10 @@ input[type=checkbox] {
     color: #FFAAE7;
     font-size: 3.5em;
     border: none;
+}
+.fa-arrow-left:hover {
     cursor: pointer;
+    opacity: 0.9;
 }
 
 `

@@ -39,9 +39,14 @@ export default css`
     padding: 2% 30%;
     background-color: white;
     border: 1px dashed #9593A0;
-    margin-bottom: 25%;
+    margin: 5% auto 15%;
 }
 .addpackbutton:hover {background-color: #F4F5F7;}
-
+.background-img {
+    position: absolute;
+    top: 0%;
+    width: 100vw;
+    z-index: -1;
+  }
 
 `
