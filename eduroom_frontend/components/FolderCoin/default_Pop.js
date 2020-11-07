@@ -10,7 +10,7 @@ const temp = (props) => {
             }}
         >
             <div onClick={e => e.stopPropagation()} className={Styles.white}>
-
+                This is pop up
             </div>
         </div>
     );

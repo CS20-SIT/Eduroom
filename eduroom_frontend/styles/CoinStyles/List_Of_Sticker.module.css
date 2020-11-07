@@ -6,6 +6,7 @@
     padding-left: 150px;
     padding-right: 150px;
     margin-top:20px ;
+    
 }
 
 .btn{
@@ -16,7 +17,18 @@
     text-align: center;
     font-size: 22px;
     border-radius: 12px;
+    outline: none;
     
+}
+.disable{
+    background-color: #a880f7;
+    border: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 12px;
+    opacity: 0.5;
 }
 
 
