@@ -1,29 +1,31 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Link, Paper,Typography } from "@material-ui/core";
+import Head from "next/head";
+import React, { Fragment, useState, useEffect, useContext } from "react";
+import {
+  Link,
+} from "@material-ui/core";
+
 import style from "../../../styles/forum/showForum";
-import GetStart from "../../../components/support/gettingstart"
-import { useRouter } from "next/router";
-import GeneralNonav from "../../../components/template/generalnonav";
-
-const create = () => {
-    const router = useRouter();
-
-    return (
-        <Fragment>
-            <GeneralNonav img={'/images/newbg.svg'}>
+import General from "../../../components/template/general";
+import Systemrequirement from "../../../components/support/systemrequirement";
+const courseinstandteaching = () => {
+  return <Fragment>
+    
+      <General img='/images/supforumbg.svg'>
+        
             <div
                 style={{
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
                 }}
-                className="background"
             >
             <div id="nav">
                     <div className="top">
-                    <Link href='/support'><label>Eduroom Support
-                    </label></Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><label>Getting Started</label>
-                    <GetStart/>
+                    <Link href='/support'>Eduroom Support
+                    </Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><Link href='/support/getstart'>Getting Started</Link>
+                    <label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label>System Requirement
+                    
+                    <Systemrequirement/>
                     </div>
                     
                 </div>
@@ -55,8 +57,7 @@ const create = () => {
           `}
                 </style>
                 </div>
-            </GeneralNonav>
-        </Fragment>
-    );
+            </General>
+  </Fragment>;
 };
-export default create;
+export default courseinstandteaching;
