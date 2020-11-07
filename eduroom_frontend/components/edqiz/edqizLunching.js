@@ -2,9 +2,10 @@ import React, { Fragment } from 'react'
 import { useRouter } from 'next/router'
 import EdqizText from './edqizText'
 import style from '../../styles/edqiz/landing'
-const Page3 = ({data,questionNumber}) => {
+const Page3 = ({question}) => {
   const router = useRouter()
-  console.log(router.query.id)
+  // console.log(router.query.id)
+  // console.log(question)
   return (
     <Fragment>
       <div className="landing">
@@ -44,7 +45,7 @@ const Page3 = ({data,questionNumber}) => {
             <div className="row">
               <button
                 className="landing-button"
-                onClick={() => router.push("/login")}
+                onClick={() => router.push(`/edqiz/waitingRoom/${router.query.id}`)}
               >
                 <span className="landing-button-text">Launch {">"}</span>
               </button>
