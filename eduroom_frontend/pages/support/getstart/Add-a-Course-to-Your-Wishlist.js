@@ -1,40 +1,31 @@
 import Head from "next/head";
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import {
-  Container,
-  Button,
-  TextField,
-  Grid,
-  Typography,
-  CssBaseline,
-  makeStyles,
-  Select,
-  MenuItem,
-  Paper,
-  createMuiTheme,
-  ThemeProvider,
   Link,
 } from "@material-ui/core";
-import Studentnav from "../../../components/support/studentsidenav";
-import HowDoesEduroomWork from '../../../components/support/howDoesEduroomWork';
+
 import style from "../../../styles/forum/showForum";
-import GeneralNonav from "../../../components/template/generalnonav";
+import General from "../../../components/template/general";
+import Addacourse from "../../../components/support/addacourse";
 const courseinstandteaching = () => {
   return <Fragment>
-      <GeneralNonav>
+    
+      <General img='/images/supforumbg.svg'>
+        
             <div
                 style={{
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
-                    marginBottom:'80px'
                 }}
             >
             <div id="nav">
                     <div className="top">
-                    <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
-                    <HowDoesEduroomWork/>
+                    <Link href='/support'>Eduroom Support
+                    </Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><Link href='/support/getstart'>Getting Started</Link>
+                    <label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label>Add a Course to Your Wishlist
+                    
+                    <Addacourse/>
                     </div>
                     
                 </div>
@@ -66,7 +57,7 @@ const courseinstandteaching = () => {
           `}
                 </style>
                 </div>
-            </GeneralNonav>
+            </General>
   </Fragment>;
 };
 export default courseinstandteaching;

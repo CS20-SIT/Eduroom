@@ -24,15 +24,14 @@ const Studentnav = () => {
       </Typography>
       <Grid container>
       <Grid item xs={12}>
-      <Link href="/support/getstart">
-      <Button>
+      <Button href="/support/getstart">
         <img
           src="https://www.flaticon.com/svg/static/icons/svg/2164/2164598.svg"
           style={{ height: "15px" }}
+          
         />
         &nbsp;&nbsp;&nbsp;Getting Started
-      </Button>
-      </Link></Grid>
+      </Button></Grid>
       <Grid item xs={12}><Button>
         <img
           src="https://www.flaticon.com/svg/static/icons/svg/2521/2521782.svg"
@@ -70,7 +69,7 @@ const Studentnav = () => {
       </Button></Grid>
       </Grid>
       <br/>
-      <Button variant='contained' style={{marginTop:'20px',backgroundColor:'#3D467F'}} href="/support/create">CONTACT US</Button>
+      <Button variant='contained' style={{backgroundColor:'#FB9CCB',marginLeft:'30px',marginTop:'10px'}} href="/support/create"><label style={{color:'#ffffff'}}>CONTACT US</label></Button>
     </Fragment>
   );
 };
