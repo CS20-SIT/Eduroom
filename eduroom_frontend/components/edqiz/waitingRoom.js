@@ -7,47 +7,41 @@ import socketIOClient from "socket.io-client";
 
 const Content = ({ id }) => {
   //mockup data
-  // console.log('id',id)
   const [kahoot_roomHistory, setHistory] = useState([
     { sessionID: "1", roomid: "1", pin: "1234", available: false },
     { sessionID: "2", roomid: "2", pin: "3456", available: false },
     { sessionID: "3", roomid: "5", pin: "4567", available: false },
   ]);
-  const [pinRandom, setPinRandom] = useState("00000");
-
-  // let mockPin='1234'
+  const [pin, setPin] = useState("0");
+  let temppin = 0;
   async function randomPin() {
-    setPinRandom(Math.floor(Math.random() * 10000) + 1000);
-  }
+    // temppin=(Math.floor(Math.random() * 10000) + 1000);
+    temppin = 1234;
+    setPin(temppin);
 
-  //update query session room id avilable: true
-  kahoot_roomHistory.map((el, index) => {
-    if (kahoot_roomHistory[index].pin == pinRandom) {
-      // console.log("duplicate" + pinRandom);
-
-      if (kahoot_roomHistory[index].available == true) {
-        setPinRandom(Math.floor(Math.random() * 10000) + 100);
-        // setPinRandom(mockPin);
+    //update query session room id avilable: true
+    kahoot_roomHistory.map((el, index) => {
+      if (kahoot_roomHistory[index].pin == temppin) {
+        if (kahoot_roomHistory[index].available == true) {
+          temppin = Math.floor(Math.random() * 10000) + 1000;
+          setPin(temppin);
+        }
       }
-    }
-  });
-  const setRoomIsOpen = () => {
-    const socket = socketIOClient("http://localhost:8000/");
-    socket.emit("set-openRoom", true,pinRandom);
-    console.log(pinRandom)
-  };
-  async function setRoom() {
-    const socket = socketIOClient("http://localhost:8000/");
-    setPinRandom("1234");
-    socket.emit("set-openRoom", true,pinRandom);
-    console.log(pinRandom)
+    });
   }
-  
+  const setRoomOpen = (ppin) => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    // console.log(ppin)
+    socket.emit("set-openRoom", true, ppin);
+  };
+
   useEffect(() => {
-    // randomPin(); 
-    setRoom();
+    randomPin();
+
   }, []);
- 
+
   const router = useRouter();
   // console.log(pinRandom)
   const student = [
@@ -82,7 +76,7 @@ const Content = ({ id }) => {
             <br />
             <div className="font">JOIN WITH GAME-PIN</div>
             <br />
-            <div className="div">{pinRandom}</div>
+            <div className="div">{pin}</div>
             <br />
             <div className="card">
               <br />
@@ -116,8 +110,8 @@ const Content = ({ id }) => {
                     alignItems: "center",
                   }}
                 >
-                  <Link href={`/edqiz/gamePlay/${pinRandom}`}>
-                    <button className="startButton">start{">"}</button>
+                  <Link href={`/edqiz/gamePlay/${pin}`}>
+                    <button className="startButton" onClick={()=>setRoomOpen(pin)}>start{">"}</button>
                   </Link>
                 </Grid>
               </Grid>

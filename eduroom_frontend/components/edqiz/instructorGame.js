@@ -2,10 +2,9 @@ import React, { Fragment, useState, useEffect } from "react";
 import Page1 from "./gamePage1";
 import Page2 from "./gamePage2";
 import socketIOClient from "socket.io-client";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router";  
 
 const Content = ({ id }) => {
-  // console.log("idPlay",id.id)
   const router = useRouter();
   const [current, setCurrent] = useState(1);
   const [questionNumber, setquestionNumber] = useState(0);
@@ -56,7 +55,8 @@ const Content = ({ id }) => {
     },
   ];
   const response = () => {
-    const socket = socketIOClient("http://localhost:8000/");
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
+
     const temp = messages.slice();
     socket.on("new-message", (newMessage, pin) => {
       temp.push([newMessage, pin]);
@@ -65,7 +65,8 @@ const Content = ({ id }) => {
   };
 
   const sentMessage = () => {
-    const socket = socketIOClient("http://localhost:8000/");
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
+
     socket.emit("sent-message", data[questionNumber], id.id);
   };
   // console.log("questionNo", questionNumber);

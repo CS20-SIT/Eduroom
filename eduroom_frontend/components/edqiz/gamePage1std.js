@@ -30,14 +30,6 @@ const Page1 = ({ goto, data, questionNumber,sentMessage,response}) => {
             xs={2}
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <button
-              className="landing-button"
-              onClick={() => {
-                goto(2);
-              }}
-            >
-              SKIP
-            </button>
           </Grid>
         </Grid>
         <br />
