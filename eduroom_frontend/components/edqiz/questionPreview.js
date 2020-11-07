@@ -16,7 +16,7 @@ const Preview = ({index,data}) => {
             <div className="img-preview" id={'img-preview'+index}>
             </div>
             <div className="question-name-preview">
-                {data.question}
+                {data.question} 
             </div>
             <div className="time-point-preview">
                 <div style={{width:'100%',fontSize:'1.5em'}}>{data.time}</div>

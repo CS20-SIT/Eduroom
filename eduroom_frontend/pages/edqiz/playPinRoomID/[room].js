@@ -2,14 +2,12 @@ import Edqiz from "../../../components/edqiz/studentPlay";
 import React, { Fragment, useState } from "react";
 import GeneralNoSide from "../../../components/template/generalnoside";
 
-const Content = () => {
-
+const Content = (room) => {
   return (
     <Fragment>
       <GeneralNoSide>
 
-        <Edqiz />
-
+        <Edqiz room={room}/>
       </GeneralNoSide>
     </Fragment>
   );
