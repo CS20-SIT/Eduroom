@@ -1,20 +1,30 @@
-import React, { Fragment, useState,useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 const axios = require("axios");
-const Page1 = ({ goto, data, questionNumber,sentMessage,response}) => {
-  const router = useRouter()
+const Page1 = ({
+  goto,
+  data,
+  questionNumber,
+  sentMessage,
+  response,
+  messages,
+}) => {
+  const router = useRouter();
 
-  // console.log(router.query.id)
+  // console.log("message", messages);
   const room = { name: "room1", PIN: router.query.id };
-  
+
   function questionNext() {
     setquestionNumber(questionNumber + 1);
   }
+
+
   useEffect(() => {
-    sentMessage()
-    response()
+    sentMessage();
+    response();
+  
   }, []);
   return (
     <Fragment>
@@ -22,6 +32,7 @@ const Page1 = ({ goto, data, questionNumber,sentMessage,response}) => {
         <Grid container style={{ marginTop: "4vh" }}>
           <Grid item xs={10}>
             <div className="text-title">
+              NICKNAME : <div>katak</div>
               PIN :<div style={{ color: "#FB9CCB" }}>{room.PIN}</div>
             </div>
           </Grid>
@@ -29,12 +40,11 @@ const Page1 = ({ goto, data, questionNumber,sentMessage,response}) => {
             item
             xs={2}
             style={{ display: "flex", justifyContent: "center" }}
-          >
-          </Grid>
+          ></Grid>
         </Grid>
         <br />
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{display:'flex',justifyContent:'center'}}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <div className="text">{data[questionNumber].question}</div>
           </div>
           <Grid
@@ -168,8 +178,6 @@ const Page1 = ({ goto, data, questionNumber,sentMessage,response}) => {
             display: flex;
             justify-content: center;
             width: 95vw;
-            
-            
           }
           .text-time {
             font-family: "Quicksand", sans-serif;
