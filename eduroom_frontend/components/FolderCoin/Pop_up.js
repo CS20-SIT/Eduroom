@@ -5,7 +5,7 @@ const temp = (props) => {
     // };
     return (
         
-        <div className={Styles.modal}>
+        <div>
         <h1>
             Name Sticker : {props.title}
             Price : {props.price}
