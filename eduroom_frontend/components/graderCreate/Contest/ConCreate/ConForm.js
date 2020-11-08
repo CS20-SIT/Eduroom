@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+
 import {
   KeyboardDateTimePicker,
   MuiPickersUtilsProvider,
@@ -212,10 +213,7 @@ export default function FullWidthGrid() {
     console.log(compareAsc(selectedStartDate, selectedEndDate) != -1);
   };
   const handleSubmit = () => {
-    if (
-      (title == "" || compareAsc(selectedStartDate, selectedEndDate) != -1) &&
-      check
-    ) {
+    if (title == "" || compareAsc(selectedStartDate, selectedEndDate) != -1) {
       seterorValid(true);
     } else
       axios.post("http://localhost:5000/api/grader/ccontest", {
