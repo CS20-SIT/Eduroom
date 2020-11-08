@@ -7,7 +7,8 @@ const temp = (props) => {
         
         <div className={Styles.modal}>
         <h1>
-            Kiki
+            Name Sticker : {props.title}
+            Price : {props.price}
         </h1>
         </div>
     

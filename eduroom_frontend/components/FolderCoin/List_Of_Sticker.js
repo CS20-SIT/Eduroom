@@ -62,6 +62,9 @@ const ListSticker = props => {
         });
         return stickers;
     };
+
+
+    
     return (
         <div >
             <div className={Styles.box}>{renderSlide()}</div>
