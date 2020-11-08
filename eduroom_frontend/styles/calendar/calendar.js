@@ -15,8 +15,17 @@ export default css`
     text-align: center;
     color: #3D467F;
     font-weight : bold;
-    
   }
+
+  .EmptyItem {
+    background-color: #FFFFFF;
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight : bold;
+  }
+
   .month-size{
    font-size :  50px
   }  .month-color{
@@ -25,10 +34,11 @@ export default css`
     text-align : center;
   }
   .headerCell {
-    background-color: rgba(255,0,0 ,.2);
+    background-color: rgba(254,117,183);
     padding: 20px;
     font-size: 30px;
     text-align: center;
+    color: white;
   }
 
   .currentDate {
