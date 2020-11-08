@@ -16,28 +16,26 @@ import {
   Link,
 } from "@material-ui/core";
 import Studentnav from "../../../components/support/studentsidenav";
-import Courseinstandteachingast from '../../../components/support/courseinstandteachingast';
+import HowDoesEduroomWork from '../../../components/support/howDoesEduroomWork';
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
 const courseinstandteaching = () => {
   return <Fragment>
-    
       <General img='/images/supforumbg.svg'>
-        
             <div
                 style={{
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
+                    marginBottom:'80px'
                 }}
             >
             <div id="nav">
                     <div className="top">
                     <Link href='/support'>Eduroom Support
                     </Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><Link href='/support/getstart'>Getting Started</Link>
-                    <label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label>  Course Instructors and Teaching Assistantsd
-                    
-                    <Courseinstandteachingast/>
+                    <label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label>How does Eduroon work
+                    <HowDoesEduroomWork/>
                     </div>
                     
                 </div>

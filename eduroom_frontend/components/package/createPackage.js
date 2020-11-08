@@ -13,7 +13,7 @@ const CreatePackage = (props) => {
       ...props.myPackage,
       discount: parseInt(e.target.value),
     });
-  };
+  }; 
   const categories = [
     { value: 'business', label: 'Business' },
     { value: 'development', label: 'Development' },
