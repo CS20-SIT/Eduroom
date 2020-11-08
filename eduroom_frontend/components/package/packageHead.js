@@ -16,9 +16,9 @@ const Package = () => {
                                      aliqua dolor do amet sint. Velit officia consequat </div>
                             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <BestSeller />
-                                <div style={{ fontWeight: 500 }}>3 course in this package</div>
+                                <div style={{ fontWeight: 500, marginLeft:10,color:'#3D467F' }}>3 course in this package</div>
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'row', marginBottom: 10 }}>
+                            <div style={{ display: 'flex', flexDirection: 'row', marginBottom: 10,marginTop:10 }}>
                                 <div style={{ marginRight: 10 }}>Instructors</div>
                                 <div>Instructors Name</div>
                             </div>
@@ -33,6 +33,7 @@ const Package = () => {
                                 <div style={{ marginRight: 30, fontSize: 30, fontWeight: 500 }}>฿1000</div>
                                 <div style={{ marginRight: 30, fontSize: 18, marginTop: 10, color: '#9593A0', textDecorationLine: 'line-through' }}>฿3500</div>
                             </div>
+                            
                             <Button style={{ marginRight: 10, backgroundColor: '#7B89DD', color: 'white', borderRadius: 10 }}
                                 onClick={() => router.push("/user/wishlist")}// link to wishlist
                             >
@@ -61,6 +62,7 @@ const Package = () => {
                                     style={{ width: 20, height: 20, marginLeft: 8, display: 'center' }}
                                 />
                             </Button>
+                            
                         </div>
 
                         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>

@@ -18,10 +18,12 @@ import {
 import Studentnav from "../../../components/support/studentsidenav";
 import Courseinstandteachingast from '../../../components/support/courseinstandteachingast';
 import style from "../../../styles/forum/showForum";
-import GeneralNonav from "../../../components/template/generalnonav";
+import General from "../../../components/template/general";
 const courseinstandteaching = () => {
   return <Fragment>
-      <GeneralNonav>
+    
+      <General img='/images/supforumbg.svg'>
+        
             <div
                 style={{
                     display: "flex",
@@ -31,8 +33,10 @@ const courseinstandteaching = () => {
             >
             <div id="nav">
                     <div className="top">
-                    <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
+                    <Link href='/support'>Eduroom Support
+                    </Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><Link href='/support/getstart'>Getting Started</Link>
+                    <label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label>  Course Instructors and Teaching Assistantsd
+                    
                     <Courseinstandteachingast/>
                     </div>
                     
@@ -65,7 +69,7 @@ const courseinstandteaching = () => {
           `}
                 </style>
                 </div>
-            </GeneralNonav>
+            </General>
   </Fragment>;
 };
 export default courseinstandteaching;
