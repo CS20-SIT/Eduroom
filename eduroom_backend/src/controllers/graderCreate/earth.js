@@ -14,8 +14,18 @@ const pQuestion = async (req, res, next) => {
   const ruleType = req.body.ruleType;
   const adminid = req.body.adminid;
 
+  const newTags = req.body.pnewTags;
+  const existTags = req.body.pqexistTags;
+
+  // newTags.forEach(t => {
+  //   await pool.query("INSERT INTO tags (tagName) VALUES ($1)", [
+  //     t,
+  //   ]);
+
+  // });
+
   await pool.query(
-    "INSERT INTO Questions(title,description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType,adminid) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+    "INSERT INTO Questions(title,description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType,adminid) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id",
     [
       title,
       description,
@@ -28,8 +38,15 @@ const pQuestion = async (req, res, next) => {
       visibility,
       ruleType,
       adminid,
-    ]
+    ],
+    function (err, result, fields) {
+      if (err) throw err;
+      console.log(result);
+      console.log(result.rows[0].id);
+      //TODO Then post question tag
+    }
   );
+
   res.send({ success: true });
 };
 

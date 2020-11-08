@@ -129,7 +129,6 @@ export default function FullWidthGrid() {
       setExistTags(result.data);
     };
     GetData();
-    console.log(existTags);
   }, []);
 
   const sInputfield = {
@@ -318,9 +317,21 @@ export default function FullWidthGrid() {
   };
 
   const handleSubmit = () => {
-    if (title == "" && check) {
+    if (title == "") {
       seterorValid(true);
-    } else
+    } else {
+      let newtags = tags.filter((t) => {
+        return typeof t === "string";
+      });
+      let qexisttags = tags.filter((t) => {
+        return typeof t !== "string";
+      });
+      qexisttags = qexisttags.map((t) => {
+        return t.tagid;
+      });
+      const pnewTags = [...new Set(newtags)];
+      const pqexistTags = [...new Set(qexisttags)];
+
       axios.post("http://localhost:5000/api/grader/cquestion", {
         title: title,
         ruleType: rule,
@@ -333,7 +344,10 @@ export default function FullWidthGrid() {
         intputDes: inputdesc,
         outputDes: outputdesc,
         difficulty: difficulty,
+        newTags: pnewTags,
+        existTags: pqexistTags,
       });
+    }
     //   .then(function (response) {
     //     console.log(response);
     //     setOpen(false);
