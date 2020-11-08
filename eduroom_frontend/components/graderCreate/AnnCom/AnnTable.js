@@ -169,7 +169,7 @@ const AnnTable = (props) => {
             <TableRow>
               <TableCell className={classes.tableHID}> Id</TableCell>
               <TableCell
-                width="25%"
+                width="20%"
                 className={classes.tableHeader}
                 align="left"
               >
@@ -209,7 +209,7 @@ const AnnTable = (props) => {
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
-                      width="30%"
+                      width="25%"
                       align="left"
                     >
                       {row.title}
@@ -226,7 +226,7 @@ const AnnTable = (props) => {
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
-                      width="20%"
+                      width="22%"
                       align="left"
                     >
                       {row.time}

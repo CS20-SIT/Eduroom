@@ -48,6 +48,7 @@ const pQuestion = async (req, res, next) => {
       if (err) throw err;
       const id = result.rows[0].id;
       console.log("2nd");
+      console.log(id);
       console.log(newTagsIds);
       newTagsIds.forEach((t) => {
         console.log("3rd");
@@ -58,10 +59,9 @@ const pQuestion = async (req, res, next) => {
       //  existTags.forEach(t => {
       //    await pool.query("INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
       //    [id, t]); });
+      res.send({ success: true, id: result.rows[0].id });
     }
   );
-
-  res.send({ success: true });
 };
 
 const pQuestionTag = async (req, res, next) => {
