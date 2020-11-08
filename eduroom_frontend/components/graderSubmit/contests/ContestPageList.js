@@ -1,10 +1,18 @@
 import React, { Fragment } from "react"
 import style from "../../../styles/graderSubmit/contests/contestPageList"
+import { useRouter } from "next/router"
 
-const ContestList = () => {
+const ContestList = (props) => {
+  const router = useRouter()
+
   return (
     <Fragment>
-      <div className="box">
+      <div
+        className="box contest-list"
+        onClick={() => {
+          router.push(`/graderSystem/contest/${props.id}`)
+        }}
+      >
         <img src="../../../images/graderSubmit/trophy.svg" className="trophy" />
         <div className="content">
           <p className="contest-name">Content Name</p>

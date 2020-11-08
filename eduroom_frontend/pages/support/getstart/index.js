@@ -10,18 +10,19 @@ const create = () => {
 
     return (
         <Fragment>
-            <GeneralNonav>
+            <GeneralNonav img={'/images/newbg.svg'}>
             <div
                 style={{
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
                 }}
+                className="background"
             >
             <div id="nav">
                     <div className="top">
                     <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
+                    </label></Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><label>Getting Started</label>
                     <GetStart/>
                     </div>
                     

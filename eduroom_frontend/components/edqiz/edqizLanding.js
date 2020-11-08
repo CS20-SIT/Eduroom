@@ -2,7 +2,6 @@ import React, { Fragment, useState } from "react";
 import { useRouter } from "next/router";
 import EdqizText from "./edqizText";
 import style from "../../styles/edqiz/landing";
-import Link from "next/link";
 const Content = () => {
   
   const [room, setPinRoom] = useState("");
