@@ -28,26 +28,26 @@ const RoomTab = () => {
   function FormRow() {
     return (
       <React.Fragment>
-        <Grid item xs={2} className='button' onClick={handleClick}>
-          <Paper className={classes.paper}>item</Paper>
+        <Grid item xs={2} className='button' onClick={handleClick} variant="outlined">
+          <Paper className={classes.paper}>Room1</Paper>
         </Grid>
         <Grid item xs={2}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}>Room2</Paper>
         </Grid>
         <Grid item xs={2}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}>Room3</Paper>
         </Grid>
         <Grid item xs={2}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}>Room4</Paper>
         </Grid>
         <Grid item xs={2}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}>Room5</Paper>
         </Grid>
         <Grid item xs={2}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}>Room6</Paper>
         </Grid>
         <Grid item xs={2}>
-          <Paper className={classes.paper}>item</Paper>
+          <Paper className={classes.paper}>Room7</Paper>
         </Grid>
       </React.Fragment>
     );
