@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { useRouter } from 'next/router'
 
-const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,setNextQuestion}) => {
+const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,setTime,setNextQuestion}) => {
   const router = useRouter()
 
   const room = { name: "room1", PIN: router.query.id };
@@ -489,7 +489,7 @@ const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,setNextQuesti
               className="landing-button"
               onClick={() => {
                 goto(1) ;number++  ;ChangeQuestionNumber(number);
-                setNextQuestion()
+                setNextQuestion(); setTime(data[questionNumber+1].time)
               }}
             >
              

@@ -41,4 +41,21 @@ io.on('connection', (client) => {
     console.log("this next is ", pin, isNext,questionNo);
     io.sockets.emit("new-Nextquestion", isNext, pin,questionNo);
   });
+
+
+
+  client.on('set-seconds',temp => {
+    console.log('temp'+temp)
+    var interval = setInterval(()=> {
+      console.log('temp1 '+temp);
+      temp--;
+      io.emit('sent-seconds',temp);
+      if(temp <= 0){
+        clearInterval(interval);
+        
+      }
+    }, 1000);
+    console.log('hello outside');
+    
+  })
 });
