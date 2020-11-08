@@ -323,14 +323,18 @@ export default function FullWidthGrid() {
       let newtags = tags.filter((t) => {
         return typeof t === "string";
       });
+
       let qexisttags = tags.filter((t) => {
         return typeof t !== "string";
       });
       qexisttags = qexisttags.map((t) => {
         return t.tagid;
       });
+
       const pnewTags = [...new Set(newtags)];
+      console.log(pnewTags);
       const pqexistTags = [...new Set(qexisttags)];
+      console.log(pqexistTags);
 
       axios.post("http://localhost:5000/api/grader/cquestion", {
         title: title,

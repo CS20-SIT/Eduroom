@@ -13,18 +13,23 @@ const pQuestion = async (req, res, next) => {
   const visibility = req.body.visibility;
   const ruleType = req.body.ruleType;
   const adminid = req.body.adminid;
+  const newTags = req.body.newTags;
+  const existTags = req.body.existTags;
 
-  const newTags = req.body.pnewTags;
-  const existTags = req.body.pqexistTags;
+  const newTagsIds = [];
+  console.log(newTags);
+  newTags.forEach((t) => {
+    console.log(" 1st");
+    console.log(t);
+    // await pool.query("INSERT INTO tags (tagName) VALUES ($1) RETURNING tagid", [
+    //   t, function (err, result, fields) {
+    //     if (err) throw err;
+    //     newTagsIds.push(result.rows[0].tagid)
+    //   }
+    // ]);
+  });
 
-  // newTags.forEach(t => {
-  //   await pool.query("INSERT INTO tags (tagName) VALUES ($1)", [
-  //     t,
-  //   ]);
-
-  // });
-
-  await pool.query(
+  pool.query(
     "INSERT INTO Questions(title,description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType,adminid) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id",
     [
       title,
@@ -41,9 +46,18 @@ const pQuestion = async (req, res, next) => {
     ],
     function (err, result, fields) {
       if (err) throw err;
-      console.log(result);
-      console.log(result.rows[0].id);
-      //TODO Then post question tag
+      const id = result.rows[0].id;
+      console.log("2nd");
+      console.log(newTagsIds);
+      newTagsIds.forEach((t) => {
+        console.log("3rd");
+        // await pool.query("INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
+        //  [id, t]);
+      });
+
+      //  existTags.forEach(t => {
+      //    await pool.query("INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
+      //    [id, t]); });
     }
   );
 
