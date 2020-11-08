@@ -28,7 +28,7 @@ export default css`
   .link:hover {
     color: #f39ac4;
   }
-  .link:visit {
+  .active {
     color: #f39ac4;
   }
   .profile {

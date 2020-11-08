@@ -79,4 +79,7 @@ export default css`
     font-size: 0.875rem;
     color: #3d467f;
   }
+  .contest-list:hover {
+    cursor: pointer;
+  }
 `
