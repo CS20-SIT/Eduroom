@@ -1,16 +1,24 @@
 import React from "react";
 import axios from "axios";
+import MuiAlert from "@material-ui/lab/Alert";
+import { useState, useEffect } from "react";
+import Snackbar from "@material-ui/core/Snackbar";
 
-class AddFile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedFile: null,
-      loaded: 0,
-    };
-  }
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+const sError = {
+  "font-family": "Quicksand , sans-serif",
+  color: "white",
+  "font-size": "1em",
+};
 
-  checkMimeType = (event) => {
+export default function AddFile(props) {
+  const [selectedFile, setFile] = useState(null);
+  const [load, setLoad] = useState(0);
+  const [fileError, setFileError] = useState("Invalid Files");
+  const [checkError, setCheckError] = useState(false);
+  const checkMimeType = (event) => {
     //getting file object
     let files = event.target.files;
     console.log(files);
@@ -22,9 +30,6 @@ class AddFile extends React.Component {
       "application/zip",
       "application/x-zip-compressed",
       "application/zip-compressed",
-      "image/png",
-      "image/jpeg",
-      "image/gif",
     ];
     // loop access array
     for (var x = 0; x < files.length; x++) {
@@ -33,7 +38,8 @@ class AddFile extends React.Component {
         // create error message and assign to container
         err[x] = files[x].type + " is not a supported format\n";
         result = false;
-        console.log(err[x]);
+        setFileError("Invaild File Format!\n");
+        setCheckError(true);
       }
     }
     for (var z = 0; z < err.length; z++) {
@@ -43,23 +49,24 @@ class AddFile extends React.Component {
     }
     return result;
   };
-  maxSelectFile = (event) => {
+  const maxSelectFile = (event) => {
     let files = event.target.files;
-    if (files.length > 3) {
-      const msg = "Only 3 images can be uploaded at a time";
+    if (files.length > 10) {
+      setFileError("Only 10 Files can be uploaded at a time!\n");
+      setCheckError(true);
       event.target.value = null;
-      console.log("Only 3 images can be uploaded at a time");
       return false;
     }
     return true;
   };
-  checkFileSize = (event) => {
+  const checkFileSize = (event) => {
     let files = event.target.files;
-    let size = 2000000;
+    let size = 10 * 1024 * 1024;
     let err = [];
     for (var x = 0; x < files.length; x++) {
       if (files[x].size > size) {
-        console.log("is too large, please pick a smaller file");
+        setFileError("Pick a smaller file!\n");
+        setCheckError(true);
         err[x] = files[x].type + "is too large, please pick a smaller file\n";
       }
     }
@@ -71,35 +78,25 @@ class AddFile extends React.Component {
     }
     return true;
   };
-
-  onChangeHandler = (event) => {
+  const onChangeHandler = (event) => {
     var files = event.target.files;
-    if (
-      this.maxSelectFile(event) &&
-      this.checkMimeType(event) &&
-      this.checkFileSize(event)
-    ) {
-      // if return true allow to setState
-      this.setState({
-        selectedFile: files,
-        loaded: 0,
-      });
+    if (maxSelectFile(event) && checkMimeType(event) && checkFileSize(event)) {
+      setFile(files);
+      setLoad(0);
     }
   };
-  onClickHandler = () => {
+  const onClickHandler = () => {
     const data = new FormData();
-    data.append("owner", "John Doe");
-    if (this.state.selectedFile != null) {
-      for (var x = 0; x < this.state.selectedFile.length; x++) {
-        data.append("file", this.state.selectedFile[x]);
-        console.log(this.state.selectedFile[x]);
+
+    if (selectedFile != null) {
+      for (var x = 0; x < selectedFile.length; x++) {
+        data.append("file", selectedFile[x]);
+        console.log(selectedFile[x]);
       }
       axios
         .post("http://localhost:5000/api/grader/ptc", data, {
           onUploadProgress: (ProgressEvent) => {
-            this.setState({
-              loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
-            });
+            setLoad((ProgressEvent.loaded / ProgressEvent.total) * 100);
           },
         })
         .then((res) => {
@@ -113,33 +110,81 @@ class AddFile extends React.Component {
         });
     }
   };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
 
-  render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="offset-md-3 col-md-6">
-            <div className="form-group files">
-              <label>Upload Your Img </label>
-              <input
-                type="file"
-                className="form-control"
-                multiple
-                onChange={this.onChangeHandler}
-              />
-            </div>
-
-            <button
-              type="button"
-              className="btn btn-success btn-block"
-              onClick={this.onClickHandler}
-            >
-              Upload
-            </button>
+    setCheckError(false);
+  };
+  return (
+    <div className="container">
+      <Snackbar open={checkError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert style={sError} onClose={handleClose} severity="error">
+          {fileError}
+        </Alert>
+      </Snackbar>
+      <style jsx>{`
+        *:focus {
+          outline: none;
+        }
+        .custom-file-input::-webkit-file-upload-button {
+          visibility: hidden;
+          width: 100px;
+        }
+        .custom-file-input::before {
+          content: "Select Your Test Case Files";
+          display: inline-block;
+          color: #a880f7;
+          width: 120px;
+          padding: 5px 8px;
+          outline: none;
+          white-space: nowrap;
+          -webkit-user-select: none;
+          cursor: pointer;
+          text-shadow: 1px 1px #fff;
+          font-weight: 700;
+          font-size: 1.2em;
+        }
+        .custom-file-input:hover::before {
+          border-color: black;
+          outline: none;
+        }
+        .custom-file-input:focus {
+          outline: none;
+        }
+        /* .custom-file-input:active::before {
+          background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+          width: 120px;
+        } */
+      `}</style>
+      <div className="row">
+        <div className="offset-md-3 col-md-12">
+          <div className="form-group files">
+            <h3></h3>
+            <br></br>
+            <h5>
+              Testcase files up to 10 MB in size are available for upload.
+            </h5>
+            <input
+              type="file"
+              className="form-control"
+              multiple
+              onChange={onChangeHandler}
+              className="custom-file-input"
+              style={{ width: 1000 }}
+            />
           </div>
+
+          <button
+            type="button"
+            className="btn btn-success btn-block"
+            onClick={onClickHandler}
+          >
+            Upload
+          </button>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-export default AddFile;

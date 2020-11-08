@@ -336,25 +336,28 @@ export default function FullWidthGrid() {
       const pqexistTags = [...new Set(qexisttags)];
       console.log(pqexistTags);
 
-      axios.post("http://localhost:5000/api/grader/cquestion", {
-        title: title,
-        ruleType: rule,
-        description: description,
-        hint: hint,
-        timeLimit: time,
-        memoryLimit: memory,
-        visibility: visible,
-        adminid: "12345678-1234-1234-1234-123456789123",
-        intputDes: inputdesc,
-        outputDes: outputdesc,
-        difficulty: difficulty,
-        newTags: pnewTags,
-        existTags: pqexistTags,
-      });
+      axios
+        .post("http://localhost:5000/api/grader/cquestion", {
+          title: title,
+          ruleType: rule,
+          description: description,
+          hint: hint,
+          timeLimit: time,
+          memoryLimit: memory,
+          visibility: visible,
+          adminid: "12345678-1234-1234-1234-123456789123",
+          intputDes: inputdesc,
+          outputDes: outputdesc,
+          difficulty: difficulty,
+          newTags: pnewTags,
+          existTags: pqexistTags,
+        })
+        .then(function (response) {
+          console.log(response.data.id);
+
+          // setOpen(false);
+        });
     }
-    //   .then(function (response) {
-    //     console.log(response);
-    //     setOpen(false);
 
     //     setTimeout(() => {
     //       console.log('this is when we call prop on sucess')
