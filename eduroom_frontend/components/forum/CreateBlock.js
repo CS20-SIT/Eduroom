@@ -15,7 +15,22 @@ import {
 import GeneralNoNav from "../../components/template/generalnonav";
 import TextField from "@material-ui/core/TextField";
 import api from "../../api";
+// export async function getServerSideProps(ctx) {
+//   try{
+//     if(ctx.req.headers.cookie){
+//       const res = await axios.get('/create',{headers: { cookie: ctx.req.headers.cookie }})
+//       const data1 = await res.data
+//       return { props: { data:{...data1} }}
+//     }
+//     else{
+//       return { props: { data: {err:true}}}
+//     }
+//   }
+//   catch(err){
+//     return {props: {data:{err:true}}}
+//   }
 
+// }
 const CreateBlock = () => {
   const [createForm, setForm] = useState({
     title: "",
@@ -32,6 +47,7 @@ const CreateBlock = () => {
   useEffect(() => {
     console.log("render");
   }, []);
+  
   const handleChange = (e) => {
     e.preventDefault();
     setForm({ ...createForm, [e.target.name]: e.target.value });
