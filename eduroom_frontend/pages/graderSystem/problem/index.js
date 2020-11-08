@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import Head from "next/head"
-import Box from "../../../components/graderSubmit/Box"
 import Layout from "../../../components/graderSubmit/Layout"
+import Box from "../../../components/graderSubmit/Box"
 import style from "../../../styles/graderSubmit/problems/problems"
 import Tag from "../../../components/graderSubmit/problems/ProblemTag"
 import ProblemList from "../../../components/graderSubmit/problems/ProblemList"
@@ -13,19 +13,19 @@ const Problems = () => {
         <title>Problems</title>
         <meta property="og:title" content="Problems" key="Problems" />
       </Head>
-      <Layout>
+      <Layout page="problem">
         <div className="container">
           <div className="main">
             <div className="size">
               <Box>
                 <h2>Problem List</h2>
                 <div className="problem-list">
-                  <ProblemList />
-                  <ProblemList />
-                  <ProblemList />
-                  <ProblemList />
-                  <ProblemList />
-                  <ProblemList />
+                  <ProblemList id={1} />
+                  <ProblemList id={2} />
+                  <ProblemList id={3} />
+                  <ProblemList id={4} />
+                  <ProblemList id={5} />
+                  <ProblemList id={6} />
                 </div>
               </Box>
             </div>

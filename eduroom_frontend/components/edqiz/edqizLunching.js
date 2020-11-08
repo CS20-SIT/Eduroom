@@ -1,10 +1,31 @@
-import React, { Fragment } from 'react'
-import { useRouter } from 'next/router'
-import EdqizText from './edqizText'
-import style from '../../styles/edqiz/landing'
-const Page3 = ({data,questionNumber}) => {
-  const router = useRouter()
-  console.log(router.query.id)
+import React, { Fragment, useState } from 'react';
+import { useRouter } from 'next/router';
+import EdqizText from './edqizText';
+import style from '../../styles/edqiz/landing';
+const Page3 = (props) => {
+  const router = useRouter();
+  const [data, setData] = useState([
+    {
+      roomid: '1',
+      quizname: 'quizname1',
+      description: 'this is a test of description1',
+    },
+    {
+      roomid: '2',
+      quizname: 'quizname2',
+      description: 'this is a test of description2',
+    },
+    {
+      roomid: '5',
+      quizname: 'quizname3',
+      description: 'this is a test of description3',
+    },
+    {
+      roomid: '10',
+      quizname: 'quizname4',
+      description: 'this is a test of description4',
+    },
+  ]);
   return (
     <Fragment>
       <div className="landing">
@@ -15,38 +36,39 @@ const Page3 = ({data,questionNumber}) => {
             </div>
             <div className="landing-title">
               <div
-                style={{ fontWeight: 600, fontSize: "2rem", color: "#3D467F" }}
+                style={{ fontWeight: 600, fontSize: '2rem', color: '#3D467F' }}
               >
-                {" "}
+                {' '}
                 Quiz name
               </div>
             </div>
             <div className="row">
               <div
                 style={{
-                  backgroundColor: "#EFF0F6",
-                  height: "8vh",
-                  width: "25vw",
-                  borderRadius: "1rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  backgroundColor: '#EFF0F6',
+                  height: '8vh',
+                  width: '25vw',
+                  borderRadius: '1rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                   fontWeight: 600,
-                  fontSize: "1.5rem",
-                  color: "#5B5B5B",
+                  fontSize: '1.5rem',
+                  color: '#5B5B5B',
                 }}
               >
-                {" "}
-                {router.query.id}
+                {data[parseInt(props.id) - 1].quizname}
                 {/* query database by using id */}
               </div>
             </div>
             <div className="row">
               <button
                 className="landing-button"
-                onClick={() => router.push("/login")}
+                onClick={() =>
+                  router.push(`/edqiz/waitingRoom/${router.query.id}`)
+                }
               >
-                <span className="landing-button-text">Launch {">"}</span>
+                <span className="landing-button-text">Launch {'>'}</span>
               </button>
             </div>
           </div>
@@ -56,4 +78,5 @@ const Page3 = ({data,questionNumber}) => {
     </Fragment>
   );
 };
+
 export default Page3;
