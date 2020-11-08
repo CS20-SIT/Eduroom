@@ -20,9 +20,6 @@ select{
     textAlign: justify;
     width:300;
     padding: 20px 30px;
-    
-
-
 }
 input[type='radio']:after {
     background-color: #2196F3;
