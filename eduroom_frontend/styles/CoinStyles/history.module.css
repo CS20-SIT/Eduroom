@@ -1,0 +1,36 @@
+.background {
+    width: 95vw;
+    height: 90.5vh;
+    background-image: url('../../public/images/Coin-image/BG.svg');
+    background-repeat: repeat;
+    animation:MoveIn 2s;
+}
+.container {
+    height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.card {
+    width: 21vw;
+}
+.card div {
+    margin: 10%;
+    padding: 10%;
+    width: 20vw;
+    height: 18vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    background-color: white;
+    border-radius: 5%;
+}
+@keyframes MoveIn{
+    0%{
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
