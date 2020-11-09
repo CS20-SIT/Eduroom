@@ -14,10 +14,10 @@ spec:
       containers:
       - name: eduroom-frontend-deployment
         image: asia.gcr.io/macbigduck/eduroom-frontend
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
         ports:
         - containerPort: 3000
         env:
