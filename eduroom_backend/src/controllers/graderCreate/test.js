@@ -72,12 +72,16 @@ const editAnn = async (req, res, next) => {
 //   [questionId, fileNo, filePath]
 // );
 // };
+const path = require('path');
+const fs = require('fs');
+const DIR = path.join(__dirname,);
 const pTestcase = (req, res, next) => {
   //stackoverflow.com/questions/55586619/how-to-save-file-locally-and-save-path-on-database-using-multer-on-angular
-  https: console.log("Yes Sir");
+   console.log("Yes Sir");
   try {
-    const host = req.host;
-    const filePath = req.protocol + "://" + host + "/" + req.file.path;
+ 
+    const filePath = req.file.path;
+    console.log(filePath);
     pool.query(
       "INSERT INTO QuestionTestcases(questionId,fileNo,filePath) VALUES ($1 , $2, $3)",
       [questionId, fileNo, filePath]
