@@ -42,7 +42,7 @@ const Ownpackage = () => {
 
                                 <div style={{ paddingLeft: '10%' }}>
                                     <button style={{
-                                        backgroundColor: "#fdecf4",
+                                        backgroundColor: "#e1eefb",
                                         border: "none",
                                         cursor: "pointer",
                                         color: "#3D467F",
@@ -73,7 +73,7 @@ const Ownpackage = () => {
                                 <div style={{ fontSize: 15, fontWeight: 500, paddingTop: 4 }}>Category</div>
                                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                     <button onClick={() => console.log('Clicked')} className="pebutton"><i className="fas fa-globe"></i>publish</button>
-                                    <Link href="/user/instructor/course/edit">
+                                    <Link href="/user/instructor/course/editpackage">
                                         <button onClick={() => console.log('Clicked')} className="pebutton"><i className="fas fa-pen"></i>edit</button></Link>
                                 </div>
                             </div>

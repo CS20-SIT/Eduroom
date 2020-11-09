@@ -1,27 +1,31 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { Fragment, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-import style from '../../styles/edqiz/managePage';
-import Page1 from './join';
-import Page2 from './edqizManagePage2';
-import Page3 from './edqizManagePage3';
-import LandingPage from './edqizLanding';
-import socketIOClient from 'socket.io-client';
+import style from "../../styles/edqiz/managePage";
+import Page1 from "./join";
+import Page2 from "./join2";
+import Page3 from "./edqizManagePage3";
 
-const Content = ({ mode }) => {
+import socketIOClient from "socket.io-client";
+
+const Content = () => {
   const router = useRouter();
   // console.log(router.query.room);
-  const [name, setName] = useState('');
+
+  const [name, setName] = useState("");
   const mockData = [
-    { id: '1', pin: '3456' },
-    { id: '2', pin: '1234' },
-    { id: '3', pin: '2345' },
-    { id: '4', pin: '6789' },
+    { id: "1", pin: "3456" },
+    { id: "2", pin: "1234" },
+    { id: "3", pin: "2345" },
+    { id: "4", pin: "6789" },
   ];
 
   const [current, setCurrent] = useState(1);
-  const [inputMessage, setInputMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [roomPin, setRoomPin] = useState([]);
+  // console.log(roomPin)
+
   const goto = (val) => {
     if (val != current) {
       if (val <= 2 || isValidForm()) {
@@ -30,7 +34,7 @@ const Content = ({ mode }) => {
     }
   };
   const handleChangeQuizName = (val) => {
-    console.log(val);
+    // console.log(val);
     setName(val);
   };
 
@@ -52,27 +56,53 @@ const Content = ({ mode }) => {
   };
 
   const response = () => {
-    const socket = socketIOClient('http://localhost:8000/');
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+      
+    });
     const temp = messages.slice();
-    socket.on('new-message', (newMessage) => {
-      temp.push(newMessage);
+    socket.on("new-message", (newMessage, pin) => {
+      temp.push([newMessage, pin]);
       setMessages(temp.slice());
     });
   };
+
+  const checkOpenRoom = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = messages.slice();
+    socket.on("new-room", (isOpen, pin) => {
+      temp.push([isOpen, pin]);
+      setRoomPin(temp.slice());
+    });
+  };
   const sentMessage = () => {
-    const socket = socketIOClient('http://localhost:8000/');
-    socket.emit('sent-message', inputMessage);
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit("sent-message", inputMessage);
+   
   };
 
   const renderMessage = () => {
-    const arr = messages.map((msg, index) => {
-      return <div key={index}>{msg}</div>;
+    const arr = roomPin.map((msg, index) => {
+      if (roomPin[index][1] == router.query.room) {
+         router.push(`/edqiz/gamePlaySTD/${router.query.room}`)
+      }
+    });
+    return arr;
+  };
+  console.log("roomPin", roomPin);
+  const renderPin = () => {
+    const arr = roomPin.map((pin, index) => {
+      return <div key={index}>{pin}</div>;
     });
     return arr;
   };
   const test = () => {
     return (
-      <div style={{ padding: '30px' }}>
+      <div style={{ padding: "30px" }}>
         <input
           type="text"
           onChange={(e) => setInputMessage(e.target.value)}
@@ -83,16 +113,18 @@ const Content = ({ mode }) => {
       </div>
     );
   };
+
   useEffect(() => {
-    // checkPinIsValid();
     response();
+    checkOpenRoom();
+
   }, []);
-  
+
   return (
     <Fragment>
       <div>
         <div>{renderPage()}</div>
-        <div>{test()}</div>
+        {renderMessage()}
       </div>
       <style jsx>{style}</style>
     </Fragment>

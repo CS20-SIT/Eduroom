@@ -4,7 +4,12 @@ import Grid from '@material-ui/core/Grid'
 import OrderDetail from './orderDetail'
 import CreditBox from './creditBox'
 import PaypalBox from './paypalBox'
+<<<<<<< HEAD
 import Button from '@material-ui/core/Button'
+=======
+import { useRouter } from 'next/router'
+import Link from 'next/link';
+>>>>>>> a63a98f72bfc6cecba98457cd74fa30e5f972d42
 
 const Checkout = () => {
     const [open, setOpen] = useState(false)

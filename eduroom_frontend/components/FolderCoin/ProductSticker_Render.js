@@ -1,9 +1,21 @@
 import Card from '@material-ui/core/Card';
 import Styles from '../../styles/CoinStyles/ProductSticker_Render.module.css';
 import CardContent from '@material-ui/core/CardContent';
-
+import Pop from '../../components/FolderCoin/Pop_up'
+import { useState } from 'react';
 
 const Name = props => {
+    const[state,setState] = useState(false);
+    // state={
+    //     seen: false
+
+    // };
+    const togglePop = () => {
+        setState(true)
+        // this.setState({
+        //   seen: !this.state.seen
+        // });
+      };
     return (
         <div className={Styles.cardContainer}>
             <Card>
@@ -13,11 +25,15 @@ const Name = props => {
                             <h1 className={Styles.text}>
                                 Name Sticker : {props.title}
                             </h1>
+                            <div>
                             <button
-                                className={Styles.btn}
+                                className={Styles.btn} onClick={togglePop}
                             >
                                 Buy!
                             </button>
+                            <Pop toggle={state}/>
+                            {/* {this.state.seen ? <Pop toggle={this.togglePop} /> : null} */}
+                            </div>
                             <h1 className={Styles.text}>
                                 <img
                                     className={Styles.coin}
