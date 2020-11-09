@@ -4,6 +4,7 @@ metadata:
   name: prod-configmap
 data:
   # Frontend 
+  ENTRYPOINT_URL: https://eduroom.cscms.me
   BACKEND_API: https://eduroom.cscms.me/api
   CLIENT_URL: https://eduroom.cscms.me
   GRADER_URL: https://eduroom.cscms.me/grader
