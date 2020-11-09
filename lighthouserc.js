@@ -24,7 +24,6 @@ module.exports = {
         'https://eduroom.cscms.me/user/courses',
         'https://eduroom.cscms.me/edqiz',
         'https://eduroom.cscms.me/edqiz/create',
-        'https://eduroom.cscms.me/edqiz/correctAnswer',
         'https://eduroom.cscms.me/forum',
         'https://eduroom.cscms.me/support',
         'https://eduroom.cscms.me/tutor',
