@@ -10,8 +10,6 @@ const Page2 = ({ name }) => {
 
   let room = router.query.room;
 
-  // console.log(router.query.room);
-
 
  
   return (

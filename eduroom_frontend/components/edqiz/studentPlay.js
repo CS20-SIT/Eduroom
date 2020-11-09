@@ -5,13 +5,12 @@ import style from "../../styles/edqiz/managePage";
 import Page1 from "./join";
 import Page2 from "./join2";
 import Page3 from "./edqizManagePage3";
-import LandingPage from "./edqizLanding";
+
 import socketIOClient from "socket.io-client";
 
-const Content = ({ mode,room }) => {
+const Content = () => {
   const router = useRouter();
   // console.log(router.query.room);
-
 
   const [name, setName] = useState("");
   const mockData = [
@@ -25,7 +24,7 @@ const Content = ({ mode,room }) => {
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [roomPin, setRoomPin] = useState([]);
-
+  // console.log(roomPin)
 
   const goto = (val) => {
     if (val != current) {
@@ -57,29 +56,44 @@ const Content = ({ mode,room }) => {
   };
 
   const response = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+      
+    });
     const temp = messages.slice();
-    socket.on("new-message", (newMessage,pin) => {
-      temp.push([newMessage,pin]);
+    socket.on("new-message", (newMessage, pin) => {
+      temp.push([newMessage, pin]);
       setMessages(temp.slice());
     });
   };
-  
-  const sentMessage = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
-    socket.emit('sent-message', inputMessage);
+
+  const checkOpenRoom = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = messages.slice();
+    socket.on("new-room", (isOpen, pin) => {
+      temp.push([isOpen, pin]);
+      setRoomPin(temp.slice());
+    });
   };
- 
+  const sentMessage = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit("sent-message", inputMessage);
+   
+  };
 
   const renderMessage = () => {
-    const arr = messages.map((msg, index) => {
-      if(messages[index][1]==router.query.room){
-      return <div key={index}>{msg}</div>;
-    }
+    const arr = roomPin.map((msg, index) => {
+      if (roomPin[index][1] == router.query.room) {
+         router.push(`/edqiz/gamePlaySTD/${router.query.room}`)
+      }
     });
     return arr;
   };
-  console.log(messages);
+  console.log("roomPin", roomPin);
   const renderPin = () => {
     const arr = roomPin.map((pin, index) => {
       return <div key={index}>{pin}</div>;
@@ -99,21 +113,18 @@ const Content = ({ mode,room }) => {
       </div>
     );
   };
-  
 
-  
   useEffect(() => {
     response();
+    checkOpenRoom();
 
-   
   }, []);
 
   return (
     <Fragment>
       <div>
         <div>{renderPage()}</div>
-        <div>{test()}</div>
-        {renderPin()}
+        {renderMessage()}
       </div>
       <style jsx>{style}</style>
     </Fragment>
