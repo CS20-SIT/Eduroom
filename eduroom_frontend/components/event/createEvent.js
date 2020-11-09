@@ -20,21 +20,23 @@ const content = () => {
   const createEvent = async () => {};
   const handleCreate = (e) => {
     // if (validator()) {
-    //   api.post("/api/event/createEvent", {
-    //     title: eventInfo.title,
-    //     type: eventInfo.type,
-    //     description: eventInfo.description,
-    //     startDate: eventInfo.startDate,
-    //     endDate: eventInfo.endDate,
-    //     startTime: eventInfo.startTime,
-    //     endTime: eventInfo.endTime,
-    //     place: eventInfo.place,
-    //   });
+      api.post("/api/event/createEvent", {
+        title: eventInfo.title,
+        type: eventInfo.type,
+        description: eventInfo.description,
+        startDate: eventInfo.startDate,
+        endDate: eventInfo.endDate,
+        startTime: eventInfo.startTime,
+        endTime: eventInfo.endTime,
+        place: eventInfo.place,
+      });
     // }
-    console.log(eventInfo);
   };
 
-  const validator = () => {};
+  const validator = () => {
+    
+  };
+
   const [selectedDate, handleDateChange] = useState(new Date());
 
   const eventType = ["Holiday", "Meeting", "Seminar"];
