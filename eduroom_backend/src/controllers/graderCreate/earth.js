@@ -85,10 +85,10 @@ const pTag = async (req, res, next) => {
   res.send({ success: true });
 };
 const pQuestionSample = async (req, res, next) => {
-  const questionId = 2;
-  const sampleNo = 2;
-  const intput = "mockup data here";
-  const output = "mockup data here";
+  const questionId = req.body.questionId;
+  const sampleNo = req.body.sampleNo;
+  const intput = req.body.intput;
+  const output = req.body.output;
 
   await pool.query(
     "INSERT INTO questionSample(questionId,sampleNo, intput, output) VALUES ($1 , $2, $3, $4)",
@@ -97,9 +97,9 @@ const pQuestionSample = async (req, res, next) => {
   res.send({ success: true });
 };
 const pQuestionTestcase = async (req, res, next) => {
-  const questionId = 2;
-  const fileNo = 2;
-  const filePath = "/file/book";
+  const questionId = req.body.intput;
+  const fileNo = req.body.fileNo;
+  const filePath = req.body.filePath;
   0;
   await pool.query(
     "INSERT INTO QuestionTestcases(questionId,fileNo,filePath) VALUES ($1 , $2, $3)",
@@ -109,18 +109,18 @@ const pQuestionTestcase = async (req, res, next) => {
 };
 //edit by id
 const eQuestion = async (req, res, next) => {
-  const title = "test01";
-  const description = "mockup data here";
-  const hint = "mockup data here";
-  const intputDes = "mockup data here";
-  const outputDes = "mockup data here";
-  const timeLimit = 120;
-  const memoryLimit = 120;
-  const difficulty = "easy";
-  const visibility = false;
-  const ruleType = "acm";
-  const adminid = "12345678-1234-1234-1234-123456789123";
-  const id = 1;
+  const title = req.body.title;
+  const description = req.body.description;
+  const hint = req.body.hint;
+  const intputDes = req.body.intputDes;
+  const outputDes = req.body.outputDes;
+  const timeLimit = req.body.timeLimit;
+  const memoryLimit = req.body.memoryLimit;
+  const difficulty = req.body.difficulty;
+  const visibility = req.body.visibility;
+  const ruleType = req.body.ruleType;
+  const adminid = req.body.adminid;
+  const id = req.body.id;
 
   await pool.query(
     "UPDATE questions SET (title,description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType,adminid) = ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) WHERE id = ($12)",
@@ -143,10 +143,10 @@ const eQuestion = async (req, res, next) => {
   res.send({ success: true });
 };
 const eQuestionSample = async (req, res, next) => {
-  const questionId = 2;
-  const sampleNo = 2;
-  const intput = "new mockup";
-  const output = "new mockup";
+  const questionId = req.body.questionId;
+  const sampleNo = req.body.sampleNo;
+  const intput = req.body.intput;
+  const output = req.body.output;
 
   await pool.query(
     "UPDATE questionSample SET (intput, output) = ($1 , $2) WHERE questionId = ($3) and sampleNo = ($4)",
@@ -155,9 +155,9 @@ const eQuestionSample = async (req, res, next) => {
   res.send({ success: true });
 };
 const eQuestionTestcase = async (req, res, next) => {
-  const questionId = 2;
-  const fileNo = 2;
-  const filePath = "/file/isustoo";
+  const questionId = req.body.questionId;
+  const fileNo = req.body.fileNo;
+  const filePath = req.body.filePath;
   await pool.query(
     "UPDATE questionTestcases SET filePath = $1 WHERE questionId = ($2) and fileNo = ($3)",
     [filePath, questionId, fileNo]
