@@ -17,9 +17,28 @@ io.on('connection', (client) => {
   client.on("disconnect", () => {
     console.log("user disconnect");
   });
-  
-  client.on('sent-message', (msg) => {
-    console.log('This is a new messgae ', msg);
-    io.sockets.emit('new-message', msg);
+
+  client.on("sent-message", (msg, pin) => {
+    console.log("This is a new messgae ", msg, pin);
+    io.sockets.emit("new-message", msg, pin);
+  });
+
+  client.on("sent-question", (question, pin) => {
+    console.log("This is a new messgae ", question, pin);
+    io.sockets.emit("new-message", question, pin);
+  });
+  client.on("set-openRoom", (isOpen, pin) => {
+    console.log("this room is ", pin, isOpen);
+    io.sockets.emit("new-room", isOpen, pin);
+  });
+
+  client.on("set-skip", (isSkip, pin,questionNo) => {
+    console.log("this skip is ", pin, isSkip,questionNo);
+    io.sockets.emit("new-question", isSkip, pin,questionNo);
+  });
+
+  client.on("set-nextQuestion", (isNext, pin,questionNo) => {
+    console.log("this next is ", pin, isNext,questionNo);
+    io.sockets.emit("new-Nextquestion", isNext, pin,questionNo);
   });
 });
