@@ -1,22 +1,22 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import Wishlists from '../../components/user/wishlists'
-import General from '../../components/template/generalnonav'
+import UserGeneral from '../../components/user/usergeneral'
 import axios from 'axios'
 const Wishlist = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get('https://jsonplaceholder.typicode.com/albums')
       setTotalList(res.data)
-      const result = res.data.slice(0, perPage)
-      setWishlist(result)
+      // const result = res.data.slice(0, perPage)
+      // setWishlist(result)
       // console.log(res.datas);
     }
     fetchData()
   }, [])
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
   const [totalList, setTotalList] = useState([])
-  const [wishlist, setWishlist] = useState([])
-  const perPage = 9
+  // const [wishlist, setWishlist] = useState([])
+  // const perPage = 9
   // const wishlist=[
   //     {title:'TEST',price:100},
   //     {title:'TEST2',price:300},
@@ -34,25 +34,25 @@ const Wishlist = () => {
     const temp = totalList.slice()
     temp.splice(index + count, 1)
     setTotalList(temp)
-    changeList(0)
+    // changeList(0)
 
     // return console.log(wishlist[index].id,index);
   }
-  const changeList = (num) => {
-    if (num > 0 && count + num < totalList.length) {
-      changeCount(num)
-    } else if (num < 0 && count + num >= 0) {
-      changeCount(num)
-    } else {
-      const temp = totalList.slice(count, count + perPage)
-      setWishlist(temp)
-    }
-  }
-  const changeCount = (num) => {
-    setCount(count + num)
-    const temp = totalList.slice(count, count + perPage)
-    setWishlist(temp)
-  }
+  // const changeList = (num) => {
+  //   if (num > 0 && count + num < totalList.length) {
+  //     changeCount(num)
+  //   } else if (num < 0 && count + num >= 0) {
+  //     changeCount(num)
+  //   } else {
+  //     const temp = totalList.slice(count, count + perPage)
+  //     setWishlist(temp)
+  //   }
+  // }
+  // const changeCount = (num) => {
+  //   setCount(count + num)
+  //   const temp = totalList.slice(count, count + perPage)
+  //   setWishlist(temp)
+  // }
 
   const sorting = () => {
     let x = document.getElementById('sort').value
@@ -64,7 +64,7 @@ const Wishlist = () => {
     const temp = totalList.sort((a, b) => {
       if (b[x] >= a[x]) return -1
       else if (b[x] < a[x]) return 1
-    })
+    }).slice();
     // const temp=totalList.sort(
     //     (a,b)=>{
     //         let index=0;
@@ -77,13 +77,13 @@ const Wishlist = () => {
     //             }
     //         }
     //     })
-    setTotalList(temp)
-    changeList(0)
+    setTotalList(temp);
+    // changeList(0)
   }
 
   return (
     <Fragment>
-      <General>
+      <UserGeneral>
         <h1>Wishlist</h1>
         Sort by
         <select id="sort">
@@ -98,7 +98,7 @@ const Wishlist = () => {
           Select
         </button>
         <br></br>
-        <button
+        {/* <button
           onClick={() => {
             changeList(-1 * perPage)
           }}
@@ -111,10 +111,10 @@ const Wishlist = () => {
           }}
         >
           Next
-        </button>
-        {count}
-        <Wishlists item={wishlist} remove={del}></Wishlists>
-      </General>
+        </button> */}
+        {/* {count} */}
+        <Wishlists item={totalList} remove={del}></Wishlists>
+      </UserGeneral>
     </Fragment>
   )
 }
