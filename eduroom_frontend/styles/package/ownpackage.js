@@ -8,10 +8,11 @@ export default css`
     font-size: 20px;
     width: 85%;
     padding: 0.5% 2%;
-    background-color: #fdecf4;
-    border: 1px solid #fdecf4;
-    margin-bottom: 5%;
+    background-color: #e1eefb;
+    border: 1px solid #e1eefb;
+    margin-bottom: 1%;
     border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
 }
 .pebutton {
     background-color: #5b5b5b;
