@@ -20,7 +20,7 @@ const InstructorRegister = () => {
     const fetch = async () => {
       const res = await api.get('/api/test');
       console.log(res.data);
-    }
+    };
     fetch();
 
   }, []);
@@ -42,7 +42,7 @@ const InstructorRegister = () => {
 
     if (validator()) {
       api
-        .post("/api/register_instructor", {
+        .post("/api/instructor/register_instructor", {
           degree: instructorFrom.degree,
           expert: instructorFrom.expert,
           bio: instructorFrom.bio,
@@ -52,9 +52,9 @@ const InstructorRegister = () => {
         });
     }
 
-    if (validator() == true) {
-      window.location.href = "/user/instructor";
-    }
+    // if (validator() == true) {
+    //   window.location.href = "/user/instructor";
+    // }
 
 
   };
@@ -78,6 +78,7 @@ const InstructorRegister = () => {
     <GeneralNoNav>
       <div>
         <h1>Instructor   Profile</h1>
+        <Container component="main" xs={12}>
         <Grid item xs={12}>
           <Typography variant="subtitle1">Degree</Typography>
         </Grid>
@@ -158,7 +159,7 @@ const InstructorRegister = () => {
                     </Button>
           </Grid>
         </Grid>
-
+        </Container>
       </div></GeneralNoNav>
   </Fragment>
 
