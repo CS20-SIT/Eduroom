@@ -1,8 +1,14 @@
+
+// use for startime / endtime
+//https://material-ui.com/components/chips/#chip
+// use grid for listing the component
+//https://material-ui.com/components/grid/ 
+//https://material-ui.com/components/switches/
+
 import React from "react";
-import AnnDialog from "./AnnCom/AnnDialog";
-import AnnTable from "./AnnCom/AnnTable";
 import { useState, useEffect } from "react";
 import Grid from '@material-ui/core/Grid';
+import ConEach from './ConEach'
 //prepare for adding abmin log wheen create / edit ann
 const Test = () => {
   const [refresh, setRefresh] = useState(false);
@@ -18,27 +24,8 @@ const sBigTitle ={'font-family': 'Quicksand , sans-serif' ,  'font-size': '2em' 
 }
 
   return (
-    <div style={sBig}>
-    <Grid  spacing={3} containerdirection="row" justify="flex-start" alignItems="baseline">
-    <Grid  >
-   
-     <span style={sBigTitle}>Announcement</span>
-     <div style={{height:20}} ></div>
-    </Grid>
-    <Grid  >
-   <span style={{paddingTop:7}}>
-    <AnnDialog  onSuccess={handleUpdate} /></span>
-    </Grid>
-    <div style={{height:20}} ></div>
-    <Grid item xl={12} md={12}>
-    <AnnTable  onSuccess={handleUpdate}  update={refresh} />
-    <div style={{height:100}} ></div>
-    </Grid>
-  
-  </Grid>
-
-  
-</div>
+    <ConEach title = 'Do or Die' description="This contest is created for preparing yourself to do the Do or Die exam."></ConEach>
+         
   );
 };
 export default Test;
