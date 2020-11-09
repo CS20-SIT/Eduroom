@@ -88,7 +88,7 @@ const Content = () => {
   const renderMessage = () => {
     const arr = roomPin.map((msg, index) => {
       if (roomPin[index][1] == router.query.room) {
-         router.push('../../edqiz')
+         router.push(`/edqiz/gamePlaySTD/${router.query.room}`)
       }
     });
     return arr;
@@ -113,20 +113,11 @@ const Content = () => {
       </div>
     );
   };
-  const startGame = () => {
-    
-    roomPin.map((el, index) => {
-      console.log(roomPin[index][0]==true && roomPin[index][1]==router.query.room)
-     if(roomPin[index][0]==true && roomPin[index][1]==router.query.room){
-       console.log('gotoanother Page')
-     }
-    })
 
-  };
   useEffect(() => {
     response();
     checkOpenRoom();
-    startGame();
+
   }, []);
 
   return (

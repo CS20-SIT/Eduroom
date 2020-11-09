@@ -1,14 +1,16 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Page1 from "./gamePage1";
-import Page2 from "./gamePage2";
+import Page1 from "./gamePage1std";
+import Page2 from "./correctAnswer";
 import socketIOClient from "socket.io-client";
-import { useRouter } from "next/router";  
+import { useRouter } from "next/router";
 
 const Content = ({ id }) => {
   const router = useRouter();
   const [current, setCurrent] = useState(1);
   const [questionNumber, setquestionNumber] = useState(0);
   const [messages, setMessages] = useState([]);
+  const [nextQuestion, setNextQuestion] = useState([]);
+
 
   const handleChangeQuestionNumber = (val) => {
     setquestionNumber(val);
@@ -55,45 +57,61 @@ const Content = ({ id }) => {
     },
   ];
   const response = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
-
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
     const temp = messages.slice();
-    socket.on("new-message", (newMessage, pin) => {
-      temp.push([newMessage, pin]);
+    socket.on("new-question", (isSkip, pin, questionNo) => {
+      temp.push([isSkip, pin, questionNo]);
       setMessages(temp.slice());
+      console.log(temp,'resposne');
+      if (temp[questionNumber][2] == questionNumber) {
+        if (temp[questionNumber][0] == true) {
+          goto(2);
+        }
+      }
+    });
+  };
+
+  const responseNextQuestion = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = messages.slice();
+    socket.on("new-Nextquestion", (isNext, pin, questionNo) => {
+      temp.push([isNext, pin, questionNo]);
+      setNextQuestion(temp.slice());
+      // console.log(temp,'resposneNextQuestion');
+      // console.log(temp[questionNumber+1][2])
+      setquestionNumber(temp[questionNumber+1][2])
+      goto(1)
     });
   };
 
   const sentMessage = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
 
     socket.emit("sent-message", data[questionNumber], id.id);
-  };
-
-  const setNextQuestion = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
-
-    socket.emit("set-nextQuestion", true,id.id,questionNumber+1);
   };
   // console.log("questionNo", questionNumber);
   const renderMessage = () => {
     const arr = messages.map((msg, index) => {
-      console.log("test");
-
       if (messages[index][1] == id.id) {
-        console.log(messages);
-        console.log(messages[index][1] == id.id);
+        // console.log(messages);
+        // console.log(messages[index][1] == id.id);
 
-        return <div key={index}>{msg}ha</div>;
+        // return <div key={index}>{msg}ha</div>;
       }
     });
-    return ''
+    return ;
   };
 
   useEffect(() => {
-    // response();
+    response()
   }, []);
-  console.log(messages);
+  // console.log(messages);
   const goto = (val) => {
     setCurrent(val);
   };
@@ -108,7 +126,7 @@ const Content = ({ id }) => {
             questionNumber={questionNumber}
             sentMessage={sentMessage}
             response={response}
-            setquestionNumber={handleChangeQuestionNumber}
+            messages={messages}
           />
         );
       case 2:
@@ -118,7 +136,7 @@ const Content = ({ id }) => {
             data={data}
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
-            setNextQuestion={setNextQuestion}
+            responseNextQuestion={responseNextQuestion}
           />
         );
     }
@@ -128,7 +146,7 @@ const Content = ({ id }) => {
       <div className="landing">
         <div>
           <div className="card">{renderPage()}</div>
-          {renderMessage()}
+          {/* {renderMessage()} */}
         </div>
       </div>
       <style jsx>{`
