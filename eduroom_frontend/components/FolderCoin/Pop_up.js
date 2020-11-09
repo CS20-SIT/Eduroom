@@ -7,7 +7,8 @@ const temp = (props) => {
         
         <div>
         <h1>
-        
+            Name Sticker : {props.title}
+            Price : {props.price}
         </h1>
         </div>
     
