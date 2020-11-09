@@ -43,7 +43,6 @@ const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(process.cwd() + "/src/uploadedTestCase"));
-    console.log(path.join(__dirname + "/temp"));
     console.log(path.join(process.cwd() + "/src/uploadedTestCase"));
     console.log("stroage1");
   },
