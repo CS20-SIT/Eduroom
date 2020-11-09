@@ -1,9 +1,13 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-const axios = require("axios");
-const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,}) => {
-  const room = { name: "room1", PIN: "99999" };
+import { useRouter } from 'next/router'
+
+const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,setNextQuestion}) => {
+  const router = useRouter()
+
+  const room = { name: "room1", PIN: router.query.id };
   let number=questionNumber;
+
 
   
   const Correct = [];
@@ -485,8 +489,7 @@ const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,}) => {
               className="landing-button"
               onClick={() => {
                 goto(1) ;number++  ;ChangeQuestionNumber(number);
-               console.log(number) 
-               
+                setNextQuestion()
               }}
             >
              
