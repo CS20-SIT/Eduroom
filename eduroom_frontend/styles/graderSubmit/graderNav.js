@@ -2,7 +2,6 @@ import css from "styled-jsx/css"
 export default css`
   .nav,
   .profile {
-    height: 2.5rem;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -23,7 +22,13 @@ export default css`
     justify-content: center;
     align-items: center;
   }
-  .home {
+  .text:hover {
+    cursor: pointer;
+  }
+  .link:hover {
+    color: #f39ac4;
+  }
+  .active {
     color: #f39ac4;
   }
   .profile {

@@ -3,15 +3,18 @@ import EdqizText from "../edqiz/edqizText";
 import CardQuiz from "../edqiz/cardQuiz";
 import AddNewQuiz from "../edqiz/addNewQuiz";
 import Grid from "@material-ui/core/Grid";
-const Page1 = ({ data, goto, handleQuestionNumber,id }) => {
-  console.log("id"+id);
+const Page1 = ({ data, goto, handleQuestionNumber,questionNumber,question }) => {
+  
+
+  
   const renderQuestion = () => {
     return data.map((el, index) => {
       return (
         <CardQuiz
           key={index}
-          data={el}
-          id={id}
+          question={question}
+          data={data}
+          id={questionNumber}
           index={index}
           quizname={data[index].quizname}
           description={data[index].description}

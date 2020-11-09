@@ -1,10 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect,useState } from "react";
 import { useRouter } from "next/router";
-import EdqizText from "./edqizText";
 import style from "../../styles/edqiz/landing";
-const Page1 = () => {
+
+
+
+const Page1 = ({ goto, mockData, change }) => {
+ 
   const router = useRouter();
-// console.log(router.query.room)
   return (
     <Fragment>
       <div className="landing">
@@ -17,7 +19,7 @@ const Page1 = () => {
                 color: "#3D467F",
                 display: "flex",
                 justifyContent: "center",
-                padding:'20px'
+                padding: "20px",
               }}
             >
               Play NOW!
@@ -29,7 +31,6 @@ const Page1 = () => {
                 color: "#3D467F",
                 display: "flex",
                 justifyContent: "center",
-
               }}
             >
               YOUR'RE IN GAME PIN
@@ -66,7 +67,6 @@ const Page1 = () => {
                 color: "#3D467F",
                 display: "flex",
                 justifyContent: "center",
-
               }}
             >
               FILL IN YOUR NAME :
@@ -76,14 +76,12 @@ const Page1 = () => {
                 type="text"
                 id="fname"
                 name="firstname"
+                onChange={(e) => change(e.target.value)}
                 placeholder="fill in your name . ."
               />
             </div>
             <div className="row">
-              <button
-                className="landing-button"
-                onClick={() => router.push("/login")}
-              >
+              <button className="landing-button" onClick={() => goto(2)}>
                 <span className="landing-button-text">JOIN GAME</span>
               </button>
             </div>
