@@ -18,7 +18,7 @@ const Content = ({ id }) => {
     {
       question:
         "directory anything else. The name cannot be changed and is the only directory used to serve static assets?",
-      time: "30",
+      time: "10",
       point: "2000",
       ans: [
         "have a static file with the same",
@@ -75,6 +75,9 @@ const Content = ({ id }) => {
     socket.on("sent-seconds", (time1) => {
       console.log(time1,'time1')
       setTime(time1) 
+      if(time1==0){
+        goto(2)}
+    
     });
   };
   const setTimeSocket = () => {
@@ -82,7 +85,7 @@ const Content = ({ id }) => {
       path: "/kahoot",
     });
    
-    socket.emit("set-seconds",(time) )
+    socket.emit("set-seconds",(time),id.id )
   };
 
 
@@ -100,15 +103,12 @@ const Content = ({ id }) => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
-
     socket.emit("set-nextQuestion", true, id.id, questionNumber + 1);
   };
   // console.log("questionNo", questionNumber);
   const renderMessage = () => {
     const arr = messages.map((msg, index) => {
       if (messages[index][1] == id.id) {
-        console.log(messages);
-        console.log(messages[index][1] == id.id);
 
         return <div key={index}>{msg}ha</div>;
       }
@@ -139,6 +139,7 @@ const Content = ({ id }) => {
             sentMessage={sentMessage}
             response={response}
             setquestionNumber={handleChangeQuestionNumber}
+           
           />
         );
       case 2:
@@ -150,6 +151,8 @@ const Content = ({ id }) => {
             ChangeQuestionNumber={handleChangeQuestionNumber}
             setNextQuestion={setNextQuestion}
             setTime={setTime}
+            setTimeSocket={setTimeSocket}
+            id={id.id}
           />
         );
     }
