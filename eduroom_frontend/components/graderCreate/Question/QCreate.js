@@ -12,6 +12,12 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+
+import Image from "next/image";
+
+import Switch from "@material-ui/core/Switch";
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -62,8 +68,8 @@ const CustomAutocomplete = withStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "75%",
-    marginLeft: "12%",
+    width: "65%",
+    marginLeft: "17%",
     marginRight: "15%",
     marginTop: "2.5%",
     marginBottom: "10%",
@@ -131,6 +137,12 @@ export default function FullWidthGrid() {
     GetData();
   }, []);
 
+  const sButtionandVisbile = {
+    color: "#3d467f",
+    "font-family": "Quicksand , sans-serif",
+    "font-weight": "bold",
+    "font-size": "1.2em",
+  };
   const sInputfield = {
     "font-family": "Quicksand , sans-serif",
     color: "#5b5b5b",
@@ -186,16 +198,7 @@ export default function FullWidthGrid() {
       label: "ACM",
     },
   ];
-  const visibles = [
-    {
-      value: true,
-      label: "ON",
-    },
-    {
-      value: false,
-      label: "OFF",
-    },
-  ];
+
   const timelims = [
     {
       value: 250,
@@ -313,7 +316,7 @@ export default function FullWidthGrid() {
     setMemory(event.target.value);
   };
   const handleChangeStatus = (event) => {
-    setvisible(event.target.value);
+    setvisible(event.target.checked);
   };
 
   const handleSubmit = () => {
@@ -354,6 +357,7 @@ export default function FullWidthGrid() {
         })
         .then(function (response) {
           console.log(response.data.id);
+          onHandlerFile(response.data.id);
 
           // setOpen(false);
         });
@@ -388,6 +392,111 @@ export default function FullWidthGrid() {
       default:
     }
   };
+
+  ///Select Filed
+  const [selectedFile, setFile] = useState(null);
+  const [load, setLoad] = useState(0);
+  const [fileError, setFileError] = useState("Invalid Files");
+  const [checkError, setCheckError] = useState(false);
+  const [checkFileSucess, setCheckFileSucess] = useState(false);
+  const checkMimeType = (event) => {
+    //getting file object
+    let files = event.target.files;
+    console.log(files);
+    //define message container
+    let err = [];
+    let result = true;
+    // list allow mime type
+    const types = [
+      "application/zip",
+      "application/x-zip-compressed",
+      "application/zip-compressed",
+    ];
+    // loop access array
+    for (var x = 0; x < files.length; x++) {
+      // compare file type find doesn't matach
+      if (types.every((type) => files[x].type !== type)) {
+        // create error message and assign to container
+        err[x] = files[x].type + " is not a supported format\n";
+        result = false;
+        setFileError("Invaild File Format!\n");
+        setCheckError(true);
+      }
+    }
+    for (var z = 0; z < err.length; z++) {
+      // if message not same old that mean has error
+      // discard selected file
+      event.target.value = null;
+    }
+    return result;
+  };
+  const maxSelectFile = (event) => {
+    let files = event.target.files;
+    if (files.length > 10) {
+      setFileError("Only 10 Files can be uploaded at a time!\n");
+      setCheckError(true);
+      event.target.value = null;
+      return false;
+    }
+    return true;
+  };
+  const checkFileSize = (event) => {
+    let files = event.target.files;
+    let size = 10 * 1024 * 1024;
+    let err = [];
+    for (var x = 0; x < files.length; x++) {
+      if (files[x].size > size) {
+        setFileError("Pick a smaller file!\n");
+        setCheckError(true);
+        err[x] = files[x].type + "is too large, please pick a smaller file\n";
+      }
+    }
+    for (var z = 0; z < err.length; z++) {
+      // if message not same old that mean has error
+      // discard selected file
+
+      event.target.value = null;
+    }
+    return true;
+  };
+  const onChangeHandlerFile = (event) => {
+    var files = event.target.files;
+    if (maxSelectFile(event) && checkMimeType(event) && checkFileSize(event)) {
+      setFile(files);
+      setLoad(0);
+      setCheckFileSucess(true);
+    }
+  };
+  const onHandlerFile = (id) => {
+    const data = new FormData();
+
+    if (selectedFile != null) {
+      for (var x = 0; x < selectedFile.length; x++) {
+        data.append("file", selectedFile[x]);
+        data.append("questionid", id);
+        console.log(selectedFile[x]);
+      }
+      axios
+        .post("http://localhost:5000/api/grader/ptc", data, {
+          onUploadProgress: (ProgressEvent) => {
+            setLoad((ProgressEvent.loaded / ProgressEvent.total) * 100);
+          },
+        })
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  const handleCloseFile = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setCheckError(false);
+    setCheckFileSucess(false);
+  };
+
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme1}>
@@ -402,8 +511,21 @@ export default function FullWidthGrid() {
         </Snackbar>
 
         <Grid container spacing={3}>
-          <Grid item xs={12}>
+          <Grid item xs={10}>
             <span style={sBigTitle}>Create your Question</span>
+          </Grid>
+          <Grid item xs={2}>
+            <FormControlLabel
+              control={
+                <Switch
+                  color="primary"
+                  checked={visible}
+                  onChange={handleChangeStatus}
+                  name="visible"
+                />
+              }
+              label={<span style={sButtionandVisbile}>Visible</span>}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
             <div>
@@ -566,7 +688,7 @@ export default function FullWidthGrid() {
               </Paper>
             </div>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6}>
             <Paper className={classes.paper2}>
               <div>
                 <TextField
@@ -592,32 +714,7 @@ export default function FullWidthGrid() {
               </div>{" "}
             </Paper>
           </Grid>
-          <Grid item xs={3}>
-            <Paper className={classes.paper2}>
-              <div>
-                <TextField
-                  fullWidth
-                  select
-                  required
-                  label="Visibility"
-                  value={visible}
-                  onChange={handleChangeStatus}
-                  // inputProps={{style:sInputfieldSelect }}
-                  InputLabelProps={{ style: sInputfieldSelect }}
-                >
-                  {visibles.map((option) => (
-                    <MenuItem
-                      className={classes.menuitem}
-                      key={option.value}
-                      value={option.value}
-                    >
-                      <span style={sInputSelect}> {option.label}</span>
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </div>{" "}
-            </Paper>
-          </Grid>
+
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <TextField
@@ -648,6 +745,7 @@ export default function FullWidthGrid() {
                   filterSelectedOptions
                   renderInput={(params) => {
                     params.inputProps.onKeyDown = handleKeyDown;
+                    params.inputProps.maxLength = 50;
                     return (
                       <TextField
                         {...params}
@@ -660,6 +758,144 @@ export default function FullWidthGrid() {
                   }}
                 />
               </div>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                {" "}
+                <Grid item xs={12}>
+                  <Snackbar
+                    open={checkError}
+                    autoHideDuration={6000}
+                    onClose={handleCloseFile}
+                  >
+                    <Alert
+                      style={sError}
+                      onClose={handleCloseFile}
+                      severity="error"
+                    >
+                      {fileError}
+                    </Alert>
+                  </Snackbar>
+                  <Snackbar
+                    open={checkFileSucess}
+                    autoHideDuration={3000}
+                    onClose={handleCloseFile}
+                  >
+                    <Alert
+                      style={sError}
+                      onClose={handleCloseFile}
+                      severity="success"
+                    >
+                      Selected {selectedFile ? selectedFile.length : ""} Files !
+                    </Alert>
+                  </Snackbar>
+                  <style jsx>{`
+                  *:focus {
+                    outline: none;
+                  }
+                  .custom-file-input::-webkit-file-upload-button {
+                    visibility: hidden;
+                    width: 800px;
+                  }
+                  .custom-file-input::before {
+                    content: "Select Your Test Case Files";
+                    display: inline-block;
+                    color: #a880f7;
+                    width: 300px;
+                    /* padding: 5px 8px; */
+                    outline: none;
+                    white-space: nowrap;
+                    -webkit-user-select: none;
+                    cursor: pointer;
+                    font-weight: 700;
+                    font-size: 1.5em;
+                  }
+                  .custom-file-input:hover::before {
+                    border-color: black;
+                    outline: none;
+                  }
+                  .custom-file-input:focus {
+                    outline: none;
+                  }
+                  .img {
+                    width:50,
+                    height:50,
+                  }
+                `}</style>
+                  <input
+                    type="file"
+                    className="form-control"
+                    multiple
+                    onChange={onChangeHandlerFile}
+                    className="custom-file-input"
+                    style={{
+                      width: 280,
+                      marginTop: 25,
+                      marginBottom: 10,
+                    }}
+                  />
+                </Grid>
+                {/* <Grid item xs={1}>
+                  <img
+                    alt="landing-img"
+                    src="/images/graderCreate/fileUpload.svg"
+                    width="80"
+                    height="80"
+                    style={{
+                      marginTop: 20,
+                      marginBottom: 10,
+                    }}
+                  />
+                </Grid> */}
+                <Grid item xs={12}>
+                  <span
+                    style={{
+                      width: 300,
+                      marginTop: 25,
+                      marginLeft: -42,
+                      "font-weight": "bold",
+                    }}
+                  >
+                    {selectedFile
+                      ? "Total number of Testcase files recieved :  " +
+                        selectedFile.length +
+                        " Files "
+                      : "Testcase  files up to 10 MB in size are available for upload."}
+                  </span>
+                </Grid>
+                <Grid item xs={12}>
+                  <div style={{ height: 12 }}></div>
+                </Grid>
+              </Grid>
+              {/* <div className="container">
+               
+           
+                <div className="row">
+                  <div className="offset-md-3 col-md-12">
+                    <div className="form-group files">
+                      <span>
+
+                        <span></span>
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="btn btn-success btn-block"
+                      onClick={onClickHandlerFile}
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </div>
+              </div> */}
             </Paper>
           </Grid>
           <Grid item xs={12}>
