@@ -65,9 +65,9 @@ const shorten = (text, maxLength) => {
 const AnnTable = (props) => {
   const classes = useStyles()
   const [page, setPage] = useState(0)
-  const [data, setData] = useState([])
-  const [rowsPerPage, setRowsPerPage] = useState(5)
-
+  
+  // const [rowsPerPage, setRowsPerPage] = useState(5)
+const [data, setData] = useState([])
   useEffect(() => {
     const GetData = async () => {
       const result = await axios('http://localhost:3000/api/grader/ann')

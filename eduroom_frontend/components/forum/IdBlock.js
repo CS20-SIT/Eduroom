@@ -1,77 +1,93 @@
-import React, { Fragment, useEffect, useState } from "react";
-import {
-  Grid,
-  Button,
-  Container,
-  Typography,
-  CssBaseline,
-  makeStyles,
-  createMuiTheme,
-  ThemeProvider,
-  Select,
-  Paper,
-  MenuItem,
-} from "@material-ui/core";
-import style from '../../styles/forum/showForum';
-import GeneralNoNav from "../../components/template/generalnonav";
+import React, { Fragment } from "react";
+import Icon from "./Icon";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import { EditorBorderColor } from "material-ui/svg-icons";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
 const IdBlock = () => {
-    const useStyles = makeStyles((theme) => ({
-        page: {
-          display: "flex",
-          flexDirection: "column",
-        },
-        form: {
-          width: "100%",
-          marginTop: theme.spacing(3),
-        },
-        submit: {
-          margin: theme.spacing(3, 0, 2),
-          background: "#3D467F",
-        },
-        paper: {
-          marginTop: theme.spacing(3),
-          marginBottom: theme.spacing(3),
-          padding: theme.spacing(2),
-          [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-            marginTop: theme.spacing(6),
-            marginBottom: theme.spacing(6),
-            padding: theme.spacing(3),
-          },
-        },
-      }));
-      const classes = useStyles();
-    
-      return (
-        <Fragment>
-            <GeneralNoNav >
-        <div
-            style={{
-            display: "flex",
-            flex: "1 1 auto",
-            justifyContent: "space-between",
-            background: "#EFF0F6",
-            }}
-        ></div>
-        <div className='idblock'>
-            <div className={classes.root}  className='button' >
-                <Grid container spacing={3} variant="outlined">
-                    <Grid item xs={12}>
-                        <Paper className={classes.paper}>Forum</Paper>
-                    </Grid>
-                </Grid>
-                </div>
-            <style jsx>{style}</style>
-            <style jsx> 
-            {`
-            .button{
+  
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const GetData = async () => {
+      const result = await axios.get("http://localhost:5000/api/forum/id", {
+        id: props.id,});
+      console.log(result.data);
+      setData(result.data);
+    };
+    GetData();
+    console.log(data);
+  }, []);
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      padding: theme.spacing(3),
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flexStart",
+      // textAlign: 'center',
+      color: theme.palette.text.secondary,
+    },
+  }));
+  const classes = useStyles();
+
+  return (
+    <Fragment>
+      <div className={classes.root}>
+        <Grid container spacing={3} variant="outlined">
+          <Grid item xs={12} borderColor="#a27cef">
+            <div>
+              {data.map((row) => {
+                return (
+                  <Paper
+                    className={classes.paper}
+                    style={{ border: "2px solid #d5c1fc" }}
+                  >
+                    <div>{row.titlethread}</div>
+                    <div>{row.content}</div>
+                    <div
+                      className="icon"
+                      style={{ bottom: 0, right: 0, marginTop: "15px" }}
+                    >
+                      <div style={{ paddingRight: "30px" }}>
+                        <Icon type="like" />
+                      </div>
+                      <div style={{ paddingRight: "30px" }}>
+                        <Icon type="comment" />
+                      </div>
+                    </div>
+                  </Paper>
+                );
+              })}
+            </div>
+          </Grid>
+        </Grid>
+      </div>
+      <style jsx>
+        {`
+          .button {
             cursor: pointer;
             opacity: 0.8;
             transition: 0.25s;
-            }
-            `}
-            </style>
-            </div>
-      </GeneralNoNav>
-     </Fragment>)
+            display: flex;
+            justify-content: end;
+            flex-direction: row;
+            align-items: flex-end;
+          }
+          .icon {
+            display: flex;
+            justify-content: end;
+            flex-direction: row;
+            align-items: flex-end;
+          }
+        `}
+      </style>
+    </Fragment>
+  );
 };
-export default IdBlock
+export default IdBlock;

@@ -10,6 +10,18 @@ exports.forumTest = async (req, res, next) => {
   return;
 };
 
+exports.showForum = async(req,res,next) =>{
+  const data = await pool.query('select * from forum_form')
+  const forum = data.rows
+  res.status(200).json({success:true, data:forum})
+}
+exports.selectForum = async(req,res,next) =>{
+  const id = req.body.id
+  const data = await pool.query(`select * from forum_form where forumid=${id}`)
+  const forum = data.rows
+  res.status(200).json({success:true, data:forum})
+}
+
 exports.createForum = async (req, res, next) => {
   console.log(req.body)
   res.status(200).json({success: true });
