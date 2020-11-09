@@ -8,6 +8,26 @@
     animation-name: MoveOut;
     animation-duration: 0.5s;
 }
+.btnHistory2{
+    padding: 12px 50px;
+    background-color: #a880f7;
+    border: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        z-index: 10000;
+        outline: none;
+}
+.btnHistory{
+    position: absolute;
+    top: 0%;
+    left: 30%;
+    z-index: 10000;
+}
 .animation2 {
     animation-name: MoveIn;
     animation-duration: 1s;
@@ -105,6 +125,19 @@
     width: 95vw;
     background-image: url('../../public/images/Coin-image/BG.svg');
     background-repeat: repeat;
+}
+.History{
+    animation:MoveOut2 0.5s;
+}
+@keyframes MoveOut2{
+    0%{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(-100px);
+    }
 }
 
 .img2 {
