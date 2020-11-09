@@ -14,6 +14,7 @@ const ConfirmPackage = (props) => {
     setOpen(true);
     handleSubmit();
   };
+
   const handleCloseDialog = (e) => {
     e.preventDefault();
     setOpen(false);
@@ -29,6 +30,7 @@ const ConfirmPackage = (props) => {
         courses: props.myPackage.courses
       })
   };
+
   console.log(props);
 
   return (
