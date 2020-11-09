@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { forumTest, createForum } = require('../controllers/forumController')
+const { selectForum, showForum, createForum } = require('../controllers/forumController')
 
-router.get('/', forumTest)
+router.get('/', showForum)
 router.post('/create', createForum)
-router.post('/id',)
+router.get('/id', selectForum)
 
 module.exports = router
