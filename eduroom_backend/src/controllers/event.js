@@ -2,7 +2,7 @@ const pool = require('../database/db')
 exports.getEvent = async (req, res, next) => {
 
     const data = await pool.query('select * from global_event')
-    res.send(data.rows)
+ 
     res.status(200).json({ GorgunGetSuccess: true })
     return
 }

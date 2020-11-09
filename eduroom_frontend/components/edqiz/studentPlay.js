@@ -3,65 +3,128 @@ import { useRouter } from "next/router";
 
 import style from "../../styles/edqiz/managePage";
 import Page1 from "./join";
-import Page2 from "./edqizManagePage2";
+import Page2 from "./join2";
 import Page3 from "./edqizManagePage3";
-import LandingPage from "./edqizLanding"
-const Content = ({ mode }) => {
-  const router = useRouter();
-  // console.log(router.query.room)
 
+import socketIOClient from "socket.io-client";
+
+const Content = () => {
+  const router = useRouter();
+  // console.log(router.query.room);
+
+  const [name, setName] = useState("");
   const mockData = [
     { id: "1", pin: "3456" },
     { id: "2", pin: "1234" },
     { id: "3", pin: "2345" },
     { id: "4", pin: "6789" },
   ];
+
   const [current, setCurrent] = useState(1);
+  const [inputMessage, setInputMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [roomPin, setRoomPin] = useState([]);
+  // console.log(roomPin)
+
   const goto = (val) => {
-    const data = { name, description, image, questionList };
-    console.log(data);
     if (val != current) {
       if (val <= 2 || isValidForm()) {
         setCurrent(val);
       }
     }
   };
-  const checkPinIsValid = () => {
-    let temp = 0;
-
-    for (let i = 0; i < mockData.length; i++) {
-      temp++;
-      if (mockData[i].pin == router.query.room) {
-        console.log("page is valid");
-        break;
-      } else if (
-        temp == mockData.length &&
-        mockData[i].pin != router.query.room
-      ) {
-          alert('ROOM IS NOT VALID')
-          router.push('/edqiz')
-      }
-    }
+  const handleChangeQuizName = (val) => {
+    // console.log(val);
+    setName(val);
   };
 
   const renderPage = () => {
     switch (current) {
       case 1:
-        return <Page1 goto={goto} />;
+        return (
+          <Page1
+            goto={goto}
+            mockData={mockData}
+            change={handleChangeQuizName}
+          />
+        );
       case 2:
-        return <Page2 goto={goto} />;
+        return <Page2 goto={goto} mockData={mockData} name={name} />;
       case 3:
         return <Page3 goto={goto} />;
     }
   };
-  useEffect(()=>{
-    checkPinIsValid()
-  },[])
+
+  const response = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+      
+    });
+    const temp = messages.slice();
+    socket.on("new-message", (newMessage, pin) => {
+      temp.push([newMessage, pin]);
+      setMessages(temp.slice());
+    });
+  };
+
+  const checkOpenRoom = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = messages.slice();
+    socket.on("new-room", (isOpen, pin) => {
+      temp.push([isOpen, pin]);
+      setRoomPin(temp.slice());
+    });
+  };
+  const sentMessage = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit("sent-message", inputMessage);
+   
+  };
+
+  const renderMessage = () => {
+    const arr = roomPin.map((msg, index) => {
+      if (roomPin[index][1] == router.query.room) {
+         router.push(`/edqiz/gamePlaySTD/${router.query.room}`)
+      }
+    });
+    return arr;
+  };
+  console.log("roomPin", roomPin);
+  const renderPin = () => {
+    const arr = roomPin.map((pin, index) => {
+      return <div key={index}>{pin}</div>;
+    });
+    return arr;
+  };
+  const test = () => {
+    return (
+      <div style={{ padding: "30px" }}>
+        <input
+          type="text"
+          onChange={(e) => setInputMessage(e.target.value)}
+        ></input>
+        <button onClick={sentMessage}>Sent</button>
+        <h2>This is the message</h2>
+        <div>{renderMessage()}</div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    response();
+    checkOpenRoom();
+
+  }, []);
+
   return (
     <Fragment>
       <div>
-      
         <div>{renderPage()}</div>
+        {renderMessage()}
       </div>
       <style jsx>{style}</style>
     </Fragment>
