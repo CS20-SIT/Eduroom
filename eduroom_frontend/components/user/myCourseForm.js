@@ -11,20 +11,20 @@ const MyCourseForm = (props) => {
   }
   return (
     <Fragment>
-      <div className="cardContainer">
-        <Card>
-          <CardContent>
-            <div className="cardContainer">
-              <div className="container">
-                <Link href={'../../course/' + props.id}>
-                  <span>
-                    <div>Title: {props.title}</div>
-                    <div>Status: {checkComplete(props.isCompleted)}</div>
-                  </span>
-                </Link>
-              </div>
-            </div>
-          </CardContent>
+      <div className={style.cardContainer}>
+      <Card>
+      <CardContent>
+        <div  className={style.cardContainer}>
+        <div className={style.container}>
+          <Link href={`../../course/${props.id}`}>
+              <span>
+                  <div>Title: {props.title}</div>
+                  <div>Status: {checkComplete(props.isCompleted)}</div>
+              </span>
+          </Link>
+        </div>
+        </div>
+        </CardContent>
         </Card>
       </div>
       <style jsx>{style}</style>
