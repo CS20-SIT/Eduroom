@@ -78,19 +78,20 @@ export default function AddFile(props) {
     }
     return true;
   };
-  const onChangeHandler = (event) => {
+  const onChangeHandlerFile = (event) => {
     var files = event.target.files;
     if (maxSelectFile(event) && checkMimeType(event) && checkFileSize(event)) {
       setFile(files);
       setLoad(0);
     }
   };
-  const onClickHandler = () => {
+  const onClickHandlerFile = () => {
     const data = new FormData();
 
     if (selectedFile != null) {
       for (var x = 0; x < selectedFile.length; x++) {
         data.append("file", selectedFile[x]);
+        data.append("id", 2);
         console.log(selectedFile[x]);
       }
       axios
@@ -99,18 +100,13 @@ export default function AddFile(props) {
             setLoad((ProgressEvent.loaded / ProgressEvent.total) * 100);
           },
         })
-        .then((res) => {
-          //   // then print response status
-          //   toast.success("upload success");
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err);
-          //   // then print response status
-          //   toast.error("upload fail");
         });
     }
   };
-  const handleClose = (event, reason) => {
+  const handleCloseFile = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -119,8 +115,12 @@ export default function AddFile(props) {
   };
   return (
     <div className="container">
-      <Snackbar open={checkError} autoHideDuration={6000} onClose={handleClose}>
-        <Alert style={sError} onClose={handleClose} severity="error">
+      <Snackbar
+        open={checkError}
+        autoHideDuration={6000}
+        onClose={handleCloseFile}
+      >
+        <Alert style={sError} onClose={handleCloseFile} severity="error">
           {fileError}
         </Alert>
       </Snackbar>
@@ -153,16 +153,10 @@ export default function AddFile(props) {
         .custom-file-input:focus {
           outline: none;
         }
-        /* .custom-file-input:active::before {
-          background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-          width: 120px;
-        } */
       `}</style>
       <div className="row">
         <div className="offset-md-3 col-md-12">
           <div className="form-group files">
-            <h3></h3>
-            <br></br>
             <h5>
               Testcase files up to 10 MB in size are available for upload.
             </h5>
@@ -170,7 +164,7 @@ export default function AddFile(props) {
               type="file"
               className="form-control"
               multiple
-              onChange={onChangeHandler}
+              onChange={onChangeHandlerFile}
               className="custom-file-input"
               style={{ width: 1000 }}
             />
@@ -179,7 +173,7 @@ export default function AddFile(props) {
           <button
             type="button"
             className="btn btn-success btn-block"
-            onClick={onClickHandler}
+            onClick={onClickHandlerFile}
           >
             Upload
           </button>

@@ -17,16 +17,16 @@ const pQuestion = async (req, res, next) => {
   const existTags = req.body.existTags;
 
   const newTagsIds = [];
-  console.log(newTags);
   newTags.forEach((t) => {
-    console.log(" 1st");
-    console.log(t);
-    await pool.query("INSERT INTO tags (tagName) VALUES ($1) RETURNING tagid", [
-      t, function (err, result, fields) {
+    pool.query(
+      "INSERT INTO tags (tagName) VALUES ($1) RETURNING tagid",
+      [t],
+      function (err, result, fields) {
         if (err) throw err;
-        newTagsIds.push(result.rows[0].tagid)
+        newTagsIds.push(result.rows[0].tagid);
+        console.log(newTagsIds);
       }
-    ]);
+    );
   });
 
   pool.query(
@@ -52,13 +52,18 @@ const pQuestion = async (req, res, next) => {
       console.log(newTagsIds);
       newTagsIds.forEach((t) => {
         console.log("3rd");
-        await pool.query("INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
-         [id, t]);
+        pool.query(
+          "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
+          [id, t]
+        );
       });
 
-       existTags.forEach(t => {
-         await pool.query("INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
-         [id, t]); });
+      existTags.forEach((t) => {
+        pool.query(
+          "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
+          [id, t]
+        );
+      });
       res.send({ success: true, id: result.rows[0].id });
     }
   );
