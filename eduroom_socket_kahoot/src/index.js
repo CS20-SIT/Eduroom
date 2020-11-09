@@ -31,4 +31,14 @@ io.on('connection', (client) => {
     console.log("this room is ", pin, isOpen);
     io.sockets.emit("new-room", isOpen, pin);
   });
+
+  client.on("set-skip", (isSkip, pin,questionNo) => {
+    console.log("this skip is ", pin, isSkip,questionNo);
+    io.sockets.emit("new-question", isSkip, pin,questionNo);
+  });
+
+  client.on("set-nextQuestion", (isNext, pin,questionNo) => {
+    console.log("this next is ", pin, isNext,questionNo);
+    io.sockets.emit("new-Nextquestion", isNext, pin,questionNo);
+  });
 });
