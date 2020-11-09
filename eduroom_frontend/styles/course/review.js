@@ -8,7 +8,7 @@ export default css`
                 height: 100vh;
                 margin-left: auto;
                 margin-right: auto;
-                margin-top: 2%;
+               
                 display: flex;
                 justify-content: start;
                 background-color: white;
@@ -19,5 +19,14 @@ export default css`
         object-fit:cover;
         border-radius:50%;
        
+      }
+      .image-position{
+          position : absolute;
+          margin-top : 8rem;
+          margin-left : 10%;
+      }
+      .bg{
+        background-image:url('/images/big-bg.svg');
+        background-size : cover;
       }
 `
