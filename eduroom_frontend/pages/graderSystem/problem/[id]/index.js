@@ -18,9 +18,7 @@ const ProblemID = () => {
         <div className="main">
           <div className="size">
             <Box>
-              <ProblemLayout page="description" id={id}>
-                This is individual Problem page
-              </ProblemLayout>
+              <ProblemLayout page="description" id={id} />
             </Box>
           </div>
         </div>
