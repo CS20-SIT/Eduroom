@@ -9,7 +9,8 @@ const Page1 = ({
   questionNumber,
   sentMessage,
   response,
-  messages,
+  setAnswer,
+  time
 }) => {
   const router = useRouter();
 
@@ -58,7 +59,7 @@ const Page1 = ({
           >
             <Grid item xs={4}>
               <div className="text-time">TIME</div>
-              <div className="text-timeNum">{45}</div>
+              <div className="text-timeNum">{time}</div>
             </Grid>
             <Grid item xs={4}>
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -99,8 +100,9 @@ const Page1 = ({
               <button
                 className="buttonAnswer"
                 style={{ backgroundColor: "#F39AC4" }}
-                onClick={() => {}}
+                onClick={() => {setAnswer('0'),goto(3)}}
               >
+                {setAnswer('0')}
                 {data[questionNumber].ans[0]}
               </button>
             </Grid>
@@ -112,7 +114,9 @@ const Page1 = ({
               <button
                 className="buttonAnswer"
                 style={{ backgroundColor: "#D5C1FC" }}
+                onClick={() => {setAnswer(1),goto(3)}}
               >
+                {/* {goto(3)} */}
                 {data[questionNumber].ans[1]}
               </button>
             </Grid>
@@ -133,6 +137,7 @@ const Page1 = ({
               <button
                 className="buttonAnswer"
                 style={{ backgroundColor: "#FDD4C1" }}
+                onClick={() => {setAnswer(2),goto(3)}}
               >
                 {data[questionNumber].ans[2]}
               </button>
@@ -145,6 +150,7 @@ const Page1 = ({
               <button
                 className="buttonAnswer"
                 style={{ backgroundColor: "#A6CEEE" }}
+                onClick={() => {setAnswer(3),goto(3)}}
               >
                 {data[questionNumber].ans[3]}
               </button>
