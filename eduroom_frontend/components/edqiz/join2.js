@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useRouter } from "next/router";
 import style from "../../styles/edqiz/landing";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import socketIOClient from "socket.io-client";
 
 
 const Page2 = ({ name }) => {
@@ -9,9 +10,14 @@ const Page2 = ({ name }) => {
   const router = useRouter();
 
   let room = router.query.room;
-
-  // console.log(router.query.room);
-
+  const sentName = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit("set-name", name, router.query.room);
+    // console.log(name, router.query.room);
+  };
+  useEffect(() => {sentName()}, []);
 
  
   return (
