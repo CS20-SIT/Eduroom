@@ -6,15 +6,12 @@ const Content = (props) => {
   // console.log(props.Content);
   const content = props.Content;
   const TodayDate = props.TodayDate;
-  const isNow = props.isNow;
+  const setOpen = props.setOpen;
+  const isNow = props.isNow
 
   return (
     <Fragment>
-      {(content == TodayDate && isNow )? (
-        <div className="currentDate gridItem">{content}</div>
-      ) : (
-        <div className="gridItem">{content}</div>
-      )}
+      <div onClick={() => { setOpen(content) }} className={`${content == TodayDate && isNow ? 'currentDate' : ''} gridItem`} style={{cursor:"pointer"}}>{content}</div>
       <style jsx>{style}</style>
     </Fragment>
   );
