@@ -5,7 +5,7 @@ export default css`
     grid-template-columns: repeat(7, 1fr);
     background-color: #FFFFFF;
     border-radius: 2px;
-    padding: 5rem;
+    margin: 5rem;
     
   }
   .gridItem {
@@ -32,6 +32,7 @@ export default css`
     color: #3D467F;
     font-weight : bold;
     text-align : center;
+    margin-top : 5rem;
   }
   .headerCell {
     background-color: rgba(254,117,183);
@@ -88,4 +89,66 @@ export default css`
   background : #f4f5f7;
   cursor: pointer;
 }
+
+.d-calendar {
+  width: 25vw;
+  height: 50vh;
+  background-color: white;
+  position: fixed;
+  top: 50% ;
+  left: 50%;
+  z-index: 2; 
+  transform: translate(-50%,-50%);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  
+}
+.d-close{
+  position: fixed;
+  top: 0%;
+  right: 0%;
+  margin: 2rem;
+  padding: 0.5rem;
+  cursor: pointer; 
+  font-weight: 800;
+  font-size : 28px;
+  color : #999999;
+}
+.bg-overlay{
+ background-color : rgba(255, 255 ,255 , .2);
+  height : 100vh;
+  width : 100vw;
+  position : fixed;
+  z-index : 1;
+  
+}
+
+.content{
+  height : 77%;
+  overflow-y : scroll;
+
+}
+.content *{
+  height : 70rem;
+
+}
+.d-top{
+  border-bottom : rgba(0,0,0,.1) 1px solid;
+  height 45px;
+  color: #3D467F;
+  font-weight : bold;
+  text-align : center;
+}
+.d-buttom{
+  border-top : rgba(0,0,0,.1) 1px solid;
+  color: #3D467F;
+  font-weight : bold;
+  text-align : center;
+  
+}
+.d-day{
+  position : absolute;
+  margin:10px;
+}
+
 `;

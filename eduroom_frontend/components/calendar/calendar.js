@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import Cell from "../../components/calendar/calendarCell";
 import HeadCell from "../../components/calendar/calendarHeader";
 import BlankCell from "../../components/calendar/calendarBlankCell";
+import CSSTransition from 'react-transition-group/CSSTransition';
+
 // import { useRouter } from 'next/router';
 import style from "../../styles/calendar/calendar";
 import moment from "moment";
@@ -13,6 +15,10 @@ import {
   Dialog,
   DialogTitle,
   Button,
+  DialogContentText,
+  DialogActions,
+  TextField,
+
 } from "@material-ui/core";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
@@ -20,21 +26,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const Content = () => {
   // Pop-up-event
-  const useStyles = makeStyles((theme) => ({
-    typography: {
-      padding: theme.spacing(2),
-    },
-  }));
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+
 
   //Array of short names of the day.
   //Mon Tue ...
@@ -82,7 +74,7 @@ const Content = () => {
   }
 
   let blankEnd = [];
-  while(count<42){
+  while (count < 42) {
     blankEnd.push("x")
     count++;
   }
@@ -111,25 +103,65 @@ const Content = () => {
     }
   };
 
+  const [open, setOpen] = useState(-1);
+
   return (
     <Fragment>
-      {/* Pop up event content */}
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
+      {/* {
+        open > 0 ?
+          <div className='bg-overlay' onClick={() => setOpen(-1)}>
+
+            <div className='d-calendar'>
+              <div className="d-top">
+                <div className="d-day">{open} {currentMonth}{currentYear}</div>
+              </div>
+
+              <div className="content">
+                <div>
+                  TEST Content
+              </div>
+              </div>
+              <div className="d-buttom">
+                <div className="">
+                  <button>
+                    Edit มั้ง? คิดก่อน
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> : null
+      } */}
+
+      <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={open > 0}
+        timeout={{ enter: 300, exit: 300 }}
+        classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
       >
-        <Typography className={classes.typography}>This November.</Typography>
-      </Popover>
+        <div className='bg-overlay' onClick={() => setOpen(-1)}>
+
+          <div className='d-calendar'>
+            <div className="d-top">
+              <div className="d-day">{open} {currentMonth}{currentYear}</div>
+            </div>
+
+            <div className="content">
+              <div>
+                TEST Content
+              </div>
+            </div>
+            <div className="d-buttom">
+              <div className="">
+                <button>
+                  Edit มั้ง? คิดก่อน
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CSSTransition>
+
 
       <div className="month-color text-center">
         <div className="month-size">
@@ -142,7 +174,7 @@ const Content = () => {
                   &lt;{" "}
                 </div>
               </Grid>
-              <Grid item xs={6} onClick={handleClick}>
+              <Grid item xs={6}>
                 {currentMonth + " " + currentYear}
               </Grid>
               <Grid item xs={1}>
@@ -155,6 +187,9 @@ const Content = () => {
           </Container>
         </div>
         <div className="grid">
+
+
+
           {days.map((dayName) => {
             return <HeadCell head={dayName} />;
           })}
@@ -164,7 +199,7 @@ const Content = () => {
           })}
 
           {daysInMonth.map((day) => {
-            return <Cell TodayDate={TodayDate} isNow={isToday} Content={day} />;
+            return <Cell TodayDate={TodayDate} setOpen={setOpen} Content={day} isNow={isToday} />;
           })}
 
           {blankEnd.map((blank) => {
@@ -180,6 +215,38 @@ const Content = () => {
       </div>
 
       <style jsx>{style}</style>
+      <style jsx>
+        {
+          `
+                        .fade-in {
+                          animation: fade-in 0.3s forwards;
+                        }
+                        .fade-out {
+                          animation: fade-out 0.3s forwards;
+                        }
+                        @keyframes fade-in {
+                          0% {
+                            opacity: 0;
+                          }
+                          100% {
+                            opacity: 1;
+                          }
+                        }
+                        @keyframes fade-out {
+                          0% {
+                            opacity: 1;
+                          }
+                          100% {
+                            opacity: 0;
+                          }
+                        }
+
+                        
+                        
+                        
+                        `
+        }
+      </style>
     </Fragment>
   );
 };
