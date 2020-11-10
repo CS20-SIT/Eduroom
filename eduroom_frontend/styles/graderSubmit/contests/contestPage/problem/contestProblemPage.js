@@ -20,7 +20,7 @@ export default css`
     display: flex;
     padding-left: 3%;
     width: 95%;
-    justify-content: space-between;
+    margin-bottom: 10px;
     background-color: #eff0f6;
   }
   .flex-item {
@@ -28,7 +28,7 @@ export default css`
     padding 5px 0;
     font-weight: bold;
   }
-  .announcement-list {
+  .problem-list {
     height: 76%;
     border-right: 2px solid rgba(91, 91, 91, 0.1);
     border-bottom: 2px solid rgba(91, 91, 91, 0.1);
