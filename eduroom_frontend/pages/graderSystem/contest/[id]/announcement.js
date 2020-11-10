@@ -2,8 +2,9 @@ import React, { Fragment, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import Box from "../../../../components/graderSubmit/Box"
 import Layout from "../../../../components/graderSubmit/Layout"
-import style from "../../../../styles/graderSubmit/contests/contestPage/contestAnnouncementPage"
+import style from "../../../../styles/graderSubmit/contests/contestPage/announcement/contestAnnouncementPage"
 import ContestLayout from "../../../../components/graderSubmit/contests/ContestLayout"
+import ContestAnnouncementList from "../../../../components/graderSubmit/contests/allList/ContestAnnouncementList"
 
 const contestAnnouncement = () => {
   const [id, setId] = useState(null)
@@ -25,19 +26,24 @@ const contestAnnouncement = () => {
                 </center>
                 <div className="announcement-list">
                   <div className="flex-container">
-                    <div className="flex-item" style={{ flexGrow: "1.5" }}>
+                    <div className="flex-item" style={{ flexBasis: "20%" }}>
                       Admin
                     </div>
-                    <div className="flex-item" style={{ flexGrow: "1.5" }}>
+                    <div className="flex-item" style={{ flexBasis: "20%" }}>
                       Title
                     </div>
-                    <div className="flex-item" style={{ flexGrow: "2.5" }}>
+                    <div className="flex-item" style={{ flexBasis: "40%" }}>
                       Description
                     </div>
-                    <div className="flex-item" style={{ flexGrow: "2" }}>
+                    <div className="flex-item" style={{ flexBasis: "20%" }}>
                       Date
                     </div>
                   </div>
+                  <ContestAnnouncementList />
+                  <ContestAnnouncementList />
+                  <ContestAnnouncementList />
+                  <ContestAnnouncementList />
+                  <ContestAnnouncementList />
                 </div>
               </ContestLayout>
             </Box>
