@@ -11,6 +11,7 @@ const EventRoute = require('./eventRoute')
 const registerUemail = require('./registerUemail');
 const sendEventMail = require('./sendEventMail')
 const InstructorRoute = require('./instructorRoute')
+const LeaderboardRoute = require('./leaderboardRoute');
 
 router.use('/test', TestRoute)
 router.use('/auth', AuthRoute)
@@ -22,6 +23,6 @@ router.use('/event',EventRoute)
 router.use('/registerUemail',registerUemail)
 router.use('/sendEventMail',sendEventMail)
 router.use('/instructor',InstructorRoute)
-
+router.use('/leaderboard', LeaderboardRoute)
 
 module.exports = router
