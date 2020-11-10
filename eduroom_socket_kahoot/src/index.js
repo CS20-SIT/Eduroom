@@ -1,6 +1,7 @@
 const server = require("./server");
 const port = process.env.PORT || 8000;
 const socketIO = require("socket.io");
+const { countReset } = require("console");
 
 const app = server.listen(port, () => {
   console.log(`Running on ${port}`);
@@ -40,5 +41,28 @@ io.on('connection', (client) => {
   client.on("set-nextQuestion", (isNext, pin,questionNo) => {
     console.log("this next is ", pin, isNext,questionNo);
     io.sockets.emit("new-Nextquestion", isNext, pin,questionNo);
+  });
+
+
+
+  client.on('set-seconds',(temp,pin) => {
+    console.log('temp'+temp,pin)
+    var interval = setInterval(()=> {
+      if(temp>0){
+      console.log('temp1 '+temp,pin);
+      temp--;
+      io.emit('sent-seconds',temp);
+      }
+      // if(temp <= 0){
+      //   clearInterval(interval);
+        
+      // }
+     
+    }, 1000);
+  })
+
+  client.on("set-name", (namePlayer, pin) => {
+    console.log("this name is ", pin, namePlayer);
+    io.sockets.emit("new-name", namePlayer, pin);
   });
 });

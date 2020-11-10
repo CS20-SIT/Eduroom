@@ -1,15 +1,28 @@
 import React, { Fragment, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
+import socketIOClient from "socket.io-client";
+const Page1 = ({
+  responseTime,
+  goto,
+  data,
+  questionNumber,
+  ChangeQuestionNumber,
+  setTime,
+  setNextQuestion,
+  id,
+}) => {
+  const router = useRouter();
+  const setTimeSocket = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
 
-const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,setNextQuestion}) => {
-  const router = useRouter()
-
+    socket.emit("set-seconds", data[questionNumber].time,id);
+  };
   const room = { name: "room1", PIN: router.query.id };
-  let number=questionNumber;
+  let number = questionNumber;
 
-
-  
   const Correct = [];
   const getCorrectAnswer = () => {
     if (data[questionNumber].correct == 0) {
@@ -355,8 +368,8 @@ const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,setNextQuesti
         </div>
       );
     }
-     //////////////////////////33333333333333333//////////////////////////////////////////////////////////////////
-     if (data[questionNumber].correct == 3) {
+    //////////////////////////33333333333333333//////////////////////////////////////////////////////////////////
+    if (data[questionNumber].correct == 3) {
       Correct.push(
         <div>
           <Grid
@@ -488,11 +501,14 @@ const Page1 = ({ goto, data, questionNumber, ChangeQuestionNumber ,setNextQuesti
             <button
               className="landing-button"
               onClick={() => {
-                goto(1) ;number++  ;ChangeQuestionNumber(number);
-                setNextQuestion()
+                goto(1);
+                number++;
+                ChangeQuestionNumber(number);
+                setNextQuestion();
+                setTime(data[questionNumber + 1].time);
+                setTimeSocket();
               }}
             >
-             
               NEXT
             </button>
           </Grid>
