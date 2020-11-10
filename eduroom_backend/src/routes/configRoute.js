@@ -12,17 +12,19 @@ const registerUemail = require('./registerUemail');
 const sendEventMail = require('./sendEventMail');
 const InstructorRoute = require('./instructorRoute');
 const KahootRoute = require('./kahootRoute');
+const PackageRoute = require('./packageRoute')
 
-router.use('/test', TestRoute);
-router.use('/auth', AuthRoute);
-router.use('/support', SupportRoute);
-router.use('/forum', ForumRoute);
-router.use('/analysis', AnalysisRoute);
-router.use('/grader', GraderRoute);
-router.use('/event', EventRoute);
-router.use('/registerUemail', registerUemail);
-router.use('/sendEventMail', sendEventMail);
-router.use('/instructor', InstructorRoute);
-router.use('/kahoot', KahootRoute);
+router.use('/test', TestRoute)
+router.use('/auth', AuthRoute)
+router.use('/support', SupportRoute)
+router.use('/forum', ForumRoute)
+router.use('/analysis', AnalysisRoute)
+router.use('/grader', GraderRoute)
+router.use('/event',EventRoute)
+router.use('/registerUemail',registerUemail)
+router.use('/sendEventMail',sendEventMail)
+router.use('/instructor', InstructorRoute)
+router.use('/kahoot', KahootRoute)
+router.use('/package', PackageRoute)
 
 module.exports = router;

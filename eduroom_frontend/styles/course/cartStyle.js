@@ -2,7 +2,7 @@ import css from 'styled-jsx/css'
 export default css`
 
     .background{
-        background-color: #F4F5F7;
+       
         padding:4%;
     }
     .centerBar{
@@ -17,12 +17,13 @@ export default css`
     }
     .checkoutBox{
         box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
-                background: white;
+                background: rgba(255,255,255,.9);
                 width: 40vw;
                 height: 30vh;
                 margin-top: 10%;
                 margin-left: auto;
                 margin-right: auto;
+                border-radius: 10px;
     }
     .bigDiv{
         box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
@@ -37,6 +38,7 @@ export default css`
         padding-top:10px;
         padding-left:10px;
         background-color: white;
+        
     }
 
     .apply{
@@ -51,18 +53,22 @@ export default css`
     .inputCoupon {
         padding: 4px;
         font-size: 17px;
-        color: white;
+        color: whiteradius: 10px;;
        
       }
     .checkOut{
         width: 133px;
         height: 42px;
-        radius: 10px;
+        
         background: #A880F7;
         font-size: 16px;
         border: none;
         color: white;
         border-radius: 10px;
        
+    }
+    .bg{
+        background-image:url('/images/cart-bg.svg');
+        background-size : cover;
     }
 `

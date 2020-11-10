@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs')
 const pool = require('../database/db')
+const crypto = require('crypto')
+const dayjs = require('dayjs')
 const { generateCookieJWT, generateVerifyJWT, verifyVerificationJWT } = require('../utils/jwt')
 const sendEmail = require('../utils/sendMail')
 const errorHandler = require('../middleware/error')
@@ -10,14 +12,55 @@ exports.getProfile = (req, res) => {
 
 exports.regisController = async (req, res) => {
     try {
-        //TODO: Find exist email in db
+        // {
+        //     email: <String>
+        //     password: <String>
+        //     firstname: <String>
+        //     lastname: <String>
+        //     birthdate: <String>
+        //     initial: <String>
+        //     phoneNo: <String>
+        //     displayname: <String>
+        //     bio: <String>
+        //     isStudent: <Boolean>
+        // }
         const user = req.body
-        const password = bcrypt.hashSync(req.body.password)
-        const userID = 'userIDfromRegis'
-
+        // Find existing user in db
+        const existingUser = await pool.query(`SELECT email FROM local_auth WHERE email = '${user.email}'`)
+        if(existingUser.rowCount != 0){
+            const err = {
+                statusCode: 400,
+                message: 'Email is used'
+            }
+            return errorHandler(err, req, res)
+        }
+        // Insert new user_profile
+        user.password = bcrypt.hashSync(user.password)
+        const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
+        VALUES (uuid_generate_v4(), '${user.firstname}', '${user.lastname}', '${user.birthdate}', '${user.initial}', '${user.phoneNo}', '${user.displayname}', '${user.bio}', './png.png', ${user.isStudent}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+        await pool.query(user_profileCreationQuery)
+        // Get userId from user_profile
+        const user_profile = await pool.query(`SELECT userid FROM user_profile WHERE firstname = '${user.firstname}' AND lastname = '${user.lastname}'`)
+        if(user_profile.rowCount == 0){
+            const err = {
+                statusCode: 500,
+                message: 'user is not found after saved'
+            }
+            return errorHandler(err, req, res)
+        }
+        const userId = user_profile.rows[0].userid
+        // Create local_auth
+        const local_authCreationQuery = `INSERT INTO local_auth (userid, email, password) 
+                                        VALUES ('${userId}', '${user.email}', '${user.password}')`
+        await pool.query(local_authCreationQuery)
         // Create verification token and send it in email
-        const verifyToken = Buffer.from(generateVerifyJWT(userID)).toString('base64')
-        const verifyUrl = `${process.env.BACKEND_API}/api/auth/verify/${verifyToken}`
+
+        const verifyToken = crypto.randomBytes(20).toString('hex')
+        const user_verificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
+        VALUES ('${userId}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + (120 * interval '1 minute'), '${verifyToken}', false)`
+        await pool.query(user_verificationCreationQuery)
+
+        const verifyUrl = `${process.env.ENTRYPOINT_URL}/api/auth/verify/${verifyToken}`
         const emailOptions = {
             email: user.email,
             subject: 'Eduroom Email Verification',
@@ -26,7 +69,7 @@ exports.regisController = async (req, res) => {
         await sendEmail(emailOptions)
 
         // Generate JWT for user to login
-        const token = generateCookieJWT(userID)
+        const token = generateCookieJWT(userId)
         res.cookie('jwt', token)
         res.status(201).send({ success: true })
     } catch (error) {
@@ -36,11 +79,29 @@ exports.regisController = async (req, res) => {
 
 exports.verifyEmailController = async (req, res) => {
     try {
-        const b64Token = req.params.token
-        const jwtToken = Buffer.from(b64Token, 'base64').toString()
-        const user = verifyVerificationJWT(jwtToken)
-        // TODO: Change user status to verified and Redirect user to verification success page
-        res.redirect(`${process.env.CLIENT_URL}/login`) 
+        // Verify token in db
+        const token = req.params.token
+        const user_verification = await pool.query(`SELECT * FROM user_verification WHERE token = '${token}'`)
+        if(user_verification.rowCount != 1){
+            const err = {
+                statusCode: 400,
+                message: 'Token is not found'
+            }
+            return errorHandler(err, req, res)
+        }
+        // Check if token is expired
+        const endTimestamp = dayjs(user_verification.rows[0].endtime)
+        const nowTimestamp = dayjs()
+        if(nowTimestamp.isAfter(endTimestamp)){
+            const err = {
+                statusCode: 400,
+                message: 'token is expired'
+            }
+            return errorHandler(err, req, res)
+        }
+        await pool.query(`UPDATE user_verification SET isverified = true WHERE token = '${token}'`)
+        // TODO: Should redirect to verification success page
+        res.redirect(`${process.env.ENTRYPOINT_URL}/login`) 
     } catch (error) {
         // TODO: Should redirect to verification error page
         errorHandler(error, req, res)
@@ -49,9 +110,29 @@ exports.verifyEmailController = async (req, res) => {
 
 exports.loginController = async (req, res) => {
     try{
+        // {
+        //     email: <String>
+        //     password: <String>
+        // }
         //TODO: Find user and compare password using bcrypt
-        const userID = 'userIDfromLogin'
-        const token = generateCookieJWT(userID)
+        const localAuth = await pool.query(`SELECT * FROM local_auth WHERE email = '${req.body.email}'`)
+        if(localAuth.rowCount != 1){
+            const err = {
+                statusCode: 400,
+                message: 'Email or password is in correct'
+            }
+            return errorHandler(err, req, res)
+        }
+        const passwordMatch = await bcrypt.compare(req.body.password, localAuth.rows[0].password)
+        if(!passwordMatch){
+            const err = {
+                statusCode: 400,
+                message: 'Email or password is in correct'
+            }
+            return errorHandler(err, req, res)
+        }
+        const userId = localAuth.rows[0].userid
+        const token = generateCookieJWT(userId)
         res.cookie('jwt', token)
         res.status(201).send({ success: true })
     } catch (error) {
@@ -63,4 +144,21 @@ exports.loginController = async (req, res) => {
 exports.logoutController = (req, res) => {
     res.clearCookie('jwt')
     res.status(200).send({ success: true })
+}
+
+
+exports.googleCallbackController = (req, res) => {
+    let user = {
+        displayName: req.user.displayName,
+        firstname: req.user.name.givenName,
+        lastname: req.user.name.familyName,
+        email: req.user._json.email,
+        picture: req.user._json.picture,
+        provider: req.user.provider }
+    console.log(user)
+    //TODO: Find or add user in db
+    const token = generateCookieJWT('userid' + user.name)
+
+    res.cookie('jwt', token)
+    res.redirect(process.env.ENTRYPOINT_URL)
 }
