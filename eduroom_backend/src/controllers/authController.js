@@ -110,9 +110,29 @@ exports.verifyEmailController = async (req, res) => {
 
 exports.loginController = async (req, res) => {
     try{
+        // {
+        //     email: <String>
+        //     password: <String>
+        // }
         //TODO: Find user and compare password using bcrypt
-        const userID = 'userIDfromLogin'
-        const token = generateCookieJWT(userID)
+        const localAuth = await pool.query(`SELECT * FROM local_auth WHERE email = '${req.body.email}'`)
+        if(localAuth.rowCount != 1){
+            const err = {
+                statusCode: 400,
+                message: 'Email or password is in correct'
+            }
+            return errorHandler(err, req, res)
+        }
+        const passwordMatch = await bcrypt.compare(req.body.password, localAuth.rows[0].password)
+        if(!passwordMatch){
+            const err = {
+                statusCode: 400,
+                message: 'Email or password is in correct'
+            }
+            return errorHandler(err, req, res)
+        }
+        const userId = localAuth.rows[0].userid
+        const token = generateCookieJWT(userId)
         res.cookie('jwt', token)
         res.status(201).send({ success: true })
     } catch (error) {
