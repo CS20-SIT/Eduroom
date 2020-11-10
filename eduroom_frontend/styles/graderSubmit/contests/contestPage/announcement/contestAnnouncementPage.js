@@ -1,6 +1,6 @@
 import css from "styled-jsx/css"
 export default css`
-.main {
+  .main {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -20,15 +20,15 @@ export default css`
     display: flex;
     padding-left: 3%;
     width: 95%;
-    justify-content: space-between;
     background-color: #eff0f6;
+    margin-bottom: 8px;
   }
   .flex-item {
     color: #3d467f;
     padding 5px 0;
     font-weight: bold;
   }
-  .submission-list {
+  .announcement-list {
     height: 76%;
     border-right: 2px solid rgba(91, 91, 91, 0.1);
     border-bottom: 2px solid rgba(91, 91, 91, 0.1);
