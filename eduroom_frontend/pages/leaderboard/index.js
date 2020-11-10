@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import ScorePlace from "../../components/leaderboard/ScorePlace";
 import Navbar from '../../components/layouts/navbar'
 import SideNav from '../../components/layouts/sidenav/sidenav'
+// import SortRank from '../../components/leaderboard/SortRank';
 const LeaderBoard = (props) => {
   return (
     <Fragment>
