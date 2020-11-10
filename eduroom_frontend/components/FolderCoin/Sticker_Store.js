@@ -1,5 +1,5 @@
 import List_Of_Sticker from './List_Of_Sticker';
-
+import Pop_up from './Pop_up';
 const sticker = () => {
     const data = [
         { title: 'Monkey', price: 20, id: 1 },
@@ -18,6 +18,7 @@ const sticker = () => {
     return (
         <div>
             <List_Of_Sticker item={data}></List_Of_Sticker>
+           
         </div>
     );
 };
