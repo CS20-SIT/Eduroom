@@ -145,3 +145,20 @@ exports.logoutController = (req, res) => {
     res.clearCookie('jwt')
     res.status(200).send({ success: true })
 }
+
+
+exports.googleCallbackController = (req, res) => {
+    let user = {
+        displayName: req.user.displayName,
+        firstname: req.user.name.givenName,
+        lastname: req.user.name.familyName,
+        email: req.user._json.email,
+        picture: req.user._json.picture,
+        provider: req.user.provider }
+    console.log(user)
+    //TODO: Find or add user in db
+    const token = generateCookieJWT('userid' + user.name)
+
+    res.cookie('jwt', token)
+    res.redirect(process.env.ENTRYPOINT_URL)
+}
