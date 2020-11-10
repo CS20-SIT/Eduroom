@@ -3,7 +3,7 @@ import Styles from '../../styles/CoinStyles/ProductSticker_Render.module.css';
 import CardContent from '@material-ui/core/CardContent';
 import Pop from '../../components/FolderCoin/Pop_up'
 import { useState } from 'react';
-
+import {Dialog, DialogContent} from '@material-ui/core'
 const Name = props => {
     const[state,setState] = useState(false);
     // state={
@@ -12,9 +12,6 @@ const Name = props => {
     // };
     const togglePop = () => {
         setState(true)
-        // this.setState({
-        //   seen: !this.state.seen
-        // });
       };
     return (
         <div className={Styles.cardContainer}>
@@ -31,8 +28,9 @@ const Name = props => {
                             >
                                 Buy!
                             </button>
-                            <Pop toggle={state}/>
-                            {/* {this.state.seen ? <Pop toggle={this.togglePop} /> : null} */}
+                            <Dialog open={state} onClose={()=>setState(false)}>
+                                <DialogContent style={{width:'500px',height:'500px'}}><Pop title={props.title} price={props.price} /></DialogContent>
+                            </Dialog>
                             </div>
                             <h1 className={Styles.text}>
                                 <img
