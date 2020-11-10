@@ -103,47 +103,24 @@ const Content = () => {
     }
   };
 
-  const [open, setOpen] = useState(-1);
+  const [open, setOpen] = useState(false);
+  const [showDate, setShowDate] = useState(-1);
 
   return (
     <Fragment>
-      {/* {
-        open > 0 ?
-          <div className='bg-overlay' onClick={() => setOpen(-1)}>
-
-            <div className='d-calendar'>
-              <div className="d-top">
-                <div className="d-day">{open} {currentMonth}{currentYear}</div>
-              </div>
-
-              <div className="content">
-                <div>
-                  TEST Content
-              </div>
-              </div>
-              <div className="d-buttom">
-                <div className="">
-                  <button>
-                    Edit มั้ง? คิดก่อน
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div> : null
-      } */}
 
       <CSSTransition
         mountOnEnter
         unmountOnExit
-        in={open > 0}
+        in={open}
         timeout={{ enter: 300, exit: 300 }}
         classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
       >
-        <div className='bg-overlay' onClick={() => setOpen(-1)}>
+        <div className='bg-overlay' onClick={() => setOpen(false)}>
 
           <div className='d-calendar'>
             <div className="d-top">
-              <div className="d-day">{open} {currentMonth}{currentYear}</div>
+              <div className="d-day">{showDate} {currentMonth}{currentYear}</div>
             </div>
 
             <div className="content">
@@ -199,7 +176,7 @@ const Content = () => {
           })}
 
           {daysInMonth.map((day) => {
-            return <Cell TodayDate={TodayDate} setOpen={setOpen} Content={day} isNow={isToday} />;
+            return <Cell TodayDate={TodayDate} setOpen={setOpen} Content={day} setShowDate={setShowDate} isNow={isToday} />;
           })}
 
           {blankEnd.map((blank) => {
