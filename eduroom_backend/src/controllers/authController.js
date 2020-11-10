@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const pool = require('../database/db')
 const crypto = require('crypto')
+const dayjs = require('dayjs')
 const { generateCookieJWT, generateVerifyJWT, verifyVerificationJWT } = require('../utils/jwt')
 const sendEmail = require('../utils/sendMail')
 const errorHandler = require('../middleware/error')
@@ -78,11 +79,29 @@ exports.regisController = async (req, res) => {
 
 exports.verifyEmailController = async (req, res) => {
     try {
-        const b64Token = req.params.token
-        const jwtToken = Buffer.from(b64Token, 'base64').toString()
-        const user = verifyVerificationJWT(jwtToken)
-        // TODO: Change user status to verified and Redirect user to verification success page
-        res.redirect(`${process.env.CLIENT_URL}/login`) 
+        // Verify token in db
+        const token = req.params.token
+        const user_verification = await pool.query(`SELECT * FROM user_verification WHERE token = '${token}'`)
+        if(user_verification.rowCount != 1){
+            const err = {
+                statusCode: 400,
+                message: 'Token is not found'
+            }
+            return errorHandler(err, req, res)
+        }
+        // Check if token is expired
+        const endTimestamp = dayjs(user_verification.rows[0].endtime)
+        const nowTimestamp = dayjs()
+        if(nowTimestamp.isAfter(endTimestamp)){
+            const err = {
+                statusCode: 400,
+                message: 'token is expired'
+            }
+            return errorHandler(err, req, res)
+        }
+        await pool.query(`UPDATE user_verification SET isverified = true WHERE token = '${token}'`)
+        // TODO: Should redirect to verification success page
+        res.redirect(`${process.env.ENTRYPOINT_URL}/login`) 
     } catch (error) {
         // TODO: Should redirect to verification error page
         errorHandler(error, req, res)
