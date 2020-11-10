@@ -4,7 +4,7 @@ import Selected from './selectedcourse'
 import Dialog from '@material-ui/core/Dialog'
 import { useRouter } from 'next/router'
 
-const ConfirmEdit = (props) => {
+const EditConfirm = (props) => {
     const [open, setOpen] = useState(false)
     const router = useRouter();
     const [type] = useState("created");
@@ -55,7 +55,7 @@ const ConfirmEdit = (props) => {
                 </div>
                 <div style={{ display: 'grid', justifyContent: 'space-around', gridTemplateColumns: '5% 50% 5%', marginBottom: '5%' }}>
                     <div><button onClick={() => props.changePage(1)} className="backbutton"><i className="fas fa-arrow-left"></i></button></div>
-                    <div style={{ textAlign: 'center' }}><button className="createbutton" onClick={handleOpenDialog}>Confirm and Create</button>
+                    <div style={{ textAlign: 'center' }}><button className="createbutton" onClick={handleOpenDialog}>Confirm and Update</button>
                     </div>
                     <div> </div>
                     <Dialog open={open} onClose={handleCloseDialog} >
@@ -83,4 +83,4 @@ const ConfirmEdit = (props) => {
         </Fragment >
     )
 }
-export default ConfirmEdit
+export default EditConfirm
