@@ -1,8 +1,10 @@
 import Styles from '../../styles/CoinStyles/dailyReward.module.css';
 import { useState, useEffect } from 'react';
-const temp = () => {
+const temp = props => {
     const [myStyle, setMyStyle] = useState({});
     const [disable, setDisbale] = useState(false);
+    const [change, setChange] = useState(false);
+    const [next,setNext] = useState(true);
     const [deg, setDeg] = useState([]);
     const [num, setNum] = useState(0);
     const [time, setTime] = useState({ hour: null, min: null, second: null });
@@ -36,6 +38,8 @@ const temp = () => {
         console.log('hello');
         setDeg(temp);
     }, []);
+    
+
     const click = () => {
         if (disable) return;
         console.log(deg);
@@ -47,26 +51,65 @@ const temp = () => {
         setTimeout(() => {
             setNum(getNum);
         }, 4000);
-
+        setTimeout(()=>{
+            setNext(false);
+        },4000);
+        setDisbale(true);
         setMyStyle({
             width: '100%',
             height: '100%',
             transform: `rotate(${deg[randDeg]}deg)`,
             transition: 'all 6s cubic-bezier(0, 0.99, 0.44, 0.99)'
         });
-
-        setDisbale(true);
     };
-    const renderText = () =>{
-        if(disable){
-            return <h4 className={Styles.check}>Now you have to wait it for {time.hour} Hours</h4>
-        } else{
-            return <h4 className={Styles.check}> Your can click it</h4>
+    const renderText = () => {
+        if (change) {
+            return (
+                <div className={Styles.time}>
+                    <h1 className={Styles.test3}>COUNT DOWN!!!</h1>
+                    <h1 className={Styles.test4}>
+                        {time.hour} HOURS {time.min} MIN {time.second} Sec
+                    </h1>
+                    <button
+                        className={Styles.btn2}
+                        onClick={e => {
+                            props.onClose();
+                            e.stopPropagation();
+                        }}
+                    >
+                        Back
+                    </button>
+                </div>
+            );
+        } else {
+            return (
+                <div className={Styles.time}>
+                    <h1 className={Styles.test3}>YOUR GOT!</h1>
+                    <h2 className={Styles.test3}>
+                        <img
+                            className={Styles.coin}
+                            src='../../images/Coin-image/icon_coin_back.svg'
+                        />{' '}
+                        {num} Coins
+                    </h2>
+                    <button
+                        className={next? Styles.disbtn : Styles.btn}
+                        onClick={() => setChange(true)}
+                        disabled={next}
+
+                    >
+                        GOT IT!!!
+                    </button>
+                </div>
+            );
         }
-    }
+    };
     return (
-        <div>
-            <div className={Styles.test}>Daily Reward</div>
+        <div className={Styles.bigbox}>
+            <div className={Styles.test}>
+                WELCOME TO <br />
+                DAILY REWARDS!
+            </div>
             <div className={Styles.wrapper}>
                 <div className={Styles.wheel}>
                     <div style={myStyle}>
@@ -75,19 +118,19 @@ const temp = () => {
                             <div className={Styles.sec}>
                                 <span className={Styles.fa}>6</span>
                             </div>
-                            <div className={Styles.sec}>
+                            <div className={Styles.sec5}>
                                 <span className={Styles.fa}>5</span>
                             </div>
                             <div className={Styles.sec}>
                                 <span className={Styles.fa}>4</span>
                             </div>
-                            <div className={Styles.sec}>
+                            <div className={Styles.sec3}>
                                 <span className={Styles.fa}>3</span>
                             </div>
                             <div className={Styles.sec}>
                                 <span className={Styles.fa}>2</span>
                             </div>
-                            <div className={Styles.sec}>
+                            <div className={Styles.sec6}>
                                 <span className={Styles.fa}>1</span>
                             </div>
                         </div>
@@ -97,22 +140,15 @@ const temp = () => {
                         onClick={() => click()}
                         className={disable ? Styles.disSpin : Styles.spin}
                     >
-                        <div className={Styles.innerSpin}></div>
+                        <div className={Styles.innerSpin}><img className={Styles.coinImg} src="../../images/Coin-image/icon_coin_back.svg"/></div>
                     </div>
 
                     <div className={Styles.shine}></div>
                 </div>
             </div>
-            <div className={Styles.txt}>Your got the {num}</div>
-            <div className={Styles.time}>
-                <h1>Count Down</h1>
-                <span className={Styles.label}>{time.hour}</span> Hour{' '}
-                <span className={Styles.label}>{time.min}</span> Min{' '}
-                <span className={Styles.label}>{time.second}</span> Second
-                <h3 className={Styles.label}>It's will reset every midnight</h3>
-                {/* <h4 className={disable ? Styles.false : Styles.true}>Hello</h4> */}
-                {renderText()}
-            </div>
+
+            {/* <h4 className={disable ? Styles.false : Styles.true}>Hello</h4> */}
+            {renderText()}
         </div>
     );
 };

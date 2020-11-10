@@ -9,6 +9,8 @@ const AnalysisRoute = require('./analysisRoute')
 const GraderRoute = require('./graderRoute')
 const EventRoute = require('./eventRoute')
 const registerUemail = require('./registerUemail');
+const sendEventMail = require('./sendEventMail')
+const InstructorRoute = require('./instructorRoute')
 
 router.use('/test', TestRoute)
 router.use('/auth', AuthRoute)
@@ -18,5 +20,8 @@ router.use('/analysis', AnalysisRoute)
 router.use('/grader', GraderRoute)
 router.use('/event',EventRoute)
 router.use('/registerUemail',registerUemail)
+router.use('/sendEventMail',sendEventMail)
+router.use('/instructor',InstructorRoute)
+
 
 module.exports = router

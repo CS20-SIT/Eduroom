@@ -1,46 +1,49 @@
-import React, { Fragment } from "react";
-import GeneralNoSide from "../../components/template/generalnoside";
+import React, { Fragment, useEffect } from "react";
+
 import Grid from "@material-ui/core/Grid";
-const Content = () => {
+const Page3 = ({questionNumber,time}) => {
+  useEffect(() => {
+  
+  }, []);
   return (
     <Fragment>
-      <GeneralNoSide />
       <Grid
         container
-        style={{ height: "7vh", display: "flex", alignItems: "center" }}
+        style={{ height: "3vh", display: "flex", alignItems: "center" }}
       >
-        <Grid item xs={6}>
-          <div className="question">question : 1</div>
+        <Grid item xs={2}>
+          <div className="question">question : {questionNumber+1}</div>
         </Grid>
+        <Grid item xs={4}></Grid>
         <Grid item xs={6}>
           <div className="pin">PIN:00000</div>
         </Grid>
       </Grid>
       <div className="main">
-        <i
-          class="fas fa-check"
-          style={{ color: "white", fontSize: "10vw" }}
-        ></i>
-        <span className="correct">correct!</span>
-        <div className="font">1000 points for you</div>
-        <div className="font">You are now in 3 th position</div>
+    
+        <span className="correct">Please Wait!</span>
+        <div className="font">Another Players</div>
+  <div className="font">time left : {time}</div>
       </div>
       <Grid
         container
-        style={{ height: "7vh", display: "flex", alignItems: "center" }}
+        style={{ height: "3vh", display: "flex", alignItems: "center" }}
       >
-        <Grid item xs={6}>
+        <Grid item xs={2}>
           <div className="question">Points</div>
         </Grid>
+        <Grid item xs={4}></Grid>
         <Grid item xs={6}>
-          <div className="pin" style={{color:'#F39AC4'}}>2000</div>
+          <div className="pin">
+            2000
+          </div>
         </Grid>
       </Grid>
       <style>
         {`
         .font{
             color:white;
-            font-size:1rem;
+            font-size:2rem;
             font-weight:500;
 
         }
@@ -51,7 +54,7 @@ const Content = () => {
 
         }
         .main{
-            background-color: #96AE97;
+            background-color: #6699FF;
             height: 86vh;
             display: flex ;
             justify-content: center;
@@ -60,7 +63,7 @@ const Content = () => {
 
         }
         .pin{
-            color:#A880F7;
+            color:#6699FF;
             font-weight:600;
             font-size:1.5rem;
             justify-content:flex-end;
@@ -69,6 +72,8 @@ const Content = () => {
         }
         .question{
             font-weight:600;
+            display:flex;
+            justify-content:start;
             font-size:1.5rem;
             padding:0px 0px 0px 20px;
         }
@@ -78,4 +83,4 @@ const Content = () => {
     </Fragment>
   );
 };
-export default Content;
+export default Page3;
