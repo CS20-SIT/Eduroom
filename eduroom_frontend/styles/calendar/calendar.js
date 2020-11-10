@@ -149,6 +149,7 @@ export default css`
 .d-day{
   position : absolute;
   margin:10px;
+  
 }
 
 `;

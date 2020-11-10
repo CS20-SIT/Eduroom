@@ -7,11 +7,12 @@ const Content = (props) => {
   const content = props.Content;
   const TodayDate = props.TodayDate;
   const setOpen = props.setOpen;
+  const setShowDate = props.setShowDate;
   const isNow = props.isNow
 
   return (
     <Fragment>
-      <div onClick={() => { setOpen(content) }} className={`${content == TodayDate && isNow ? 'currentDate' : ''} gridItem`} style={{cursor:"pointer"}}>{content}</div>
+      <div onClick={() => { setOpen(true);setShowDate(content); }} className={`${content == TodayDate && isNow ? 'currentDate' : ''} gridItem`} style={{cursor:"pointer"}}>{content}</div>
       <style jsx>{style}</style>
     </Fragment>
   );
