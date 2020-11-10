@@ -5,12 +5,12 @@ import {
   gridSections,
   gridAreaDays,
   gridAreaTimes,
-} from '../../../../components/tutor/data/grid-area';
+} from "../../../../components/tutor/data/grid-area"
 
 import {
   defineGridTime,
   createTable,
-} from '../../../../components/tutor/lib/time-availability';
+} from "../../../../components/tutor/lib/time-availability"
 
 import {
   dayFormatter,
@@ -21,9 +21,9 @@ import GeneralNoNav from "../../../../components/template/generalnonav"
 import AvailabilityEdit from "../../../../components/tutor/instructor-availability/availability-edit"
 
 const Availability = ({ availabilities, price }) => {
-  const [timeSlots, setTimeSlots] = useState(defineGridTime());
-  const [timeSections, setTimeSections] = useState(availabilities);
-  let tmp = [...timeSections];
+  const [timeSlots, setTimeSlots] = useState(defineGridTime())
+  const [timeSections, setTimeSections] = useState(availabilities)
+  let tmp = [...timeSections]
   let table = [
     [[], [], [], []],
     [[], [], [], []],
@@ -108,8 +108,8 @@ const Availability = ({ availabilities, price }) => {
                   style={{ textAlign: "center", borderRadius: 4 + "px" }}
                   onClick={() => {
                     // POST api/tutor/instructor/availability
-                    console.log(timeSlots);
-                    console.log(cost);
+                    console.log(timeSlots)
+                    console.log(cost)
                     // location.reload();
                     setMode(true)
                   }}
