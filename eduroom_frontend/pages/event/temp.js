@@ -18,3 +18,5 @@ function App() {
     </MuiPickersUtilsProvider>
   );
 }
+
+export default App;
