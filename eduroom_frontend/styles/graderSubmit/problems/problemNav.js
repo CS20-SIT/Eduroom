@@ -16,7 +16,7 @@ export default css`
   }
   .link:hover {
     color: #f39ac4;
-    border-bottom: 2px solid #f39ac4;
+    border-color: #f39ac4;
   }
   .active {
     color: #f39ac4;
@@ -33,5 +33,22 @@ export default css`
   .display {
     display: flex;
     flex-direction: column;
+  }
+  .language {
+    display: inherit;
+    height: inherit;
+    padding: 0 14.5px;
+    font-size: 1.2rem;
+    color: #828282;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    outline: none;
+  }
+  option:hover {
+    background-color: #007700;
   }
 `
