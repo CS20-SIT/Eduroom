@@ -3,6 +3,6 @@ const router = express.Router()
 const { RegisInstructor, Test } = require('../controllers/instructorController')
 
 router.post('/register_instructor', RegisInstructor)
-router.get('/test', Test)
+router.get('/profile', Test)
 
 module.exports = router
