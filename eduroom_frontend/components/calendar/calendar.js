@@ -120,7 +120,7 @@ const Content = () => {
 
           <div className='d-calendar'>
             <div className="d-top">
-              <div className="d-day">{showDate} {currentMonth}{currentYear}</div>
+              <div className="d-day">{showDate} {currentMonth} {currentYear}</div>
             </div>
 
             <div className="content">
