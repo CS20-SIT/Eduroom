@@ -5,6 +5,7 @@ export default css`
     font-size: 1.7em;
     padding: 0 6% 3% 6%;
     font-weight: bold;
+    text-shadow: 2px 1px rgba(0,0,0,0.5);
 }
 .container {
     background-color: #ffffff;
@@ -62,9 +63,9 @@ input[type=checkbox] {
 .subtitle {
     color: #3D467F;
     font-style: normal;
-    font-weight: 550;
+    font-weight: 650;
     font-size: 22px; 
-    margin-bottom: 30px;   
+    margin-bottom: 15px;   
 
 }
 .text {
@@ -74,13 +75,18 @@ input[type=checkbox] {
 
 .coursebox {
     background-color: white;
-    border-radius: 5px;
-    border: 1px solid white;
+    border: 3px solid white;
     margin-bottom: 7%;
+    width: 100%;
     text-align: center;
-    width: 101.5%;
-   
 }
+.create {
+    padding: 3% 2% 3% 3%;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-track {
+    background: white; 
+  }
 ::-webkit-scrollbar {
     width: 10px;
   }
@@ -101,7 +107,7 @@ input[type=checkbox] {
     text-align: left;
     display: flex;
     align-items: center;
-    
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.2);
     
 }
 .createbutton {
@@ -118,6 +124,8 @@ input[type=checkbox] {
 .createbutton:hover {
     cursor: pointer;
     opacity: 0.9;
+    box-shadow: 0 0px 6px 2px rgba(0,0,0,0.1);
+    transition: 0.25s;
   }
 .backbutton {
     font-size: 1em;
