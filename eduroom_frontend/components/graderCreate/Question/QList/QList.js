@@ -4,6 +4,8 @@ import QTable from "./QTable";
 import { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 
+import { useRouter } from "next/router";
+
 //prepare for adding abmin log wheen create / edit ann
 // toggle for visiblity https://material-ui.com/components/switches/
 const Test = () => {
@@ -21,15 +23,15 @@ const Test = () => {
     color: "#5b5b5b",
     fontWeight: "bold",
   };
-
+  const router = useRouter();
   return (
     <div style={sBig}>
       <Grid>
         <Grid>
-          <span style={sBigTitle}>Question</span>{" "}
           <span>
-            {" "}
-            <Link href="/admin/grader/question/create">Create</Link>
+            <Link href="/admin/grader/question/create" scroll={false}>
+              Create
+            </Link>
           </span>
           <div style={{ height: 20 }}></div>
         </Grid>

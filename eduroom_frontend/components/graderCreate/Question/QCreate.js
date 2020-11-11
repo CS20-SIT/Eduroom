@@ -28,6 +28,13 @@ import Switch from "@material-ui/core/Switch";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+function ScrollToTopOnMount() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  return null;
+}
 const CustomAutocomplete = withStyles({
   input: {
     marginTop: 7,
@@ -552,6 +559,7 @@ export default function FullWidthGrid() {
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme1}>
+        <ScrollToTopOnMount />
         <Snackbar
           open={erorvalid}
           autoHideDuration={6000}
@@ -611,7 +619,6 @@ export default function FullWidthGrid() {
                     label="Description"
                     type="text"
                     margin="dense"
-                    autoFocus
                     fullWidth
                     multiline
                     rows={15}
@@ -628,7 +635,6 @@ export default function FullWidthGrid() {
             <div>
               <Paper className={classes.paper}>
                 <TextField
-                  autoFocus
                   multiline
                   margin="dense"
                   label="Input Description"
@@ -647,7 +653,6 @@ export default function FullWidthGrid() {
             <div>
               <Paper className={classes.paper}>
                 <TextField
-                  autoFocus
                   multiline
                   margin="dense"
                   label="Output Description"
@@ -772,7 +777,6 @@ export default function FullWidthGrid() {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <TextField
-                autoFocus
                 margin="dense"
                 label="Hint"
                 type="text"
@@ -965,7 +969,7 @@ export default function FullWidthGrid() {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={statusClose} color="primary" autoFocus>
+                <Button onClick={statusClose} color="primary">
                   <span style={sButtionandVisbile}>
                     <Link href="/admin/grader/question/">Ok</Link>
                   </span>
@@ -983,7 +987,7 @@ export default function FullWidthGrid() {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={statusClose} color="primary" autoFocus>
+                <Button onClick={statusClose} color="primary">
                   <span style={sButtionandVisbile}>Ok</span>
                 </Button>
               </DialogActions>

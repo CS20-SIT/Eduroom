@@ -431,7 +431,7 @@ export default function FullWidthGrid() {
               <div>
                 {" "}
                 <Chip
-                  label=" Cr eate"
+                  label=" Create"
                   onClick={handleSubmit}
                   style={{
                     backgroundColor: "#FC8FC3",
