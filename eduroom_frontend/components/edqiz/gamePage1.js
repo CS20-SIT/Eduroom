@@ -1,16 +1,27 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState,useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
-import Page2 from "./gamePage2";
-// import image from ""
+import { useRouter } from 'next/router'
+import socketIOClient from "socket.io-client";
 
 const axios = require("axios");
-const Page1 = ({ goto, data, questionNumber }) => {
-  const room = { name: "room1", PIN: "99999" };
+const Page1 = ({ goto, data, questionNumber,sentMessage,response,setquestionNumber}) => {
+  const router = useRouter()
 
+  // console.log(router.query.id)
+  const room = { name: "room1", PIN: router.query.id };
+  
   function questionNext() {
     setquestionNumber(questionNumber + 1);
   }
+  const setSkip = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
 
+    socket.emit("set-skip",true, router.query.id,questionNumber);
+  };
+  useEffect(() => {
+    // sentMessage()
+    // response()
+  }, []);
   return (
     <Fragment>
       <div className="landing">
@@ -28,7 +39,8 @@ const Page1 = ({ goto, data, questionNumber }) => {
             <button
               className="landing-button"
               onClick={() => {
-                goto(2);
+                goto(2),
+                setSkip()
               }}
             >
               SKIP

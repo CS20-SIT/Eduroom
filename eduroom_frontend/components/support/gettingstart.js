@@ -7,15 +7,12 @@ import {
   Grid,
   Typography,
   CssBaseline,
-  makeStyles,
-  Select,
-  MenuItem,
   Paper,
-  createMuiTheme,
   ThemeProvider,
   Link,
+  fade,
 } from "@material-ui/core";
-import Studentnav from '../support/studentsidenav'
+import Studentnav from "../support/studentsidenav";
 
 const GetStart = () => {
   return (
@@ -26,16 +23,41 @@ const GetStart = () => {
             <h1>Getting started</h1>
           </Typography>
         </Grid>
-        <Grid container justify="center" alignItems="center">
-          <Grid item xs={3}><Studentnav/></Grid>
+        <Grid container>
+          <Grid item xs={3}>
+            <Studentnav />
+          </Grid>
+
           <Grid item xs={9}>
-            <Typography><h2>Getting Started - General</h2></Typography>
-            <Typography><Link href='/support/getstart/Course-Instructors-and-Teaching-Assistants'>Course Instructors and Teaching Assistants</Link></Typography>
-            <Typography>Udemy Platforms and Features</Typography>
-            <Typography>How Does Udemy Work? FAQ</Typography>
-            <Typography>Add a Course to Your Wishlist</Typography>
-            <Typography>System Requirements</Typography>
-            <Typography>How to Preview And Compare Courses</Typography>
+            <Paper
+              elevation={3}
+              style={{
+                paddingBottom: "100px",
+                paddingLeft: "40px",
+                paddingTop: "20px",
+                backgroundColor: fade("#ffffff", 0.7),
+              }}
+            >
+              <Typography>
+                <h2>Getting Started - General</h2>
+              </Typography>
+              <hr style={{ marginRight: "30px", marginBottom: "25px" }}></hr>
+              <p>
+                <Link href="/support/getstart/Course-Instructors-and-Teaching-Assistants">
+                  Course Instructors and Teaching Assistants
+                </Link>
+              </p>
+              
+                <Link href="/support/getstart/How-Does-Eduroom-Work">
+                <p>
+                  How Does Eduroom Work? FAQ
+                  </p>
+                </Link>
+              
+                <Link href="/support/getstart/Add-a-Course-to-Your-Wishlist"><p>Add a Course to Your Wishlist</p></Link>
+                <Link href="/support/getstart/System-Requirements"><p>System Requirement</p></Link>
+              <p>How to Preview And Compare Courses</p>
+            </Paper>
           </Grid>
         </Grid>
       </Grid>
