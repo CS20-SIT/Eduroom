@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from "react";
-import Grid from "@material-ui/core/Grid";
-import { useRouter } from "next/router";
-import socketIOClient from "socket.io-client";
+import React, { Fragment, useState } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { useRouter } from 'next/router';
+import socketIOClient from 'socket.io-client';
 const Page1 = ({
   responseTime,
   goto,
@@ -15,42 +15,41 @@ const Page1 = ({
   const router = useRouter();
   const setTimeSocket = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
-      path: "/kahoot",
+      path: '/kahoot',
     });
 
-    socket.emit("set-seconds", data[questionNumber].time,id);
+    socket.emit('set-seconds', data[questionNumber].time, id);
   };
-  const room = { name: "room1", PIN: router.query.id };
-  let number = questionNumber;
+  const room = { name: 'room1', PIN: router.query.id };
 
   const Correct = [];
   const getCorrectAnswer = () => {
     if (data[questionNumber].correct == 0) {
       Correct.push(
-        <div>
+        <div key={1}>
           <Grid
             container
-            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
+            style={{ marginTop: '4vh', display: 'flex', alignItems: 'center' }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: "flex-end",
-                display: "flex",
-                padding: "1vw",
+                justifyContent: 'flex-end',
+                display: 'flex',
+                padding: '1vw',
               }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#EB7DB1",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#EB7DB1',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
                 onClick={() => {}}
               >
@@ -60,19 +59,19 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: "flex", justifyContent: "flex-start" }}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#D5C1FC",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#D5C1FC',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[1]}
@@ -82,32 +81,32 @@ const Page1 = ({
           <Grid
             container
             style={{
-              marginTop: "1vh",
-              display: "flex",
-              alignItems: "center",
-              outline: "none",
+              marginTop: '1vh',
+              display: 'flex',
+              alignItems: 'center',
+              outline: 'none',
             }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: "flex-end",
-                display: "flex",
-                padding: "1vw",
+                justifyContent: 'flex-end',
+                display: 'flex',
+                padding: '1vw',
               }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#FDD4C1",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#FDD4C1',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[2]}
@@ -116,19 +115,19 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: "flex", justifyContent: "flex-start" }}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#A6CEEE",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#A6CEEE',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[3]}
@@ -141,31 +140,31 @@ const Page1 = ({
     //////////////////////////111111111//////////////////////////////////////////////////////////////////
     if (data[questionNumber].correct == 1) {
       Correct.push(
-        <div>
+        <div key={Correct.length}>
           <Grid
             container
-            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
+            style={{ marginTop: '4vh', display: 'flex', alignItems: 'center' }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: "flex-end",
-                display: "flex",
-                padding: "1vw",
+                justifyContent: 'flex-end',
+                display: 'flex',
+                padding: '1vw',
               }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#F39AC4",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  opacity: "0.5",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#F39AC4',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  opacity: '0.5',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
                 onClick={() => {}}
               >
@@ -175,19 +174,19 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: "flex", justifyContent: "flex-start" }}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#A27CEF",
-                  opacity: "1",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#A27CEF',
+                  opacity: '1',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[1]}
@@ -197,32 +196,32 @@ const Page1 = ({
           <Grid
             container
             style={{
-              marginTop: "1vh",
-              display: "flex",
-              alignItems: "center",
-              outline: "none",
+              marginTop: '1vh',
+              display: 'flex',
+              alignItems: 'center',
+              outline: 'none',
             }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: "flex-end",
-                display: "flex",
-                padding: "1vw",
+                justifyContent: 'flex-end',
+                display: 'flex',
+                padding: '1vw',
               }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#FDD4C1",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#FDD4C1',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[2]}
@@ -231,19 +230,19 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: "flex", justifyContent: "flex-start" }}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#A6CEEE",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#A6CEEE',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[3]}
@@ -259,28 +258,28 @@ const Page1 = ({
         <div>
           <Grid
             container
-            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
+            style={{ marginTop: '4vh', display: 'flex', alignItems: 'center' }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: "flex-end",
-                display: "flex",
-                padding: "1vw",
+                justifyContent: 'flex-end',
+                display: 'flex',
+                padding: '1vw',
               }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#F39AC4",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  opacity: "0.5",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#F39AC4',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  opacity: '0.5',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
                 onClick={() => {}}
               >
@@ -290,19 +289,19 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: "flex", justifyContent: "flex-start" }}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#A27CEF",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#A27CEF',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[1]}
@@ -312,32 +311,32 @@ const Page1 = ({
           <Grid
             container
             style={{
-              marginTop: "1vh",
-              display: "flex",
-              alignItems: "center",
-              outline: "none",
+              marginTop: '1vh',
+              display: 'flex',
+              alignItems: 'center',
+              outline: 'none',
             }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: "flex-end",
-                display: "flex",
-                padding: "1vw",
+                justifyContent: 'flex-end',
+                display: 'flex',
+                padding: '1vw',
               }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#F3B496",
-                  opacity: "1",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#F3B496',
+                  opacity: '1',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[2]}
@@ -346,19 +345,19 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: "flex", justifyContent: "flex-start" }}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#A6CEEE",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#A6CEEE',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[3]}
@@ -374,28 +373,28 @@ const Page1 = ({
         <div>
           <Grid
             container
-            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
+            style={{ marginTop: '4vh', display: 'flex', alignItems: 'center' }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: "flex-end",
-                display: "flex",
-                padding: "1vw",
+                justifyContent: 'flex-end',
+                display: 'flex',
+                padding: '1vw',
               }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#F39AC4",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  opacity: "0.5",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#F39AC4',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  opacity: '0.5',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
                 onClick={() => {}}
               >
@@ -405,19 +404,19 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: "flex", justifyContent: "flex-start" }}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#A27CEF",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#A27CEF',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[1]}
@@ -427,32 +426,32 @@ const Page1 = ({
           <Grid
             container
             style={{
-              marginTop: "1vh",
-              display: "flex",
-              alignItems: "center",
-              outline: "none",
+              marginTop: '1vh',
+              display: 'flex',
+              alignItems: 'center',
+              outline: 'none',
             }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: "flex-end",
-                display: "flex",
-                padding: "1vw",
+                justifyContent: 'flex-end',
+                display: 'flex',
+                padding: '1vw',
               }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#F3B496",
-                  opacity: "0.5",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#F3B496',
+                  opacity: '0.5',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[2]}
@@ -461,19 +460,19 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: "flex", justifyContent: "flex-start" }}
+              style={{ display: 'flex', justifyContent: 'flex-start' }}
             >
               <button
                 className="buttonAnswer"
                 style={{
-                  backgroundColor: "#8CC0EA",
-                  opacity: "1",
-                  width: "30vw",
-                  height: "10vh",
-                  border: "none",
-                  color: "white",
-                  fontSize: "1.2rem",
-                  outline: "none",
+                  backgroundColor: '#8CC0EA',
+                  opacity: '1',
+                  width: '30vw',
+                  height: '10vh',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: '1.2rem',
+                  outline: 'none',
                 }}
               >
                 {data[questionNumber].ans[3]}
@@ -487,26 +486,25 @@ const Page1 = ({
   return (
     <Fragment>
       <div className="landing">
-        <Grid container style={{ marginTop: "4vh" }}>
+        <Grid container style={{ marginTop: '4vh' }}>
           <Grid item xs={10}>
             <div className="text-title">
-              PIN :<div style={{ color: "#FB9CCB" }}>{room.PIN}</div>
+              PIN :<div style={{ color: '#FB9CCB' }}>{room.PIN}</div>
             </div>
           </Grid>
           <Grid
             item
             xs={2}
-            style={{ display: "flex", justifyContent: "center" }}
+            style={{ display: 'flex', justifyContent: 'center' }}
           >
             <button
               className="landing-button"
               onClick={() => {
                 goto(1);
-                number++;
-                ChangeQuestionNumber(number);
+                ChangeQuestionNumber(questionNumber + 1);
                 setNextQuestion();
-                setTime(data[questionNumber + 1].time);
-                setTimeSocket();
+                // setTime(data[questionNumber + 1].time);
+                // setTimeSocket();
               }}
             >
               NEXT
@@ -519,19 +517,19 @@ const Page1 = ({
         <Grid
           container
           style={{
-            marginTop: "4vh",
-            display: "flex",
-            height: "40vh",
-            alignItems: "center",
+            marginTop: '4vh',
+            display: 'flex',
+            height: '40vh',
+            alignItems: 'center',
           }}
         >
           <Grid item xs={4}></Grid>
           <Grid item xs={4}>
             <div
               style={{
-                backgroundColor: "#EFF0F6",
-                padding: "20px",
-                fontSize: "1.3rem",
+                backgroundColor: '#EFF0F6',
+                padding: '20px',
+                fontSize: '1.3rem',
                 fontWeight: 600,
               }}
             >
@@ -561,7 +559,7 @@ const Page1 = ({
             box-shadow: 0 4px 3px 0 rgba(0, 0, 0, 0.2);
           }
           .text {
-            font-family: "Quicksand", sans-serif;
+            font-family: 'Quicksand', sans-serif;
             color: #473f47;
             font-weight: 600;
             font-size: 1.7rem;
@@ -570,7 +568,7 @@ const Page1 = ({
             justify-content: center;
           }
           .text-time {
-            font-family: "Quicksand", sans-serif;
+            font-family: 'Quicksand', sans-serif;
             align-items: center;
             color: #3d467f;
             font-weight: 600;
@@ -580,7 +578,7 @@ const Page1 = ({
             justify-content: center;
           }
           .text-timeNum {
-            font-family: "Quicksand", sans-serif;
+            font-family: 'Quicksand', sans-serif;
             color: #d5c1fc;
             font-weight: 600;
             font-size: 2.5rem;
@@ -589,7 +587,7 @@ const Page1 = ({
             justify-content: center;
           }
           .text-title {
-            font-family: "Quicksand", sans-serif;
+            font-family: 'Quicksand', sans-serif;
             color: #473f47;
             font-weight: 600;
             font-size: 1.5rem;
@@ -617,7 +615,7 @@ const Page1 = ({
             padding: 0px;
             width: 100%;
             height: 100%;
-            background-image: url("/images/edqiz/BGgame.svg");
+            background-image: url('/images/edqiz/BGgame.svg');
             background-size: cover;
             overflow: auto;
           }
