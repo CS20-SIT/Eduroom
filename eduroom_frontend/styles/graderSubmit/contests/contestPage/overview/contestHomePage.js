@@ -63,7 +63,6 @@ export default css`
     font-size: 0.875rem;
     font-weight: bold;
     padding-left: 8px;
-    padding-right: 15%;
   }
   .flex-container {
     width: 90%;
