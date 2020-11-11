@@ -1,5 +1,28 @@
-.modal{
-    background-color: salmon;
-    width: 100px;
-    height: 50px;
+.title{
+font-size: small;
+margin-left: 20%;
+/* background-color: red; */
+}
+.setPayment{
+    display: flex;
+    /* background-color: blue; */
+}
+.showPhoto {
+  position: relative;
+  top: -20px;
+  padding: 0%;
+  margin-right: 20% ;
+  /* padding-bottom: 20%; */
+  /* border: 2px solid black;
+  background-color: slategrey; */
+  width: 130%;
+  height: 100%;
+}
+.setMoney{
+  display: flex;
+}
+.coinPhoto{
+  /* width: -30%;
+  height: auto; */
+  border: 2px solid black;
 }
