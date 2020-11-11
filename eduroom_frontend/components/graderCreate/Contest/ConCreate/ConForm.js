@@ -127,7 +127,7 @@ export default function FullWidthGrid() {
   const sInputSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.1em",
+    "font-size": "1.0em",
   };
   const sError = {
     "font-family": "Quicksand , sans-serif",
@@ -137,7 +137,7 @@ export default function FullWidthGrid() {
   const sInputfieldSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-size": "1.2em",
+    "font-size": "1.1em",
     "font-weight": "bold",
   };
   const sButtionandVisbile = {
