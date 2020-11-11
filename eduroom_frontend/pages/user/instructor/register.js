@@ -8,7 +8,7 @@ const InstructorRegister = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await api.get('/api/instructor/test');
+      const res = await api.get('/api/instructor/profile');
       setUser(res.data);
     };
     fetchData();
