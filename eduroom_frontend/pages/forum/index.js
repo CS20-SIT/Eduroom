@@ -8,19 +8,10 @@ import style from '../../styles/forum/showForum';
 import GeneralNoNav from "../../components/template/generalnonav";
 import RoomTab from "../../components/forum/RoomTab";
 import ForumBlock from "../../components/forum/forumBlock";
+
 const Forum = () => {
     const [forum, setForum] = useState([]);
-    // useEffect(() => {
-    //   queryData();
-    // }, []);
-    // const queryData = () => {
-    //   api.get("/api/forum").then((res) => {
-    //     setForum(res.data.data);
-    //   });
-    // };
-    // const [create, setCreate] = useState();
-  const data = [
-    { username: "00001", topic: "topic01", date: "2020-01-01" }];
+    
   return (
     <Fragment>
       <GeneralNoNav >
@@ -41,14 +32,16 @@ const Forum = () => {
           <RoomTab />
           </div>
           <div className="forumblock">
-            <ForumBlock createForm='test' />
+            <ForumBlock />
           </div>
         </div>
+
         <style jsx>{style}</style>
         <style jsx>
         {`
           #nav {
             width: 100%;
+            height: 100%;
           }
           .background-img {
             position: absolute;
