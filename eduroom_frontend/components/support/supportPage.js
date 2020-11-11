@@ -15,7 +15,7 @@ import {
   ThemeProvider,
   Link
 } from "@material-ui/core";
-import GeneralNonav from "../../components/template/generalnonav";
+import General from "../../components/template/general";
 import StudentSupport from "../support/studentSupport";
 import InstructorSupport from "../support/InstructorSupport";
 import create from '../../pages/support/getstart'
@@ -81,30 +81,13 @@ const SupportPage = () => {
   };
   return (
     <Fragment>
+      <General>
       <Head>Help and Support</Head>
-      <Container>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+
+          <img src='/images/whatcanwe2.svg' style={{width:'100%'}}></img>
           <div>
-
-<Grid container spacing={2}><Grid item sm={12}>
-            <Paper className={classes.toppaper}>
-              <Grid
-                container
-
-                align="center"
-                justify="center"
-                direction="column"
-              >
-                <Grid item>
-                  <Typography variant="h4">
-                    <br></br>
-                    <br></br>How may we help you?
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Paper>
-            </Grid>
+          
+<Grid container spacing={2}>
 
 <Grid item sm={12}>
             <Grid container 
@@ -129,8 +112,7 @@ const SupportPage = () => {
             </Link>
             </Grid>
           </div>
-        </ThemeProvider>
-      </Container>
+        </General>
       </Fragment>
     );
   };

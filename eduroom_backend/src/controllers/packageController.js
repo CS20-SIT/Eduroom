@@ -1,18 +1,16 @@
 const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
 
-
-const getPackage = async (req, res, next) => {
-    const data = await pool.query('SELECT * FROM ()')
-    res.send({ success: true })
-    return
-  }
-module.exports = {getPackage}
-
-const isPublic = async (req, res, next) => {
+exports.createPackage = async(req,res)=>{
+  const time = await pool.query('SELECT NOW()')
+  // res.status(200).json({success:true,msg: 'test from backend',time:time.rows[0]})
+  // console.log(req)
+  const data = req.body
+  console.log(data);
+  res.send({ success: data})
+  return
 
 }
-module.exports = {isPublic}
 
 // const pool = require('../database/db')
 // exports.getEvent = async (req, res, next) => {
