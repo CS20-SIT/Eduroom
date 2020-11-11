@@ -19,19 +19,24 @@ import {
 import Studentnav from "../support/studentsidenav";
 
 const Courseinstandteachingast = () => {
+  const theme = createMuiTheme({
+    typography: {
+      fontFamily: "Quicksand",
+    },
+  });
   return (
     <Fragment>
-      <Grid container style={{ marginTop: "30px" }}>
+      <Grid container style={{ marginTop: theme.spacing(4) }}>
         <Grid container>
-          <Typography style={{ marginLeft: "20px" }}>
+          <Typography style={{ marginLeft: theme.spacing(2) }}>
             {" "}
             <h1>Course Instructors and Teaching Assistantsd</h1>
           </Typography>
-          <Grid item xs={9} style={{ paddingRight: "100px" }}>
+          <Grid item xs={9} style={{ paddingRight: theme.spacing(13) }}>
             <Paper
               style={{
-                padding: "20px",
-                
+                padding: theme.spacing(3),
+                marginBottom: theme.spacing(10),
                 backgroundColor: fade("#ffffff", 0.6),
               }}
             >
@@ -61,8 +66,8 @@ const Courseinstandteachingast = () => {
                   the course landing page, they are also experts in the course
                   subject, and can provide accurate answers to your questions.
                 </p>
-                <p style={{marginLeft:'630px',marginTop:'200px'}}>
-                  <Link href="/support/getstart"><label style={{marginRight:'8px'}}>&lt;</label>Getting Started</Link>
+                <p style={{marginLeft:theme.spacing(78),marginTop:theme.spacing(25)}}>
+                  <Link href="/support/getstart"><label style={{marginRight:theme.spacing(1.7)}}>&lt;</label>Getting Started</Link>
                 </p>
               </Typography>
             </Paper>
@@ -80,9 +85,14 @@ const Courseinstandteachingast = () => {
             <p>Add a Course to Your Wishlist</p>
             <p>System Requirements</p>
             <p>How to Preview And Compare Courses</p>
-            <div style={{ marginTop: "50px", marginBottom: "100px" }}>
+            
+            <div style={{ marginTop: theme.spacing(7), marginBottom: theme.spacing(3) }}>
               <Studentnav />
+             
             </div>
+
+            <Button variant='contained' style={{backgroundColor:'#FB9CCB', marginBottom:theme.spacing(10),marginLeft:theme.spacing(8.5),marginTop:theme.spacing(1)}} href="/support/create"><label style={{color:'#ffffff'}}>CONTACT US</label></Button>
+
           </Grid>
         </Grid>
       </Grid>
