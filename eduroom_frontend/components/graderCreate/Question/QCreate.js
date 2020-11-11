@@ -13,7 +13,14 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
+import QSampleList from "./QSampleList";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import Link from "next/link";
 import Image from "next/image";
 
 import Switch from "@material-ui/core/Switch";
@@ -68,8 +75,8 @@ const CustomAutocomplete = withStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "65%",
-    marginLeft: "17%",
+    width: "52.5%",
+    marginLeft: "22.5%",
     marginRight: "15%",
     marginTop: "2.5%",
     marginBottom: "10%",
@@ -137,6 +144,13 @@ export default function FullWidthGrid() {
     GetData();
   }, []);
 
+  const sTitle = {
+    "font-family": "Quicksand , sans-serif",
+    "font-size": "1.2em",
+    color: "#3d467f",
+    "font-weight": "bold",
+  };
+  const sText = { "font-family": "Quicksand , sans-serif", color: "#5b5b5b" };
   const sButtionandVisbile = {
     color: "#3d467f",
     "font-family": "Quicksand , sans-serif",
@@ -168,7 +182,7 @@ export default function FullWidthGrid() {
   const sInputSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    "font-size": "1.0em",
   };
   const sError = {
     "font-family": "Quicksand , sans-serif",
@@ -178,7 +192,7 @@ export default function FullWidthGrid() {
   const sInputfieldSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-size": "1.4em",
+    "font-size": "1.1em",
     "font-weight": "bold",
   };
   const sBigTitle = {
@@ -266,6 +280,22 @@ export default function FullWidthGrid() {
     },
   ];
 
+  const [submitStatus, setSubmitStatus] = useState({
+    success: false,
+    failed: false,
+  });
+
+  const statusClose = () => {
+    setSubmitStatus({
+      success: false,
+      failed: false,
+    });
+  };
+
+  const handleDialogClose = () => {
+    setOpen(false);
+  };
+
   const classes = useStyles();
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -279,6 +309,8 @@ export default function FullWidthGrid() {
   const [erorvalid, seterorValid] = React.useState(false);
   const [hint, setHint] = useState("");
   const [difficulty, setDiff] = useState("easy");
+  const [samples, setSample] = useState([]);
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -286,7 +318,10 @@ export default function FullWidthGrid() {
 
     seterorValid(false);
   };
-
+  const handleSample = (s) => {
+    setSample(s);
+    console.log(samples);
+  };
   const handleTitle = (event) => {
     setTitle(event.target.value);
     setCheck(true);
@@ -320,7 +355,7 @@ export default function FullWidthGrid() {
   };
 
   const handleSubmit = () => {
-    if (title == "") {
+    if (title == "" || selectedFile.length == 0) {
       seterorValid(true);
     } else {
       let newtags = tags.filter((t) => {
@@ -357,23 +392,16 @@ export default function FullWidthGrid() {
         })
         .then(function (response) {
           console.log(response.data.id);
-          onHandlerFile(response.data.id);
-
-          // setOpen(false);
+          const id = response.data.id;
+          onHandlerFile(id);
+          onHandlerSample(id);
+        })
+        .catch(function (error) {
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, failed: true });
+          }, 450);
         });
     }
-
-    //     setTimeout(() => {
-    //       console.log('this is when we call prop on sucess')
-    //       setSubmitStatus({ ...submitStatus, success: true });
-    //     }, 450);
-    //   })
-    //   .catch(function (error) {
-    //     setOpen(false);
-    //     setTimeout(() => {
-    //       setSubmitStatus({ ...submitStatus, failed: true });
-    //     }, 450);
-    //   })
   };
   // so when send -> post the new tags into tagTable  first then post in Question Tag
   const [tags, setTags] = React.useState([]);
@@ -473,6 +501,7 @@ export default function FullWidthGrid() {
     if (selectedFile != null) {
       for (var x = 0; x < selectedFile.length; x++) {
         data.append("file", selectedFile[x]);
+        console.log(id);
         data.append("questionid", id);
         console.log(selectedFile[x]);
       }
@@ -485,6 +514,29 @@ export default function FullWidthGrid() {
         .then((res) => {})
         .catch((err) => {
           console.log(err);
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, failed: true });
+          }, 450);
+        });
+    }
+  };
+  const onHandlerSample = (id) => {
+    if (samples != null) {
+      axios
+        .post("http://localhost:5000/api/grader/cquestionsample", {
+          samples: samples,
+          questionId: id,
+        })
+        .then((res) => {
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, success: true });
+          }, 450);
+        })
+        .catch((err) => {
+          console.log(err);
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, failed: true });
+          }, 450);
         });
     }
   };
@@ -510,7 +562,7 @@ export default function FullWidthGrid() {
           </Alert>
         </Snackbar>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={6}>
           <Grid item xs={10}>
             <span style={sBigTitle}>Create your Question</span>
           </Grid>
@@ -555,13 +607,13 @@ export default function FullWidthGrid() {
                 {" "}
                 <Paper className={classes.paper}>
                   <TextField
-                    autoFocus
-                    multiline
-                    margin="dense"
                     id="description"
                     label="Description"
                     type="text"
+                    margin="dense"
+                    autoFocus
                     fullWidth
+                    multiline
                     rows={15}
                     value={description}
                     onChange={handleDesc}
@@ -714,7 +766,9 @@ export default function FullWidthGrid() {
               </div>{" "}
             </Paper>
           </Grid>
-
+          <Grid item xs={12}>
+            <QSampleList handleSample={handleSample}></QSampleList>
+          </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <TextField
@@ -874,33 +928,12 @@ export default function FullWidthGrid() {
                   <div style={{ height: 12 }}></div>
                 </Grid>
               </Grid>
-              {/* <div className="container">
-               
-           
-                <div className="row">
-                  <div className="offset-md-3 col-md-12">
-                    <div className="form-group files">
-                      <span>
-
-                        <span></span>
-                      </span>
-                    </div>
-
-                    <button
-                      type="button"
-                      className="btn btn-success btn-block"
-                      onClick={onClickHandlerFile}
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </div>
-              </div> */}
             </Paper>
+            <Grid item xs={12}>
+              <div style={{ height: 20 }}></div>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <div style={{ height: 20 }}></div>
-          </Grid>
+
           <Grid item xs={12}>
             <center>
               <div>
@@ -909,6 +942,7 @@ export default function FullWidthGrid() {
                   label=" Create"
                   onClick={handleSubmit}
                   style={{
+                    marginLeft: -50,
                     backgroundColor: "#FC8FC3",
                     marginBottom: 10,
                     color: "white",
@@ -921,6 +955,39 @@ export default function FullWidthGrid() {
                 />
               </div>
             </center>
+            <Dialog open={submitStatus.success} onClose={statusClose}>
+              <DialogTitle>
+                <span style={sTitle}>Success!</span>
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  <span style={sText}> Your Question have been created.</span>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={statusClose} color="primary" autoFocus>
+                  <span style={sButtionandVisbile}>
+                    <Link href="/admin/grader/question/">Ok</Link>
+                  </span>
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+            <Dialog open={submitStatus.failed} onClose={statusClose}>
+              <DialogTitle>
+                <span style={sTitle}>Opps.... Something went wrong!</span>
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  <span style={sText}> Come back again later...</span>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={statusClose} color="primary" autoFocus>
+                  <span style={sButtionandVisbile}>Ok</span>
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
         </Grid>
       </MuiThemeProvider>
