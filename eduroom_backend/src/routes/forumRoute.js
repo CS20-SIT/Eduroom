@@ -4,6 +4,6 @@ const { selectForum, showForum, createForum } = require('../controllers/forumCon
 
 router.get('/', showForum)
 router.post('/create', createForum)
-router.get('/id', selectForum)
+router.get('/:id', selectForum)
 
 module.exports = router
