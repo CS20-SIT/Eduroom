@@ -16,10 +16,6 @@ const postcontestAnn = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
   const adminid = req.body.adminid;
-  //   await pool.query("INSERT INTO users(email,password) VALUES($1,$2)", [
-  //     email,
-  //     hashedPassword,
-  //   ]);
   await pool.query(
     'INSERT INTO announcements(title,description,"adminid") VALUES ($1 , $2, $3)',
     [title, description, adminid]
@@ -27,4 +23,7 @@ const postcontestAnn = async (req, res, next) => {
 
   res.send({ title, description, adminid });
 };
+
+
+
 module.exports = { getcontestAnn, postcontestAnn };

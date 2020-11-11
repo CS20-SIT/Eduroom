@@ -105,7 +105,7 @@ const temp = props => {
         }
     };
     return (
-        <div>
+        <div className={Styles.bigbox}>
             <div className={Styles.test}>
                 WELCOME TO <br />
                 DAILY REWARDS!
