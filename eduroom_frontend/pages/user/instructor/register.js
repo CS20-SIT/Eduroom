@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import General from '../../../components/template/General';
+import General from '../../../components/template/general';
 import api from '../../../api';
 import Register from '../../../components/user/instructor/Register';
 import WaitingApproved from '../../../components/user/instructor/WaitingApproved';
