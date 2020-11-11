@@ -72,7 +72,8 @@ const RoomTab = () => {
             className={classes.paper}
             style={{ border: "2px solid #a880f7", borderRadius:'10px' }}
           >
-            Room4
+          <div><img src='/images/forum/Language.svg'></img></div>
+          <div style={{paddingTop:'6px', fontSize: '0.8em', fontWeight: '600'}}>ROOM4</div>
           </Paper>
         </Grid>
         <Grid item xs={2}>
@@ -81,7 +82,8 @@ const RoomTab = () => {
             className={classes.paper}
             style={{ border: "2px solid #a880f7", borderRadius:'10px' }}
           >
-            Room5
+          <div><img src='/images/forum/Language.svg'></img></div>
+          <div style={{paddingTop:'6px', fontSize: '0.8em', fontWeight: '600'}}>ROOM5</div>
           </Paper>
         </Grid>
         <Grid item xs={2}>
@@ -90,7 +92,8 @@ const RoomTab = () => {
             className={classes.paper}
             style={{ border: "2px solid #a880f7", borderRadius:'10px' }}
           >
-            Room6
+          <div><img src='/images/forum/Language.svg'></img></div>
+          <div style={{paddingTop:'6px', fontSize: '0.8em', fontWeight: '600'}}>ROOM6</div>
           </Paper>
         </Grid>
         <Grid item xs={2}>
@@ -99,7 +102,8 @@ const RoomTab = () => {
             className={classes.paper}
             style={{ border: "2px solid #a880f7", borderRadius:'10px' }}
           >
-            Room7
+          <div><img src='/images/forum/Language.svg'></img></div>
+          <div style={{paddingTop:'6px', fontSize: '0.8em', fontWeight: '600'}}>ROOM7</div>
           </Paper>
         </Grid>
       </React.Fragment>

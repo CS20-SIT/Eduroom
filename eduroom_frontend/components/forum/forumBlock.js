@@ -15,7 +15,7 @@ const forumBlock = ({row}) => {
     const GetData = async () => {
       const result = await api.get('http://localhost:5000/api/forum')
       console.log(result.data)
-      setData(result.data)
+      setData(result.data.data)
     }
     GetData()
     console.log(data);

@@ -4,23 +4,24 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { EditorBorderColor } from "material-ui/svg-icons";
-import axios from "axios";
+import api from "../../api";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 const IdBlock = () => {
-  
   const [data, setData] = useState([]);
+  const param = useRouter().query.id || "";
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios.get("http://localhost:5000/api/forum/id", {
-        id: props.id,});
-      console.log(result.data);
-      setData(result.data);
+      if (param != "") {
+        const result = await api.get(`/api/forum/${param}`);
+        console.log(result.data);
+        setData(result.data.data);
+      }
     };
     GetData();
     console.log(data);
-  }, []);
+  }, [param]);
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
