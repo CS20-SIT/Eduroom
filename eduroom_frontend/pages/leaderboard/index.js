@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import ScorePlace from "../../components/leaderboard/ScorePlace";
 import Navbar from '../../components/layouts/navbar'
 import SideNav from '../../components/layouts/sidenav/sidenav'
-// import SortRank from '../../components/leaderboard/SortRank';
+import SortRank from '../../components/leaderboard/SortRank';
 const LeaderBoard = (props) => {
   return (
     <Fragment>
@@ -10,7 +10,7 @@ const LeaderBoard = (props) => {
         <div id="content">
           <Navbar />
           <main>{props.children}</main>
-          <ScorePlace> </ScorePlace>
+          <SortRank> </SortRank>
         </div>
         <style jsx>
         {`

@@ -1,5 +1,5 @@
 import style from "../../styles/leaderboardStyles/WorldRankingStyle";
-import axios from "axios";
+import axios from "../../api";
 import { useState, useEffect } from "react";
 import React, { Fragment } from "react";
 
@@ -8,7 +8,7 @@ const SortRank = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios("http://localhost:5000/api/leaderboard");
+      const result = await axios.get("/api/leaderboard");
       setData(result.data);
     };
     GetData();
@@ -32,10 +32,10 @@ const SortRank = (props) => {
 					</thead>
 					<tbody>
               {data
-                .map((row) => {
+                .map((row,index) => {
               return (		
                 <tr key={row.id}>
-                  <td className="rank">{row.id} </td> 
+                  <td className="rank">{index+1} </td> 
                   <td className="user" >{row.displayname}</td>  
                   <td className="title" >{row.titlename}</td>
                   <td className="points" >{row.xp}</td>

@@ -2,8 +2,9 @@ import React, { Fragment, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import Box from "../../../../components/graderSubmit/Box"
 import Layout from "../../../../components/graderSubmit/Layout"
-import style from "../../../../styles/graderSubmit/contests/contestPage/contestHomePage"
+import style from "../../../../styles/graderSubmit/contests/contestPage/overview/contestHomePage"
 import ContestLayout from "../../../../components/graderSubmit/contests/ContestLayout"
+import ContestOverviewList from "../../../../components/graderSubmit/contests/allList/ContestOverviewList"
 
 const contestOverview = () => {
   const [id, setId] = useState(null)
@@ -48,12 +49,23 @@ const contestOverview = () => {
                 </div>
                 <div className="overview-detail">
                   <div className="flex-container">
-                    <div className="flex-item">StartAt</div>
-                    <div className="flex-item">EndAt</div>
-                    <div className="flex-item">ContestType</div>
-                    <div className="flex-item">Rule</div>
-                    <div className="flex-item">Creator</div>
+                    <div className="flex-item" style={{ flexBasis: "25%" }}>
+                      StartAt
+                    </div>
+                    <div className="flex-item" style={{ flexBasis: "25%" }}>
+                      EndAt
+                    </div>
+                    <div className="flex-item" style={{ flexBasis: "16.6%" }}>
+                      ContestType
+                    </div>
+                    <div className="flex-item" style={{ flexBasis: "16.6%" }}>
+                      Rule
+                    </div>
+                    <div className="flex-item" style={{ flexBasis: "16.6%" }}>
+                      Creator
+                    </div>
                   </div>
+                  <ContestOverviewList />
                 </div>
               </ContestLayout>
             </Box>
