@@ -7,8 +7,11 @@ const sendEmail = require('../utils/sendMail')
 const errorHandler = require('../middleware/error')
 
 exports.getProfile = (req, res) => {
+    // UserID is in req.user.user
     res.send(req.user)
 }
+
+
 
 exports.regisController = async (req, res) => {
     try {
@@ -147,7 +150,7 @@ exports.logoutController = (req, res) => {
 }
 
 
-exports.googleCallbackController = (req, res) => {
+exports.googleCallbackController = async (req, res) => {
     let user = {
         displayName: req.user.displayName,
         firstname: req.user.name.givenName,
@@ -157,8 +160,28 @@ exports.googleCallbackController = (req, res) => {
         provider: req.user.provider }
     console.log(user)
     //TODO: Find or add user in db
-    const token = generateCookieJWT('userid' + user.name)
+    const existingUser = await pool.query(`SELECT userid FROM oauth WHERE email = '${user.email}'`)
+    if(existingUser.rowCount != 0){
+        return res.redirect(process.env.ENTRYPOINT_URL)
+    }
+    // Add user to user_profile
+    const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
+        VALUES (uuid_generate_v4(), '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+    await pool.query(user_profileCreationQuery,[''])
 
+    const user_profile = await pool.query(`SELECT userid FROM user_profile WHERE firstname = '${user.firstname}' AND lastname = '${user.lastname}'`)
+        if(user_profile.rowCount == 0){
+            const err = {
+                statusCode: 500,
+                message: 'user is not found after saved'
+            }
+            return errorHandler(err, req, res)
+        }
+    const userId = user_profile.rows[0].userid
+    const oauthCreationQuery = `INSERT INTO oauth (email, token, userid) VALUES ('${user.email}', '', '${userId}')`
+    await pool.query(oauthCreationQuery)
+
+    const token = generateCookieJWT(userId)
     res.cookie('jwt', token)
     res.redirect(process.env.ENTRYPOINT_URL)
 }
