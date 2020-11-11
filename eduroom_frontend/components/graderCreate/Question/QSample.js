@@ -76,7 +76,7 @@ const SampleCard = (props) => {
       outputSample = `outputSample-${idx}`;
 
     return (
-      <div className={classes.root}>
+      <div key={idx} className={classes.root}>
         <Paper className={classes.paper}>
           <div style={{ paddingTop: 25 }}></div>
 
@@ -118,13 +118,11 @@ const SampleCard = (props) => {
                 {" "}
                 <TextField
                   name="inputSample"
-                  autoFocus
                   margin="dense"
                   id={inputSample}
                   label="Input"
                   type="text"
                   fullWidth
-                  autoFocus
                   multiline
                   inputProps={{
                     "data-id": idx,
@@ -141,13 +139,11 @@ const SampleCard = (props) => {
                 {" "}
                 <TextField
                   name="outputSample"
-                  autoFocus
                   margin="dense"
                   id={outputSample}
                   label="Output"
                   type="text"
                   fullWidth
-                  autoFocus
                   multiline
                   inputProps={{
                     "data-id": idx,
