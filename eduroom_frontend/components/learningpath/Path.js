@@ -5,8 +5,17 @@ const Pathline = () => {
     return(
         <Fragment>
             <header>
-    <p>Under Maintenance</p>
-    <h1>Learning Path</h1>
+              <div className="user-bar">
+              <span1>Anya</span1><span2>LV : </span2>
+              <span4>99&nbsp;&nbsp;&nbsp;</span4>
+              <span3>&#127942; : </span3>
+              <span5>9</span5>
+              <span6>/10</span6>
+              <br/>
+              <br/>
+                <p>9999/9999</p>
+              </div>
+  
 </header>
 
 <ul className="timeline">
