@@ -1,8 +1,9 @@
 import React from "react";
-import AnnDialog from "./AnnDialog";
-import AnnTable from "./AnnTable";
+import Link from "next/link";
+import QTable from "./QTable";
 import { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
+
 //prepare for adding abmin log wheen create / edit ann
 // toggle for visiblity https://material-ui.com/components/switches/
 const Test = () => {
@@ -25,17 +26,21 @@ const Test = () => {
     <div style={sBig}>
       <Grid>
         <Grid>
-          <span style={sBigTitle}>Announcement</span>
+          <span style={sBigTitle}>Question</span>{" "}
+          <span>
+            {" "}
+            <Link href="/admin/grader/question/create">Create</Link>
+          </span>
           <div style={{ height: 20 }}></div>
         </Grid>
-        <Grid>
+        {/* <Grid>
           <span style={{ paddingTop: 7 }}>
             <AnnDialog onSuccess={handleUpdate} />
           </span>
-        </Grid>
+        </Grid> */}
         <div style={{ height: 20 }}></div>
         <Grid item xl={12} md={12}>
-          <AnnTable onSuccess={handleUpdate} update={refresh} />
+          <QTable onSuccess={handleUpdate} update={refresh} />
           <div style={{ height: 100 }}></div>
         </Grid>
       </Grid>

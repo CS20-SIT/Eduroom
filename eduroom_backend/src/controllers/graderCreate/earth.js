@@ -91,14 +91,18 @@ const pTag = async (req, res, next) => {
 };
 const pQuestionSample = async (req, res, next) => {
   const questionId = req.body.questionId;
-  const sampleNo = req.body.sampleNo;
-  const intput = req.body.intput;
-  const output = req.body.output;
+  const samples = req.body.samples;
+  try {
+    samples.forEach((s) => {
+      pool.query(
+        "INSERT INTO questionSample(questionId,sampleNo, intput, output) VALUES ($1 , $2, $3, $4)",
+        [questionId, s.index, s.inputSample, s.outputSample]
+      );
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
-  await pool.query(
-    "INSERT INTO questionSample(questionId,sampleNo, intput, output) VALUES ($1 , $2, $3, $4)",
-    [questionId, sampleNo, intput, output]
-  );
   res.send({ success: true });
 };
 const pQuestionTestcase = async (req, res, next) => {
@@ -178,7 +182,9 @@ const gAllAdminLog = async (req, res, next) => {
   res.send(ann);
 };
 const gAllQuestions = async (req, res, next) => {
-  const data = await pool.query("select * from Questions ");
+  const query =
+    "select a.id, a.title , a.difficulty , a.visibility, b.displayName from Questions a, admin_login b  where a.adminid = b.adminid order by 1 DESC ";
+  const data = await pool.query(query);
   const ann = data.rows;
   res.send(ann);
 };

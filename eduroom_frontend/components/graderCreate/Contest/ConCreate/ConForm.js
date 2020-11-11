@@ -46,8 +46,8 @@ const theme1 = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "75%",
-    marginLeft: "12%",
+    width: "52.5%",
+    marginLeft: "22.5%",
     marginRight: "15%",
     marginTop: "2.5%",
     marginBottom: "10%",
@@ -127,7 +127,7 @@ export default function FullWidthGrid() {
   const sInputSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    "font-size": "1.1em",
   };
   const sError = {
     "font-family": "Quicksand , sans-serif",
@@ -137,7 +137,7 @@ export default function FullWidthGrid() {
   const sInputfieldSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-size": "1.4em",
+    "font-size": "1.2em",
     "font-weight": "bold",
   };
   const sButtionandVisbile = {
@@ -255,7 +255,7 @@ export default function FullWidthGrid() {
           </Alert>
         </Snackbar>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={6}>
           <Grid item xs={12}>
             <span style={sBigTitle}>Create your Contest</span>
           </Grid>

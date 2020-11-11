@@ -57,11 +57,16 @@ const editAnn = async (req, res, next) => {
 const path = require("path");
 
 const pTestcase = (req, res, next) => {
-  const questionId = req.body.questionid[0];
+  const questionId =
+    typeof req.body.questionid == "string"
+      ? req.body.questionid
+      : req.body.questionid[0];
+
+  // console.log(req.body);
+  // console.log(req.body.questionid);
   let fileNo = 1;
   //stackoverflow.com/questions/55586619/how-to-save-file-locally-and-save-path-on-database-using-multer-on-angular
-  console.log("P test Case");
-  console.log(req.body.questionid);
+
   const testCases = req.files;
 
   try {
