@@ -5,14 +5,83 @@ import Layout from "../../../../components/graderSubmit/Layout"
 import style from "../../../../styles/graderSubmit/contests/contestPage/overview/contestHomePage"
 import ContestLayout from "../../../../components/graderSubmit/contests/ContestLayout"
 import ContestOverviewList from "../../../../components/graderSubmit/contests/allList/ContestOverviewList"
+import { compareAsc, parseISO } from "date-fns"
+import api from "../../../../api"
 
-const contestOverview = () => {
-  const [id, setId] = useState(null)
-  const router = useRouter()
+const contestOverview = ({ id }) => {
+  const [data, setData] = useState([])
+
   useEffect(() => {
-    const ID = router.query.id
-    setId(ID)
+    const GetData = async () => {
+      console.log(id)
+      const result = await api.get("api/grader/getContestDetail", {
+        params: { id },
+      })
+      setData(result.data[0])
+    }
+    GetData()
   }, [])
+
+  const contestStatus = (props) => {
+    console.log(props.endtime)
+    let presentTime = compareAsc(parseISO(props.endtime), new Date())
+
+    if (presentTime == 1) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            height: "fit-content",
+            margin: "8px 8px 0 0",
+            padding: "0.25rem 0.75rem",
+            border: "1px solid #3d467f",
+            borderRadius: "100px",
+          }}
+        >
+          <img
+            src="../../../images/graderSubmit/statusTrue.svg"
+            style={{ marginRight: "10px" }}
+          />
+          <div
+            style={{
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: "#3d467f",
+            }}
+          >
+            Underway
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div
+          style={{
+            display: "flex",
+            height: "fit-content",
+            margin: "8px 8px 0 0",
+            padding: "0.25rem 0.75rem",
+            border: "1px solid #f39ac4",
+            borderRadius: "100px",
+          }}
+        >
+          <img
+            src="../../../images/graderSubmit/statusFalse.svg"
+            style={{ marginRight: "10px" }}
+          />
+          <div
+            style={{
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: "#f39ac4",
+            }}
+          >
+            Ended
+          </div>
+        </div>
+      )
+    }
+  }
 
   return (
     <Fragment>
@@ -23,28 +92,13 @@ const contestOverview = () => {
               <ContestLayout page="overview" id={id}>
                 <div className="overview-info">
                   <div className="overview-info-detail">
-                    <p className="overview-title">Contest Name</p>
+                    <p className="overview-title">{data.title}</p>
                     <div className="overview-title-detail">
-                      Description: Lorem Ipsum used since the 1500s is
-                      reproduced below for those interested. Sections 1.10.32
-                      and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero
-                      are also reproduced in their exact original form,
-                      accompanied. Lorem Ipsum used since the 1500s is
-                      reproduced below for those interested. Sections 1.10.32
-                      and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero
-                      are also reproduced in their exact original form,
-                      accompanied. Lorem Ipsum used since the 1500s is
-                      reproduced below for those interested. Sections 1.10.32
-                      and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero
-                      are also reproduced in their exact original form,
-                      accompanied.
+                      {data.description}
                     </div>
                   </div>
                   <div className="overview-info-status">
-                    <div className="status-box">
-                      <img src="../../../../images/graderSubmit/statusTrue.svg" />
-                      <p className="status-text">ended</p>
-                    </div>
+                    {contestStatus(data)}
                   </div>
                 </div>
                 <div className="overview-detail">
@@ -55,17 +109,19 @@ const contestOverview = () => {
                     <div className="flex-item" style={{ flexBasis: "25%" }}>
                       EndAt
                     </div>
-                    <div className="flex-item" style={{ flexBasis: "16.6%" }}>
-                      ContestType
-                    </div>
-                    <div className="flex-item" style={{ flexBasis: "16.6%" }}>
+                    <div className="flex-item" style={{ flexBasis: "25%" }}>
                       Rule
                     </div>
-                    <div className="flex-item" style={{ flexBasis: "16.6%" }}>
+                    <div className="flex-item" style={{ flexBasis: "25%" }}>
                       Creator
                     </div>
                   </div>
-                  <ContestOverviewList />
+                  <ContestOverviewList
+                    startTime={data.starttime}
+                    endTime={data.endtime}
+                    rule={data.conruletype}
+                    creator={data.displayname}
+                  />
                 </div>
               </ContestLayout>
             </Box>
@@ -75,5 +131,13 @@ const contestOverview = () => {
       <style jsx>{style}</style>
     </Fragment>
   )
+}
+export async function getServerSideProps(ctx) {
+  try {
+    const id = ctx.query.id
+    return { props: { id } }
+  } catch (err) {
+    return { props: { id: "" } }
+  }
 }
 export default contestOverview

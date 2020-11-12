@@ -16,17 +16,12 @@ const ProblemList = (props) => {
         }
       >
         <div className="left">
-          <div className="title">Problem title</div>
-          <p>
-            Description: Description: Lorem Ipsum used since the 1500s is
-            reproduced below for those interested. Sections 1.10.32 and 1.10.33
-            from "de Finibus Bonorum et Malorum" by Cicero are also reproduced
-            in their exact original form, accompanied.
-          </p>
+          <div className="title">{props.title}</div>
+          <p>{props.description}</p>
         </div>
         <div className="right">
           <div className="right-top">
-            <p className="difficulty">Easy</p>
+            <p className="difficulty">{props.difficulty}</p>
           </div>
           <div className="right-bottom">
             <div
