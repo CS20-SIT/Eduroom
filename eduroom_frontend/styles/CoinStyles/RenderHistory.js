@@ -1,7 +1,10 @@
+import css from "styled-jsx/css"
+export default css`
 .background {
+    position:fixed;
     width: 95vw;
     height: 90.5vh;
-    background-image: url('../../public/images/Coin-image/BG.svg');
+    background-image: url('/images/Coin-image/BG.svg');
     background-repeat: repeat;
     animation: MoveIn 2s;
     display: flex;
@@ -14,24 +17,9 @@
     top: -10%;
     font-size: 10px;
 }
-.price {
-    position: relative;
-    top: 20%;
-}
-.mid {
-    position: relative;
-    top: 10%;
-
-}
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
 
 
-}
 .right {
-
     padding: 50px;
     height: 80vh;
     width: 35vw;
@@ -41,20 +29,7 @@
     background-color: white;
     border-radius: 5%;
 }
-.card {
-    width: 25vw;
-}
-.card div {
-    position: relative;
-    left: -20%;
-    width: 120%;
-    margin: 15%;
-    padding: 20%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    background-color: white;
-    border-radius: 5%;
-}
+
 @keyframes MoveIn {
     0% {
         transform: translateX(100px);
@@ -65,3 +40,24 @@
         opacity: 1;
     }
 }
+
+.list {
+    height: 90%;
+    width:50vw;
+    overflow: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px; /* width of the entire scrollbar */
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent; /* color of the tracking area */
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(189, 189, 189, 0.7); /* color of the scroll thumb */
+    border-radius: 100px; /* roundness of the scroll thumb */
+  }
+
+
+`
+
