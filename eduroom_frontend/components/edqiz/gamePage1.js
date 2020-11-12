@@ -14,6 +14,9 @@ const Page1 = ({
   response,
   setquestionNumber,
 }) => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+        path: '/kahoot',
+      });
   const router = useRouter();
   const room = { name: 'room1', PIN: router.query.id };
 
@@ -21,29 +24,29 @@ const Page1 = ({
   const [endTime, setEndTime] = useState(null);
   var intervalID = null;
 
-  function questionNext() {
-    setquestionNumber(questionNumber + 1);
-  }
-
   const responseTime = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
-      path: '/kahoot',
-    });
+   
     socket.on('sent-end-time', (pin, time) => {
       setEndTime(time);
     });
   };
 
-  useEffect(() => {
-    console.log('This is a starting of game');
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
-      path: '/kahoot',
-    });
+  useEffect(()=>{
     socket.emit('start-game', id.id, data[questionNumber].time);
     responseTime();
-  }, []);
+  },[])
+  useEffect(() => {
+    
+    // if(diff==null) return
+    if(diff != null){
+        socket.emit('set-diff',diff, id.id);
+        // console.log(diff)
+    }
+   
+   
+  }, [diff]);
 
-  function doStuff(cc) {
+  function doStuff() {
     const now = new Date().getTime();
     const temp = Math.floor((endTime - now) / 1000);
     setDiff(temp);
@@ -70,6 +73,7 @@ const Page1 = ({
 
   function setSkip() {
     clearInterval(intervalID);
+    socket.emit('set-skip',true, id.id);
     goto(2);
   }
 
