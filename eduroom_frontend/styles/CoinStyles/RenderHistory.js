@@ -17,6 +17,10 @@ export default css`
     top: -10%;
     font-size: 10px;
 }
+.coin{
+  position: relative;
+  top: 20px;
+}
 
 
 .right {

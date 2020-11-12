@@ -1,8 +1,11 @@
 import Styles from '../../styles/CoinStyles/RenderHistory';
 import General from '../../components/template/general';
 import RenderHistory from '../../components/FolderCoin/Render_History';
+import RightHistory from '../../components/FolderCoin/RightHistory';
+import { useState } from 'react';
 
 const temp = () => {
+    const [id, setId] = useState(0);
     const data = [
         { title: 'Monkey', price: 20, id: 1 },
         { title: 'Dolphin', price: 30, id: 2 },
@@ -17,35 +20,28 @@ const temp = () => {
         { title: 'Test7', price: 26, id: 11 },
         { title: 'Test8', price: 25, id: 12 }
     ];
+    const renderDetail = () => {
+        return (
+            <RightHistory
+                title={data[id].title}
+                price={data[id].price}
+            ></RightHistory>
+        );
+    };
+    const handleChoose = (idx) =>{
+        console.log(idx);
+        setId(idx);
+    }
     return (
         <General>
-
-
-        <div className="background">
-                {/* <div className={Styles.container}>
-                    <div className={Styles.card}>
-                        <div>1</div>
-                        <div>2</div>
-                        <div>3</div>
-                    </div>
-                </div> */}
-                <div className="list">
-                    <RenderHistory item={data}></RenderHistory>
+            <div className='background'>
+                <div className='list'>
+                    <RenderHistory item={data} choose={handleChoose}></RenderHistory>
                 </div>
-                <div className="right">
-                    This is Right
-                    <span className="detail">
-                        <h1>Detail </h1>
-                        <h1>This sticker is fruit </h1>
-                        <h1>No Expiration Date</h1>
-                        <h1>99 $</h1>
-                    </span>
-                    <hr className="mid"/>
-                </div>
-                </div>
+                {renderDetail()}
+            </div>
 
             <style jsx>{Styles}</style>
-
         </General>
     );
 };

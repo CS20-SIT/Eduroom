@@ -11,7 +11,7 @@ const temp = props => {
                         src='../../images/Coin-image/icon_coin_back.svg'
                     />
                 </h2>
-                <button>View</button>
+                <button onClick={() => props.choose(props.index)}>View</button>
             </div>
         </div>
     );
