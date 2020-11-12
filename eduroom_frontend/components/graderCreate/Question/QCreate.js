@@ -28,13 +28,7 @@ import Switch from "@material-ui/core/Switch";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-function ScrollToTopOnMount() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
 
-  return null;
-}
 const CustomAutocomplete = withStyles({
   input: {
     marginTop: 7,
@@ -140,13 +134,17 @@ const theme1 = createMuiTheme({
     },
   },
 });
-export default function FullWidthGrid() {
+export default function FullWidthGrid(props) {
   const [existTags, setExistTags] = useState([]);
 
   useEffect(() => {
     const GetData = async () => {
       const result = await axios("http://localhost:5000/api/grader/alltag");
       setExistTags(result.data);
+      console.log(props);
+      if (props.id != null) {
+        console.log(props.id);
+      }
     };
     GetData();
   }, []);
@@ -559,7 +557,6 @@ export default function FullWidthGrid() {
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme1}>
-        <ScrollToTopOnMount />
         <Snackbar
           open={erorvalid}
           autoHideDuration={6000}
