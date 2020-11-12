@@ -33,14 +33,14 @@ io.on('connection', (client) => {
     io.sockets.emit('new-room', isOpen, pin);
   });
 
-  client.on('set-skip', (isSkip, pin, questionNo) => {
-    console.log('this skip is ', pin, isSkip, questionNo);
-    io.sockets.emit('new-question', isSkip, pin, questionNo);
+  client.on('set-skip', (isSkip, pin) => {
+    console.log('this skip is ', pin, isSkip);
+    io.sockets.emit('get-skip', isSkip, pin);
   });
 
   client.on('set-nextQuestion', (isNext, pin, questionNo) => {
     console.log('this next is ', pin, isNext, questionNo);
-    io.sockets.emit('new-Nextquestion', isNext, pin, questionNo);
+    io.sockets.emit('get-Nextquestion', isNext, pin, questionNo);
   });
 
   client.on('start-game', (pin,time) => {
@@ -52,5 +52,10 @@ io.on('connection', (client) => {
   client.on('set-name', (namePlayer, pin) => {
     console.log('this name is ', pin, namePlayer);
     io.sockets.emit('new-name', namePlayer, pin);
+  });
+
+  client.on('set-diff', (diff, pin) => {
+    console.log('this diff is ', diff, pin);
+    io.sockets.emit('get-diff', diff);
   });
 });
