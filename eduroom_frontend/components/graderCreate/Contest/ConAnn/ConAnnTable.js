@@ -9,7 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 
-import axios from "axios";
+import axios from "../../../../api";
 import { useState, useEffect } from "react";
 import AnnEdit from "../ConAnn/ConAnnEdit";
 
@@ -69,7 +69,7 @@ const AnnTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios("http://localhost:5000/api/grader/ann");
+      const result = await axios("/api/grader/ann");
       setData(result.data);
     };
     GetData();
