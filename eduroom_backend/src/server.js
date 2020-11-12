@@ -20,15 +20,11 @@ app.use(express.json())
 
 app.use(cookieParser())
 
-let originURL = 'http://localhost:3000'
-if (process.env.NODE_ENV === 'production') {
-  originURL = process.env.CLIENT_URL
-}
 
 app.use(
   cors({
     credentials: true,
-    origin: originURL,
+    origin: [process.env.ENTRYPOINT_URL, process.env.CLIENT_URL],
   })
 )
 
