@@ -20,12 +20,6 @@ exports.regisController = async (req, res) => {
         //     password: <String>
         //     firstname: <String>
         //     lastname: <String>
-        //     birthdate: <String>
-        //     initial: <String>
-        //     phoneNo: <String>
-        //     displayname: <String>
-        //     bio: <String>
-        //     isStudent: <Boolean>
         // }
         const user = req.body
         // Find existing user in db
@@ -40,8 +34,9 @@ exports.regisController = async (req, res) => {
         // Insert new user_profile
         user.password = bcrypt.hashSync(user.password)
         const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES (uuid_generate_v4(), '${user.firstname}', '${user.lastname}', '${user.birthdate}', '${user.initial}', '${user.phoneNo}', '${user.displayname}', '${user.bio}', './png.png', ${user.isStudent}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
-        await pool.query(user_profileCreationQuery)
+        VALUES (uuid_generate_v4(), '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, $1, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+        await pool.query(user_profileCreationQuery,[''])
+
         // Get userId from user_profile
         const user_profile = await pool.query(`SELECT userid FROM user_profile WHERE firstname = '${user.firstname}' AND lastname = '${user.lastname}'`)
         if(user_profile.rowCount == 0){
@@ -56,8 +51,8 @@ exports.regisController = async (req, res) => {
         const local_authCreationQuery = `INSERT INTO local_auth (userid, email, password) 
                                         VALUES ('${userId}', '${user.email}', '${user.password}')`
         await pool.query(local_authCreationQuery)
+        
         // Create verification token and send it in email
-
         const verifyToken = crypto.randomBytes(20).toString('hex')
         const user_verificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
         VALUES ('${userId}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + (120 * interval '1 minute'), '${verifyToken}', false)`
@@ -158,7 +153,8 @@ exports.googleCallbackController = async (req, res) => {
         lastname: req.user.name.familyName,
         email: req.user._json.email,
         picture: req.user._json.picture,
-        provider: req.user.provider }
+        provider: req.user.provider 
+    }
     console.log(user)
     //TODO: Find or add user in db
     const existingUser = await pool.query(`SELECT userid FROM oauth WHERE email = '${user.email}'`)
