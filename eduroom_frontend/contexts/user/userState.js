@@ -16,7 +16,6 @@ const userState = (props) => {
   const registerUser = async (user) => {
     try {
       const res = await api.post('/api/auth/register', user);
-      console.log(res.data);
       dispatch({ type: REGISTER_USER_SUCCESS, payload: res.data });
     } catch (err) {
       dispatch({ type: REGISTER_USER_FAIL, payload: err });
