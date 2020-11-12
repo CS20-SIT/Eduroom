@@ -3,6 +3,7 @@ import General from '../../../components/template/general';
 import api from '../../../api';
 import Register from '../../../components/user/instructor/Register';
 import WaitingApproved from '../../../components/user/instructor/WaitingApproved';
+import AlreadyBeInstructor from '../../../components/user/instructor/AlreadyBeInstructor';
 
 const InstructorRegister = () => {
   const [user, setUser] = useState(null);
@@ -17,12 +18,12 @@ const InstructorRegister = () => {
     if (!user) return null;
     if (user.role === 'instructor') {
       if (user.isverified) {
-        return <h1>You already be instructor</h1>;
+        return <AlreadyBeInstructor />;
       } else {
-        return <WaitingApproved></WaitingApproved>;
+        return <WaitingApproved />;
       }
     } else {
-      return <Register></Register>;
+      return <Register />;
     }
   };
   return (
