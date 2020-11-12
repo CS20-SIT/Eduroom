@@ -860,7 +860,7 @@ export default function FullWidthGrid(props) {
                     width: 800px;
                   }
                   .custom-file-input::before {
-                    content: "Select Your Test Case Files";
+                    content: "Select Your Test Case File";
                     display: inline-block;
                     color: #a880f7;
                     width: 300px;
@@ -887,7 +887,7 @@ export default function FullWidthGrid(props) {
                   <input
                     type="file"
                     className="form-control"
-                    multiple
+                    
                     onChange={onChangeHandlerFile}
                     className="custom-file-input"
                     style={{
@@ -919,9 +919,9 @@ export default function FullWidthGrid(props) {
                     }}
                   >
                     {selectedFile
-                      ? "Total number of Testcase files recieved :  " +
-                        selectedFile.length +
-                        " Files "
+                      ? "File recieved :  " +
+                        selectedFile[0].name 
+                    
                       : "Testcase  files up to 10 MB in size are available for upload."}
                   </span>
                 </Grid>
