@@ -17,16 +17,15 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express()
 
 app.use(express.json())
-
 app.use(cookieParser())
 
+const corsMiddleware = cors({
+  credentials: true,
+  origin: [process.env.ENTRYPOINT_URL, process.env.CLIENT_URL],
+  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE']
+})
 
-app.use(
-  cors({
-    credentials: true,
-    origin: [process.env.ENTRYPOINT_URL, process.env.CLIENT_URL],
-  })
-)
+app.use(corsMiddleware)
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
@@ -37,6 +36,6 @@ app.use(passport.initialize())
 app.use('/api', ConfigRoute)
 app.use(errorHandler)
 
-
+app.options('*', cors(corsMiddleware))
 
 module.exports = app
