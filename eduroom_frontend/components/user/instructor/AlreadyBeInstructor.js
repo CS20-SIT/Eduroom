@@ -1,13 +1,12 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
 
-const WaitingApproved = () => {
+const AlreadyBeInstructor = () => {
   return (
     <Fragment>
       <div className="container">
         <div style={{ textAlign: 'center' }}>
-          <h1>Waiting for approved ...</h1>
-          <h1>You already submit your instructor registration</h1>
+          <h1>You already be a instructor</h1>
           <Link href="/user/instructor">
             <button className="back">Back</button>
           </Link>
@@ -44,4 +43,4 @@ const WaitingApproved = () => {
   );
 };
 
-export default WaitingApproved;
+export default AlreadyBeInstructor;
