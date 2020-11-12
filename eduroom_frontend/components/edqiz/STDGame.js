@@ -23,39 +23,39 @@ const Content = ({ id }) => {
   const data = [
     {
       question:
-        "directory anything else. The name cannot be changed and is the only directory used to serve static assets?",
-      time: "90",
-      point: "2000",
+        'directory anything else. The name cannot be changed and is the only directory used to serve static assets?',
+      time: '10',
+      point: '2000',
       ans: [
-        "have a static file with the same",
-        "directory at build time will be served",
+        'have a static file with the same',
+        'directory at build time will be served',
         "Files added at runtime won't be available",
-        "ecommend using a third party service ",
+        'ecommend using a third party service ',
       ],
       correct: 0,
       image: null,
     },
     {
-      question: "Question2",
-      time: "45",
-      point: "2000",
-      ans: ["a", "b", "c", "d"],
+      question: ' COVID-19 and related health topics?',
+      time: '45',
+      point: '2000',
+      ans: ['Abortion: Safety Abortion: Safety · Addictive behaviours: Gaming disorder', ' Ageing: Global population Ageing: Global ', ' Care and support at home', 'What assistance can I get at home'],
       correct: 1,
       image: null,
     },
     {
-      question: "Question3",
-      time: "60",
-      point: "2000",
-      ans: ["a", "b", "c", "d"],
+      question: 'Browse the WebMD Questions and Answers',
+      time: '60',
+      point: '2000',
+      ans: ['A-Z library for insights and advice for better health', 'tap Edit question or Delete question', 'When your question is answered', ' you will get a notification'],
       correct: 2,
       image: null,
     },
     {
-      question: "Question4",
-      time: "90",
-      point: "2000",
-      ans: ["a", "b", "c", "d"],
+      question: ' can have difficulty finding the right words or phrases to answer?',
+      time: '90',
+      point: '2000',
+      ans: ['simple questions. Here are 20 of the most common questions', 'We have compiled a list of 46 common interview questions you might be asked', 'plus advice on how to answer each and every one of them', 'Read tips and example answers for 125 of the most common job interview'],
       correct: 3,
       image: null,
     },
@@ -74,17 +74,29 @@ const Content = ({ id }) => {
       }
     });
   };
-  const [time, setTime] = useState();
+  
+  const getQuestionNo = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    
+    socket.on("new-questionNo", (question) => {
+     setquestionNumber(question)
+     
+
+      
+    });
+  };
+
 
   const responseTime = (tempAnswer) => {
-    console.log(tempAnswer,'socket')
+ 
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.on("sent-seconds", (timeTemp) => {
       setTime(timeTemp);
-     
-
+      console.log(timeTemp)
       if (timeTemp == 0) {
         console.log(tempAnswer+'socketInSide')
         if (tempAnswer == data[questionNumber].correct) {
@@ -105,7 +117,8 @@ const Content = ({ id }) => {
     socket.on("new-Nextquestion", (isNext, pin, questionNo) => {
       temp.push([isNext, pin, questionNo]);
       setNextQuestion(temp.slice());
-      setquestionNumber(questionNumber + 1);
+      let tempq=questionNumber
+      tempq+=1;
       goto(1);
     });
   };
@@ -118,9 +131,21 @@ const Content = ({ id }) => {
   };
 
   useEffect(() => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit('room1','1234');
+    socket.on("get-Nextquestion", (isNext, pin, questionNo) => {
+      setquestionNumber(questionNo)
+      if(isNext){
+        goto(1)
+      }
+
+    })
     response();
+    getQuestionNo();
     responseTime(answer);
-  }, []);
+  }, [questionNumber]);
   const goto = (val) => {
     setCurrent(val);
   };
@@ -137,7 +162,6 @@ const Content = ({ id }) => {
             response={response}
             messages={messages}
             setAnswer={setAnswer}
-            time={time}
             responseTime={responseTime}
           />
         );
@@ -149,7 +173,7 @@ const Content = ({ id }) => {
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
             responseNextQuestion={responseNextQuestion}
-            time={time}
+            answer={answer}
           />
         );
       case 3:
@@ -160,7 +184,7 @@ const Content = ({ id }) => {
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
             responseNextQuestion={responseNextQuestion}
-            time={time}
+            answer={answer}
           />
         );
       case 4:
@@ -171,6 +195,7 @@ const Content = ({ id }) => {
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
             responseNextQuestion={responseNextQuestion}
+            answer={answer}
           />
         );
     }
