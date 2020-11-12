@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const pool = require('../database/db')
 const crypto = require('crypto')
 const dayjs = require('dayjs')
+const { v4: uuidv4 } = require('uuid')
 const { generateCookieJWT, generateVerifyJWT, verifyVerificationJWT } = require('../utils/jwt')
 const sendEmail = require('../utils/sendMail')
 const errorHandler = require('../middleware/error')
@@ -33,25 +34,17 @@ exports.regisController = async (req, res) => {
         }
         // Insert new user_profile
         user.password = bcrypt.hashSync(user.password)
+        const userId = uuidv4()
+        console.log(userId);
         const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES (uuid_generate_v4(), '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, $1, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, $1, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
         await pool.query(user_profileCreationQuery,[''])
 
-        // Get userId from user_profile
-        const user_profile = await pool.query(`SELECT userid FROM user_profile WHERE firstname = '${user.firstname}' AND lastname = '${user.lastname}'`)
-        if(user_profile.rowCount == 0){
-            const err = {
-                statusCode: 500,
-                message: 'user is not found after saved'
-            }
-            return errorHandler(err, req, res)
-        }
-        const userId = user_profile.rows[0].userid
         // Create local_auth
         const local_authCreationQuery = `INSERT INTO local_auth (userid, email, password) 
                                         VALUES ('${userId}', '${user.email}', '${user.password}')`
         await pool.query(local_authCreationQuery)
-        
+
         // Create verification token and send it in email
         const verifyToken = crypto.randomBytes(20).toString('hex')
         const user_verificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
@@ -162,19 +155,12 @@ exports.googleCallbackController = async (req, res) => {
         return res.redirect(process.env.ENTRYPOINT_URL)
     }
     // Add user to user_profile
+    const userId = uuidv4()
     const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES (uuid_generate_v4(), '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
     await pool.query(user_profileCreationQuery,[''])
-
-    const user_profile = await pool.query(`SELECT userid FROM user_profile WHERE firstname = '${user.firstname}' AND lastname = '${user.lastname}'`)
-        if(user_profile.rowCount == 0){
-            const err = {
-                statusCode: 500,
-                message: 'user is not found after saved'
-            }
-            return errorHandler(err, req, res)
-        }
-    const userId = user_profile.rows[0].userid
+    
+    // Add user to OAuth
     const oauthCreationQuery = `INSERT INTO oauth (email, token, userid) VALUES ('${user.email}', '', '${userId}')`
     await pool.query(oauthCreationQuery)
 

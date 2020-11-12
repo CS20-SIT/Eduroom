@@ -38,6 +38,7 @@
     "passport-jwt": "^4.0.0",
     "pg": "^8.3.3",
     "stripe": "^8.96.0",
-    "supertest": "^6.0.0"
+    "supertest": "^6.0.0",
+    "uuid": "^8.3.1"
   }
 }
