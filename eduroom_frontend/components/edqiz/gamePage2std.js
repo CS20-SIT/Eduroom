@@ -1,9 +1,37 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect,useState } from "react";
+import socketIOClient from "socket.io-client";
 
 import Grid from "@material-ui/core/Grid";
-const Page3 = ({questionNumber,time}) => {
+const Page3 = ({questionNumber,goto,answer,data}) => {
+  const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+    path: '/kahoot',
+  });
+  const [diff, setDiff] = useState(null);
+ 
   useEffect(() => {
-  
+    console.log('watiting',answer)
+    socket.on('get-diff', (time) => {
+      setDiff(time);
+      if(time==0){
+        if(answer == data[questionNumber].correct){
+        goto(2)}
+        else{
+          goto(4)
+        }
+      }
+    });
+    socket.on("get-skip", (isSkip) => {
+      console.log('answer',answer);
+      console.log(answer == data[questionNumber].correct);
+      if (isSkip || answer == data[questionNumber].correct) {
+        if (answer == data[questionNumber].correct) {
+          console.log(answer == data[questionNumber].correct);
+          goto(2);
+        } else {
+          goto(4);
+        }
+      }
+    });
   }, []);
   return (
     <Fragment>
@@ -23,7 +51,7 @@ const Page3 = ({questionNumber,time}) => {
     
         <span className="correct">Please Wait!</span>
         <div className="font">Another Players</div>
-  <div className="font">time left : {time}</div>
+  <div className="font">time left : {diff}</div>
       </div>
       <Grid
         container

@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import InputText from '../../utils/InputText';
 import Image from 'next/image';
 import api from '../../../api';
@@ -36,15 +36,15 @@ const Register = () => {
     },
   });
 
-  const handleSubmit = async () => {
-    const body = {
-      degree: data.degree.value,
-      expert: data.expert.value,
-      bio: data.bio.value,
-    };
-    const res = await api.post('/api/instructor/register_instructor', body);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (body) => {
+    setLoading(true);
+    const res = await api.post('/api/instructor/register', body);
     console.log(res.data);
+    setLoading(false);
   };
+  
   const handleChange = (e) => {
     let temp = { ...data };
     temp[e.target.name].value = e.target.value;
@@ -71,7 +71,7 @@ const Register = () => {
       Object.keys(temp).map((el) => {
         formData[el] = temp[el].value;
       });
-      handleSubmit();
+      handleSubmit(formData);
     }
     setData(temp);
   };
@@ -108,7 +108,11 @@ const Register = () => {
               })}
             </form>
             <div style={{ textAlign: 'center', paddingTop: '20px' }}>
-              <button className="submit" onClick={handleClick}>
+              <button
+                className={`submit ${loading ? 'disable' : ''}`}
+                onClick={handleClick}
+                disabled={loading}
+              >
                 SUBMIT
               </button>
             </div>
@@ -143,6 +147,12 @@ const Register = () => {
           }
           .submit:hover {
             cursor: pointer;
+          }
+          .disable {
+            opacity: 0.9;
+          }
+          .disable:hover {
+            cursor: default;
           }
         `}
       </style>
