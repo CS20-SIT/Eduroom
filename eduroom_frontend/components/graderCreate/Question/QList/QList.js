@@ -28,10 +28,9 @@ const Test = () => {
     <div style={sBig}>
       <Grid>
         <Grid>
+          <span style={sBigTitle}>Question</span>{" "}
           <span>
-            <Link href="/admin/grader/question/create" scroll={false}>
-              Create
-            </Link>
+            <Link href="/admin/grader/question/create">Create</Link>
           </span>
           <div style={{ height: 20 }}></div>
         </Grid>

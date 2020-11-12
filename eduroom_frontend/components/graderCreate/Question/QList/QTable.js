@@ -10,7 +10,9 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
+import { useRouter } from "next/router";
 //add submit time here
 
 const useStyles = makeStyles({
@@ -129,6 +131,7 @@ const shorten = (text, maxLength) => {
   return text;
 };
 const AnnTable = (props) => {
+  const router = useRouter();
   const classes = useStyles();
   const [page, setPage] = useState(0);
 
@@ -248,14 +251,28 @@ const AnnTable = (props) => {
                       )}
                     </TableCell>
                     <TableCell className={classes.tableEdit} align="left">
-                      {/* <AnnEdit
-                        onSuccess={props.onSuccess}
-                        id={row.id}
-                        title={row.title}
-                        description={row.description}
-                        visible={row.isvisible}
-                        adminid={row.adminid}
-                      ></AnnEdit> */}
+                      <div>
+                        <button
+                          style={{
+                            padding: 0,
+                            border: "none",
+                            background: "none",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            router.push(
+                              `/admin/grader/question/edit/${row.id}`
+                            );
+                          }}
+                        >
+                          {" "}
+                          <Image
+                            src="/images/graderCreate/edit.svg"
+                            width="20"
+                            height="20"
+                          />
+                        </button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 );
