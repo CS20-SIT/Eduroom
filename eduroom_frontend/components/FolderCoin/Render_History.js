@@ -9,12 +9,14 @@ const RenderHistory = props => {
                         price={item.price}
                         index={index}
                         id={item.id}
+                        choose={props.choose}
                     ></DetailHistory>
                 </div>
             );
         });
         return list;
     };
+   
 
     return <div>{renderList()}</div>;
 };
