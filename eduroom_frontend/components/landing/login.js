@@ -1,30 +1,33 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import style from '../../styles/landing/login';
 import Image from 'next/image';
-import api from '../../api';
+import UserContext from '../../contexts/user/userContext';
 const Content = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const userContext = useContext(UserContext);
+  const { loginUser } = userContext;
   const handleEmail = (e) => {
-    if (e.target.value.length === 0) setEmailError('Email are required');
+    if (e.target.value.length === 0) setEmailError('Email is required');
     else setEmailError('');
     setEmail(e.target.value);
   };
   const handlePassword = (e) => {
-    if (e.target.value.length === 0) setPasswordError('Password are required');
+    if (e.target.value.length === 0) setPasswordError('Password is required');
     else setPasswordError('');
-    setEmail(e.target.value);
+    setPassword(e.target.value);
   };
-  const handleLogin = () => {
-    
-  }
+  const handleLogin = async () => {
+    const body = { email, password };
+    loginUser(body);
+  };
   const googleLogin = async () => {
     window.location.pathname = '/api/auth/google';
   };
-  
+
   return (
     <Fragment>
       <div className="login">
@@ -59,7 +62,7 @@ const Content = () => {
                 <div className="error">{passwordError}</div>
               </label>
 
-              <button className="login-button">
+              <button className="login-button" onClick={handleLogin}>
                 <span className="login-button-text">Log In</span>
               </button>
               <div className="or-text">

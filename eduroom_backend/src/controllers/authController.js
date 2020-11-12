@@ -124,6 +124,7 @@ exports.loginController = async (req, res) => {
     const localAuth = await pool.query(
       `SELECT * FROM local_auth WHERE email = '${req.body.email}'`
     );
+    console.log(localAuth);
     if (localAuth.rowCount != 1) {
       const err = {
         statusCode: 400,
