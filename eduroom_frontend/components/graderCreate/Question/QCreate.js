@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Chip from "@material-ui/core/Chip";
 import { useState, useEffect } from "react";
-import axios from '../../../api';
+import axios from "../../../api";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -35,7 +35,7 @@ const CustomAutocomplete = withStyles({
 
     color: "#5b5b5b",
     fontFamily: "Quicksand , sans-serif",
-    "font-size": "1.2em",
+    fontSize: "1.2em",
   },
   tag: {
     marginTop: 15,
@@ -49,8 +49,8 @@ const CustomAutocomplete = withStyles({
       color: "#3d467f",
       fontFamily: "Quicksand , sans-serif",
 
-      "font-size": "1.2em",
-      "font-weight": "bold",
+      fontSize: "1.2em",
+      fontWeight: "bold",
     },
     "& .MuiChip-deleteIcon": {
       color: "#FC8FC3",
@@ -97,15 +97,15 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     paddingBottom: theme.spacing(4),
 
-    textAlign: "center",
+    // textAlign: "center",
     color: theme.palette.text.secondary,
   },
   menuitem: {
     "&.Mui-selected": {
-      "font-family": "Quicksand , sans-serif",
+      fontFamily: "Quicksand , sans-serif",
       color: "#3d467f",
-      "font-size": "1.2em",
-      "font-weight": "bold",
+      fontSize: "1.2em",
+      fontWeight: "bold",
     },
   },
   select: {
@@ -113,16 +113,32 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       fontFamily: "Quicksand , sans-serif",
       color: "#3d467f",
-      "font-size": "1.2em",
-      "font-weight": "bold",
+      fontSize: "1.2em",
+      fontWeight: "bold",
     },
     error1: {
-      "font-family": "Quicksand , sans-serif",
+      fontFamily: "Quicksand , sans-serif",
       color: "#5b5b5b",
-      "font-size": "1.2em",
+      fontSize: "1.2em",
     },
   },
 }));
+
+// const classes = useStyles();
+//   const [title, setTitle] = React.useState("");
+//   const [description, setDescription] = React.useState("");
+//   const [inputdesc, setInputdesc] = useState("");
+//   const [outputdesc, setOutputdesc] = useState("");
+//   const [rule, setRule] = React.useState("oi");
+//   const [visible, setvisible] = React.useState(false);
+//   const [memory, setMemory] = useState(256);
+//   const [time, setTime] = useState(1000);
+//   const [check, setCheck] = useState(false);
+//   const [erorvalid, seterorValid] = React.useState(false);
+//   const [hint, setHint] = useState("");
+//   const [difficulty, setDiff] = useState("easy");
+//   const [samples, setSample] = useState([]);
+
 const theme1 = createMuiTheme({
   overrides: {
     MuiSelect: {
@@ -136,7 +152,12 @@ const theme1 = createMuiTheme({
 });
 export default function FullWidthGrid(props) {
   const [existTags, setExistTags] = useState([]);
-  const [oldDetail,setoldDetail] = useState([]);
+  const [oldDetail, setoldDetail] = useState([]);
+  const [oldTestcase, setoldTestcase] = useState("");
+
+  const splitTest = function (str) {
+    return str.split("\\").pop().split("/").pop();
+  };
   // const [oldSample,]
 
   useEffect(() => {
@@ -147,69 +168,97 @@ export default function FullWidthGrid(props) {
       if (props.id != null) {
         const id = props.id;
         console.log(props.id);
-        const detail =  await axios.get("/api/grader/question",{params : {id}})
-        setoldDetail(detail);
-        console.log("testttttttttttttttttttttttttttttttttttttttttttttt")
-        console.log(detail)
+        const oldData = await axios.get("/api/grader/question", {
+          params: { id },
+        });
+        const detail = oldData.data[0];
+
+        setTitle(detail.title);
+        setDescription(detail.description);
+        setInputdesc(detail.intputdes);
+        setOutputdesc(detail.outputdes);
+        setRule(detail.ruletype);
+        setvisible(detail.visibility);
+        setMemory(detail.memorylimit);
+        setTime(detail.timelimit);
+        setHint(detail.hint);
+        setDiff(detail.difficulty);
+
+        const testcase = await axios.get("/api/grader/questiontestcase", {
+          params: { id },
+        });
+
+        setoldTestcase(splitTest(testcase.data[0].filepath));
+
+        const tag = await axios.get("/api/grader/questiontag", {
+          params: { id },
+        });
+
+        const oldTag = tag.data;
+        const a = oldTag.map((r) => {
+          return r.tagname;
+        });
+
+        setTags(a);
       }
     };
     GetData();
   }, []);
 
   const sTitle = {
-    "font-family": "Quicksand , sans-serif",
-    "font-size": "1.2em",
+    fontFamily: "Quicksand , sans-serif",
+    fontSize: "1.2em",
     color: "#3d467f",
-    "font-weight": "bold",
+    fontWeight: "bold",
   };
-  const sText = { "font-family": "Quicksand , sans-serif", color: "#5b5b5b" };
+  const sText = { fontFamily: "Quicksand , sans-serif", color: "#5b5b5b" };
   const sButtionandVisbile = {
     color: "#3d467f",
-    "font-family": "Quicksand , sans-serif",
-    "font-weight": "bold",
-    "font-size": "1.2em",
+    fontFamily: "Quicksand , sans-serif",
+    fontWeight: "bold",
+    fontSize: "1.2em",
   };
   const sInputfield = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    fontSize: "1.2em",
   };
   const sInputTag = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    fontSize: "1.2em",
   };
   const sInput = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-weight": "bold",
-    "font-size": "1.2em",
+    fontWeight: "bold",
+    fontSize: "1.2em",
   };
   const sInputfieldDesc = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    fontSize: "1.2em",
     paddingTop: 12,
   };
   const sInputSelect = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.0em",
+    fontSize: "1.0em",
   };
   const sError = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "white",
-    "font-size": "1em",
+    fontSize: "1em",
   };
   const sInputfieldSelect = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-size": "1.1em",
-    "font-weight": "bold",
+    fontSize: "1.1em",
+    fontWeight: "bold",
   };
   const sBigTitle = {
     fontFamily: "Quicksand , sans-serif",
-    "font-size": "2em",
+    fontSize: "2em",
     color: "#3d467f",
     fontWeight: "bold",
   };
@@ -369,6 +418,7 @@ export default function FullWidthGrid(props) {
   const handleSubmit = () => {
     if (title == "" || selectedFile.length == 0) {
       seterorValid(true);
+      document.querySelector("body").scrollTo(0, 0);
     } else {
       let newtags = tags.filter((t) => {
         return typeof t === "string";
@@ -576,7 +626,12 @@ export default function FullWidthGrid(props) {
 
         <Grid container spacing={6}>
           <Grid item xs={10}>
-            <span style={sBigTitle}>Create your Question</span>
+            <span style={sBigTitle}>
+              {" "}
+              {props.id == null
+                ? "Create your Question"
+                : `Edit Question No. ${props.id} `}
+            </span>
           </Grid>
           <Grid item xs={2}>
             <FormControlLabel
@@ -776,7 +831,10 @@ export default function FullWidthGrid(props) {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <QSampleList handleSample={handleSample}></QSampleList>
+            <QSampleList
+              id={props.id}
+              handleSample={handleSample}
+            ></QSampleList>
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
@@ -894,7 +952,6 @@ export default function FullWidthGrid(props) {
                   <input
                     type="file"
                     className="form-control"
-                    
                     onChange={onChangeHandlerFile}
                     className="custom-file-input"
                     style={{
@@ -922,14 +979,14 @@ export default function FullWidthGrid(props) {
                       width: 300,
                       marginTop: 25,
                       marginLeft: -42,
-                      "font-weight": "bold",
+                      fontWeight: "bold",
                     }}
                   >
                     {selectedFile
-                      ? "File recieved :  " +
-                        selectedFile[0].name 
-                    
-                      : "Testcase  files up to 10 MB in size are available for upload."}
+                      ? "File recieved :  " + selectedFile[0].name
+                      : props.id == undefined
+                      ? "Testcase file up to 10 MB in size are available for upload."
+                      : oldTestcase}
                   </span>
                 </Grid>
                 <Grid item xs={12}>
@@ -956,9 +1013,9 @@ export default function FullWidthGrid(props) {
                     color: "white",
                     height: 35,
                     width: 300,
-                    "font-family": "Quicksand , sans-serif",
-                    "font-size": "1.2em",
-                    "font-weight": "bold",
+                    fontFamily: "Quicksand , sans-serif",
+                    fontSize: "1.2em",
+                    fontWeight: "bold",
                   }}
                 />
               </div>
@@ -974,9 +1031,12 @@ export default function FullWidthGrid(props) {
               </DialogContent>
               <DialogActions>
                 <Button onClick={statusClose} color="primary">
-                  <span style={sButtionandVisbile}>
-                    <Link href="/admin/grader/question/">Ok</Link>
-                  </span>
+                  <Link
+                    style={sButtionandVisbile}
+                    href="/admin/grader/question/"
+                  >
+                    Ok
+                  </Link>
                 </Button>
               </DialogActions>
             </Dialog>

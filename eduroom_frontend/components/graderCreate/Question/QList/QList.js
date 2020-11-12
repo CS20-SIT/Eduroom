@@ -19,7 +19,7 @@ const Test = () => {
   const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "2.5%" };
   const sBigTitle = {
     fontFamily: "Quicksand , sans-serif",
-    "font-size": "2em",
+    fontSize: "2em",
     color: "#5b5b5b",
     fontWeight: "bold",
   };

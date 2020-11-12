@@ -3,15 +3,26 @@ import { useRouter } from "next/router";
 
 import Create from "./QCreate";
 
-const EditQuestion = () => {
+const EditQuestion = (props) => {
   const router = useRouter();
-  const id = router.query.id;
+
+  const tid = router.query.id;
 
   return (
     <Fragment>
-      <div>{id}</div>
-      <Create id={id}></Create>
+      <div>{props.id}</div>
+      <Create id={tid}></Create>
     </Fragment>
   );
 };
+
+export async function getServerSideProps(context) {
+  try {
+    const id = context.query.id;
+
+    return { props: { id } };
+  } catch (err) {
+    return { props: { id: "" } };
+  }
+}
 export default EditQuestion;
