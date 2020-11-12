@@ -7,6 +7,8 @@ import {
   REGISTER_USER_FAIL,
   GET_USER_SUCCESS,
   GET_USER_FAIL,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAIL,
 } from './types';
 const userState = (props) => {
   const initialState = { user: null };
@@ -21,7 +23,15 @@ const userState = (props) => {
     }
   };
 
-  const loginUser = async ({ email, password }) => {};
+  const loginUser = async (body) => {
+    try {
+      await api.post('/api/auth/login', body);
+      const user = await api.get('/api/auth/profile');
+      dispatch({ type: LOGIN_USER_SUCCESS, payload: user.data });
+    } catch (err) {
+      dispatch({ type: LOGIN_USER_FAIL, payload: err });
+    }
+  };
 
   const getUser = async () => {
     try {

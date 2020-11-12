@@ -3,19 +3,19 @@ import style from '../../styles/landing/register';
 import Image from 'next/image';
 import UserContext from '../../contexts/user/userContext';
 import InputText from '../utils/InputText';
-import { useRouter } from 'next/router';
-import api from '../../api';
 
 const Register = () => {
   const userContext = useContext(UserContext);
   const { registerUser } = userContext;
-  const newUser = userContext.user;
-  const router = useRouter();
-  
 
   const handleChange = (e) => {
     let temp = { ...data };
     temp[e.target.name].value = e.target.value;
+    if (e.target.value.length === 0) {
+      temp[e.target.name].error = true;
+    } else{
+      temp[e.target.name].error = false;
+    }
     setData(temp);
   };
 

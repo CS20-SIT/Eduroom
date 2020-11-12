@@ -8,8 +8,6 @@ import {
 const userReducer = (state, action) => {
   switch (action.type) {
     case REGISTER_USER_SUCCESS:
-      console.log('inside reducer');
-      console.log(action.payload);
       return { ...state, user: action.payload };
     case REGISTER_USER_FAIL:
       return state;
