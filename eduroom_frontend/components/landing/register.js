@@ -80,7 +80,6 @@ const Register = () => {
       Object.keys(temp).map((el) => {
         formData[el] = temp[el].value;
       });
-      console.log(formData);
       registerUser(formData);
     }
     setData(temp);
