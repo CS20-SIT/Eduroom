@@ -5,6 +5,7 @@ import Layout from "../../../../components/graderSubmit/Layout"
 import style from "../../../../styles/graderSubmit/contests/contestPage/announcement/contestAnnouncementPage"
 import ContestLayout from "../../../../components/graderSubmit/contests/ContestLayout"
 import ContestAnnouncementList from "../../../../components/graderSubmit/contests/allList/ContestAnnouncementList"
+import api from "../../../../api"
 
 const contestAnnouncement = () => {
   const [id, setId] = useState(null)
@@ -12,6 +13,20 @@ const contestAnnouncement = () => {
   useEffect(() => {
     const ID = router.query.id
     setId(ID)
+  }, [])
+
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const GetData = async () => {
+      console.log(id)
+      const result = await api.get("api/grader/getContestAnnouncement", {
+        params: { id },
+      })
+      setData(result.data)
+      console.log(result.data)
+    }
+    GetData()
   }, [])
 
   return (
@@ -39,11 +54,17 @@ const contestAnnouncement = () => {
                       Date
                     </div>
                   </div>
-                  <ContestAnnouncementList />
-                  <ContestAnnouncementList />
-                  <ContestAnnouncementList />
-                  <ContestAnnouncementList />
-                  <ContestAnnouncementList />
+                  {data.map((element, key) => {
+                    return (
+                      <ContestAnnouncementList
+                        title={element.title}
+                        description={element.description}
+                        name={element.displayname}
+                        time={element.time}
+                        key={key}
+                      />
+                    )
+                  })}
                 </div>
               </ContestLayout>
             </Box>

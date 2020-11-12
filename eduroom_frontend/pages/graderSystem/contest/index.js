@@ -1,12 +1,22 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useState, useEffect } from "react"
 import Head from "next/head"
 import style from "../../../styles/graderSubmit/contests/contestPage"
 import Box from "../../../components/graderSubmit/Box"
 import Layout from "../../../components/graderSubmit/Layout"
 import ContestHeader from "../../../components/graderSubmit/contests/ContestPageHeader"
 import ContestList from "../../../components/graderSubmit/contests/ContestPageList"
+import api from "../../../api"
 
 const Contests = () => {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const GetData = async () => {
+      const result = await api.get("api/grader/getPreviewContest")
+      setData(result.data)
+    }
+    GetData()
+  }, [])
   return (
     <Fragment>
       <Head>
@@ -18,11 +28,19 @@ const Contests = () => {
           <div className="size">
             <Box>
               <ContestHeader>
-                <ContestList id={1} />
-                <ContestList id={2} />
-                <ContestList id={3} />
-                <ContestList id={4} />
-                <ContestList id={5} />
+                {data.map((element, key) => {
+                  return (
+                    <ContestList
+                      id={element.conno}
+                      title={element.title}
+                      conruletype={element.conruletype}
+                      starttime={element.starttime}
+                      endtime={element.endtime}
+                      status={element.status}
+                      key={key}
+                    />
+                  )
+                })}
               </ContestHeader>
             </Box>
           </div>
