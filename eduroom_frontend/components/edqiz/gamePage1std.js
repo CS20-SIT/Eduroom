@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { useRouter } from "next/router";
+import socketIOClient from "socket.io-client";
 
 const axios = require("axios");
 const Page1 = ({
@@ -10,22 +11,49 @@ const Page1 = ({
   sentMessage,
   response,
   setAnswer,
-  time
+  answer,
 }) => {
   const router = useRouter();
 
+  const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+    path: "/kahoot",
+  });
   // console.log("message", messages);
   const room = { name: "room1", PIN: router.query.id };
 
-  function questionNext() {
-    setquestionNumber(questionNumber + 1);
-  }
+  ////////////
+  const [diff, setDiff] = useState(null);
 
+  //////////////
 
   useEffect(() => {
+    socket.on("get-diff", (time) => {
+      setDiff(time);
+      if (time == 0) {
+        if (answer == data[questionNumber].correct) {
+          console.log(answer == data[questionNumber].correct);
+          goto(2);
+        } else {
+          goto(4);
+        }
+      }
+    });
+
+    socket.on("get-skip", (isSkip) => {
+      console.log('answer',answer);
+      console.log(answer == data[questionNumber].correct);
+      if (isSkip || answer == data[questionNumber].correct) {
+        if (answer == data[questionNumber].correct) {
+          console.log(answer == data[questionNumber].correct);
+          goto(2);
+        } else {
+          goto(4);
+        }
+      }
+    });
+
     sentMessage();
     response();
-  
   }, []);
   return (
     <Fragment>
@@ -59,7 +87,7 @@ const Page1 = ({
           >
             <Grid item xs={4}>
               <div className="text-time">TIME</div>
-              <div className="text-timeNum">{time}</div>
+              <div className="text-timeNum">{diff}</div>
             </Grid>
             <Grid item xs={4}>
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -100,9 +128,11 @@ const Page1 = ({
               <button
                 className="buttonAnswer"
                 style={{ backgroundColor: "#F39AC4" }}
-                onClick={() => {setAnswer('0'),goto(3)}}
+                onClick={() => {
+                  setAnswer("0"), goto(3);
+                }}
               >
-                {setAnswer('0')}
+                {setAnswer("0")}
                 {data[questionNumber].ans[0]}
               </button>
             </Grid>
@@ -114,7 +144,9 @@ const Page1 = ({
               <button
                 className="buttonAnswer"
                 style={{ backgroundColor: "#D5C1FC" }}
-                onClick={() => {setAnswer(1),goto(3)}}
+                onClick={() => {
+                  setAnswer(1), goto(3);
+                }}
               >
                 {/* {goto(3)} */}
                 {data[questionNumber].ans[1]}
@@ -137,7 +169,9 @@ const Page1 = ({
               <button
                 className="buttonAnswer"
                 style={{ backgroundColor: "#FDD4C1" }}
-                onClick={() => {setAnswer(2),goto(3)}}
+                onClick={() => {
+                  setAnswer(2), goto(3);
+                }}
               >
                 {data[questionNumber].ans[2]}
               </button>
@@ -150,7 +184,9 @@ const Page1 = ({
               <button
                 className="buttonAnswer"
                 style={{ backgroundColor: "#A6CEEE" }}
-                onClick={() => {setAnswer(3),goto(3)}}
+                onClick={() => {
+                  setAnswer(3), goto(3);
+                }}
               >
                 {data[questionNumber].ans[3]}
               </button>
