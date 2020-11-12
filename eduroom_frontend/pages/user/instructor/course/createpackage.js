@@ -48,7 +48,7 @@ const CreatePackagePage = () => {
   };
   return (
     <Fragment>
-      <General>
+      <General img={'/images/package/bgbelow.svg'}>
         {renderPage()}
         <style jsx>{style}</style>
       </General>

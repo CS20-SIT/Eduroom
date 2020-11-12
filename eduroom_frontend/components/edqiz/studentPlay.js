@@ -46,6 +46,7 @@ const Content = () => {
             goto={goto}
             mockData={mockData}
             change={handleChangeQuizName}
+            name={name}
           />
         );
       case 2:
@@ -93,7 +94,7 @@ const Content = () => {
     });
     return arr;
   };
-  console.log("roomPin", roomPin);
+  // console.log("roomPin", roomPin);
   const renderPin = () => {
     const arr = roomPin.map((pin, index) => {
       return <div key={index}>{pin}</div>;
