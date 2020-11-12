@@ -18,15 +18,9 @@
   	password: <String>
   	firstname: <String>
   	lastname: <String>
-  	birthdate: <String>
-  	initial: <String>
-  	phoneNo: <String>
-  	displayname: <String>
-  	bio: <String>
-  	isStudent: <Boolean>
   }
   ```
-
+  
 - **Params** : `NONE`
 
 - **Success ** : `201` with cookie of key 'jwt'
