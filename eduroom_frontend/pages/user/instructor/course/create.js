@@ -1,11 +1,19 @@
-import React,{Fragment} from 'react'
+const { default: Link } = require("next/link");
+
+
+import InstructorProfile from '../index'
+import EditProfile from '../EditProfile'
+// import Logout from './Logout'
 import Nav from '../../../../components/user/instructor/Nav';
-import SideNav from '../../../../components/layouts/sidenav/sidenav'
-const CourseCreate = () => {
-    return <Fragment>
-        <div>
+import AddressForm from '../../../../components/user/instructor/AddressForm';
+import Checkout from '../../../../components/user/instructor/Checkout';
+
+
+
+function CreateCourse()
+{
+    return <div>
         <Nav />
-        <SideNav />
         <style jsx>
             {
                 `
@@ -32,39 +40,18 @@ const CourseCreate = () => {
                 `
             }
         </style>
-        <a id="box"><a id="title">Create 
-        <br></br>
-        <a>Course</a>
-        </a>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-
-        <a id="info">
-          
-
-          <a id="info">Course Title   ..........</a><br></br>
-          <br></br>
-          <a id="info">Course Picture ..........</a><br></br>
-          <br></br>
-          <a id="info">Sample Video   ..........</a><br></br>
-          <br></br>
-          <a id="info">Subject        ..........</a><br></br>
-          <br></br>
-
+        <a id="box">
+        <Checkout />
+        
+       
 
         
         
-        </a>
+      
         
         
         </a>
         
     </div>
-    </Fragment>
 }
-export default CourseCreate
+export default CreateCourse;
