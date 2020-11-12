@@ -9,7 +9,7 @@ router.get('/mail',async(req,res,next)=>{
     res.status(200).json({success:true})
 })
 
-router.post('/gcs', uploadHandler('test.png', '/testUpload'), (req, res) => {
+router.post('/multer', uploadHandler('test.png', 'testUpload/'), (req, res) => {
     res.send({ linkURL: req.files[0].linkUrl });
 })
 
