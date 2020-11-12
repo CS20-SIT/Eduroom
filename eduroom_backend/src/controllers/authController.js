@@ -35,7 +35,8 @@ exports.regisController = async (req, res) => {
         // Insert new user_profile
         user.password = bcrypt.hashSync(user.password)
         const userId = uuidv4()
-        console.log(userId);
+        // TODO: Add url for default user profile picture
+        // const defaultProfilePic = ''
         const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
         VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, $1, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
         await pool.query(user_profileCreationQuery,[''])
