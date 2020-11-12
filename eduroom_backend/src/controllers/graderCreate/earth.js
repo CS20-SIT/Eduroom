@@ -194,9 +194,10 @@ const gAllTag = async (req, res, next) => {
   res.send(ann);
 };
 
-//get by id
+//get by id `````````````````````````````````
 const gQuestion = async (req, res, next) => {
-  const data = await pool.query("select * from Questions  where id = 1 ");
+  const id = req.query.id;
+  const data = await pool.query(`select * from Questions  where id = '${id}' `);
   const conann = data.rows;
   res.send(conann);
 };

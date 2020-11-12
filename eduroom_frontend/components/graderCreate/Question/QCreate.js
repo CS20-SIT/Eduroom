@@ -136,6 +136,8 @@ const theme1 = createMuiTheme({
 });
 export default function FullWidthGrid(props) {
   const [existTags, setExistTags] = useState([]);
+  const [oldDetail,setoldDetail] = useState([]);
+  // const [oldSample,]
 
   useEffect(() => {
     const GetData = async () => {
@@ -143,7 +145,12 @@ export default function FullWidthGrid(props) {
       setExistTags(result.data);
       console.log(props);
       if (props.id != null) {
+        const id = props.id;
         console.log(props.id);
+        const detail =  await axios.get("/api/grader/question",{params : {id}})
+        setoldDetail(detail);
+        console.log("testttttttttttttttttttttttttttttttttttttttttttttt")
+        console.log(detail)
       }
     };
     GetData();
