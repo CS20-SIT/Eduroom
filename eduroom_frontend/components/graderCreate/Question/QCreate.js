@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Chip from "@material-ui/core/Chip";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from '../../../api';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -139,7 +139,7 @@ export default function FullWidthGrid(props) {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios("http://localhost:5000/api/grader/alltag");
+      const result = await axios("/api/grader/alltag");
       setExistTags(result.data);
       console.log(props);
       if (props.id != null) {
@@ -380,7 +380,7 @@ export default function FullWidthGrid(props) {
       console.log(pqexistTags);
 
       axios
-        .post("http://localhost:5000/api/grader/cquestion", {
+        .post("/api/grader/cquestion", {
           title: title,
           ruleType: rule,
           description: description,
@@ -511,7 +511,7 @@ export default function FullWidthGrid(props) {
         console.log(selectedFile[x]);
       }
       axios
-        .post("http://localhost:5000/api/grader/ptc", data, {
+        .post("/api/grader/ptc", data, {
           onUploadProgress: (ProgressEvent) => {
             setLoad((ProgressEvent.loaded / ProgressEvent.total) * 100);
           },
@@ -528,7 +528,7 @@ export default function FullWidthGrid(props) {
   const onHandlerSample = (id) => {
     if (samples != null) {
       axios
-        .post("http://localhost:5000/api/grader/cquestionsample", {
+        .post("/api/grader/cquestionsample", {
           samples: samples,
           questionId: id,
         })

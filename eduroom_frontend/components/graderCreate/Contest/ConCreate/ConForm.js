@@ -21,10 +21,11 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { compareAsc } from "date-fns";
+
 import { add } from "date-fns";
 import Chip from "@material-ui/core/Chip";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../../../api";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
@@ -216,7 +217,9 @@ export default function FullWidthGrid() {
     if (title == "" || compareAsc(selectedStartDate, selectedEndDate) != -1) {
       seterorValid(true);
     } else
-      axios.post("http://localhost:5000/api/grader/ccontest", {
+  
+      
+      axios.post("/api/grader/ccontest", {
         title: title,
         conRuleType: rule,
         description: description,
@@ -225,6 +228,7 @@ export default function FullWidthGrid() {
         status: conStatus,
         adminid: "12345678-1234-1234-1234-123456789123",
       });
+
     //   .then(function (response) {
     //     console.log(response);
     //     setOpen(false);
