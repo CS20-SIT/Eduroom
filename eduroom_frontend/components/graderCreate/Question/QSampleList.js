@@ -3,15 +3,19 @@ import Qsample from "./QSample";
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-
+import axios from "../../../api";
 import Chip from "@material-ui/core/Chip";
 
 class Form extends React.Component {
-  no = 1;
+  no = 0;
 
   constructor(props) {
     super(props);
+    console.log("---------------------------------------------------------");
+    console.log("first meet");
+    console.log(this.props);
     // Don't call this.setState() here!
+
     this.state = {
       questionSample: [
         {
@@ -22,6 +26,26 @@ class Form extends React.Component {
       ],
     };
   }
+  // async componentDidMount() {
+  //   if (this.props.id != undefined) {
+  //     console.log("componenet didmount");
+  //     const id = this.props.id;
+  //     const sample = await axios.get("/api/grader/questionsample", {
+  //       params: { id },
+  //     });
+  //     this.state = { questionSample: sample.data };
+  //     this.no = this.state.questionSample.length;
+  //     console.log(this.state.questionSample);
+  //   }
+  // }
+  handleSet = (old, adder) => {
+    console.log("---------Set---------------");
+    console.log(old);
+    this.setState({ questionSample: old });
+    console.log(this.state.questionSample);
+    this.no += adder;
+    console.log("------------------------");
+  };
   handleChange = (e) => {
     if (["inputSample", "outputSample"].includes(e.target.name)) {
       let questionSample = [...this.state.questionSample];
@@ -48,6 +72,7 @@ class Form extends React.Component {
         },
       ],
     }));
+    console.log("---------ADD---------------");
     console.log(this.state.questionSample);
   };
 
@@ -77,10 +102,10 @@ class Form extends React.Component {
               >
                 <span
                   style={{
-                    "font-family": "Quicksand , sans-serif",
+                    fontFamily: "Quicksand , sans-serif",
                     color: "#3d467f",
-                    "font-weight": "bold",
-                    "font-size": "1.2em",
+                    fontWeight: "bold",
+                    fontSize: "1.2em",
                   }}
                 >
                   Question Sample
@@ -95,9 +120,9 @@ class Form extends React.Component {
                     color: "white",
                     height: 25,
                     width: 120,
-                    "font-family": "Quicksand , sans-serif",
-                    "font-size": "1.0em",
-                    "font-weight": "bold",
+                    fontFamily: "Quicksand , sans-serif",
+                    fontSize: "1.0em",
+                    fontWeight: "bold",
                   }}
                 />
               </div>
@@ -108,9 +133,11 @@ class Form extends React.Component {
             <Grid item xs={12}>
               {" "}
               <Qsample
+                set={this.handleSet}
                 add={this.addNewRow}
                 delete={this.clickOnDelete.bind(this)}
                 questionSample={questionSample}
+                id={this.props.id}
               />
             </Grid>
             <Grid item xs={12}></Grid>

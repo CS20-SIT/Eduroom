@@ -202,22 +202,26 @@ const gQuestion = async (req, res, next) => {
   res.send(conann);
 };
 const gQuestionTag = async (req, res, next) => {
+  const id = req.query.id;
   const data = await pool.query(
-    "select * from questiontag  where questionId = 1 "
+    `select  tagname from questiontag q , tags t  where q.questionid = '${id}'and t.tagid = q.tagid  `
+    // `select t.tagname from questiontag q , tags t where q.questionid = '${id}' and t.questionid = q.questionId `
   );
   const conann = data.rows;
   res.send(conann);
 };
 const gQuestionSample = async (req, res, next) => {
+  const id = req.query.id;
   const data = await pool.query(
-    "select * from questionSample  where questionId = 1 "
+    `select intput as inputSample, output as outputSample , sampleno as index from questionSample  where questionId = '${id}' `
   );
   const conann = data.rows;
   res.send(conann);
 };
 const gQuestionTestcase = async (req, res, next) => {
+  const id = req.query.id;
   const data = await pool.query(
-    "select * from questionTestcases  where questionId = 2 "
+    `select * from questionTestcases  where questionId = '${id}' `
   );
   const conann = data.rows;
   res.send(conann);

@@ -141,9 +141,7 @@ const AnnTable = (props) => {
   useEffect(
     () => {
       const GetData = async () => {
-        const result = await axios.get(
-          "/api/grader/allquestion"
-        );
+        const result = await axios.get("/api/grader/allquestion");
         setData(result.data);
       };
       GetData();
@@ -245,9 +243,9 @@ const AnnTable = (props) => {
                       align="center"
                     >
                       {row.visibility ? (
-                        <i class="fas fa-check"></i>
+                        <i className="fas fa-check"></i>
                       ) : (
-                        <i class="fas fa-times"></i>
+                        <i className="fas fa-times"></i>
                       )}
                     </TableCell>
                     <TableCell className={classes.tableEdit} align="left">
