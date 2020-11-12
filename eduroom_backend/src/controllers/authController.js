@@ -96,6 +96,7 @@ exports.verifyEmailController = async (req, res) => {
         const endTimestamp = dayjs(user_verification.rows[0].endtime)
         const nowTimestamp = dayjs()
         if(nowTimestamp.isAfter(endTimestamp)){
+            // Should redirect to token expire page
             const err = {
                 statusCode: 400,
                 message: 'token is expired'
@@ -137,7 +138,7 @@ exports.loginController = async (req, res) => {
         const userId = localAuth.rows[0].userid
         const token = generateCookieJWT(userId)
         res.cookie('jwt', token)
-        res.status(201).send({ success: true })
+        res.status(200).send({ success: true })
     } catch (error) {
         // TODO: Should redirect to verification error page
         errorHandler(error, req, res)
