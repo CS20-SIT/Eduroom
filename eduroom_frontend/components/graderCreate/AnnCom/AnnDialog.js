@@ -61,7 +61,7 @@ const AnnEdit = (props) => {
 
   const handleSubmit = () => {
     axios
-      .post('/api/grader/cann", {
+      .post('/api/grader/cann', {
         
         title: ann.title,
         description: ann.description,

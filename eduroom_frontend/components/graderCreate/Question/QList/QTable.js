@@ -141,7 +141,7 @@ const AnnTable = (props) => {
   useEffect(
     () => {
       const GetData = async () => {
-        const result = await axios(
+        const result = await axios.get(
           "/api/grader/allquestion"
         );
         setData(result.data);
