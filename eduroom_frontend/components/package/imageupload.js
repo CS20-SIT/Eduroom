@@ -10,7 +10,7 @@ const Upload = ({index}) => {
         document.getElementById("show-image" + index).src = e.target.result;
       };
       reader.readAsDataURL(image);
-    }
+    };
   }, [image]);
   const handleUplaodFile = (e) => {
     let newValue = e.target.files[0];
@@ -50,17 +50,14 @@ const Upload = ({index}) => {
             </div>
           ) : (
               <div>
-                <span style={{ fontSize: "1.3em" }}>
-                  <i className="fas fa-camera"></i>
-                </span>
-                <br />
-                <span>Click here to add photo</span>
+                <div><i className="fas fa-camera"></i></div>
+                <div>Click here to add photo</div>
               </div>
             )}
         </div>
         <style jsx>{style}</style>
   </div>
   </Fragment>
-  );
-  };
+  )
+  }
   export default Upload
