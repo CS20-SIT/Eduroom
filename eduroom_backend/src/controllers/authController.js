@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const pool = require('../database/db')
 const crypto = require('crypto')
 const dayjs = require('dayjs')
+const { v4: uuidv4 } = require('uuid')
 const { generateCookieJWT, generateVerifyJWT, verifyVerificationJWT } = require('../utils/jwt')
 const sendEmail = require('../utils/sendMail')
 const errorHandler = require('../middleware/error')
@@ -20,12 +21,6 @@ exports.regisController = async (req, res) => {
         //     password: <String>
         //     firstname: <String>
         //     lastname: <String>
-        //     birthdate: <String>
-        //     initial: <String>
-        //     phoneNo: <String>
-        //     displayname: <String>
-        //     bio: <String>
-        //     isStudent: <Boolean>
         // }
         const user = req.body
         // Find existing user in db
@@ -39,25 +34,19 @@ exports.regisController = async (req, res) => {
         }
         // Insert new user_profile
         user.password = bcrypt.hashSync(user.password)
+        const userId = uuidv4()
+        // TODO: Add url for default user profile picture
+        // const defaultProfilePic = ''
         const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES (uuid_generate_v4(), '${user.firstname}', '${user.lastname}', '${user.birthdate}', '${user.initial}', '${user.phoneNo}', '${user.displayname}', '${user.bio}', './png.png', ${user.isStudent}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
-        await pool.query(user_profileCreationQuery)
-        // Get userId from user_profile
-        const user_profile = await pool.query(`SELECT userid FROM user_profile WHERE firstname = '${user.firstname}' AND lastname = '${user.lastname}'`)
-        if(user_profile.rowCount == 0){
-            const err = {
-                statusCode: 500,
-                message: 'user is not found after saved'
-            }
-            return errorHandler(err, req, res)
-        }
-        const userId = user_profile.rows[0].userid
+        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, $1, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+        await pool.query(user_profileCreationQuery,[''])
+
         // Create local_auth
         const local_authCreationQuery = `INSERT INTO local_auth (userid, email, password) 
                                         VALUES ('${userId}', '${user.email}', '${user.password}')`
         await pool.query(local_authCreationQuery)
-        // Create verification token and send it in email
 
+        // Create verification token and send it in email
         const verifyToken = crypto.randomBytes(20).toString('hex')
         const user_verificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
         VALUES ('${userId}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + (120 * interval '1 minute'), '${verifyToken}', false)`
@@ -96,6 +85,7 @@ exports.verifyEmailController = async (req, res) => {
         const endTimestamp = dayjs(user_verification.rows[0].endtime)
         const nowTimestamp = dayjs()
         if(nowTimestamp.isAfter(endTimestamp)){
+            // Should redirect to token expire page
             const err = {
                 statusCode: 400,
                 message: 'token is expired'
@@ -137,7 +127,7 @@ exports.loginController = async (req, res) => {
         const userId = localAuth.rows[0].userid
         const token = generateCookieJWT(userId)
         res.cookie('jwt', token)
-        res.status(201).send({ success: true })
+        res.status(200).send({ success: true })
     } catch (error) {
         // TODO: Should redirect to verification error page
         errorHandler(error, req, res)
@@ -157,7 +147,8 @@ exports.googleCallbackController = async (req, res) => {
         lastname: req.user.name.familyName,
         email: req.user._json.email,
         picture: req.user._json.picture,
-        provider: req.user.provider }
+        provider: req.user.provider 
+    }
     console.log(user)
     //TODO: Find or add user in db
     const existingUser = await pool.query(`SELECT userid FROM oauth WHERE email = '${user.email}'`)
@@ -165,19 +156,12 @@ exports.googleCallbackController = async (req, res) => {
         return res.redirect(process.env.ENTRYPOINT_URL)
     }
     // Add user to user_profile
+    const userId = uuidv4()
     const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES (uuid_generate_v4(), '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
     await pool.query(user_profileCreationQuery,[''])
-
-    const user_profile = await pool.query(`SELECT userid FROM user_profile WHERE firstname = '${user.firstname}' AND lastname = '${user.lastname}'`)
-        if(user_profile.rowCount == 0){
-            const err = {
-                statusCode: 500,
-                message: 'user is not found after saved'
-            }
-            return errorHandler(err, req, res)
-        }
-    const userId = user_profile.rows[0].userid
+    
+    // Add user to OAuth
     const oauthCreationQuery = `INSERT INTO oauth (email, token, userid) VALUES ('${user.email}', '', '${userId}')`
     await pool.query(oauthCreationQuery)
 
