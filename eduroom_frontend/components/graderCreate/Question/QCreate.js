@@ -165,7 +165,8 @@ export default function FullWidthGrid(props) {
       const result = await axios("/api/grader/alltag");
       setExistTags(result.data);
       console.log(props);
-      if (props.id != null) {
+
+      if (props.id != undefined) {
         const id = props.id;
         console.log(props.id);
         const oldData = await axios.get("/api/grader/question", {

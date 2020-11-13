@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "22.5%",
     marginRight: "15%",
     marginTop: "2.5%",
-    marginBottom: "10%",
+    paddingBottom: "10%",
   },
   paper: {
     paddingTop: theme.spacing(1),
@@ -68,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     paddingBottom: theme.spacing(4),
 
-    textAlign: "center",
     color: theme.palette.text.secondary,
   },
   menuitem: {
@@ -217,8 +216,6 @@ export default function FullWidthGrid() {
     if (title == "" || compareAsc(selectedStartDate, selectedEndDate) != -1) {
       seterorValid(true);
     } else
-  
-      
       axios.post("/api/grader/ccontest", {
         title: title,
         conRuleType: rule,

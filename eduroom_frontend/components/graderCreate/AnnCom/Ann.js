@@ -13,7 +13,7 @@ const Test = () => {
     setRefresh(true);
     setRefresh(false);
   };
-  const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "2.5%" };
+  const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "2.25%" };
   const sBigTitle = {
     fontFamily: "Quicksand , sans-serif",
     "font-size": "2em",
@@ -25,14 +25,14 @@ const Test = () => {
     <div style={sBig}>
       <Grid>
         <Grid>
-          <span style={sBigTitle}>Announcement</span>
+          <span style={sBigTitle}>
+            Announcement
+            {"\u00A0" + "\u00A0" + "\u00A0" + "\u00A0"}
+          </span>{" "}
+          <AnnDialog onSuccess={handleUpdate} />
           <div style={{ height: 20 }}></div>
         </Grid>
-        <Grid>
-          <span style={{ paddingTop: 7 }}>
-            <AnnDialog onSuccess={handleUpdate} />
-          </span>
-        </Grid>
+
         <div style={{ height: 20 }}></div>
         <Grid item xl={12} md={12}>
           <AnnTable onSuccess={handleUpdate} update={refresh} />
