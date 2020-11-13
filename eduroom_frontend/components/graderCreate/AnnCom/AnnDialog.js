@@ -7,19 +7,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-
 import axios from "../../../api";
 
-
-import Chip from '@material-ui/core/Chip';
+import Chip from "@material-ui/core/Chip";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
-//on button , change that to chips 
+//on button , change that to chips
 // https://material-ui.com/components/chips/#chip
 const AnnEdit = (props) => {
-  
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
     success: false,
@@ -35,13 +32,12 @@ const AnnEdit = (props) => {
 
   const handleClickOpen = () => {
     setOpen(true);
-   
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-//// admind id here!!!!!!!
+  //// admind id here!!!!!!!
   const [ann, setAnn] = useState({
     title: "",
     description: "",
@@ -61,19 +57,18 @@ const AnnEdit = (props) => {
 
   const handleSubmit = () => {
     axios
-      .post('/api/grader/cann', {
-        
+      .post("/api/grader/cann", {
         title: ann.title,
         description: ann.description,
         adminid: ann.adminid,
-        isvisible : visible
+        isvisible: visible,
       })
       .then(function (response) {
         console.log(response);
         setOpen(false);
-        
+
         setTimeout(() => {
-          console.log('this is when we call prop on sucess')
+          console.log("this is when we call prop on sucess");
           props.onSuccess();
           setSubmitStatus({ ...submitStatus, success: true });
         }, 450);
@@ -88,48 +83,67 @@ const AnnEdit = (props) => {
     setAnn({
       title: "",
       description: "",
-      adminid: '12345678-1234-1234-1234-123456789123',
+      adminid: "12345678-1234-1234-1234-123456789123",
     });
     setVisible(true);
   };
 
-
-
-
-const sTitle = {'font-family': 'Quicksand , sans-serif' ,  'font-size': '1.2em' ,  color: '#3d467f','font-weight': 'bold'}
-const sText ={'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b'};
-const sInputfield = {'font-family': 'Quicksand , sans-serif' ,color: '#5b5b5b'}
-const sInput  ={'font-family': 'Quicksand , sans-serif' ,color: '#3d467f','font-weight': 'bold'}
-const sButtionandVisbile =  { color: '#3d467f', 'font-family': 'Quicksand , sans-serif','font-weight': 'bold' }
-
-
+  const sTitle = {
+    "font-family": "Quicksand , sans-serif",
+    "font-size": "1.2em",
+    color: "#3d467f",
+    "font-weight": "bold",
+  };
+  const sText = { "font-family": "Quicksand , sans-serif", color: "#5b5b5b" };
+  const sInputfield = {
+    "font-family": "Quicksand , sans-serif",
+    color: "#5b5b5b",
+  };
+  const sInput = {
+    "font-family": "Quicksand , sans-serif",
+    color: "#3d467f",
+    "font-weight": "bold",
+  };
+  const sButtionandVisbile = {
+    color: "#3d467f",
+    "font-family": "Quicksand , sans-serif",
+    "font-weight": "bold",
+  };
 
   return (
-    <div >
-              <Chip
-label=" Create"
-onClick={handleClickOpen}
-style={{backgroundColor:'#FC8FC3',marginBottom:10,color:'white',height:30,width:200,'font-family': 'Quicksand , sans-serif' ,  'font-size': '1.2em','font-weight': 'bold'}}
-
-/>
-
-    
+    <span>
+      <Chip
+        label=" Create"
+        onClick={handleClickOpen}
+        style={{
+          backgroundColor: "#FC8FC3",
+          marginBottom: 10,
+          color: "white",
+          height: 30,
+          width: 200,
+          "font-family": "Quicksand , sans-serif",
+          "font-size": "1.2em",
+          "font-weight": "bold",
+        }}
+      />
 
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">  <span style={sTitle} >Make Announcement</span></DialogTitle>
-      
+        <DialogTitle id="form-dialog-title">
+          {" "}
+          <span style={sTitle}>Make Announcement</span>
+        </DialogTitle>
+
         <DialogContent>
           <DialogContentText>
-          <span style={sText} >
-          To let our precious students know about the upcoming contest, your
-          brand-new questions, or even just to show off your new iphone,           
-          please enter your detail here.
+            <span style={sText}>
+              To let our precious students know about the upcoming contest, your
+              brand-new questions, or even just to show off your new iphone,
+              please enter your detail here.
             </span>
-          
           </DialogContentText>
           <TextField
             autoFocus
@@ -138,79 +152,84 @@ style={{backgroundColor:'#FC8FC3',marginBottom:10,color:'white',height:30,width:
             label="Title"
             type="text"
             fullWidth
-      
             value={ann.title}
             onChange={setTitle}
             required
-           
-            inputProps={{ maxLength: 50 ,style:sInputfield }}
-            InputLabelProps={{style: sInput}}
+            inputProps={{ maxLength: 50, style: sInputfield }}
+            InputLabelProps={{ style: sInput }}
           />
 
-<div style={{ height:20}} ></div>
+          <div style={{ height: 20 }}></div>
           <TextField
             id="standard-multiline-static"
             label="Description"
             multiline
             rows={10}
             fullWidth
-
             value={ann.description}
             onChange={setDesc}
             required
-            inputProps={{ style:sInputfield}}
-            InputLabelProps={{style: sInput}}
+            inputProps={{ style: sInputfield }}
+            InputLabelProps={{ style: sInput }}
           />
-           <div style={{ height:30}} ></div>
-           <FormControlLabel
-      control={
-        <Switch color='primary' checked={visible} onChange={handleChange} name="visible" />
-      }
-      label={<span style={sButtionandVisbile}>Visible</span>}
-    />
+          <div style={{ height: 30 }}></div>
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                checked={visible}
+                onChange={handleChange}
+                name="visible"
+              />
+            }
+            label={<span style={sButtionandVisbile}>Visible</span>}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-          <span style={sButtionandVisbile}>Cancel</span>
+            <span style={sButtionandVisbile}>Cancel</span>
           </Button>
           <Button onClick={handleSubmit} color="primary">
-          <span style={sButtionandVisbile}>Submit</span> 
+            <span style={sButtionandVisbile}>Submit</span>
           </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={submitStatus.success} onClose={statusClose}>
-        <DialogTitle><span style={sTitle} >Success!</span></DialogTitle>
+        <DialogTitle>
+          <span style={sTitle}>Success!</span>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-          <span style={sText} > Your announcement have been created.</span>
-           
+            <span style={sText}> Your announcement have been created.</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={statusClose} color="primary" autoFocus>
-          <span style={sButtionandVisbile}>Ok</span>
+            <span style={sButtionandVisbile}>Ok</span>
           </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={submitStatus.failed} onClose={statusClose}>
-        <DialogTitle><span style={sTitle} >Opps.... Something went wrong!</span></DialogTitle>
+        <DialogTitle>
+          <span style={sTitle}>Opps.... Something went wrong!</span>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-          <span style={sText} >  Come back again later...</span></DialogContentText>
+            <span style={sText}> Come back again later...</span>
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={statusClose} color="primary" autoFocus>
-          <span style={sButtionandVisbile}>Ok</span>
+            <span style={sButtionandVisbile}>Ok</span>
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </span>
   );
 };
 export default AnnEdit;
-
 
 // import React, { Fragment, useEffect, useState } from "react";
 // import Button from "@material-ui/core/Button";
@@ -226,7 +245,7 @@ export default AnnEdit;
 
 // import Chip from '@material-ui/core/Chip';
 
-// //on button , change that to chips 
+// //on button , change that to chips
 // // https://material-ui.com/components/chips/#chip
 // const AnnDialog = (props) => {
 //   const [open, setOpen] = useState(false);
@@ -254,7 +273,7 @@ export default AnnEdit;
 //     title: "",
 //     description: "",
 //     adminid: 'df3b7cb7-6a95-11e7-8846-b05adad3f0ae',
-//     isvisible: 
+//     isvisible:
 //   });
 //   const setDesc = (event) => {
 //     setAnn({ ...ann, description: event.target.value });
@@ -295,7 +314,7 @@ export default AnnEdit;
 
 //   return (
 //     <div>
-     
+
 //       <Chip
 // label=" Create"
 // onClick={handleClickOpen}
