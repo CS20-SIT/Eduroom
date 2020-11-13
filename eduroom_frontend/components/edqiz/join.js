@@ -6,13 +6,7 @@ import socketIOClient from "socket.io-client";
 const Page1 = ({ goto, mockData, change, name }) => {
   const router = useRouter();
 
-  const sentName = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
-      path: "/kahoot",
-    });
-    socket.emit("set-name", 'katak', '1234');
-    // console.log(name, router.query.room);
-  };
+ 
  
   useEffect(() => {}, []);
   return (

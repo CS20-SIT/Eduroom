@@ -16,7 +16,7 @@ const Page1 = ({
   });
   const router = useRouter();
   const setNextQuestion = () => {
-    socket.emit('set-nextQuestion',true,id.id,questionNumber+1);
+    socket.emit('set-nextQuestion',true,router.query.id,questionNumber+1);
   };
   const room = { name: 'room1', PIN: router.query.id };
 
