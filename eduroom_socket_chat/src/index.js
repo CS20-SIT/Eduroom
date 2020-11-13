@@ -1,8 +1,8 @@
-const app = require('./server')
+const server = require('./server')
 const port = process.env.PORT || 5050
 const socketIO = require('socket.io');
 
-app.listen(port, () => {
+const app = server.listen(port, () => {
 	console.log(`Running on ${port}`)
 })
 

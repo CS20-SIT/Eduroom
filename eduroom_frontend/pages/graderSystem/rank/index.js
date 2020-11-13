@@ -10,7 +10,7 @@ const Ranks = () => {
         <title>Ranks</title>
         <meta property="og:title" content="Ranks" key="Ranks" />
       </Head>
-      <Layout>
+      <Layout page="rank">
         <Box>This is rank page</Box>
       </Layout>
     </Fragment>

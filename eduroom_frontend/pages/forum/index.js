@@ -7,17 +7,11 @@ import NavForum from "../../components/forum/searchForum";
 import style from '../../styles/forum/showForum';
 import GeneralNoNav from "../../components/template/generalnonav";
 import RoomTab from "../../components/forum/RoomTab";
+import ForumBlock from "../../components/forum/forumBlock";
+
 const Forum = () => {
     const [forum, setForum] = useState([]);
-  //   useEffect(() => {
-  //     queryData();
-  //   }, []);
-  //   const queryData = () => {
-  //     api.get("/api/forum").then((res) => {
-  //       setForum(res.data.data);
-  //     });
-  //   };
-  //   const [create, setCreate] = useState();
+    
   return (
     <Fragment>
       <GeneralNoNav >
@@ -37,12 +31,17 @@ const Forum = () => {
           <div className="roomtab">
           <RoomTab />
           </div>
+          <div className="forumblock">
+            <ForumBlock />
+          </div>
         </div>
+
         <style jsx>{style}</style>
         <style jsx>
         {`
           #nav {
             width: 100%;
+            height: 100%;
           }
           .background-img {
             position: absolute;

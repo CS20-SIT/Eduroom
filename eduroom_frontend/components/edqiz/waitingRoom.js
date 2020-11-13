@@ -1,61 +1,73 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import GeneralNoSide from "../../components/template/generalnoside";
 import Grid from "@material-ui/core/Grid";
 import Link from "next/link";
-const Content = () => {
-  const student = [
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-  ];
-  const renderQuestion = () => {
-    return student.map((el, index) => {
+import { useRouter } from "next/router";
+import socketIOClient from "socket.io-client";
+
+const Content = ({ id }) => {
+  //mockup data
+  const router = useRouter();
+  const [kahoot_roomHistory, setHistory] = useState([
+    { sessionID: "1", roomid: "1", pin: "1234", available: false },
+    { sessionID: "2", roomid: "2", pin: "3456", available: false },
+    { sessionID: "3", roomid: "5", pin: "4567", available: false },
+  ]);
+  const [player, setPlayer] = useState([]);
+  const [pin, setPin] = useState("0");
+  let temppin = 0;
+  async function randomPin() {
+    // temppin=(Math.floor(Math.random() * 10000) + 1000);
+    temppin = 1234;
+    setPin(temppin);
+
+    //update query session room id avilable: true
+    kahoot_roomHistory.map((el, index) => {
+      if (kahoot_roomHistory[index].pin == temppin) {
+        if (kahoot_roomHistory[index].available == true) {
+          temppin = Math.floor(Math.random() * 10000) + 1000;
+          setPin(temppin);
+        }
+      }
+    });
+  }
+  const setRoomOpen = (ppin) => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit("set-openRoom", true, ppin);
+  };
+  const [render, setRender] = useState();
+  const response = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = [];
+    socket.on("new-name", (namePlayer, pin) => {
+      temp.push([namePlayer, pin]);
+      if (temp[temp.length - 1][1] == "1234") {
+        player.push(temp[temp.length - 1][0]);
+        setRender(namePlayer);
+      }
+    });
+  };
+
+  const renderStudent = () => {
+    console.log(player);
+    return player.map((el, index) => {
       return (
-        <Grid item xs={4} style={{ padding: "1vw",display:'flex',justifyContent:'center'}}>
-          <div>{student[index].name}</div>
+        <Grid item xs={4} style={{display:'flex',justifyContent:'center'}}>
+          <div key={index}>{el}</div>
         </Grid>
       );
     });
   };
+
+  useEffect(() => {
+    randomPin();
+    response();
+  }, []);
+
   return (
     <Fragment>
       <GeneralNoSide>
@@ -64,7 +76,7 @@ const Content = () => {
             <br />
             <div className="font">JOIN WITH GAME-PIN</div>
             <br />
-            <div className="div">00000</div>
+            <div className="div">{pin}</div>
             <br />
             <div className="card">
               <br />
@@ -78,7 +90,7 @@ const Content = () => {
                     alignItems: "center",
                   }}
                 >
-                  <button className="player">{student.length} players</button>
+                  <button className="player">{player.length} players</button>
                 </Grid>
                 <Grid item xs={4}>
                   <span className="text-title">
@@ -98,15 +110,20 @@ const Content = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Link href={"./game"}>
-                    <button className="startButton">start</button>
+                  <Link href={`/edqiz/gamePlay/${pin}`}>
+                    <button
+                      className="startButton"
+                      onClick={() => setRoomOpen(pin)}
+                    >
+                      start{">"}
+                    </button>
                   </Link>
                 </Grid>
               </Grid>
               <br />
               <br />
-              <div style={{ color: "#3D467F", fontWeight: 600}}>
-                <Grid container>{renderQuestion()}</Grid>
+              <div style={{ color: "#3D467F", fontWeight: 600 }}>
+                <Grid container>{renderStudent()}</Grid>
                 <br />
               </div>
             </div>
