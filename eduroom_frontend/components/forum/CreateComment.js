@@ -16,7 +16,7 @@ import {
 import GeneralNoNav from "../../components/template/generalnonav";
 import TextField from "@material-ui/core/TextField";
 import api from "../../api";
-const CreateComment = () => {
+const CreateComment = (props) => {
   // const create = async(e) =>{
   //   e.preventDefault();
   //   alert("comment")
@@ -29,6 +29,7 @@ const CreateComment = () => {
 
   const [createForm, setForm] = useState({
     comment: "",
+    id: props.id,
   });
   const [alert, setAlert] = useState({
     comment: false,
@@ -44,8 +45,12 @@ const CreateComment = () => {
     e.preventDefault();
     if (validator()) {
       console.log(createForm);
-      api.post("/api/forum/create", createForm).then((res) => {
+      api.post("/api/forum/comment", createForm).then((res) => {
         console.log(res);
+        setForm({
+          comment: "",
+        });
+        props.GetData();
         //router.push("/forum");
       });
     } else {

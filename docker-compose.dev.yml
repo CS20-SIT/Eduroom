@@ -64,6 +64,8 @@ services:
       - FROM_NAME=Eduroom Admin
       - NODE_TLS_REJECT_UNAUTHORIZED=0
       - GCS_SA_KEY_PATH=gcs-eduroom.json
+      - GCS_BUCKET_NAME=eduroom
+      - GCS_PROJECT_ID=macbigduck
     ports:
       - "5000:5000"
   eduroom_grading_server:

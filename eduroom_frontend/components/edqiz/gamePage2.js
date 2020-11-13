@@ -9,16 +9,14 @@ const Page1 = ({
   questionNumber,
   ChangeQuestionNumber,
   setTime,
-  setNextQuestion,
   id,
 }) => {
+  const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+    path: '/kahoot',
+  });
   const router = useRouter();
-  const setTimeSocket = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
-      path: '/kahoot',
-    });
-
-    socket.emit('set-seconds', data[questionNumber].time, id);
+  const setNextQuestion = () => {
+    socket.emit('set-nextQuestion',true,router.query.id,questionNumber+1);
   };
   const room = { name: 'room1', PIN: router.query.id };
 
@@ -503,8 +501,6 @@ const Page1 = ({
                 goto(1);
                 ChangeQuestionNumber(questionNumber + 1);
                 setNextQuestion();
-                // setTime(data[questionNumber + 1].time);
-                // setTimeSocket();
               }}
             >
               NEXT

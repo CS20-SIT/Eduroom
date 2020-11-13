@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { useRouter } from 'next/router';
-import socketIOClient from 'socket.io-client';
+import React, { Fragment, useState, useEffect } from "react";
+import Grid from "@material-ui/core/Grid";
+import { useRouter } from "next/router";
+import socketIOClient from "socket.io-client";
 
-const axios = require('axios');
+const axios = require("axios");
 const Page1 = ({
   id,
   time,
@@ -14,36 +14,43 @@ const Page1 = ({
   response,
   setquestionNumber,
 }) => {
+  const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+    path: "/kahoot",
+  });
   const router = useRouter();
-  const room = { name: 'room1', PIN: router.query.id };
+  const room = { name: "room1", PIN: router.query.id };
 
   const [diff, setDiff] = useState(null);
   const [endTime, setEndTime] = useState(null);
   var intervalID = null;
 
-  function questionNext() {
-    setquestionNumber(questionNumber + 1);
-  }
-
   const responseTime = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
-      path: '/kahoot',
-    });
-    socket.on('sent-end-time', (pin, time) => {
+    socket.on("sent-end-time", (pin, time) => {
       setEndTime(time);
     });
   };
 
   useEffect(() => {
-    console.log('This is a starting of game');
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
-      path: '/kahoot',
-    });
-    socket.emit('start-game', id.id, data[questionNumber].time);
+    socket.emit("start-game", id.id, data[questionNumber].time);
     responseTime();
+    ///////////////
+   
+   
+  
+   
+  
+ 
+    //////////////
   }, []);
+  useEffect(() => {
+    responseTime();
+    if (diff != null) {
+      socket.emit("set-diff", diff, id.id);
+      console.log(diff);
+    }
+  }, [diff]);
 
-  function doStuff(cc) {
+  function doStuff() {
     const now = new Date().getTime();
     const temp = Math.floor((endTime - now) / 1000);
     setDiff(temp);
@@ -70,22 +77,23 @@ const Page1 = ({
 
   function setSkip() {
     clearInterval(intervalID);
+    socket.emit("set-skip", true,id.id);
     goto(2);
   }
 
   return (
     <Fragment>
       <div className="landing">
-        <Grid container style={{ marginTop: '4vh' }}>
+        <Grid container style={{ marginTop: "4vh" }}>
           <Grid item xs={10}>
             <div className="text-title">
-              PIN :<div style={{ color: '#FB9CCB' }}>{room.PIN}</div>
+              PIN :<div style={{ color: "#FB9CCB" }}>{room.PIN}</div>
             </div>
           </Grid>
           <Grid
             item
             xs={2}
-            style={{ display: 'flex', justifyContent: 'center' }}
+            style={{ display: "flex", justifyContent: "center" }}
           >
             <button
               className="landing-button"
@@ -99,17 +107,17 @@ const Page1 = ({
           </Grid>
         </Grid>
         <br />
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <div className="text">{data[questionNumber].question}</div>
           </div>
           <Grid
             container
             style={{
-              marginTop: '4vh',
-              display: 'flex',
-              height: '45vh',
-              alignItems: 'center',
+              marginTop: "4vh",
+              display: "flex",
+              height: "45vh",
+              alignItems: "center",
             }}
           >
             <Grid item xs={4}>
@@ -117,23 +125,23 @@ const Page1 = ({
               <div className="text-timeNum">{diff ? diff : time}</div>
             </Grid>
             <Grid item xs={4}>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <img
                   src="/images/questionPic.jpg "
                   alt="my image"
                   style={{
-                    width: '90%',
-                    borderStyle: 'dotted',
-                    padding: '20px',
-                    borderRadius: '20px',
-                    borderColor: '#B3ABBC',
+                    width: "90%",
+                    borderStyle: "dotted",
+                    padding: "20px",
+                    borderRadius: "20px",
+                    borderColor: "#B3ABBC",
                   }}
                 />
               </div>
             </Grid>
             <Grid item xs={4}>
               <div className="text-time">ANSWER</div>
-              <div className="text-timeNum" style={{ color: '#FB9CCB' }}>
+              <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
                 0
               </div>
             </Grid>
@@ -141,20 +149,20 @@ const Page1 = ({
 
           <Grid
             container
-            style={{ marginTop: '4vh', display: 'flex', alignItems: 'center' }}
+            style={{ marginTop: "4vh", display: "flex", alignItems: "center" }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: 'flex-end',
-                display: 'flex',
-                padding: '1vw',
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
               }}
             >
               <button
                 className="buttonAnswer"
-                style={{ backgroundColor: '#F39AC4' }}
+                style={{ backgroundColor: "#F39AC4" }}
                 onClick={() => {}}
               >
                 {data[questionNumber].ans[0]}
@@ -163,11 +171,11 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: 'flex', justifyContent: 'flex-start' }}
+              style={{ display: "flex", justifyContent: "flex-start" }}
             >
               <button
                 className="buttonAnswer"
-                style={{ backgroundColor: '#D5C1FC' }}
+                style={{ backgroundColor: "#D5C1FC" }}
               >
                 {data[questionNumber].ans[1]}
               </button>
@@ -175,20 +183,20 @@ const Page1 = ({
           </Grid>
           <Grid
             container
-            style={{ marginTop: '1vh', display: 'flex', alignItems: 'center' }}
+            style={{ marginTop: "1vh", display: "flex", alignItems: "center" }}
           >
             <Grid
               item
               xs={6}
               style={{
-                justifyContent: 'flex-end',
-                display: 'flex',
-                padding: '1vw',
+                justifyContent: "flex-end",
+                display: "flex",
+                padding: "1vw",
               }}
             >
               <button
                 className="buttonAnswer"
-                style={{ backgroundColor: '#FDD4C1' }}
+                style={{ backgroundColor: "#FDD4C1" }}
               >
                 {data[questionNumber].ans[2]}
               </button>
@@ -196,11 +204,11 @@ const Page1 = ({
             <Grid
               item
               xs={6}
-              style={{ display: 'flex', justifyContent: 'flex-start' }}
+              style={{ display: "flex", justifyContent: "flex-start" }}
             >
               <button
                 className="buttonAnswer"
-                style={{ backgroundColor: '#A6CEEE' }}
+                style={{ backgroundColor: "#A6CEEE" }}
               >
                 {data[questionNumber].ans[3]}
               </button>
@@ -226,7 +234,7 @@ const Page1 = ({
             box-shadow: 0 4px 3px 0 rgba(0, 0, 0, 0.2);
           }
           .text {
-            font-family: 'Quicksand', sans-serif;
+            font-family: "Quicksand", sans-serif;
             color: #473f47;
             font-weight: 600;
             font-size: 1.7rem;
@@ -236,7 +244,7 @@ const Page1 = ({
             width: 95vw;
           }
           .text-time {
-            font-family: 'Quicksand', sans-serif;
+            font-family: "Quicksand", sans-serif;
             align-items: center;
             color: #3d467f;
             font-weight: 600;
@@ -246,7 +254,7 @@ const Page1 = ({
             justify-content: center;
           }
           .text-timeNum {
-            font-family: 'Quicksand', sans-serif;
+            font-family: "Quicksand", sans-serif;
             color: #d5c1fc;
             font-weight: 600;
             font-size: 2.5rem;
@@ -255,7 +263,7 @@ const Page1 = ({
             justify-content: center;
           }
           .text-title {
-            font-family: 'Quicksand', sans-serif;
+            font-family: "Quicksand", sans-serif;
             color: #473f47;
             font-weight: 600;
             font-size: 1.5rem;
@@ -283,7 +291,7 @@ const Page1 = ({
             padding: 0px;
             width: 100%;
             height: 100%;
-            background-image: url('/images/edqiz/BGgame.svg');
+            background-image: url("/images/edqiz/BGgame.svg");
 
             background-size: cover;
             overflow: auto;
