@@ -19,15 +19,18 @@ if (process.env.NODE_ENV === 'production') {
   originURL = process.env.CLIENT_URL;
 }
 
-app.use(
-  cors({
-    credentials: true,
-    origin: originURL,
-  })
-);
+const corsMiddleware = cors({
+  credentials: true,
+  origin: [process.env.ENTRYPOINT_URL, process.env.CLIENT_URL],
+  methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE']
+})
+
+app.use(corsMiddleware)
+app.options('*', cors(corsMiddleware))
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
 app.get('/grader/test',(req,res)=>{return res.status(200).json({success:true})})
 module.exports = app

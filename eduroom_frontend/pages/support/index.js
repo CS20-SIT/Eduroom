@@ -11,7 +11,6 @@ const Support = () => {
 
     return (
         <Fragment>
-          <GeneralNonav>
             <div
                 style={{
                     display: "flex",
@@ -53,7 +52,6 @@ const Support = () => {
           `}
                 </style>
             </div>
-            </GeneralNonav>
         </Fragment>
     );
 };

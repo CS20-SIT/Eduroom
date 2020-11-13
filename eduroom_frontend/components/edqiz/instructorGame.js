@@ -31,26 +31,26 @@ const Content = ({ id }) => {
       image: null,
     },
     {
-      question: 'Question2',
+      question: ' COVID-19 and related health topics?',
       time: '45',
       point: '2000',
-      ans: ['a', 'b', 'c', 'd'],
+      ans: ['Abortion: Safety Abortion: Safety · Addictive behaviours: Gaming disorder', ' Ageing: Global population Ageing: Global ', ' Care and support at home', 'What assistance can I get at home'],
       correct: 1,
       image: null,
     },
     {
-      question: 'Question3',
+      question: 'Browse the WebMD Questions and Answers',
       time: '60',
       point: '2000',
-      ans: ['a', 'b', 'c', 'd'],
+      ans: ['A-Z library for insights and advice for better health', 'tap Edit question or Delete question', 'When your question is answered', ' you will get a notification'],
       correct: 2,
       image: null,
     },
     {
-      question: 'Question4',
+      question: ' can have difficulty finding the right words or phrases to answer?',
       time: '90',
       point: '2000',
-      ans: ['a', 'b', 'c', 'd'],
+      ans: ['simple questions. Here are 20 of the most common questions', 'We have compiled a list of 46 common interview questions you might be asked', 'plus advice on how to answer each and every one of them', 'Read tips and example answers for 125 of the most common job interview'],
       correct: 3,
       image: null,
     },
@@ -101,9 +101,8 @@ const Content = ({ id }) => {
       console.log('time is ', time);
       setEndTime(time);
     });
-    // socket.emit('set-nextQuestion', true, id.id, questionNumber + 1);
   };
-  // console.log("questionNo", questionNumber);
+
   const renderMessage = () => {
     const arr = messages.map((msg, index) => {
       if (messages[index][1] == id.id) {
@@ -114,12 +113,7 @@ const Content = ({ id }) => {
   };
 
   useEffect(() => {
-    // console.log('This is a starting of game');
-    // const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
-    //   path: '/kahoot',
-    // });
-    // socket.emit('start-game', id.id);
-    // responseTime();
+
   }, []);
   const goto = (val) => {
     setCurrent(val);

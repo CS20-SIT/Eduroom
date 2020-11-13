@@ -8,11 +8,13 @@ const ForumRoute = require('./forumRoute');
 const AnalysisRoute = require('./analysisRoute');
 const GraderRoute = require('./graderRoute');
 const EventRoute = require('./eventRoute');
-const registerUemail = require('./registerUemail');
+const uDiscountRoute = require('./uDiscountRoute');
+const InstructorRoute = require('./instructorRoute')
+const LeaderboardRoute = require('./leaderboardRoute');
 const sendEventMail = require('./sendEventMail');
-const InstructorRoute = require('./instructorRoute');
 const KahootRoute = require('./kahootRoute');
 const PackageRoute = require('./packageRoute')
+const CoinRoute = require('./coinRoute');
 
 router.use('/test', TestRoute)
 router.use('/auth', AuthRoute)
@@ -21,10 +23,12 @@ router.use('/forum', ForumRoute)
 router.use('/analysis', AnalysisRoute)
 router.use('/grader', GraderRoute)
 router.use('/event',EventRoute)
-router.use('/registerUemail',registerUemail)
+router.use('/udiscount',uDiscountRoute)
 router.use('/sendEventMail',sendEventMail)
 router.use('/instructor', InstructorRoute)
 router.use('/kahoot', KahootRoute)
 router.use('/package', PackageRoute)
+router.use('/leaderboard', LeaderboardRoute)
+router.use('/coin',CoinRoute);
 
 module.exports = router;

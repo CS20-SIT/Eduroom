@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 
 import Grid from "@material-ui/core/Grid";
-const Content = ({ responseNextQuestion, questionNumber }) => {
+const Page2 = ({ responseNextQuestion, questionNumber }) => {
   useEffect(() => {
     responseNextQuestion();
   }, []);
@@ -86,4 +86,4 @@ const Content = ({ responseNextQuestion, questionNumber }) => {
     </Fragment>
   );
 };
-export default Content;
+export default Page2;
