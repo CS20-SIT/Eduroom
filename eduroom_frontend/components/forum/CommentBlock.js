@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import api from "../../api";
 import Grid from "@material-ui/core/Grid";
 
-const CommentBlock = () => {
+const CommentBlock = ({ row, id, data }) => {
+  const [boy, setBoy] = useState(["1", "2", "3"]);
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -17,29 +19,28 @@ const CommentBlock = () => {
       color: theme.palette.text.secondary,
     },
   }));
+
   const classes = useStyles();
   return (
     <Fragment>
       <div className={classes.root}>
         <Grid container spacing={2} variant="outlined">
           <Grid item xs={12} style={{ marginTop: "5px", marginBottom: "10px" }}>
-            <Paper className={classes.paper}>
-              <div>
-                <b>comment 1</b>
-                <p>
-                  {" "}
-                  Loren gypsum dolor sit mate, ad prompts feud gait, quid
-                  exercise emeritus bis e.Usu cu ores quid am, me rides sapper
-                  croquet ex. Ed ea clit a elect ram referent,at diode imper
-                  diet enc. Me sumo unique argument um no. Ea alien um accustoms
-                  quo,mod summon effendi it tied. malia id per in minimum
-                  facility, quid facet modifier ea ma. Ea alien um accustomsquo,
-                  mod summon effendi it tied. Imus cause verier ea, grace
-                  commode it tied. Idmes mover elect ram assertion has no. Ea
-                  elite ague disco bequeath eons. Miniminterpretations man en.
-                </p>
-              </div>
-            </Paper>
+            <div>
+              {data.map((row, index) => {
+                return (
+                  <Paper className={classes.paper}>
+                    <div>
+                      <b>comment {index + 1}</b>
+                      <p>{row.answer}</p>
+                    </div>
+                  </Paper>
+                );
+              })}
+              {/* {boy.map((ee) => {
+                return <h1>ee</h1>;
+              })} */}
+            </div>
           </Grid>
         </Grid>
       </div>

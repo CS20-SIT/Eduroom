@@ -12,11 +12,11 @@ const forumBlock = ({ row }) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const GetData = async () => {
-      const result = await api.get("http://localhost:5000/api/forum");
-      console.log(result.data);
-      setData(result.data.data);
-    };
-    GetData();
+      const result = await api.get('/api/forum')
+      console.log(result.data)
+      setData(result.data.data)
+    }
+    GetData()
     console.log(data);
   }, []);
   const router = useRouter();
@@ -57,57 +57,24 @@ const forumBlock = ({ row }) => {
                     {/* <div  onClick={handleClick} className="button">
                   {props.createForm}
                   </div> */}
-                    <div
-                      style={{
-                        fontWeight: "500",
-                        fontSize: "1.5em",
-                        color: "#5b5b5b",
-                      }}
-                    >
-                      {row.titlethread}
-                      {row.forumid}
-                    </div>
-                    <div
-                      style={{ display: "flex", justifyContent: "flex-start" }}
-                    >
-                      <div
-                        style={{
-                          marginTop: "25px",
-                          fontSize: "13px",
-                          color: "#5b5b5b",
-                        }}
-                      >
-                        USER NUMBER : {row.userid}{" "}
-                      </div>
-                      <div
-                        style={{
-                          marginTop: "25px",
-                          fontSize: "13px",
-                          color: "#5b5b5b",
-                          marginLeft: "12px",
-                        }}
-                      >
-                        DATE : {row.posttime}
-                      </div>
-                    </div>
-
-                    <div
-                      className="icon"
-                      style={{ bottom: 0, right: 0, marginTop: "20px" }}
-                    >
-                      <div style={{ paddingRight: "30px" }}>
-                        <Icon type="like" />
-                      </div>
-                      <div
-                        onClick={handleClick}
-                        style={{ paddingRight: "30px" }}
-                      >
-                        <Icon type="comment" />
-                      </div>
-                    </div>
-                  </Paper>
-                );
-              })}
+                  <div style={{fontWeight: '500',fontSize: '1.5em',color:'#5b5b5b'}}>
+                  {row.titlethread}
+                  </div>
+                  <div style={{display:'flex',justifyContent:'flex-start'}}>
+                     <div style={{marginTop:'25px', fontSize:'13px',color:'#5b5b5b'}}>USER NUMBER : {row.userid} </div>
+                    <div style={{marginTop:'25px', fontSize:'13px',color:'#5b5b5b',marginLeft:'12px'}}>DATE : {row.posttime}</div>
+                  </div>
+                 
+                <div className='icon' style={{bottom: 0, right: 0, marginTop: '20px'}}>
+                 <div style={{paddingRight:'30px'}}><Icon type="like"/></div>
+                 <div onClick={handleClick} style={{paddingRight:'30px'}}><Icon type="comment"/></div>
+                </div>
+                </Paper>
+                )}) }</div>
+                       
+                       
+                    </Grid>
+                </Grid>
             </div>
           </Grid>
         </Grid>

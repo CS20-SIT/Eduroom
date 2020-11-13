@@ -29,7 +29,7 @@ const Name = props => {
                                 Buy!
                             </button>
                             <Dialog open={state} onClose={()=>setState(false)}>
-                                <DialogContent style={{width:'500px',height:'500px'}}><Pop title={props.title} price={props.price} /></DialogContent>
+                                <DialogContent style={{width:'500px',height:'500px',padding: '0px'}}><Pop title={props.title} price={props.price} /></DialogContent>
                             </Dialog>
                             </div>
                             <h1 className={Styles.text}>
@@ -41,6 +41,7 @@ const Name = props => {
                             </h1>
                         </div>
                     </div>
+                    
                 </CardContent>
             </Card>
         </div>

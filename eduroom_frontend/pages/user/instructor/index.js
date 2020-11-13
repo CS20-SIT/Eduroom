@@ -1,26 +1,21 @@
-import Nav from '../../../components/user/instructor/Nav';
+import General from '../../../components/template/general';
 import React, { Fragment } from 'react';
-import Bord from '../../../components/user/instructor/bord';
-import Course1 from '../../../components/user/instructor/Course1';
-import Course2 from '../../../components/user/instructor/Course2';
-import Course3 from '../../../components/user/instructor/Course3';
-import GoCreate from '../../../components/user/instructor/GoCreate';
-import SideNav from '../../../components/layouts/sidenav/sidenav';
+import Courses from '../../../components/user/instructor/Courses';
 
-function InstructorProfile() {
+const InstructorProfile = () => {
   return (
     <Fragment>
-      <div>
-        <Nav />
-        <SideNav />
-
-        <Bord />
-        <Course1 />
-        <Course2 />
-        <Course3 />
-        <GoCreate />
-      </div>
+      <General>
+        <div className="container">
+          <h1>Hello</h1>
+        </div>
+      </General>
+      <style jsx>{`
+        .container {
+          padding: 0 50px;
+        }
+      `}</style>
     </Fragment>
   );
-}
+};
 export default InstructorProfile;
