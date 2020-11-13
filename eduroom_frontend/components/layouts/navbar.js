@@ -1,29 +1,38 @@
-import React, { Fragment, useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { AppBar, Toolbar } from '@material-ui/core';
 import style from '../../styles/layout/navbar';
 import UserContext from '../../contexts/user/userContext';
-import Image from 'next/image';
+import NavContext from '../../contexts/landing/navContext';
+import api from '../../api';
 
 const Navbar = () => {
   const userContext = useContext(UserContext);
-  const { getUser } = userContext;
+  const navContext = useContext(NavContext);
+  const { getUser, logoutUser } = userContext;
   const user = userContext.user;
+  const y = navContext.y;
   const router = useRouter();
+
   useEffect(() => {
     getUser();
   }, []);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const getOp = () => {
+    return y >= 30 ? 1 : y * 0.033333333333;
+  };
+
+  const handleLogout = async () => {
+    logoutUser(router);
+  };
 
   return (
     <Fragment>
       <AppBar
         position="sticky"
-        style={{ background: 'transparent' }}
+        style={{ background: `rgba(245, 245, 245, ${getOp()})` }}
         elevation={0}
       >
         <Toolbar>
@@ -40,6 +49,9 @@ const Navbar = () => {
               <Fragment>
                 <div className="navItem">
                   <span style={{ color: '#3d467f' }}>{user.firstname}</span>
+                </div>
+                <div className="navItem" onClick={handleLogout}>
+                  <span style={{ color: '#3d467f' }}>Logout</span>
                 </div>
                 <div className="navItem">
                   <Image
