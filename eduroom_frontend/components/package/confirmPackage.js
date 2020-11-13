@@ -3,6 +3,7 @@ import style from '../../styles/package/createpackage';
 import Selected from './selectedcourse';
 import Dialog from '@material-ui/core/Dialog';
 import { useRouter } from 'next/router';
+import api from '../../api';
 
 const ConfirmPackage = (props) => {
   const [open, setOpen] = useState(false);
@@ -13,13 +14,25 @@ const ConfirmPackage = (props) => {
     setOpen(true);
     handleSubmit();
   };
+
   const handleCloseDialog = (e) => {
     e.preventDefault();
     setOpen(false);
   };
   const handleSubmit = () => {
     console.log(type);
+    api
+      .post('/api/package/createPackage', {
+        name: props.myPackage.name,
+        discount: props.myPackage.discount,
+        category: props.myPackage.category,
+        detail: props.myPackage.detail,
+        courses: props.myPackage.courses
+      })
   };
+
+  console.log(props);
+
   return (
     <Fragment>
       <div style={{ backgroundColor: '#f4f5f7' }}>
@@ -38,8 +51,7 @@ const ConfirmPackage = (props) => {
               >
                 image
               </div>
-              <div className="subtitle">Name</div>
-              <div>{props.myPackage.name}</div>
+              <div className="subtitle" style={{ textTransform: 'uppercase' }}>{props.myPackage.name}</div>
               <div
                 style={{
                   fontSize: '16px',
@@ -58,19 +70,12 @@ const ConfirmPackage = (props) => {
                   color: '#5b5b5b',
                 }}
               >
-                Category
+                {props.myPackage.category}
               </div>
               <div className="subtitle">Package Detail</div>
               <div style={{ border: '1px solid white', marginBottom: '25px' }}>
                 <div>
-                  Non dolore minim et dolore ea qui cillum nisi cupidatat ea
-                  consectetur laborum. Esse aliquip tempor aliqua fugiat
-                  incididunt aliquip ut. Ea pariatur Lorem cillum officia
-                  excepteur laborum magna. Pariatur dolore voluptate magna
-                  exercitation adipisicing aliquip enim eiusmod sint consectetur
-                  aute commodo culpa. Velit mollit id nulla sunt fugiat elit et
-                  sunt enim irure nisi sint tempor. Consequat quis dolore
-                  aliquip sunt et ipsum commodo laborum eiusmod.
+                  {props.myPackage.detail}
                 </div>
               </div>
               <div className="subtitle">Selected Courses</div>

@@ -3,22 +3,22 @@ const next = require('next')
 
 const devProxy = {
   '/api': {
-    target: `${process.env.BACKEND_API || 'http://localhost:5000'}`,
+    target: `${process.env.NEXT_PUBLIC_BACKEND_API || 'http://localhost:5000'}`,
     pathRewrite: { '^/api': '/api' },
     changeOrigin: true,
   },
   '/grader': {
-    target: `${process.env.GRADER_URL || 'http://localhost:3050'}`,
+    target: `${process.env.NEXT_PUBLIC_GRADER_URL || 'http://localhost:3050'}`,
     pathRewrite: { '^/grader': '/grader' },
     changeOrigin: true,
   },
   '/socket-chat': {
-    target: `${process.env.CHAT_SERVER || 'http://localhost:5050'}`,
+    target: `${process.env.NEXT_PUBLIC_CHAT_SERVER || 'http://localhost:5050'}`,
     pathRewrite: { '^/socket-chat': '/socket-chat' },
     changeOrigin: true,
   },
   '/kahoot': {
-    target: `${process.env.KAHOOT_URL || 'http://localhost:8000'}`,
+    target: `${process.env.NEXT_PUBLIC_KAHOOT_URL || 'http://localhost:8000'}`,
     pathRewrite: { '^/kahoot': '/kahoot' },
     changeOrigin: true,
   }
