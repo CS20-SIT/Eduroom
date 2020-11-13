@@ -13,6 +13,7 @@ const Navbar = () => {
 	const user = userContext.user
 	const y = navContext.y
 	const router = useRouter()
+	console.log(user)
 
 	useEffect(() => {
 		getUser()
