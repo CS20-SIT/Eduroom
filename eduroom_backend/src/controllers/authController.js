@@ -6,12 +6,13 @@ const { v4: uuidv4 } = require('uuid');
 const { generateCookieJWT } = require('../utils/jwt');
 const sendEmail = require('../utils/sendMail');
 const errorHandler = require('../middleware/error');
+const { getDefailtProfilePic } = require('../utils/cloudStorage')
 
 exports.getProfile = async (req, res) => {
   try{
     // UserID is in req.user.user
     const result = await pool.query(
-      `SELECT firsname, lastname, displayname from user_profile where userid = '${req.user.user}'`
+      `SELECT firstname, lastname, displayname, avatar from user_profile where userid = '${req.user.user}'`
     );
     const user = { ...result.rows[0], id: req.user.user };
     res.send(user);
@@ -48,10 +49,10 @@ exports.regisController = async (req, res) => {
     // Insert new user_profile
     user.password = bcrypt.hashSync(user.password);
     const userId = uuidv4();
-    // TODO: Add url for default user profile picture
-    // const defaultProfilePic = ''
+    const defaultProfilePic = getDefailtProfilePic()
+    console.log(defaultProfilePic);
     const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, $1, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`;
+        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`;
     await pool.query(user_profileCreationQuery, ['']);
 
     // Create local_auth
