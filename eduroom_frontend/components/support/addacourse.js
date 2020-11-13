@@ -19,19 +19,24 @@ import {
 import Studentnav from "../support/studentsidenav";
 
 const Addacourse = () => {
+  const theme = createMuiTheme({
+    typography: {
+      fontFamily: "Quicksand",
+    },
+  });
   return (
     <Fragment>
-      <Grid container style={{ marginTop: "30px" }}>
+      <Grid container style={{ marginTop: theme.spacing(4) }}>
         <Grid container>
-          <Typography style={{ marginLeft: "20px" }}>
+          <Typography style={{ marginLeft: theme.spacing(2) }}>
             {" "}
             <h1>Add a Course to Your Wishlist</h1>
           </Typography>
-          <Grid item xs={9} style={{ paddingRight: "100px" }}>
+          <Grid item xs={9} style={{ paddingRight: theme.spacing(13) }}>
             <Paper
               style={{
-                padding: "20px",
-                marginBottom:'80px',
+                padding: theme.spacing(3),
+                marginBottom: theme.spacing(10),
                 backgroundColor: fade("#ffffff", 0.6),
               }}
             >
@@ -84,9 +89,9 @@ const Addacourse = () => {
 <h4>Remove Courses From Wishlist</h4>
 
 <p>To remove a courses from the Wishlist, click the red heart located on the course card. The course will no longer be included.</p>
-<p style={{marginLeft:'630px',marginTop:'50px'}}>
-                  <Link href="/support/getstart"><label style={{marginRight:'8px'}}>&lt;</label>Getting Started</Link>
-                </p>
+<p style={{marginLeft:theme.spacing(78),marginTop:theme.spacing(5)}}>
+                  <Link href="/support/getstart"><label style={{marginRight:theme.spacing(1.7)}}>&lt;</label>Getting Started</Link>
+</p>
               </Typography>
             </Paper>
           </Grid>
@@ -103,9 +108,13 @@ const Addacourse = () => {
             <p>Add a Course to Your Wishlist</p>
             <p>System Requirements</p>
             <p>How to Preview And Compare Courses</p>
-            <div style={{ marginTop: "50px", marginBottom: "100px" }}>
+            <div style={{ marginTop: theme.spacing(7), marginBottom: theme.spacing(3) }}>
               <Studentnav />
+             
             </div>
+
+            <Button variant='contained' style={{backgroundColor:'#FB9CCB', marginBottom:theme.spacing(10),marginLeft:theme.spacing(8.5),marginTop:theme.spacing(1)}} href="/support/create"><label style={{color:'#ffffff'}}>CONTACT US</label></Button>
+
           </Grid>
         </Grid>
       </Grid>
