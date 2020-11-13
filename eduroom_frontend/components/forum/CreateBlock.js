@@ -63,7 +63,12 @@ const CreateBlock = () => {
     if (validator()) {
       console.log(createForm);
       api.post("/api/forum/create", createForm).then((res) => {
-        console.log(res);
+        setForm({
+          title: "",
+          cat: "",
+          subcat: "",
+          content: "",
+        });
         //router.push("/forum");
       });
     } else {
@@ -238,6 +243,7 @@ const CreateBlock = () => {
                         color={"primary"}
                         onClick={handleSubmit}
                         className={classes.submit}
+                        style={{borderRadius:'23px'}}
                       >
                         Submit
                       </Button>

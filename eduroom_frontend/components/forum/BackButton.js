@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { Link } from '@material-ui/core';
+import React, { Fragment, useState } from "react";
+import Link from "next/link";
 const BackButton = () => {
   return (
     <Fragment>

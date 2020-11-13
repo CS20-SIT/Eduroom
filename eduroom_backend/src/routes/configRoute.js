@@ -14,6 +14,7 @@ const LeaderboardRoute = require('./leaderboardRoute');
 const sendEventMail = require('./sendEventMail');
 const KahootRoute = require('./kahootRoute');
 const PackageRoute = require('./packageRoute')
+const CoinRoute = require('./coinRoute');
 
 router.use('/test', TestRoute)
 router.use('/auth', AuthRoute)
@@ -28,5 +29,6 @@ router.use('/instructor', InstructorRoute)
 router.use('/kahoot', KahootRoute)
 router.use('/package', PackageRoute)
 router.use('/leaderboard', LeaderboardRoute)
+router.use('/coin',CoinRoute);
 
 module.exports = router;
