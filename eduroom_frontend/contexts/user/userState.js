@@ -21,9 +21,7 @@ const userState = (props) => {
       dispatch({ type: REGISTER_USER_SUCCESS, payload: res.data });
       router.push('/');
     } catch (err) {
-      console.log('error is');
       const error = err.response.data.error;
-      console.log(error);
       dispatch({ type: REGISTER_USER_FAIL, payload: error });
     }
   };
