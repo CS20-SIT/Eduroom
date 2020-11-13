@@ -9,9 +9,11 @@ import {
   GET_USER_FAIL,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
+  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER_FAIL,
 } from './types';
 const userState = (props) => {
-  const initialState = { user: null };
+  const initialState = { user: null, err: null };
   const [state, dispatch] = useReducer(userReducer, initialState);
   const registerUser = async (user) => {
     try {
@@ -22,13 +24,26 @@ const userState = (props) => {
     }
   };
 
-  const loginUser = async (body) => {
+  const loginUser = async (body, router) => {
     try {
       await api.post('/api/auth/login', body);
       const user = await api.get('/api/auth/profile');
       dispatch({ type: LOGIN_USER_SUCCESS, payload: user.data });
+      router.push('/');
     } catch (err) {
-      dispatch({ type: LOGIN_USER_FAIL, payload: err });
+      const error = err.response.data.error;
+      dispatch({ type: LOGIN_USER_FAIL, payload: error });
+    }
+  };
+
+  const logoutUser = async (router) => {
+    try {
+      await api.get('/api/auth/logout');
+      dispatch({ type: LOGOUT_USER_SUCCESS, payload: {} });
+      router.push('/');
+    } catch (err) {
+      const error = err.response.data.error;
+      dispatch({ type: LOGOUT_USER_FAIL, payload: error });
     }
   };
 
@@ -43,7 +58,14 @@ const userState = (props) => {
 
   return (
     <UserContext.Provider
-      value={{ user: state.user, registerUser, loginUser, getUser }}
+      value={{
+        user: state.user,
+        err: state.err,
+        registerUser,
+        loginUser,
+        getUser,
+        logoutUser,
+      }}
     >
       {props.children}
     </UserContext.Provider>

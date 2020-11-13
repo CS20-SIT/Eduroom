@@ -1,13 +1,20 @@
 import '../styles/globals.css';
 import '../styles/all.css';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import UserState from '../contexts/user/userState';
+import NavState from '../contexts/landing/navState';
+import Container from '../components/container';
+
 const MyApp = ({ Component, pageProps }) => {
   return (
     <Fragment>
-      <UserState>
-        <Component {...pageProps} />
-      </UserState>
+      <NavState>
+        <UserState>
+          <Container>
+            <Component {...pageProps} />
+          </Container>
+        </UserState>
+      </NavState>
     </Fragment>
   );
 };
