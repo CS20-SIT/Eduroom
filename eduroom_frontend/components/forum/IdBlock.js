@@ -15,8 +15,8 @@ const IdBlock = () => {
     const GetData = async () => {
       if (param != "") {
         const result = await api.get(`/api/forum/${param}`);
-        console.log(result.data);
-        setData(result.data.data);
+        console.log(result.data.data.forum);
+        setData(result.data.data.forum);
       }
     };
     GetData();
