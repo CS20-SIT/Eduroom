@@ -53,37 +53,29 @@ const editAnn = async (req, res, next) => {
 
   res.send({ success: true, title, description, adminid });
 };
-// const pTestcase = async (req, res, next) => {
-//   (req, res, next) => {
-//     console.log("hi");
-//     const questionId = 2;
-//     const fileNo = 2;
-//     const filePath = "/file/book";
-//     try {
-//       return res.status(201).json({
-//         message: "File uploded successfully",
-//       });
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-// await pool.query(
-//   "INSERT INTO QuestionTestcases(questionId,fileNo,filePath) VALUES ($1 , $2, $3)",
-//   [questionId, fileNo, filePath]
-// );
-// };
+
+const path = require("path");
+
 const pTestcase = (req, res, next) => {
+  const questionId =
+    typeof req.body.questionid == "string"
+      ? req.body.questionid
+      : req.body.questionid[0];
+
+  // console.log(req.body);
+  // console.log(req.body.questionid);
+  let fileNo = 1;
   //stackoverflow.com/questions/55586619/how-to-save-file-locally-and-save-path-on-database-using-multer-on-angular
-  https: console.log("Yes Sir");
+
+  const testCases = req.files;
+
   try {
-    const host = req.host;
-    const filePath = req.protocol + "://" + host + "/" + req.file.path;
-    pool.query(
-      "INSERT INTO QuestionTestcases(questionId,fileNo,filePath) VALUES ($1 , $2, $3)",
-      [questionId, fileNo, filePath]
-    );
-    return res.status(201).json({
-      message: "File uploded successfully",
+    testCases.forEach((t) => {
+      pool.query(
+        "INSERT INTO QuestionTestcases(questionId,fileNo,filePath) VALUES ($1 , $2, $3)",
+        [questionId, fileNo, t.path]
+      );
+      fileNo++;
     });
   } catch (error) {
     console.error(error);

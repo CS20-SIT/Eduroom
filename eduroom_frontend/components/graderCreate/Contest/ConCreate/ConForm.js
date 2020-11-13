@@ -21,10 +21,11 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { compareAsc } from "date-fns";
+
 import { add } from "date-fns";
 import Chip from "@material-ui/core/Chip";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../../../api";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
@@ -46,8 +47,8 @@ const theme1 = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "75%",
-    marginLeft: "12%",
+    width: "52.5%",
+    marginLeft: "22.5%",
     marginRight: "15%",
     marginTop: "2.5%",
     marginBottom: "10%",
@@ -127,7 +128,7 @@ export default function FullWidthGrid() {
   const sInputSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    "font-size": "1.0em",
   };
   const sError = {
     "font-family": "Quicksand , sans-serif",
@@ -137,7 +138,7 @@ export default function FullWidthGrid() {
   const sInputfieldSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-size": "1.4em",
+    "font-size": "1.1em",
     "font-weight": "bold",
   };
   const sButtionandVisbile = {
@@ -216,7 +217,9 @@ export default function FullWidthGrid() {
     if (title == "" || compareAsc(selectedStartDate, selectedEndDate) != -1) {
       seterorValid(true);
     } else
-      axios.post("http://localhost:5000/api/grader/ccontest", {
+  
+      
+      axios.post("/api/grader/ccontest", {
         title: title,
         conRuleType: rule,
         description: description,
@@ -225,6 +228,7 @@ export default function FullWidthGrid() {
         status: conStatus,
         adminid: "12345678-1234-1234-1234-123456789123",
       });
+
     //   .then(function (response) {
     //     console.log(response);
     //     setOpen(false);
@@ -255,7 +259,7 @@ export default function FullWidthGrid() {
           </Alert>
         </Snackbar>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={6}>
           <Grid item xs={12}>
             <span style={sBigTitle}>Create your Contest</span>
           </Grid>
@@ -431,7 +435,7 @@ export default function FullWidthGrid() {
               <div>
                 {" "}
                 <Chip
-                  label=" Cr eate"
+                  label=" Create"
                   onClick={handleSubmit}
                   style={{
                     backgroundColor: "#FC8FC3",

@@ -8,7 +8,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 
-import axios from "axios";
+import axios from "../../../api";
 
 
 import Chip from '@material-ui/core/Chip';
@@ -61,7 +61,7 @@ const AnnEdit = (props) => {
 
   const handleSubmit = () => {
     axios
-      .post("http://localhost:5000/api/grader/cann", {
+      .post('/api/grader/cann', {
         
         title: ann.title,
         description: ann.description,

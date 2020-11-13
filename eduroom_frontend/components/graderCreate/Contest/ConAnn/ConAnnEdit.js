@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import axios from "axios";
+import axios from "../../../../api";
 import Image from 'next/image'
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -58,7 +58,7 @@ const AnnEdit = (props) => {
 
   const handleSubmit = () => {
     axios
-      .put("http://localhost:5000/api/grader/eann", {
+      .put("/api/grader/eann", {
         id: props.id,
         title: ann.title,
         description: ann.description,
