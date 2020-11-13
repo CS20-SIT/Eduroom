@@ -4,24 +4,24 @@ import style from "../../../styles/forum/showForum";
 import GetStart from "../../../components/support/gettingstart"
 import { useRouter } from "next/router";
 import GeneralNonav from "../../../components/template/generalnonav";
+import General from "../../../components/template/general";
 
 const create = () => {
     const router = useRouter();
 
     return (
         <Fragment>
-            <GeneralNonav>
+            <General>
             <div
                 style={{
                     display: "flex",
                     flex: "1 1 auto",
                     justifyContent: "space-between",
                 }}
+                className="background"
             >
             <div id="nav">
                     <div className="top">
-                    <Link href='/support'><label>Eduroom Support
-                    </label></Link><label>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Getting Started</label>
                     <GetStart/>
                     </div>
                     
@@ -54,7 +54,7 @@ const create = () => {
           `}
                 </style>
                 </div>
-            </GeneralNonav>
+            </General>
         </Fragment>
     );
 };

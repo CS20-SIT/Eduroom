@@ -11,6 +11,7 @@ services:
       - /usr/src/app/node_modules
       - ./eduroom_frontend/.next:/usr/src/app/.next
     environment:
+      - NEXT_PUBLIC_ENTRYPOINT_URL=http://localhost
       - NEXT_PUBLIC_BACKEND_API=http://localhost:5000
       - NEXT_PUBLIC_GRADER_URL=http://localhost:3050
       - NEXT_PUBLIC_CHAT_SERVER=http://localhost:5050
@@ -41,6 +42,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=5000
+      - ENTRYPOINT_URL=http://localhost
       - CLIENT_URL=http://localhost:3000
       - BACKEND_API=http://localhost:5000
       - DB_USER=eduroom_user
@@ -62,6 +64,8 @@ services:
       - FROM_NAME=Eduroom Admin
       - NODE_TLS_REJECT_UNAUTHORIZED=0
       - GCS_SA_KEY_PATH=gcs-eduroom.json
+      - GCS_BUCKET_NAME=eduroom
+      - GCS_PROJECT_ID=macbigduck
     ports:
       - "5000:5000"
   eduroom_grading_server:
@@ -74,6 +78,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3050
+      - ENTRYPOINT_URL=http://localhost
       - CLIENT_URL=http://localhost:3000
     ports:
       - "3050:3050"
@@ -87,6 +92,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=5050
+      - ENTRYPOINT_URL=http://localhost
       - CLIENT_URL=http://localhost:3000
     ports:
       - "5050:5050"
@@ -100,6 +106,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=8000
+      - ENTRYPOINT_URL=http://localhost
       - CLIENT_URL=http://localhost:3000
     ports:
       - "8000:8000"

@@ -1,3 +1,4 @@
+
 import Head from "next/head";
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import {
@@ -17,58 +18,53 @@ import {
 } from "@material-ui/core";
 
 const Studentnav = () => {
+  const theme = createMuiTheme({
+    typography: {
+      fontFamily: "Quicksand",
+    },
+  });
   return (
     <Fragment>
+      <Paper style={{width:theme.spacing(32), paddingTop:theme.spacing(1.2), paddingLeft:theme.spacing(5), paddingBottom:theme.spacing(4)}} elevation={3}>
+
+          
       <Typography>
         <h3>Student Topics</h3>
       </Typography>
-      <Link href="/support/getstart">
-      <Button>
-        <img
-          src="https://www.flaticon.com/svg/static/icons/svg/2164/2164598.svg"
-          style={{ height: "15px" }}
-        />
-        &nbsp;&nbsp;&nbsp;Getting Started
+
+      
+      <Button href="/support/getstart">
+
+        Getting Started
       </Button>
-      </Link>
+      <br></br>
       <Button>
-        <img
-          src="https://www.flaticon.com/svg/static/icons/svg/2521/2521782.svg"
-          style={{ height: "15px" }}
-        />
-        &nbsp;&nbsp;&nbsp;Account/Profile
+
+        Account/Profile
       </Button>
+      <br></br>
       <Button>
-        <img
-          src="https://www.flaticon.com/svg/static/icons/svg/2920/2920249.svg"
-          style={{ height: "15px" }}
-        />
-        &nbsp;&nbsp;&nbsp;Troubleshooting
+
+        Troubleshooting
       </Button>
+<br></br>
       <Button>
-        <img
-          src="https://www.flaticon.com/svg/static/icons/svg/182/182321.svg"
-          style={{ height: "15px" }}
-        />
-        &nbsp;&nbsp;&nbsp;Course Taking
+
+        Course Taking
       </Button>
+      <br></br>
       <Button>
-        <img
-          src="https://www.flaticon.com/svg/static/icons/svg/846/846023.svg"
-          style={{ height: "15px" }}
-        />
-        &nbsp;&nbsp;&nbsp;Purchase/Refunds
+
+        Purchase/Refunds
       </Button>
+      <br></br>
       <Button>
-        <img
-          src="https://www.flaticon.com/svg/static/icons/svg/977/977411.svg"
-          style={{ height: "15px" }}
-        />
-        &nbsp;&nbsp;&nbsp;Mobile
+
+        Mobile
       </Button>
-      <br/>
-      <Link href="/support/create">
-      <Button variant='contained' color="primary" style={{marginTop:'20px'}}>CONTACT US</Button></Link>
+      
+      
+      </Paper>
     </Fragment>
   );
 };
