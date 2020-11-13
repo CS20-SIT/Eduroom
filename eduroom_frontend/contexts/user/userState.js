@@ -15,12 +15,14 @@ import {
 const userState = (props) => {
   const initialState = { user: null, err: null };
   const [state, dispatch] = useReducer(userReducer, initialState);
-  const registerUser = async (user) => {
+  const registerUser = async (user, router) => {
     try {
       const res = await api.post('/api/auth/register', user);
       dispatch({ type: REGISTER_USER_SUCCESS, payload: res.data });
+      router.push('/');
     } catch (err) {
-      dispatch({ type: REGISTER_USER_FAIL, payload: err });
+      const error = err.response.data.error;
+      dispatch({ type: REGISTER_USER_FAIL, payload: error });
     }
   };
 
