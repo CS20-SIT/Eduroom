@@ -109,6 +109,8 @@
   left: 45%;
   top: 7%;
 }
+
+
 .posball2 {
   position: relative;
   margin-left: 65%;
@@ -121,24 +123,23 @@
 }
 
 .img3 {
-  width: 95vw;
-  background-image: url('../../public/images/Coin-image/BG.svg');
-  position: sticky;
-  margin-top: -65px;
+    width: 95vw;
+    background-image: url('../../public/images/Coin-image/BG.svg');
+    background-repeat: repeat;
 
 }
-.History {
-  animation: MoveOut2 0.5s;
+.History{
+    animation:MoveOut2 0.5s;
 }
-@keyframes MoveOut2 {
-  0% {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-100px);
-  }
+@keyframes MoveOut2{
+    0%{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(-100px);
+    }
 }
 
 .img2 {
@@ -240,6 +241,7 @@
   transform-origin: bottom center;
 }
 
+
 @keyframes balloons2 {
   0%,
   100% {
@@ -249,6 +251,7 @@
     transform: translateY(-25px) rotate(4deg);
   }
 }
+
 
 .balloon2:before {
   content: '▲';
