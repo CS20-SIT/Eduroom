@@ -18,7 +18,9 @@ const General = (props) => {
 				<SideNav />
 				<div id="content">
 					<Navbar />
-					<main>{props.children}</main>
+					<div style={{paddingLeft:'5%'}}>
+						<main>{props.children}</main>
+					</div>
 				</div>
 				{props.img ? <img alt="background-img" src={props.img} className="background-img" /> : null}
 			</div>
