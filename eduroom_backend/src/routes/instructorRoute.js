@@ -6,6 +6,6 @@ const { isInstructor } = require('../middleware/isInstructor')
 const { isRegisterInstructor } = require('../middleware/isRegisterInstructor')
 
 router.post('/register', jwtAuthenicate, Register)
-router.get('/profile', jwtAuthenicate, isRegisterInstructor, isInstructor, GetProfile)
+router.get('/profile', jwtAuthenicate, isRegisterInstructor, GetProfile)
 
 module.exports = router
