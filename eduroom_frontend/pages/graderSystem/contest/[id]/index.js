@@ -117,8 +117,8 @@ const contestOverview = ({ id }) => {
                     </div>
                   </div>
                   <ContestOverviewList
-                    startTime={data.starttime}
-                    endTime={data.endtime}
+                    starttime={data.starttime}
+                    endtime={data.endtime}
                     rule={data.conruletype}
                     creator={data.displayname}
                   />
