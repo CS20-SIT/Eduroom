@@ -139,7 +139,7 @@ export async function getServerSideProps(ctx) {
     price: 2000,
   };
 
-  // GET /tutor/appointment/review
+  // GET /api/tutor/appointment/review
   const review = [
     {
       score: 5,
@@ -189,7 +189,7 @@ export async function getServerSideProps(ctx) {
 
   const reviews = [highReview, lowReview, latestReview];
 
-  return { props: { instructor, review, reviews } };
+  return { props: { instructor, reviews } };
 }
 
 export default Instructor;
