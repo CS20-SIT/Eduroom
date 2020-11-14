@@ -13,7 +13,7 @@ const forumBlock = ({row}) => {
   const [data, setData] = useState([])
   useEffect(() => {
     const GetData = async () => {
-      const result = await api.get('http://localhost:5000/api/forum')
+      const result = await api.get('/api/forum')
       console.log(result.data)
       setData(result.data.data)
     }
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
                   {props.createForm}
                   </div> */}
                   <div style={{fontWeight: '500',fontSize: '1.5em',color:'#5b5b5b'}}>
-                  {row.titlethread}{row.forumid}
+                  {row.titlethread}
                   </div>
                   <div style={{display:'flex',justifyContent:'flex-start'}}>
                      <div style={{marginTop:'25px', fontSize:'13px',color:'#5b5b5b'}}>USER NUMBER : {row.userid} </div>
