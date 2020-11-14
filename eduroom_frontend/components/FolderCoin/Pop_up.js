@@ -1,19 +1,24 @@
 import { Container } from '@material-ui/core';
 import Styles from '../../styles/CoinStyles/Pop-up.module.css';
+import { useState } from 'react';
+import {Dialog, DialogContent} from '@material-ui/core';
+import EnsurePay from '../FolderCoin/ensurePayment';
+import Card from '@material-ui/core/Card';
 const temp = (props) => {
-    // handleClick = ()=>{
-    //     this.props.toggle();
-    // };
+    const [state, setState] = useState(false);
+    const PopPurchase = () => {
+        setState(true)
+    };
     const listPicture = [
-        {src: '../../images/Coin-image/Icon_Avocado.svg' },
-        {src: '../../images/Coin-image/Icon_Coconut_2.svg' },
-        {src: '../../images/Coin-image/Icon_Garnet.svg' },
-        {src: '../../images/Coin-image/Icon_Peach.svg' },
-        {src: '../../images/Coin-image/Icon_Lemon.svg' },
-        {src: '../../images/Coin-image/Icon_Orange.svg' },
-        {src: '../../images/Coin-image/Icon_Pear.svg' },
-        {src: '../../images/Coin-image/Icon_Red Apple.svg' }
-]
+        { src: '../../images/Coin-image/Icon_Avocado.svg' },
+        { src: '../../images/Coin-image/Icon_Coconut_2.svg' },
+        { src: '../../images/Coin-image/Icon_Garnet.svg' },
+        { src: '../../images/Coin-image/Icon_Peach.svg' },
+        { src: '../../images/Coin-image/Icon_Lemon.svg' },
+        { src: '../../images/Coin-image/Icon_Orange.svg' },
+        { src: '../../images/Coin-image/Icon_Pear.svg' },
+        { src: '../../images/Coin-image/Icon_Red Apple.svg' }
+    ]
     return (
         <Container>
             <div className={Styles.setPayment}>
@@ -34,14 +39,20 @@ const temp = (props) => {
                     <h3>No expiration Date</h3>
 
                     <h3>My coins: 99 $</h3>
-                    <button className={Styles.btn}>Purchase</button>
+                    <div>
+                        <button className={Styles.btn} onClick={PopPurchase}>Purchase</button>
+                        
+                        <Dialog open={state} onClose={() => setState(false)}>
+                            <DialogContent style={{ width: '400px', height: '300px', padding: '0px' }}><EnsurePay /></DialogContent>
+                        </Dialog>
+                    </div>
                 </div>
             </div>
             <div className={Styles.line}></div>
             <div className={Styles.listSticker}>
-               {listPicture.map(picture =>(
-                   <img className={Styles.picture} src={picture.src}/>
-               ))}
+                {listPicture.map(picture => (
+                    <img className={Styles.picture} src={picture.src} />
+                ))}
             </div>
         </Container>
     );
