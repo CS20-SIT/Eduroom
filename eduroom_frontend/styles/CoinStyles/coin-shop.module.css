@@ -1,14 +1,14 @@
 .test {
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    z-index: 100;
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  z-index: 100;
 }
 .animation {
     animation-name: MoveOut;
     animation-duration: 0.5s;
 }
-.btnHistory2{
+.btnHistory2 {
     padding: 12px 50px;
     background-color: #a880f7;
     border: none;
@@ -19,10 +19,13 @@
     border-radius: 12px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        z-index: 10000;
-        outline: none;
+    z-index: 10000;
+    outline: none;
 }
-.btnHistory{
+.top{
+    padding-top:100px;
+}
+.btnHistory {
     position: absolute;
     top: 0%;
     left: 30%;
@@ -33,7 +36,7 @@
     animation-duration: 1s;
     margin-right: 100px;
 }
-.btnPop{
+.btnPop {
     position: absolute;
     top: 0%;
     left: 13%;
@@ -47,13 +50,32 @@
     border-radius: 12px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        z-index: 10000;
-        outline: none;
+    z-index: 10000;
+    outline: none;
 }
-.btnPop:hover{
+.btnPop:hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2),
         0 17px 50px 0 rgba(0, 0, 0, 0.19);
-
+}
+.btnPop {
+  position: absolute;
+  top: 0%;
+  left: 13%;
+  padding: 12px 50px;
+  background-color: #a880f7;
+  border: none;
+  color: white;
+  display: inline-block;
+  text-align: center;
+  font-size: 22px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 10000;
+  outline: none;
+}
+.btnPop:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 .btn {
     position: absolute;
@@ -70,209 +92,205 @@
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
     outline: none;
-
 }
 .btn:hover {
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2),
-        0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
-.daily{
+.daily {
     position: absolute;
-    top:62.8%;
+    top: 62.8%;
     left: 30%;
     z-index: 100000;
 }
 .text {
-    position: absolute;
-    font-size: 70px;
-    top: 40%;
-    left: 10%;
-    color: #5b5b5b;
-    font-weight: 20px;
-    z-index: 1000;
+  position: absolute;
+  font-size: 70px;
+  top: 40%;
+  left: 10%;
+  color: #5b5b5b;
+  font-weight: 20px;
+  z-index: 1000;
 }
 .detail {
-    position: absolute;
-    font-size: 17px;
-    top: 53%;
-    left: 12%;
-    color: #5b5b5b;
+  position: absolute;
+  font-size: 17px;
+  top: 53%;
+  left: 12%;
+  color: #5b5b5b;
 }
 .img {
-    position: absolute;
-    top: 0%;
-    height: 100vh;
-    width: 95vw;
-    background-image: url('../../public/images/Coin-image/Frame\ 1.svg');
+  position: absolute;
+  top: 0%;
+  height: 100vh;
+  width: 95vw;
+  background-image: url('../../public/images/Coin-image/Frame\ 1.svg');
 }
 .img1 {
-    position: absolute;
-    left: 45%;
-    top: 7%;
+  position: absolute;
+  left: 45%;
+  top: 7%;
 }
-
 
 .posball2 {
-    position: relative;
-    margin-left: 65%;
-    margin-top: 7%;
+  position: relative;
+  margin-left: 65%;
+  margin-top: 7%;
 }
 .posball {
-    position: absolute;
-    margin-left: 75%;
-    top: 10%;
+  position: absolute;
+  margin-left: 75%;
+  top: 10%;
 }
 
 .img3 {
     width: 95vw;
     background-image: url('../../public/images/Coin-image/BG.svg');
-    background-repeat: repeat;
-
+    position: sticky;
+    margin-top:-65px ;
 }
-.History{
-    animation:MoveOut2 0.5s;
+.History {
+    animation: MoveOut2 0.5s;
 }
-@keyframes MoveOut2{
-    0%{
+@keyframes MoveOut2 {
+    0% {
         opacity: 1;
         transform: translateX(0px);
     }
-    100%{
+    100% {
         opacity: 0;
         transform: translateX(-100px);
     }
 }
 
 .img2 {
-    position: absolute;
-    left: 50%;
-    top: 10%;
+  position: absolute;
+  left: 50%;
+  top: 10%;
 }
 @keyframes balloons {
-    0%,
-    100% {
-        transform: translateY(0) rotate(-4deg);
-    }
-    50% {
-        transform: translateY(-25px) rotate(4deg);
-    }
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-25px) rotate(4deg);
+  }
 }
 
 @keyframes MoveOut {
-    0% {
-        opacity: 1;
-        transform: translate(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-500px);
-    }
+  0% {
+    opacity: 1;
+    transform: translate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-500px);
+  }
 }
 @keyframes MoveIn {
-    0% {
-        opacity: 0;
-        transform: translateY(500px);
-    }
-    80% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(500px);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
 .balloon {
-    display: inline-block;
-    width: 250px;
-    height: 300px;
-    background: linear-gradient(#ffbbab, #ffd9f7);
-    border-radius: 80%;
-    position: relative;
-    box-shadow: inset -10px -10px 0 linear-gradient(#ffbbab, #ffd9f7);
-    margin: 20px 30px;
-    transition: transform 0.5s ease;
-    z-index: 10;
-    animation: balloons 4s ease-in-out infinite;
-    transform-origin: bottom center;
+  display: inline-block;
+  width: 250px;
+  height: 300px;
+  background: linear-gradient(#ffbbab, #ffd9f7);
+  border-radius: 80%;
+  position: relative;
+  box-shadow: inset -10px -10px 0 linear-gradient(#ffbbab, #ffd9f7);
+  margin: 20px 30px;
+  transition: transform 0.5s ease;
+  z-index: 10;
+  animation: balloons 4s ease-in-out infinite;
+  transform-origin: bottom center;
 }
 
 @keyframes balloons {
-    0%,
-    100% {
-        transform: translateY(0) rotate(-4deg);
-    }
-    50% {
-        transform: translateY(-25px) rotate(4deg);
-    }
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-25px) rotate(4deg);
+  }
 }
 
 .balloon:before {
-    content: '▲';
-    font-size: 20px;
-    color: #ffbbab;
-    display: block;
-    text-align: center;
-    width: 100%;
-    position: absolute;
-    bottom: -12px;
-    z-index: -100;
+  content: '▲';
+  font-size: 20px;
+  color: #ffbbab;
+  display: block;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: -12px;
+  z-index: -100;
 }
 
 .balloon:after {
-    display: inline-block;
-    top: 153px;
-    position: absolute;
-    height: 210px;
-    width: 4px;
-    margin: 150px 123px;
-    content: '';
-    background: linear-gradient(#ffbbab, #ffd9f7);
+  display: inline-block;
+  top: 153px;
+  position: absolute;
+  height: 210px;
+  width: 4px;
+  margin: 150px 123px;
+  content: '';
+  background: linear-gradient(#ffbbab, #ffd9f7);
 }
 
 .balloon2 {
-    display: inline-block;
-    width: 250px;
-    height: 300px;
-    background: linear-gradient(#d5c1fc, #ffaae7);
-    border-radius: 80%;
-    position: relative;
-    box-shadow: inset -10px -10px 0 linear-gradient(#d5c1fc, #ffaae7);
-    margin: 20px 30px;
-    transition: transform 0.5s ease;
-    z-index: 5;
-    animation: balloons2 3s ease-in-out infinite;
-    transform-origin: bottom center;
+  display: inline-block;
+  width: 250px;
+  height: 300px;
+  background: linear-gradient(#d5c1fc, #ffaae7);
+  border-radius: 80%;
+  position: relative;
+  box-shadow: inset -10px -10px 0 linear-gradient(#d5c1fc, #ffaae7);
+  margin: 20px 30px;
+  transition: transform 0.5s ease;
+  z-index: 5;
+  animation: balloons2 3s ease-in-out infinite;
+  transform-origin: bottom center;
 }
-
 
 @keyframes balloons2 {
-    0%,
-    100% {
-        transform: translateY(0) rotate(-4deg);
-    }
-    50% {
-        transform: translateY(-25px) rotate(4deg);
-    }
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-25px) rotate(4deg);
+  }
 }
 
-
 .balloon2:before {
-    content: '▲';
-    font-size: 20px;
-    color: #d5c1fc;
-    display: block;
-    text-align: center;
-    width: 100%;
-    position: absolute;
-    bottom: -12px;
-    z-index: -100;
+  content: '▲';
+  font-size: 20px;
+  color: #d5c1fc;
+  display: block;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: -12px;
+  z-index: -100;
 }
 
 .balloon2:after {
-    display: inline-block;
-    top: 153px;
-    position: absolute;
-    height: 210px;
-    width: 4px;
-    margin: 150px 123px;
-    content: '';
-    background: linear-gradient(#d5c1fc, #ffaae7);
+  display: inline-block;
+  top: 153px;
+  position: absolute;
+  height: 210px;
+  width: 4px;
+  margin: 150px 123px;
+  content: '';
+  background: linear-gradient(#d5c1fc, #ffaae7);
 }
