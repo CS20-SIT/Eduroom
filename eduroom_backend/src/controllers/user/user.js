@@ -21,7 +21,7 @@ const getWishlist = async (req, res, next) => {
     'inner join course c on c.courseid=w.courseid '+
     'inner join instructor i on i.instructorid=c.ownerid '+
     'inner join user_profile p on i.userid=p.userid '+
-    'where w.userid=\'$1\' '+condition+
+    'where w.userid=$1 '+condition+
     'order by '+orderby+'; ',
     [user])
     const ann = data.rows
@@ -44,7 +44,7 @@ const getMycourse = async (req, res, next) => {
     'inner join course c on c.courseid=m.courseid '+
     'inner join instructor i on i.instructorid=c.ownerid '+
     'inner join user_profile p on i.userid=p.userid '+
-    'where m.userid=\'$1\' and isfinished=$2 '+condition+
+    'where m.userid=$1 and isfinished=$2 '+condition+
     'order by '+orderby+'; ',
     [user,finish])
     const ann = data.rows
@@ -67,7 +67,7 @@ const getProfile = async (req, res, next) => {
     'select avatar,firstname,lastname,isstudent,email,birthdate,createat,bio,phoneno '+
     'from user_profile u '+
     'inner join local_auth l on u.userid = l.userid '+
-    'where u.userid=\'user\'; ',
+    'where u.userid=$1; ',
     [user]
   )
   res.send({ success: true})
@@ -83,13 +83,13 @@ const postEditProfile = async (req, res, next) => {
   const phoneno=req.body.phoneno;
   await pool.query(
     'update user_profile set '+
-    'avatar=\'$2\', '+
-    'firstname=\'$3\', '+
-    'lastname=\'$4\', '+
-    'birthdate=\'$5\', '+
-    'bio=\'$6\', '+
-    'phoneno=\'$7\', '+
-    'where userid=\'$1\'; ',
+    'avatar=$2, '+
+    'firstname=$3, '+
+    'lastname=$4, '+
+    'birthdate=$5, '+
+    'bio=$6, '+
+    'phoneno=$7, '+
+    'where userid=$1; ',
     [user,avatar,firstname,lastname,birthdate,bio,phoneno]
   )
   res.send({ success: true})
@@ -99,7 +99,7 @@ const getCheckPassword = async (req, res, next) => {
   const password=req.body.password;
   const user=req.body.userid;
   await pool.query(
-    'select \'$2\'=(select password from local_auth where userid=\'$1\') checkpassword; ',
+    'select $2=(select password from local_auth where userid=$1) checkpassword; ',
     [user,password]
   )
   res.send({ success: true})
@@ -110,8 +110,8 @@ const postNewPassword = async (req, res, next) => {
   const user=req.body.userid;
   await pool.query(
     'update local_auth set '+
-    'password=\'$2\' '+
-    'where userid=\'$1\'; ',
+    'password=$2 '+
+    'where userid=$1; ',
     [user,password]
   )
   res.send({ success: true})
