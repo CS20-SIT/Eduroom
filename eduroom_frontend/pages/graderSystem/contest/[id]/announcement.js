@@ -7,7 +7,7 @@ import ContestLayout from "../../../../components/graderSubmit/contests/ContestL
 import ContestAnnouncementList from "../../../../components/graderSubmit/contests/allList/ContestAnnouncementList"
 import api from "../../../../api"
 
-const contestAnnouncement = () => {
+const contestAnnouncement = ({ id }) => {
   const [id, setId] = useState(null)
   const router = useRouter()
   useEffect(() => {
