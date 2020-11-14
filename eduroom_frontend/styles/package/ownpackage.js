@@ -28,6 +28,8 @@ export default css`
 .pebutton:hover {
     cursor: pointer;
     opacity: 0.9;
+    box-shadow: 0 0px 6px 2px rgba(0,0,0,0.2);
+    transition: 0.25s;
   }
 .ycbutton {
     background-color: #FB9CCB;

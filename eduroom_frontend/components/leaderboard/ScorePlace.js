@@ -1,7 +1,8 @@
-import React, { Fragment } from "react";
 import style from "../../styles/leaderboardStyles/WorldRankingStyle";
+import axios from "axios";
+import React, { Fragment } from "react";
 
-const ScorePlace = () => {
+const ScorePlace = (props) => {
   return (
     <Fragment>
       <div className="container">

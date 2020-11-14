@@ -1,6 +1,12 @@
 import css from 'styled-jsx/css'
 export default css`
-
+.bg{
+    position: absolute;
+    bottom: 0%;
+    height: 100vh;
+    width: 95vw;
+    background-image: url('/images/package/package-bg');
+}
 .package-header {
     display: flex;
     font-size: 1.7em;

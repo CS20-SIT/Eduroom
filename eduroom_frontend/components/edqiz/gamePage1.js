@@ -1,27 +1,86 @@
-import React, { Fragment, useState,useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import socketIOClient from "socket.io-client";
 
 const axios = require("axios");
-const Page1 = ({time, goto, data, questionNumber,sentMessage,response,setquestionNumber}) => {
-  const router = useRouter()
-
-  // console.log(router.query.id)
+const Page1 = ({
+  id,
+  time,
+  goto,
+  data,
+  questionNumber,
+  sentMessage,
+  response,
+  setquestionNumber,
+}) => {
+  const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+    path: "/kahoot",
+  });
+  const router = useRouter();
   const room = { name: "room1", PIN: router.query.id };
-  
-  function questionNext() {
-    setquestionNumber(questionNumber + 1);
-  }
-  const setSkip = () => {
-    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, { path: '/kahoot' });
 
-    socket.emit("set-skip",true, router.query.id,questionNumber);
+  const [diff, setDiff] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+  var intervalID = null;
+
+  const responseTime = () => {
+    socket.on("sent-end-time", (pin, time) => {
+      setEndTime(time);
+    });
   };
+
   useEffect(() => {
-    // sentMessage()
-    // response()
+    socket.emit("start-game", id.id, data[questionNumber].time);
+    responseTime();
+    ///////////////
+   
+   
+  
+   
+  
+ 
+    //////////////
   }, []);
+  useEffect(() => {
+    responseTime();
+    if (diff != null) {
+      socket.emit("set-diff", diff, id.id);
+      console.log(diff);
+    }
+  }, [diff]);
+
+  function doStuff() {
+    const now = new Date().getTime();
+    const temp = Math.floor((endTime - now) / 1000);
+    setDiff(temp);
+    if (temp <= 0) {
+      clearInterval(intervalID);
+      goto(2);
+    }
+  }
+
+  useEffect(() => {
+    if (endTime !== null) {
+      intervalID = setInterval(doStuff, 100);
+      return () => {
+        clearInterval(intervalID);
+      };
+    }
+  }, [endTime]);
+
+  useEffect(() => {
+    return () => {
+      clearInterval(intervalID);
+    };
+  }, []);
+
+  function setSkip() {
+    clearInterval(intervalID);
+    socket.emit("set-skip", true,id.id);
+    goto(2);
+  }
+
   return (
     <Fragment>
       <div className="landing">
@@ -39,8 +98,8 @@ const Page1 = ({time, goto, data, questionNumber,sentMessage,response,setquestio
             <button
               className="landing-button"
               onClick={() => {
-                goto(2),
-                setSkip()
+                setSkip();
+                doStuff(true);
               }}
             >
               SKIP
@@ -49,7 +108,7 @@ const Page1 = ({time, goto, data, questionNumber,sentMessage,response,setquestio
         </Grid>
         <br />
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{display:'flex',justifyContent:'center'}}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <div className="text">{data[questionNumber].question}</div>
           </div>
           <Grid
@@ -63,7 +122,7 @@ const Page1 = ({time, goto, data, questionNumber,sentMessage,response,setquestio
           >
             <Grid item xs={4}>
               <div className="text-time">TIME</div>
-              <div className="text-timeNum">{time}</div>
+              <div className="text-timeNum">{diff ? diff : time}</div>
             </Grid>
             <Grid item xs={4}>
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -183,8 +242,6 @@ const Page1 = ({time, goto, data, questionNumber,sentMessage,response,setquestio
             display: flex;
             justify-content: center;
             width: 95vw;
-            
-            
           }
           .text-time {
             font-family: "Quicksand", sans-serif;
