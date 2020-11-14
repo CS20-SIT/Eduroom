@@ -100,6 +100,16 @@ const dSample = async (req, res, next) => {
   res.send({ success: true });
 };
 
+const dQuestion = async (req, res, next) => {
+  console.log("-----------------------------------------------");
+  const id = req.query.id;
+  console.log(req.query);
+  await pool.query(`DELETE FROM QuestionTestcases WHERE questionId = '${id}'`);
+  await pool.query(`DELETE FROM Questiontag WHERE questionId = '${id}'`);
+  await pool.query(`DELETE FROM questionSample WHERE questionId = '${id}'`);
+  await pool.query(`DELETE FROM questions WHERE id = '${id}'`);
+  res.send({ success: true });
+};
 const eQuestion = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
@@ -170,5 +180,6 @@ module.exports = {
   pTestcase,
   dTestcase,
   dSample,
+  dQuestion,
   eQuestion,
 };
