@@ -9,21 +9,16 @@ const getUniversitylist = async (req, res, next) => {
 
 
 const registerUemail = async (req, res, next) => {
-    req.body.predomain = 'sakkarin.kmutt';
-    req.body.postdomain ='mail.kmutt.ac.th';
-    req.body.userid ='c3289d0e-7fbc-4880-b15f-e679f667680f';
-    req.body.isverified =false;
+
     
     const data = await pool.query("select uuid_generate_v4()");
-    const uuid = data.rows[0].uuid_generate_v4;
- 
-
-    const predomain = req.body.predomain ;
-    const postdomain = req.body.postdomain;
+    const uuid = (data.rows[0].uuid_generate_v4).substring(0, 7);
+    const localPart = req.body.localPart ;
+    const domainName = req.body.domainName;
     const userid = req.body.userid;
-    const isverified = req.body.isverified;
+    const isverified =false;
     const token = uuid;
-    const universityemail = predomain + '@' + postdomain;
+    const universityemail = localPart + '@' + domainName;
 
     await pool.query(
         'insert into user_student_verification (userid, isverified, token, universityemail) values ($1, $2, $3, $4 )',
