@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import ConList from "./ConList";
 import Link from "next/link";
+
 //prepare for adding abmin log wheen create / edit ann
 const Test = () => {
   const [refresh, setRefresh] = useState(false);
@@ -20,7 +21,7 @@ const Test = () => {
     setRefresh(true);
     setRefresh(false);
   };
-  const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "2.5%" };
+  const sBig = { marginLeft: "15.5%", marginRight: "10.5%", marginTop: "2.5%" };
   const sBigTitle = {
     fontFamily: "Quicksand , sans-serif",
     "font-size": "2em",

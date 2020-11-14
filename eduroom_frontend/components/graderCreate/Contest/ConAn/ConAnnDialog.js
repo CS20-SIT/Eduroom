@@ -9,7 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 
-import axios from "../../../api";
+import axios from "../../../../api";
 
 import Chip from "@material-ui/core/Chip";
 
