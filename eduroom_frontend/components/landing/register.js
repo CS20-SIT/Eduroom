@@ -3,17 +3,21 @@ import style from '../../styles/landing/register';
 import Image from 'next/image';
 import UserContext from '../../contexts/user/userContext';
 import InputText from '../utils/InputText';
+import { useRouter } from 'next/router';
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const userContext = useContext(UserContext);
   const { registerUser } = userContext;
+  const registerError = userContext.err;
+  const router = useRouter();
 
   const handleChange = (e) => {
     let temp = { ...data };
     temp[e.target.name].value = e.target.value;
     if (e.target.value.length === 0) {
       temp[e.target.name].error = true;
-    } else{
+    } else {
       temp[e.target.name].error = false;
     }
     setData(temp);
@@ -60,7 +64,7 @@ const Register = () => {
     },
   });
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     let temp = { ...data };
     let i = -1;
     Object.keys(temp).map((el) => {
@@ -80,7 +84,9 @@ const Register = () => {
       Object.keys(temp).map((el) => {
         formData[el] = temp[el].value;
       });
-      registerUser(formData);
+      setLoading(true);
+      await registerUser(formData,router);
+      setLoading(false);
     }
     setData(temp);
   };
@@ -111,8 +117,16 @@ const Register = () => {
                   />
                 );
               })}
+              {registerError ? (
+                <div className="error">{registerError}</div>
+              ) : null}
               <div style={{ textAlign: 'center' }}>
-                <button className="register-button" onClick={handleClick}>
+                <button
+                  className="register-button"
+                  disabled={loading}
+                  onClick={handleClick}
+                  style={loading ? { opacity: '0.6' } : {}}
+                >
                   <span className="register-button-text">Register</span>
                 </button>
                 <div className="or-text">

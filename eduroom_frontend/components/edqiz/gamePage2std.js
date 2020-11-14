@@ -1,14 +1,18 @@
 import React, { Fragment, useEffect,useState } from "react";
 import socketIOClient from "socket.io-client";
+import { useRouter } from "next/router";
 
 import Grid from "@material-ui/core/Grid";
 const Page3 = ({questionNumber,goto,answer,data}) => {
+  const router = useRouter();
+
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: '/kahoot',
   });
   const [diff, setDiff] = useState(null);
  
   useEffect(() => {
+    socket.emit("room", (router.query.id));
     console.log('watiting',answer)
     socket.on('get-diff', (time) => {
       setDiff(time);
