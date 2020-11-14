@@ -1,7 +1,7 @@
 import css from 'styled-jsx/css';
 export default css`
   .landing {
-    width: 95%;
+    width: 100%;
     height: 100vh;
     display: flex;
     justify-content: flex-end;
