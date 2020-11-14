@@ -64,7 +64,7 @@ const Appointment = ({ AID, setAID, appointment }) => {
                 style={{ width: '10rem', backgroundColor: '#EB7DB1' }}
                 className='pointer text-center font-quicksand text-white py-2 rounded-md my-4'
                 onClick={() => {
-                  // POST api/tutor/instructor/appointment -> true
+                  // POST /api/tutor/instructor/appointment -> true
                   console.log(true);
                   location.reload();
                 }}
@@ -75,7 +75,7 @@ const Appointment = ({ AID, setAID, appointment }) => {
                 style={{ width: '10rem' }}
                 className='pointer text-center font-quicksand py-2 border-secondary text-secondary bg-white-faded rounded-md'
                 onClick={() => {
-                  // POST api/tutor/instructor/appointment -> false
+                  // POST /api/tutor/instructor/appointment -> false
                   console.log(false);
                   location.reload();
                 }}

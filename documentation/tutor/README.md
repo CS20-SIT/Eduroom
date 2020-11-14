@@ -18,7 +18,7 @@
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
@@ -37,14 +37,14 @@
 ```
 
 - **Params** : `none`
-- **Success** : `200`
+- **Success** : `201`
 - **Error** : `400`
 
 ## instructor information
 
 ### Get List of Instructor who register to be a Private Tutor
 
-- **URL** : `/api/tutor/instructors`
+- **URL** : `/api/tutor/instructor​s`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -65,7 +65,7 @@
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
@@ -100,7 +100,7 @@
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ## student's appointment
 
@@ -120,16 +120,16 @@
 		"id",
 		"name": String,
 		"info": String,
-		"date": `YYYY-MM-DD`,
-		"startTime": int,
-		"endTime": int,
-		"isAgree": 'Approved'/'Pending'/'Rejected'
+		"date": `DD MMM YYYY`,
+		"startTime": 'HH:MM',
+		"endTime": 'HH:MM',
+		"isAgree": 'Approved'/'Rejected'/'Pending'
    }
 ],
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
@@ -146,12 +146,12 @@
 	 "startTime": timestamp,
 	 "endTime": timestamp,
 	 "price": int,
-	 "members": [{ "id", "firstname", "lastname"}]
+	 "members": [{ "id", "name"}]
  }
 ```
 
 - **Params** : `none`
-- **Success** : `200`
+- **Success** : `201`
 - **Error** : `400`
 
 ## instructor's appointment
@@ -172,21 +172,21 @@
 		"appointmentID",
 		"id": studentID,
 		"name": String,
-		"date": `YYYY-MM-DD`,
+		"date": `[DD, MM, YYYY]`,
 		"startTime": int,
 		"endTime": int,
-		"status": 'Pending'/'Approved'/'Rejected',
+		"status": 'Approved'/'Rejected'/'Pending',
 		"members":[{"id","name"}]
    }
 ],
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
-### Insert student appointment
+### Approve or Reject student's Appointment
 
 - **URL** : `/api/tutor/instructor/appointment`
 - **Method** : `POST`
@@ -201,7 +201,7 @@
 ```
 
 - **Params** : `none`
-- **Success** : `200`
+- **Success** : `201`
 - **Error** : `400`
 
 ## Rating appointment
@@ -223,14 +223,14 @@
 		  "score": int,
 		  "desc": String,
 		  "name": String,
-		  "date": `YYYY-MM-DD`
+		  "date": `YYYYMMDD`
 		}]
    }
 ],
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
@@ -243,15 +243,14 @@
 
 ```
  {
-	  "id",
+	  "id": AppointmentID,
 	  "score": int,
 	  "desc": String,
-	  "date": `YYYY-MM-DD`
 }
 ```
 
 - **Params** : `none`
-- **Success** : `200`
+- **Success** : `201`
 - **Error** : `400`
 
 ## Utilities
@@ -266,8 +265,7 @@
 
 ```
  {
-	 "firstname": String,
-	 "lastname": String
+	 "name": String,
  }
 ```
 
@@ -278,8 +276,7 @@
  "students": [
    {
 		"id",
-		"firstname": String,
-		"lastname": String
+		"name": String
    }
 ],
 }
