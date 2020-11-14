@@ -11,10 +11,7 @@ import { useRouter } from "next/router";
 const Test = () => {
   const [refresh, setRefresh] = useState(false);
   const handleUpdate = () => {
-    console.log(refresh);
-    console.log("Handle Update From Dialog Submission");
-    setRefresh(true);
-    setRefresh(false);
+    setRefresh(!refresh);
   };
   const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "2.5%" };
   const sBigTitle = {

@@ -1,21 +1,13 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
-import Divider from "@material-ui/core/Divider";
-import axios from "../../../api";
+import axios from "../../../../api";
 import Image from "next/image";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-
-//on button , change that to chips
-// https://material-ui.com/components/chips/#chip
 const AnnEdit = (props) => {
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
@@ -28,6 +20,8 @@ const AnnEdit = (props) => {
       success: false,
       failed: false,
     });
+
+    props.onSuccess();
   };
 
   const handleClickOpen = () => {
@@ -36,41 +30,20 @@ const AnnEdit = (props) => {
 
   const handleClose = () => {
     setOpen(false);
+    props.onSuccess();
   };
   //// admind id here!!!!!!!
-  const [ann, setAnn] = useState({
-    title: props.title,
-    description: props.description,
-    adminid: props.adminid,
-  });
-  const setDesc = (event) => {
-    setAnn({ ...ann, description: event.target.value });
-  };
-  const setTitle = (event) => {
-    setAnn({ ...ann, title: event.target.value });
-  };
-  const [visible, setVisible] = React.useState(props.visible);
-
-  const handleChange = (event) => {
-    setVisible(event.target.checked);
-  };
 
   const handleSubmit = () => {
     axios
-      .put("/api/grader/eann", {
-        id: props.id,
-        title: ann.title,
-        description: ann.description,
-        adminid: ann.adminid,
-        isvisible: visible,
+      .delete("/api/grader/dquestion", {
+        params: {
+          id: props.id,
+        },
       })
       .then(function (response) {
-        console.log(response);
         setOpen(false);
-
         setTimeout(() => {
-          console.log("this is when we call prop on sucess");
-          props.onSuccess();
           setSubmitStatus({ ...submitStatus, success: true });
         }, 450);
       })
@@ -80,13 +53,6 @@ const AnnEdit = (props) => {
           setSubmitStatus({ ...submitStatus, failed: true });
         }, 450);
       });
-
-    // setAnn({
-    //   title: "",
-    //   description: "",
-    //   adminid: 0,
-    // });
-    // setVisible(true);
   };
 
   const sTitle = {
@@ -112,7 +78,7 @@ const AnnEdit = (props) => {
   };
 
   return (
-    <div>
+    <span>
       <button
         style={{
           padding: 0,
@@ -123,8 +89,22 @@ const AnnEdit = (props) => {
         onClick={handleClickOpen}
       >
         {" "}
-        <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
+        <Image src="/images/graderCreate/del.svg" width="20" height="20" />
       </button>
+      {/* <button
+        style={{
+          padding: 0,
+          border: "none",
+          background: "none",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          router.push(`/admin/grader/question/edit/${props.id}`);
+        }}
+      >
+        {" "}
+        <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
+      </button> */}
 
       <Dialog
         open={open}
@@ -133,64 +113,24 @@ const AnnEdit = (props) => {
       >
         <DialogTitle id="form-dialog-title">
           {" "}
-          <span style={sTitle}>Edit Announcement</span>
+          <span style={sTitle}>Are you sure?</span>
         </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
             <span style={sText}>
-              Modify what you want here , remember to check everything before
-              submitting
+              The Question No. {props.id} will be removed from the system. Your
+              action will be recorded in the Admin Log, and everyone will
+              acknowledge your action.
             </span>
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="title"
-            label="Title"
-            type="text"
-            fullWidth
-            defaultValue={ann.title}
-            value={ann.title}
-            onChange={setTitle}
-            required
-            inputProps={{ maxLength: 50, style: sInputfield }}
-            InputLabelProps={{ style: sInput }}
-          />
-
-          <div style={{ height: 20 }}></div>
-          <TextField
-            id="standard-multiline-static"
-            label="Description"
-            multiline
-            rows={10}
-            fullWidth
-            defaultValue={ann.description}
-            value={ann.description}
-            onChange={setDesc}
-            inputProps={{ style: sInputfield }}
-            InputLabelProps={{ style: sInput }}
-            required
-          />
-          <div style={{ height: 30 }}></div>
-          <FormControlLabel
-            control={
-              <Switch
-                color="primary"
-                checked={visible}
-                onChange={handleChange}
-                name="visible"
-              />
-            }
-            label={<span style={sButtionandVisbile}>Visible</span>}
-          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             <span style={sButtionandVisbile}>Cancel</span>
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            <span style={sButtionandVisbile}>Submit</span>
+            <span style={sButtionandVisbile}>Confrim</span>
           </Button>
         </DialogActions>
       </Dialog>
@@ -201,7 +141,7 @@ const AnnEdit = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <span style={sText}> Your announcement have been edited.</span>
+            <span style={sText}> The Question have been deleted.</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -226,7 +166,7 @@ const AnnEdit = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </span>
   );
 };
 export default AnnEdit;

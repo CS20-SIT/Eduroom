@@ -1057,7 +1057,7 @@ export default function FullWidthGrid(props) {
               <div>
                 {" "}
                 <Chip
-                  label=" Create"
+                  label={props.id == undefined ? "Create" : "Update"}
                   onClick={handleSubmit}
                   style={{
                     marginLeft: -50,
@@ -1079,11 +1079,16 @@ export default function FullWidthGrid(props) {
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  <span style={sText}> Your Question have been created.</span>
+                  <span style={sText}>
+                    {" "}
+                    {props.id == undefined
+                      ? "Your Question have been created."
+                      : "Question have been Edited"}
+                  </span>
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={statusClose} color="primary">
+                <Button color="primary">
                   <Link
                     style={sButtionandVisbile}
                     href="/admin/grader/question/"

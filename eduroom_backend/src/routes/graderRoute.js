@@ -8,6 +8,7 @@ const {
   editAnn,
   pTestcase,
   dTestcase,
+  dQuestion,
   dSample,
   eQuestion,
 } = require("../controllers/graderCreate/test");
@@ -114,6 +115,7 @@ router.get("/questiontestcase", gQuestionTestcase);
 
 router.delete("/dquestiontestcase", dTestcase);
 router.delete("/dquestionsample", dSample);
+router.delete("/dquestion", dQuestion);
 
 // eContest,eContestAnn,gAllContest,gContest,gContestAnn,gContestQuestion
 

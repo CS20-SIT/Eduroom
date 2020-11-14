@@ -11,6 +11,8 @@ import TableRow from "@material-ui/core/TableRow";
 import axios from "../../../../api";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import DeleteQuestion from "./QDelete";
+import Grid from "@material-ui/core/Grid";
 
 import { useRouter } from "next/router";
 //add submit time here
@@ -35,9 +37,10 @@ const useStyles = makeStyles({
   },
   tableHEdit: {
     paddingLeft: 25,
-    paddingRight: 50,
+    paddingRight: 70,
     paddingTop: 50,
-    "font-family": "Quicksand , sans-serif",
+    textAlign: "center",
+    fontFamily: "Quicksand , sans-serif",
     borderBottom: "none",
     "font-size": "1em",
     color: "#3d467f",
@@ -138,20 +141,15 @@ const AnnTable = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [data, setData] = useState([]);
 
-  useEffect(
-    () => {
-      const GetData = async () => {
-        const result = await axios.get("/api/grader/allquestion");
-        setData(result.data);
-      };
-      GetData();
-      console.log(data);
-      // console.log(props.onSuccess);
-    },
-    [
-      /*props.update*/
-    ]
-  );
+  useEffect(() => {
+    const GetData = async () => {
+      const result = await axios.get("/api/grader/allquestion");
+      setData(result.data);
+    };
+    GetData();
+    console.log(data);
+    // console.log(props.onSuccess);
+  }, [props.update]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -178,7 +176,7 @@ const AnnTable = (props) => {
                 Id
               </TableCell>
               <TableCell
-                width="40%"
+                width="35%"
                 className={classes.tableHeader}
                 align="left"
               >
@@ -197,7 +195,7 @@ const AnnTable = (props) => {
               <TableCell className={classes.tableHeader} align="center">
                 Visible
               </TableCell>
-              <TableCell className={classes.tableHEdit} align="left">
+              <TableCell className={classes.tableHEdit} align="center">
                 Edit{" "}
               </TableCell>
             </TableRow>
@@ -218,7 +216,7 @@ const AnnTable = (props) => {
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
-                      width="25%"
+                      width="35%"
                       align="left"
                     >
                       {row.title}
@@ -248,29 +246,37 @@ const AnnTable = (props) => {
                         <i className="fas fa-times"></i>
                       )}
                     </TableCell>
-                    <TableCell className={classes.tableEdit} align="left">
-                      <div>
-                        <button
-                          style={{
-                            padding: 0,
-                            border: "none",
-                            background: "none",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            router.push(
-                              `/admin/grader/question/edit/${row.id}`
-                            );
-                          }}
-                        >
-                          {" "}
-                          <Image
-                            src="/images/graderCreate/edit.svg"
-                            width="20"
-                            height="20"
-                          />
-                        </button>
-                      </div>
+                    <TableCell className={classes.tableEdit} align="center">
+                      <Grid container direction="row" spacing={3}>
+                        <Grid item sm={6}>
+                          <button
+                            style={{
+                              padding: 0,
+                              border: "none",
+                              background: "none",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              router.push(
+                                `/admin/grader/question/edit/${row.id}`
+                              );
+                            }}
+                          >
+                            {" "}
+                            <Image
+                              src="/images/graderCreate/edit.svg"
+                              width="20"
+                              height="20"
+                            />
+                          </button>
+                        </Grid>
+                        <Grid item sm={6}>
+                          <DeleteQuestion
+                            onSuccess={props.onSuccess}
+                            id={row.id}
+                          ></DeleteQuestion>
+                        </Grid>
+                      </Grid>
                     </TableCell>
                   </TableRow>
                 );
