@@ -60,7 +60,7 @@ const Appointment = ({ appointments }) => {
 };
 
 export async function getServerSideProps(ctx) {
-  // GET /tutor/instructor/appointments
+  // GET /api/tutor/instructor/appointments
   const appointment = [
     {
       appointmentID: 1,
