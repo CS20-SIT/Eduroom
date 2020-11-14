@@ -33,8 +33,6 @@
 .animation2 {
   animation-name: MoveIn;
   animation-duration: 1s;
-  margin-right: 100px;
-
 }
 .btnPop {
   position: absolute;
@@ -123,7 +121,7 @@
 }
 
 .img3 {
-    width: 95%;
+    width: 100%;
     background-image: url('../../public/images/Coin-image/BG.svg');
     background-repeat: repeat;
 
