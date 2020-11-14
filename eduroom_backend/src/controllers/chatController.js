@@ -12,7 +12,12 @@ const getChatlist = async (req, res, next) => {
 };
 
 const getGroupPicture = async(req, res, next) => {
-  const messagelist = await pool.query();
+  let chatroomid = 3
+  const messagelist = await pool.query(`select avatar
+  from user_profile, chat_roommember
+  where user_profile.userid = chat_roommember.userid and
+        chatroomid = '${chatroomid}'
+  `);
 
   const mes = messagelist.rows;
   res.send(mes);
