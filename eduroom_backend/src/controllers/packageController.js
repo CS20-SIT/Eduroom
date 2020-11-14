@@ -1,25 +1,20 @@
 const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
 
-exports.createPackage = async(req,res)=>{
+exports.createPackage = async(req,res,next)=>{
   const time = await pool.query('SELECT NOW()')
-  // res.status(200).json({success:true,msg: 'test from backend',time:time.rows[0]})
-  // console.log(req)
   const data = req.body
+  res.status(200).json({ success: true, data: data })
   console.log(data);
-  res.send({ success: data})
-  return
-
+  // await pool.query('INSERT INTO package(packageid, packagename, instructorid, discount, ispublic) VALUES ($1,$2,$3,$4,$5)',
+  // [data.packageid,data.packagename,data.instructorid,data.discount,data.ispublic])
 }
 
-// const pool = require('../database/db')
-// exports.getEvent = async (req, res, next) => {
-
-//     const data = await pool.query('select * from global_event')
-//     res.send(data.rows)
-//     res.status(200).json({ GorgunGetSuccess: true })
-//     return
+// exports.getPackage  = async (req, res, next) => {
+//   const data = await pool.query('select * from package')
+//   res.status(200).json({ success: true })
 // }
+
 
 // exports.createEvent = async (req, res, next) => {
 //     const data = req.body;

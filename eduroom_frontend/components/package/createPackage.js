@@ -1,9 +1,31 @@
-import React, { Fragment, useState } from 'react';
-import Upload from './imageupload';
+import React, { Fragment, useState, useEffect } from 'react';
 import Courses from './courses';
 import style from '../../styles/package/createpackage';
 
-const CreatePackage = (props) => {
+const CreatePackage = (props, { index }) => {
+  const [image, setImage] = useState(null);
+  const [alert, setAlert] = useState({
+    pic: false,
+    name: false,
+    category: false,
+    detail: false,
+    courses: false
+  })
+  useEffect(() => {
+    if (image) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("show-image" + index).src = e.target.result;
+      };
+      reader.readAsDataURL(image);
+    };
+  }, [image]);
+  const handleUplaodFile = (e) => {
+    let newValue = e.target.files[0];
+    let type = "image";
+    console.log(newValue);
+    setImage(newValue);
+  };
   const numDiscount = [5, 10, 20, 30, 40, 50, 60, 70];
   const discount = numDiscount.map((num) => {
     return { label: num + '%', value: num };
@@ -30,28 +52,76 @@ const CreatePackage = (props) => {
   const detailChange = (e) => {
     props.setMyPackage({ ...props.myPackage, detail: e.target.value });
   };
-  
+  const handleClick = (e) => {
+    if (validator()) {
+      props.changePage(2);
+    }
+  }
+  const validator = () => {
+    if (
+      props.myPackage.name == '' ||
+      props.myPackage.category == '' ||
+      props.myPackage.detail == '' ||
+      props.myPackage.courses == 0) {
+      setAlert({ name: true, category: true, detail: true, courses: true })
+      return false
+    }
+    return true;
+
+  }
+
   return (
     <Fragment>
       <div >
         <div className="package-header">CREATE NEW PACKAGE</div>
-        <div className="container pd-4-15">
-          <div className="subtitle mg-40">PACKAGE INFORMATION</div>
+        <div className="container pd-4-10">
+          <div className="subtitle mg-40 text-center">PACKAGE INFORMATION</div>
           <div style={{ display: 'flex' }}>
             <div className="img-upload">
-              <Upload index={0} />
+              <div className="imageupload"
+                onClick={() => {
+                  document.getElementById("image" + index).click();
+                }}
+              >
+                <input
+                  id={"image" + index}
+                  type="file"
+                  accept="image/*"
+                  hidden={true}
+                  onChange={handleUplaodFile}
+                />
+                
+                {image ? (
+                  <div>
+                    <img
+                      src=""
+                      id={"show-image" + index}
+                      style={{ maxWidth: 420, maxHeight: 235 }}
+                    />
+                  </div>
+                ) : (
+                    <div>
+                      <div><i className="fas fa-camera"></i></div>
+                      <div>Click here to add photo</div>
+                    </div>
+                  )} 
+              </div>
+              {/* {alert.pic ? (<div className="alert-text center">* Image is required</div>) : null}   */}
             </div>
 
-            <div style={{ width: '60%' }}>
+            <div style={{ width: '50%' }}>
               <div>
                 <input
                   type="text"
                   placeholder="Name"
                   name="name"
                   id="name"
+                  className="mgt-0"
                   onChange={nameChange}
                   value={props.myPackage.name}
-                ></input>
+                  error={alert.name}
+                />
+                {alert.name ? (<div className="alert-text">* Name is required</div>) : null}
               </div>
 
               <div>
@@ -78,6 +148,7 @@ const CreatePackage = (props) => {
                   name="category"
                   onChange={categoryChange}
                   value={props.myPackage.category}
+                  error={alert.category}
                 >
                   <option disabled value="default">
                     Category
@@ -90,32 +161,36 @@ const CreatePackage = (props) => {
                     );
                   })}
                 </select>
+                {alert.category ? (<div className="alert-text">* Category is required</div>) : null}
+              
               </div>
 
               <div>
                 <textarea
                   placeholder="Detail"
                   name="detail"
-                  id="pdetail"
+                  id="detail"
                   rows="4"
                   style={{ resize: 'none' }}
-                  className="pdetail"
                   onChange={detailChange}
                   value={props.myPackage.detail}
-                ></textarea>
+                  error={alert.detail}
+                />
+                {alert.detail ? (<div className="alert-text">* Detail is required</div>) : null}
+              
               </div>
             </div>
           </div>
 
           <div>
-            <div className="subtitle bold">Courses</div>
+            <div className="subtitle2">Courses</div>
             <div className="coursebox">
               <Courses />
             </div>
           </div>
         </div>
         <div className="center">
-          <button className="createbutton mgb-5" onClick={() => props.changePage(2)}>
+          <button className="createbutton mgb-5" onClick={handleClick}>
             Create
           </button>
         </div>
