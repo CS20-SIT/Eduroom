@@ -8,6 +8,7 @@ const ListSticker = props => {
 
     useEffect(() => {
         const mx = Math.ceil(props.item.length / 3);
+        console.log('hello')
         setMax(mx);
     }, []);
     const getLeftClass = () => {

@@ -1,7 +1,7 @@
 import { Container } from '@material-ui/core';
 import Styles from '../../styles/CoinStyles/Pop-up.module.css';
 import { useState } from 'react';
-import {Dialog, DialogContent} from '@material-ui/core';
+import { Dialog, DialogContent } from '@material-ui/core';
 import EnsurePay from '../FolderCoin/ensurePayment';
 import Card from '@material-ui/core/Card';
 const temp = (props) => {
@@ -41,9 +41,9 @@ const temp = (props) => {
                     <h3>My coins: 99 $</h3>
                     <div>
                         <button className={Styles.btn} onClick={PopPurchase}>Purchase</button>
-                        
+
                         <Dialog open={state} onClose={() => setState(false)}>
-                            <DialogContent style={{ width: '400px', height: '300px', padding: '0px' }}><EnsurePay /></DialogContent>
+                            <DialogContent style={{ width: '400px', height: '300px', padding: '0px' }}><EnsurePay closeEnsure={() => { props.closePopup(); setState(false) }} close={() => setState(false)} /></DialogContent>
                         </Dialog>
                     </div>
                 </div>
