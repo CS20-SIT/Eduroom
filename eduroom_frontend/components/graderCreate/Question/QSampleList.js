@@ -20,24 +20,13 @@ class Form extends React.Component {
       questionSample: [
         {
           index: this.no,
-          inputSample: "",
-          outputSample: "",
+          inputsample: "",
+          outputsample: "",
         },
       ],
     };
   }
-  // async componentDidMount() {
-  //   if (this.props.id != undefined) {
-  //     console.log("componenet didmount");
-  //     const id = this.props.id;
-  //     const sample = await axios.get("/api/grader/questionsample", {
-  //       params: { id },
-  //     });
-  //     this.state = { questionSample: sample.data };
-  //     this.no = this.state.questionSample.length;
-  //     console.log(this.state.questionSample);
-  //   }
-  // }
+
   handleSet = (old, adder) => {
     console.log("---------Set---------------");
     console.log(old);
@@ -47,7 +36,7 @@ class Form extends React.Component {
     console.log("------------------------");
   };
   handleChange = (e) => {
-    if (["inputSample", "outputSample"].includes(e.target.name)) {
+    if (["inputsample", "outputsample"].includes(e.target.name)) {
       let questionSample = [...this.state.questionSample];
       console.log(e.target);
       console.log(e.target.value);
@@ -57,6 +46,13 @@ class Form extends React.Component {
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
+    console.log(
+      "----------questionSample --------------------- questionSample ------------------questionSample-"
+    );
+    console.log(this.state.questionSample);
+    console.log(
+      "----------questionSample --------------------- questionSample ------------------questionSample-"
+    );
     this.props.handleSample(this.state.questionSample);
   };
   addNewRow = (e) => {
@@ -67,8 +63,8 @@ class Form extends React.Component {
         ...prevState.questionSample,
         {
           index: this.no,
-          inputSample: "",
-          outputSample: "",
+          inputsample: "",
+          outputsample: "",
         },
       ],
     }));

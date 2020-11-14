@@ -24,6 +24,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Switch from "@material-ui/core/Switch";
+import { ImageFilter9 } from "material-ui/svg-icons";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -154,6 +155,7 @@ export default function FullWidthGrid(props) {
   const [existTags, setExistTags] = useState([]);
   const [oldDetail, setoldDetail] = useState([]);
   const [oldTestcase, setoldTestcase] = useState("");
+  const [oldTag, setoldTag] = useState([]);
 
   const splitTest = function (str) {
     return str.split("\\").pop().split("/").pop();
@@ -189,18 +191,19 @@ export default function FullWidthGrid(props) {
           params: { id },
         });
 
-        setoldTestcase(splitTest(testcase.data[0].filepath));
+        let testcaseName =
+          testcase.data[0] == undefined
+            ? "FILE NOT FOUND"
+            : splitTest(testcase.data[0].filepath);
+        setoldTestcase(testcaseName);
+        setFile(-1);
 
         const tag = await axios.get("/api/grader/questiontag", {
           params: { id },
         });
 
         const oldTag = tag.data;
-        const a = oldTag.map((r) => {
-          return r.tagname;
-        });
-
-        setTags(a);
+        setTags(oldTag);
       }
     };
     GetData();
@@ -417,7 +420,7 @@ export default function FullWidthGrid(props) {
   };
 
   const handleSubmit = () => {
-    if (title == "" || selectedFile.length == 0) {
+    if (title == "" || selectedFile == null) {
       seterorValid(true);
       document.querySelector("body").scrollTo(0, 0);
     } else {
@@ -433,37 +436,69 @@ export default function FullWidthGrid(props) {
       });
 
       const pnewTags = [...new Set(newtags)];
+
       console.log(pnewTags);
       const pqexistTags = [...new Set(qexisttags)];
-      console.log(pqexistTags);
 
-      axios
-        .post("/api/grader/cquestion", {
-          title: title,
-          ruleType: rule,
-          description: description,
-          hint: hint,
-          timeLimit: time,
-          memoryLimit: memory,
-          visibility: visible,
-          adminid: "12345678-1234-1234-1234-123456789123",
-          intputDes: inputdesc,
-          outputDes: outputdesc,
-          difficulty: difficulty,
-          newTags: pnewTags,
-          existTags: pqexistTags,
-        })
-        .then(function (response) {
-          console.log(response.data.id);
-          const id = response.data.id;
-          onHandlerFile(id);
-          onHandlerSample(id);
-        })
-        .catch(function (error) {
-          setTimeout(() => {
-            setSubmitStatus({ ...submitStatus, failed: true });
-          }, 450);
-        });
+      console.log(pqexistTags);
+      if (props.id == undefined) {
+        axios
+          .post("/api/grader/cquestion", {
+            title: title,
+            ruleType: rule,
+            description: description,
+            hint: hint,
+            timeLimit: time,
+            memoryLimit: memory,
+            visibility: visible,
+            adminid: "12345678-1234-1234-1234-123456789123",
+            intputDes: inputdesc,
+            outputDes: outputdesc,
+            difficulty: difficulty,
+            newTags: pnewTags,
+            existTags: pqexistTags,
+          })
+          .then(function (response) {
+            console.log(response.data.id);
+            const id = response.data.id;
+            onHandlerFile(id);
+            onHandlerSample(id);
+          })
+          .catch(function (error) {
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
+      } else {
+        axios
+          .put("/api/grader/equestion", {
+            title: title,
+            ruleType: rule,
+            description: description,
+            hint: hint,
+            timeLimit: time,
+            memoryLimit: memory,
+            visibility: visible,
+            adminid: "12345678-1234-1234-1234-123456789123",
+            intputDes: inputdesc,
+            outputDes: outputdesc,
+            difficulty: difficulty,
+            newTags: pnewTags,
+            existTags: pqexistTags,
+            id: props.id,
+          })
+          .then(function (response) {
+            console.log(response.data.id);
+            const id = response.data.id;
+            onHandlerFile(id);
+            onHandlerSample(id);
+          })
+          .catch(function (error) {
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
+      }
     }
   };
   // so when send -> post the new tags into tagTable  first then post in Question Tag
@@ -562,29 +597,46 @@ export default function FullWidthGrid(props) {
     const data = new FormData();
 
     if (selectedFile != null) {
+      console.log("apppppppppppedding data aaaaaaaaaaaaa");
       for (var x = 0; x < selectedFile.length; x++) {
         data.append("file", selectedFile[x]);
         console.log(id);
         data.append("questionid", id);
         console.log(selectedFile[x]);
       }
-      axios
-        .post("/api/grader/ptc", data, {
-          onUploadProgress: (ProgressEvent) => {
-            setLoad((ProgressEvent.loaded / ProgressEvent.total) * 100);
+      if (props.id != undefined && selectedFile != -1) {
+        axios.delete("/api/grader/dquestiontestcase", {
+          params: {
+            id: props.id,
           },
-        })
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-          setTimeout(() => {
-            setSubmitStatus({ ...submitStatus, failed: true });
-          }, 450);
         });
+      }
+      if (selectedFile != -1) {
+        axios
+          .post("/api/grader/ptc", data, {
+            onUploadProgress: (ProgressEvent) => {
+              setLoad((ProgressEvent.loaded / ProgressEvent.total) * 100);
+            },
+          })
+          .then((res) => {})
+          .catch((err) => {
+            console.log(err);
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
+      }
     }
   };
   const onHandlerSample = (id) => {
     if (samples != null) {
+      if (props.id != undefined) {
+        axios.delete("/api/grader/dquestionsample", {
+          params: {
+            id: props.id,
+          },
+        });
+      }
       axios
         .post("/api/grader/cquestionsample", {
           samples: samples,
@@ -983,7 +1035,7 @@ export default function FullWidthGrid(props) {
                       fontWeight: "bold",
                     }}
                   >
-                    {selectedFile
+                    {selectedFile != null && selectedFile != -1
                       ? "File recieved :  " + selectedFile[0].name
                       : props.id == undefined
                       ? "Testcase file up to 10 MB in size are available for upload."

@@ -16,19 +16,6 @@ const pQuestion = async (req, res, next) => {
   const newTags = req.body.newTags;
   const existTags = req.body.existTags;
 
-  const newTagsIds = [];
-  newTags.forEach((t) => {
-    pool.query(
-      "INSERT INTO tags (tagName) VALUES ($1) RETURNING tagid",
-      [t],
-      function (err, result, fields) {
-        if (err) throw err;
-        newTagsIds.push(result.rows[0].tagid);
-        console.log(newTagsIds);
-      }
-    );
-  });
-
   pool.query(
     "INSERT INTO Questions(title,description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType,adminid) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id",
     [
@@ -47,14 +34,32 @@ const pQuestion = async (req, res, next) => {
     function (err, result, fields) {
       if (err) throw err;
       const id = result.rows[0].id;
-      console.log("2nd");
-      console.log(id);
-      console.log(newTagsIds);
-      newTagsIds.forEach((t) => {
-        console.log("3rd");
+      newTags.forEach((t) => {
         pool.query(
-          "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
-          [id, t]
+          "INSERT INTO tags (tagName) VALUES ($1) RETURNING tagid",
+          [t],
+          function (err, result, fields) {
+            if (err) throw err;
+
+            console.log(
+              "----------------newTagsIds------------------------------------newTagsIds----------- newTagsIds------"
+            );
+            console.log(newTagsIds);
+            console.log(
+              "----------------newTagsIds------------------------------------newTagsIds----------- newTagsIds------"
+            );
+            console.log(
+              "----------------InsertnewTagsIds-----------------------------------InsertnewTagsIds --------InsertnewTagsIds "
+            );
+            console.log(result.rows[0].tagid);
+            pool.query(
+              "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
+              [id, result.rows[0].tagid]
+            );
+            console.log(
+              "----------------InsertnewTagsIds-----------------------------------InsertnewTagsIds --------InsertnewTagsIds "
+            );
+          }
         );
       });
 
@@ -96,7 +101,7 @@ const pQuestionSample = async (req, res, next) => {
     samples.forEach((s) => {
       pool.query(
         "INSERT INTO questionSample(questionId,sampleNo, intput, output) VALUES ($1 , $2, $3, $4)",
-        [questionId, s.index, s.inputSample, s.outputSample]
+        [questionId, s.index, s.inputsample, s.outputsample]
       );
     });
   } catch (error) {
@@ -204,7 +209,7 @@ const gQuestion = async (req, res, next) => {
 const gQuestionTag = async (req, res, next) => {
   const id = req.query.id;
   const data = await pool.query(
-    `select  tagname from questiontag q , tags t  where q.questionid = '${id}'and t.tagid = q.tagid  `
+    `select  q.tagid as tagid , tagname from questiontag q , tags t  where q.questionid = '${id}'and t.tagid = q.tagid  `
     // `select t.tagname from questiontag q , tags t where q.questionid = '${id}' and t.questionid = q.questionId `
   );
   const conann = data.rows;

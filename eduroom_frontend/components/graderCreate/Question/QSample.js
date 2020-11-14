@@ -146,7 +146,7 @@ const SampleCard = (props) => {
               <Paper elevation={0} className={classes.paper}>
                 {" "}
                 <TextField
-                  name="inputSample"
+                  name="inputsample"
                   margin="dense"
                   label="Input"
                   type="text"
@@ -166,7 +166,7 @@ const SampleCard = (props) => {
               <Paper elevation={0} className={classes.paper}>
                 {" "}
                 <TextField
-                  name="outputSample"
+                  name="outputsample"
                   margin="dense"
                   label="Output"
                   type="text"
