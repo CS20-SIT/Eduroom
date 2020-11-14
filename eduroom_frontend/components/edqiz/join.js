@@ -1,12 +1,14 @@
-import React, { Fragment, useEffect,useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import style from "../../styles/edqiz/landing";
+import socketIOClient from "socket.io-client";
 
-
-
-const Page1 = ({ goto, mockData, change }) => {
- 
+const Page1 = ({ goto, mockData, change, name }) => {
   const router = useRouter();
+
+ 
+ 
+  useEffect(() => {}, []);
   return (
     <Fragment>
       <div className="landing">
@@ -69,7 +71,7 @@ const Page1 = ({ goto, mockData, change }) => {
                 justifyContent: "center",
               }}
             >
-              FILL IN YOUR NAME :
+              FILL IN YOUR NAME 
             </div>
             <div className="row">
               <input
@@ -77,11 +79,17 @@ const Page1 = ({ goto, mockData, change }) => {
                 id="fname"
                 name="firstname"
                 onChange={(e) => change(e.target.value)}
+             
+                // {seeName()}
                 placeholder="fill in your name . ."
               />
             </div>
             <div className="row">
-              <button className="landing-button" onClick={() => goto(2)}>
+              <button
+                className="landing-button"
+                onClick={(() => goto(2))}
+              >
+              
                 <span className="landing-button-text">JOIN GAME</span>
               </button>
             </div>

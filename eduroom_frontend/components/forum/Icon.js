@@ -37,13 +37,6 @@ const Icon = ({ type }) => {
 </svg>
 
           </div>
-          {/* <style jsx>
-            {`
-            .{
-
-            }
-            `}
-          </style> */}
         </Fragment>
       );
   }

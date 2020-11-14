@@ -81,37 +81,34 @@ const SupportForm = () => {
     setForm({ ...supportForm, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
-      
-      if (validator(),validateEmail()) {
-        api
-          .post("/api/support", {
-            name: supportForm.name,
-            username: supportForm.username,
-            email: supportForm.email,
-            title: supportForm.title,
-            content: supportForm.content,
-            priority: supportForm.priority,
-            cat: supportForm.cat,
-            subCat: supportForm.subCat,
-          })
-          .then((res) => {
-            console.log(res.data);
-          });
-      }
-      
-        if(validator()==true){
-          window.location.href="/support";
-        }
-      
-    
+    if ((validator(), validateEmail())) {
+      api
+        .post("/api/support", {
+          name: supportForm.name,
+          username: supportForm.username,
+          email: supportForm.email,
+          title: supportForm.title,
+          content: supportForm.content,
+          priority: supportForm.priority,
+          cat: supportForm.cat,
+          subCat: supportForm.subCat,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+    }
+
+    if (validator() == true) {
+      window.location.href = "/support";
+    }
   };
   const validateEmail = () => {
     const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([\t]*\r\n)?[\t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([\t]*\r\n)?[\t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
     if (expression.test(String(supportForm.email).toLowerCase())) {
-      setAlert({...alert,email:false});
+      setAlert({ ...alert, email: false });
       check = false;
-    }else{
-      setAlert({...alert,email:true});
+    } else {
+      setAlert({ ...alert, email: true });
     }
   };
 
@@ -130,7 +127,6 @@ const SupportForm = () => {
     setAlert(temp);
     return check;
   };
-  
 
   const useStyles = makeStyles((theme) => ({
     page: {
@@ -378,19 +374,15 @@ const SupportForm = () => {
                   alignItems="center"
                   justify="center"
                 >
-                  <Grid item xs={2} sm={2} alignItems="center">
+                  <Grid item xs={2} sm={2}>
                     <Button
                       style={{ width: "150px", height: "40px" }}
                       fullWidth
                       variant="contained"
                       color={"primary"}
                       onClick={handleSubmit}
-                      
-                      
                       className={classes.submit}
-                      
                     >
-                      
                       Submit
                     </Button>
                   </Grid>
