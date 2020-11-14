@@ -26,17 +26,8 @@ exports.Register = async (req, res, next) => {
 }
 
 exports.GetProfile = async (req, res, next) => {
-	console.log(req.user)
-	const userId = req.user.user
-	const result = await pool.query('SELECT isverified from instructor where userid = $1', [userId])
-	if (result.rowCount == 0) {
-		res.status(200).json({ name: 'Boyplus', role: 'student' })
-	} else {
-		const isverified = result.rows[0].isverified
-		res.status(200).json({ name: 'Boyplus', role: 'instructor', isverified })
-	}
-}
-
-exports.GetCourses = async (req, res, next) => {
-	return
+	const instructorId = req.user.instructor
+  const result = await pool.query('SELECT isverified from instructor where instructorid = $1', [instructorId])
+  const isverified = result.rows[0].isverified
+	res.status(200).json({ role: 'instructor', isverified })
 }

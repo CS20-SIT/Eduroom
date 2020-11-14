@@ -1,0 +1,48 @@
+.cardPay{
+   text-align: center;
+   position: relative;
+   top: 30%;
+}
+.select{
+    display: flex;
+   justify-content: center;
+}
+.select button{
+    padding: 5px 40px;
+    margin: 0px 20px;
+    font-size: 1em;
+    color: whitesmoke;
+    background-color: #FB9CCB;
+    border: none;
+    border-radius: 10px;
+    
+}
+.cardPay h2 {
+    font-size: x-large;
+    background:linear-gradient(#A880F7,#FB9CCB);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.setMiddle{
+    text-align: center;
+}
+.setMiddle h1{
+   color: #A880F7;
+}
+.photoPurchase{
+    position: relative;
+    width: 70%;
+    height: 70%;
+    right: 20px;
+}
+.btn{
+    color: whitesmoke;
+    font-size: 1.2em;
+    position: relative;
+    top:40px;
+    padding: 5px 40px;
+    background-color:#A880F7;
+    border: none;
+    border-radius: 10px;
+  }
+  
