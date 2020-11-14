@@ -4,27 +4,28 @@ const Hello = () => {
 	return (
 		<Fragment>
 			<GeneralTemplate>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
-				<h1>Hello</h1>
+				<div style={{backgroundColor:'pink'}}>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+					<h1>Hello</h1>
+				</div>
 			</GeneralTemplate>
 		</Fragment>
 	)

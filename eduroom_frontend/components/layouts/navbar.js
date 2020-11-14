@@ -13,7 +13,6 @@ const Navbar = () => {
 	const user = userContext.user
 	const y = navContext.y
 	const router = useRouter()
-	console.log(user)
 
 	useEffect(() => {
 		getUser()
@@ -25,6 +24,9 @@ const Navbar = () => {
 
 	const handleLogout = async () => {
 		logoutUser(router)
+	}
+	const gotoProfile = () => {
+		router.push('/user')
 	}
 
 	return (
@@ -42,13 +44,13 @@ const Navbar = () => {
 						</div>
 						{user ? (
 							<Fragment>
-								<div className="navItem">
+								<div className="navItem" onClick={gotoProfile}>
 									<span style={{ color: '#3d467f' }}>{user.firstname}</span>
 								</div>
 								<div className="navItem" onClick={handleLogout}>
 									<span style={{ color: '#3d467f' }}>Logout</span>
 								</div>
-								<div className="navItem">
+								<div className="navItem" onClick={gotoProfile}>
 									<img
 										className="avatar"
 										src="https://storage.googleapis.com/eduroom/profile_pic/Avatar_2.png"
