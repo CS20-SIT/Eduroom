@@ -21,4 +21,4 @@ const getGroupPicture = async(req, res, next) => {
 
 
 
-module.exports = { getChatlist, getMessagelist };
+module.exports = { getChatlist, getGroupPicture };
