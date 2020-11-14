@@ -1,6 +1,12 @@
 import css from 'styled-jsx/css'
 export default css`
-
+.bg{
+    position: absolute;
+    bottom: 0%;
+    height: 100vh;
+    width: 95vw;
+    background-image: url('/images/package/package-bg');
+}
 .package-header {
     display: flex;
     font-size: 1.7em;
@@ -30,6 +36,7 @@ export default css`
     font-size: 1.5em;
     padding-bottom: 20px;
 }
+
 .addpackbutton {
     color: #3d467f;
     font-size: 19px;
@@ -38,9 +45,14 @@ export default css`
     padding: 2% 30%;
     background-color: white;
     border: 1px dashed #9593A0;
-    margin-bottom: 25%;
+    margin: 5% auto 15%;
 }
 .addpackbutton:hover {background-color: #F4F5F7;}
-
+.background-img {
+    position: absolute;
+    top: 0%;
+    width: 100vw;
+    z-index: -1;
+  }
 
 `

@@ -16,7 +16,7 @@ const StudentSupport = () => {
     
     const classes = useStyles();
   return <Fragment>
-      <Typography className={classes.typo}><h2>Select a topic to search for help</h2></Typography>
+ 
       <Grid container spacing={7} justify="center">
           <Grid item >
           <Paper style={{width: '260px', height: '220px',backgroundColor:"#eff0f6"}} elevation={3}>
