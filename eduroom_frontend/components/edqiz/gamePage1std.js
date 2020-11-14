@@ -18,6 +18,7 @@ const Page1 = ({
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: "/kahoot",
   });
+ 
   // console.log("message", messages);
   const room = { name: "room1", PIN: router.query.id };
 
@@ -27,8 +28,10 @@ const Page1 = ({
   //////////////
 
   useEffect(() => {
-    socket.on("get-diff", (time) => {
+    socket.emit("room", (router.query.id));
+    socket.on("get-diff", (time,pin) => {
       setDiff(time);
+      console.log('get-diff',time,pin)
       if (time == 0) {
         if (answer == data[questionNumber].correct) {
           console.log(answer == data[questionNumber].correct);
@@ -39,18 +42,7 @@ const Page1 = ({
       }
     });
 
-    socket.on("get-skip", (isSkip) => {
-      console.log('answer',answer);
-      console.log(answer == data[questionNumber].correct);
-      if (isSkip || answer == data[questionNumber].correct) {
-        if (answer == data[questionNumber].correct) {
-          console.log(answer == data[questionNumber].correct);
-          goto(2);
-        } else {
-          goto(4);
-        }
-      }
-    });
+  
 
     sentMessage();
     response();

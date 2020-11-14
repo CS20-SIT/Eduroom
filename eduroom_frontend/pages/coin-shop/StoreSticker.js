@@ -8,6 +8,9 @@ const Temp = () => {
     const router = useRouter();
     const [show, setShow] = useState(false);
     const [div,setDivClass] = useState('');
+    const warp = () =>{
+        router.push('/coin-shop/test');
+    }
     const click = () => {
         setDivClass(Styles.History);
         setTimeout(() => {
@@ -27,7 +30,7 @@ const Temp = () => {
                 <div className={div}>
                 <div className={Styles.animation2}>
                     <div className={Styles.img3}>
-                        <div>
+                        <div className={Styles.top}>
                             <Product_Sticker></Product_Sticker>
                         </div>
                     </div>
@@ -44,6 +47,7 @@ const Temp = () => {
                         History
                     </button>
                     </div>
+                    <button onClick={()=>warp()}>Test</button>
                 </div>
                 </div>
             </General>
