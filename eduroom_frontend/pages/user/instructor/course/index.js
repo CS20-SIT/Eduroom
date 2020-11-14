@@ -8,7 +8,6 @@ const Index = () => {
     return (
         <Fragment>
             <General>
-                <div style={{ backgroundColor: "#f4f5f7" }}>
                     <div className="package-header">Package Management </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                         <div className="container" >
@@ -26,7 +25,6 @@ const Index = () => {
                             </div>
                         </div>
                     </div>
-                </div>
                 <style jsx>{style}</style>
             </General>
         </Fragment>

@@ -3,14 +3,11 @@ import Styles from '../../styles/CoinStyles/List_Of_Sticker.module.css';
 import { useEffect, useState } from 'react';
 
 const ListSticker = props => {
-    const [stickers, setSticker] = useState([]);
     const [page, setPage] = useState(1);
     const [max, setMax] = useState(1);
 
     useEffect(() => {
-        const data = props.item.slice(0, 12);
-        setSticker(data);
-        const mx = Math.ceil(data.length / 3);
+        const mx = Math.ceil(props.item.length / 3);
         setMax(mx);
     }, []);
     const getLeftClass = () => {
@@ -29,7 +26,7 @@ const ListSticker = props => {
     };
 
     const renderSlide = () => {
-        const nowSlide = stickers.slice(page * 3 - 3, page * 3);
+        const nowSlide = props.item.slice(page * 3 - 3, page * 3);
         const arr = nowSlide.map((item, index) => {
             return (
                 <ProductSticker_Render
@@ -92,8 +89,6 @@ const ListSticker = props => {
         });
         return stickers;
     };
-
-
     
     return (
         <div>
