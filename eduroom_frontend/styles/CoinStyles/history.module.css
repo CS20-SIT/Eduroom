@@ -3,33 +3,64 @@
     height: 90.5vh;
     background-image: url('../../public/images/Coin-image/BG.svg');
     background-repeat: repeat;
-    animation:MoveIn 2s;
+    animation: MoveIn 2s;
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+.detail {
+    position: relative;
+    left: 50%;
+    top: -10%;
+    font-size: 10px;
+}
+.price {
+    position: relative;
+    top: 20%;
+}
+.mid {
+    position: relative;
+    top: 10%;
+
 }
 .container {
-    height: 50px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
+
+
 }
-.card {
-    width: 21vw;
-}
-.card div {
-    margin: 10%;
-    padding: 10%;
-    width: 20vw;
-    height: 18vh;
+.right {
+
+    padding: 50px;
+    height: 80vh;
+    width: 35vw;
+    margin: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     background-color: white;
     border-radius: 5%;
 }
-@keyframes MoveIn{
-    0%{
+.card {
+    width: 25vw;
+}
+.card div {
+    position: relative;
+    left: -20%;
+    width: 120%;
+    margin: 15%;
+    padding: 20%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    background-color: white;
+    border-radius: 5%;
+}
+@keyframes MoveIn {
+    0% {
         transform: translateX(100px);
         opacity: 0;
     }
-    100%{
+    100% {
         transform: translateX(0px);
         opacity: 1;
     }

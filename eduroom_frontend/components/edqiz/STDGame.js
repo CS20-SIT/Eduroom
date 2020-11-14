@@ -64,13 +64,11 @@ const Content = ({ id }) => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
-    const temp = messages.slice();
-    socket.on("new-question", (isSkip, pin, questionNo) => {
-      temp.push([isSkip, pin, questionNo]);
-      setMessages(temp.slice());
-
-      if (temp[questionNumber][0] == true) {
-        goto(2);
+    socket.emit("room", (router.query.id));
+    socket.on("get-skip", (isSkip) => {
+      console.log('isSkip',isSkip)
+      if (isSkip) {
+        goto(4);
       }
     });
   };
@@ -134,7 +132,7 @@ const Content = ({ id }) => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
-    socket.emit('room1','1234');
+    socket.emit("room", (router.query.id));
     socket.on("get-Nextquestion", (isNext, pin, questionNo) => {
       setquestionNumber(questionNo)
       if(isNext){
