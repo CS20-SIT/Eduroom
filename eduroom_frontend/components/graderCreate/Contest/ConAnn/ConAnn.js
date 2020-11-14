@@ -19,7 +19,7 @@ const sBigTitle ={'font-family': 'Quicksand , sans-serif' ,  'font-size': '2em' 
 
   return (
     <div style={sBig}>
-        <Grid  spacing={3} containerdirection="row" justify="flex-start" alignItems="baseline">
+        <Grid  >
         <Grid  >
        
          <span style={sBigTitle}>Contest Announcement</span>

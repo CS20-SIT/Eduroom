@@ -27,6 +27,8 @@ const Content = ({mode}) => {
       setQuestionList([questionTemplate,questionTemplate])
     }
   },[])
+ 
+
   useEffect(() => {
     questionList.map((el, index) => {
       if (el.image) {

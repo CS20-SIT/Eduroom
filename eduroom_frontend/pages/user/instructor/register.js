@@ -1,18 +1,35 @@
-import React, { Fragment } from 'react'
-import GeneralNoNav from '../../../components/template/generalnonav'
+import React, { Fragment, useState, useEffect } from 'react';
+import General from '../../../components/template/general';
+import api from '../../../api';
+import Register from '../../../components/user/instructor/Register';
+import WaitingApproved from '../../../components/user/instructor/WaitingApproved';
+import AlreadyBeInstructor from '../../../components/user/instructor/AlreadyBeInstructor';
+
 const InstructorRegister = () => {
-    return <Fragment>
-    <GeneralNoNav>
-        <div>
-            <h1>Instructor   Profile</h1><input type="text" id="Degree" placeholder="Degree" /><br />
-            <input type="text" id="Expert" placeholder="Expert" /><br />
-            <textarea rows="4" cols="50" name="Bio" form="profile" placeholder="Bio">
-            </textarea><br />
-            <input type="submit" value="SUBMIT" />
-
-        </div></GeneralNoNav>
-        </Fragment>
-
-    
-}
-export default InstructorRegister
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api.get('/api/instructor/profile');
+      setUser(res.data);
+    };
+    fetchData();
+  });
+  const renderPage = () => {
+    if (!user) return null;
+    if (user.role === 'instructor') {
+      if (user.isverified) {
+        return <AlreadyBeInstructor />;
+      } else {
+        return <WaitingApproved />;
+      }
+    } else {
+      return <Register />;
+    }
+  };
+  return (
+    <Fragment>
+      <General>{renderPage()}</General>
+    </Fragment>
+  );
+};
+export default InstructorRegister;

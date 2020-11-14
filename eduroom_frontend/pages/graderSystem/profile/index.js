@@ -9,7 +9,7 @@ const Profile = () => {
         <title>Profile</title>
         <meta property="og:title" content="Profile" key="Profile" />
       </Head>
-      <Layout>This is Profile Page</Layout>
+      <Layout page="profile">This is Profile Page</Layout>
     </Fragment>
   )
 }

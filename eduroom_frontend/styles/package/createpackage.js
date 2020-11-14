@@ -5,6 +5,7 @@ export default css`
     font-size: 1.7em;
     padding: 0 6% 3% 6%;
     font-weight: bold;
+    text-shadow: 2px 1px rgba(0,0,0,0.5);
 }
 .container {
     background-color: #ffffff;
@@ -16,15 +17,16 @@ export default css`
 }
 
 input,select,textarea {
-    border: 1px solid #EFF0F6;
+    border: 1px solid #3d467f;
     width: 100%;
-    padding: 13px 20px;
+    padding: 10px 20px;
     border-radius: 10px;
-    font-size: 1.2em;
-    margin-bottom: 25px;
-    background-color: #EFF0F6;
+    font-size: 1em;
+    margin-bottom: 6px;
+    background-color: #f4f5f7;
     cursor: pointer;
     color: #3d467f;
+    font-weight: 500;
 }
 input[type=checkbox] {
     width: 5%;
@@ -33,10 +35,9 @@ input[type=checkbox] {
     width: 20px;
     background-color: #3d467f;
 }
-
 ::placeholder {
     color: #3d467f;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .imageupload {
@@ -62,9 +63,9 @@ input[type=checkbox] {
 .subtitle {
     color: #3D467F;
     font-style: normal;
-    font-weight: 550;
+    font-weight: 650;
     font-size: 22px; 
-    margin-bottom: 20px;   
+    margin-bottom: 15px;   
 
 }
 .text {
@@ -74,13 +75,18 @@ input[type=checkbox] {
 
 .coursebox {
     background-color: white;
-    border-radius: 5px;
-    border: 1px solid white;
+    border: 3px solid white;
     margin-bottom: 7%;
+    width: 100%;
     text-align: center;
-    width: 101.5%;
-   
 }
+.create {
+    padding: 3% 2% 3% 3%;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-track {
+    background: white; 
+  }
 ::-webkit-scrollbar {
     width: 10px;
   }
@@ -95,13 +101,13 @@ input[type=checkbox] {
 .list {
     border: 1px solid #EFF0F6;
     border-radius: 10px;
-    padding: 2%;
-    margin-bottom: 2%;
-    background-color: #EFF0F6;
+    padding: 1% 2%;
+    margin-bottom: 1.5%;
+    background-color: #e1eefb;
     text-align: left;
     display: flex;
     align-items: center;
-    
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.2);
     
 }
 .createbutton {
@@ -113,12 +119,19 @@ input[type=checkbox] {
     padding: 13px 90px ;
     font-weight: 550;
     cursor: pointer;
-    margin-bottom: 5%;
+    
 }
+.createbutton:hover {
+    cursor: pointer;
+    opacity: 0.9;
+    box-shadow: 0 0px 6px 2px rgba(0,0,0,0.1);
+    transition: 0.25s;
+  }
 .backbutton {
-    padding: 0 40px ;
-    margin: 0;
-    font-size: 21px;
+    font-size: 1em;
+    border: none;
+    background-color: #f4f5f7;
+    cursor: pointer;
 }
 .courseno {
     margin: 0 20px;
@@ -144,6 +157,15 @@ input[type=checkbox] {
     flex-wrap: wrap; 
     display: flex
     flex-direction: column-reverse;
+}
+.fa-arrow-left {
+    color: #FFAAE7;
+    font-size: 3.5em;
+    border: none;
+}
+.fa-arrow-left:hover {
+    cursor: pointer;
+    opacity: 0.9;
 }
 
 `
