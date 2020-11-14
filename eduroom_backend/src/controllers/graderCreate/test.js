@@ -81,4 +81,94 @@ const pTestcase = (req, res, next) => {
     console.error(error);
   }
 };
-module.exports = { getAnn, test, postAnn, editAnn, pTestcase };
+
+const dTestcase = async (req, res, next) => {
+  console.log("-----------------------------------------------");
+  const id = req.query.id;
+  console.log(req.query);
+
+  await pool.query(`DELETE FROM QuestionTestcases WHERE questionId = '${id}'`);
+  res.send({ success: true });
+};
+
+const dSample = async (req, res, next) => {
+  console.log("-----------------------------------------------");
+  const id = req.query.id;
+  console.log(req.query);
+
+  await pool.query(`DELETE FROM questionSample WHERE questionId = '${id}'`);
+  res.send({ success: true });
+};
+
+const eQuestion = async (req, res, next) => {
+  const title = req.body.title;
+  const description = req.body.description;
+  const hint = req.body.hint;
+  const intputDes = req.body.intputDes;
+  const outputDes = req.body.outputDes;
+  const timeLimit = req.body.timeLimit;
+  const memoryLimit = req.body.memoryLimit;
+  const difficulty = req.body.difficulty;
+  const visibility = req.body.visibility;
+  const ruleType = req.body.ruleType;
+  const adminid = req.body.adminid;
+  const newTags = req.body.newTags;
+  const existTags = req.body.existTags;
+  const id = req.body.id;
+  await pool.query(`DELETE FROM questiontag WHERE questionId = '${id}'`);
+
+  pool.query(
+    "UPDATE questions SET (title,description,hint,intputDes,outputDes,timeLimit,memoryLimit,difficulty,visibility,ruleType,adminid) = ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) WHERE id = ($12)",
+    [
+      title,
+      description,
+      hint,
+      intputDes,
+      outputDes,
+      timeLimit,
+      memoryLimit,
+      difficulty,
+      visibility,
+      ruleType,
+      adminid,
+      id,
+    ],
+    function (err, result, fields) {
+      if (err) throw err;
+
+      newTags.forEach((t) => {
+        pool.query(
+          "INSERT INTO tags (tagName) VALUES ($1) RETURNING tagid",
+          [t],
+          function (err, result, fields) {
+            if (err) throw err;
+
+            pool.query(
+              "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
+              [id, result.rows[0].tagid]
+            );
+          }
+        );
+      });
+
+      existTags.forEach((t) => {
+        pool.query(
+          "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
+          [id, t]
+        );
+      });
+      res.send({ success: true, id: id });
+    }
+  );
+};
+
+module.exports = {
+  getAnn,
+  test,
+  postAnn,
+  editAnn,
+  pTestcase,
+  dTestcase,
+  dSample,
+  eQuestion,
+};
