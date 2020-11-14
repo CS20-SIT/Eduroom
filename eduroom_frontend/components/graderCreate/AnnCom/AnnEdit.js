@@ -13,10 +13,16 @@ import Image from "next/image";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 //on button , change that to chips
 // https://material-ui.com/components/chips/#chip
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const AnnEdit = (props) => {
+  const [erorvalid, seterorValid] = React.useState(false);
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
     success: false,
@@ -28,6 +34,12 @@ const AnnEdit = (props) => {
       success: false,
       failed: false,
     });
+  };
+  const handleErrorClose = (event, reason) => {
+    seterorValid(false);
+    if (reason === "clickaway") {
+      return;
+    }
   };
 
   const handleClickOpen = () => {
@@ -56,37 +68,45 @@ const AnnEdit = (props) => {
   };
 
   const handleSubmit = () => {
-    axios
-      .put("/api/grader/eann", {
-        id: props.id,
-        title: ann.title,
-        description: ann.description,
-        adminid: ann.adminid,
-        isvisible: visible,
-      })
-      .then(function (response) {
-        console.log(response);
-        setOpen(false);
+    if (ann.title == "") {
+      seterorValid(true);
+    } else {
+      axios
+        .put("/api/grader/eann", {
+          id: props.id,
+          title: ann.title,
+          description: ann.description,
+          adminid: ann.adminid,
+          isvisible: visible,
+        })
+        .then(function (response) {
+          console.log(response);
+          setOpen(false);
 
-        setTimeout(() => {
-          console.log("this is when we call prop on sucess");
-          props.onSuccess();
-          setSubmitStatus({ ...submitStatus, success: true });
-        }, 450);
-      })
-      .catch(function (error) {
-        setOpen(false);
-        setTimeout(() => {
-          setSubmitStatus({ ...submitStatus, failed: true });
-        }, 450);
-      });
-
+          setTimeout(() => {
+            console.log("this is when we call prop on sucess");
+            props.onSuccess();
+            setSubmitStatus({ ...submitStatus, success: true });
+          }, 450);
+        })
+        .catch(function (error) {
+          setOpen(false);
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, failed: true });
+          }, 450);
+        });
+    }
     // setAnn({
     //   title: "",
     //   description: "",
     //   adminid: 0,
     // });
     // setVisible(true);
+  };
+  const sError = {
+    fontFamily: "Quicksand , sans-serif",
+    color: "white",
+    fontSize: "1em",
   };
 
   const sTitle = {
@@ -184,6 +204,15 @@ const AnnEdit = (props) => {
             }
             label={<span style={sButtionandVisbile}>Visible</span>}
           />
+          <Snackbar
+            open={erorvalid}
+            autoHideDuration={6000}
+            onClose={handleErrorClose}
+          >
+            <Alert style={sError} onClose={handleErrorClose} severity="error">
+              Invalid Information detected, Please Review your submission !
+            </Alert>
+          </Snackbar>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
