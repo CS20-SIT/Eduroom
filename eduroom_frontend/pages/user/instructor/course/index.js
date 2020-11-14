@@ -20,7 +20,7 @@ const Index = () => {
                             <Link href="/user/instructor/course/createpackage">
                                 <button className="addpackbutton">
                                     <div><i className="fas fa-plus-circle"></i></div>
-                                    <div>Add new package</div>
+                                    <div>add new package</div>
                                 </button>
                             </Link>
                         </div>

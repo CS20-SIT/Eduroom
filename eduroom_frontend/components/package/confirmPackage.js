@@ -6,6 +6,10 @@ import { useRouter } from 'next/router';
 import api from '../../api';
 
 const ConfirmPackage = (props) => {
+  const totalPrice = (total) => {
+    let price = parseFloat(total*((100-props.myPackage.discount)/100)).toFixed(2);
+    return price;
+  }
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const [type] = useState('created');
@@ -15,10 +19,10 @@ const ConfirmPackage = (props) => {
     handleSubmit();
   };
 
-  const handleCloseDialog = (e) => {
-    e.preventDefault();
-    setOpen(false);
-  };
+  // const handleCloseDialog = (e) => {
+  //   e.preventDefault();
+  //   setOpen(false);
+  // };
   const handleSubmit = () => {
     console.log(type);
     api
@@ -37,10 +41,11 @@ const ConfirmPackage = (props) => {
     <Fragment>
       <div>
         <div className="package-header">CONFIRM CREATE</div>
-        <div className="container pd-4-25">
-          <div className="imgconfirm">image</div>
-          <div className="subtitle">{props.myPackage.name}</div>
-          <div className="price">฿<span>Price</span></div>
+        <div className="container pd-4-15">
+          <div className="center">
+          <div className="imgconfirm">image</div></div>
+          <div className="subtitle uppercase">{props.myPackage.name}</div>
+          <div className="price">฿<span>{totalPrice(1000)}</span></div>
           <div className="category">{props.myPackage.category}</div>
           <div className="subtitle">Package Detail</div>
           <div className="detail">{props.myPackage.detail}</div>
@@ -62,7 +67,7 @@ const ConfirmPackage = (props) => {
           </div>
           <div></div>
 
-          <Dialog open={open} onClose={handleCloseDialog}>
+          <Dialog open={open}>
             <div className="dialog">
               <div className="indialog">
                 <div className="dialog-buttonX">
@@ -78,7 +83,7 @@ const ConfirmPackage = (props) => {
                     style={{ width: 200, height: 200 }}
                   />
                 </div>
-                <div className="text-dialog-create" > Create Package Successful !</div>
+                <div className="text-dialog"> Create Package Successful !</div>
               </div>
             </div>
           </Dialog>
