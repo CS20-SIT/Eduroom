@@ -10,6 +10,8 @@
 .select button{
     padding: 5px 40px;
     margin: 0px 20px;
+    font-size: 1em;
+    color: whitesmoke;
     background-color: #FB9CCB;
     border: none;
     border-radius: 10px;
@@ -35,6 +37,7 @@
 }
 .btn{
     color: whitesmoke;
+    font-size: 1.2em;
     position: relative;
     top:40px;
     padding: 5px 40px;

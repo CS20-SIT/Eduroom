@@ -4,7 +4,7 @@ import Styles from '../../styles/CoinStyles/ensurePayment.module.css';
 import SuccessPop from '../FolderCoin/Success-popup';
 import {Dialog, DialogContent} from '@material-ui/core';
 
-const ensurePay = () => {
+const ensurePay = (props) => {
     const [state,setState]=useState(false);
     const SuccessPurchase =()=>{
         setState(true)
@@ -19,13 +19,13 @@ const ensurePay = () => {
                 <button onClick={SuccessPurchase}>
                     Yes
                 </button>
-                <Dialog  open={state} onClose={() => setState(false)}>
+                <Dialog  open={state}>
                     <DialogContent style={{width:'500px',height:'500px'}}>
-                        <SuccessPop/>
+                        <SuccessPop close={()=>{ props.closeEnsure(); setState(false)}}/>
                     </DialogContent>
                 </Dialog>
                 </div>
-                <button>
+                <button onClick={props.close}>
                     No
                 </button>
             </div>
