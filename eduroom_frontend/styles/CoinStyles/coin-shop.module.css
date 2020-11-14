@@ -8,7 +8,7 @@
     animation-name: MoveOut;
     animation-duration: 0.5s;
 }
-.btnHistory2{
+.btnHistory2 {
     padding: 12px 50px;
     background-color: #a880f7;
     border: none;
@@ -19,10 +19,13 @@
     border-radius: 12px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        z-index: 10000;
-        outline: none;
+    z-index: 10000;
+    outline: none;
 }
-.btnHistory{
+.top{
+    padding-top:100px;
+}
+.btnHistory {
     position: absolute;
     top: 0%;
     left: 30%;
@@ -33,7 +36,7 @@
     animation-duration: 1s;
     margin-right: 100px;
 }
-.btnPop{
+.btnPop {
     position: absolute;
     top: 0%;
     left: 13%;
@@ -47,13 +50,12 @@
     border-radius: 12px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        z-index: 10000;
-        outline: none;
+    z-index: 10000;
+    outline: none;
 }
-.btnPop:hover{
+.btnPop:hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2),
         0 17px 50px 0 rgba(0, 0, 0, 0.19);
-
 }
 .btn {
     position: absolute;
@@ -70,15 +72,14 @@
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
     outline: none;
-
 }
 .btn:hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2),
         0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
-.daily{
+.daily {
     position: absolute;
-    top:62.8%;
+    top: 62.8%;
     left: 30%;
     z-index: 100000;
 }
@@ -111,7 +112,6 @@
     top: 7%;
 }
 
-
 .posball2 {
     position: relative;
     margin-left: 65%;
@@ -126,18 +126,18 @@
 .img3 {
     width: 95vw;
     background-image: url('../../public/images/Coin-image/BG.svg');
-    background-repeat: repeat;
-
+    position: sticky;
+    margin-top:-65px ;
 }
-.History{
-    animation:MoveOut2 0.5s;
+.History {
+    animation: MoveOut2 0.5s;
 }
-@keyframes MoveOut2{
-    0%{
+@keyframes MoveOut2 {
+    0% {
         opacity: 1;
         transform: translateX(0px);
     }
-    100%{
+    100% {
         opacity: 0;
         transform: translateX(-100px);
     }
@@ -242,7 +242,6 @@
     transform-origin: bottom center;
 }
 
-
 @keyframes balloons2 {
     0%,
     100% {
@@ -252,7 +251,6 @@
         transform: translateY(-25px) rotate(4deg);
     }
 }
-
 
 .balloon2:before {
     content: '▲';

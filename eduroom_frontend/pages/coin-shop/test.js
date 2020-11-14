@@ -1,7 +1,8 @@
-import Styles from '../../styles/CoinStyles/defaultPop';
-import { useEffect, useState } from 'react';
-
+import {useEffect} from 'react';
 const temp = props => {
+    useEffect(()=>{
+        createBalloons(100);
+    },[]);
     function random(num) {
         return Math.floor(Math.random() * num);
     }
@@ -20,31 +21,57 @@ const temp = props => {
             10},0.7);
         margin: ${mt}px 0 0 ${ml}px;
         animation: float ${dur}s ease-in infinite
+         .balloon {
+                    height: 125px;
+                    width: 105px;
+                    border-radius: 75% 75% 70% 70%;
+                    position: relative;
+                }
+
+                .balloon:before {
+                    content: '';
+                    height: 75px;
+                    width: 1px;
+                    padding: 1px;
+                    background-color: #fdfd96;
+                    display: block;
+                    position: absolute;
+                    top: 125px;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                }
+
+                .balloon:after {
+                    content: '▲';
+                    text-align: center;
+                    display: block;
+                    position: absolute;
+                    color: inherit;
+                    top: 120px;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                }
+        
         `;
     }
 
     function createBalloons(num) {
-        var balloonContainer = document.getElementById('.balloon-container');
+        var balloonContainer = document.getElementById('balloon-container');
+        console.log(balloonContainer);
         for (var i = num; i > 0; i--) {
             var balloon = document.createElement('div');
-            balloon.className = 'balloon';
+            balloon.className = balloon;
             balloon.style.cssText = getRandomStyles();
             balloonContainer.append(balloon);
         }
+        console.log(balloonContainer);
     }
-    window.onload = function() {
-        createBalloons(100);
-    };
 
     return (
-        <div
-            className='div'
-            onClick={e => {
-                props.onClose();
-                e.stopPropagation();
-            }}
-        >
-            <div onClick={e => e.stopPropagation()} className='white'>
+        <div>
+            <div>
                 Kuy
                 <div id='balloon-container'></div>
             </div>
