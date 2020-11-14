@@ -91,7 +91,6 @@ const BookingInfo = ({
                 times[times.length - 1] + 1
               }:00:00`
             );
-            w;
             console.log(
               'price',
               times.length * instructor.price * (students.length + 1)
