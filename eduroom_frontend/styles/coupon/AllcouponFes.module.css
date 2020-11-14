@@ -1,0 +1,21 @@
+.arrow {
+    border: solid 8px;
+    opacity: 1;
+    background-color: #f39ac4;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    color: white;
+}
+.disable {
+    border: solid 8px;
+    opacity: 0.5;
+    background-color: #f39ac4;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    color: white;
+}
+.container{
+    margin:20px;
+}
