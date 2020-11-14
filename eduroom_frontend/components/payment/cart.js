@@ -81,6 +81,8 @@ const cart = () => {
           </div>
         </div>
         <div className="checkoutBox">
+
+          <div style={{ width:"50px", height:"200px",position:"absolute"}}>
           <div
             style={{
               display: "flex",
@@ -157,6 +159,8 @@ const cart = () => {
               </div>
             </div>
           </div>
+          </div>
+          
         </div>
       </div>
       <style jsx>{style}</style>

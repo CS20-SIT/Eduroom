@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import style from '../../styles/package/detail'
 import Instructors from '../../components/package/instructorCard'
+import SelectedCourse from '../../components/package/selectedcourse'
 
 
 const Package = () => {
@@ -9,9 +10,13 @@ const Package = () => {
         <Fragment>
             
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
+                
                     <div className="bigCard">
+                    {/* <div style={{backgroundImage: "url("+"/images/package/pgbg.svg"+")"}}> */}
                         <div style={{display:'flex', marginLeft:30, flexDirection:'column'}}> 
+                        
                             <h1 className="textHead">Package Detail</h1>
+                            
                             <div className="text">There are various courses in this package. Learn about the computational language like Python. 
                                 You can learn from the ground up to the professional level to further your work or study. 
                                 Of course, within this package, not only theories that are easy to understand from the instructor 
@@ -29,7 +34,9 @@ const Package = () => {
                         <div>
                         <h1 className="textHead">Courses in Package</h1>
                         <div style={{marginBottom: '30px'}}>
-                            waiting for EJuuu!!! (course card)
+                            <div style={{width:'60vw', marginLeft:40}}>
+                            <SelectedCourse/>
+                            </div>
                         </div>
                         </div>
                         <hr style={{width:700, justifyContent:'center',border: '1px solid #7B89DD'}}></hr>
@@ -41,9 +48,11 @@ const Package = () => {
                        <Instructors/>
                        <Instructors/>
                         </div>
-                        </div>                             
+                        </div> 
+                        {/* </div> */}
                         </div>
                         
+                    
                     </div>
                 </div>
             
