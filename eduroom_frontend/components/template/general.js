@@ -25,14 +25,10 @@ const General = (props) => {
 			<style jsx>
 				{`
 					#content {
-						width: 95%;
-						margin-left: 5%;
-						// margin-left: 30px;
+						width: 100%;
 						top: 0;
 						z-index: 20;
 						min-height: 100vh;
-						// overflow-y: auto;
-						// position:absolute;
 					}
 					.background-img {
 						position: absolute;
