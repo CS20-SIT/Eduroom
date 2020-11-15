@@ -26,7 +26,6 @@ export default css`
   }
   .edit{
     display: flex;
-    marginTop: 20px;
   }
   .edit:hover{
     cursor: pointer;
@@ -35,7 +34,7 @@ export default css`
     margin-bottom: 0;
     color: #F39AC4;
   }
-  .register{
+  .btn{
     background: #F39AC4;
 		border-radius: 25px;
 		padding: 0.75rem 2rem;
@@ -48,7 +47,7 @@ export default css`
     font-size: 16px;
   }
 
-  .register:hover{
+  .btn:hover{
     cursor:pointer;
     opacity: 0.8;
   }
