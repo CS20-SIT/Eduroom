@@ -24,7 +24,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Switch from "@material-ui/core/Switch";
-import { ImageFilter9 } from "material-ui/svg-icons";
+import { ImageFilter } from "material-ui/svg-icons";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -124,21 +124,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-// const classes = useStyles();
-//   const [title, setTitle] = React.useState("");
-//   const [description, setDescription] = React.useState("");
-//   const [inputdesc, setInputdesc] = useState("");
-//   const [outputdesc, setOutputdesc] = useState("");
-//   const [rule, setRule] = React.useState("oi");
-//   const [visible, setvisible] = React.useState(false);
-//   const [memory, setMemory] = useState(256);
-//   const [time, setTime] = useState(1000);
-//   const [check, setCheck] = useState(false);
-//   const [erorvalid, seterorValid] = React.useState(false);
-//   const [hint, setHint] = useState("");
-//   const [difficulty, setDiff] = useState("easy");
-//   const [samples, setSample] = useState([]);
 
 const theme1 = createMuiTheme({
   overrides: {

@@ -10,11 +10,12 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Divider from "@material-ui/core/Divider";
 import axios from "../../../api";
 import Image from "next/image";
-
+import { useRouter } from "next/router";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
+import { connect } from "socket.io-client";
 
 //on button , change that to chips
 // https://material-ui.com/components/chips/#chip
@@ -71,14 +72,24 @@ const AnnEdit = (props) => {
     if (ann.title == "") {
       seterorValid(true);
     } else {
+      let backend = "";
+      let data = {
+        title: ann.title,
+        description: ann.description,
+        adminid: ann.adminid,
+        isvisible: visible,
+      };
+      if (props.coannno == undefined) {
+        backend = "/api/grader/eann";
+        data.id = props.id;
+      } else {
+        backend = "/api/grader/econtestann";
+        data.coannno = props.coannno;
+        data.conid = props.conid;
+      }
+
       axios
-        .put("/api/grader/eann", {
-          id: props.id,
-          title: ann.title,
-          description: ann.description,
-          adminid: ann.adminid,
-          isvisible: visible,
-        })
+        .put(backend, data)
         .then(function (response) {
           console.log(response);
           setOpen(false);
@@ -96,12 +107,8 @@ const AnnEdit = (props) => {
           }, 450);
         });
     }
-    // setAnn({
-    //   title: "",
-    //   description: "",
-    //   adminid: 0,
-    // });
-    // setVisible(true);
+
+    setVisible(true);
   };
   const sError = {
     fontFamily: "Quicksand , sans-serif",

@@ -52,13 +52,13 @@ const Test = () => {
           <ConEach
             id={row.conno}
             title={row.title}
-            description={shorten(row.description, 500)}
+            description={shorten(row.description, 700)}
             starttime={
-              "Start time : " +
+              "START : " +
               format(Date.parse(row.starttime), "yyyy-MM-dd 'AT' HH:mm")
             }
             endtime={
-              "End time : " +
+              "END : " +
               format(Date.parse(row.endtime), "yyyy-MM-dd 'AT' HH:mm")
             }
           ></ConEach>

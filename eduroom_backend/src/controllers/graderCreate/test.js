@@ -14,7 +14,7 @@ const setTime = (text) => {
 };
 const getAnn = async (req, res, next) => {
   const data = await pool.query(
-    "select a.id, a.title , a.description , b.displayName ,a.time ,a.isvisible from announcements a, admin_login b  where a.adminid = b.adminid order by 1 DESC "
+    "select  a.id, a.title , a.description , b.displayName ,a.time ,a.isvisible,a.adminid from announcements a, admin_login b  where a.adminid = b.adminid order by 1 DESC "
   );
   const ann = data.rows;
   if (ann != null) {
@@ -41,8 +41,7 @@ const postAnn = async (req, res, next) => {
 const editAnn = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
-  // const adminid = req.body.adminid
-  const adminid = "12345678-1234-1234-1234-123456789123";
+  const adminid = req.body.adminid;
   const visible = req.body.isvisible;
   const id = req.body.id;
 
