@@ -29,4 +29,21 @@ export default css`
     color: #F39AC4;
     cursor: pointer;
   }
+  .register{
+    background: #F39AC4;
+		border-radius: 25px;
+		padding: 0.75rem 2rem;
+		margin-bottom: 5%;
+		border: none;
+		transition: 0.25s;
+		outline: none;
+    margin-top: 5px;
+    color: white;
+    font-size: 16px;
+  }
+
+  .register:hover{
+    cursor:pointer;
+    opacity: 0.8;
+  }
 `
