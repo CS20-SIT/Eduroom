@@ -8,6 +8,7 @@ import socketIOClient from "socket.io-client";
 const Content = ({ id }) => {
   //mockup data
   const router = useRouter();
+ 
   const [kahoot_roomHistory, setHistory] = useState([
     { sessionID: "1", roomid: "1", pin: "1234", available: false },
     { sessionID: "2", roomid: "2", pin: "3456", available: false },
@@ -17,8 +18,8 @@ const Content = ({ id }) => {
   const [pin, setPin] = useState("0");
   let temppin = 0;
   async function randomPin() {
-    // temppin=(Math.floor(Math.random() * 10000) + 1000);
-    temppin = 1234;
+    temppin=(Math.floor(Math.random() * 10000) + 1000);
+    // temppin = 1234;
     setPin(temppin);
 
     //update query session room id avilable: true
