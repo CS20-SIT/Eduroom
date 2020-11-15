@@ -46,7 +46,7 @@ const pContestAnn = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
   const conId = req.body.conid;
-  const adminId = "12345678-1234-1234-1234-123456789123";
+  const adminId = req.body.adminid;
   const isVisible = req.body.isvisible;
 
   await pool.query(
@@ -66,13 +66,11 @@ const eContest = async (req, res, next) => {
   const startTime = req.body.startTime;
   const endTime = req.body.endTime;
   const status = req.body.status;
-  const adminid = "12345678-1234-1234-1234-123456789123";
-  const id = req.body.id;
+  const adminid = req.body.adminid;
 
   await pool.query(
-    'UPDATE contest SET (conno,title,conruletype,description,starttime,endtime,status,"adminid") = ($1 , $2, $3, $4, $5, $6, $7, $8) WHERE id = ($9)',
+    'UPDATE contest SET (title,conruletype,description,starttime,endtime,status,"adminid") = ($1 , $2, $3, $4, $5, $6, $7) WHERE conno = ($8)',
     [
-      conno,
       title,
       conRuleType,
       description,
@@ -80,7 +78,7 @@ const eContest = async (req, res, next) => {
       endTime,
       status,
       adminid,
-      id,
+      conno,
     ]
   );
   res.send({ success: true });
@@ -115,7 +113,10 @@ const gAllContest = async (req, res, next) => {
 
 //get by id
 const gContest = async (req, res, next) => {
-  const data = await pool.query("select * from contest  where conno = 1 ");
+  const id = req.query.id;
+  const data = await pool.query(
+    `select * from contest  where conno =  '${id}'`
+  );
   const conann = data.rows;
   res.send(conann);
 };
