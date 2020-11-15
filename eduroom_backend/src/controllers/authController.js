@@ -12,7 +12,7 @@ exports.getProfile = async (req, res) => {
   try {
     // UserID is in req.user.user
     const result = await pool.query(
-      `SELECT firstname, lastname, displayname, avatar from user_profile where userid = '${req.user.user}'`
+      `SELECT * from user_profile where userid = '${req.user.user}'`
     );
     const user = { ...result.rows[0], id: req.user.user };
     res.send(user);
