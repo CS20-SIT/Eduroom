@@ -4,33 +4,52 @@ import Grid from "@material-ui/core/Grid";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import socketIOClient from "socket.io-client";
+import api from '../../api';
 
 const Content = ({ id }) => {
   //mockup data
   const router = useRouter();
- 
-  const [kahoot_roomHistory, setHistory] = useState([
-    { sessionID: "1", roomid: "1", pin: "1234", available: false },
-    { sessionID: "2", roomid: "2", pin: "3456", available: false },
-    { sessionID: "3", roomid: "5", pin: "4567", available: false },
-  ]);
+  const [kahoot_roomHistory, setHistory] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api.get('/api/kahoot/roomHistory');
+      setHistory(res.data)
+    };
+    fetchData();
+  }, []);
+
+  //insert to the database
+  const handleSubmit = async (body) => {
+    setLoading(true);
+    const res = await api.post('/api/instructor/register', body);
+    console.log(res.data);
+    setLoading(false);
+  };
   const [player, setPlayer] = useState([]);
-  const [pin, setPin] = useState("0");
+  const [pin, setPin] = useState(null);
   let temppin = 0;
   async function randomPin() {
-    temppin=(Math.floor(Math.random() * 10000) + 1000);
-    // temppin = 1234;
-    setPin(temppin);
-
-    //update query session room id avilable: true
-    kahoot_roomHistory.map((el, index) => {
-      if (kahoot_roomHistory[index].pin == temppin) {
-        if (kahoot_roomHistory[index].available == true) {
-          temppin = Math.floor(Math.random() * 10000) + 1000;
-          setPin(temppin);
+    temppin = await (Math.floor(Math.random() * 10000) + 1000);
+    // temppin = "12345";
+  
+    let duplicate = true;
+    if(kahoot_roomHistory!=null){
+    while(duplicate){
+      duplicate = false;
+      for(let i=0;i<kahoot_roomHistory.length;i++){
+        if(kahoot_roomHistory[i].pin == temppin){
+          temppin = (Math.floor(Math.random() * 10000) + 1000);
+          duplicate = true;
+          break;
         }
       }
-    });
+      if(duplicate == false){
+        break;
+      }
+    }
+  }
+    setPin(temppin);
+    console.log('setPin',pin)
   }
   const setRoomOpen = (ppin) => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
@@ -39,35 +58,44 @@ const Content = ({ id }) => {
     socket.emit("set-openRoom", true, ppin);
   };
   const [render, setRender] = useState();
+
+
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     const temp = [];
-    socket.on("new-name", (namePlayer, pin) => {
-      temp.push([namePlayer, pin]);
-      if (temp[temp.length - 1][1] == "1234") {
+    console.log('pinResponse',pin)
+
+    socket.on("new-name", (namePlayer, pinTemp) => {
+      // if(pin!=null){
+      console.log(namePlayer,pinTemp,temppin)
+      // }
+      temp.push([namePlayer, pinTemp]);
+      if (temp[temp.length - 1][1] == pin) {
         player.push(temp[temp.length - 1][0]);
         setRender(namePlayer);
       }
     });
   };
-
   const renderStudent = () => {
-    console.log(player);
+
     return player.map((el, index) => {
       return (
-        <Grid item xs={4} style={{display:'flex',justifyContent:'center'}}>
-          <div key={index}>{el}</div>
+        <Grid key={index} item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
+          <div >{el}</div>
         </Grid>
       );
     });
   };
 
   useEffect(() => {
-    randomPin();
     response();
-  }, []);
+  }, [pin]);
+
+  useEffect(()=>{
+    randomPin();
+  },[kahoot_roomHistory])
 
   return (
     <Fragment>
