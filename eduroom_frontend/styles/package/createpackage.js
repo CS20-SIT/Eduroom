@@ -262,7 +262,7 @@ input[type=checkbox] {
 }
 .alert-text {
     color: red;
-    font-size: 14px;
+    font-size: 13px;
     padding-left: 7px;
 }
 .old-price {

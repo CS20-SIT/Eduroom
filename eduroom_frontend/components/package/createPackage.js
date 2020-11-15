@@ -60,7 +60,7 @@ const CreatePackage = (props, { index }) => {
   const validator = () => {
     if (
       props.myPackage.name == '' ||
-      props.myPackage.category == '' ||
+      props.myPackage.category == 'default' ||
       props.myPackage.detail == '' ||
       props.myPackage.courses == 0) {
       setAlert({ name: true, category: true, detail: true, courses: true })

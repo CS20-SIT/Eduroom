@@ -28,10 +28,12 @@ const ConfirmPackage = (props) => {
     api
       .post('/api/package/createPackage', {
         name: props.myPackage.name,
+        instructorid: '1a9fa554-0c66-4ece-acb4-13a5078aa3b7',
         discount: props.myPackage.discount,
         category: props.myPackage.category,
         detail: props.myPackage.detail,
-        courses: props.myPackage.courses
+        courses: props.myPackage.courses,
+        ispublic: false
       })
   };
 
