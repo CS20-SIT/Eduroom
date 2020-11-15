@@ -1,10 +1,21 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Courses from './courses';
 import style from '../../styles/package/createpackage';
+import api from '../../api';
 
 const EditPackage = (props, { index }) => {
   const [image, setImage] = useState(null);
+  const [data, setData] = useState([]);
+  
   useEffect(() => {
+    const GetData = async () => {
+      const result = await api.get('/api/package/getPackage',
+      {params : { packageid: 'b7c2c25b-01e4-43e4-a72d-739d194a5bcd'}
+    })
+      setData(result.data[0])
+    }
+    GetData()
+    console.log(data);
     if (image) {
       var reader = new FileReader();
       reader.onload = function (e) {
@@ -93,8 +104,9 @@ const EditPackage = (props, { index }) => {
                   onChange={nameChange}
                   value={props.myPackage.name}
                 ></input>
+                <div>{data.packagename}</div>
               </div>
-
+                
               <div>
                 <select
                   name="discount"
@@ -112,6 +124,7 @@ const EditPackage = (props, { index }) => {
                     );
                   })}
                 </select>
+                <div>{data.discount}</div>
               </div>
 
               <div>
@@ -144,6 +157,7 @@ const EditPackage = (props, { index }) => {
                   onChange={detailChange}
                   value={props.myPackage.detail}
                 ></textarea>
+                 <div>{data.detail}</div>
               </div>
             </div>
           </div>
