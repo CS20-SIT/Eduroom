@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import Navbar from '../layouts/navbar'
 import Header from '../layouts/header'
 import SideNav from '../layouts/sidenav/sidenav'
-import Image from 'next/image'
+
 const General = (props) => {
 	return (
 		<Fragment>
@@ -18,7 +18,9 @@ const General = (props) => {
 				<SideNav />
 				<div id="content">
 					<Navbar />
-					<main>{props.children}</main>
+					<div style={{ paddingLeft: '5%' }}>
+						<main>{props.children}</main>
+					</div>
 				</div>
 				{props.img ? <img alt="background-img" src={props.img} className="background-img" /> : null}
 			</div>
@@ -35,7 +37,6 @@ const General = (props) => {
 						bottom: 0;
 						width: 100vw;
 						z-index: 5;
-						// position:fixed;
 					}
 				`}
 			</style>

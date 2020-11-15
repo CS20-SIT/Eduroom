@@ -14,8 +14,29 @@ exports.createRoom = async (req, res, next) => {
   res.status(201).json(room);
 };
 
+exports.createKahootHistory = async (req, res, next) => {
+  const { roomid, pin, isavailable } = req.body;
+  console.log('kk');
+  console.log(req.body);
+  res.send();
+  const result = await pool.query('SELECT MAX(id) as id from kahoot_room');
+  const newID = result.rows[0].id + 1;
+  let room = await pool.query(
+    'INSERT INTO kahoot_roomhistory(roomid, pin, isavailable) values($1,$2,$3) RETURNING * ',
+    [roomid, pin, isavailable]
+  );
+  room = room.rows[0];
+  res.status(201).json(room);
+};
+
 exports.fetchRoom = async (req, res, next) => {
   const result = await pool.query('SELECT * from kahoot_room');
   const rooms = result.rows;
   res.status(200).json(rooms);
+};
+
+exports.fetchRoomHistory = async (req, res, next) => {
+  const result = await pool.query('SELECT * from kahoot_roomhistory');
+  const roomHistory = result.rows;
+  res.status(200).json(roomHistory);
 };

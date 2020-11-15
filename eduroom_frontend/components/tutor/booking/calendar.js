@@ -87,7 +87,7 @@ const Calendar = ({
               }`}
               key={index}
               onClick={() => {
-                if (i < today.month && month == today.month) return;
+                if (i < today.date && month == today.month) return;
                 setDate(i);
                 setTimes([]);
               }}
