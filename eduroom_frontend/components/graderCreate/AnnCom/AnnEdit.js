@@ -6,7 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
+import Snackbar from "@material-ui/core/Snackbar";
 import Divider from "@material-ui/core/Divider";
 import axios from "../../../api";
 import Image from "next/image";
@@ -14,8 +14,6 @@ import { useRouter } from "next/router";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import MuiAlert from "@material-ui/lab/Alert";
-import Snackbar from "@material-ui/core/Snackbar";
-import { connect } from "socket.io-client";
 
 //on button , change that to chips
 // https://material-ui.com/components/chips/#chip

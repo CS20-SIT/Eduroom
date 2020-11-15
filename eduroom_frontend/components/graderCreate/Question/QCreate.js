@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Chip from "@material-ui/core/Chip";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import axios from "../../../api";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -21,10 +22,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Link from "next/link";
-import Image from "next/image";
-
 import Switch from "@material-ui/core/Switch";
-import { ImageFilter } from "material-ui/svg-icons";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -146,7 +144,7 @@ export default function FullWidthGrid(props) {
     return str.split("\\").pop().split("/").pop();
   };
   // const [oldSample,]
-
+  const router = useRouter();
   useEffect(() => {
     const GetData = async () => {
       const result = await axios("/api/grader/alltag");
@@ -665,7 +663,13 @@ export default function FullWidthGrid(props) {
         <Grid container spacing={6}>
           <Grid item xs={10}>
             <span style={sBigTitle}>
-              {" "}
+              <span onClick={() => router.back()}>
+                <i
+                  style={{ cursor: "pointer" }}
+                  className="fa fa-arrow-left"
+                  aria-hidden="true"
+                ></i>
+              </span>{" "}
               {props.id == null
                 ? "Create your Question"
                 : `Edit Question No. ${props.id} `}
