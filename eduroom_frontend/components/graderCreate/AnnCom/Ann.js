@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 // toggle for visiblity https://material-ui.com/components/switches/
 const Test = (p) => {
   const router = useRouter();
-  const id = router.query.id;
+  const id = router.query.conno;
 
   const [refresh, setRefresh] = useState(false);
   const handleUpdate = () => {

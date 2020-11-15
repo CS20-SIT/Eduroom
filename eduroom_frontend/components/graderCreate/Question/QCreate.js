@@ -145,6 +145,8 @@ export default function FullWidthGrid(props) {
   };
   // const [oldSample,]
   const router = useRouter();
+  const conno = router.query.conno;
+
   useEffect(() => {
     const GetData = async () => {
       const result = await axios("/api/grader/alltag");
@@ -446,6 +448,7 @@ export default function FullWidthGrid(props) {
             const id = response.data.id;
             onHandlerFile(id);
             onHandlerSample(id);
+            onHandlerContest(id);
           })
           .catch(function (error) {
             setTimeout(() => {
@@ -630,6 +633,28 @@ export default function FullWidthGrid(props) {
             setSubmitStatus({ ...submitStatus, success: true });
           }, 450);
         })
+        .catch((err) => {
+          console.log(err);
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, failed: true });
+          }, 450);
+        });
+    }
+  };
+
+  const onHandlerContest = (id) => {
+    if (conno != undefined) {
+      axios
+        .post("/api/grader/ccontestquestion", {
+          conquestionno: 1,
+          conid: conno,
+          questionid: id,
+        })
+        // .then((res) => {
+        //   setTimeout(() => {
+        //     setSubmitStatus({ ...submitStatus, success: true });
+        //   }, 450);
+        // })
         .catch((err) => {
           console.log(err);
           setTimeout(() => {
@@ -1003,18 +1028,6 @@ export default function FullWidthGrid(props) {
                     }}
                   />
                 </Grid>
-                {/* <Grid item xs={1}>
-                  <img
-                    alt="landing-img"
-                    src="/images/graderCreate/fileUpload.svg"
-                    width="80"
-                    height="80"
-                    style={{
-                      marginTop: 20,
-                      marginBottom: 10,
-                    }}
-                  />
-                </Grid> */}
                 <Grid item xs={12}>
                   <span
                     style={{
@@ -1078,12 +1091,12 @@ export default function FullWidthGrid(props) {
               </DialogContent>
               <DialogActions>
                 <Button color="primary">
-                  <Link
+                  <span
                     style={sButtionandVisbile}
-                    href="/admin/grader/question/"
+                    onClick={() => router.back()}
                   >
-                    Ok
-                  </Link>
+                    <span style={{ cursor: "pointer" }}>OK</span>
+                  </span>{" "}
                 </Button>
               </DialogActions>
             </Dialog>

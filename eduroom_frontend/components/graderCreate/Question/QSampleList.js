@@ -38,21 +38,12 @@ class Form extends React.Component {
   handleChange = (e) => {
     if (["inputsample", "outputsample"].includes(e.target.name)) {
       let questionSample = [...this.state.questionSample];
-      console.log(e.target);
-      console.log(e.target.value);
-
       questionSample[e.target.dataset.id][e.target.name] = e.target.value;
       console.log([this.state.questionSample]);
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
-    console.log(
-      "----------questionSample --------------------- questionSample ------------------questionSample-"
-    );
-    console.log(this.state.questionSample);
-    console.log(
-      "----------questionSample --------------------- questionSample ------------------questionSample-"
-    );
+
     this.props.handleSample(this.state.questionSample);
   };
   addNewRow = (e) => {
