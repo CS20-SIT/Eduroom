@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react'
+import Link from 'next/link';
 import General from '../../components/template/general'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
@@ -8,7 +9,7 @@ const User = () => {
 	const user = userContext.user
 	const [birth, setBirth] = useState(null)
 	const [joined, setJoined] = useState(null)
-
+	console.log(user)
 	useEffect(() => {
 		if (user) {
 			const d = new Date(user.birthdate)
@@ -43,11 +44,13 @@ const User = () => {
 						<h1 style={{ marginBottom: '0px' }}>
 							{user.firstname} {user.lastname}
 						</h1>
-						<div className="edit">
-							<h2 className="editText" style={{ margin: '0' }}>
-								Edit
-							</h2>
-							<i className="fas fa-edit edit-icon" style={{marginTop:'7px'}}></i>
+						<div style={{ marginTop: '20px' }}>
+							<div className="edit">
+								<h2 className="editText" style={{ margin: '0' }}>
+									Edit
+								</h2>
+								<i className="fas fa-edit edit-icon" style={{ marginTop: '7px' }}></i>
+							</div>
 						</div>
 					</div>
 
@@ -83,7 +86,17 @@ const User = () => {
 		return (
 			<Fragment>
 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-					<button className="register">Become an instructor</button>
+					{user.role === 'general' ? (
+						<Link href="/user/instructor/register">
+							<button className="btn">Become an instructor</button>
+						</Link>
+					) : user.isverified ? (
+					<Link href="/user/instructor">
+							<button className="btn">Instructor Mode</button>
+						</Link>
+					) : (
+						<span>Waiting for approve</span>
+					)}
 				</div>
 				<style jsx>{styles}</style>
 			</Fragment>
