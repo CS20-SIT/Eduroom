@@ -2,24 +2,12 @@ import React, { Fragment, useState, useEffect, useContext } from 'react'
 import General from '../../components/template/general'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
-import api from '../../api';
 
 const User = () => {
 	const userContext = useContext(UserContext)
 	const user = userContext.user
 	const [birth, setBirth] = useState(null)
 	const [joined, setJoined] = useState(null)
-	const [instructor, setInstructor] = useState(null);
-	console.log(user)
-	const fetchProfile = async () => {
-		try {
-			const res = await api.get('/api/instructor/profile');
-			console.log(res.data);
-			setInstructor(res.data);
-		} catch (err) {
-			
-		}
-	}
 
 	useEffect(() => {
 		if (user) {
@@ -27,10 +15,22 @@ const User = () => {
 			setBirth({ year: d.getFullYear(), month: d.getMonth() + 1, date: d.getDate() })
 			const j = new Date(user.createat)
 			setJoined({ year: j.getFullYear(), month: j.getMonth() + 1, date: j.getDate() })
-			fetchProfile();
 		}
 	}, [user])
-
+	const getRole = (role) => {
+		return role.charAt(0).toUpperCase() + role.slice(1)
+	}
+	const getVerified = () => {
+		if (user.role === 'instructor') {
+			if (user.isverified) {
+				return <span style={{ color: 'green' }}>(Verified)</span>
+			} else {
+				return <span style={{ color: 'red' }}>(Not Verified)</span>
+			}
+		} else {
+			return null
+		}
+	}
 	const renderProfile = () => {
 		if (!user || !birth || !joined) return null
 		return (
@@ -43,15 +43,19 @@ const User = () => {
 						<h1 style={{ marginBottom: '0px' }}>
 							{user.firstname} {user.lastname}
 						</h1>
-						<div>
-							<h1 className="edit">Edit</h1>
+						<div className="edit">
+							<h2 className="editText" style={{ margin: '0' }}>
+								Edit
+							</h2>
+							<i className="fas fa-edit edit-icon" style={{marginTop:'7px'}}></i>
 						</div>
 					</div>
 
-					<p style={{ color: '#A880F7', fontWeight: '700', marginTop: '4px' }}>Student</p>
+					<span style={{ color: '#A880F7', fontWeight: '700', marginTop: '4px' }}>{getRole(user.role)}</span>
+					<span style={{ marginLeft: '5px' }}>{getVerified()}</span>
 					<div className="topic">
 						<p className="header">Email</p>
-						<span>thnapahon.me@mail.kmutt.ac.th</span>
+						<span>{user.email}</span>
 					</div>
 
 					<div className="topic">
@@ -66,11 +70,9 @@ const User = () => {
 
 					<div className="topic">
 						<p className="header">Bio</p>
-						<span>{user.bio}</span>
+						<span>{user.bio ? user.bio : '-'}</span>
 					</div>
-					<div style={{display:'flex', justifyContent:'flex-end'}}>
-						<button className="register">Become an instructor</button>
-					</div>
+					{renderRegister()}
 				</div>
 				<style jsx>{styles}</style>
 			</div>
@@ -78,15 +80,20 @@ const User = () => {
 	}
 
 	const renderRegister = () => {
-		return null
+		return (
+			<Fragment>
+				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+					<button className="register">Become an instructor</button>
+				</div>
+				<style jsx>{styles}</style>
+			</Fragment>
+		)
 	}
 
 	return (
 		<Fragment>
 			<General>
-				<div className="container">
-					{renderProfile()}
-				</div>
+				<div className="container">{renderProfile()}</div>
 			</General>
 			<style jsx>{styles}</style>
 		</Fragment>

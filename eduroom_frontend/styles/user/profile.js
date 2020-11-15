@@ -25,9 +25,15 @@ export default css`
     align-items: center;
   }
   .edit{
+    display: flex;
+    marginTop: 20px;
+  }
+  .edit:hover{
+    cursor: pointer;
+  }
+  .editText{
     margin-bottom: 0;
     color: #F39AC4;
-    cursor: pointer;
   }
   .register{
     background: #F39AC4;
@@ -45,5 +51,10 @@ export default css`
   .register:hover{
     cursor:pointer;
     opacity: 0.8;
+  }
+
+  .edit-icon{
+    color: #F39AC4;
+    margin-left: 9px;
   }
 `
