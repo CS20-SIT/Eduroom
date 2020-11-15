@@ -1,54 +1,82 @@
-import Styles from '../../styles/CoinStyles/defaultPop';
-import { useEffect, useState } from 'react';
+import {useEffect} from 'react';
 
 const temp = props => {
-    function random(num) {
-        return Math.floor(Math.random() * num);
-    }
+    // useEffect(()=>{
+    //     createBalloons(100);
+    // },[]);
+    // function random(num) {
+    //     return Math.floor(Math.random() * num);
+    // }
 
-    function getRandomStyles() {
-        var r = random(255);
-        var g = random(255);
-        var b = random(255);
-        var mt = random(200);
-        var ml = random(50);
-        var dur = random(5) + 5;
-        return `
-        background-color: rgba(${r},${g},${b},0.7);
-        color: rgba(${r},${g},${b},0.7); 
-        box-shadow: inset -7px -3px 10px rgba(${r - 10},${g - 10},${b -
-            10},0.7);
-        margin: ${mt}px 0 0 ${ml}px;
-        animation: float ${dur}s ease-in infinite
-        `;
-    }
+    // function getRandomStyles() {
+    //     var r = random(255);
+    //     var g = random(255);
+    //     var b = random(255);
+    //     var mt = random(200);
+    //     var ml = random(50);
+    //     var dur = random(5) + 5;
+    //     return `
+    //     background-color: rgba(${r},${g},${b},0.7);
+    //     color: rgba(${r},${g},${b},0.7); 
+    //     box-shadow: inset -7px -3px 10px rgba(${r - 10},${g - 10},${b -
+    //         10},0.7);
+    //     margin: ${mt}px 0 0 ${ml}px;
+    //     animation: float ${dur}s ease-in infinite
+    //      .balloon {
+    //                 height: 125px;
+    //                 width: 105px;
+    //                 border-radius: 75% 75% 70% 70%;
+    //                 position: relative;
+    //             }
 
-    function createBalloons(num) {
-        var balloonContainer = document.getElementById('.balloon-container');
-        for (var i = num; i > 0; i--) {
-            var balloon = document.createElement('div');
-            balloon.className = 'balloon';
-            balloon.style.cssText = getRandomStyles();
-            balloonContainer.append(balloon);
-        }
-    }
-    window.onload = function() {
-        createBalloons(100);
-    };
+    //             .balloon:before {
+    //                 content: '';
+    //                 height: 75px;
+    //                 width: 1px;
+    //                 padding: 1px;
+    //                 background-color: #fdfd96;
+    //                 display: block;
+    //                 position: absolute;
+    //                 top: 125px;
+    //                 left: 0;
+    //                 right: 0;
+    //                 margin: auto;
+    //             }
+
+    //             .balloon:after {
+    //                 content: '▲';
+    //                 text-align: center;
+    //                 display: block;
+    //                 position: absolute;
+    //                 color: inherit;
+    //                 top: 120px;
+    //                 left: 0;
+    //                 right: 0;
+    //                 margin: auto;
+    //             }
+        
+    //     `;
+    // }
+
+    // function createBalloons(num) {
+    //     var balloonContainer = document.getElementById('balloon-container');
+    //     console.log(balloonContainer);
+    //     for (var i = num; i > 0; i--) {
+    //         var balloon = document.createElement('div');
+    //         balloon.className = balloon;
+    //         balloon.style.cssText = getRandomStyles();
+    //         balloonContainer.append(balloon);
+    //     }
+    //     console.log(balloonContainer);
+    // }
 
     return (
-        <div
-            className='div'
-            onClick={e => {
-                props.onClose();
-                e.stopPropagation();
-            }}
-        >
-            <div onClick={e => e.stopPropagation()} className='white'>
-                Kuy
-                <div id='balloon-container'></div>
+        <div>
+            <div>
+
+                {/* <div id='balloon-container'></div> */}
             </div>
-            <style jsx>{`
+            {/* <style jsx>{`
                 #balloon-container {
                     height: 100vh;
                     padding: 1em;
@@ -124,7 +152,7 @@ const temp = props => {
                     width: 50vw;
                     height: 50vh;
                 }
-            `}</style>
+            `}</style> */}
         </div>
     );
 };
