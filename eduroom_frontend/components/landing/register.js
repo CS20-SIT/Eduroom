@@ -151,7 +151,7 @@ const Register = () => {
             </form>
           </div>
         </div>
-        <div style={{ width: '50%', zIndex: '50' }}>
+        <div style={{ width: '50%', zIndex: '50', marginLeft: '5%' }}>
           <div style={{ width: '100%', paddingLeft: '10%' }}>
             <div style={{ paddingBottom: '5%' }}>
               <div>

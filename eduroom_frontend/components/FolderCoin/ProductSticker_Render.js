@@ -29,7 +29,9 @@ const Name = props => {
                                 Buy!
                             </button>
                             <Dialog open={state} onClose={()=>setState(false)}>
-                                <DialogContent style={{width:'500px',height:'500px',padding: '0px'}}><Pop title={props.title} price={props.price} /></DialogContent>
+                                <DialogContent style={{width:'500px',height:'500px',padding: '0px'}}>
+                                    <Pop title={props.title} price={props.price}  closePopup={()=>setState(false)}/>
+                                </DialogContent>
                             </Dialog>
                             </div>
                             <h1 className={Styles.text}>

@@ -14,11 +14,6 @@ const AvailabilityEdit = ({
   setTimeSlots,
   timeSlots,
 }) => {
-  const [hoverSlot, setHoverSlot] = useState(-1);
-
-  const gridSections = ['a', 'b', 'c', 'd', 'e'];
-  //   console.log(timeSections);
-
   return (
     <Fragment>
       <div>
@@ -120,7 +115,7 @@ const AvailabilityEdit = ({
           top: 50%;
           left: 50%;
           font-size: 1rem;
-          font-weight: 300;
+          font-weight: 700;
         }
         .plus::before {
           content: '+';
@@ -129,7 +124,7 @@ const AvailabilityEdit = ({
           top: 50%;
           left: 50%;
           font-size: 0.65rem;
-          font-weight: 300;
+          font-weight: 700;
         }
       `}</style>
     </Fragment>
