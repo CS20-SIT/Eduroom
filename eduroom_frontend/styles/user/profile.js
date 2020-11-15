@@ -25,11 +25,16 @@ export default css`
     align-items: center;
   }
   .edit{
-    margin-bottom: 0;
-    color: #F39AC4;
+    display: flex;
+  }
+  .edit:hover{
     cursor: pointer;
   }
-  .register{
+  .editText{
+    margin-bottom: 0;
+    color: #F39AC4;
+  }
+  .btn{
     background: #F39AC4;
 		border-radius: 25px;
 		padding: 0.75rem 2rem;
@@ -42,8 +47,13 @@ export default css`
     font-size: 16px;
   }
 
-  .register:hover{
+  .btn:hover{
     cursor:pointer;
     opacity: 0.8;
+  }
+
+  .edit-icon{
+    color: #F39AC4;
+    margin-left: 9px;
   }
 `

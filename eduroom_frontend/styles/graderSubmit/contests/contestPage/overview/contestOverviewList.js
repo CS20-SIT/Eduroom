@@ -8,6 +8,7 @@ export default css`
   }
   .flex-container {
     width: 90%;
+    font-weight: 500;
     padding: 5px 0;
     display: flex;
   }
