@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import style from '../../../../styles/graderSubmit/contests/contestPage/overview/contestOverviewList'
-import { compareAsc, format } from 'date-fns'
+import { format } from 'date-fns'
 
 const ContestOverviewList = (props) => {
 	return (
