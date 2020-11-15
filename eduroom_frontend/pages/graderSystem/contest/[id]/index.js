@@ -10,10 +10,11 @@ import api from '../../../../api'
 
 const contestOverview = ({ id }) => {
 	const [data, setData] = useState([])
-
+	useEffect(() => {
+		console.log(id)
+	}, [id])
 	useEffect(() => {
 		const GetData = async () => {
-			console.log(id)
 			const result = await api.get('api/grader/getContestDetail', {
 				params: { id },
 			})
@@ -23,7 +24,6 @@ const contestOverview = ({ id }) => {
 	}, [])
 
 	const contestStatus = (props) => {
-		console.log(props.endtime)
 		let presentTime = compareAsc(parseISO(props.endtime), new Date())
 
 		if (presentTime == 1) {
