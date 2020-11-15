@@ -8,37 +8,31 @@ const GroupBooking = ({
   focus,
   setFocus,
 }) => {
-  // GET /tutor/utils/id
+  // GET /api/tutor/utils/id
   const mockup = [
     {
       id: 1,
-      firstname: 'Thanawat',
-      lastname: 'Benjachatriroj',
+      name: 'Thanawat Benjachatriroj',
     },
     {
       id: 2,
-      firstname: 'Alphav',
-      lastname: 'Benjachatriroj',
+      name: 'Alphav Benjachatriroj',
     },
     {
       id: 3,
-      firstname: 'Bravo',
-      lastname: 'Benjachatriroj',
+      name: 'Bravo Benjachatriroj',
     },
     {
       id: 4,
-      firstname: 'Charlie',
-      lastname: 'Benjachatriroj',
+      name: 'Charlie Benjachatriroj',
     },
     {
       id: 5,
-      firstname: 'Delta',
-      lastname: 'Benjachatriroj',
+      name: 'Delta Benjachatriroj',
     },
     {
       id: 6,
-      firstname: 'Echo',
-      lastname: 'Benjachatriroj',
+      name: 'Echo Benjachatriroj',
     },
   ];
 
@@ -52,10 +46,7 @@ const GroupBooking = ({
       return;
     }
     const filtered = mockup.filter((x) => {
-      return (
-        x.firstname.toLowerCase().includes(key.toLowerCase()) ||
-        x.lastname.toLowerCase().includes(key.toLowerCase())
-      );
+      return x.name.toLowerCase().includes(key.toLowerCase());
     });
     setMembers(filtered);
   };
@@ -119,7 +110,7 @@ const GroupBooking = ({
                     document.getElementById('searchbar').value = '';
                     const tmp = [...students];
                     const check = tmp.findIndex((s) => {
-                      return s.firstname == m.firstname;
+                      return s.name == m.name;
                     });
                     if (check != -1) return;
                     tmp.push(m);
@@ -132,7 +123,7 @@ const GroupBooking = ({
                     setHoverSelection(-1);
                   }}
                 >
-                  {m.firstname} {m.lastname}
+                  {m.name}
                 </div>
               ))}
             </div>
@@ -144,7 +135,7 @@ const GroupBooking = ({
           {students.map((s, i) => (
             <span key={i} className='shadow rounded-md px-2 py-1 mx-1 my-1'>
               <span className='text-md font-bold text-secondary opacity-80'>
-                {s.firstname} {s.lastname}{' '}
+                {s.name}{' '}
                 <span
                   className='font-light px-1 pointer'
                   onClick={() => {
