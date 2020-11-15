@@ -2,13 +2,37 @@ import React, { Fragment, useState, useEffect, useContext } from 'react'
 import General from '../../components/template/general'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
+import api from '../../api';
 
 const User = () => {
 	const userContext = useContext(UserContext)
 	const user = userContext.user
+	const [birth, setBirth] = useState(null)
+	const [joined, setJoined] = useState(null)
+	const [instructor, setInstructor] = useState(null);
 	console.log(user)
+	const fetchProfile = async () => {
+		try {
+			const res = await api.get('/api/instructor/profile');
+			console.log(res.data);
+			setInstructor(res.data);
+		} catch (err) {
+			
+		}
+	}
+
+	useEffect(() => {
+		if (user) {
+			const d = new Date(user.birthdate)
+			setBirth({ year: d.getFullYear(), month: d.getMonth() + 1, date: d.getDate() })
+			const j = new Date(user.createat)
+			setJoined({ year: j.getFullYear(), month: j.getMonth() + 1, date: j.getDate() })
+			fetchProfile();
+		}
+	}, [user])
+
 	const renderProfile = () => {
-		if (!user) return null
+		if (!user || !birth || !joined) return null
 		return (
 			<div className="profile-container">
 				<div style={{ marginRight: '40px' }}>
@@ -32,27 +56,37 @@ const User = () => {
 
 					<div className="topic">
 						<p className="header">Birthday</p>
-						<span>01-01-2020</span>
+						<span>{`${birth.date}-${birth.month}-${birth.year}`}</span>
 					</div>
 
 					<div className="topic">
 						<p className="header">Joined</p>
-						<span>01-01-2020</span>
+						<span>{`${joined.date}-${joined.month}-${joined.year}`}</span>
 					</div>
 
 					<div className="topic">
 						<p className="header">Bio</p>
-						<span>Computer Science student at SIT KMUTT</span>
+						<span>{user.bio}</span>
+					</div>
+					<div style={{display:'flex', justifyContent:'flex-end'}}>
+						<button className="register">Become an instructor</button>
 					</div>
 				</div>
 				<style jsx>{styles}</style>
 			</div>
 		)
 	}
+
+	const renderRegister = () => {
+		return null
+	}
+
 	return (
 		<Fragment>
 			<General>
-				<div className="container">{renderProfile()}</div>
+				<div className="container">
+					{renderProfile()}
+				</div>
 			</General>
 			<style jsx>{styles}</style>
 		</Fragment>
