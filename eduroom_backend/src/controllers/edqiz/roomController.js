@@ -19,3 +19,9 @@ exports.fetchRoom = async (req, res, next) => {
   const rooms = result.rows;
   res.status(200).json(rooms);
 };
+
+exports.fetchRoomHistory = async (req, res, next) => {
+  const result = await pool.query('SELECT * from kahoot_roomhistory');
+  const roomHistory = result.rows;
+  res.status(200).json(roomHistory);
+};
