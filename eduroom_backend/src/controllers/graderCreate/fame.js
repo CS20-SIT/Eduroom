@@ -31,9 +31,9 @@ const pContest = async (req, res, next) => {
   res.send({ success: true });
 };
 const pContestQuestion = async (req, res, next) => {
-  const conQuestionNo = req.body.conQuestionNo;
+  const conQuestionNo = req.body.conquestionno;
   const conid = req.body.conid;
-  const questionId = req.body.questionId;
+  const questionId = req.body.questionid;
 
   await pool.query(
     "INSERT INTO contest_question(conQuestionNo,conid,questionId) VALUES ($1 , $2, $3)",

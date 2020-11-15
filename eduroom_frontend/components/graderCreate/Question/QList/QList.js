@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 //prepare for adding abmin log wheen create / edit ann
 // toggle for visiblity https://material-ui.com/components/switches/
 const Test = () => {
+  const router = useRouter();
+  const id = router.query.conno;
   const [refresh, setRefresh] = useState(false);
   const handleUpdate = () => {
     setRefresh(!refresh);
@@ -20,14 +22,37 @@ const Test = () => {
     color: "#5b5b5b",
     fontWeight: "bold",
   };
-  const router = useRouter();
+
   return (
     <div style={sBig}>
       <Grid>
         <Grid>
-          <span style={sBigTitle}>Question</span>{" "}
-          <span>
-            <Link href="/admin/grader/question/create">Create</Link>
+          <span style={sBigTitle}>
+            {id != undefined ? (
+              <span onClick={() => router.back()}>
+                <i
+                  style={{ cursor: "pointer" }}
+                  className="fa fa-arrow-left"
+                  aria-hidden="true"
+                ></i>
+                {" Contest "}
+              </span>
+            ) : (
+              ""
+            )}{" "}
+            Question
+            {"\u00A0" + "\u00A0" + "\u00A0" + "\u00A0"}
+          </span>{" "}
+          <span
+            onClick={() => {
+              router.push(
+                id == undefined
+                  ? "/admin/grader/question/create"
+                  : `/admin/grader/contest/${id}/addquestion`
+              );
+            }}
+          >
+            Create New
           </span>
           <div style={{ height: 20 }}></div>
         </Grid>

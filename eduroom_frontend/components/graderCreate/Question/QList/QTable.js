@@ -138,6 +138,8 @@ const AnnTable = (props) => {
   const classes = useStyles();
   const [page, setPage] = useState(0);
 
+  const conno = router.query.conno;
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [data, setData] = useState([]);
 
@@ -270,12 +272,16 @@ const AnnTable = (props) => {
                             />
                           </button>
                         </Grid>
-                        <Grid item sm={6}>
-                          <DeleteQuestion
-                            onSuccess={props.onSuccess}
-                            id={row.id}
-                          ></DeleteQuestion>
-                        </Grid>
+                        {conno != undefined ? (
+                          "" //DeleteQuestion  here
+                        ) : (
+                          <Grid item sm={6}>
+                            <DeleteQuestion
+                              onSuccess={props.onSuccess}
+                              id={row.id}
+                            ></DeleteQuestion>
+                          </Grid>
+                        )}
                       </Grid>
                     </TableCell>
                   </TableRow>

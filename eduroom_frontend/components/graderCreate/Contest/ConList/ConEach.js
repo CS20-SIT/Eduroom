@@ -171,7 +171,7 @@ const ConEach = (p) => {
           className={classes.Button}
           size="small"
           onClick={() => {
-            router.push(`/admin/grader/contest/${p.id}/announcement`);
+            router.push(`/admin/grader/contest/${p.id}/question`);
           }}
         >
           <span className={classes.buttonText}>question </span>

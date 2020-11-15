@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function FullWidthGrid() {
   const router = useRouter();
-  const id = router.query.id;
+  const id = router.query.conno;
 
   useEffect(() => {
     const GetData = async () => {
