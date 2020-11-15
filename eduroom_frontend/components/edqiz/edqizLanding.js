@@ -12,6 +12,8 @@ const Content = () => {
     { id: "2", pin: "1234" },
     { id: "3", pin: "2345" },
     { id: "4", pin: "6789" },
+    { id: "4", pin: "6193" },
+
   ];
   const checkPinIsValid = () => {
     let temp = 0;
