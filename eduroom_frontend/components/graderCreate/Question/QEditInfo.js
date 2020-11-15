@@ -6,12 +6,12 @@ import Create from "./QCreate";
 const EditQuestion = (props) => {
   const router = useRouter();
 
-  const tid = router.query.id;
+  const id = router.query.id;
 
   return (
     <Fragment>
       <div>{props.id}</div>
-      <Create id={tid}></Create>
+      <Create id={id}></Create>
     </Fragment>
   );
 };

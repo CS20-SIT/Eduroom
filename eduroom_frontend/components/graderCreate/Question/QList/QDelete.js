@@ -119,9 +119,9 @@ const AnnEdit = (props) => {
         <DialogContent>
           <DialogContentText>
             <span style={sText}>
-              The Question No. {props.id} will be removed from the system. Your
-              action will be recorded in the Admin Log, and everyone will
-              acknowledge your action.
+              The Question No. {props.id} will be REMOVED from the system. Your
+              action will be recorded in the Admin Log, EVERYONE WILL ACKNOWLEGE
+              YOUR ACTION.
             </span>
           </DialogContentText>
         </DialogContent>

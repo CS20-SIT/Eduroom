@@ -40,18 +40,6 @@ const pQuestion = async (req, res, next) => {
           [t],
           function (err, result, fields) {
             if (err) throw err;
-
-            console.log(
-              "----------------newTagsIds------------------------------------newTagsIds----------- newTagsIds------"
-            );
-            console.log(newTagsIds);
-            console.log(
-              "----------------newTagsIds------------------------------------newTagsIds----------- newTagsIds------"
-            );
-            console.log(
-              "----------------InsertnewTagsIds-----------------------------------InsertnewTagsIds --------InsertnewTagsIds "
-            );
-            console.log(result.rows[0].tagid);
             pool.query(
               "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
               [id, result.rows[0].tagid]

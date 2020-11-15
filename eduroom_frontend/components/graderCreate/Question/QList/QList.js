@@ -31,11 +31,7 @@ const Test = () => {
           </span>
           <div style={{ height: 20 }}></div>
         </Grid>
-        {/* <Grid>
-          <span style={{ paddingTop: 7 }}>
-            <AnnDialog onSuccess={handleUpdate} />
-          </span>
-        </Grid> */}
+
         <div style={{ height: 20 }}></div>
         <Grid item xl={12} md={12}>
           <QTable onSuccess={handleUpdate} update={refresh} />
