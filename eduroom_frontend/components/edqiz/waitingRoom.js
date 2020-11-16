@@ -13,17 +13,17 @@ const Content = ({ id }) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await api.get('/api/kahoot/roomHistory');
-      setHistory(res.data)
+      // setHistory(res.data)
     };
     fetchData();
   }, []);
 
   //insert to the database
+  const testPost = {roomid:'7',pin:'2891',isavailable:'false'}
   const handleSubmit = async (body) => {
-    setLoading(true);
-    const res = await api.post('/api/instructor/register', body);
+    console.log('helllo');
+    const res = await api.post('/api/kahoot/roomHistory', body);
     console.log(res.data);
-    setLoading(false);
   };
   const [player, setPlayer] = useState([]);
   const [pin, setPin] = useState(null);
@@ -95,7 +95,14 @@ const Content = ({ id }) => {
 
   useEffect(()=>{
     randomPin();
-  },[kahoot_roomHistory])
+  },[kahoot_roomHistory]);
+
+  useEffect(()=>{
+
+    handleSubmit(testPost);
+  },[])
+
+
 
   return (
     <Fragment>

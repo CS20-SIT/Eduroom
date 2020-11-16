@@ -3,17 +3,17 @@ import GeneralNoNav from "../../../../../components/graderCreate/Layout/gSide";
 
 import GNav from "../../../../../components/graderCreate/Layout/gNav";
 
-import QEdit from "../../../../../components/graderCreate/Question/QEditInfo";
+import Create from "../../../../../components/graderCreate/Question/QCreate";
 
-const EditQuestion = () => {
+const ConCreate = () => {
   return (
     <Fragment>
       <GeneralNoNav>
         <GNav></GNav>
 
-        <QEdit />
+        <Create />
       </GeneralNoNav>
     </Fragment>
   );
 };
-export default EditQuestion;
+export default ConCreate;

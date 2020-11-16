@@ -1,34 +1,30 @@
-// https://stackoverflow.com/questions/52911169/how-to-change-the-border-color-of-material-ui-textfield?rq=1
-// https://stackblitz.com/edit/material-ui-custom-outline-color
-// https://stackoverflow.com/questions/50228108/is-it-possible-to-change-the-textfields-font-color-in-material-ui-next
-// https://github.com/mui-org/material-ui/issues/9574
-
-// for add tag
-////https://www.freecodecamp.org/news/how-to-create-email-chips-in-pure-react-ad1cc3ecea16/
-
-//for date time picker
-//https://material-ui.com/components/pickers/
-
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-
+import { useRouter } from "next/router";
 import {
   KeyboardDateTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { compareAsc } from "date-fns";
+import { parseJSON, compareAsc } from "date-fns";
+
 import { add } from "date-fns";
 import Chip from "@material-ui/core/Chip";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../../../api";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -46,11 +42,11 @@ const theme1 = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "75%",
-    marginLeft: "12%",
+    width: "52.5%",
+    marginLeft: "22.5%",
     marginRight: "15%",
     marginTop: "2.5%",
-    marginBottom: "10%",
+    paddingBottom: "10%",
   },
   paper: {
     paddingTop: theme.spacing(1),
@@ -67,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     paddingBottom: theme.spacing(4),
 
-    textAlign: "center",
     color: theme.palette.text.secondary,
   },
   menuitem: {
@@ -94,6 +89,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function FullWidthGrid() {
+  const router = useRouter();
+  const id = router.query.conno;
+
+  useEffect(() => {
+    const GetData = async () => {
+      if (id != undefined) {
+        const oldData = await axios.get("/api/grader/contest", {
+          params: { id },
+        });
+        const prev = oldData.data[0];
+        setTitle(prev.title);
+        setRule(prev.conruletype);
+        setDescription(prev.description);
+
+        const oldEndTime = parseJSON(prev.endtime);
+        handleStartDateChange(prev.starttime);
+
+        handleEndDateChange(prev.endtime);
+        setConStatus(prev.status);
+      }
+    };
+    GetData();
+  }, []);
   const sTitle = {
     "font-family": "Quicksand , sans-serif",
     "font-size": "1.2em",
@@ -127,7 +145,7 @@ export default function FullWidthGrid() {
   const sInputSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    "font-size": "1.0em",
   };
   const sError = {
     "font-family": "Quicksand , sans-serif",
@@ -137,7 +155,7 @@ export default function FullWidthGrid() {
   const sInputfieldSelect = {
     "font-family": "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-size": "1.4em",
+    "font-size": "1.1em",
     "font-weight": "bold",
   };
   const sButtionandVisbile = {
@@ -183,6 +201,10 @@ export default function FullWidthGrid() {
   const [description, setDescription] = React.useState("");
   const [rule, setRule] = React.useState("oi");
   const [conStatus, setConStatus] = React.useState(false);
+  const [submitStatus, setSubmitStatus] = useState({
+    success: false,
+    failed: false,
+  });
   const [selectedStartDate, handleStartDateChange] = useState(new Date());
   const [selectedEndDate, handleEndDateChange] = useState(
     add(new Date(), { days: 1 })
@@ -213,10 +235,14 @@ export default function FullWidthGrid() {
     console.log(compareAsc(selectedStartDate, selectedEndDate) != -1);
   };
   const handleSubmit = () => {
-    if (title == "" || compareAsc(selectedStartDate, selectedEndDate) != -1) {
+    if (
+      title == "" ||
+      compareAsc(Date.parse(selectedStartDate), Date.parse(selectedEndDate)) !=
+        -1
+    ) {
       seterorValid(true);
-    } else
-      axios.post("http://localhost:5000/api/grader/ccontest", {
+    } else {
+      let data = {
         title: title,
         conRuleType: rule,
         description: description,
@@ -224,26 +250,84 @@ export default function FullWidthGrid() {
         endTime: selectedEndDate,
         status: conStatus,
         adminid: "12345678-1234-1234-1234-123456789123",
-      });
-    //   .then(function (response) {
-    //     console.log(response);
-    //     setOpen(false);
-
-    //     setTimeout(() => {
-    //       console.log('this is when we call prop on sucess')
-    //       setSubmitStatus({ ...submitStatus, success: true });
-    //     }, 450);
-    //   })
-    //   .catch(function (error) {
-    //     setOpen(false);
-    //     setTimeout(() => {
-    //       setSubmitStatus({ ...submitStatus, failed: true });
-    //     }, 450);
-    //   })
+      };
+      if (id == undefined) {
+        axios
+          .post("/api/grader/ccontest", data)
+          .then(function (response) {
+            console.log(response);
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, success: true });
+            }, 450);
+          })
+          .catch(function (error) {
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
+      } else {
+        data.conno = id;
+        axios
+          .put("/api/grader/econtest", data)
+          .then(function (response) {
+            console.log(response);
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, success: true });
+            }, 450);
+          })
+          .catch(function (error) {
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
+      }
+    }
   };
 
+  const statusClose = () => {
+    setSubmitStatus({
+      success: false,
+      failed: false,
+    });
+  };
   return (
     <div className={classes.root}>
+      <Dialog open={submitStatus.success} onClose={statusClose}>
+        <DialogTitle>
+          <span style={sTitle}>Success!</span>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <span style={sText}>
+              {" "}
+              {id == undefined
+                ? "Your Contest have been created."
+                : "Contest have been Edited"}
+            </span>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button color="primary" onClick={() => router.back()}>
+            <span style={sButtionandVisbile}>Ok</span>
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={submitStatus.failed} onClose={statusClose}>
+        <DialogTitle>
+          <span style={sTitle}>Opps.... Something went wrong!</span>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <span style={sText}> Come back again later...</span>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={statusClose} color="primary">
+            <span style={sButtionandVisbile}>Ok</span>
+          </Button>
+        </DialogActions>
+      </Dialog>
       <MuiThemeProvider theme={theme1}>
         <Snackbar
           open={erorvalid}
@@ -255,9 +339,19 @@ export default function FullWidthGrid() {
           </Alert>
         </Snackbar>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={6}>
           <Grid item xs={12}>
-            <span style={sBigTitle}>Create your Contest</span>
+            <span style={sBigTitle}>
+              <span onClick={() => router.back()}>
+                <i
+                  style={{ cursor: "pointer" }}
+                  className="fa fa-arrow-left"
+                  aria-hidden="true"
+                ></i>
+              </span>
+              {id != undefined ? " Edit Contest" : " Create your Contest"}{" "}
+              {"\u00A0" + "\u00A0" + "\u00A0" + "\u00A0"}
+            </span>{" "}
           </Grid>
           <Grid item xs={12} sm={12}>
             <div>
@@ -309,30 +403,56 @@ export default function FullWidthGrid() {
             <div>
               <Paper className={classes.paper2}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDateTimePicker
-                    variant="inline"
-                    ampm={false}
-                    label="Start"
-                    value={selectedStartDate}
-                    onChange={handleStartDateChange}
-                    onError={console.log}
-                    disablePast
-                    required
-                    fullWidth
-                    format="dd-MMM-yyyy 'AT' HH:mm"
-                    error={
-                      compareAsc(selectedStartDate, selectedEndDate) != -1 &&
-                      check
-                    }
-                    helperText={
-                      compareAsc(selectedStartDate, selectedEndDate) != -1 &&
-                      check
-                        ? "Invaild Date!"
-                        : ""
-                    }
-                    inputProps={{ style: sInputfieldDesc }}
-                    InputLabelProps={{ style: sInputTime }}
-                  />
+                  {id == undefined ? (
+                    <KeyboardDateTimePicker
+                      variant="inline"
+                      ampm={false}
+                      label="Start"
+                      value={selectedStartDate}
+                      onChange={handleStartDateChange}
+                      onError={console.log}
+                      disablePast
+                      required
+                      fullWidth
+                      format="dd-MMM-yyyy 'AT' HH:mm"
+                      error={
+                        compareAsc(selectedStartDate, selectedEndDate) != -1 &&
+                        check
+                      }
+                      helperText={
+                        compareAsc(selectedStartDate, selectedEndDate) != -1 &&
+                        check
+                          ? "Invaild Date!"
+                          : ""
+                      }
+                      inputProps={{ style: sInputfieldDesc }}
+                      InputLabelProps={{ style: sInputTime }}
+                    />
+                  ) : (
+                    <KeyboardDateTimePicker
+                      variant="inline"
+                      ampm={false}
+                      label="Start"
+                      value={selectedStartDate}
+                      onChange={handleStartDateChange}
+                      onError={console.log}
+                      required
+                      fullWidth
+                      format="dd-MMM-yyyy 'AT' HH:mm"
+                      error={
+                        compareAsc(selectedStartDate, selectedEndDate) != -1 &&
+                        check
+                      }
+                      helperText={
+                        compareAsc(selectedStartDate, selectedEndDate) != -1 &&
+                        check
+                          ? "Invaild Date!"
+                          : ""
+                      }
+                      inputProps={{ style: sInputfieldDesc }}
+                      InputLabelProps={{ style: sInputTime }}
+                    />
+                  )}
                 </MuiPickersUtilsProvider>
               </Paper>
             </div>
@@ -431,7 +551,7 @@ export default function FullWidthGrid() {
               <div>
                 {" "}
                 <Chip
-                  label=" Cr eate"
+                  label=" Create"
                   onClick={handleSubmit}
                   style={{
                     backgroundColor: "#FC8FC3",
