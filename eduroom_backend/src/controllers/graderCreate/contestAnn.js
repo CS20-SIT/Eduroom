@@ -20,7 +20,6 @@ const postcontestAnn = async (req, res, next) => {
     'INSERT INTO announcements(title,description,"adminid") VALUES ($1 , $2, $3)',
     [title, description, adminid]
   );
-
   res.send({ title, description, adminid });
 };
 
