@@ -14,10 +14,9 @@ const userReducer = (state, action) => {
     case LOGIN_USER_SUCCESS:
       return { ...state, user: action.payload, err: null };
     case LOGIN_USER_FAIL:
-      const newState = { ...state, user: null, err: action.payload };
-      return newState;
+      return { ...state, user: null, err: action.payload };
     case REGISTER_USER_SUCCESS:
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload, err: null };
     case REGISTER_USER_FAIL:
       return { ...state, err: action.payload };
     case GET_USER_SUCCESS:

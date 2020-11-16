@@ -60,3 +60,17 @@ jobs:
         run: docker-compose -f docker-compose.test.yml run eduroom_socket_chat
       - name: Test Eduroom Socket Kahoot Image
         run: docker-compose -f docker-compose.test.yml run eduroom_socket_kahoot
+#   prettier:
+#     runs-on: [self-hosted, linux, x64]
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+#       with:
+#         # Make sure the actual branch is checked out when running on pull requests
+#         ref: ${{ github.head_ref }}
+#     - name: Prettify code
+#       uses: creyD/prettier_action@v3.1
+# #       with:
+#         # This part is also where you can pass other options, for example:
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
