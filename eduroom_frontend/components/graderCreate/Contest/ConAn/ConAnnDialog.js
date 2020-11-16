@@ -9,7 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 
-import axios from "../../../api";
+import axios from "../../../../api";
 
 import Chip from "@material-ui/core/Chip";
 
@@ -71,20 +71,13 @@ const AnnEdit = (props) => {
     if (ann.title == "") {
       seterorValid(true);
     } else {
-      let backend = "/api/grader/cann";
-
-      const data = {
-        title: ann.title,
-        description: ann.description,
-        adminid: ann.adminid,
-        isvisible: visible,
-      };
-      if (props.conid != undefined) {
-        data.conid = props.conid;
-        backend = "/api/grader/ccontestann";
-      }
       axios
-        .post(backend, data)
+        .post("/api/grader/cann", {
+          title: ann.title,
+          description: ann.description,
+          adminid: ann.adminid,
+          isvisible: visible,
+        })
         .then(function (response) {
           console.log(response);
           setOpen(false);
@@ -168,9 +161,9 @@ const AnnEdit = (props) => {
         <DialogContent>
           <DialogContentText>
             <span style={sText}>
-              {props.conid == undefined
-                ? "To let our precious students know about the upcoming contest, your brand-new questions, or even just to show off your new iphone, please enter your detail here."
-                : "Feel Free to infrom our students about anything, perhaps extend the contest time, or maybe give more hints? Please enter your detail here."}
+              To let our precious students know about the upcoming contest, your
+              brand-new questions, or even just to show off your new iphone,
+              please enter your detail here.
             </span>
           </DialogContentText>
           <TextField

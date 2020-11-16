@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
-import Header from "../layouts/header";
-import SideNav from "../layouts/sidenav/sidenav";
+
+import Header from "../../layouts/header";
+import SideNav from "../../layouts/sidenav/sidenav";
 const GeneralNonav = (props) => {
   return (
     <Fragment>
@@ -35,6 +36,7 @@ const GeneralNonav = (props) => {
             height: 100vh;
             overflow-y: auto;
             position: fixed;
+            background-color: #f4f5f7aa;
           }
           .background-img {
             position: absolute;

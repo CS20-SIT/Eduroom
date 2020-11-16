@@ -1,19 +1,18 @@
 import React, { Fragment } from "react";
 import GeneralNoNav from "../../../../../components/graderCreate/Layout/gSide";
-
 import GNav from "../../../../../components/graderCreate/Layout/gNav";
 
-import QEdit from "../../../../../components/graderCreate/Question/QEditInfo";
+import ConQuestionEdit from "../../../../../components/graderCreate/Question/QList/QList";
 
-const EditQuestion = () => {
+const Info = () => {
   return (
     <Fragment>
       <GeneralNoNav>
-        <GNav></GNav>
-
-        <QEdit />
+        <GNav> </GNav>
+        <ConQuestionEdit />
       </GeneralNoNav>
     </Fragment>
   );
 };
-export default EditQuestion;
+
+export default Info;
