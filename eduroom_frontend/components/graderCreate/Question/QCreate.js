@@ -646,7 +646,6 @@ export default function FullWidthGrid(props) {
     if (conno != undefined) {
       axios
         .post("/api/grader/ccontestquestion", {
-          conquestionno: 1,
           conid: conno,
           questionid: id,
         })

@@ -10,6 +10,7 @@ const {
   pTestcase,
   dTestcase,
   dQuestion,
+  dConQuestion,
   dSample,
   eQuestion,
 } = require("../controllers/graderCreate/test");
@@ -127,6 +128,7 @@ router.get("/questiontestcase", gQuestionTestcase);
 router.delete("/dquestiontestcase", dTestcase);
 router.delete("/dquestionsample", dSample);
 router.delete("/dquestion", dQuestion);
+router.delete("/dcontestquestion", dConQuestion);
 
 // eContest,eContestAnn,gAllContest,gContest,gContestAnn,gContestQuestion
 

@@ -59,7 +59,7 @@ const Test = () => {
 
         <div style={{ height: 20 }}></div>
         <Grid item xl={12} md={12}>
-          <QTable onSuccess={handleUpdate} update={refresh} />
+          <QTable onSuccess={handleUpdate} update={refresh} conno={id} />
           <div style={{ height: 100 }}></div>
         </Grid>
       </Grid>
