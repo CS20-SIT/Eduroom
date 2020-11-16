@@ -2,7 +2,7 @@ const pool = require('../database/db')
 
 exports.Register = async (req, res, next) => {
 	const data = req.body
-	const userId = req.user.user
+	const userId = req.user.id
 
 	//check whether this user already reguster
 	const userRows = await pool.query('SELECT userId from instructor where userid = $1', [userId])
@@ -27,7 +27,14 @@ exports.Register = async (req, res, next) => {
 
 exports.GetProfile = async (req, res, next) => {
 	const instructorId = req.user.instructor
-  const result = await pool.query('SELECT isverified from instructor where instructorid = $1', [instructorId])
-  const isverified = result.rows[0].isverified
+	const result = await pool.query('SELECT isverified from instructor where instructorid = $1', [instructorId])
+	const isverified = result.rows[0].isverified
 	res.status(200).json({ role: 'instructor', isverified })
+}
+
+exports.GetCourses = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const result = await pool.query('SELECT * from course where ownerid = $1', [instructorId])
+	console.log(result.rows)
+	res.send(result.rows)
 }
