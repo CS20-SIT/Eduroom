@@ -66,18 +66,8 @@ export default css`
     width: 25px;
     padding: 3px 5px 3px 5px;
   }
-  .status-box {
-    display: flex;
-    padding: 0.25rem 0.75rem;
-    border: 1px solid #3d467f;
-    border-radius: 100px;
-  }
   .status-dot {
     width: 20px;
-  }
-  .contest-status {
-    font-size: 0.875rem;
-    color: #3d467f;
   }
   .contest-list:hover {
     cursor: pointer;

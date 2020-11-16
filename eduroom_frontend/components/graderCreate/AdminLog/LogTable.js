@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import axios from 'axios'
+import api from '../../../api';
 import { useState, useEffect } from 'react'
 
 
@@ -71,7 +72,7 @@ const LogTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios('http://localhost:5000/api/grader/').catch(err => {
+      const result = await api.get('/api/grader/allladminlog').catch(err => {
         // what now?
         
          const requestFail = [{id:'0',title:'NO',description:'Test',displayname:'NUTTY',time:'2100-05-12'}]
