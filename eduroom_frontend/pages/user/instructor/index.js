@@ -1,8 +1,36 @@
 import General from '../../../components/template/general'
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Courses from '../../../components/user/instructor/Courses'
+import UserContext from '../../../contexts/user/userContext'
+import styles from '../../../styles/user/instructor/profile'
 
 const InstructorProfile = () => {
+	const userContext = useContext(UserContext)
+	const user = userContext.user
+
+	const renderProfile = () => {
+		if (!user) return null
+		return (
+			<Fragment>
+				<h2 style={{ color: '#353E6C' }}>Profile</h2>
+				<img src={user.avatar} width="50px" height="50px" alt="avatar" className="avatar"></img>
+
+				<div className="box">
+					<div className="topic">Firstname</div> <div className="det">{user.firstname}</div>
+				</div>
+
+				<div className="box">
+					<div className="topic">lastname</div> <div className="det">{user.lastname}</div>
+				</div>
+
+				<div className="box">
+					<div className="topic">Expert</div> <div className="det">Algorithms</div>
+				</div>
+
+				<style jsx>{styles}</style>
+			</Fragment>
+		)
+	}
 	return (
 		<Fragment>
 			<General>
@@ -19,10 +47,7 @@ const InstructorProfile = () => {
 						</div>
 						<div className="detail">
 							<div className="human">
-								<div className="detailProfile">
-                  <h2 style={{color:'#353E6C'}}>Profile</h2>
-								</div>
-
+								<div className="detailProfile">{renderProfile()}</div>
 								<div className="img">
 									<img src="/images/instructor/Human.svg" width="250px"></img>
 								</div>
@@ -31,43 +56,7 @@ const InstructorProfile = () => {
 					</div>
 				</div>
 			</General>
-			<style jsx>{`
-				.container {
-					padding: 50px;
-					display: flex;
-				}
-				.courses {
-					width: 50%;
-					margin-right: 100px;
-				}
-				.profile {
-					width: 50%;
-					margin-right: 50px;
-					filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.1));
-					display: flex;
-					flex-direction: column;
-				}
-				.header {
-					border-radius: 30px 30px 0 0;
-					height: 200px;
-					background: linear-gradient(323.28deg, rgba(213, 138, 187, 0.8) 0.2%, rgba(129, 127, 188, 0.8) 99.77%);
-				}
-				.detail {
-					margin: 0;
-					padding: 0;
-					background: white;
-				}
-				.human {
-					display: flex;
-					justify-content: space-between;
-				}
-				.img {
-					margin-top: -100px;
-				}
-        .detailProfile{
-          padding: 5px 20px;
-        }
-			`}</style>
+			<style jsx>{styles}</style>
 		</Fragment>
 	)
 }
