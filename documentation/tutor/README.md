@@ -212,7 +212,14 @@
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
-- **Params** : `none`
+- **Params** :
+
+```
+ {
+	 "id": `instructorId`
+ }
+```
+
 - **Success** : `200`
 
 ```
