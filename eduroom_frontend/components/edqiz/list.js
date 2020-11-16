@@ -1,22 +1,27 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import EdqizText from "../edqiz/edqizText";
 import CardQuiz from "../edqiz/cardQuiz";
 import AddNewQuiz from "../edqiz/addNewQuiz";
 import Grid from "@material-ui/core/Grid";
-const Page1 = ({ data, goto, handleQuestionNumber,questionNumber,question }) => {
+const Page1 = ({ data, goto, handleQuestionNumber,questionNumber }) => {
   
 
-  
+  console.log(data)
+  useEffect(()=>{
+    console.log(data);
+  },[data])
   const renderQuestion = () => {
+
+    if(data!=null){
+      
     return data.map((el, index) => {
       return (
         <CardQuiz
           key={index}
-          question={question}
           data={data}
           id={questionNumber}
           index={index}
-          quizname={data[index].quizname}
+          quizname={data[index].name}
           description={data[index].description}
           goto={goto}
           handleQuestionNumber={(val) => {
@@ -26,6 +31,7 @@ const Page1 = ({ data, goto, handleQuestionNumber,questionNumber,question }) => 
       );
     });
   };
+}
 
   return (
     <Fragment>
