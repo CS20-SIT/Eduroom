@@ -1,26 +1,24 @@
 import React from "react";
-import AnnDialog from "./AnnDialog";
-import AnnTable from "./AnnTable";
+import Link from "next/link";
+import QTable from "./QTable";
 import { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
+
 import { useRouter } from "next/router";
 
 //prepare for adding abmin log wheen create / edit ann
 // toggle for visiblity https://material-ui.com/components/switches/
-const Test = (p) => {
+const Test = () => {
   const router = useRouter();
   const id = router.query.conno;
-
   const [refresh, setRefresh] = useState(false);
   const handleUpdate = () => {
-    console.log(refresh);
-    console.log("Handle Update From Dialog Submission");
     setRefresh(!refresh);
   };
-  const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "2.25%" };
+  const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "2.5%" };
   const sBigTitle = {
     fontFamily: "Quicksand , sans-serif",
-    "font-size": "2em",
+    fontSize: "2em",
     color: "#5b5b5b",
     fontWeight: "bold",
   };
@@ -42,16 +40,26 @@ const Test = (p) => {
             ) : (
               ""
             )}{" "}
-            Announcement
+            Question
             {"\u00A0" + "\u00A0" + "\u00A0" + "\u00A0"}
           </span>{" "}
-          <AnnDialog onSuccess={handleUpdate} conid={id} />
+          <span
+            onClick={() => {
+              router.push(
+                id == undefined
+                  ? "/admin/grader/question/create"
+                  : `/admin/grader/contest/${id}/addquestion`
+              );
+            }}
+          >
+            Create New
+          </span>
           <div style={{ height: 20 }}></div>
         </Grid>
 
         <div style={{ height: 20 }}></div>
         <Grid item xl={12} md={12}>
-          <AnnTable onSuccess={handleUpdate} update={refresh} conid={id} />
+          <QTable onSuccess={handleUpdate} update={refresh} />
           <div style={{ height: 100 }}></div>
         </Grid>
       </Grid>

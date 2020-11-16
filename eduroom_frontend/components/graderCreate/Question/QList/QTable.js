@@ -8,11 +8,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import axios from "../../../api";
+import axios from "../../../../api";
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import DeleteQuestion from "./QDelete";
+import Grid from "@material-ui/core/Grid";
 
-import AnnEdit from "../AnnCom/AnnEdit";
-
+import { useRouter } from "next/router";
 //add submit time here
 
 const useStyles = makeStyles({
@@ -35,9 +37,10 @@ const useStyles = makeStyles({
   },
   tableHEdit: {
     paddingLeft: 25,
-    paddingRight: 50,
+    paddingRight: 70,
     paddingTop: 50,
-    "font-family": "Quicksand , sans-serif",
+    textAlign: "center",
+    fontFamily: "Quicksand , sans-serif",
     borderBottom: "none",
     "font-size": "1em",
     color: "#3d467f",
@@ -131,28 +134,23 @@ const shorten = (text, maxLength) => {
   return text;
 };
 const AnnTable = (props) => {
+  const router = useRouter();
   const classes = useStyles();
   const [page, setPage] = useState(0);
+
+  const conno = router.query.conno;
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const GetData = async () => {
-      let result = "";
-      if (props.conid == undefined) {
-        result = await axios("/api/grader/ann");
-      } else {
-        const conid = props.conid;
-        result = await axios.get("/api/grader/contestann", {
-          params: { conid },
-        });
-      }
+      const result = await axios.get("/api/grader/allquestion");
       setData(result.data);
     };
     GetData();
     console.log(data);
-    console.log(props.onSuccess);
+    // console.log(props.onSuccess);
   }, [props.update]);
 
   const handleChangePage = (event, newPage) => {
@@ -175,28 +173,31 @@ const AnnTable = (props) => {
         >
           <TableHead>
             <TableRow>
-              <TableCell className={classes.tableHID}> Id</TableCell>
+              <TableCell width="10%" className={classes.tableHID}>
+                {" "}
+                Id
+              </TableCell>
               <TableCell
-                width="20%"
+                width="35%"
                 className={classes.tableHeader}
                 align="left"
               >
                 Title
               </TableCell>
               <TableCell
-                width="45%"
+                width="10%"
                 className={classes.tableHeader}
                 align="left"
               >
-                Description
+                Difficulty
               </TableCell>
               <TableCell className={classes.tableHeader} align="left">
                 Admin{" "}
               </TableCell>
-              <TableCell className={classes.tableHeader} align="left">
-                Created At{" "}
+              <TableCell className={classes.tableHeader} align="center">
+                Visible
               </TableCell>
-              <TableCell className={classes.tableHEdit} align="left">
+              <TableCell className={classes.tableHEdit} align="center">
                 Edit{" "}
               </TableCell>
             </TableRow>
@@ -217,39 +218,71 @@ const AnnTable = (props) => {
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
-                      width="25%"
+                      width="35%"
                       align="left"
                     >
                       {row.title}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
-                      width="40%"
+                      width="15%"
                       align="left"
                     >
-                      {shorten(row.description, 130)}
+                      {row.difficulty}
                     </TableCell>
-                    <TableCell className={classes.tableCell} align="left">
+                    <TableCell
+                      width="15%"
+                      className={classes.tableCell}
+                      align="left"
+                    >
                       {row.displayname}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
                       width="22%"
-                      align="left"
+                      align="center"
                     >
-                      {row.time}
+                      {row.visibility ? (
+                        <i className="fas fa-check"></i>
+                      ) : (
+                        <i className="fas fa-times"></i>
+                      )}
                     </TableCell>
-                    <TableCell className={classes.tableEdit} align="left">
-                      <AnnEdit
-                        onSuccess={props.onSuccess}
-                        coannno={row.coannno}
-                        conid={row.conid}
-                        id={row.id}
-                        title={row.title}
-                        description={row.description}
-                        visible={row.isvisible}
-                        adminid={row.adminid} // change to cookies
-                      ></AnnEdit>
+                    <TableCell className={classes.tableEdit} align="center">
+                      <Grid container direction="row" spacing={3}>
+                        <Grid item sm={6}>
+                          <button
+                            style={{
+                              padding: 0,
+                              border: "none",
+                              background: "none",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              router.push(
+                                `/admin/grader/question/edit/${row.id}`
+                              );
+                            }}
+                          >
+                            {" "}
+                            <Image
+                              src="/images/graderCreate/edit.svg"
+                              width="20"
+                              height="20"
+                            />
+                          </button>
+                        </Grid>
+                        {conno != undefined ? (
+                          "" //DeleteQuestion  here
+                        ) : (
+                          <Grid item sm={6}>
+                            <DeleteQuestion
+                              onSuccess={props.onSuccess}
+                              id={row.id}
+                            ></DeleteQuestion>
+                          </Grid>
+                        )}
+                      </Grid>
                     </TableCell>
                   </TableRow>
                 );
