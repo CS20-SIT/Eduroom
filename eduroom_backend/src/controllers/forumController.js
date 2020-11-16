@@ -16,8 +16,8 @@ exports.showForum = async (req, res, next) => {
   res.status(200).json({ success: true, data: forum });
 };
 exports.selectForum = async (req, res, next) => {
-  const id = req.query.id;
-  
+  const id = req.params.id;
+  console.log('id is ',id);
   const data = await pool.query("select * from forum_form where forumid= $1", [
     id,
   ]);
