@@ -1,29 +1,31 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState,useEffect } from "react";
 import { useRouter } from "next/router";
 import EdqizText from "./edqizText";
 import style from "../../styles/edqiz/landing";
+import api from '../../api';
 const Content = () => {
   
   const [room, setPinRoom] = useState("");
   const router = useRouter();
-  
-  const mockData = [
-    { id: "1", pin: "3456" },
-    { id: "2", pin: "1234" },
-    { id: "3", pin: "2345" },
-    { id: "4", pin: "6789" },
-    { id: "4", pin: "6193" },
 
-  ];
+  const [data,setData]=useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api.get('/api/kahoot/roomHistory');
+      setData(res.data)
+    };
+    fetchData();
+  }, []);
+
   const checkPinIsValid = () => {
     let temp = 0;
-    for (let i = 0; i < mockData.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       temp++;
-      if (mockData[i].pin === room) {
-        console.log(mockData[i].pin == room)  
+      if (data[i].pin ==room && data[i].isavailable == true) {
         router.push(`/edqiz/playPinRoomID/${room}`);
         break;
-      } else if ( temp === mockData.length && mockData[i].pin !== room) {
+      } else if ( temp == data.length && data[i].pin != room &&data[i].isavailable== true) {
+        console.log('not valid')
         alert("ROOM IS NOT VALID");
         router.push('/edqiz');
       }
