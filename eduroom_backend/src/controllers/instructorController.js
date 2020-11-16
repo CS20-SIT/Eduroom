@@ -31,3 +31,11 @@ exports.GetProfile = async (req, res, next) => {
   const isverified = result.rows[0].isverified
 	res.status(200).json({ role: 'instructor', isverified })
 }
+
+
+exports.GetCourses = async (req, res, next) => {
+	const instructorId = req.user.instructor;
+	const result = await pool.query('SELECT * from course where ownerid = $1', [instructorId]);
+	console.log(result.rows);
+	res.send(result.rows);
+}

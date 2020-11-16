@@ -8,6 +8,10 @@ import api from '../../api'
 import { useState, useEffect } from 'react'
 
 const forumBlock = ({ row }) => {
+<<<<<<< HEAD
+=======
+	// const [create, setCreate] = useState('');
+>>>>>>> a33f73d4931ff4c1acc894f34a6d8729cefc152a
 	const [data, setData] = useState([])
 	useEffect(() => {
 		const GetData = async () => {
@@ -77,12 +81,16 @@ const forumBlock = ({ row }) => {
 											<div style={{ paddingRight: '30px' }}>
 												<Icon type="like" />
 											</div>
+<<<<<<< HEAD
 											<div
 												onClick={() => {
 													router.push(`/forum/${row.forumid}`)
 												}}
 												style={{ paddingRight: '30px' }}
 											>
+=======
+											<div onClick={handleClick} style={{ paddingRight: '30px' }}>
+>>>>>>> a33f73d4931ff4c1acc894f34a6d8729cefc152a
 												<Icon type="comment" />
 											</div>
 										</div>

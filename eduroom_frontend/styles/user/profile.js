@@ -25,8 +25,35 @@ export default css`
     align-items: center;
   }
   .edit{
+    display: flex;
+  }
+  .edit:hover{
+    cursor: pointer;
+  }
+  .editText{
     margin-bottom: 0;
     color: #F39AC4;
-    cursor: pointer;
+  }
+  .btn{
+    background: #F39AC4;
+		border-radius: 25px;
+		padding: 0.75rem 2rem;
+		margin-bottom: 5%;
+		border: none;
+		transition: 0.25s;
+		outline: none;
+    margin-top: 5px;
+    color: white;
+    font-size: 16px;
+  }
+
+  .btn:hover{
+    cursor:pointer;
+    opacity: 0.8;
+  }
+
+  .edit-icon{
+    color: #F39AC4;
+    margin-left: 9px;
   }
 `
