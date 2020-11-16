@@ -211,5 +211,68 @@ const getStudentAppointments = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
+const getInstructorReviews = async (req, res) => {
+	try {
+		// ID : instructorID
+		// const { id } = req.query
+		// console.log(id)
 
-module.exports = { getAvailableInstructor, getInstructorList, getInstructorInfo, getStudentAppointments }
+		// ID : hardcode
+		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		let result = await pool.query(`
+        select m.score, m.description, u.firstname, u.lastname,to_char( starttime, 'YYYYMMDD') as date
+        from instructor_appointments a, instructor_appointment_members m, user_profile u
+        where a.appointmentid = m.appointmentid
+          and a.instructorid = '${id}'
+          and m.score is not null
+          and u.userid = m.userid`)
+
+		rates = result.rows
+		const rating = []
+		rates.forEach((r) => {
+			let tmp = {
+				score: r.score,
+				desc: r.description,
+				name: r.firstname + ' ' + r.lastname,
+				date: r.date,
+			}
+			rating.push(tmp)
+		})
+		res.status(200).send({ rating })
+	} catch (e) {
+		res.status(404).send(e)
+	}
+}
+const getUserInfo = async (req, res) => {
+	try {
+		// name : name key
+		// const { name } = req.query
+		// console.log(name)
+
+		// name : hardcode
+		const name = 'ka'
+		let result = await pool.query(`
+        select userid, firstname, lastname from user_profile where lower(firstname) like '%${name}%' or lower(lastname) like '%${name}%'
+        `)
+		const students = []
+		result.rows.forEach((s) => {
+			let tmp = {
+				id: s.userid,
+				name: s.firstname + ' ' + s.lastname,
+			}
+			students.push(tmp)
+		})
+		res.status(200).send({ students })
+	} catch (e) {
+		res.status(404).send(e)
+	}
+}
+
+module.exports = {
+	getAvailableInstructor,
+	getInstructorList,
+	getInstructorInfo,
+	getStudentAppointments,
+	getInstructorReviews,
+	getUserInfo,
+}
