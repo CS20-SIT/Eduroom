@@ -59,6 +59,7 @@ export default css`
 		border-radius: 4px;
 		font-size: 20px;
 		background-color: white;
+		padding:1%;
 	}
 	.color {
 		color: #3d467f;
