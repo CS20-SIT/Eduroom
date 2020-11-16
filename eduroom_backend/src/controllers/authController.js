@@ -11,25 +11,25 @@ const { prependOnceListener } = require('process')
 
 exports.getProfile = async (req, res) => {
 	try {
-		// UserID is in req.user.user
-    const result = await pool.query(`SELECT * from user_profile where userid = '${req.user.user}'`)
-    //init role of user
-    let user = { ...result.rows[0], id: req.user.user, role: 'general' }
+		// UserID is in req.user.id
+		const result = await pool.query(`SELECT * from user_profile where userid = '${req.user.id}'`)
+		//init role of user
+		let user = { ...result.rows[0], id: req.user.id, role: 'general' }
 
-    //get email of user
-    let email = '';
-    const localEmail = await pool.query('SELECT email from local_auth where userid = $1', [req.user.user]);
-    
-    if (localEmail.rowCount !== 0) {
-      email = localEmail.rows[0].email;
-    } else {
-      const oauthEmail = await pool.query('SELECT email from oauth where userid = $1', [req.user.user]);
-      email = oauthEmail.rows[0].email;
-    }
-    user = { ...user, email };
+		//get email of user
+		let email = ''
+		const localEmail = await pool.query('SELECT email from local_auth where userid = $1', [req.user.id])
 
-    //get isInstructor of user
-    const result2 = await pool.query('SELECT isverified from instructor where userid = $1', [req.user.user])
+		if (localEmail.rowCount !== 0) {
+			email = localEmail.rows[0].email
+		} else {
+			const oauthEmail = await pool.query('SELECT email from oauth where userid = $1', [req.user.id])
+			email = oauthEmail.rows[0].email
+		}
+		user = { ...user, email }
+
+		//get isInstructor of user
+		const result2 = await pool.query('SELECT isverified from instructor where userid = $1', [req.user.id])
 		if (result2.rowCount !== 0) {
 			user = { ...user, role: 'instructor', isverified: result2.rows[0].isverified }
 		}
