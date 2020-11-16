@@ -217,16 +217,12 @@
 
 ```
 {
- "appointment": [
-   {
-		"rating", [{
-		  "score": int,
-		  "desc": String,
-		  "name": String,
-		  "date": `YYYYMMDD`
-		}]
-   }
-],
+	"rating", [{
+	  "score": int,
+	  "desc": String,
+	  "name": String,
+	  "date": `YYYYMMDD`
+	}]
 }
 ```
 
