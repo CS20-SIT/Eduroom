@@ -8,7 +8,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import axios from "axios";
+import axios from "../../../api";
 import { useState, useEffect } from "react";
 
 import AnnEdit from "../AnnCom/AnnEdit";
@@ -139,7 +139,15 @@ const AnnTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios("http://localhost:5000/api/grader/ann");
+      let result = "";
+      if (props.conid == undefined) {
+        result = await axios("/api/grader/ann");
+      } else {
+        const conid = props.conid;
+        result = await axios.get("/api/grader/contestann", {
+          params: { conid },
+        });
+      }
       setData(result.data);
     };
     GetData();
@@ -234,11 +242,13 @@ const AnnTable = (props) => {
                     <TableCell className={classes.tableEdit} align="left">
                       <AnnEdit
                         onSuccess={props.onSuccess}
+                        coannno={row.coannno}
+                        conid={row.conid}
                         id={row.id}
                         title={row.title}
                         description={row.description}
                         visible={row.isvisible}
-                        adminid={row.adminid}
+                        adminid={row.adminid} // change to cookies
                       ></AnnEdit>
                     </TableCell>
                   </TableRow>
