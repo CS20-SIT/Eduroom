@@ -106,7 +106,24 @@ const dQuestion = async (req, res, next) => {
   await pool.query(`DELETE FROM QuestionTestcases WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM Questiontag WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM questionSample WHERE questionId = '${id}'`);
+
+  await pool.query(`DELETE FROM contest_question WHERE questionId = '${id}'`);
+  await pool.query(`DELETE FROM question_attempt WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM questions WHERE id = '${id}'`);
+
+  res.send({ success: true });
+};
+
+const dConQuestion = async (req, res, next) => {
+  console.log("-----------------------------------------------");
+  const questionid = req.query.id;
+  const conid = req.query.conno;
+  console.log(req.query);
+
+  await pool.query(
+    `DELETE FROM contest_question WHERE questionId = '${questionid}' and conid = '${conid}'`
+  );
+
   res.send({ success: true });
 };
 const eQuestion = async (req, res, next) => {
@@ -181,4 +198,5 @@ module.exports = {
   dSample,
   dQuestion,
   eQuestion,
+  dConQuestion,
 };

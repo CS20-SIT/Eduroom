@@ -31,13 +31,12 @@ const pContest = async (req, res, next) => {
   res.send({ success: true });
 };
 const pContestQuestion = async (req, res, next) => {
-  const conQuestionNo = req.body.conquestionno;
   const conid = req.body.conid;
   const questionId = req.body.questionid;
 
   await pool.query(
-    "INSERT INTO contest_question(conQuestionNo,conid,questionId) VALUES ($1 , $2, $3)",
-    [conQuestionNo, conid, questionId]
+    "INSERT INTO contest_question(conid,questionId) VALUES ($1 , $2 )",
+    [conid, questionId]
   );
 
   res.send({ success: true });
@@ -139,8 +138,9 @@ const gContestAnn = async (req, res, next) => {
   res.send(conann);
 };
 const gContestQuestion = async (req, res, next) => {
+  const conno = req.query.conno;
   const data = await pool.query(
-    "select * from contest_question  where conid = 1 and questionid = 1"
+    `select conquestionno,  a.id, a.title , a.difficulty , a.visibility, b.displayName  from contest_question c , Questions a, admin_login b  where a.adminid = b.adminid and conid = '${conno}' and questionid = a.id `
   );
   const conann = data.rows;
   res.send(conann);

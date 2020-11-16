@@ -145,8 +145,15 @@ const AnnTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios.get("/api/grader/allquestion");
-      setData(result.data);
+      if (props.conno == undefined) {
+        const result = await axios.get("/api/grader/allquestion");
+        setData(result.data);
+      } else {
+        const result = await axios.get("/api/grader/contestquestion", {
+          params: { conno: props.conno },
+        });
+        setData(result.data);
+      }
     };
     GetData();
     console.log(data);
@@ -272,16 +279,14 @@ const AnnTable = (props) => {
                             />
                           </button>
                         </Grid>
-                        {conno != undefined ? (
-                          "" //DeleteQuestion  here
-                        ) : (
-                          <Grid item sm={6}>
-                            <DeleteQuestion
-                              onSuccess={props.onSuccess}
-                              id={row.id}
-                            ></DeleteQuestion>
-                          </Grid>
-                        )}
+
+                        <Grid item sm={6}>
+                          <DeleteQuestion
+                            conno={conno}
+                            onSuccess={props.onSuccess}
+                            id={row.id}
+                          ></DeleteQuestion>
+                        </Grid>
                       </Grid>
                     </TableCell>
                   </TableRow>
