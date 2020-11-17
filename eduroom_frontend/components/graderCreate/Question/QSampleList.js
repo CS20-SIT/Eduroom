@@ -78,6 +78,7 @@ class Form extends React.Component {
     });
   }
   render() {
+    this.props.handleSample(this.state.questionSample);
     let { questionSample } = this.state; //let { notes, date, description, taskList } = this.state
     return (
       <form onChange={this.handleChange}>

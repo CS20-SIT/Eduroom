@@ -615,15 +615,33 @@ export default function FullWidthGrid(props) {
     }
   };
   const onHandlerSample = (id) => {
-    if (samples != null) {
+    console.log(samples);
+    if (samples != []) {
       if (props.id != undefined) {
+  
         axios.delete("/api/grader/dquestionsample", {
           params: {
             id: props.id,
           },
-        });
+        }).then( ()=>{    axios
+          .post("/api/grader/cquestionsample", {
+            samples: samples,
+            questionId: id,
+          })
+          .then((res) => {
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, success: true });
+            }, 450);
+          })
+          .catch((err) => {
+            console.log(err);
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });} );
       }
-      axios
+
+      else{    axios
         .post("/api/grader/cquestionsample", {
           samples: samples,
           questionId: id,
@@ -638,7 +656,8 @@ export default function FullWidthGrid(props) {
           setTimeout(() => {
             setSubmitStatus({ ...submitStatus, failed: true });
           }, 450);
-        });
+        });}
+    
     }
   };
 
