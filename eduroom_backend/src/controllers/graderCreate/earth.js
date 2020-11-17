@@ -219,9 +219,18 @@ const gQuestionTestcase = async (req, res, next) => {
   const conann = data.rows;
   res.send(conann);
 };
+const gNonExistQuestion = async (req, res, next) => {
+  const id = req.query.conno;
+  const data = await pool.query(
+    `select id, title from Questions  where id not in ( select questionid from contest_question where conid = '${id}' )  `
+  );
+  const conann = data.rows;
+  res.send(conann);
+};
 
 module.exports = {
   pQuestion,
+  gNonExistQuestion,
   pQuestionTag,
   pTag,
   pQuestionSample,

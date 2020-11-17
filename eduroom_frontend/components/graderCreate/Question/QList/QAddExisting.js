@@ -1,9 +1,9 @@
- import TextField from "@material-ui/core/TextField";
+import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import MenuItem from "@material-ui/core/MenuItem";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -14,32 +14,35 @@ import axios from "../../../../api";
 
 const CustomAutocomplete = withStyles({
   input: {
-    marginTop: 7,
+    marginTop: 10,
 
     color: "#5b5b5b",
     fontFamily: "Quicksand , sans-serif",
     fontSize: "1.2em",
   },
   tag: {
+    marginLeft: 5,
     marginTop: 5,
     marginBottom: 7,
     backgroundColor: "white",
     height: 30,
     position: "relative",
     zIndex: 0,
-    // border: "2.5px solid #a880f7",
+    border: "2.5px solid #a880f7",
     "& .MuiChip-label": {
       color: "#3d467f",
       fontFamily: "Quicksand , sans-serif",
-      width:500,
+      width: 500,
+
       fontSize: "1.2em",
       fontWeight: "bold",
     },
     "& .MuiChip-deleteIcon": {
       color: "#FC8FC3",
-      height: 15,
-      width: 15,
+      height: 22.5,
+      width: 22.5,
       opacity: 0.8,
+      marginRight: 20,
     },
 
     //
@@ -58,20 +61,20 @@ const CustomAutocomplete = withStyles({
 })(Autocomplete);
 
 const AnnEdit = (props) => {
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
+  const [addquestion, setAddquestion] = React.useState([]);
   useEffect(() => {
     const GetData = async () => {
-       /// execpet the quesiton that alread;y on thr contest table
-        const result = await axios.get("/api/grader/allquestion");
-        setData(result.data);
-      };
-    
+      /// execpet the quesiton that alread;y on thr contest table
+      const result = await axios.get("/api/grader/addexistingquestion", {
+        params: { conno: props.conno },
+      });
+      setData(result.data);
+    };
+
     GetData();
     console.log(data);
-    // console.log(props.onSuccess);
-  }, [
-    // props.update
-  ]);
+  }, [props.update]);
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
     success: false,
@@ -79,11 +82,12 @@ const AnnEdit = (props) => {
   });
 
   const statusClose = () => {
+    props.onSuccess();
     setSubmitStatus({
       success: false,
       failed: false,
     });
-
+    setAddquestion([]);
     // props.onSuccess();
   };
 
@@ -93,15 +97,16 @@ const AnnEdit = (props) => {
 
   const handleClose = () => {
     setOpen(false);
-    // props.onSuccess();
+    props.onSuccess();
   };
 
   const handleSubmit = () => {
+    let question = addquestion;
+    delete question.title;
     axios
-      .delete("/api/grader/dquestion", {
-        params: {
-          id: props.id,
-        },
+      .post("/api/grader/ccontestexistquestion", {
+        conno: props.conno,
+        questions: question,
       })
       .then(function (response) {
         setOpen(false);
@@ -118,25 +123,28 @@ const AnnEdit = (props) => {
   };
 
   const sTitle = {
-    "font-family": "Quicksand , sans-serif",
-    "font-size": "1.2em",
+    fontFamily: "Quicksand , sans-serif",
+    fontSize: "1.2em",
     color: "#3d467f",
-    "font-weight": "bold",
+    fontWeight: "bold",
   };
-  const sText = { "font-family": "Quicksand , sans-serif", color: "#5b5b5b" };
+  const sText = {
+    fontFamily: "Quicksand , sans-serif",
+    color: "#5b5b5b",
+  };
   const sInputfield = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
   };
   const sInput = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-weight": "bold",
+    fontWeight: "bold",
   };
   const sButtionandVisbile = {
     color: "#3d467f",
-    "font-family": "Quicksand , sans-serif",
-    "font-weight": "bold",
+    fontFamily: "Quicksand , sans-serif",
+    fontWeight: "bold",
   };
 
   return (
@@ -152,7 +160,6 @@ const AnnEdit = (props) => {
       >
         {" "}
         Add Existing
-     
       </button>
       {/* <button
           style={{
@@ -184,17 +191,21 @@ const AnnEdit = (props) => {
             <span style={sText}>
               Select what question you want from the question libary here
             </span>
+            <div style={{ height: 25 }}></div>
             <CustomAutocomplete
-        multiple
-        limitTags={2}
-        id="multiple-limit-tags"
-        options={data}
-        getOptionLabel={(option) => option.id+'. '+option.title}
-        // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
-        renderInput={(params) => (
-          <TextField {...params} variant="outlined" label="limitTags" placeholder="Favorites" />
-        )}
-      />
+              multiple
+              options={data}
+              getOptionLabel={(option) => option.id + ". " + option.title}
+              value={addquestion}
+              onChange={(event, newValue) => {
+                setAddquestion(newValue);
+                console.log(addquestion);
+                console.log(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} placeholder="Add Question" />
+              )}
+            />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -213,7 +224,10 @@ const AnnEdit = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <span style={sText}> The Question have been deleted.</span>
+            <span style={sText}>
+              {" "}
+              The Questions have been added to the contest.
+            </span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
