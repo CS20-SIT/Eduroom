@@ -69,7 +69,7 @@
 
 ---
 
-### Get Instructor information ( available times )
+### Get Instructor information
 
 - **URL** : `/api/tutor/instructor/info`
 - **Method** : `GET`
@@ -95,7 +95,35 @@
 		"rating": decimal,
 		"ratingCount": int,
 		"price": decimal
-		"times": [{ "date": int, "time": [int] }]
+   }
+}
+```
+
+- **Error** : `404`
+
+---
+
+### Get Instructor information ( available times )
+
+- **URL** : `/api/tutor/instructor/availability`
+- **Method** : `GET`
+- **Headers** : `Token`
+- **Body** : `none`
+- **Params** :
+
+```
+ {
+	 "id": `instructorId`,
+	 "date": `YYYY-MM-DD`
+ }
+```
+
+- **Success** : `200`
+
+```
+{
+ "times": {
+	 [ int ]
    }
 }
 ```
