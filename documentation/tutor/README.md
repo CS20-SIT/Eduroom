@@ -114,7 +114,7 @@
 ```
  {
 	 "id": `instructorId`,
-	 "date": `YYYY-MM-DD`
+	 "dates": `YYYY-MM-DD`
  }
 ```
 
