@@ -31,7 +31,6 @@ export default css`
 	.human {
 		display: flex;
 		justify-content: space-between;
-		// background-color: red;
 	}
 	.img {
 		margin-top: -100px;
@@ -48,7 +47,7 @@ export default css`
   .topic {
     color: #fb9ccb;
     font-weight: 700;
-		width: 100px;
+		min-width: 100px;
   }
   .box {
     width: 275px;
@@ -60,8 +59,9 @@ export default css`
 	}
 	
 	.boxBio{
+		width: 100%;
     display: flex;
-    margin-top: 20px;
+		margin-top: 20px;
 	}
 	.detBio{
 		color: #858585;
