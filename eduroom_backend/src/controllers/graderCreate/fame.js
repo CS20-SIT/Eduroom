@@ -145,6 +145,30 @@ const gContestQuestion = async (req, res, next) => {
   const conann = data.rows;
   res.send(conann);
 };
+const pContestExistingQuestion = async (req, res, next) => {
+  const conno = req.body.conno;
+  const question = req.body.questions;
+
+  try {
+    question.forEach((q) => {
+      pool.query(
+        "INSERT INTO contest_question(conid,questionid) VALUES ($1 , $2)",
+        [conno, q.id],
+        function (err, result, fields) {
+          if (err) throw err;
+          console.log("-----------pContestExistingQuestion------------");
+          console.log(result);
+          console.log(fields);
+          console.log("-----------pContestExistingQuestion------------");
+        }
+      );
+    });
+  } catch (error) {
+    console.error(error);
+  }
+
+  res.send({ success: true });
+};
 
 module.exports = {
   pAdminLog,
@@ -157,6 +181,7 @@ module.exports = {
   gContest,
   gContestAnn,
   gContestQuestion,
+  pContestExistingQuestion,
 };
 
 ///// dont forget to go to routes => graderRoute  and add your api

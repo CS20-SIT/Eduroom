@@ -205,7 +205,7 @@ const AnnTable = (props) => {
                 Visible
               </TableCell>
               <TableCell className={classes.tableHEdit} align="center">
-                Edit{" "}
+                <span style={{ marginLeft: 18 }}>Edit </span>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -250,13 +250,16 @@ const AnnTable = (props) => {
                       align="center"
                     >
                       {row.visibility ? (
-                        <i className="fas fa-check"></i>
+                        <i style={{ marginLeft: 20 }} className="fa fa-eye"></i>
                       ) : (
-                        <i className="fas fa-times"></i>
+                        <i
+                          style={{ marginLeft: 20 }}
+                          className="fa fa-eye-slash"
+                        ></i>
                       )}
                     </TableCell>
                     <TableCell className={classes.tableEdit} align="center">
-                      <Grid container direction="row" spacing={3}>
+                      <Grid container direction="row">
                         <Grid item sm={6}>
                           <button
                             style={{

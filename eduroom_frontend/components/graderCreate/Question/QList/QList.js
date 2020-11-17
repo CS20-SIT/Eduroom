@@ -55,7 +55,15 @@ const Test = () => {
           >
             Create New
           </span>
-          {id!=undefined?     (<QExisting conno={id}></QExisting>):('')}
+          {id != undefined ? (
+            <QExisting
+              onSuccess={handleUpdate}
+              update={refresh}
+              conno={id}
+            ></QExisting>
+          ) : (
+            ""
+          )}
           <div style={{ height: 20 }}></div>
         </Grid>
 
