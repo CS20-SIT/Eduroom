@@ -1,15 +1,27 @@
 import General from '../../../components/template/general'
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useState, useContext, useEffect } from 'react'
 import Courses from '../../../components/user/instructor/Courses'
 import UserContext from '../../../contexts/user/userContext'
 import styles from '../../../styles/user/instructor/profile'
+import api from '../../../api'
 
 const InstructorProfile = () => {
 	const userContext = useContext(UserContext)
 	const user = userContext.user
-
+	const [instructor, setInstructor] = useState(null)
+	const fetchInstructor = async () => {
+		const res = await api.get('/api/instructor/profileDetail')
+		setInstructor(res.data)
+	}
+	useEffect(() => {
+		fetchInstructor()
+	}, [])
+	const renderExpert = () => {
+		return instructor.expert.map((exp, index) => {
+			return index === 0 ? exp : ', ' + exp
+		})
+	}
 	const renderProfile = () => {
-		if (!user) return null
 		return (
 			<Fragment>
 				<h2 style={{ color: '#353E6C' }}>Profile</h2>
@@ -24,39 +36,67 @@ const InstructorProfile = () => {
 				</div>
 
 				<div className="box">
-					<div className="topic">Expert</div> <div className="det">Algorithms</div>
+					<div className="topic">Expert</div> <div className="det">{renderExpert()}</div>
 				</div>
-
 				<style jsx>{styles}</style>
 			</Fragment>
 		)
 	}
-	return (
-		<Fragment>
-			<General>
-				<div className="container">
-					<div className="courses">
-						<Courses></Courses>
+	const renderDegree = () => {
+		return instructor.degree.map((deg, index) => {
+			return index === 0 ? deg : ', ' + deg
+		})
+	}
+	const renderDetail = () => {
+		return (
+			<Fragment>
+				<div className="boxBio">
+					<div className="topic">Degree</div> <div className="detBio">{renderDegree()}</div>
+				</div>
+
+				<div className="boxBio">
+					<div className="topic">Bio</div> <div className="detBio">{instructor.bio}</div>
+				</div>
+				<style jsx>{styles}</style>
+			</Fragment>
+		)
+	}
+	const renderPage = () => {
+		if (!user || !instructor) {
+			return null
+		}
+		return (
+			<div className="container">
+				<div className="courses">
+					<Courses></Courses>
+				</div>
+				<div className="profile">
+					<div className="header">
+						<div style={{ color: 'white', padding: '20px 40px' }}>
+							<div style={{ display: 'flex', marginTop: '20px' }}>
+								<h1 style={{ margin: '0' }}>Instructor</h1>
+								<i style={{ margin: '15px 0 0 20px' }} className="fas fa-edit"></i>
+							</div>
+							<h1>Profile</h1>
+						</div>
 					</div>
-					<div className="profile">
-						<div className="header">
-							<div style={{ color: 'white', padding: '20px 30px' }}>
-								<h1>Instructor</h1>
-								<h1>Profile</h1>
+					<div className="detail">
+						<div className="human">
+							<div className="detailProfile">{renderProfile()}</div>
+							<div className="img">
+								<img src="/images/instructor/Human.svg" width="100%"></img>
 							</div>
 						</div>
-						<div className="detail">
-							<div className="human">
-								<div className="detailProfile">{renderProfile()}</div>
-								<div className="img">
-									<img src="/images/instructor/Human.svg" width="250px"></img>
-								</div>
-							</div>
-						</div>
+						<div style={{ margin: '30px 40px', borderTop: '2px solid #DEDEDE' }}>{renderDetail()}</div>
 					</div>
 				</div>
-			</General>
-			<style jsx>{styles}</style>
+				<style jsx>{styles}</style>
+			</div>
+		)
+	}
+	return (
+		<Fragment>
+			<General>{renderPage()}</General>
 		</Fragment>
 	)
 }
