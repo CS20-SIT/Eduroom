@@ -6,22 +6,35 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Chip from "@material-ui/core/Chip";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useRouter } from "next/router";
+import axios from "../../../api";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import QSampleList from "./QSampleList";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import Link from "next/link";
+import Switch from "@material-ui/core/Switch";
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
 const CustomAutocomplete = withStyles({
   input: {
     marginTop: 7,
 
     color: "#5b5b5b",
     fontFamily: "Quicksand , sans-serif",
-    "font-size": "1.2em",
+    fontSize: "1.2em",
   },
   tag: {
     marginTop: 15,
@@ -35,8 +48,8 @@ const CustomAutocomplete = withStyles({
       color: "#3d467f",
       fontFamily: "Quicksand , sans-serif",
 
-      "font-size": "1.2em",
-      "font-weight": "bold",
+      fontSize: "1.2em",
+      fontWeight: "bold",
     },
     "& .MuiChip-deleteIcon": {
       color: "#FC8FC3",
@@ -62,8 +75,8 @@ const CustomAutocomplete = withStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "75%",
-    marginLeft: "12%",
+    width: "52.5%",
+    marginLeft: "22.5%",
     marginRight: "15%",
     marginTop: "2.5%",
     marginBottom: "10%",
@@ -83,15 +96,15 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     paddingBottom: theme.spacing(4),
 
-    textAlign: "center",
+    // textAlign: "center",
     color: theme.palette.text.secondary,
   },
   menuitem: {
     "&.Mui-selected": {
-      "font-family": "Quicksand , sans-serif",
+      fontFamily: "Quicksand , sans-serif",
       color: "#3d467f",
-      "font-size": "1.2em",
-      "font-weight": "bold",
+      fontSize: "1.2em",
+      fontWeight: "bold",
     },
   },
   select: {
@@ -99,16 +112,17 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       fontFamily: "Quicksand , sans-serif",
       color: "#3d467f",
-      "font-size": "1.2em",
-      "font-weight": "bold",
+      fontSize: "1.2em",
+      fontWeight: "bold",
     },
     error1: {
-      "font-family": "Quicksand , sans-serif",
+      fontFamily: "Quicksand , sans-serif",
       color: "#5b5b5b",
-      "font-size": "1.2em",
+      fontSize: "1.2em",
     },
   },
 }));
+
 const theme1 = createMuiTheme({
   overrides: {
     MuiSelect: {
@@ -120,58 +134,120 @@ const theme1 = createMuiTheme({
     },
   },
 });
-export default function FullWidthGrid() {
+export default function FullWidthGrid(props) {
   const [existTags, setExistTags] = useState([]);
+  const [oldDetail, setoldDetail] = useState([]);
+  const [oldTestcase, setoldTestcase] = useState("");
+  const [oldTag, setoldTag] = useState([]);
+
+  const splitTest = function (str) {
+    return str.split("\\").pop().split("/").pop();
+  };
+  // const [oldSample,]
+  const router = useRouter();
+  const conno = router.query.conno;
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios("http://localhost:5000/api/grader/alltag");
+      const result = await axios("/api/grader/alltag");
       setExistTags(result.data);
+      console.log(props);
+
+      if (props.id != undefined) {
+        const id = props.id;
+        console.log(props.id);
+        const oldData = await axios.get("/api/grader/question", {
+          params: { id },
+        });
+        const detail = oldData.data[0];
+
+        setTitle(detail.title);
+        setDescription(detail.description);
+        setInputdesc(detail.intputdes);
+        setOutputdesc(detail.outputdes);
+        setRule(detail.ruletype);
+        setvisible(detail.visibility);
+        setMemory(detail.memorylimit);
+        setTime(detail.timelimit);
+        setHint(detail.hint);
+        setDiff(detail.difficulty);
+
+        const testcase = await axios.get("/api/grader/questiontestcase", {
+          params: { id },
+        });
+
+        let testcaseName =
+          testcase.data[0] == undefined
+            ? "FILE NOT FOUND"
+            : splitTest(testcase.data[0].filepath);
+        setoldTestcase(testcaseName);
+        setFile(-1);
+
+        const tag = await axios.get("/api/grader/questiontag", {
+          params: { id },
+        });
+
+        const oldTag = tag.data;
+        setTags(oldTag);
+      }
     };
     GetData();
   }, []);
 
+  const sTitle = {
+    fontFamily: "Quicksand , sans-serif",
+    fontSize: "1.2em",
+    color: "#3d467f",
+    fontWeight: "bold",
+  };
+  const sText = { fontFamily: "Quicksand , sans-serif", color: "#5b5b5b" };
+  const sButtionandVisbile = {
+    color: "#3d467f",
+    fontFamily: "Quicksand , sans-serif",
+    fontWeight: "bold",
+    fontSize: "1.2em",
+  };
   const sInputfield = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    fontSize: "1.2em",
   };
   const sInputTag = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    fontSize: "1.2em",
   };
   const sInput = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-weight": "bold",
-    "font-size": "1.2em",
+    fontWeight: "bold",
+    fontSize: "1.2em",
   };
   const sInputfieldDesc = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    fontSize: "1.2em",
     paddingTop: 12,
   };
   const sInputSelect = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#5b5b5b",
-    "font-size": "1.2em",
+    fontSize: "1.0em",
   };
   const sError = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "white",
-    "font-size": "1em",
+    fontSize: "1em",
   };
   const sInputfieldSelect = {
-    "font-family": "Quicksand , sans-serif",
+    fontFamily: "Quicksand , sans-serif",
     color: "#3d467f",
-    "font-size": "1.4em",
-    "font-weight": "bold",
+    fontSize: "1.1em",
+    fontWeight: "bold",
   };
   const sBigTitle = {
     fontFamily: "Quicksand , sans-serif",
-    "font-size": "2em",
+    fontSize: "2em",
     color: "#3d467f",
     fontWeight: "bold",
   };
@@ -186,16 +262,7 @@ export default function FullWidthGrid() {
       label: "ACM",
     },
   ];
-  const visibles = [
-    {
-      value: true,
-      label: "ON",
-    },
-    {
-      value: false,
-      label: "OFF",
-    },
-  ];
+
   const timelims = [
     {
       value: 250,
@@ -263,6 +330,22 @@ export default function FullWidthGrid() {
     },
   ];
 
+  const [submitStatus, setSubmitStatus] = useState({
+    success: false,
+    failed: false,
+  });
+
+  const statusClose = () => {
+    setSubmitStatus({
+      success: false,
+      failed: false,
+    });
+  };
+
+  const handleDialogClose = () => {
+    setOpen(false);
+  };
+
   const classes = useStyles();
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -276,6 +359,8 @@ export default function FullWidthGrid() {
   const [erorvalid, seterorValid] = React.useState(false);
   const [hint, setHint] = useState("");
   const [difficulty, setDiff] = useState("easy");
+  const [samples, setSample] = useState([]);
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -283,7 +368,10 @@ export default function FullWidthGrid() {
 
     seterorValid(false);
   };
-
+  const handleSample = (s) => {
+    setSample(s);
+    console.log(samples);
+  };
   const handleTitle = (event) => {
     setTitle(event.target.value);
     setCheck(true);
@@ -313,12 +401,13 @@ export default function FullWidthGrid() {
     setMemory(event.target.value);
   };
   const handleChangeStatus = (event) => {
-    setvisible(event.target.value);
+    setvisible(event.target.checked);
   };
 
   const handleSubmit = () => {
-    if (title == "") {
+    if (title == "" || selectedFile == null) {
       seterorValid(true);
+      document.querySelector("body").scrollTo(0, 0);
     } else {
       let newtags = tags.filter((t) => {
         return typeof t === "string";
@@ -332,44 +421,71 @@ export default function FullWidthGrid() {
       });
 
       const pnewTags = [...new Set(newtags)];
+
       console.log(pnewTags);
       const pqexistTags = [...new Set(qexisttags)];
+
       console.log(pqexistTags);
-
-      axios
-        .post("http://localhost:5000/api/grader/cquestion", {
-          title: title,
-          ruleType: rule,
-          description: description,
-          hint: hint,
-          timeLimit: time,
-          memoryLimit: memory,
-          visibility: visible,
-          adminid: "12345678-1234-1234-1234-123456789123",
-          intputDes: inputdesc,
-          outputDes: outputdesc,
-          difficulty: difficulty,
-          newTags: pnewTags,
-          existTags: pqexistTags,
-        })
-        .then(function (response) {
-          console.log(response.data.id);
-
-          // setOpen(false);
-        });
+      if (props.id == undefined) {
+        axios
+          .post("/api/grader/cquestion", {
+            title: title,
+            ruleType: rule,
+            description: description,
+            hint: hint,
+            timeLimit: time,
+            memoryLimit: memory,
+            visibility: visible,
+            adminid: "12345678-1234-1234-1234-123456789123",
+            intputDes: inputdesc,
+            outputDes: outputdesc,
+            difficulty: difficulty,
+            newTags: pnewTags,
+            existTags: pqexistTags,
+          })
+          .then(function (response) {
+            console.log(response.data.id);
+            const id = response.data.id;
+            onHandlerFile(id);
+            onHandlerSample(id);
+            onHandlerContest(id);
+          })
+          .catch(function (error) {
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
+      } else {
+        axios
+          .put("/api/grader/equestion", {
+            title: title,
+            ruleType: rule,
+            description: description,
+            hint: hint,
+            timeLimit: time,
+            memoryLimit: memory,
+            visibility: visible,
+            adminid: "12345678-1234-1234-1234-123456789123",
+            intputDes: inputdesc,
+            outputDes: outputdesc,
+            difficulty: difficulty,
+            newTags: pnewTags,
+            existTags: pqexistTags,
+            id: props.id,
+          })
+          .then(function (response) {
+            console.log(response.data.id);
+            const id = response.data.id;
+            onHandlerFile(id);
+            onHandlerSample(id);
+          })
+          .catch(function (error) {
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
+      }
     }
-
-    //     setTimeout(() => {
-    //       console.log('this is when we call prop on sucess')
-    //       setSubmitStatus({ ...submitStatus, success: true });
-    //     }, 450);
-    //   })
-    //   .catch(function (error) {
-    //     setOpen(false);
-    //     setTimeout(() => {
-    //       setSubmitStatus({ ...submitStatus, failed: true });
-    //     }, 450);
-    //   })
   };
   // so when send -> post the new tags into tagTable  first then post in Question Tag
   const [tags, setTags] = React.useState([]);
@@ -388,6 +504,174 @@ export default function FullWidthGrid() {
       default:
     }
   };
+
+  ///Select Filed
+  const [selectedFile, setFile] = useState(null);
+  const [load, setLoad] = useState(0);
+  const [fileError, setFileError] = useState("Invalid Files");
+  const [checkError, setCheckError] = useState(false);
+  const [checkFileSucess, setCheckFileSucess] = useState(false);
+  const checkMimeType = (event) => {
+    //getting file object
+    let files = event.target.files;
+    console.log(files);
+    //define message container
+    let err = [];
+    let result = true;
+    // list allow mime type
+    const types = [
+      "application/zip",
+      "application/x-zip-compressed",
+      "application/zip-compressed",
+    ];
+    // loop access array
+    for (var x = 0; x < files.length; x++) {
+      // compare file type find doesn't matach
+      if (types.every((type) => files[x].type !== type)) {
+        // create error message and assign to container
+        err[x] = files[x].type + " is not a supported format\n";
+        result = false;
+        setFileError("Invaild File Format!\n");
+        setCheckError(true);
+      }
+    }
+    for (var z = 0; z < err.length; z++) {
+      // if message not same old that mean has error
+      // discard selected file
+      event.target.value = null;
+    }
+    return result;
+  };
+  const maxSelectFile = (event) => {
+    let files = event.target.files;
+    if (files.length > 10) {
+      setFileError("Only 10 Files can be uploaded at a time!\n");
+      setCheckError(true);
+      event.target.value = null;
+      return false;
+    }
+    return true;
+  };
+  const checkFileSize = (event) => {
+    let files = event.target.files;
+    let size = 10 * 1024 * 1024;
+    let err = [];
+    for (var x = 0; x < files.length; x++) {
+      if (files[x].size > size) {
+        setFileError("Pick a smaller file!\n");
+        setCheckError(true);
+        err[x] = files[x].type + "is too large, please pick a smaller file\n";
+      }
+    }
+    for (var z = 0; z < err.length; z++) {
+      // if message not same old that mean has error
+      // discard selected file
+
+      event.target.value = null;
+    }
+    return true;
+  };
+  const onChangeHandlerFile = (event) => {
+    var files = event.target.files;
+    if (maxSelectFile(event) && checkMimeType(event) && checkFileSize(event)) {
+      setFile(files);
+      setLoad(0);
+      setCheckFileSucess(true);
+    }
+  };
+  const onHandlerFile = (id) => {
+    const data = new FormData();
+
+    if (selectedFile != null) {
+      console.log("apppppppppppedding data aaaaaaaaaaaaa");
+      for (var x = 0; x < selectedFile.length; x++) {
+        data.append("file", selectedFile[x]);
+        console.log(id);
+        data.append("questionid", id);
+        console.log(selectedFile[x]);
+      }
+      if (props.id != undefined && selectedFile != -1) {
+        axios.delete("/api/grader/dquestiontestcase", {
+          params: {
+            id: props.id,
+          },
+        });
+      }
+      if (selectedFile != -1) {
+        axios
+          .post("/api/grader/ptc", data, {
+            onUploadProgress: (ProgressEvent) => {
+              setLoad((ProgressEvent.loaded / ProgressEvent.total) * 100);
+            },
+          })
+          .then((res) => {})
+          .catch((err) => {
+            console.log(err);
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
+      }
+    }
+  };
+  const onHandlerSample = (id) => {
+    if (samples != null) {
+      if (props.id != undefined) {
+        axios.delete("/api/grader/dquestionsample", {
+          params: {
+            id: props.id,
+          },
+        });
+      }
+      axios
+        .post("/api/grader/cquestionsample", {
+          samples: samples,
+          questionId: id,
+        })
+        .then((res) => {
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, success: true });
+          }, 450);
+        })
+        .catch((err) => {
+          console.log(err);
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, failed: true });
+          }, 450);
+        });
+    }
+  };
+
+  const onHandlerContest = (id) => {
+    if (conno != undefined) {
+      axios
+        .post("/api/grader/ccontestquestion", {
+          conquestionno: 1,
+          conid: conno,
+          questionid: id,
+        })
+        // .then((res) => {
+        //   setTimeout(() => {
+        //     setSubmitStatus({ ...submitStatus, success: true });
+        //   }, 450);
+        // })
+        .catch((err) => {
+          console.log(err);
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, failed: true });
+          }, 450);
+        });
+    }
+  };
+  const handleCloseFile = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setCheckError(false);
+    setCheckFileSucess(false);
+  };
+
   return (
     <div className={classes.root}>
       <MuiThemeProvider theme={theme1}>
@@ -401,9 +685,33 @@ export default function FullWidthGrid() {
           </Alert>
         </Snackbar>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <span style={sBigTitle}>Create your Question</span>
+        <Grid container spacing={6}>
+          <Grid item xs={10}>
+            <span style={sBigTitle}>
+              <span onClick={() => router.back()}>
+                <i
+                  style={{ cursor: "pointer" }}
+                  className="fa fa-arrow-left"
+                  aria-hidden="true"
+                ></i>
+              </span>{" "}
+              {props.id == null
+                ? "Create your Question"
+                : `Edit Question No. ${props.id} `}
+            </span>
+          </Grid>
+          <Grid item xs={2}>
+            <FormControlLabel
+              control={
+                <Switch
+                  color="primary"
+                  checked={visible}
+                  onChange={handleChangeStatus}
+                  name="visible"
+                />
+              }
+              label={<span style={sButtionandVisbile}>Visible</span>}
+            />
           </Grid>
           <Grid item xs={12} sm={12}>
             <div>
@@ -433,13 +741,12 @@ export default function FullWidthGrid() {
                 {" "}
                 <Paper className={classes.paper}>
                   <TextField
-                    autoFocus
-                    multiline
-                    margin="dense"
                     id="description"
                     label="Description"
                     type="text"
+                    margin="dense"
                     fullWidth
+                    multiline
                     rows={15}
                     value={description}
                     onChange={handleDesc}
@@ -454,7 +761,6 @@ export default function FullWidthGrid() {
             <div>
               <Paper className={classes.paper}>
                 <TextField
-                  autoFocus
                   multiline
                   margin="dense"
                   label="Input Description"
@@ -473,7 +779,6 @@ export default function FullWidthGrid() {
             <div>
               <Paper className={classes.paper}>
                 <TextField
-                  autoFocus
                   multiline
                   margin="dense"
                   label="Output Description"
@@ -566,7 +871,7 @@ export default function FullWidthGrid() {
               </Paper>
             </div>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6}>
             <Paper className={classes.paper2}>
               <div>
                 <TextField
@@ -592,36 +897,15 @@ export default function FullWidthGrid() {
               </div>{" "}
             </Paper>
           </Grid>
-          <Grid item xs={3}>
-            <Paper className={classes.paper2}>
-              <div>
-                <TextField
-                  fullWidth
-                  select
-                  required
-                  label="Visibility"
-                  value={visible}
-                  onChange={handleChangeStatus}
-                  // inputProps={{style:sInputfieldSelect }}
-                  InputLabelProps={{ style: sInputfieldSelect }}
-                >
-                  {visibles.map((option) => (
-                    <MenuItem
-                      className={classes.menuitem}
-                      key={option.value}
-                      value={option.value}
-                    >
-                      <span style={sInputSelect}> {option.label}</span>
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </div>{" "}
-            </Paper>
+          <Grid item xs={12}>
+            <QSampleList
+              id={props.id}
+              handleSample={handleSample}
+            ></QSampleList>
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <TextField
-                autoFocus
                 margin="dense"
                 label="Hint"
                 type="text"
@@ -648,6 +932,7 @@ export default function FullWidthGrid() {
                   filterSelectedOptions
                   renderInput={(params) => {
                     params.inputProps.onKeyDown = handleKeyDown;
+                    params.inputProps.maxLength = 50;
                     return (
                       <TextField
                         {...params}
@@ -663,28 +948,174 @@ export default function FullWidthGrid() {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <div style={{ height: 20 }}></div>
+            <Paper className={classes.paper}>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                {" "}
+                <Grid item xs={12}>
+                  <Snackbar
+                    open={checkError}
+                    autoHideDuration={6000}
+                    onClose={handleCloseFile}
+                  >
+                    <Alert
+                      style={sError}
+                      onClose={handleCloseFile}
+                      severity="error"
+                    >
+                      {fileError}
+                    </Alert>
+                  </Snackbar>
+                  <Snackbar
+                    open={checkFileSucess}
+                    autoHideDuration={3000}
+                    onClose={handleCloseFile}
+                  >
+                    <Alert
+                      style={sError}
+                      onClose={handleCloseFile}
+                      severity="success"
+                    >
+                      Selected {selectedFile ? selectedFile.length : ""} Files !
+                    </Alert>
+                  </Snackbar>
+                  <style jsx>{`
+                  *:focus {
+                    outline: none;
+                  }
+                  .custom-file-input::-webkit-file-upload-button {
+                    visibility: hidden;
+                    width: 800px;
+                  }
+                  .custom-file-input::before {
+                    content: "Select Your Test Case File";
+                    display: inline-block;
+                    color: #a880f7;
+                    width: 300px;
+                    /* padding: 5px 8px; */
+                    outline: none;
+                    white-space: nowrap;
+                    -webkit-user-select: none;
+                    cursor: pointer;
+                    font-weight: 700;
+                    font-size: 1.5em;
+                  }
+                  .custom-file-input:hover::before {
+                    border-color: black;
+                    outline: none;
+                  }
+                  .custom-file-input:focus {
+                    outline: none;
+                  }
+                  .img {
+                    width:50,
+                    height:50,
+                  }
+                `}</style>
+                  <input
+                    type="file"
+                    className="form-control"
+                    onChange={onChangeHandlerFile}
+                    className="custom-file-input"
+                    style={{
+                      width: 280,
+                      marginTop: 25,
+                      marginBottom: 10,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <span
+                    style={{
+                      width: 300,
+                      marginTop: 25,
+                      marginLeft: -42,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {selectedFile != null && selectedFile != -1
+                      ? "File recieved :  " + selectedFile[0].name
+                      : props.id == undefined
+                      ? "Testcase file up to 10 MB in size are available for upload."
+                      : oldTestcase}
+                  </span>
+                </Grid>
+                <Grid item xs={12}>
+                  <div style={{ height: 12 }}></div>
+                </Grid>
+              </Grid>
+            </Paper>
+            <Grid item xs={12}>
+              <div style={{ height: 20 }}></div>
+            </Grid>
           </Grid>
+
           <Grid item xs={12}>
             <center>
               <div>
                 {" "}
                 <Chip
-                  label=" Create"
+                  label={props.id == undefined ? "Create" : "Update"}
                   onClick={handleSubmit}
                   style={{
+                    marginLeft: -50,
                     backgroundColor: "#FC8FC3",
                     marginBottom: 10,
                     color: "white",
                     height: 35,
                     width: 300,
-                    "font-family": "Quicksand , sans-serif",
-                    "font-size": "1.2em",
-                    "font-weight": "bold",
+                    fontFamily: "Quicksand , sans-serif",
+                    fontSize: "1.2em",
+                    fontWeight: "bold",
                   }}
                 />
               </div>
             </center>
+            <Dialog open={submitStatus.success} onClose={statusClose}>
+              <DialogTitle>
+                <span style={sTitle}>Success!</span>
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  <span style={sText}>
+                    {" "}
+                    {props.id == undefined
+                      ? "Your Question have been created."
+                      : "Question have been Edited"}
+                  </span>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button color="primary">
+                  <span
+                    style={sButtionandVisbile}
+                    onClick={() => router.back()}
+                  >
+                    <span style={{ cursor: "pointer" }}>OK</span>
+                  </span>{" "}
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+            <Dialog open={submitStatus.failed} onClose={statusClose}>
+              <DialogTitle>
+                <span style={sTitle}>Opps.... Something went wrong!</span>
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  <span style={sText}> Come back again later...</span>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={statusClose} color="primary">
+                  <span style={sButtionandVisbile}>Ok</span>
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
         </Grid>
       </MuiThemeProvider>
