@@ -5,11 +5,11 @@ export default css`
 		display: flex;
 	}
 	.courses {
-		width: 50%;
-		margin-right: 100px;
+		width: 60%;
+		margin-right: 50px;
 	}
 	.profile {
-		width: 50%;
+		width: 45%;
 		margin-right: 50px;
 		filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.1));
 		display: flex;
@@ -31,9 +31,12 @@ export default css`
 	.human {
 		display: flex;
 		justify-content: space-between;
+		// background-color: red;
 	}
 	.img {
 		margin-top: -100px;
+		margin-left: 50%;
+		position: absolute;
 	}
 	.detailProfile {
 		padding: 5px 40px;
