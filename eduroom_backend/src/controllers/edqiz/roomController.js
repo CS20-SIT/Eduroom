@@ -18,7 +18,6 @@ exports.createKahootHistory = async (req, res, next) => {
   const { roomid, pin, isavailable } = req.body;
   console.log('kk');
   console.log(req.body);
-  res.send();
   const result = await pool.query('SELECT MAX(id) as id from kahoot_room');
   const newID = result.rows[0].id + 1;
   let room = await pool.query(
