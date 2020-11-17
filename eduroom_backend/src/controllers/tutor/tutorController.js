@@ -1,6 +1,15 @@
 const pool = require('../../database/db')
 const app = require('../../server')
 
+// INSTRUCTOR
+// 1: 9e6cfde7-af2c-4f56-b76e-2c68d97e847f
+// 2: 14bbc17c-e4cd-4e16-851f-29298171381d
+
+// STUDENT
+// 1: 44f8e863-226c-4bed-9556-aa6e1600d3bc
+// 2: 123e4567-e89b-12d3-a456-426614174000
+// 3: 08e9d239-b3f2-4db8-b29a-da99a314df92
+
 // GET
 const getAvailableInstructor = async (req, res) => {
 	try {
@@ -72,7 +81,7 @@ const getInstructorList = async (req, res) => {
 			delete i.firstname
 			delete i.lastname
 		})
-		res.status(200).send({ instructorInfo })
+		res.status(200).send(instructorInfo)
 	} catch (e) {
 		res.status(404).send(e)
 	}
@@ -89,7 +98,6 @@ const getInstructorInfo = async (req, res) => {
                             "rating": decimal,
                             "ratingCount": int,
                             "price": decimal
-                            "times": [{ "date": int, "time": [int] }]
                     }
                     }
                  */
@@ -127,30 +135,6 @@ const getInstructorInfo = async (req, res) => {
 		`)
 		instructorRatingCount = result.rows[0]
 
-		result = await pool.query(`
-		select day,time
-		from instructor_availabilities
-		where instructorid = '${id}';
-        `)
-		const availabilities = [[], [], [], [], []]
-		result.rows.forEach((r) => {
-			availabilities[r.day].push(r.time)
-		})
-
-		result = await pool.query(`
-		select date_part('hour', starttime) as starttime,date_part('hour', endtime) as endtime,  to_char( starttime, 'YYYY-MM-DD') as date from instructor_appointments
-		where instructorid = '${id}';
-		`)
-		instructorApps = result.rows
-		instructorApps.forEach((a) => {
-			const days = (a.date + '').split('-')
-			let date = new Date(days[0], days[1] - 1, days[2])
-			const day = date.getDay() - 1
-			const timeremoval = a.endtime - a.starttime
-			const index = availabilities[day].indexOf(a.starttime)
-			availabilities[day].splice(index, timeremoval)
-		})
-
 		let instructor = {
 			id: instructorInfo.instructorid,
 			name: instructorInfo.firstname + ' ' + instructorInfo.lastname,
@@ -159,7 +143,6 @@ const getInstructorInfo = async (req, res) => {
 			rating: (sum / c).toFixed(1),
 			ratingCount: instructorRatingCount.count,
 			price: instructorInfo.price,
-			times: availabilities,
 		}
 
 		res.status(200).send({ instructor })
@@ -243,6 +226,50 @@ const getInstructorReviews = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
+const getInstructorAval = async (req, res) => {
+	try {
+		// id, dates : instructorID + dd-mm-yyyy
+		// const { id, dates } = req.query
+		// console.log(id, dates)
+
+		// name : hardcode
+		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		const dates = '2020-12-16'
+
+		const date = dates.split('-')
+		const start = `${date[0]}-${date[1]}-${date[2]}`
+		const end = `${date[0]}-${date[1]}-${parseInt(date[2]) + 1}`
+		const d = new Date(date[0], date[1] - 1, date[2])
+		const day = d.getDay() - 1
+
+		let result = await pool.query(`
+        select date_part('hour', starttime) as starttime, date_part('hour', endtime) as endtime
+        from instructor_appointments
+        where starttime >= timestamp '${start} 00:00:00'
+          and starttime < timestamp '${end} 00:00:00'
+          and instructorid = '${id}';`)
+		sameDay = result.rows
+
+		result = await pool.query(`
+        select time from instructor_availabilities
+        where day = '${day}'
+          and instructorid = '${id}';`)
+		const times = []
+		result.rows.forEach((r) => {
+			times.push(r.time)
+		})
+
+		sameDay.forEach((d) => {
+			const removal = parseInt(d.endtime) - parseInt(d.starttime)
+			const removeIndex = times.indexOf(d.starttime)
+			times.splice(removeIndex, removal)
+		})
+
+		res.status(200).send({ times })
+	} catch (e) {
+		res.status(404).send(e)
+	}
+}
 const getUserInfo = async (req, res) => {
 	try {
 		// name : name key
@@ -252,7 +279,7 @@ const getUserInfo = async (req, res) => {
 		// name : hardcode
 		const name = 'ka'
 		let result = await pool.query(`
-        select userid, firstname, lastname from user_profile where lower(firstname) like '%${name}%' or lower(lastname) like '%${name}%'
+        select userid, firstname, lastname from user_profile where lower(firstname) like '%${name}%' or lower(lastname) like '%${name}%'  limit 5
         `)
 		const students = []
 		result.rows.forEach((s) => {
@@ -275,4 +302,5 @@ module.exports = {
 	getStudentAppointments,
 	getInstructorReviews,
 	getUserInfo,
+	getInstructorAval,
 }
