@@ -55,7 +55,7 @@ const Test = () => {
           >
             Create New
           </span>
-          {id!=undefined?     (<QExisting></QExisting>):('')}
+          {id!=undefined?     (<QExisting conno={id}></QExisting>):('')}
           <div style={{ height: 20 }}></div>
         </Grid>
 
