@@ -4,7 +4,7 @@
 
 ### Get instructor availability days and times
 
-- **URL** : `/api/tutor/instructor/availability`
+- **URL** : `/instructor/availabilities`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -24,7 +24,7 @@
 
 ### Update/Insert instructor availability days and times
 
-- **URL** : `/api/tutor/instructor/availability`
+- **URL** : `/instructor/availabilities`
 - **Method** : `POST`
 - **Headers** : `Token`
 - **Body** :
@@ -44,7 +44,7 @@
 
 ### Get List of Instructor who register to be a Private Tutor
 
-- **URL** : `/api/tutor/instructor​s`
+- **URL** : `/instructor/list`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -71,7 +71,7 @@
 
 ### Get Instructor information
 
-- **URL** : `/api/tutor/instructor/info`
+- **URL** : `/instructor/info`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -105,7 +105,7 @@
 
 ### Get Instructor information ( available times )
 
-- **URL** : `/api/tutor/instructor/availability`
+- **URL** : `/instructor/availability`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -134,7 +134,7 @@
 
 ### Get List of Appointments that student appointed
 
-- **URL** : `/api/tutor/student/appointments`
+- **URL** : `/student/appointments`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -163,7 +163,7 @@
 
 ### Insert student appointment
 
-- **URL** : `/api/tutor/student/appointment`
+- **URL** : `/student/appointments`
 - **Method** : `POST`
 - **Headers** : `Token`
 - **Body** :
@@ -186,7 +186,7 @@
 
 ### Get List of Appointments for instructor
 
-- **URL** : `/api/tutor/instructor/appointments`
+- **URL** : `/instructor/appointments`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -216,7 +216,7 @@
 
 ### Approve or Reject student's Appointment
 
-- **URL** : `/api/tutor/instructor/appointment`
+- **URL** : `/instructor/appointments`
 - **Method** : `POST`
 - **Headers** : `Token`
 - **Body** :
@@ -236,7 +236,7 @@
 
 ### Get List of instructor's reviews
 
-- **URL** : `/api/tutor/appointment/review`
+- **URL** : `/instructor/review`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -267,7 +267,7 @@
 
 ### Student rate instructor in appointment
 
-- **URL** : `/api/tutor/appointment/review`
+- **URL** : `/appointment/review`
 - **Method** : `POST`
 - **Headers** : `Token`
 - **Body** :
@@ -288,7 +288,7 @@
 
 ### Searching student by first name or last name ( limit 5 )
 
-- **URL** : `/api/tutor/utils/id`
+- **URL** : `/utils/id`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -319,7 +319,7 @@
 
 ### Get Profile picture of user ( maybe use other group )
 
-- **URL** : `/api/tutor/utils/pics`
+- **URL** : `/utils/pics`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
