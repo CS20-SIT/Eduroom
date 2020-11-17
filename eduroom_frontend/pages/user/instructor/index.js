@@ -1,6 +1,7 @@
 import General from '../../../components/template/general'
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import Courses from '../../../components/user/instructor/Courses'
+import CreateCourseButton from '../../../components/user/instructor/CreateCourseButton'
 import UserContext from '../../../contexts/user/userContext'
 import styles from '../../../styles/user/instructor/profile'
 import api from '../../../api'
@@ -69,6 +70,7 @@ const InstructorProfile = () => {
 			<div className="container">
 				<div className="courses">
 					<Courses></Courses>
+					<CreateCourseButton></CreateCourseButton>
 				</div>
 				<div className="profile">
 					<div className="header">
