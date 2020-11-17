@@ -2,20 +2,23 @@ const express = require('express')
 const router = express.Router()
 
 const {
-	getAvailableInstructor,
+	getInstructorAvailabilities,
 	getInstructorList,
 	getInstructorInfo,
+	getInstructorAppointments,
+	getInstructorReview,
 	getStudentAppointments,
-	getInstructorReviews,
+	getInstructorAvailability,
 	getUserInfo,
-	getInstructorAval,
 } = require('../controllers/tutor/tutorController')
-router.get('/availability', getAvailableInstructor)
-router.get('/instructors', getInstructorList)
+
+router.get('/instructor/availabilities', getInstructorAvailabilities)
+router.get('/instructor/list', getInstructorList)
 router.get('/instructor/info', getInstructorInfo)
-router.get('/instructor/availability', getInstructorAval)
+router.get('/instructor/availability', getInstructorAvailability)
+router.get('/instructor/appointments', getInstructorAppointments)
+router.get('/instructor/review', getInstructorReview)
 router.get('/student/appointments', getStudentAppointments)
-router.get('/appointment/review', getInstructorReviews)
 router.get('/utils/id', getUserInfo)
 
 module.exports = router

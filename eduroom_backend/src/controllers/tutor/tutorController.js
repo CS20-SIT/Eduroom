@@ -11,7 +11,7 @@ const app = require('../../server')
 // 3: 08e9d239-b3f2-4db8-b29a-da99a314df92
 
 // GET
-const getAvailableInstructor = async (req, res) => {
+const getInstructorAvailabilities = async (req, res) => {
 	try {
 		/*
          {
@@ -19,6 +19,7 @@ const getAvailableInstructor = async (req, res) => {
             "price": int
          }
          */
+
 		// ID from cookies
 		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 
@@ -152,12 +153,8 @@ const getInstructorInfo = async (req, res) => {
 }
 const getStudentAppointments = async (req, res) => {
 	try {
-		/*
-              
-                 */
-
 		// ID from cookies
-		const id = '71ac8b74-11e5-465c-ae9e-41b56edbbe00'
+		const id = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
 
 		let result = await pool.query(`
         select a.appointmentid,u.firstname , u.lastname ,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, to_char( starttime, 'DD MON YYYY') as date, a.status
@@ -166,7 +163,8 @@ const getStudentAppointments = async (req, res) => {
             and i.userid = u.userid
             and a.appointmentid = m.appointmentid
             and m.userid = '${id}'
-            and e.instructorid = i.instructorid;
+            and e.instructorid = i.instructorid
+            order by a.appointmentid;
         `)
 		appointment = result.rows
 
@@ -194,7 +192,72 @@ const getStudentAppointments = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const getInstructorReviews = async (req, res) => {
+const getInstructorAppointments = async (req, res) => {
+	try {
+		// ID from cookies
+		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+
+		let result = await pool.query(`
+		select a.appointmentid, a.headerid as id, u.firstname as firstname, u.lastname as lastname, date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, a.status,to_char( a.starttime, 'DD-MM-YYYY') as date, m.userid as mid, me.firstname as mfn, me.lastname as mln
+        from instructor_appointments a,user_profile u, instructor_appointment_members m, (select userid, firstname, lastname from user_profile) me
+        where a.instructorid = '${id}'
+		  and a.headerid = u.userid
+		  and m.appointmentid = a.appointmentid
+          and me.userid = m.userid
+        order by appointmentid;
+        `)
+
+		appointments = result.rows
+		// console.log(appointments)
+
+		const appointment = []
+		let c = -1
+		appointments.forEach((a) => {
+			if (c != a.appointmentid) {
+				c = a.appointmentid
+				let isAgree = 'Pending'
+				if (a.status === true) isAgree = 'Approved'
+				if (a.status === false) isAgree = 'Rejected'
+				let tmp = {
+					appointmentID: a.appointmentid,
+					id: a.id,
+					name: a.firstname + ' ' + a.lastname,
+					date: a.date.split('-'),
+					starttime: a.starttime,
+					endtime: a.endtime,
+					status: isAgree,
+					members: [],
+				}
+				if (a.mid != a.id)
+					tmp.members.push({
+						id: a.mid,
+						name: a.mfn + ' ' + a.mln,
+					})
+				appointment.push(tmp)
+			} else {
+				if (a.mid != a.id) {
+					let index = -1
+					appointment.forEach((x, i) => {
+						if (x.appointmentID == a.appointmentid) {
+							index = i
+						}
+					})
+					console.log(index)
+
+					appointment[index].members.push({
+						id: a.mid,
+						name: a.mfn + ' ' + a.mln,
+					})
+				}
+			}
+		})
+
+		res.status(200).send({ appointment })
+	} catch (e) {
+		res.status(404).send(e)
+	}
+}
+const getInstructorReview = async (req, res) => {
 	try {
 		// ID : instructorID
 		// const { id } = req.query
@@ -226,7 +289,7 @@ const getInstructorReviews = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const getInstructorAval = async (req, res) => {
+const getInstructorAvailability = async (req, res) => {
 	try {
 		// id, dates : instructorID + dd-mm-yyyy
 		// const { id, dates } = req.query
@@ -296,11 +359,12 @@ const getUserInfo = async (req, res) => {
 }
 
 module.exports = {
-	getAvailableInstructor,
+	getInstructorAvailabilities,
 	getInstructorList,
 	getInstructorInfo,
 	getStudentAppointments,
-	getInstructorReviews,
+	getInstructorReview,
 	getUserInfo,
-	getInstructorAval,
+	getInstructorAvailability,
+	getInstructorAppointments,
 }
