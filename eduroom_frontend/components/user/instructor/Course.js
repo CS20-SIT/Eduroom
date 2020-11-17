@@ -7,7 +7,7 @@ const Course = ({ course }) => {
 					<img src="/images/user/Blue-cone.png" alt="course-img" width="150px" height="120px"></img>
 					<div style={{ marginLeft: '30px' }}>
 						<h2 style={{ margin: '0' }}>{course.coursename}</h2>
-						<div>{course.coursedescription}</div>
+						<div className="det">{course.coursedescription}</div>
 					</div>
 				</div>
 			</div>
@@ -18,6 +18,9 @@ const Course = ({ course }) => {
 					border-radius: 10px;
 					padding: 20px 10px;
           margin-bottom: 20px;
+				}
+				.det{
+					color: #858585;
 				}
 			`}</style>
 		</Fragment>

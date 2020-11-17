@@ -1,7 +1,7 @@
 import css from 'styled-jsx/css'
 export default css`
 	.container {
-		padding: 50px;
+		padding: 30px 50px;
 		display: flex;
 	}
 	.courses {
@@ -23,7 +23,10 @@ export default css`
 	.detail {
 		margin: 0;
 		padding: 0;
+		padding-bottom: 30px;
 		background: white;
+		border-bottom-left-radius: 30px;
+		border-bottom-right-radius: 30px;
 	}
 	.human {
 		display: flex;
@@ -33,7 +36,7 @@ export default css`
 		margin-top: -100px;
 	}
 	.detailProfile {
-		padding: 5px 20px;
+		padding: 5px 40px;
   }
   
   .avatar {
@@ -42,15 +45,22 @@ export default css`
   .topic {
     color: #fb9ccb;
     font-weight: 700;
-    width: 40%;
+		width: 100px;
   }
   .box {
-    width: 200px;
+    width: 275px;
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+		margin-top: 20px;
   }
   .det {
-    width: 40%;
-  }
+		color: #858585;
+	}
+	
+	.boxBio{
+    display: flex;
+    margin-top: 20px;
+	}
+	.detBio{
+		color: #858585;
+	}
 `
