@@ -35,13 +35,7 @@ const Contests = (props) => {
 				</div>
 			</div>
 			<div className="bottom">
-				Description: Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and
-				1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,
-				accompanied. Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and
-				1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,
-				accompanied. Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and
-				1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,
-				accompanied.
+				{props.description.length > 1200 ? props.description.slice(0, 480) + '...' : props.description}
 			</div>
 
 			<style jsx>{style}</style>

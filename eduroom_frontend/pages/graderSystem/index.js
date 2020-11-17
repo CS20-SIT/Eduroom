@@ -18,7 +18,9 @@ const Home = () => {
 						<img src="/images/graderSubmit/pr_monochromatic.svg" width="479" height="440" />
 					</div>
 					<div className="content">
-						<ContestBox id={50} />
+						<div className="contest-box">
+							<ContestBox id={50} />
+						</div>
 						<AnnounceBox />
 					</div>
 				</div>

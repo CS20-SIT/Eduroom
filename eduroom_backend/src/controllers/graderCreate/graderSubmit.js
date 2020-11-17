@@ -89,6 +89,15 @@ const gContestSubmissions = async (req, res, next) => {
 	res.send(ann)
 }
 
+const gQuestionTags = async (req, res, next) => {
+	const data = await pool.query(`
+  select t.tagname
+  from questiontag qa, tags t
+  where qa.tagid = t.tagid;`)
+	const ann = data.rows
+	res.send(ann)
+}
+
 module.exports = {
 	gPreviewQuestions,
 	gPreviewContests,
@@ -97,4 +106,5 @@ module.exports = {
 	gContestProblems,
 	gContestSubmissions,
 	gAnnouncements,
+	gQuestionTags,
 }
