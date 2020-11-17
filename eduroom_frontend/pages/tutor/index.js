@@ -71,36 +71,4 @@ const Tutor = () => {
 	)
 }
 
-export async function getServerSideProps(ctx) {
-	// GET /tutor/instructor/list
-	const instructors = [
-		{
-			id: 1,
-			name: 'Thanawat Benjachatriroj',
-			info: 'Frontend Developer',
-			rating: 4.5,
-			ratingCount: 2000,
-		},
-		{
-			id: 2,
-			name: 'Passawat Wetchasart',
-			info: 'Web Disigner',
-			rating: 3.7,
-			ratingCount: 1800,
-		},
-		{
-			id: 3,
-			name: 'Thanaphong phatthanaphaisarnsin',
-			info: 'Backend Developer',
-			rating: 3.5,
-			ratingCount: 1200,
-		},
-	]
-	return {
-		props: {
-			instructors,
-		},
-	}
-}
-
 export default Tutor
