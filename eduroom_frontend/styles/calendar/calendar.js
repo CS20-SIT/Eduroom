@@ -1,20 +1,30 @@
 import css from "styled-jsx/css";
 export default css`
+.BG{
+  background-image : url('/images/createEvent/CalenBG.svg');
+  background-size : cover;
+  height : 100vh;
+  background-attachment: fixed;
+}
+
+
+
   .grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     background-color: #FFFFFF;
     border-radius: 2px;
-    margin: 5rem;
-    
+    margin: 5rem 8rem 5rem 8rem;
+    box-shadow: 1px 3px 12px rgba(0, 0, 0, 0.2);
   }
   .gridItem {
     background-color: #FFFFFF;
-    padding: 20px;
+    padding: 20px 40px 20px 40px;
     font-size: 30px;
     text-align: center;
-    color: #3D467F;
+    color: #000000;
     font-weight : bold;
+    font-size : 20px;
   }
 
   .EmptyItem {
@@ -32,23 +42,25 @@ export default css`
     color: #3D467F;
     font-weight : bold;
     text-align : center;
-    margin-top : 5rem;
+    padding-top : 7rem;
   }
   .headerCell {
-    background-color: rgba(254,117,183);
-    padding: 20px;
-    font-size: 30px;
+    background-color: rgba(255,255,255);
+    padding: 70px 20px 20px 20px; 
+    font-size: 20px;
     text-align: center;
-    color: white;
+    color: #817FBC;
+
   }
 
   .currentDate {
     position: relative;
     z-index: 0;
+    color:#FFFFFF
   }
   .currentDate::after {
     content: '';
-    background-color: #ffdc7c;
+    background-color: #fb9ccb;
     border-radius: 50%;
     width: 3.5rem;
     height: 3.5rem;
@@ -80,20 +92,31 @@ export default css`
 .previous-m {
   border: none;
   outline: none;
+  position : absolute;
   background : #f4f5f7;
   cursor: pointer;
+  margin-left: 18rem;
+  
 }
 .forward-m {
   border: none;
   outline: none;
   background : #f4f5f7;
   cursor: pointer;
+  position : absolute;
+  margin-left :51rem;
+}
+.month{
+  position : absolute;
+  padding-left : 24rem;
+  z-index : -1;
 }
 
 .d-calendar {
-  width: 25vw;
+  width: 30vw;
   height: 50vh;
-  background-color: white;
+  background-image: url('/images/createEvent/d-bg.svg');
+  bacground-size : cover;
   position: fixed;
   top: 50% ;
   left: 50%;
@@ -113,6 +136,7 @@ export default css`
   font-weight: 800;
   font-size : 28px;
   color : #999999;
+  z-index : 2;
 }
 .bg-overlay{
  background-color : rgba(255, 255 ,255 , .2);
@@ -133,23 +157,41 @@ export default css`
 
 }
 .d-top{
-  border-bottom : rgba(0,0,0,.1) 1px solid;
-  height 45px;
+  height 75px;
   color: #3D467F;
   font-weight : bold;
   text-align : center;
+  margin-top : 5%;
+  margin-left: 27%;
+  margin-right : 30%;
+  font-size : 24px;
 }
 .d-buttom{
-  border-top : rgba(0,0,0,.1) 1px solid;
   color: #3D467F;
   font-weight : bold;
   text-align : center;
-  
+  margin-top : -15%;
 }
 .d-day{
   position : absolute;
   margin:10px;
   
 }
+.button {
+  background: #f39ac4;
+  border-radius: 25px;
+  padding: 0.5rem 2.3rem;
+  margin-bottom: 5%;
+  border: none;
+  transition: 0.25s;
+  font-size : 18px;
+  color : #FFFFFF;
+}
+.button:hover{
+
+}
+
+
+
 
 `;

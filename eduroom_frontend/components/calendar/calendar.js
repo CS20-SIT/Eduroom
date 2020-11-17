@@ -3,6 +3,7 @@ import Cell from "../../components/calendar/calendarCell";
 import HeadCell from "../../components/calendar/calendarHeader";
 import BlankCell from "../../components/calendar/calendarBlankCell";
 import CSSTransition from 'react-transition-group/CSSTransition';
+import Image from "next/image";
 
 // import { useRouter } from 'next/router';
 import style from "../../styles/calendar/calendar";
@@ -116,9 +117,11 @@ const Content = () => {
         timeout={{ enter: 300, exit: 300 }}
         classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
       >
-        <div className='bg-overlay' onClick={() => setOpen(false)}>
-
+        <div className='bg-overlay'>
           <div className='d-calendar'>
+            <div onClick={() => setOpen(false)} className="d-close">
+              X
+        </div>
             <div className="d-top">
               <div className="d-day">{showDate} {currentMonth} {currentYear}</div>
             </div>
@@ -129,9 +132,9 @@ const Content = () => {
               </div>
             </div>
             <div className="d-buttom">
-              <div className="">
-                <button>
-                  Edit มั้ง? คิดก่อน
+              <div >
+                <button className="button">
+                  Edit
                 </button>
               </div>
             </div>
@@ -144,22 +147,32 @@ const Content = () => {
         <div className="month-size">
           <Container>
             <Grid container spacing={0}>
-              <Grid item xs={2}></Grid>
-              <Grid item xs={1}>
-                <div className="previous-m" onClick={minusMonth}>
-                  {" "}
-                  &lt;{" "}
-                </div>
-              </Grid>
-              <Grid item xs={6}>
+              <div className="previous-m" onClick={minusMonth}>
+                {" "}
+                <Image
+                  alt="left-arrow"
+                  src="/images/createEvent/L.svg"
+                  width="30"
+                  height="30"
+                />
+                {" "}
+              </div>
+
+              <div className="month">
                 {currentMonth + " " + currentYear}
-              </Grid>
-              <Grid item xs={1}>
-                <div className="forward-m" onClick={addMonth}>
-                  &gt;
-                </div>
-              </Grid>
-              <Grid item xs={2}></Grid>
+              </div>
+
+
+              <div className="forward-m" onClick={addMonth}>
+                <Image
+                  alt="right-arrow"
+                  src="/images/createEvent/R.svg"
+                  width="30"
+                  height="30"
+                />
+              </div>
+
+
             </Grid>
           </Container>
         </div>
@@ -183,12 +196,18 @@ const Content = () => {
             return <BlankCell Content={blank} />;
           })}
 
-          {/*  <div>
-                        <Link href="/event">
-                            <button className="addEvent-button">Add Event</button>
-                        </Link>
-                    </div> */}
         </div>
+      </div>
+
+
+
+      <div>
+        <Image
+          alt="right-arrow"
+          src="/images/createEvent/calendar.svg"
+          width="435"
+          height="326"
+        />
       </div>
 
       <style jsx>{style}</style>
