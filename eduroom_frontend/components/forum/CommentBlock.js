@@ -16,6 +16,7 @@ const CommentBlock = ({ row, id, data }) => {
       flexDirection: "column",
       justifyContent: "flexStart",
       // textAlign: 'center',
+      marginBottom: '10px',
       color: theme.palette.text.secondary,
     },
   }));
