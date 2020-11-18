@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import style from '../../styles/landing/content';
-import Image from 'next/image';
+
 const Content = () => {
   const router = useRouter();
   return (

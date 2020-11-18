@@ -1,20 +1,22 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const TestRoute = require('./testRoute');
-const AuthRoute = require('./authRoute');
-const SupportRoute = require('./supportRoute');
-const ForumRoute = require('./forumRoute');
-const AnalysisRoute = require('./analysisRoute');
-const GraderRoute = require('./graderRoute');
-const EventRoute = require('./eventRoute');
-const uDiscountRoute = require('./uDiscountRoute');
+const TestRoute = require('./testRoute')
+const AuthRoute = require('./authRoute')
+const SupportRoute = require('./supportRoute')
+const ForumRoute = require('./forumRoute')
+const AnalysisRoute = require('./analysisRoute')
+const GraderRoute = require('./graderRoute')
+const EventRoute = require('./eventRoute')
+const uDiscountRoute = require('./uDiscountRoute')
 const InstructorRoute = require('./instructorRoute')
-const LeaderboardRoute = require('./leaderboardRoute');
-const sendEventMail = require('./sendEventMail');
-const KahootRoute = require('./kahootRoute');
+const LeaderboardRoute = require('./leaderboardRoute')
+const sendEventMail = require('./sendEventMail')
+const KahootRoute = require('./kahootRoute')
 const PackageRoute = require('./packageRoute')
-const CoinRoute = require('./coinRoute');
+const CoinRoute = require('./coinRoute')
+const UserRoute = require('./userRoute')
+const TutorRoute = require('./tutorRoute')
 
 router.use('/test', TestRoute)
 router.use('/auth', AuthRoute)
@@ -22,13 +24,15 @@ router.use('/support', SupportRoute)
 router.use('/forum', ForumRoute)
 router.use('/analysis', AnalysisRoute)
 router.use('/grader', GraderRoute)
-router.use('/event',EventRoute)
-router.use('/udiscount',uDiscountRoute)
-router.use('/sendEventMail',sendEventMail)
+router.use('/event', EventRoute)
+router.use('/udiscount', uDiscountRoute)
+router.use('/sendEventMail', sendEventMail)
 router.use('/instructor', InstructorRoute)
 router.use('/kahoot', KahootRoute)
 router.use('/package', PackageRoute)
 router.use('/leaderboard', LeaderboardRoute)
-router.use('/coin',CoinRoute);
+router.use('/coin', CoinRoute)
+router.use('/user', UserRoute)
+router.use('/tutor', TutorRoute)
 
-module.exports = router;
+module.exports = router
