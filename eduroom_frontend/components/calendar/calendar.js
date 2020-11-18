@@ -4,6 +4,8 @@ import HeadCell from "../../components/calendar/calendarHeader";
 import BlankCell from "../../components/calendar/calendarBlankCell";
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Image from "next/image";
+import axios from 'axios'
+
 
 // import { useRouter } from 'next/router';
 import style from "../../styles/calendar/calendar";
@@ -91,10 +93,28 @@ const Content = () => {
   const currentMonth = day.dateObject.format("MMMM");
   const currentMonthNo = parseInt(day.dateObject.format("M"));
   const currentYear = parseInt(day.dateObject.format("YYYY"));
+  const [data, setData] = useState([])
+
+
+
+
 
   useEffect(() => {
     isTodayInThisMonthAndYear();
-  });
+    const GetData = async () => {
+      const result = await axios("http://localhost/api/event/getEvent");
+      setData(result.data);
+    };
+    GetData();
+    console.log(data);
+  }, []);
+
+  const checkEvent = () => {
+
+  }
+
+
+
 
   const isTodayInThisMonthAndYear = () => {
     if (TodayMonth === currentMonthNo && TodayYear === currentYear) {
@@ -121,14 +141,30 @@ const Content = () => {
           <div className='d-calendar'>
             <div onClick={() => setOpen(false)} className="d-close">
               X
-        </div>
+            </div>
             <div className="d-top">
               <div className="d-day">{showDate} {currentMonth} {currentYear}</div>
             </div>
 
             <div className="content">
               <div>
-                TEST Content
+                {data.map((row) => {
+                  return (showDate == row.startday ?
+                    <div>
+                      <div className="title">{row.title}</div>
+                      <div className="detail">{row.starttime} - {row.endtime} | {row.place}
+                      </div>
+
+
+
+                    </div>
+
+                    : '')
+                })}
+
+
+
+
               </div>
             </div>
             <div className="d-buttom">
