@@ -235,7 +235,8 @@ const getInstructorAvailability = async (req, res) => {
 const getInstructorAppointments = async (req, res) => {
 	try {
 		// ID from cookies
-		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
 
 		let result = await pool.query(`
 		select a.appointmentid, a.headerid as id, u.firstname as firstname, u.lastname as lastname, date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, a.status,to_char( a.starttime, 'DD-MM-YYYY') as date, m.userid as mid, me.firstname as mfn, me.lastname as mln
