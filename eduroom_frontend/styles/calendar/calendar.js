@@ -113,7 +113,7 @@ export default css`
 }
 
 .d-calendar {
-  width: 30vw;
+  width: 35vw;
   height: 50vh;
   background-image: url('/images/createEvent/d-bg.svg');
   bacground-size : cover;
@@ -153,7 +153,7 @@ export default css`
 
 }
 .content *{
-  height : 70rem;
+  
 
 }
 .d-top{
@@ -162,8 +162,7 @@ export default css`
   font-weight : bold;
   text-align : center;
   margin-top : 5%;
-  margin-left: 27%;
-  margin-right : 30%;
+ 
   font-size : 24px;
 }
 .d-buttom{
@@ -175,6 +174,7 @@ export default css`
 .d-day{
   position : absolute;
   margin:10px;
+  margin-left : 32%;
   
 }
 .button {
