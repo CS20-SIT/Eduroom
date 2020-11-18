@@ -36,13 +36,13 @@ exports.room = async (req,res,next) =>{
 }
 exports.selectRoom = async (req, res, next) => {
   const roomname = req.params.roomname;
+  console.log('name is ',roomname);
   const data = await pool.query("select titlethread, userid, posttime, subtypename from forum_form f , category_type c , sub_category s where f.subcategoryiid = s.subcategoryiid and c.categorytypeid=s.categorytypeid and c.typename = $1",
    [
     roomname,
   ]);
   const forum = data.rows;
   res.status(200).json({ success: true, data: forum });
-  console.log(forum);
 };
 
 exports.createForum = async (req, res, next) => {
