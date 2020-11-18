@@ -17,7 +17,7 @@ const Name = props => {
         <div className={Styles.cardContainer}>
             <Card>
                 <CardContent>
-                    <div style={{ padding: '20px' }}>
+                    <div >
                         <div className={Styles.container}>
                             <h1 className={Styles.text}>
                                 Name Sticker : {props.title}
