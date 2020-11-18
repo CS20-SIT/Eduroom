@@ -33,6 +33,8 @@ const AnnEdit = (props) => {
           params: {
             id: props.id,
             conno: props.conno,
+            title: props.title,
+            adminid: props.adminid,
           },
         })
         .then(() => {
@@ -52,6 +54,8 @@ const AnnEdit = (props) => {
         .delete("/api/grader/dquestion", {
           params: {
             id: props.id,
+            title: props.title,
+            adminid: props.adminid,
           },
         })
         .then(function (response) {

@@ -119,6 +119,7 @@ const ConEach = (p) => {
                   "font-weight": "bold",
                 }}
               />
+
               <Chip
                 label={p.endtime}
                 style={{
@@ -143,7 +144,7 @@ const ConEach = (p) => {
             color="textSecondary"
             component="p"
           >
-            Let manage elements in contest by click the button below!
+            Let manage elements in Contest No.{p.id} by click the button below!
             {/* {p.description} */}
           </Typography>
         </CardContent>

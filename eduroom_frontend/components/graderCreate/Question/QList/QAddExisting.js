@@ -11,8 +11,22 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import axios from "../../../../api";
+import Chip from "@material-ui/core/Chip";
 
 const CustomAutocomplete = withStyles({
+  listbox: {},
+  option: {
+    color: "#3d467f",
+    fontFamily: "Quicksand , sans-serif",
+    fontSize: "1.2em",
+    fontWeight: "600",
+  },
+  clearIndicator: {
+    color: "#3d467f",
+    height: 22.5,
+    width: 22.5,
+    opacity: 1,
+  },
   input: {
     marginTop: 10,
 
@@ -56,7 +70,6 @@ const CustomAutocomplete = withStyles({
       backgroundColor: "rgba(0, 0, 0, 0.0)",
       zIndex: -1,
     },
-    // .MuiAutocomplete-inputFocused
   },
 })(Autocomplete);
 
@@ -103,10 +116,14 @@ const AnnEdit = (props) => {
   const handleSubmit = () => {
     let question = addquestion;
     delete question.title;
+    const finalQuestion = [...new Set(question)];
+    let adminid = "12345678-1234-1234-1234-123456789123";
+    alert(adminid);
     axios
       .post("/api/grader/ccontestexistquestion", {
         conno: props.conno,
-        questions: question,
+        questions: finalQuestion,
+        adminid: adminid,
       })
       .then(function (response) {
         setOpen(false);
@@ -149,18 +166,21 @@ const AnnEdit = (props) => {
 
   return (
     <span>
-      <button
-        style={{
-          padding: 0,
-          border: "none",
-          background: "none",
-          cursor: "pointer",
-        }}
+      <Chip
+        label="Add Existing Question"
         onClick={handleClickOpen}
-      >
-        {" "}
-        Add Existing
-      </button>
+        style={{
+          backgroundColor: "#a880f7",
+          marginTop: -15,
+          marginLeft: 20,
+          color: "white",
+          height: 30,
+          width: 250,
+          "font-family": "Quicksand , sans-serif",
+          "font-size": "1.2em",
+          "font-weight": "600",
+        }}
+      />
       {/* <button
           style={{
             padding: 0,
@@ -194,6 +214,8 @@ const AnnEdit = (props) => {
             <div style={{ height: 25 }}></div>
             <CustomAutocomplete
               multiple
+              filterSelectedOptions
+              disableCloseOnSelect
               options={data}
               getOptionLabel={(option) => option.id + ". " + option.title}
               value={addquestion}

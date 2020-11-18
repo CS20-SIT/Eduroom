@@ -288,6 +288,8 @@ const AnnTable = (props) => {
                             conno={conno}
                             onSuccess={props.onSuccess}
                             id={row.id}
+                            title={row.title}
+                            adminid={row.adminid}
                           ></DeleteQuestion>
                         </Grid>
                       </Grid>

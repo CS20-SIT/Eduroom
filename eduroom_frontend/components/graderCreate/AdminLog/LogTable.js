@@ -1,62 +1,128 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TablePagination from '@material-ui/core/TablePagination'
-import TableRow from '@material-ui/core/TableRow'
-import axios from 'axios'
-import api from '../../../api';
-import { useState, useEffect } from 'react'
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import axios from "../../../api";
+import { useState, useEffect } from "react";
 
+import AnnEdit from "../AnnCom/AnnEdit";
+
+//add submit time here
 
 const useStyles = makeStyles({
   root: {
-   
-    
-    width: '100%',
-    
+    width: "100%",
   },
   container: {
-    
     maxHeight: 440,
   },
-  tableHeader : {
-    'font-family': 'Quicksand , sans-serif',
+  tableHID: {
+    paddingLeft: 50,
+    paddingRight: 25,
+    paddingTop: 50,
+    "font-family": "Quicksand , sans-serif",
     borderBottom: "none",
-    'font-size': '1.2em' ,  color: '#3d467f','font-weight': 'bold',backgroundColor: 'white'
+    "font-size": "1em",
+    color: "#3d467f",
+    "font-weight": "bold",
+    backgroundColor: "white",
+  },
+  tableHEdit: {
+    paddingLeft: 25,
+    paddingRight: 50,
+    paddingTop: 50,
+    "font-family": "Quicksand , sans-serif",
+    borderBottom: "none",
+    "font-size": "1em",
+    color: "#3d467f",
+    "font-weight": "bold",
+    backgroundColor: "white",
+  },
+  tableHeader: {
+    paddingRight: 25,
+    paddingTop: 50,
+    "font-family": "Quicksand , sans-serif",
+    borderBottom: "none",
+    "font-size": "1em",
+    color: "#3d467f",
+    "font-weight": "bold",
+    backgroundColor: "white",
+  },
+  tableRow: {
+    "font-family": "Quicksand , sans-serif",
+    borderBottom: "none",
+  },
+  tableCell: {
+    "font-family": "Quicksand , sans-serif",
+    borderBottom: "none",
+    "font-size": "0.9em",
+    color: "#5b5b5b",
+    paddingRight: 45,
+  },
+  tableId: {
+    "font-family": "Quicksand , sans-serif",
+    borderBottom: "none",
+    "font-size": "1em",
+    color: "#5b5b5b",
 
-    
+    paddingLeft: 50,
+    paddingRight: 25,
   },
-  tableRow : {
-    'font-family': 'Quicksand , sans-serif',
-    borderBottom: "none"
-  },
-  tableCell : {
-    'font-family': 'Quicksand , sans-serif',
+  tableEdit: {
+    "font-family": "Quicksand , sans-serif",
     borderBottom: "none",
-    'font-size': '1em'
-    ,color: '#5b5b5b'
+    "font-size": "1em",
+    color: "#5b5b5b",
+    paddingRight: 50,
+    paddingLeft: 25,
   },
   caption: {
-    'font-family': 'Quicksand , sans-serif',
-    color: '#5b5b5b',
-    fontSize: "0.875rem",
-    'font-weight': 'bold'
+    "font-family": "Quicksand , sans-serif",
+    color: "#5b5b5b",
+    fontSize: "0.775rem",
+    "font-weight": "bold",
+    marginTop: 10,
+    marginBottom: 30,
   },
   toolbar: {
     "& > p:nth-of-type(2)": {
-      'font-family': 'Quicksand , sans-serif',
-    color: '#5b5b5b',
-    fontSize: "0.875rem",
-    'font-weight': 'bold'
-  }}
-
-
-})
+      "font-family": "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      "font-weight": "bold",
+      marginTop: 10,
+      marginBottom: 30,
+    },
+  },
+  select: {
+    "font-family": "Quicksand , sans-serif",
+    color: "#5b5b5b",
+    fontSize: "0.775rem",
+    "font-weight": "bold",
+    marginTop: 10,
+    marginBottom: 30,
+  },
+  menuItem: {
+    "font-family": "Quicksand , sans-serif",
+    color: "#5b5b5b",
+    fontSize: "0.775rem",
+    "font-weight": "bold",
+  },
+  actions: {
+    "font-family": "Quicksand , sans-serif",
+    color: "#5b5b5b",
+    fontSize: "0.775rem",
+    "font-weight": "bold",
+    marginTop: 10,
+    marginBottom: 30,
+  },
+});
 const shorten = (text, maxLength) => {
   if (text && text.length > maxLength) {
     return text.substr(0, maxLength) + "...";
@@ -64,51 +130,63 @@ const shorten = (text, maxLength) => {
 
   return text;
 };
-const LogTable = (props) => {
-  const classes = useStyles()
-  const [page, setPage] = useState(0)
-  const [data, setData] = useState([])
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+const AnnTable = (props) => {
+  const classes = useStyles();
+  const [page, setPage] = useState(0);
+
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await api.get('/api/grader/allladminlog').catch(err => {
-        // what now?
-        
-         const requestFail = [{id:'0',title:'NO',description:'Test',displayname:'NUTTY',time:'2100-05-12'}]
-  
-        setData(requestFail)
-        
-    })
-      setData(result.data)
-    }
-    GetData()
-    console.log(data)
-    console.log(props.onSuccess);
-  }, [props.update])
+      const result = await axios("/api/grader/alladminlog");
+      setData(result.data);
+    };
+    GetData();
+    console.log(data);
+  }, []);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value)
+    setRowsPerPage(+event.target.value);
 
-    setPage(0)
-  }
+    setPage(0);
+  };
 
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
-        <Table className={classes.tableRow}  stickyHeader aria-label="sticky table">
+        <Table
+          className={classes.tableRow}
+          stickyHeader
+          aria-label="sticky table"
+        >
           <TableHead>
             <TableRow>
-              <TableCell className={classes.tableHeader}> Id</TableCell>
-              <TableCell width="25%" className={classes.tableHeader} align="left">Title</TableCell>
-              <TableCell width="45%" className={classes.tableHeader} align="left">Detail</TableCell>
-              <TableCell className={classes.tableHeader} align="left">Admin </TableCell>
-              <TableCell className={classes.tableHeader} align="left">Time Stamp </TableCell>
-           
+              <TableCell className={classes.tableHID}> Log No</TableCell>
+              <TableCell
+                width="20%"
+                className={classes.tableHeader}
+                align="left"
+              >
+                Action
+              </TableCell>
+              <TableCell
+                width="30%"
+                className={classes.tableHeader}
+                align="left"
+              >
+                On
+              </TableCell>
+              <TableCell className={classes.tableHeader} align="left">
+                Admin{" "}
+              </TableCell>
+              <TableCell className={classes.tableHEdit} align="left">
+                Timstamp{" "}
+              </TableCell>
             </TableRow>
           </TableHead>
 
@@ -117,18 +195,42 @@ const LogTable = (props) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                 
                   <TableRow key={row.id}>
-                    <TableCell className={classes.tableCell}  component="th" scope="row">
-                      {row.id}
+                    <TableCell
+                      className={classes.tableId}
+                      width="12%"
+                      component="th"
+                      scope="row"
+                      align="center"
+                    >
+                      {row.logno}
                     </TableCell>
-                    <TableCell className={classes.tableCell}  width="25%"align="left">{row.title}</TableCell>
-                    <TableCell className={classes.tableCell} width="45%" align="left">{shorten(row.description,130)}</TableCell>  
-                    <TableCell className={classes.tableCell} align="left">{row.displayname}</TableCell>
-                    <TableCell className={classes.tableCell} width="16%" align="left">{row.time}</TableCell>
-            
+                    <TableCell
+                      className={classes.tableCell}
+                      width="25%"
+                      align="left"
+                    >
+                      {row.title}
+                    </TableCell>
+                    <TableCell
+                      className={classes.tableCell}
+                      width="40%"
+                      align="left"
+                    >
+                      {shorten(row.detail, 130)}
+                    </TableCell>
+                    <TableCell className={classes.tableCell} align="left">
+                      {row.displayname}
+                    </TableCell>
+                    <TableCell
+                      className={classes.tableEdit}
+                      width="30%"
+                      align="left"
+                    >
+                      {row.timestamp}
+                    </TableCell>
                   </TableRow>
-                )
+                );
               })}
           </TableBody>
         </Table>
@@ -144,10 +246,14 @@ const LogTable = (props) => {
         onChangeRowsPerPage={handleChangeRowsPerPage}
         classes={{
           toolbar: classes.toolbar,
-          caption: classes.caption
+          caption: classes.caption,
+          // select: classes.select,
+          selectRoot: classes.select,
+          menuItem: classes.menuItem,
+          actions: classes.actions,
         }}
       />
     </Paper>
-  )
-}
-export default LogTable
+  );
+};
+export default AnnTable;

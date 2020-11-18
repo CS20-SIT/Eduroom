@@ -618,12 +618,32 @@ export default function FullWidthGrid(props) {
     console.log(samples);
     if (samples != []) {
       if (props.id != undefined) {
-  
-        axios.delete("/api/grader/dquestionsample", {
-          params: {
-            id: props.id,
-          },
-        }).then( ()=>{    axios
+        axios
+          .delete("/api/grader/dquestionsample", {
+            params: {
+              id: props.id,
+            },
+          })
+          .then(() => {
+            axios
+              .post("/api/grader/cquestionsample", {
+                samples: samples,
+                questionId: id,
+              })
+              .then((res) => {
+                setTimeout(() => {
+                  setSubmitStatus({ ...submitStatus, success: true });
+                }, 450);
+              })
+              .catch((err) => {
+                console.log(err);
+                setTimeout(() => {
+                  setSubmitStatus({ ...submitStatus, failed: true });
+                }, 450);
+              });
+          });
+      } else {
+        axios
           .post("/api/grader/cquestionsample", {
             samples: samples,
             questionId: id,
@@ -638,26 +658,8 @@ export default function FullWidthGrid(props) {
             setTimeout(() => {
               setSubmitStatus({ ...submitStatus, failed: true });
             }, 450);
-          });} );
+          });
       }
-
-      else{    axios
-        .post("/api/grader/cquestionsample", {
-          samples: samples,
-          questionId: id,
-        })
-        .then((res) => {
-          setTimeout(() => {
-            setSubmitStatus({ ...submitStatus, success: true });
-          }, 450);
-        })
-        .catch((err) => {
-          console.log(err);
-          setTimeout(() => {
-            setSubmitStatus({ ...submitStatus, failed: true });
-          }, 450);
-        });}
-    
     }
   };
 
@@ -667,6 +669,8 @@ export default function FullWidthGrid(props) {
         .post("/api/grader/ccontestquestion", {
           conid: conno,
           questionid: id,
+          adminid: "12345678-1234-1234-1234-123456789123",
+          title: title,
         })
         // .then((res) => {
         //   setTimeout(() => {
