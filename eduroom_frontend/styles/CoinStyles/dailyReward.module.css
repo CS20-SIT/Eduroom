@@ -191,8 +191,8 @@
     height: 0;
     border-style: solid;
     border-width: 130px 75px 0;
-    border-image: linear-gradient(#d58abb, #817fbc);
     transform-origin: 75px 129px;
+    
     left: 50px;
     top: -4px;
     opacity: 1;
@@ -203,7 +203,7 @@
     height: 0;
     border-style: solid;
     border-width: 130px 75px 0;
-    border-image: linear-gradient(#d58abb, #817fbc);
+    border-color: #817fbc transparent;
     transform-origin: 75px 129px;
     left: 50px;
     top: -4px;
@@ -215,7 +215,7 @@
     height: 0;
     border-style: solid;
     border-width: 130px 75px 0;
-    border-image: linear-gradient(#d58abb, #817fbc);
+    border-color: #D1CFFF transparent;
     transform-origin: 75px 129px;
     left: 50px;
     top: -4px;
@@ -227,7 +227,7 @@
     height: 0;
     border-style: solid;
     border-width: 130px 75px 0;
-    border-image: linear-gradient(#d58abb, #817fbc);
+    border-color: #FFCDFA transparent;
     transform-origin: 75px 129px;
     left: 50px;
     top: -4px;
@@ -237,26 +237,26 @@
 /* 6 */
 .wheel div.sec {
     transform: rotate(60deg);
-    border-color: white transparent;
+    border-color: #817fbc transparent;
     z-index: 10;
 
     /*5  */
 }
 .wheel div.sec5 {
     transform: rotate(120deg);
+    
 }
 .wheel div.sec:nth-child(3) {
     transform: rotate(180deg);
 
-    border-color: white transparent;
+    border-color: #D1CFFF transparent;
 }
 .wheel div.sec3 {
     transform: rotate(240deg);
-
-    border-color: brown transparent;
 }
 .wheel div.sec:nth-child(5) {
     transform: rotate(300deg);
+    border-color: #FFCDFA transparent;
 }
 /* 1 */
 .wheel div.sec6 {
@@ -265,7 +265,7 @@
 
 .fa {
     margin-top: -100px;
-    color: rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 2, 0.2);
     position: relative;
     z-index: 10000000;
     display: block;
