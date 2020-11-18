@@ -1,10 +1,12 @@
 import React, {Fragment} from 'react'
 import ForumNav from './forumNav'
+import HomeContent from './homeContext'
 const ForumHome = () => {
     return (
         <Fragment>
             <div className="forumHome">
             <ForumNav/>
+            <HomeContent/>
             </div>
             <style jsx>
                 {
