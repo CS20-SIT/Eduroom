@@ -5,7 +5,16 @@ import api from "../../api";
 import Grid from "@material-ui/core/Grid";
 
 const CommentBlock = ({ row, id, data }) => {
-  const [boy, setBoy] = useState(["1", "2", "3"]);
+  const [auth, setData] = useState([])
+	useEffect(() => {
+		const GetData = async () => {
+			const result = await api.get('/api/auth/profile')
+			console.log(result.data)
+			setData(result.data)
+		}
+		GetData()
+		console.log(data)
+	}, [])
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -34,6 +43,14 @@ const CommentBlock = ({ row, id, data }) => {
                     <div>
                       <b>comment {index + 1}</b>
                       <p>{row.answer}</p>
+                      <div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
+                        {row.userid}
+                      </div>
+                    </div>
+                    <div>
+                      {row.userid == auth.userid ? (
+                        <i className="fas fa-times"></i>
+                      ):null}
                     </div>
                   </Paper>
                 );

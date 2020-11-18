@@ -1,7 +1,9 @@
 import { Fragment } from 'react'
 import Pagination from './Pagination'
+import ImageUpload from './ImageUpload'
+import VideoUpload from './VideoUpload';
 
-const Page1 = () => {
+const Page1 = (props) => {
 	return (
 		<Fragment>
 			<div className="box">
@@ -9,17 +11,17 @@ const Page1 = () => {
 				<div className="container">
 					<div className="text">
 						<div className="title">Coursename</div>
-						<input className="textfield" placeholder="Course Title" type="text"></input>
+						<input name="name" className="textfield" placeholder="Course Title" type="text"></input>
 					</div>
 
 					<div className="text">
 						<div className="title">Choose Picture</div>
-						<input className="textfield" placeholder="Introduction to Programming" type="text"></input>
+						<ImageUpload index={0}></ImageUpload>
 					</div>
 
 					<div className="text">
 						<div className="title">Sample Video</div>
-						<input className="textfield" placeholder="Introduction to Programming" type="text"></input>
+						<VideoUpload></VideoUpload>
 					</div>
 
 					<div className="text">

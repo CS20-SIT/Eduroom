@@ -1,5 +1,6 @@
 const ErrorResponse = require("../utils/errorResponse");
 const pool = require("../database/db");
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate');
 
 exports.forumTest = async (req, res, next) => {
   const data = [
@@ -55,10 +56,10 @@ exports.createComment = async (req, res, next) => {
   // const ansno = { no: "3" };
   const result = await pool.query('SELECT MAX(answerno) as answerno from forum_answer_form');
   const ansno = result.rows[0].answerno+1;
-  const user = { uid: "123e4567-e89b-12d3-a456-426614174000" };
+  const userId = req.user.id
   const data = await pool.query(
     "insert into forum_answer_form (forumid, answerno, userid, anstime, answer ) values($1,$2,$3,current_timestamp,$4)",
-    [temp.id, ansno, user.uid, temp.comment]
+    [temp.id, ansno, userId, temp.comment]
   );
   const forum = data.rows;
   res.status(200).json({ success: true, data: forum });
@@ -66,9 +67,7 @@ exports.createComment = async (req, res, next) => {
 };
 exports.setForum = async (req, res, next) => {
   const temp = req.body;
-  // const user = req.user ;
-  // const forumid = { id: "8" };
-  const user = { uid: "123e4567-e89b-12d3-a456-426614174000" };
+  const userId = req.user.id
   const subcat = await pool.query(
     "SELECT subcategoryiid FROM sub_category WHERE subtypename = $1",
     [temp.subcat]
@@ -77,7 +76,7 @@ exports.setForum = async (req, res, next) => {
     const subcatID = subcat.rows[0].subcategoryiid;
     const data = await pool.query(
       "insert into forum_form ( userid, posttime, titlethread, subcategoryiid, content) values($1,current_timestamp,$2,$3,$4)",
-      [user.uid, temp.title, subcatID, temp.content]
+      [userId, temp.title, subcatID, temp.content]
     );
     const forum = data.rows;
     res.status(200).json({ success: true, data: forum });
