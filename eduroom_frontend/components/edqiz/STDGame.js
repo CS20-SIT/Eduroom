@@ -46,7 +46,7 @@ const Content = ({ id }) => {
     {
       question: 'Browse the WebMD Questions and Answers',
       time: '60',
-      point: '2000',
+      point: '1000',
       ans: ['A-Z library for insights and advice for better health', 'tap Edit question or Delete question', 'When your question is answered', ' you will get a notification'],
       correct: 2,
       image: null,
@@ -54,7 +54,7 @@ const Content = ({ id }) => {
     {
       question: ' can have difficulty finding the right words or phrases to answer?',
       time: '90',
-      point: '2000',
+      point: '3000',
       ans: ['simple questions. Here are 20 of the most common questions', 'We have compiled a list of 46 common interview questions you might be asked', 'plus advice on how to answer each and every one of them', 'Read tips and example answers for 125 of the most common job interview'],
       correct: 3,
       image: null,
