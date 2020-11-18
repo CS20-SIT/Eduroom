@@ -7,11 +7,11 @@ import { useRouter } from 'next/router'
 import api from '../../api'
 import { useState, useEffect } from 'react'
 
-const forumBlock = ({ row }) => {
+const ForumInRoom = ({ row }) => {
 	const [data, setData] = useState([])
 	useEffect(() => {
 		const GetData = async () => {
-			const result = await api.get('/api/forum')
+			const result = await api.get('/api/forum/room/:roomname')
 			console.log(result.data)
 			setData(result.data.data)
 		}
@@ -24,7 +24,7 @@ const forumBlock = ({ row }) => {
 		// router.push(`/forum/${}`)
 	}
 	const useStyles = makeStyles((theme) => ({
-		root: { 
+		root: {
 			flexGrow: 1,
 		},
 		paper: {
@@ -116,4 +116,4 @@ const forumBlock = ({ row }) => {
 		</Fragment>
 	)
 }
-export default forumBlock
+export default ForumInRoom

@@ -6,6 +6,6 @@ router.get('/', showForum)
 router.post('/create', setForum)
 router.get('/:id', selectForum)
 router.post('/comment',createComment)
-router.get('/room',selectRoom)
+router.get('/room/:roomname',selectRoom)
 
 module.exports = router
