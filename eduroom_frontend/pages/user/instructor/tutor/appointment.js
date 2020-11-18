@@ -1,7 +1,9 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../../styles/tutor/utils'
 
 import CSSTransition from 'react-transition-group/CSSTransition'
+
+import api from '../../../../api'
 
 import GeneralNoNav from '../../../../components/template/generalnonav'
 
@@ -10,8 +12,32 @@ import AppointmentInfo from '../../../../components/tutor/instructor-appointment
 import RequestMode from '../../../../components/tutor/instructor-appointment/request-mode'
 import TableHeader from '../../../../components/tutor/instructor-appointment/table-header'
 
-const Appointment = ({ appointments }) => {
+const Appointment = () => {
 	//   console.log(appointments[0]);
+
+	const [appointments, setAppointments] = useState(null)
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await api.get('/api/tutor/instructor/appointments')
+
+			const { appointment } = res.data
+			const approved = appointment.filter((e) => {
+				return e.status == 'Approved'
+			})
+			const rejected = appointment.filter((e) => {
+				return e.status == 'Rejected'
+			})
+			const pending = appointment.filter((e) => {
+				return e.status == 'Pending'
+			})
+
+			const tmp = [appointment, pending, approved, rejected]
+			console.log(tmp)
+
+			setAppointments(tmp)
+		}
+		fetchData()
+	}, [])
 
 	const renderIcon = () => {
 		return <i class="fa fa-chevron-left"></i>
@@ -40,15 +66,18 @@ const Appointment = ({ appointments }) => {
 					<div className="container">
 						<RequestMode requestMode={requestMode} setRequestMode={setRequestMode} />
 						<TableHeader />
-						<AppointmentList
-							appointments={appointments}
-							requestMode={requestMode}
-							setAppointment={setAppointment}
-							setAID={setAID}
-							renderIcon={renderIcon}
-						/>
+						{appointments && (
+							<AppointmentList
+								appointments={appointments}
+								requestMode={requestMode}
+								setAppointment={setAppointment}
+								setAID={setAID}
+								renderIcon={renderIcon}
+							/>
+						)}
 					</div>
 				</div>
+
 				<style jsx>{utils}</style>
 				<style jsx>{``}</style>
 			</GeneralNoNav>
@@ -62,6 +91,7 @@ export async function getServerSideProps(ctx) {
 		{
 			appointmentID: 1,
 			id: 1,
+			name: 'Where r u',
 			members: [
 				{ id: 2, name: 'John Doe' },
 				{ id: 3, name: 'Mama Bear' },
