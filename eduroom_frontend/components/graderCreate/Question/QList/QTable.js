@@ -152,6 +152,7 @@ const AnnTable = (props) => {
         const result = await axios.get("/api/grader/contestquestion", {
           params: { conno: props.conno },
         });
+        setRowsPerPage(20);
         setData(result.data);
       }
     };
@@ -181,8 +182,7 @@ const AnnTable = (props) => {
           <TableHead>
             <TableRow>
               <TableCell width="10%" className={classes.tableHID}>
-                {" "}
-                Id
+                {props.conno == undefined ? "Id" : "No."}
               </TableCell>
               <TableCell
                 width="35%"
@@ -221,7 +221,7 @@ const AnnTable = (props) => {
                       component="th"
                       scope="row"
                     >
-                      {row.id}
+                      {props.conno == undefined ? row.id : row.conquestionno}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
