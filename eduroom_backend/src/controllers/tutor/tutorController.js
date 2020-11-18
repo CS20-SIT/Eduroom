@@ -341,13 +341,13 @@ const getStudentAppointments = async (req, res) => {
 const getUserInfo = async (req, res) => {
 	try {
 		// name : name key
-		// const { name } = req.query
-		// console.log(name)
+		const { name } = req.query
+		console.log(name)
 
 		// name : hardcode
-		const name = 'ka'
+		// const name = 'ka'
 		let result = await pool.query(`
-        select userid, firstname, lastname from user_profile where lower(firstname) like '%${name}%' or lower(lastname) like '%${name}%'  limit 5
+        select userid, firstname, lastname from user_profile where  CONCAT(lower(firstname),' ',lower(lastname)) like '%${name}%'  limit 5
         `)
 		const students = []
 		result.rows.forEach((s) => {
