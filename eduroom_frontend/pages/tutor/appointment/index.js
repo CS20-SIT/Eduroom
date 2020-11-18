@@ -68,7 +68,7 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
               <div
                 className='px-8 py-3 rounded-sm bg-navy text-md font-bold text-white pointer'
                 onClick={() => {
-                  // POST /tutor/appointment/review
+                  // POST /api/tutor/appointment/review
                   console.log(starHover + 1);
                   console.log(desc);
                   // Reload
@@ -165,7 +165,6 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
                           }}
                           onClick={() => {
                             console.log(e.id);
-
                             setReviewModal(e.id);
                           }}
                         >
@@ -207,7 +206,7 @@ const Appointment = ({ appointments, approved, rejected, pending }) => {
 };
 
 export async function getServerSideProps(ctx) {
-  // GET /tutor/student/appointments
+  // GET /api/tutor/student/appointments
   const appointments = [
     {
       id: 1,
