@@ -17,7 +17,7 @@ exports.createRoom = async (req, res, next) => {
 exports.player = async (req, res, next) => { //kahoot_player
   const userid = '71ac8b74-11e5-465c-ae9e-41b56edbbe00';
   const { nameforplay } = req.body;
-  console.log('nameForplay',nameforplay)
+  console.log('nameForplay', nameforplay)
   const result = await pool.query('SELECT userid from kahoot_player where userid = $1', [userid]);
   let player = null;
   if (result.rowCount === 0) {
@@ -39,19 +39,20 @@ exports.player = async (req, res, next) => { //kahoot_player
   }
 };
 
-// exports.historyPlayer = async (req, res, next) => { //kahoot_historyPlayer
-//   const userid = '123e4567-e89b-12d3-a456-426614174000';
-//   const { sessionid } = req.body;
-//   let player = await pool.query(
-//     'INSERT INTO kahoot_historyPlayer(sessionid,userid,) values($1,$2) RETURNING *',
-//     [userid, nameforplay]
-//   );
-//   player = player.rows[0];
-//   res.status(201).json(player);
-// };
+exports.historyPlayer = async (req, res, next) => { //kahoot_historyPlayer
+  const userid = '71ac8b74-11e5-465c-ae9e-41b56edbbe00';
+  const { sessionid } = req.body;
+  console.log('sessionidbackend', sessionid)
+  const rank='99';
+  let player = await pool.query(
+    'INSERT INTO kahoot_roomhistoryplayer(sessionid,userid,rank) values($1,$2,$3) RETURNING *',
+    [sessionid,userid,rank]
+  );
+  player = player.rows[0];
+  res.status(201).json(player);
+};
 
 exports.createKahootHistory = async (req, res, next) => {
-  // try{
   const { roomid, pin, isavailable } = req.body;
   console.log(req.body);
   let room = await pool.query(
@@ -62,17 +63,6 @@ exports.createKahootHistory = async (req, res, next) => {
   res.status(201).json(room);
 
 }
-// catch (err) {
-//   if (hasUncaughtExceptionCaptureCallback()) {
-//     process._fatalException(err);
-//     return;
-//   }
-//   internalBinding('errors').triggerUncaughtException(
-//     err,
-//     true /* fromPromise */
-//   );
-// }
-// };
 
 exports.fetchRoom = async (req, res, next) => {
   const result = await pool.query('SELECT * from kahoot_room');
@@ -88,8 +78,10 @@ exports.fetchRoomHistory = async (req, res, next) => {
 
 
 exports.fetchExactlyRoom = async (req, res, next) => {
-  const { userid } = req.body;
-  const result = await pool.query('SELECT userid from kahoot_roomhistory where userid=$1 and isvailable=true',[userid]);
-  const exactlyRoom = result.rows;
+  const { pin } = req.params;
+  console.log('pinbackend', pin)
+  const result = await pool.query('SELECT sessionid from kahoot_roomhistory where pin=$1 and isavailable = true', [pin]);
+  console.log('row', result.rows)
+  const exactlyRoom = result.rows[0];
   res.status(200).json(exactlyRoom);
 };
