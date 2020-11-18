@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import Styles from '../../styles/CoinStyles/test.module.css'
 
 const temp = (props) => {
 	useEffect(() => {
@@ -49,7 +48,6 @@ const temp = (props) => {
 					display: flex;
 					flex-wrap: wrap;
 					overflow: hidden;
-
 					@keyframes float {
 						0% {
 							transform: translateY(100vh);

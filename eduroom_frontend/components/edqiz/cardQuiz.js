@@ -8,6 +8,7 @@ const Page2 = ({
   handleQuestionNumber,
   index,
 }) => {
+  console.log('quizname',data)
   return (
     <Fragment>
       <div>
