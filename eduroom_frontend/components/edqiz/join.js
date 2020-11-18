@@ -2,13 +2,17 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import style from "../../styles/edqiz/landing";
 import socketIOClient from "socket.io-client";
-
+import api from '../../api';
 const Page1 = ({ goto, mockData, change, name }) => {
   const router = useRouter();
 
- 
- 
-  useEffect(() => {}, []);
+  const handlePlayere = async (body) => {
+    console.log('body')
+    const nameforplay={nameforplay:body}
+    const res = await api.post('/api/kahoot/player', nameforplay);
+    
+    console.log('success post player')
+  };
   return (
     <Fragment>
       <div className="landing">
@@ -87,7 +91,7 @@ const Page1 = ({ goto, mockData, change, name }) => {
             <div className="row">
               <button
                 className="landing-button"
-                onClick={(() => goto(2))}
+                onClick={() => {goto(2);handlePlayere(name);}}
               >
               
                 <span className="landing-button-text">JOIN GAME</span>
