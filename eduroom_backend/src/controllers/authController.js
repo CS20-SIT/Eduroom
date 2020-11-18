@@ -66,15 +66,14 @@ exports.regisController = async (req, res) => {
 		const userId = uuidv4()
 		const defaultProfilePic = getDefailtProfilePic()
 		console.log(defaultProfilePic)
-		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, createat, updateat) 
+        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
 		await pool.query(user_profileCreationQuery, [''])
 
 		// Create local_auth
 		const local_authCreationQuery = `INSERT INTO local_auth (userid, email, password) 
                                         VALUES ('${userId}', '${user.email}', '${user.password}')`
 		await pool.query(local_authCreationQuery)
-
 		// Create verification token and send it in email
 		const verifyToken = crypto.randomBytes(20).toString('hex')
 		const user_verificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
@@ -88,7 +87,6 @@ exports.regisController = async (req, res) => {
 			htmlMessage: `Please Verify your email by click <a href="${verifyUrl}">here</a>.`,
 		}
 		await sendEmail(emailOptions)
-
 		// Generate JWT for user to login
 		const token = generateCookieJWT(userId)
 		res.cookie('jwt', token)
