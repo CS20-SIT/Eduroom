@@ -25,7 +25,9 @@ const Pagination = (props) => {
 					height: 35px;
 					border-radius: 20px;
 					background: #5b5b5b;
-					padding: 8px 14px;
+					display:flex;
+          justify-content: center;
+          align-items: center;
 				}
 				.active {
 					background: #f39ac4;
