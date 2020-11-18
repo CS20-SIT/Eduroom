@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { fetchRoom, createRoom,fetchRoomHistory,createKahootHistory } = require('../controllers/edqiz/roomController');
+const { fetchRoom, createRoom,fetchRoomHistory,createKahootHistory, player } = require('../controllers/edqiz/roomController');
 
 router.get('/rooms', fetchRoom);
 router.post('/room', createRoom);
 router.get('/roomHistory', fetchRoomHistory);
 router.post('/roomHistory', createKahootHistory);
+router.post('/player', player);
 
 module.exports = router;
