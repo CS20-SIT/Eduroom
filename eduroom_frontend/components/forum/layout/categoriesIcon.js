@@ -6,7 +6,7 @@ const CategoriesIcon = ({ type }) => {
 			return (
 				<Fragment>
 					<svg width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<g clip-path="url(#clip0)">
+						<g clipPath="url(#clip0)">
 							<path
 								d="M19.9234 8.80726L26.2622 2.46845L25.2055 1.41204C23.4576 -0.335793 20.6153 -0.335793 18.867 1.41204C17.1192 3.16026 17.1192 6.00264 18.867 7.75047L19.9234 8.80726Z"
 								fill="#5B5B5B"
