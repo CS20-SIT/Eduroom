@@ -52,6 +52,7 @@ exports.regisController = async (req, res) => {
     console.log(defaultProfilePic);
     const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
         VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`;
+    console.log(user_profileCreationQuery)
     await pool.query(user_profileCreationQuery, ['']);
 
     // Create local_auth
