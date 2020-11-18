@@ -57,7 +57,7 @@ const roomID = (props) => {
 							<RoomTab />
 						</div> */}
 						<div className="forumblock">
-							<ForumInRoom/>
+							<ForumInRoom row={data}/>
 						</div>
 					</div>
 					<style jsx>{style}</style>
