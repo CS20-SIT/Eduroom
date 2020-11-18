@@ -25,8 +25,13 @@ const Page1 = ({
   var intervalID = null;
 
   const responseTime = () => {
+    console.log('testTIme')
+    socket.emit('room',router.query.id)
     socket.on("sent-end-time", (pin, time) => {
+      if(pin==id.id){
+      console.log('sent-end-time',pin,time)
       setEndTime(time);
+      }
     });
   };
 
