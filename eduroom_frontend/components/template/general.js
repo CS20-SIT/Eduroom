@@ -18,7 +18,7 @@ const General = (props) => {
 				<SideNav />
 				<div id="content">
 					<Navbar />
-					<div style={{paddingLeft:'5%'}}>
+					<div style={{ paddingLeft: '5%' }}>
 						<main>{props.children}</main>
 					</div>
 				</div>

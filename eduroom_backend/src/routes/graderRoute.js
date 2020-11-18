@@ -1,12 +1,17 @@
 const express = require("express");
 const path = require("path");
 const router = express.Router();
+
 const {
   test,
   getAnn,
   postAnn,
   editAnn,
   pTestcase,
+  dTestcase,
+  dQuestion,
+  dSample,
+  eQuestion,
 } = require("../controllers/graderCreate/test");
 const {
   pAdminLog,
@@ -20,13 +25,14 @@ const {
   gContestAnn,
   gContestQuestion,
 } = require("../controllers/graderCreate/fame");
+
 const {
   pQuestion,
   pQuestionTag,
   pTag,
   pQuestionSample,
   pQuestionTestcase,
-  eQuestion,
+
   eQuestionSample,
   eQuestionTestcase,
   gAllAdminLog,
@@ -37,20 +43,26 @@ const {
   gQuestionTag,
   gQuestionTestcase,
 } = require("../controllers/graderCreate/earth");
+const {
+  gPreviewQuestions,
+  gPreviewContests,
+  gContestDetails,
+  gContestAnnouncements,
+  gContestProblems,
+  gContestSubmissions,
+  gAnnouncements,
+} = require("../controllers/graderCreate/graderSubmit");
 
 const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(process.cwd() + "/src/uploadedTestCase"));
-    console.log(path.join(__dirname + "/temp"));
-    console.log(path.join(process.cwd() + "/src/uploadedTestCase"));
-    console.log("stroage1");
+    // console.log(path.join(process.cwd() + "/src/uploadedTestCase"));
   },
   filename: (req, file, cb) => {
     console.log(file);
     cb(null, Date.now() + file.originalname);
-    console.log("stroage2");
   },
 });
 // const fileFilter = (req, file, cb) => {
@@ -112,6 +124,19 @@ router.get("/questionsample", gQuestionSample);
 router.get("/questiontag", gQuestionTag);
 router.get("/questiontestcase", gQuestionTestcase);
 
+router.delete("/dquestiontestcase", dTestcase);
+router.delete("/dquestionsample", dSample);
+router.delete("/dquestion", dQuestion);
+
 // eContest,eContestAnn,gAllContest,gContest,gContestAnn,gContestQuestion
+
+// Toei
+router.get("/getPreviewQuestion", gPreviewQuestions);
+router.get("/getPreviewContest", gPreviewContests);
+router.get("/getContestDetail", gContestDetails);
+router.get("/getContestAnnouncement", gContestAnnouncements);
+router.get("/getContestProblem", gContestProblems);
+router.get("/getContestSubmission", gContestSubmissions);
+router.get("/getAnnouncement", gAnnouncements);
 
 module.exports = router;

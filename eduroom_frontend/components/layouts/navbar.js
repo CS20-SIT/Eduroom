@@ -53,7 +53,7 @@ const Navbar = () => {
 								<div className="navItem" onClick={gotoProfile}>
 									<img
 										className="avatar"
-										src="https://storage.googleapis.com/eduroom/profile_pic/Avatar_2.png"
+										src={user.avatar}
 										width="40"
 										height="40"
 										alt="avatar"

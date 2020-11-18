@@ -1,16 +1,16 @@
-import React, { Fragment } from 'react'
-import Header from '../layouts/header'
-import SideNav from '../layouts/sidenav/sidenav'
+import React, { Fragment } from "react";
+import Header from "../layouts/header";
+import SideNav from "../layouts/sidenav/sidenav";
 const GeneralNonav = (props) => {
   return (
     <Fragment>
       <Header />
       <div
         style={{
-          display: 'flex',
-          flex: '1 1 auto',
-          justifyContent: 'space-between',
-          background: '#F4F5F7'
+          display: "flex",
+          flex: "1 1 auto",
+          justifyContent: "space-between",
+          background: "#F4F5F7",
         }}
       >
         <SideNav />
@@ -32,7 +32,7 @@ const GeneralNonav = (props) => {
             left: 5%;
             top: 0;
             z-index: 20;
-            height:100vh;
+            height: 100vh;
             overflow-y: auto;
             position: fixed;
           }
