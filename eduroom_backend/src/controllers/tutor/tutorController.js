@@ -304,14 +304,13 @@ const getStudentAppointments = async (req, res) => {
 		const id = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
 
 		let result = await pool.query(`
-        select a.appointmentid,u.firstname , u.lastname ,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, to_char( starttime, 'DD MON YYYY') as date, a.status
+        select a.appointmentid,u.firstname , u.lastname ,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, to_char( starttime, 'DD MON YYYY') as date, a.status, to_char( starttime, 'YYYYMMDD') as sorted
             from  instructor i, user_profile u, instructor_expert e, instructor_appointments a,instructor_appointment_members m
             where i.instructorid = a.instructorid
             and i.userid = u.userid
             and a.appointmentid = m.appointmentid
             and m.userid = '${id}'
-            and e.instructorid = i.instructorid
-            order by a.appointmentid;
+            and e.instructorid = i.instructorid;
         `)
 		appointment = result.rows
 
@@ -330,6 +329,7 @@ const getStudentAppointments = async (req, res) => {
 				starttime,
 				endtime,
 				isAgree,
+				sorted: a.sorted,
 			}
 			appointments.push(tmp)
 		})
