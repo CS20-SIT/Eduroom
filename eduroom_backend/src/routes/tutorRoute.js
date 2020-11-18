@@ -16,6 +16,7 @@ const {
 	updateInstructorAvailabilities,
 } = require('../controllers/tutor/tutorController')
 
+// DONE
 router.get('/instructor/availabilities', getInstructorAvailabilities)
 // DONE
 router.get('/instructor/list', getInstructorList)
@@ -28,6 +29,7 @@ router.get('/instructor/review', getInstructorReview)
 router.get('/student/appointments', getStudentAppointments)
 router.get('/utils/id', getUserInfo)
 
+// DONE
 router.post('/instructor/availabilities', updateInstructorAvailabilities)
 
 module.exports = router
