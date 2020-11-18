@@ -57,7 +57,11 @@ const roomID = (props) => {
 							<RoomTab />
 						</div> */}
 						<div className="forumblock">
+<<<<<<< HEAD
+							<ForumInRoom row={data}/>
+=======
 							<ForumInRoom />
+>>>>>>> 59a8b076a47a363cc37770348ed67126b311a34d
 						</div>
 					</div>
 					<style jsx>{style}</style>
