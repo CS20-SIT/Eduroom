@@ -22,11 +22,14 @@ const getInstructorAvailabilities = async (req, res) => {
 
 		// ID from cookies
 		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
 
-		let result = await pool.query(`select day,time from instructor_availabilities where instructorid = '${id}'`)
+		let result = await pool.query(
+			`select day,time from instructor_availabilities where instructorid = '${id}' order by day, time`
+		)
 		const availabilities = [[], [], [], [], []]
 		result.rows.forEach((r) => {
-			availabilities[r.day].push(r.time)
+			availabilities[r.day].push(r.time - 9)
 		})
 		result = await pool.query(`select price from instructor_availabilities_price where instructorid = '${id}'`)
 		const { price } = result.rows[0]
@@ -360,6 +363,39 @@ const getUserInfo = async (req, res) => {
 	}
 }
 
+// POST
+const updateInstructorAvailabilities = async (req, res) => {
+	try {
+		/*
+		body
+         {
+            "availabilities": [[int],[int],[int],[int],[int]],
+            "price": int
+         }
+         */
+
+		// ID from cookies
+		const { availabilities, price } = req.body
+		// const id = 'bef966c3-c352-4044-a6b7-cdab918611b8'
+		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
+		for (let i = 0; i < 5; i++) {
+			await pool.query(`delete from instructor_availabilities where instructorid = '${id}' and day = ${i}`)
+		}
+		for (let i = 0; i < availabilities.length; i++) {
+			for (let j = 0; j < availabilities[i].length; j++) {
+				await pool.query(
+					`insert into instructor_availabilities values ('${id}',${i},${availabilities[i][j] + 9})`
+				)
+			}
+		}
+		await pool.query(`update instructor_availabilities_price set price = ${price} where instructorid = '${id}';`)
+		res.status(200).send({ test: 'Successs' })
+	} catch (e) {
+		res.status(404).send(e)
+	}
+}
+
 module.exports = {
 	getInstructorAvailabilities,
 	getInstructorList,
@@ -369,4 +405,5 @@ module.exports = {
 	getUserInfo,
 	getInstructorAvailability,
 	getInstructorAppointments,
+	updateInstructorAvailabilities,
 }
