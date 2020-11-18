@@ -3,8 +3,8 @@ import NavForum from '../../../components/forum/searchForum'
 import style from '../../../styles/forum/showForum'
 import GeneralNoNav from '../../../components/template/generalnonav'
 import RoomTab from '../../../components/forum/RoomTab'
-import ForumInRoom from '../../../components/forum/ForumInRoom';
-import ForumBlock from '../../../components/forum/forumBlock';
+import ForumInRoom from '../../../components/forum/ForumInRoom'
+import ForumBlock from '../../../components/forum/forumBlock'
 import api from '../../../api'
 import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core/styles'
@@ -13,7 +13,7 @@ import BackButton from '../../../components/forum/BackButton'
 const roomID = (props) => {
 	const [data, setData] = useState([])
 	useEffect(() => {
-        console.log(props.room);
+		console.log(props.room)
 		const GetData = async () => {
 			const result = await api.get(`/api/forum/room/${props.room}`)
 			setData(result.data.data)
@@ -57,7 +57,11 @@ const roomID = (props) => {
 							<RoomTab />
 						</div> */}
 						<div className="forumblock">
+<<<<<<< HEAD
 							<ForumInRoom row={data}/>
+=======
+							<ForumInRoom />
+>>>>>>> 59a8b076a47a363cc37770348ed67126b311a34d
 						</div>
 					</div>
 					<style jsx>{style}</style>
@@ -82,7 +86,7 @@ const roomID = (props) => {
 
 export async function getServerSideProps(ctx) {
 	try {
-		const room = ctx.query.room;
+		const room = ctx.query.room
 		return { props: { room } }
 	} catch (err) {
 		return { props: { room: '' } }

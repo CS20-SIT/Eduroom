@@ -166,6 +166,7 @@ const Content = ({ id }) => {
       case 2:
         return (
           <Page2
+          id={id.id}
             goto={goto}
             data={data}
             questionNumber={questionNumber}
@@ -177,6 +178,7 @@ const Content = ({ id }) => {
       case 3:
         return (
           <Page3
+          id={id.id}
             goto={goto}
             data={data}
             questionNumber={questionNumber}
@@ -188,6 +190,7 @@ const Content = ({ id }) => {
       case 4:
         return (
           <Page4
+            id={id.id}
             goto={goto}
             data={data}
             questionNumber={questionNumber}
