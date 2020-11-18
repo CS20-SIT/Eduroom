@@ -7,9 +7,9 @@ const CategoriesSet = () => {
         <Fragment>
             <div className="categoriesSet">
             {
-                categories.map(el=>{
+                categories.map((el,index)=>{
                     return (
-                        <div className="categoriesItems">
+                        <div className="categoriesItems" key={index}>
                             <CategoriesBox content={el} />
                         </div>
                     )
