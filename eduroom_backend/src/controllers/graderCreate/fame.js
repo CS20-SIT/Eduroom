@@ -140,7 +140,7 @@ const gContestAnn = async (req, res, next) => {
 const gContestQuestion = async (req, res, next) => {
   const conno = req.query.conno;
   const data = await pool.query(
-    `select conquestionno,  a.id, a.title , a.difficulty , a.visibility, b.displayName  from contest_question c , Questions a, admin_login b  where a.adminid = b.adminid and conid = '${conno}' and questionid = a.id `
+    `select conquestionno,  a.id, a.title , a.difficulty , a.visibility, b.displayName  from contest_question c , Questions a, admin_login b  where a.adminid = b.adminid and conid = '${conno}' and questionid = a.id order by 1 `
   );
   const conann = data.rows;
   res.send(conann);
@@ -149,20 +149,15 @@ const pContestExistingQuestion = async (req, res, next) => {
   const conno = req.body.conno;
   const question = req.body.questions;
 
+  let values = question.map((q) => {
+    return "(" + conno + " , " + q.id + ")";
+  });
+  const insertvalue = values.join(",");
+
   try {
-    question.forEach((q) => {
-      pool.query(
-        "INSERT INTO contest_question(conid,questionid) VALUES ($1 , $2)",
-        [conno, q.id],
-        function (err, result, fields) {
-          if (err) throw err;
-          console.log("-----------pContestExistingQuestion------------");
-          console.log(result);
-          console.log(fields);
-          console.log("-----------pContestExistingQuestion------------");
-        }
-      );
-    });
+    await pool.query(
+      "INSERT INTO contest_question(conid,questionid) VALUES " + insertvalue
+    );
   } catch (error) {
     console.error(error);
   }
