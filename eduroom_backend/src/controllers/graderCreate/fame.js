@@ -23,23 +23,38 @@ const pContest = async (req, res, next) => {
   const status = req.body.status;
   const adminid = req.body.adminid;
 
-  await pool.query(
-    "INSERT INTO contest(title,conRuleType,description,startTime,endTime,status,adminid) VALUES ($1 , $2, $3, $4, $5, $6, $7)",
-    [title, conRuleType, description, startTime, endTime, status, adminid]
+  pool.query(
+    "INSERT INTO contest(title,conRuleType,description,startTime,endTime,status,adminid) VALUES ($1 , $2, $3, $4, $5, $6, $7) returning conno",
+    [title, conRuleType, description, startTime, endTime, status, adminid],
+    function (err, result, fields) {
+      if (err) throw err;
+      const id = result.rows[0].conno;
+      const lgTitle = "ADD Contest";
+      const lgDetail = `${id}.${title} `;
+      pool.query(
+        'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+        [lgTitle, lgDetail, adminid]
+      );
+    }
   );
 
   res.send({ success: true });
 };
 const pContestQuestion = async (req, res, next) => {
-  const conQuestionNo = req.body.conquestionno;
   const conid = req.body.conid;
   const questionId = req.body.questionid;
-
+  const adminid = req.body.adminid;
+  const title = req.body.title;
   await pool.query(
-    "INSERT INTO contest_question(conQuestionNo,conid,questionId) VALUES ($1 , $2, $3)",
-    [conQuestionNo, conid, questionId]
+    "INSERT INTO contest_question(conid,questionId) VALUES ($1 , $2 )",
+    [conid, questionId]
   );
-
+  const lgTitle = "ADD Contest Question";
+  const lgDetail = `Contest No.${conid}, ${questionId}.${title} `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminid]
+  );
   res.send({ success: true });
 };
 const pContestAnn = async (req, res, next) => {
@@ -53,7 +68,12 @@ const pContestAnn = async (req, res, next) => {
     "INSERT INTO contest_announcements(title,description,conId,adminId,isVisible) VALUES ($1 , $2, $3, $4, $5)",
     [title, description, conId, adminId, isVisible]
   );
-
+  const lgTitle = "ADD Contest Announcement";
+  const lgDetail = `Contest No.${conId}, ${title} `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminId]
+  );
   res.send({ success: true });
 };
 
@@ -81,6 +101,12 @@ const eContest = async (req, res, next) => {
       conno,
     ]
   );
+  const lgTitle = "EDIT Contest";
+  const lgDetail = `${conno}.${title} `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminid]
+  );
   res.send({ success: true });
 };
 const eContestAnn = async (req, res, next) => {
@@ -102,6 +128,12 @@ const eContestAnn = async (req, res, next) => {
     [title, description, adminId, isVisible, conid, coannno]
   );
   res.send({ success: true });
+  const lgTitle = "EDIT Contest Announcement";
+  const lgDetail = `Contest No.${conid}, ${title} `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminId]
+  );
 };
 
 //get all
@@ -139,11 +171,37 @@ const gContestAnn = async (req, res, next) => {
   res.send(conann);
 };
 const gContestQuestion = async (req, res, next) => {
+  const conno = req.query.conno;
   const data = await pool.query(
-    "select * from contest_question  where conid = 1 and questionid = 1"
+    `select conquestionno,  a.id, a.title , a.difficulty , a.visibility, b.displayName,b.adminid from contest_question c , Questions a, admin_login b  where a.adminid = b.adminid and conid = '${conno}' and questionid = a.id order by 1 `
   );
   const conann = data.rows;
   res.send(conann);
+};
+const pContestExistingQuestion = async (req, res, next) => {
+  const conno = req.body.conno;
+  const question = req.body.questions;
+  const adminid = req.body.adminid;
+  const totalquestion = question.length;
+  let values = question.map((q) => {
+    return "(" + conno + " , " + q.id + ")";
+  });
+  const insertvalue = values.join(",");
+
+  try {
+    await pool.query(
+      "INSERT INTO contest_question(conid,questionid) VALUES " + insertvalue
+    );
+  } catch (error) {
+    console.error(error);
+  }
+  const lgTitle = "ADD Contest Questions";
+  const lgDetail = `Contest No.${conno}, Added ${totalquestion} existing questions `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminid]
+  );
+  res.send({ success: true });
 };
 
 module.exports = {
@@ -157,6 +215,7 @@ module.exports = {
   gContest,
   gContestAnn,
   gContestQuestion,
+  pContestExistingQuestion,
 };
 
 ///// dont forget to go to routes => graderRoute  and add your api

@@ -615,30 +615,51 @@ export default function FullWidthGrid(props) {
     }
   };
   const onHandlerSample = (id) => {
-    if (samples != null) {
+    console.log(samples);
+    if (samples != []) {
       if (props.id != undefined) {
-        axios.delete("/api/grader/dquestionsample", {
-          params: {
-            id: props.id,
-          },
-        });
+        axios
+          .delete("/api/grader/dquestionsample", {
+            params: {
+              id: props.id,
+            },
+          })
+          .then(() => {
+            axios
+              .post("/api/grader/cquestionsample", {
+                samples: samples,
+                questionId: id,
+              })
+              .then((res) => {
+                setTimeout(() => {
+                  setSubmitStatus({ ...submitStatus, success: true });
+                }, 450);
+              })
+              .catch((err) => {
+                console.log(err);
+                setTimeout(() => {
+                  setSubmitStatus({ ...submitStatus, failed: true });
+                }, 450);
+              });
+          });
+      } else {
+        axios
+          .post("/api/grader/cquestionsample", {
+            samples: samples,
+            questionId: id,
+          })
+          .then((res) => {
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, success: true });
+            }, 450);
+          })
+          .catch((err) => {
+            console.log(err);
+            setTimeout(() => {
+              setSubmitStatus({ ...submitStatus, failed: true });
+            }, 450);
+          });
       }
-      axios
-        .post("/api/grader/cquestionsample", {
-          samples: samples,
-          questionId: id,
-        })
-        .then((res) => {
-          setTimeout(() => {
-            setSubmitStatus({ ...submitStatus, success: true });
-          }, 450);
-        })
-        .catch((err) => {
-          console.log(err);
-          setTimeout(() => {
-            setSubmitStatus({ ...submitStatus, failed: true });
-          }, 450);
-        });
     }
   };
 
@@ -646,9 +667,10 @@ export default function FullWidthGrid(props) {
     if (conno != undefined) {
       axios
         .post("/api/grader/ccontestquestion", {
-          conquestionno: 1,
           conid: conno,
           questionid: id,
+          adminid: "12345678-1234-1234-1234-123456789123",
+          title: title,
         })
         // .then((res) => {
         //   setTimeout(() => {

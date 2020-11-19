@@ -25,34 +25,52 @@ const AnnEdit = (props) => {
   };
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (props.conno == undefined) {
+      setOpen(true);
+    } else {
+      axios
+        .delete("/api/grader/dcontestquestion", {
+          params: {
+            id: props.id,
+            conno: props.conno,
+            title: props.title,
+            adminid: props.adminid,
+          },
+        })
+        .then(() => {
+          props.onSuccess();
+        });
+    }
   };
 
   const handleClose = () => {
     setOpen(false);
     props.onSuccess();
   };
-  //// admind id here!!!!!!!
 
   const handleSubmit = () => {
-    axios
-      .delete("/api/grader/dquestion", {
-        params: {
-          id: props.id,
-        },
-      })
-      .then(function (response) {
-        setOpen(false);
-        setTimeout(() => {
-          setSubmitStatus({ ...submitStatus, success: true });
-        }, 450);
-      })
-      .catch(function (error) {
-        setOpen(false);
-        setTimeout(() => {
-          setSubmitStatus({ ...submitStatus, failed: true });
-        }, 450);
-      });
+    if (props.conno == undefined) {
+      axios
+        .delete("/api/grader/dquestion", {
+          params: {
+            id: props.id,
+            title: props.title,
+            adminid: props.adminid,
+          },
+        })
+        .then(function (response) {
+          setOpen(false);
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, success: true });
+          }, 450);
+        })
+        .catch(function (error) {
+          setOpen(false);
+          setTimeout(() => {
+            setSubmitStatus({ ...submitStatus, failed: true });
+          }, 450);
+        });
+    }
   };
 
   const sTitle = {
