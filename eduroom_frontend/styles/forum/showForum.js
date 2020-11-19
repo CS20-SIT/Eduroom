@@ -41,4 +41,9 @@ export default css`
     margin-top: 0%;
     margin-left: 1%;
   }
+  .backforroom{
+    margin: 2%;
+    margin-top: 0%;
+    margin-left: 7%;
+  }
 `;

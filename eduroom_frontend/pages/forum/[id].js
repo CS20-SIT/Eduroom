@@ -2,6 +2,7 @@ import React, { Fragment,useEffect, useState } from "react";
 import IdBlock from "../../components/forum/IdBlock";
 import style from "../../styles/forum/showForum";
 import GeneralNoNav from "../../components/template/generalnonav";
+import ForumNav from '../../components/forum/layout/forumNav';
 import NavForum from "../../components/forum/searchForum";
 import CommentBlock from "../../components/forum/CommentBlock";
 import CreateComment from "../../components/forum/CreateComment";
@@ -30,8 +31,8 @@ const ForumID = (props) => {
             background: "#EFF0F6",
           }}
         >
-          <div id="nav">
-            <NavForum />
+          <div id="nav" >
+            <ForumNav />
             <div className="idblock">
               <div className="backtoforum">
                 <BackButton />
