@@ -149,16 +149,13 @@ const Content = () => {
             <div className="content">
               <div>
                 {data.map((row) => {
-                  return (showDate == row.startday ?
-                    <div>
+                  return (showDate == row.startday?
+                    <div className="d-block">
                       <div className="title">{row.title}</div>
-                      <div className="detail">{row.starttime} - {row.endtime} | {row.place}
+                      <div className="point" style={{background:"#fdd4c1"}}></div>
+                      <div className="detail">{row.hstart}.{row.mstart} - {row.hend}.{row.mend} | {row.place}
                       </div>
-
-
-
                     </div>
-
                     : '')
                 })}
 
