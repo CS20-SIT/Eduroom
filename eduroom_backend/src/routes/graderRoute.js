@@ -10,6 +10,7 @@ const {
   pTestcase,
   dTestcase,
   dQuestion,
+  dConQuestion,
   dSample,
   eQuestion,
 } = require("../controllers/graderCreate/test");
@@ -23,6 +24,7 @@ const {
   gAllContest,
   gContest,
   gContestAnn,
+  pContestExistingQuestion,
   gContestQuestion,
 } = require("../controllers/graderCreate/fame");
 
@@ -32,7 +34,7 @@ const {
   pTag,
   pQuestionSample,
   pQuestionTestcase,
-
+  gNonExistQuestion,
   eQuestionSample,
   eQuestionTestcase,
   gAllAdminLog,
@@ -107,6 +109,7 @@ router.get("/contestquestion", gContestQuestion);
 //earth
 router.post("/cquestion", pQuestion);
 router.post("/cquestiontag", pQuestionTag);
+router.post("/ccontestexistquestion", pContestExistingQuestion);
 router.post("/ctags", pTag);
 router.post("/cquestionsample", pQuestionSample);
 router.post("/cquestiontestcase", pQuestionTestcase);
@@ -118,7 +121,7 @@ router.put("/equestiontestcase", eQuestionTestcase);
 
 router.get("/alladminlog", gAllAdminLog);
 router.get("/allquestion", gAllQuestions), router.get("/alltag", gAllTag);
-
+router.get("/addexistingquestion", gNonExistQuestion);
 router.get("/question", gQuestion);
 router.get("/questionsample", gQuestionSample);
 router.get("/questiontag", gQuestionTag);
@@ -127,6 +130,7 @@ router.get("/questiontestcase", gQuestionTestcase);
 router.delete("/dquestiontestcase", dTestcase);
 router.delete("/dquestionsample", dSample);
 router.delete("/dquestion", dQuestion);
+router.delete("/dcontestquestion", dConQuestion);
 
 // eContest,eContestAnn,gAllContest,gContest,gContestAnn,gContestQuestion
 

@@ -30,9 +30,19 @@ const postAnn = async (req, res, next) => {
   const adminid = req.body.adminid;
   const visible = req.body.isvisible;
 
-  await pool.query(
-    'INSERT INTO announcements(title,description,"adminid",isvisible) VALUES ($1 , $2, $3,$4)',
-    [title, description, adminid, visible]
+  pool.query(
+    'INSERT INTO announcements(title,description,"adminid",isvisible) VALUES ($1 , $2, $3,$4) returning id',
+    [title, description, adminid, visible],
+    function (err, result, fields) {
+      if (err) throw err;
+      const id = result.rows[0].id;
+      const lgTitle = "ADD Announcement";
+      const lgDetail = `${id}.${title} `;
+      pool.query(
+        'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+        [lgTitle, lgDetail, adminid]
+      );
+    }
   );
 
   res.send({ success: true, title, description, adminid });
@@ -49,7 +59,12 @@ const editAnn = async (req, res, next) => {
     'UPDATE announcements SET (title,description,"adminid",isvisible) = ($1 , $2, $3 ,$4) WHERE id = ($5)',
     [title, description, adminid, visible, id]
   );
-
+  const lgTitle = "EDIT Announcement";
+  const lgDetail = `${id}.${title} `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminid]
+  );
   res.send({ success: true, title, description, adminid });
 };
 
@@ -102,11 +117,41 @@ const dSample = async (req, res, next) => {
 const dQuestion = async (req, res, next) => {
   console.log("-----------------------------------------------");
   const id = req.query.id;
+  const title = req.query.title;
+  const adminid = req.query.adminid;
   console.log(req.query);
   await pool.query(`DELETE FROM QuestionTestcases WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM Questiontag WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM questionSample WHERE questionId = '${id}'`);
+  await pool.query(`DELETE FROM contest_question WHERE questionId = '${id}'`);
+  await pool.query(`DELETE FROM question_attempt WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM questions WHERE id = '${id}'`);
+  const lgTitle = "DELETE Question";
+  const lgDetail = `${id}.${title} `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminid]
+  );
+  res.send({ success: true });
+};
+
+const dConQuestion = async (req, res, next) => {
+  console.log("-----------------------------------------------");
+  const questionid = req.query.id;
+  const conid = req.query.conno;
+  const title = req.query.title;
+  const adminid = req.query.adminid;
+
+  await pool.query(
+    `DELETE FROM contest_question WHERE questionId = '${questionid}' and conid = '${conid}'`
+  );
+  const lgTitle = "DELETE Contest Question";
+  const lgDetail = `Contest No.${conid}, ${questionid}.${title} `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminid]
+  );
+
   res.send({ success: true });
 };
 const eQuestion = async (req, res, next) => {
@@ -166,6 +211,12 @@ const eQuestion = async (req, res, next) => {
           [id, t]
         );
       });
+      const lgTitle = "EDIT Question";
+      const lgDetail = `${id}.${title} `;
+      pool.query(
+        'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+        [lgTitle, lgDetail, adminid]
+      );
       res.send({ success: true, id: id });
     }
   );
@@ -181,4 +232,5 @@ module.exports = {
   dSample,
   dQuestion,
   eQuestion,
+  dConQuestion,
 };

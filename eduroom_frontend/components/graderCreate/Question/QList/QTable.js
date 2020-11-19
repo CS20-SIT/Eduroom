@@ -145,8 +145,16 @@ const AnnTable = (props) => {
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios.get("/api/grader/allquestion");
-      setData(result.data);
+      if (props.conno == undefined) {
+        const result = await axios.get("/api/grader/allquestion");
+        setData(result.data);
+      } else {
+        const result = await axios.get("/api/grader/contestquestion", {
+          params: { conno: props.conno },
+        });
+        setRowsPerPage(20);
+        setData(result.data);
+      }
     };
     GetData();
     console.log(data);
@@ -174,8 +182,7 @@ const AnnTable = (props) => {
           <TableHead>
             <TableRow>
               <TableCell width="10%" className={classes.tableHID}>
-                {" "}
-                Id
+                {props.conno == undefined ? "Id" : "No."}
               </TableCell>
               <TableCell
                 width="35%"
@@ -198,7 +205,7 @@ const AnnTable = (props) => {
                 Visible
               </TableCell>
               <TableCell className={classes.tableHEdit} align="center">
-                Edit{" "}
+                <span style={{ marginLeft: 18 }}>Edit </span>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -214,7 +221,7 @@ const AnnTable = (props) => {
                       component="th"
                       scope="row"
                     >
-                      {row.id}
+                      {props.conno == undefined ? row.id : row.conquestionno}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
@@ -243,13 +250,16 @@ const AnnTable = (props) => {
                       align="center"
                     >
                       {row.visibility ? (
-                        <i className="fas fa-check"></i>
+                        <i style={{ marginLeft: 20 }} className="fa fa-eye"></i>
                       ) : (
-                        <i className="fas fa-times"></i>
+                        <i
+                          style={{ marginLeft: 20 }}
+                          className="fa fa-eye-slash"
+                        ></i>
                       )}
                     </TableCell>
                     <TableCell className={classes.tableEdit} align="center">
-                      <Grid container direction="row" spacing={3}>
+                      <Grid container direction="row">
                         <Grid item sm={6}>
                           <button
                             style={{
@@ -272,16 +282,16 @@ const AnnTable = (props) => {
                             />
                           </button>
                         </Grid>
-                        {conno != undefined ? (
-                          "" //DeleteQuestion  here
-                        ) : (
-                          <Grid item sm={6}>
-                            <DeleteQuestion
-                              onSuccess={props.onSuccess}
-                              id={row.id}
-                            ></DeleteQuestion>
-                          </Grid>
-                        )}
+
+                        <Grid item sm={6}>
+                          <DeleteQuestion
+                            conno={conno}
+                            onSuccess={props.onSuccess}
+                            id={row.id}
+                            title={row.title}
+                            adminid={row.adminid}
+                          ></DeleteQuestion>
+                        </Grid>
                       </Grid>
                     </TableCell>
                   </TableRow>

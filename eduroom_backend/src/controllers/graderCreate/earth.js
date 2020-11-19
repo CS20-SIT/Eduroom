@@ -57,6 +57,12 @@ const pQuestion = async (req, res, next) => {
           [id, t]
         );
       });
+      const lgTitle = "ADD Question ";
+      const lgDetail = `${id}.${title} `;
+      pool.query(
+        'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+        [lgTitle, lgDetail, adminid]
+      );
       res.send({ success: true, id: result.rows[0].id });
     }
   );
@@ -141,6 +147,12 @@ const eQuestion = async (req, res, next) => {
       id,
     ]
   );
+  const lgTitle = "EDIT Question";
+  const lgDetail = `${id}.${title} `;
+  await pool.query(
+    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
+    [lgTitle, lgDetail, adminid]
+  );
 
   res.send({ success: true });
 };
@@ -170,13 +182,24 @@ const eQuestionTestcase = async (req, res, next) => {
 
 //get all
 const gAllAdminLog = async (req, res, next) => {
-  const data = await pool.query("select * from adminLog ");
+  const setTime = (text) => {
+    text = "" + text;
+    return text.substr(4, 11) + " At " + text.substr(16, 5);
+  };
+  const data = await pool.query(
+    "select logno ,title,detail,timestamp,displayname from adminLog a , admin_login b  where a.adminid = b.adminid order by 1 DESC "
+  );
   const ann = data.rows;
+  if (ann != null) {
+    ann.map((i) => {
+      i.timestamp = setTime(i.timestamp);
+    });
+  }
   res.send(ann);
 };
 const gAllQuestions = async (req, res, next) => {
   const query =
-    "select a.id, a.title , a.difficulty , a.visibility, b.displayName from Questions a, admin_login b  where a.adminid = b.adminid order by 1 DESC ";
+    "select a.id, a.title , a.difficulty , a.visibility, b.displayName , a.adminid from Questions a, admin_login b  where a.adminid = b.adminid order by 1 DESC ";
   const data = await pool.query(query);
   const ann = data.rows;
   res.send(ann);
@@ -219,9 +242,18 @@ const gQuestionTestcase = async (req, res, next) => {
   const conann = data.rows;
   res.send(conann);
 };
+const gNonExistQuestion = async (req, res, next) => {
+  const id = req.query.conno;
+  const data = await pool.query(
+    `select id, title from Questions  where id not in ( select questionid from contest_question where conid = '${id}' )  `
+  );
+  const conann = data.rows;
+  res.send(conann);
+};
 
 module.exports = {
   pQuestion,
+  gNonExistQuestion,
   pQuestionTag,
   pTag,
   pQuestionSample,
