@@ -1,4 +1,4 @@
-import React,{Fragment} from 'react'
+import React, { Fragment, useState } from 'react';
 import utils from '../../../../styles/course/utils';
 import GeneralNoNav from '../../../../components/template/generalnonav';
 import Link from 'next/link';
@@ -12,65 +12,46 @@ import Box from '@material-ui/core/Box';
 
 const CourseIDLesson = ({ courseDes, id }) => {
 
-    function TabPanel(props) {
-        const { children, value, index, ...other } = props;
-      
-        return (
-          <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-            {...other}
-          >
-            {value === index && (
-              <Box p={3}>
-                <Typography>{children}</Typography>
-              </Box>
-            )}
-          </div>
-        );
-    }
-    TabPanel.propTypes = {
-        children: PropTypes.node,
-        index: PropTypes.any.isRequired,
-        value: PropTypes.any.isRequired,
-    };
-    function a11yProps(index) {
-        return {
-          id: `vertical-tab-${index}`,
-          'aria-controls': `vertical-tabpanel-${index}`,
-        };
-    }
-      const useStyles = makeStyles((theme) => ({
-        root: {
-          flexGrow: 1,
-          backgroundColor: theme.palette.background.paper,
-          display: 'flex',
-          height: 224,
-        },
-        tabs: {
-          borderRight: `1px solid ${theme.palette.divider}`,
-        },
-    }));
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    const [sec,setSec] = useState(0); 
+    var secNow = 0, partNow = 0;
+    const [srcc,setSrc] = useState("https://www.youtube.com/embed/jveH6adL5DY");
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-    
-    var idx = 0;
+    const testLog = (x) => {
+        console.log(x)
+    }
+    const downloadItem = async (video) =>  {
+
+          console.log('loading file..')
+          const a = document.createElement('a')
+          a.href = toDataURL(video)
+          a.download = 'documents.pdf'
+          document.body.appendChild(a)
+          a.click()
+          document.body.removeChild(a)
+
+
+
+      }
+
+      const toDataURL= async (url) => {
+        return fetch(url)
+          .then(response => {
+            return response.blob()
+          })
+          .then(blob => {
+            return URL.createObjectURL(blob)
+          })
+      }
     
     
     return (
         <Fragment>
             <GeneralNoNav>
-            <div className='bg-tutor '>
-                <Link href={`/course/${id}`}><span className='text-primary text-lg font-quicksand py-8 px-8 pointer'>Back</span></Link>
-                <div className='container'>
+            <div className='bg-little-grey '>
+                <Link href={`/course/${id}`}><span className='text-primary text-lg py-8 px-8 pointer'>Back</span></Link>
+                <div className='container-2'>
                     <div className='my-2'>
-                        <span className='text-xl text-navy font-quicksand'>Learn To Code With Python</span>
+                        <span className='text-xl text-navy font-quicksand'>{courseDes[id-1].name}</span>
                         {/* <span>
                             <button className='text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer'>Add to cart</button>
                         </span>
@@ -78,42 +59,54 @@ const CourseIDLesson = ({ courseDes, id }) => {
                             <button className='text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer'>Buy</button>
                         </span> */}
                         <span className="share-icon pointer"><img alt="shareIcon" src="https://cdn3.iconfinder.com/data/icons/black-easy/512/538636-share_512x512.png" width="20px" height="20px" ></img></span>
-                        <div className='text-secondary font-quicksand mb-10'>{"Section "+`${courseDes[id-1].section[idx].id}`+" : " + `${courseDes[id-1].section[idx].name}`}</div>
+                        <div className='text-secondary font-quicksand mb-10'>{"Section "+`${courseDes[id-1].section[secNow].id}`+" : " + `${courseDes[id-1].section[secNow].name}`}</div>
                     </div>
                     <div className="my-8" height="500px">
                         <div className="inline-block">
-                            <iframe className="" width="600" height="400" src="https://www.youtube.com/embed/jveH6adL5DY"></iframe>
-                        
+                            <iframe className="" width="700" height="450" src={srcc}></iframe>
+                        </div>
+                        <div className="course-box bg-white inline-block">
+                            <div className="font-lato text-navy text-lg mt-10 mx-8 border-bottom-grey course-content">COURSE CONTENT</div>
+                            <div>
+                            {courseDes[id-1].section.map((e, index) => (
+                                <div>
+                                    <div className="section-box py-2 px-6 pointer text-lg font-quicksand" onClick={()=>{
+                                        if(sec == index){
+                                            setSec(-1);
+                                        }
+                                        else{
+                                            setSec(index);
+                                        }
+                                        
+                                        
+                                    }}>
+                                        <div className="font-normal my-1">{"Section "+`${e.id}`+" : " + `${e.name}`}</div>
+                                        <div className="font-light text-ll text-grey">{`${e.time}`+" mins."}</div>
+                                        
+                                    </div>
+                                    
+                                    <div className={`${sec == index ? '':"hidden"}`}>
+                                        {e.part.map((ee, indexx) => (
+                                            <div className="my-6 mx-4">
+                                                <div className="inline-block justify-icon position-ab">
+                                                <img width="30px" src="https://cdn2.iconfinder.com/data/icons/ui-basic-glyph/512/UI_Basic_GLYPH-110-512.png"/>
+                                                </div>
+                                                <div className="font-quicksand px-2 text-ll pointer font-normal-bold inline-block part-word" onClick={()=>{
+                                                    setSrc(ee.src);
+                                                }}>{"Part " + `${ee.id}` + ": " + `${ee.name}`}</div>
+                                            </div>
+                                        ))}
+                                        
+                                    </div>
+                                    {/* <div onClick={() => {
+                                        downloadItem('http://rathcenter.com/Sheet/Logic.pdf');
+                                    }}>Download</div> */}
+                                </div>
+                            ))}
+                            </div>
                         </div>
                         <div>
-                        <div className={classes.root}>
-                        <Tabs
-                            orientation="vertical"
-                            variant="scrollable"
-                            value={value}
-                            onChange={handleChange}
-                            aria-label="Vertical tabs example"
-                            className={classes.tabs}
-                        >
-                            {courseDes[id-1].section.map((e, index) => (
-                                idx = index,
-                                // console.log(idx),
-                                <Tab label={"Section "+`${courseDes[id-1].section[index].id}`+" : " + `${courseDes[id-1].section[index].name}`} {...a11yProps(0)} />
-                            ))}
-                        </Tabs>
-                        <TabPanel value={value} index={0}>
-                            {courseDes[id-1].section[0].part[0].name}
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            {courseDes[id-1].section[1].part[0].name}
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            {courseDes[id-1].section[2].part[0].name}
-                        </TabPanel>
-                        <TabPanel value={value} index={3}>
-                            {courseDes[id-1].section[3].part[0].name}
-                        </TabPanel>
-    </div>
+                        
                         </div>
                         
                     </div>
@@ -146,6 +139,7 @@ export async function getServerSideProps(contex) {
             {
                 id: 1,
                 name: 'Before start',
+                time: 3,
                 part: [
                     {
                         id: 1,
@@ -157,10 +151,21 @@ export async function getServerSideProps(contex) {
             {
                 id: 2,
                 name: 'Basic of python',
+                time: 12,
                 part: [
                     {
                         id: 1,
                         name: 'Basic',
+                        src: 'https://www.youtube.com/embed/5Y-MghiDmQ4',
+                    },
+                    {
+                        id: 2,
+                        name: 'Very basic',
+                        src: 'https://www.youtube.com/embed/5Y-MghiDmQ4',
+                    },
+                    {
+                        id: 3,
+                        name: 'Fucking basic',
                         src: 'https://www.youtube.com/embed/5Y-MghiDmQ4',
                     },
                 ]
@@ -168,6 +173,7 @@ export async function getServerSideProps(contex) {
             {
                 id: 3,
                 name: 'Datatype of value',
+                time: 10,
                 part: [
                     {
                         id: 1,
@@ -179,6 +185,7 @@ export async function getServerSideProps(contex) {
             {
                 id: 4,
                 name: 'Syntax & Error',
+                time: 18,
                 part: [
                     {
                         id: 1,
@@ -187,17 +194,16 @@ export async function getServerSideProps(contex) {
                     },
                 ]
             },
-
-        
-        ],
+        ]
     },
       {
-        id: 1,
-        name: 'Learn To Code With Python',
+        id: 2,
+        name: 'Learn To Code With C',
+        time: 34,
         section: [
             {
                 id: 1,
-                name: 'Before start',
+                name: 'Let`s start',
                 part: [
                     {
                         id: 1,
@@ -239,38 +245,36 @@ export async function getServerSideProps(contex) {
                     },
                 ]
             },
-
-        
         ],
     },
-      {
-        id: 3,
-        name: 'Learn To Code With Java',
-        instructor: 'Bill Gates',
-        price: 30,
-        src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
-      },
-      {
-        id: 4,
-        name: 'Basic for Python',
-        instructor: 'Bill Gates',
-        price: 30,
-        src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
-      },
-      {
-        id: 5,
-        name: 'Basic for C',
-        instructor: 'Bill Gates',
-        price: 30,
-        src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png'
-      },
-      {
-        id: 6,
-        name: 'Basic for Java',
-        instructor: 'Bill Gates',
-        price: 30,
-        src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
-      },
+    //   {
+    //     id: 3,
+    //     name: 'Learn To Code With Java',
+    //     instructor: 'Bill Gates',
+    //     price: 30,
+    //     src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
+    //   },
+    //   {
+    //     id: 4,
+    //     name: 'Basic for Python',
+    //     instructor: 'Bill Gates',
+    //     price: 30,
+    //     src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
+    //   },
+    //   {
+    //     id: 5,
+    //     name: 'Basic for C',
+    //     instructor: 'Bill Gates',
+    //     price: 30,
+    //     src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png'
+    //   },
+    //   {
+    //     id: 6,
+    //     name: 'Basic for Java',
+    //     instructor: 'Bill Gates',
+    //     price: 30,
+    //     src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
+    //   },
     
     ];
     

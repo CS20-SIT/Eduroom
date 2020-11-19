@@ -6,6 +6,12 @@ export default css`
     margin: 0 auto;
     padding: 4rem;
   }
+  .container-2 {
+    max-width: 1024px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 4rem, 0rem, 4rem, 4rem;
+  }
   /* Font Family */
   *,
   .font-lato {
@@ -28,6 +34,9 @@ export default css`
   .text-lg {
     font-size: 1rem;
   }
+  .text-ll{
+    font-size: 0.85rem;
+  }
   .text-md {
     font-size: 0.75rem;
   }
@@ -39,8 +48,17 @@ export default css`
   .font-bold {
     font-weight: 700;
   }
+  .font-little-bold {
+    font-weight: 600;
+  }
+  .font-normal-bold {
+    font-weight: 500;
+  }
   .font-normal {
     font-weight: 400;
+  }
+  .font-light {
+    font-weight: 300;
   }
 
   /* Text Color */
@@ -70,6 +88,9 @@ export default css`
   }
   .text-white {
     color: #ffffff;
+  }
+  .text-grey {
+    color: #636363;
   }
 
   /* BG Color */
@@ -106,6 +127,9 @@ export default css`
     background-image: url('/images/tutor/tutorBG.svg');
     background-repeat: no-repeat;
     background-size: cover;
+  }
+  .bg-little-grey {
+    background-color: #f7f7f7
   }
 
   /* Text Style */
@@ -349,8 +373,11 @@ export default css`
     margin-top: 4rem;
     margin-bottom: 4rem;
   }
-  mb-10 {
+  .mb-10 {
     margin-bottom: 4rem;
+  }
+  .mt-10 {
+    margin-top: 4rem;
   }
   /* Padding */
   .px-auto {
@@ -409,6 +436,9 @@ export default css`
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
+  .pb-4 {
+    padding-bottom: 1rem;
+  }
 
   /* Pointer */
   .pointer {
@@ -435,6 +465,36 @@ export default css`
   }
 
 
+
+ 
+  .course-content {
+    width: 200px;
+    padding-bottom: 1.5rem;
+  }
+  .course-box {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 350px;
+  }
+  .section-box {
+    margin-top: 1.6rem;
+  }
+
+
+  /*  Part Box  */
+  .part-box {
+
+  }
+  .justify-icon {
+    margin-left: 1.6rem;
+  }
+  .part-word {
+    margin-top: 0.4rem;
+    margin-left: 3.2rem;
+  }
+  
   
 
 
@@ -455,6 +515,10 @@ export default css`
   .border-pink {
     border 1px solid #fffaf4;
   }
+  .border-bottom-grey {
+    border-bottom: 1px solid #5b5b5b;
+    // EFF0F6
+  }
 
 
   /* animation */
@@ -464,4 +528,9 @@ export default css`
   .bigger {
     transform: scale(1.05);
   }
+
+  .hidden {
+    display: none;
+  }
+  
 `;

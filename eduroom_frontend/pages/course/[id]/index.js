@@ -1,12 +1,13 @@
-import React,{Fragment} from 'react'
+import React,{Fragment, useState} from 'react'
 import utils from '../../../styles/course/utils';
 import GeneralNoNav from '../../../components/template/generalnonav';
 import Link from 'next/link';
 const CourseID = ({ courseDes, id }) => {
+  const [videoSrc,] = useState(courseDes[id-1].videoSrc);
     return (
     <Fragment>
         <GeneralNoNav>
-        <div className='bg-tutor '>
+        <div className='bg-little-grey '>
             <Link href={`/course`}><span className='text-primary text-lg font-quicksand py-8 px-8 pointer'>Back</span></Link>
             <div className='container'>
                 <div className='my-2'>
@@ -25,7 +26,7 @@ const CourseID = ({ courseDes, id }) => {
                 </div>
                 <div className="my-8" height="500px">
                     <div className="inline-block">
-                        <iframe className="" width="550" height="400" src="https://www.youtube.com/embed/tgbNymZ7vqY"></iframe>
+                        <iframe className="" width="550" height="400" src={videoSrc}></iframe>
                     </div>
                     <div className="inline-block box-des">
                         <div className="font-lato text-xl text-navy">Instructor</div>
@@ -59,13 +60,15 @@ export async function getServerSideProps(contex) {
         instructor: 'Bill Gates',
         price: 30,
         src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
+        videoSrc: 'https://www.youtube.com/embed/zNHHBdyMm14',
       },
       {
         id: 2,
         name: 'Learn To Code With C',
         instructor: 'Bill Joe',
         price: 30,
-        src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png'
+        src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png',
+        videoSrc: 'https://www.youtube.com/embed/3lQEunpmtRA',
       },
       {
         id: 3,
@@ -73,6 +76,7 @@ export async function getServerSideProps(contex) {
         instructor: 'Billy Elish',
         price: 30,
         src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
+        videoSrc: 'https://www.youtube.com/embed/Zv8-hrGiGno',
       },
       {
         id: 4,
@@ -80,13 +84,15 @@ export async function getServerSideProps(contex) {
         instructor: 'Billie Armstrong',
         price: 30,
         src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
+        videoSrc: '',
       },
       {
         id: 5,
         name: 'Basic for C',
         instructor: 'Bill Gates',
         price: 30,
-        src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png'
+        src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png',
+        videoSrc: '',
       },
       {
         id: 6,
@@ -94,6 +100,7 @@ export async function getServerSideProps(contex) {
         instructor: 'Bill Gates',
         price: 30,
         src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
+        videoSrc: '',
       },
     ];
     return {
