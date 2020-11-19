@@ -191,6 +191,46 @@ export default css`
 
 }
 
+.d-block{
+  background-color : #EFF0F6;
+  padding : 15px 20px 24px 29px;
+  margin : 10px 40px 10px 40px;
+  border-radius : 10px;
+}
+.title{
+  color : #3d467f;
+  font-weight : bold;
+  font-size : 18px;
+  margin-bottom : .75rem;
+}
+.detail{
+  color :  #3d467f;
+  position : absolute;
+  margin-top : -15px;
+  margin-left : 20px;
+}
+.point{
+  border-radius : 50%;
+  width : 8px;
+  height: 8px;
+
+}
+
+
+
+ul {
+  list-style: none;
+}
+
+ul li::before {
+  content: "\2022";
+  color: red;
+  font-weight: bold;
+  display: inline-block; 
+  
+  margin-left: -35px;
+}
+
 
 
 

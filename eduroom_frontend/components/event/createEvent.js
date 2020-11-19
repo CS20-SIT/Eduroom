@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState,useEffect } from "react";
 import style from "../../styles/event/event";
 import { Button, Grid, Container, TextField } from "@material-ui/core";
 import { KeyboardTimePicker } from "@material-ui/pickers";
@@ -7,6 +7,21 @@ import { KeyboardTimePicker } from "@material-ui/pickers";
 import Image from "next/image";
 import api from "../../api";
 const content = () => {
+  const [data,setDate] = useState([])
+   useEffect(() => {
+
+    const GetData = async () => {
+      const GetData = async () => {
+      const result = await api("http://localhost:5000/api/grader/ann");
+      setData(result.data);
+      alert('hi');
+    };
+    GetData();
+    console.log(data);
+   
+    }
+  
+  },[]);
   const [eventInfo, setEventInfo] = useState({
     title: "",
     type: "",
