@@ -1,6 +1,6 @@
 const ErrorResponse = require("../utils/errorResponse");
 const pool = require("../database/db");
-const { jwtAuthenicate } = require('../middleware/jwtAuthenticate');
+
 
 exports.forumTest = async (req, res, next) => {
   const data = [
@@ -12,17 +12,17 @@ exports.forumTest = async (req, res, next) => {
 };
 
 exports.showForum = async (req, res, next) => {
-  const data = await pool.query("select forumid, titlethread, userid, posttime, subtypename, typename, c.categorytypeid from forum_form f , category_type c , sub_category s where f.subcategoryiid = s.subcategoryiid and s.categorytypeid = c.categorytypeid ;");
+  const data = await pool.query("select forumid, titlethread, f.userid, displayname as author, posttime, subtypename, typename, c.categorytypeid from forum_form f , category_type c , sub_category s , user_profile u where f.userid = u.userid and f.subcategoryiid = s.subcategoryiid and s.categorytypeid = c.categorytypeid order by posttime desc;");
   const forum = data.rows;
   res.status(200).json({ success: true, data: forum });
 };
 exports.selectForum = async (req, res, next) => {
   const id = req.params.id;
   console.log('id is ',id);
-  const data = await pool.query("select * from forum_form where forumid= $1", [
+  const data = await pool.query("SELECT * from forum_form WHERE isdelete = false AND forumid = $1", [
     id,
   ]);
-  const data2 = await pool.query("select * from forum_answer_form where forumid= $1", [
+  const data2 = await pool.query("select forumid, answerno, f.userid, displayname as author, anstime, isdelete, answer from forum_answer_form f join user_profile u on f.userid = u.userid where isdelete = false and forumid= $1  ", [
     id,
   ]);
   const forum = data.rows;
@@ -38,7 +38,7 @@ exports.room = async (req,res,next) =>{
 exports.selectRoom = async (req, res, next) => {
   const roomname = req.params.roomname;
   console.log('name is ',roomname);
-  const data = await pool.query("select titlethread, userid, posttime, subtypename from forum_form f , category_type c , sub_category s where f.subcategoryiid = s.subcategoryiid and c.categorytypeid=s.categorytypeid and c.typename = $1",
+  const data = await pool.query("select titlethread, f.userid, displayname as author, posttime,typename, subtypename from user_profile u, forum_form f , category_type c , sub_category s where u.userid = f.userid and f.subcategoryiid = s.subcategoryiid and c.categorytypeid=s.categorytypeid and c.typename = $1 order by posttime desc",
    [
     roomname,
   ]);
@@ -65,6 +65,10 @@ exports.createComment = async (req, res, next) => {
   res.status(200).json({ success: true, data: forum });
   return;
 };
+exports.deleteComment = async (req,res,next) =>{
+  res.status(200).json({ success: true });
+}
+exports.editComment = 
 exports.setForum = async (req, res, next) => {
   const temp = req.body;
   const userId = req.user.id

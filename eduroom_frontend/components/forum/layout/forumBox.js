@@ -12,7 +12,9 @@ const ForumBox = ({ data }) => {
 					<ForumTag tag={data.typename}></ForumTag>
 					<ForumTag tag={data.subtypename}></ForumTag>
 				</div>
-				<div className="forumDate">Post At: {moment(data.posttime).fromNow()}</div>
+				<div className="forumDate">
+					{data.author}  post  {moment(data.posttime).fromNow()}
+				</div>
 				<div className="forumAction">
 					<Icon type="like" />
 					<Link href={'/forum/' + data.forumid}>
