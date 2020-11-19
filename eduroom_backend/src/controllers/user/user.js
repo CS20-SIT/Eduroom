@@ -1,4 +1,5 @@
-const ErrorResponse = require('../../utils/errorResponse')
+const bcrypt = require('bcryptjs')
+const errorHandler = require('../../middleware/error')
 const pool = require('../../database/db')
 
 const test = async (req, res, next) => {
@@ -10,13 +11,15 @@ const test = async (req, res, next) => {
 
 // const user="08e9d239-b3f2-4db8-b29a-da99a314df92";
 const getWishlist = async (req, res, next) => {
-	const user = req.body.userid
-	const condition = req.body.condition
-	// const condition='';
-	const orderby = req.body.orderby
-	// const orderby='addtime desc';
-	const data = await pool.query(
-		'select w.userid,w.courseid,addtime,coursename,coursepicture,price,p.firstname,p.lastname ' +
+	try {
+		const user = '08e9d239-b3f2-4db8-b29a-da99a314df92'
+		// const user = req.user.id
+		const condition = req.query.condition
+		// const condition='';
+		const orderby = req.query.orderby
+		// const orderby='addtime desc';
+		const data = await pool.query(
+			'select w.userid,w.courseid,addtime,coursename,coursepicture,price,p.firstname,p.lastname ' +
 			'from user_wishlist w ' +
 			'inner join course c on c.courseid=w.courseid ' +
 			'inner join instructor i on i.instructorid=c.ownerid ' +
@@ -26,24 +29,32 @@ const getWishlist = async (req, res, next) => {
 			'order by ' +
 			orderby +
 			'; ',
-		[user]
-	)
-	const ann = data.rows
-	res.send(ann)
+			[user]
+		)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
 }
 
 const getMycourse = async (req, res, next) => {
-	const user = req.body.userid
-	const finish = req.body.finish
-	const condition = req.body.condition
-	const orderby = req.body.orderby
+	try {
+		// const user = req.body.userid
+		const finish = req.query.finish
+		const condition = req.query.condition
+		const orderby = req.query.orderby
 
-	// const user='08e9d239-b3f2-4db8-b29a-da99a314df92';
-	// const condition='';
-	// const orderby='addtime desc';
+		const user = '08e9d239-b3f2-4db8-b29a-da99a314df92';
+		// const condition='';
+		// const orderby='addtime desc';
 
-	const data = await pool.query(
-		'select m.userid,m.courseid,addtime,lastvisit,isfinished,coursename,coursepicture,p.firstname,p.lastname ' +
+		const data = await pool.query(
+			'select m.userid,m.courseid,addtime,lastvisit,isfinished,coursename,coursepicture,p.firstname,p.lastname ' +
 			'from user_mycourse m ' +
 			'inner join course c on c.courseid=m.courseid ' +
 			'inner join instructor i on i.instructorid=c.ownerid ' +
@@ -53,41 +64,65 @@ const getMycourse = async (req, res, next) => {
 			'order by ' +
 			orderby +
 			'; ',
-		[user, finish]
-	)
-	const ann = data.rows
-	res.send(ann)
+			[user, finish]
+		)
+		const ann = data.rows
+		res.send(ann)
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
 }
 
-const postDeleteWishlist = async (req, res, next) => {
-	const course = req.body.courseid
-	const user = req.body.userid
-	await pool.query('delete from user_wishlist where (userid,courseid)=($1,$2);', [user, course])
-	res.send({ success: true })
+const deleteWishlist = async (req, res, next) => {
+	try {
+		const course = req.body.courseid
+		const user = req.body.userid
+		await pool.query('delete from user_wishlist where (userid,courseid)=($1,$2);', [user, course])
+		res.send({ success: true })
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
 }
 ///////////
 const getProfile = async (req, res, next) => {
-	const user = req.body.userid
-	await pool.query(
-		'select avatar,firstname,lastname,isstudent,email,birthdate,createat,bio,phoneno ' +
+	try {
+		const user = req.user.id
+		const userProfile = await pool.query(
+			'select avatar,firstname,lastname,isstudent,email,birthdate,createat,bio,phoneno ' +
 			'from user_profile u ' +
 			'inner join local_auth l on u.userid = l.userid ' +
 			'where u.userid=$1; ',
-		[user]
-	)
-	res.send({ success: true })
+			[user]
+		)
+		res.send(userProfile.rows[0])
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
 }
 
-const postEditProfile = async (req, res, next) => {
-	const user = req.body.userid
-	const avatar = req.body.avatar
-	const firstname = req.body.firstname
-	const lastname = req.body.lastname
-	const birthdate = req.body.birthdate
-	const bio = req.body.bio
-	const phoneno = req.body.phoneno
-	await pool.query(
-		'update user_profile set ' +
+const editProfile = async (req, res, next) => {
+	try {
+		const user = req.body.userid
+		const avatar = req.body.avatar
+		const firstname = req.body.firstname
+		const lastname = req.body.lastname
+		const birthdate = req.body.birthdate
+		const bio = req.body.bio
+		const phoneno = req.body.phoneno
+		await pool.query(
+			'update user_profile set ' +
 			'avatar=$2, ' +
 			'firstname=$3, ' +
 			'lastname=$4, ' +
@@ -95,15 +130,22 @@ const postEditProfile = async (req, res, next) => {
 			'bio=$6, ' +
 			'phoneno=$7, ' +
 			'where userid=$1; ',
-		[user, avatar, firstname, lastname, birthdate, bio, phoneno]
-	)
-	res.send({ success: true })
+			[user, avatar, firstname, lastname, birthdate, bio, phoneno]
+		)
+		res.send({ success: true })
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
 }
 
-const getCheckPassword = async (req, res, next) => {
+const checkPassword = async (req, res, next) => {
 	const password = req.body.password
 	const user = req.body.userid
-	await pool.query('select $2=(select password from local_auth where userid=$1) checkpassword; ', [user, password])
+	await pool.query('select password from local_auth where userid = $1', [user])
 	res.send({ success: true })
 }
 
@@ -117,9 +159,9 @@ module.exports = {
 	test,
 	getWishlist,
 	getMycourse,
-	postDeleteWishlist,
+	deleteWishlist,
 	getProfile,
-	postEditProfile,
+	editProfile,
 	getCheckPassword,
 	postNewPassword,
 }
