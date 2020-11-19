@@ -4,13 +4,14 @@
 //https://material-ui.com/components/grid/
 //https://material-ui.com/components/switches/
 import { format, formatDistance, formatRelative, subDays } from "date-fns";
+import Pagination from "@material-ui/lab/Pagination";
 
 import React from "react";
 import { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import ConEach from "./ConEach";
 import axios from "../../../../api";
-
+import { makeStyles, Box } from "@material-ui/core";
 import { useRouter } from "next/router";
 //prepare for adding abmin log wheen create / edit ann
 const shorten = (text, maxLength) => {
@@ -20,8 +21,22 @@ const shorten = (text, maxLength) => {
 
   return text;
 };
+const useStyles = makeStyles((theme) => ({
+  paginator: {
+    justifyContent: "center",
+    padding: "10px",
+  },
+}));
+
 const Test = () => {
   const [data, setData] = useState([]);
+  const itemsPerPage = 5;
+  const [page, setPage] = React.useState(1);
+
+  const classes = useStyles();
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   useEffect(() => {
     const GetData = async () => {
       const result = await axios("/api/grader/allcontest");
@@ -47,7 +62,7 @@ const Test = () => {
 
   return (
     <div>
-      {data.map((row) => {
+      {data.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((row) => {
         return (
           <ConEach
             id={row.conno}
@@ -64,6 +79,19 @@ const Test = () => {
           ></ConEach>
         );
       })}{" "}
+      <Box component="span">
+        <Pagination
+          count={Math.ceil(data.length / itemsPerPage)}
+          page={page}
+          onChange={handleChange}
+          defaultPage={1}
+          color="primary"
+          size="large"
+          showFirstButton
+          showLastButton
+          classes={{ ul: classes.paginator }}
+        />
+      </Box>
     </div>
   );
 };
