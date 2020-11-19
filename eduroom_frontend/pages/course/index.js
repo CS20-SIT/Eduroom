@@ -7,7 +7,7 @@ const Course = ({ courseDes }) => {
   return (
     <Fragment>
       <GeneralNoNav>
-        <div className='bg-tutor '>
+        <div className='bg-little-grey'>
           <div className='container'>
 
                 {/* Categories Name */}
