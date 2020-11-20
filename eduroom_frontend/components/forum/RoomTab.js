@@ -4,11 +4,12 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { useRouter } from "next/router";
 import { EditorFormatAlignCenter } from "material-ui/svg-icons";
+
 const RoomTab = () => {
   const router = useRouter();
   const handleClick = (e) => {
     e.preventDefault();
-    router.push("/forum/id");
+    // router.push("/forum/id");
   };
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,6 +41,9 @@ const RoomTab = () => {
             elevation={0}
             className={classes.paper}
             style={{ border: "2px solid #a880f7", borderRadius:'10px' }}
+            onClick={() => {
+              router.push(`/forum/room/Mathematic`)
+            }}
           >
             <div><img src='/images/forum/Math.svg'></img></div>
             <div style={{paddingTop:'6px', fontSize: '0.8em', fontWeight: '600'}}>MATH</div>
@@ -51,6 +55,9 @@ const RoomTab = () => {
             elevation={0}
             className={classes.paper}
             style={{ border: "2px solid #a880f7", borderRadius:'10px' }}
+            onClick={() => {
+              router.push(`/forum/room/Science`)
+            }}
           >
             <div><img src='/images/forum/Science.svg'></img></div>
             <div style={{paddingTop:'6px', fontSize: '0.8em', fontWeight: '600'}}>SCIENCE</div>
@@ -61,6 +68,9 @@ const RoomTab = () => {
             elevation={0}
             className={classes.paper}
             style={{ border: "2px solid #a880f7", borderRadius:'10px' }}
+            onClick={() => {
+              router.push(`/forum/room/Language`)
+            }}
           >
             <div><img src='/images/forum/Language.svg'></img></div>
             <div style={{paddingTop:'6px', fontSize: '0.8em', fontWeight: '600'}}>LANGUAGE</div>
