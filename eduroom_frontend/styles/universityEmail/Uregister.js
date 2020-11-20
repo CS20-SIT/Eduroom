@@ -1,6 +1,14 @@
 import css from 'styled-jsx/css'
 export default css`
 
+#condition{
+  
+  line-height: 2;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.75em;
+  font-weight: 300;
+  color: #5b5b5b;
+}
 .label-text {
     color: #473f47;
   }
