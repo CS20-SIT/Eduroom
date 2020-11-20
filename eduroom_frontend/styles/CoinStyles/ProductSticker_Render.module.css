@@ -1,14 +1,21 @@
 .container {
     padding: 15px;
     color: black;
-    min-height: 305px;
+    height: 305px;
+    width: 290px;
 }
 .cardContainer {
     text-align: center;
     font-size: 20px;
     margin: auto;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    transition: transform 0.5s;
+
+}
+.cardContainer:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px #bdbdbd;
 }
 .text {
     font-size: 20px;

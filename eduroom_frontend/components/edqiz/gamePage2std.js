@@ -3,7 +3,7 @@ import socketIOClient from "socket.io-client";
 import { useRouter } from "next/router";
 
 import Grid from "@material-ui/core/Grid";
-const Page3 = ({questionNumber,goto,answer,data}) => {
+const Page3 = ({questionNumber,goto,answer,data,id}) => {
   const router = useRouter();
 
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
@@ -48,7 +48,7 @@ const Page3 = ({questionNumber,goto,answer,data}) => {
         </Grid>
         <Grid item xs={4}></Grid>
         <Grid item xs={6}>
-          <div className="pin">PIN:00000</div>
+  <div className="pin">PIN:{id}</div>
         </Grid>
       </Grid>
       <div className="main">
