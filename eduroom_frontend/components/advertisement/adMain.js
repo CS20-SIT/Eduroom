@@ -73,7 +73,7 @@ export default function FullWidthTabs() {
     <General>
       
      <Paper style = {{margin:"0% 5% 0% 5%", padding:"1.5%"}}>
-     <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',position:'absolute', width:'82%', opacity:'50%'}}></div>
+     <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',marginLeft:'2%',position:'absolute', width:'78%', opacity:'50%'}}></div>
         <Tabs
           value={value}
           onChange={handleChange}
