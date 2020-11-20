@@ -8,7 +8,6 @@ import api from '../../api'
 import { useState, useEffect } from 'react'
 
 const forumBlock = ({ row }) => {
-	// const [create, setCreate] = useState('');
 	const [data, setData] = useState([])
 	useEffect(() => {
 		const GetData = async () => {
@@ -25,7 +24,7 @@ const forumBlock = ({ row }) => {
 		// router.push(`/forum/${}`)
 	}
 	const useStyles = makeStyles((theme) => ({
-		root: {
+		root: { 
 			flexGrow: 1,
 		},
 		paper: {
@@ -47,31 +46,43 @@ const forumBlock = ({ row }) => {
 						<div>
 							{data.map((row) => {
 								return (
-									<Paper
-										className={classes.paper}
-										style={{ paddingLeft: '35px', cursor: 'pointer' }}
-										onClick={() => {
-											router.push(`/forum/${row.forumid}`)
-										}}
-									>
+									<Paper className={classes.paper} style={{ paddingLeft: '35px', cursor: 'pointer' }}>
 										{/* <div  onClick={handleClick} className="button">
                   {props.createForm}
                   </div> */}
-										<div style={{ fontWeight: '500', fontSize: '1.5em', color: '#5b5b5b' }}>{row.titlethread}</div>
-										<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-											<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
-												USER NUMBER : {row.userid}{' '}
-											</div>
-											<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b', marginLeft: '12px' }}>
-												DATE : {row.posttime}
+										<div
+											onClick={() => {
+												router.push(`/forum/${row.forumid}`)
+											}}
+										>
+											<div style={{ fontWeight: '500', fontSize: '1.5em', color: '#5b5b5b' }}>{row.titlethread}</div>
+											<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+												<div style={{ marginTop: '15px',marginRight: '8px',padding:'3px', fontSize: '11px', color: '#5b5b5b', borderRadius:'10px', border: "1px solid #a880f7" }}>
+													 {row.typename}{' '}
+												</div>
+                        <div style={{ marginTop: '15px',marginRight: '8px',padding:'3px', fontSize: '11px', color: '#5b5b5b', borderRadius:'10px', border: "1px solid #a880f7" }}>
+													 {row.subtypename}{' '}
+												</div>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+												<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
+													USER NUMBER : {row.userid}{' '}
+												</div>
+												<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b', marginLeft: '12px' }}>
+													DATE : {row.posttime}
+												</div>
 											</div>
 										</div>
-
 										<div className="icon" style={{ bottom: 0, right: 0, marginTop: '20px' }}>
 											<div style={{ paddingRight: '30px' }}>
 												<Icon type="like" />
 											</div>
-											<div onClick={handleClick} style={{ paddingRight: '30px' }}>
+											<div
+												onClick={() => {
+													router.push(`/forum/${row.forumid}`)
+												}}
+												style={{ paddingRight: '30px' }}
+											>
 												<Icon type="comment" />
 											</div>
 										</div>
