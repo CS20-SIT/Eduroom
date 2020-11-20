@@ -18,6 +18,7 @@ const ForumInRoom = ({ row }) => {
 	// 	GetData()
 	// 	console.log(data)
 	// }, [])
+	// console.log(row);
 	const router = useRouter()
 	const handleClick = (e) => {
 		e.preventDefault()
@@ -44,7 +45,7 @@ const ForumInRoom = ({ row }) => {
 				<Grid container spacing={3} variant="outlined">
 					<Grid item xs={12}>
 						<div>
-							{row.map((el) => {
+							{row?.map((el) => {
 								return (
 									<Paper className={classes.paper} style={{ paddingLeft: '35px', cursor: 'pointer' }}>
 										{/* <div  onClick={handleClick} className="button">
