@@ -1,4 +1,4 @@
-import css from "styled-jsx/css"
+import css from 'styled-jsx/css'
 export default css`
 .flex-container {
     display: flex;
@@ -15,4 +15,7 @@ export default css`
   }
   .wrong {
       color: #EB5757;
+  }
+  .partial {
+    color: #A27CEF;
   }`

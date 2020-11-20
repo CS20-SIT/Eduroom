@@ -1,27 +1,30 @@
-import { Fragment } from "react"
-import style from "../../../../styles/graderSubmit/contests/contestPage/announcement/contestAnnouncementList"
+import { Fragment } from 'react'
+import style from '../../../../styles/graderSubmit/contests/contestPage/announcement/contestAnnouncementList'
+import { compareAsc, format } from 'date-fns'
 
 const ContestAnnouncementList = (props) => {
-  console.log(props)
-  return (
-    <Fragment>
-      <div className="flex-container">
-        <div className="flex-item" style={{ flexBasis: "20%" }}>
-          Anya Smith
-        </div>
-        <div className="flex-item" style={{ flexBasis: "20%" }}>
-          Title
-        </div>
-        <div className="flex-item" style={{ flexBasis: "40%" }}>
-          There are many variations of passages
-        </div>
-        <div className="flex-item" style={{ flexBasis: "20%" }}>
-          2020-10-21 18:27:22
-        </div>
-      </div>
-      <style jsx>{style}</style>
-    </Fragment>
-  )
+	return (
+		<Fragment>
+			{props.time ? (
+				<div className="flex-container">
+					<div className="flex-item" style={{ flexBasis: '20%' }}>
+						{props.name}
+					</div>
+					<div className="flex-item" style={{ flexBasis: '20%' }}>
+						{props.title}
+					</div>
+					<div className="flex-item" style={{ flexBasis: '40%' }}>
+						{props.description.length >= 45 ? props.description.slice(0, 45) + '...' : props.description}
+					</div>
+					<div className="flex-item" style={{ flexBasis: '20%' }}>
+						{format(Date.parse(props.time), 'P') + ' ' + format(Date.parse(props.time), 'pp')}
+					</div>
+				</div>
+			) : null}
+
+			<style jsx>{style}</style>
+		</Fragment>
+	)
 }
 
 export default ContestAnnouncementList

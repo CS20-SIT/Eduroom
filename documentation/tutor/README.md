@@ -4,7 +4,7 @@
 
 ### Get instructor availability days and times
 
-- **URL** : `/api/tutor/instructor/availability`
+- **URL** : `/instructor/availabilities`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -18,13 +18,13 @@
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
 ### Update/Insert instructor availability days and times
 
-- **URL** : `/api/tutor/instructor/availability`
+- **URL** : `/instructor/availabilities`
 - **Method** : `POST`
 - **Headers** : `Token`
 - **Body** :
@@ -37,14 +37,14 @@
 ```
 
 - **Params** : `none`
-- **Success** : `200`
+- **Success** : `201`
 - **Error** : `400`
 
 ## instructor information
 
 ### Get List of Instructor who register to be a Private Tutor
 
-- **URL** : `/api/tutor/instructors`
+- **URL** : `/instructor/list`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -65,13 +65,13 @@
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
-### Get Instructor information ( available times )
+### Get Instructor information
 
-- **URL** : `/api/tutor/instructor/info`
+- **URL** : `/instructor/info`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -95,18 +95,46 @@
 		"rating": decimal,
 		"ratingCount": int,
 		"price": decimal
-		"times": [{ "date": int, "time": [int] }]
    }
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
+
+---
+
+### Get Instructor information ( available times )
+
+- **URL** : `/instructor/availability`
+- **Method** : `GET`
+- **Headers** : `Token`
+- **Body** : `none`
+- **Params** :
+
+```
+ {
+	 "id": `instructorId`,
+	 "dates": `YYYY-MM-DD`
+ }
+```
+
+- **Success** : `200`
+
+```
+{
+ "times": {
+	 [ int ]
+   }
+}
+```
+
+- **Error** : `404`
 
 ## student's appointment
 
 ### Get List of Appointments that student appointed
 
-- **URL** : `/api/tutor/student/appointments`
+- **URL** : `/student/appointments`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -120,22 +148,22 @@
 		"id",
 		"name": String,
 		"info": String,
-		"date": `YYYY-MM-DD`,
-		"startTime": int,
-		"endTime": int,
-		"isAgree": 'Approved'/'Pending'/'Rejected'
+		"date": `DD MMM YYYY`,
+		"startTime": 'HH:MM',
+		"endTime": 'HH:MM',
+		"isAgree": 'Approved'/'Rejected'/'Pending'
    }
 ],
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
 ### Insert student appointment
 
-- **URL** : `/api/tutor/student/appointment`
+- **URL** : `/student/appointments`
 - **Method** : `POST`
 - **Headers** : `Token`
 - **Body** :
@@ -146,19 +174,19 @@
 	 "startTime": timestamp,
 	 "endTime": timestamp,
 	 "price": int,
-	 "members": [{ "id", "firstname", "lastname"}]
+	 "members": [{ "id", "name"}]
  }
 ```
 
 - **Params** : `none`
-- **Success** : `200`
+- **Success** : `201`
 - **Error** : `400`
 
 ## instructor's appointment
 
 ### Get List of Appointments for instructor
 
-- **URL** : `/api/tutor/instructor/appointments`
+- **URL** : `/instructor/appointments`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -172,23 +200,23 @@
 		"appointmentID",
 		"id": studentID,
 		"name": String,
-		"date": `YYYY-MM-DD`,
+		"date": `[DD, MM, YYYY]`,
 		"startTime": int,
 		"endTime": int,
-		"status": 'Pending'/'Approved'/'Rejected',
+		"status": 'Approved'/'Rejected'/'Pending',
 		"members":[{"id","name"}]
    }
 ],
 }
 ```
 
-- **Error** : `400`
+- **Error** : `404`
 
 ---
 
-### Insert student appointment
+### Approve or Reject student's Appointment
 
-- **URL** : `/api/tutor/instructor/appointment`
+- **URL** : `/instructor/appointments`
 - **Method** : `POST`
 - **Headers** : `Token`
 - **Body** :
@@ -201,64 +229,14 @@
 ```
 
 - **Params** : `none`
-- **Success** : `200`
+- **Success** : `201`
 - **Error** : `400`
 
 ## Rating appointment
 
 ### Get List of instructor's reviews
 
-- **URL** : `/api/tutor/appointment/review`
-- **Method** : `GET`
-- **Headers** : `Token`
-- **Body** : `none`
-- **Params** : `none`
-- **Success** : `200`
-
-```
-{
- "appointment": [
-   {
-		"rating", [{
-		  "score": int,
-		  "desc": String,
-		  "name": String,
-		  "date": `YYYY-MM-DD`
-		}]
-   }
-],
-}
-```
-
-- **Error** : `400`
-
----
-
-### Student rate instructor in appointment
-
-- **URL** : `/api/tutor/appointment/review`
-- **Method** : `POST`
-- **Headers** : `Token`
-- **Body** :
-
-```
- {
-	  "id",
-	  "score": int,
-	  "desc": String,
-	  "date": `YYYY-MM-DD`
-}
-```
-
-- **Params** : `none`
-- **Success** : `200`
-- **Error** : `400`
-
-## Utilities
-
-### Searching student by first name or last name ( limit 5 )
-
-- **URL** : `/api/tutor/utils/id`
+- **URL** : `/instructor/review`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`
@@ -266,8 +244,59 @@
 
 ```
  {
-	 "firstname": String,
-	 "lastname": String
+	 "id": `instructorId`
+ }
+```
+
+- **Success** : `200`
+
+```
+{
+	"rating", [{
+	  "score": int,
+	  "desc": String,
+	  "name": String,
+	  "date": `YYYYMMDD`
+	}]
+}
+```
+
+- **Error** : `404`
+
+---
+
+### Student rate instructor in appointment
+
+- **URL** : `/appointment/review`
+- **Method** : `POST`
+- **Headers** : `Token`
+- **Body** :
+
+```
+ {
+	  "id": AppointmentID,
+	  "score": int,
+	  "desc": String,
+}
+```
+
+- **Params** : `none`
+- **Success** : `201`
+- **Error** : `400`
+
+## Utilities
+
+### Searching student by first name or last name ( limit 5 )
+
+- **URL** : `/utils/id`
+- **Method** : `GET`
+- **Headers** : `Token`
+- **Body** : `none`
+- **Params** :
+
+```
+ {
+	 "name": String,
  }
 ```
 
@@ -278,8 +307,7 @@
  "students": [
    {
 		"id",
-		"firstname": String,
-		"lastname": String
+		"name": String
    }
 ],
 }
@@ -291,7 +319,7 @@
 
 ### Get Profile picture of user ( maybe use other group )
 
-- **URL** : `/api/tutor/utils/pics`
+- **URL** : `/utils/pics`
 - **Method** : `GET`
 - **Headers** : `Token`
 - **Body** : `none`

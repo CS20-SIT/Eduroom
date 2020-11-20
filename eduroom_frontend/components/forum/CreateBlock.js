@@ -15,6 +15,7 @@ import {
 import GeneralNoNav from "../../components/template/generalnonav";
 import TextField from "@material-ui/core/TextField";
 import api from "../../api";
+import Link from "next/link";
 
 const CreateBlock = () => {
   const [createForm, setForm] = useState({
@@ -69,7 +70,7 @@ const CreateBlock = () => {
           subcat: "",
           content: "",
         });
-        //router.push("/forum");
+        
       });
     } else {
       console.log("This form is not valid");
@@ -245,7 +246,9 @@ const CreateBlock = () => {
                         className={classes.submit}
                         style={{borderRadius:'23px'}}
                       >
+                        < Link href="/forum">
                         Submit
+                        </Link>
                       </Button>
                     </Grid>
                   </Grid>
