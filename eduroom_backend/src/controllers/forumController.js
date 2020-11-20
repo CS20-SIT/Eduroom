@@ -19,7 +19,7 @@ exports.showForum = async (req, res, next) => {
 exports.selectForum = async (req, res, next) => {
   const id = req.params.id;
   console.log('id is ',id);
-  const data = await pool.query("SELECT * from forum_form WHERE isdelete = false AND forumid = $1", [
+  const data = await pool.query("SELECT forumid, f.userid, posttime, titlethread, subcategoryiid, content, isdelete, up.displayname AS author FROM forum_form f JOIN user_profile up on f.userid = up.userid WHERE isdelete = false AND f.userid = up.userid AND forumid = $1", [
     id,
   ]);
   const data2 = await pool.query("select forumid, answerno, f.userid, displayname as author, anstime, isdelete, answer from forum_answer_form f join user_profile u on f.userid = u.userid where isdelete = false and forumid= $1  ", [

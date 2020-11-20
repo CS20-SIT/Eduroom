@@ -68,7 +68,7 @@ const IdBlock = () => {
                     </div>
                     <div>{row.content}</div>
                     <div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
-                      <p>  post in {moment(row.posttime).fromNow()}</p>
+                      <p> {row.author}  post in {moment(row.posttime).fromNow()}</p>
                       </div>
                     <div
                       className="icon"
