@@ -1,8 +1,8 @@
 import React,{Fragment} from 'react'
-import AdsPage from '../../components/advertisement/ad'
+import AdsMain from '../../components/advertisement/adMain'
 const Temp = () => {
     return <Fragment>
-        <AdsPage />
+        <AdsMain />
     </Fragment>
 }
 export default Temp
