@@ -1,5 +1,7 @@
+
 const ErrorResponse = require("../../utils/errorResponse");
 const pool = require("../../database/db");
+
 const getUniversitylist = async (req, res, next) => {
     const data = await pool.query("select universitydomain from whitelist_university");
     const ulist = data.rows;
@@ -15,7 +17,7 @@ const registerUemail = async (req, res, next) => {
     const uuid = (data.rows[0].uuid_generate_v4).substring(0, 7);
     const localPart = req.body.localPart ;
     const domainName = req.body.domainName;
-    const userid = req.body.userid;
+    const userid = req.user.id;
     const isverified =false;
     const token = uuid;
     const universityemail = localPart + '@' + domainName;

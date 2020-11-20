@@ -1,10 +1,10 @@
-import React, { Fragment, useState,useContext, useEffect } from 'react'
+import React, { Fragment, useState, useContext, useEffect } from 'react'
 import style from '../../styles/universityEmail/Uregister'
-import { withStyles, InputBase, Link,  MenuItem, Select,Paper,Grid,FormControl,Typography } from '@material-ui/core'
+import { withStyles, InputBase, Link, MenuItem, Select, Paper, Grid, FormControl, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Checkbox from '@material-ui/core/Checkbox'
 import General from '../template/general'
-import UserContext from '../../contexts/user/userContext'
+
 import api from "../../api";
 
 
@@ -62,27 +62,25 @@ const useStyles = makeStyles({
 });
 
 const Content = () => {
-  const userContext = useContext(UserContext);
-  const {getUser} = userContext;
-  const user = userContext.user;
-  // console.log('UserContext:'+user.id);
+
+
   let unmounted = false;
   const [loading, setLoading] = React.useState(true);
   const [items, setItems] = React.useState([]);
   const [value, setValue] = React.useState("mail.kmutt.ac.th");
 
   useEffect(() => {
-    getUser()
+
     const fetchData = async () => {
       const res = await api.get('/api/udiscount/ulist');
-      
+
       console.log(res.data);
       if (!unmounted) {
         setItems(
           res.data.map(({ universitydomain }) => ({ label: universitydomain, value: universitydomain }))
         );
         setLoading(false);
-       
+
       }
     };
     fetchData();
@@ -94,20 +92,13 @@ const Content = () => {
   const [createinfo, setinfo] = useState({
     localPart: "",
     domainName: "",
-    
-    
   });
   const handleSubmit = (e) => {
     console.log(createinfo);
-    
     api.post('/api/udiscount/registerUemail', {
       localPart: createinfo.localPart,
       domainName: createinfo.domainName,
-      userid: user.id,
     });
-  
-    
-
   };
   const classes = useStyles();
   const [checked, setChecked] = React.useState(true);
