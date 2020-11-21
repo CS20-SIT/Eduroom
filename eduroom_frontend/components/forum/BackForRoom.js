@@ -27,16 +27,16 @@ const BackForRoom = ({row}) => {
         <div>
 		{row?.map((el) => {
         return(
-            <Breadcrumbs>
-            <Link color="inherit" href="/forum" onClick={handleClick} className={classes.link}>
-              {/* <HomeIcon className={classes.icon} /> */}
-              forum
-            </Link>  
-            <Typography color="textPrimary" className={classes.link}>
-                 {/* <GrainIcon className={classes.icon} /> */}
-                    {el.typename}
-            </Typography>
-             </Breadcrumbs>
+          <Breadcrumbs>
+          <Link color="inherit" href="/forum" onClick={handleClick} className={classes.link}>
+            {/* <HomeIcon className={classes.icon} /> */}
+            forum
+          </Link>  
+          <Typography color="textPrimary" className={classes.link}>
+               {/* <GrainIcon className={classes.icon} /> */}
+                  {el.typename}
+          </Typography>
+           </Breadcrumbs>
             );
         })}
         </div>

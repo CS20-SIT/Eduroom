@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core/styles'
 import BackButton from '../../../components/forum/BackButton'
 import BackForRoom from '../../../components/forum/BackForRoom'
+import ForumNav from '../../../components/forum/layout/forumNav';
 
 const roomID = (props) => {
 	const [data, setData] = useState([])
@@ -50,7 +51,7 @@ const roomID = (props) => {
 					}}
 				>
 					<div id="nav">
-						<NavForum />
+						<ForumNav />
 						<div className="backforroom">
 							<BackForRoom row={data} />
 						</div>
@@ -63,7 +64,7 @@ const roomID = (props) => {
 						{`
 							#nav {
 								width: 100%;
-								height: 100vh;
+								height: 100%;
 							}
 							.background-img {
 								position: absolute;
