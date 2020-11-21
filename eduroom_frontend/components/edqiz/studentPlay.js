@@ -36,6 +36,7 @@ const Content = () => {
   const handleChangeQuizName = (val) => {
     // console.log(val);
     setName(val);
+    
   };
 
   const renderPage = () => {

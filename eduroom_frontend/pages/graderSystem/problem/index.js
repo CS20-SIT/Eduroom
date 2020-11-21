@@ -1,12 +1,25 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useState, useEffect } from "react"
 import Head from "next/head"
 import Layout from "../../../components/graderSubmit/Layout"
 import Box from "../../../components/graderSubmit/Box"
 import style from "../../../styles/graderSubmit/problems/problems"
 import Tag from "../../../components/graderSubmit/problems/ProblemTag"
 import ProblemList from "../../../components/graderSubmit/problems/ProblemList"
+import axios from "axios"
 
 const Problems = () => {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const GetData = async () => {
+      const result = await axios(
+        "http://localhost:5000/api/grader/getPreviewQuestion"
+      )
+      setData(result.data)
+      console.log(data)
+    }
+    GetData()
+  }, [])
   return (
     <Fragment>
       <Head>
@@ -20,12 +33,16 @@ const Problems = () => {
               <Box>
                 <h2>Problem List</h2>
                 <div className="problem-list">
-                  <ProblemList id={1} />
-                  <ProblemList id={2} />
-                  <ProblemList id={3} />
-                  <ProblemList id={4} />
-                  <ProblemList id={5} />
-                  <ProblemList id={6} />
+                  {data.map((element) => {
+                    return (
+                      <ProblemList
+                        id={element.id}
+                        title={element.title}
+                        description={element.description}
+                        difficulty={element.difficulty}
+                      />
+                    )
+                  })}
                 </div>
               </Box>
             </div>

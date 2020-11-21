@@ -4,9 +4,15 @@ export default css`
 		padding: 1% 4% 0% 4%;
 		display: flex;
 		align-items: center;
-		justify-content: flex-end;
+		justify-content: space-between;
 		width: 100%;
 		cursor: default;
+	}
+	.navDefault {
+		display: flex;
+		flex: 1;
+		justify-content: flex-end;
+		align-items: center;
 	}
 	.navHeader {
 		color: #3d467f;
