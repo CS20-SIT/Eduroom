@@ -379,6 +379,12 @@ export default css`
   .mt-10 {
     margin-top: 4rem;
   }
+  .ml-20 {
+    margin-left: 8rem;
+  }
+  .ml-30 {
+    margin-left: 14rem;
+  }
   /* Padding */
   .px-auto {
     padding-left: auto;
@@ -407,6 +413,10 @@ export default css`
   .px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+  .px-12 {
+    padding-left: 9rem;
+    padding-right: 9rem;
   }
   .py-auto {
     padding-top: auto;
@@ -446,6 +456,12 @@ export default css`
   }
   .disabled {
     cursor: not-allowed;
+  }
+
+  /* Hover Color */
+  .hover-navy {
+    hover: background-color: "#3d467f";
+    
   }
 
 
@@ -531,6 +547,10 @@ export default css`
 
   .hidden {
     display: none;
+  }
+
+  .selectPart {
+    background-color: #EFF0F6;
   }
   
 `;
