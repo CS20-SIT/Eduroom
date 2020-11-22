@@ -1,94 +1,50 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import { useRouter } from "next/router";
-import {
-  KeyboardDateTimePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import { parseJSON, compareAsc } from "date-fns";
-
-import { add } from "date-fns";
 import Chip from "@material-ui/core/Chip";
-import { useState, useEffect } from "react";
 import axios from "../../../../api";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
+import { useRouter } from "next/router";
+import {
+  KeyboardDateTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import DateFnsUtils from "@date-io/date-fns";
+import { compareAsc } from "date-fns";
+import { add } from "date-fns";
+import { useState, useEffect } from "react";
+import {
+  contestformTheme,
+  contestformStyles,
+  sText,
+  sTitle,
+  sInputfield,
+  sInput,
+  sInputfieldDesc,
+  sInputTime,
+  sInputSelect,
+  sError,
+  sInputfieldSelect,
+  sButtionandVisbile,
+  sBigTitle,
+} from "../../materialUIStyle";
+import { contestRules, contestStatuses } from "../../selectOptions";
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const theme1 = createMuiTheme({
-  overrides: {
-    MuiSelect: {
-      select: {
-        "&:focus": {
-          backgroundColor: "rgba(0, 0, 0, 0.0)",
-        },
-      },
-    },
-  },
-});
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: "52.5%",
-    marginLeft: "22.5%",
-    marginRight: "15%",
-    marginTop: "2.5%",
-    paddingBottom: "10%",
-  },
-  paper: {
-    paddingTop: theme.spacing(1),
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
-    paddingBottom: theme.spacing(3),
-    // padding: theme.spacing(3),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-  paper2: {
-    paddingTop: theme.spacing(4),
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
 
-    color: theme.palette.text.secondary,
-  },
-  menuitem: {
-    "&.Mui-selected": {
-      "font-family": "Quicksand , sans-serif",
-      color: "#3d467f",
-      "font-size": "1.2em",
-      "font-weight": "bold",
-    },
-  },
-  select: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      fontFamily: "Quicksand , sans-serif",
-      color: "#3d467f",
-      "font-size": "1.2em",
-      "font-weight": "bold",
-    },
-    error1: {
-      "font-family": "Quicksand , sans-serif",
-      color: "#5b5b5b",
-      "font-size": "1.2em",
-    },
-  },
-}));
-export default function FullWidthGrid() {
+export default function Create() {
   const router = useRouter();
   const id = router.query.conno;
 
@@ -102,101 +58,15 @@ export default function FullWidthGrid() {
         setTitle(prev.title);
         setRule(prev.conruletype);
         setDescription(prev.description);
-
-        const oldEndTime = parseJSON(prev.endtime);
         handleStartDateChange(prev.starttime);
-
         handleEndDateChange(prev.endtime);
         setConStatus(prev.status);
       }
     };
     GetData();
   }, []);
-  const sTitle = {
-    "font-family": "Quicksand , sans-serif",
-    "font-size": "1.2em",
-    color: "#3d467f",
-    "font-weight": "bold",
-  };
-  const sText = { "font-family": "Quicksand , sans-serif", color: "#5b5b5b" };
-  const sInputfield = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    "font-size": "1.2em",
-  };
-  const sInput = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#3d467f",
-    "font-weight": "bold",
-    "font-size": "1.2em",
-  };
-  const sInputfieldDesc = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    "font-size": "1.2em",
-    paddingTop: 12,
-  };
-  const sInputTime = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#3d467f",
-    "font-size": "1.5em",
-    "font-weight": "bold",
-  };
-  const sInputSelect = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    "font-size": "1.0em",
-  };
-  const sError = {
-    "font-family": "Quicksand , sans-serif",
-    color: "white",
-    "font-size": "1em",
-  };
-  const sInputfieldSelect = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#3d467f",
-    "font-size": "1.1em",
-    "font-weight": "bold",
-  };
-  const sButtionandVisbile = {
-    color: "#3d467f",
-    "font-family": "Quicksand , sans-serif",
-    "font-weight": "bold",
-  };
-  const sInputfieldTime = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#3d467f",
-    "font-size": "1.2em",
-  };
-  const sBigTitle = {
-    fontFamily: "Quicksand , sans-serif",
-    "font-size": "2em",
-    color: "#3d467f",
-    fontWeight: "bold",
-  };
 
-  const rules = [
-    {
-      value: "oi",
-      label: "OI",
-    },
-    {
-      value: "acm",
-      label: "ACM",
-    },
-  ];
-  const conStatusS = [
-    {
-      value: true,
-      label: "ON",
-    },
-    {
-      value: false,
-      label: "OFF",
-    },
-  ];
-
-  const classes = useStyles();
+  const classes = contestformStyles();
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [rule, setRule] = React.useState("oi");
@@ -232,7 +102,6 @@ export default function FullWidthGrid() {
   };
   const handleChangeStatus = (event) => {
     setConStatus(event.target.value);
-    console.log(compareAsc(selectedStartDate, selectedEndDate) != -1);
   };
   const handleSubmit = () => {
     if (
@@ -249,13 +118,12 @@ export default function FullWidthGrid() {
         startTime: selectedStartDate,
         endTime: selectedEndDate,
         status: conStatus,
-        adminid: "12345678-1234-1234-1234-123456789123",
+        adminid: "12345678-1234-1234-1234-123456789123", //TODO
       };
       if (id == undefined) {
         axios
           .post("/api/grader/ccontest", data)
           .then(function (response) {
-            console.log(response);
             setTimeout(() => {
               setSubmitStatus({ ...submitStatus, success: true });
             }, 450);
@@ -270,7 +138,6 @@ export default function FullWidthGrid() {
         axios
           .put("/api/grader/econtest", data)
           .then(function (response) {
-            console.log(response);
             setTimeout(() => {
               setSubmitStatus({ ...submitStatus, success: true });
             }, 450);
@@ -328,7 +195,7 @@ export default function FullWidthGrid() {
           </Button>
         </DialogActions>
       </Dialog>
-      <MuiThemeProvider theme={theme1}>
+      <MuiThemeProvider theme={contestformTheme}>
         <Snackbar
           open={erorvalid}
           autoHideDuration={6000}
@@ -391,8 +258,7 @@ export default function FullWidthGrid() {
                     rows={15}
                     value={description}
                     onChange={handleDesc}
-                    required
-                    inputProps={{ maxLength: 1000, style: sInputfieldDesc }}
+                    inputProps={{ maxLength: 50000, style: sInputfieldDesc }}
                     InputLabelProps={{ style: sInput }}
                   />
                 </Paper>
@@ -410,7 +276,6 @@ export default function FullWidthGrid() {
                       label="Start"
                       value={selectedStartDate}
                       onChange={handleStartDateChange}
-                      onError={console.log}
                       disablePast
                       required
                       fullWidth
@@ -435,7 +300,6 @@ export default function FullWidthGrid() {
                       label="Start"
                       value={selectedStartDate}
                       onChange={handleStartDateChange}
-                      onError={console.log}
                       required
                       fullWidth
                       format="dd-MMM-yyyy 'AT' HH:mm"
@@ -467,7 +331,6 @@ export default function FullWidthGrid() {
                     label="End"
                     value={selectedEndDate}
                     onChange={handleEndDateChange}
-                    onError={console.log}
                     disablePast
                     required
                     fullWidth
@@ -499,17 +362,15 @@ export default function FullWidthGrid() {
                   label="Contest Rule Type"
                   value={rule}
                   onChange={handleChangeRule}
-                  // inputProps={{style:sInputfieldSelect }}
                   InputLabelProps={{ style: sInputfieldSelect }}
                 >
-                  {rules.map((option) => (
+                  {contestRules.map((option) => (
                     <MenuItem
                       className={classes.menuitem}
                       key={option.value}
                       value={option.value}
                     >
                       <span style={sInputSelect}> {option.label}</span>
-                      {/* <span style={{sInputTime}}> {option.label}</span> */}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -526,17 +387,15 @@ export default function FullWidthGrid() {
                   label="Status"
                   value={conStatus}
                   onChange={handleChangeStatus}
-                  // inputProps={{style:sInputfieldSelect }}
                   InputLabelProps={{ style: sInputfieldSelect }}
                 >
-                  {conStatusS.map((option) => (
+                  {contestStatuses.map((option) => (
                     <MenuItem
                       className={classes.menuitem}
                       key={option.value}
                       value={option.value}
                     >
                       <span style={sInputSelect}> {option.label}</span>
-                      {/* <span style={{sInputTime}}> {option.label}</span> */}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -554,14 +413,14 @@ export default function FullWidthGrid() {
                   label=" Create"
                   onClick={handleSubmit}
                   style={{
-                    backgroundColor: "#FC8FC3",
+                    backgroundColor: "#fb9ccb",
                     marginBottom: 10,
                     color: "white",
                     height: 35,
                     width: 300,
-                    "font-family": "Quicksand , sans-serif",
-                    "font-size": "1.2em",
-                    "font-weight": "bold",
+                    fontFamily: "Quicksand , sans-serif",
+                    fontSize: "1.2em",
+                    fontWeight: "bold",
                   }}
                 />
               </div>

@@ -1,84 +1,25 @@
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
-import MenuItem from "@material-ui/core/MenuItem";
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import axios from "../../../../api";
 import Chip from "@material-ui/core/Chip";
+import {
+  AddQuestionAutocomplete,
+  sTitle,
+  sText,
+  sButtionandVisbile,
+} from "../../materialUIStyle";
 
-const CustomAutocomplete = withStyles({
-  listbox: {},
-  option: {
-    color: "#3d467f",
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "1.2em",
-    fontWeight: "600",
-  },
-  clearIndicator: {
-    color: "#3d467f",
-    height: 22.5,
-    width: 22.5,
-    opacity: 1,
-  },
-  input: {
-    marginTop: 10,
-
-    color: "#5b5b5b",
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "1.2em",
-  },
-  tag: {
-    marginLeft: 5,
-    marginTop: 5,
-    marginBottom: 7,
-    backgroundColor: "white",
-    height: 30,
-    position: "relative",
-    zIndex: 0,
-    border: "2.5px solid #a880f7",
-    "& .MuiChip-label": {
-      color: "#3d467f",
-      fontFamily: "Quicksand , sans-serif",
-      width: 500,
-
-      fontSize: "1.2em",
-      fontWeight: "bold",
-    },
-    "& .MuiChip-deleteIcon": {
-      color: "#FC8FC3",
-      height: 22.5,
-      width: 22.5,
-      opacity: 0.8,
-      marginRight: 20,
-    },
-
-    //
-    "&:after": {
-      content: '""',
-      right: 10,
-      top: 6,
-      height: 6,
-      width: 6,
-      position: "absolute",
-      backgroundColor: "rgba(0, 0, 0, 0.0)",
-      zIndex: -1,
-    },
-  },
-})(Autocomplete);
-
-const AnnEdit = (props) => {
+const AddExistingQuestionButton = (props) => {
   const [data, setData] = useState([]);
   const [addquestion, setAddquestion] = React.useState([]);
   useEffect(() => {
     const GetData = async () => {
-      /// execpet the quesiton that alread;y on thr contest table
       const result = await axios.get("/api/grader/addexistingquestion", {
         params: { conno: props.conno },
       });
@@ -86,7 +27,6 @@ const AnnEdit = (props) => {
     };
 
     GetData();
-    console.log(data);
   }, [props.update]);
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
@@ -101,7 +41,6 @@ const AnnEdit = (props) => {
       failed: false,
     });
     setAddquestion([]);
-    // props.onSuccess();
   };
 
   const handleClickOpen = () => {
@@ -117,8 +56,8 @@ const AnnEdit = (props) => {
     let question = addquestion;
     delete question.title;
     const finalQuestion = [...new Set(question)];
-    let adminid = "12345678-1234-1234-1234-123456789123";
-    alert(adminid);
+    let adminid = "12345678-1234-1234-1234-123456789123"; //TODO
+
     axios
       .post("/api/grader/ccontestexistquestion", {
         conno: props.conno,
@@ -139,31 +78,6 @@ const AnnEdit = (props) => {
       });
   };
 
-  const sTitle = {
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "1.2em",
-    color: "#3d467f",
-    fontWeight: "bold",
-  };
-  const sText = {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-  };
-  const sInputfield = {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-  };
-  const sInput = {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#3d467f",
-    fontWeight: "bold",
-  };
-  const sButtionandVisbile = {
-    color: "#3d467f",
-    fontFamily: "Quicksand , sans-serif",
-    fontWeight: "bold",
-  };
-
   return (
     <span>
       <Chip
@@ -176,25 +90,11 @@ const AnnEdit = (props) => {
           color: "white",
           height: 30,
           width: 250,
-          "font-family": "Quicksand , sans-serif",
-          "font-size": "1.2em",
-          "font-weight": "600",
+          fontFamily: "Quicksand , sans-serif",
+          fontSize: "1.2em",
+          fontWeight: "600",
         }}
       />
-      {/* <button
-          style={{
-            padding: 0,
-            border: "none",
-            background: "none",
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            router.push(`/admin/grader/question/edit/${props.id}`);
-          }}
-        >
-          {" "}
-          <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
-        </button> */}
 
       <Dialog
         open={open}
@@ -207,12 +107,12 @@ const AnnEdit = (props) => {
         </DialogTitle>
 
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText component="div">
             <span style={sText}>
               Select what question you want from the question libary here
             </span>
             <div style={{ height: 25 }}></div>
-            <CustomAutocomplete
+            <AddQuestionAutocomplete
               multiple
               filterSelectedOptions
               disableCloseOnSelect
@@ -221,8 +121,6 @@ const AnnEdit = (props) => {
               value={addquestion}
               onChange={(event, newValue) => {
                 setAddquestion(newValue);
-                console.log(addquestion);
-                console.log(newValue);
               }}
               renderInput={(params) => (
                 <TextField {...params} placeholder="Add Question" />
@@ -277,4 +175,4 @@ const AnnEdit = (props) => {
     </span>
   );
 };
-export default AnnEdit;
+export default AddExistingQuestionButton;

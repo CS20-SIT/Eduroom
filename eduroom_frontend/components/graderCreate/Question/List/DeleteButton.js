@@ -7,8 +7,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import axios from "../../../../api";
 import Image from "next/image";
+import { sTitle, sText, sButtionandVisbile } from "../../materialUIStyle";
 
-const AnnEdit = (props) => {
+const DeleteButton = (props) => {
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
     success: false,
@@ -73,28 +74,6 @@ const AnnEdit = (props) => {
     }
   };
 
-  const sTitle = {
-    "font-family": "Quicksand , sans-serif",
-    "font-size": "1.2em",
-    color: "#3d467f",
-    "font-weight": "bold",
-  };
-  const sText = { "font-family": "Quicksand , sans-serif", color: "#5b5b5b" };
-  const sInputfield = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-  };
-  const sInput = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#3d467f",
-    "font-weight": "bold",
-  };
-  const sButtionandVisbile = {
-    color: "#3d467f",
-    "font-family": "Quicksand , sans-serif",
-    "font-weight": "bold",
-  };
-
   return (
     <span>
       <button
@@ -109,20 +88,6 @@ const AnnEdit = (props) => {
         {" "}
         <Image src="/images/graderCreate/del.svg" width="20" height="20" />
       </button>
-      {/* <button
-        style={{
-          padding: 0,
-          border: "none",
-          background: "none",
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          router.push(`/admin/grader/question/edit/${props.id}`);
-        }}
-      >
-        {" "}
-        <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
-      </button> */}
 
       <Dialog
         open={open}
@@ -187,4 +152,4 @@ const AnnEdit = (props) => {
     </span>
   );
 };
-export default AnnEdit;
+export default DeleteButton;

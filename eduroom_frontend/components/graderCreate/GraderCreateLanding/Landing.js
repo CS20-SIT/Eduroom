@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 import { useRouter } from "next/router";
 import style from "../../../styles/graderCreate/glanding";
-
-import Image from "next/image";
 const Content = () => {
   const router = useRouter();
   return (
@@ -16,8 +14,8 @@ const Content = () => {
             </span>
           </div>
           <div className="landing-description">
-            Neque porro quisquam est qui dolorem <br />
-            ipsum quia dolor sit amet, consectetur, adipisci
+            Don’t stop when you’re tired, <br />
+            Stop when you’re done.
           </div>
           <button
             className="landing-button"
@@ -26,12 +24,12 @@ const Content = () => {
             <a className="landing-button-text">START MANAGE</a>
           </button>
         </div>
-        <Image
+        <img
           className="landing-img"
           alt="landing-img"
           src="/images/graderCreate/landing.svg"
           width="800"
-          height="600"
+          height="800"
         />
       </div>
       <style jsx>{style}</style>

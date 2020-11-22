@@ -6,20 +6,25 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
-import Divider from "@material-ui/core/Divider";
 import axios from "../../../api";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import Chip from "@material-ui/core/Chip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import MuiAlert from "@material-ui/lab/Alert";
+import {
+  sError,
+  sTitle,
+  sText,
+  sInputfield,
+  sInput,
+  sButtionandVisbile,
+} from "../materialUIStyle";
 
-//on button , change that to chips
-// https://material-ui.com/components/chips/#chip
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
 const AnnEdit = (props) => {
   const [erorvalid, seterorValid] = React.useState(false);
   const [open, setOpen] = useState(false);
@@ -34,12 +39,6 @@ const AnnEdit = (props) => {
       failed: false,
     });
   };
-  const handleErrorClose = (event, reason) => {
-    seterorValid(false);
-    if (reason === "clickaway") {
-      return;
-    }
-  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,9 +49,9 @@ const AnnEdit = (props) => {
   };
   //// admind id here!!!!!!!
   const [ann, setAnn] = useState({
-    title: props.title,
-    description: props.description,
-    adminid: props.adminid,
+    title: "",
+    description: "",
+    adminid: "12345678-1234-1234-1234-123456789123", //TODO
   });
   const setDesc = (event) => {
     setAnn({ ...ann, description: event.target.value });
@@ -60,40 +59,40 @@ const AnnEdit = (props) => {
   const setTitle = (event) => {
     setAnn({ ...ann, title: event.target.value });
   };
-  const [visible, setVisible] = React.useState(props.visible);
+  const [visible, setVisible] = React.useState(true);
 
   const handleChange = (event) => {
     setVisible(event.target.checked);
+  };
+  const handleErrorClose = (event, reason) => {
+    seterorValid(false);
+    if (reason === "clickaway") {
+      return;
+    }
   };
 
   const handleSubmit = () => {
     if (ann.title == "") {
       seterorValid(true);
     } else {
-      let backend = "";
-      let data = {
+      let backend = "/api/grader/cann";
+
+      const data = {
         title: ann.title,
         description: ann.description,
         adminid: ann.adminid,
         isvisible: visible,
       };
-      if (props.coannno == undefined) {
-        backend = "/api/grader/eann";
-        data.id = props.id;
-      } else {
-        backend = "/api/grader/econtestann";
-        data.coannno = props.coannno;
+      if (props.conid != undefined) {
         data.conid = props.conid;
+        backend = "/api/grader/ccontestann";
       }
-
       axios
-        .put(backend, data)
+        .post(backend, data)
         .then(function (response) {
-          console.log(response);
           setOpen(false);
 
           setTimeout(() => {
-            console.log("this is when we call prop on sucess");
             props.onSuccess();
             setSubmitStatus({ ...submitStatus, success: true });
           }, 450);
@@ -104,52 +103,32 @@ const AnnEdit = (props) => {
             setSubmitStatus({ ...submitStatus, failed: true });
           }, 450);
         });
+
+      setAnn({
+        title: "",
+        description: "",
+        adminid: "12345678-1234-1234-1234-123456789123", //TODO
+      });
+      setVisible(true);
     }
-
-    setVisible(true);
-  };
-  const sError = {
-    fontFamily: "Quicksand , sans-serif",
-    color: "white",
-    fontSize: "1em",
-  };
-
-  const sTitle = {
-    "font-family": "Quicksand , sans-serif",
-    "font-size": "1.2em",
-    color: "#3d467f",
-    "font-weight": "bold",
-  };
-  const sText = { "font-family": "Quicksand , sans-serif", color: "#5b5b5b" };
-  const sInputfield = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-  };
-  const sInput = {
-    "font-family": "Quicksand , sans-serif",
-    color: "#3d467f",
-    "font-weight": "bold",
-  };
-  const sButtionandVisbile = {
-    color: "#3d467f",
-    "font-family": "Quicksand , sans-serif",
-    "font-weight": "bold",
   };
 
   return (
-    <div>
-      <button
-        style={{
-          padding: 0,
-          border: "none",
-          background: "none",
-          cursor: "pointer",
-        }}
+    <span>
+      <Chip
+        label=" Create"
         onClick={handleClickOpen}
-      >
-        {" "}
-        <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
-      </button>
+        style={{
+          backgroundColor: "#fb9ccb",
+          marginBottom: 10,
+          color: "white",
+          height: 30,
+          width: 200,
+          fontFamily: "Quicksand , sans-serif",
+          fontSize: "1.2em",
+          fontWeight: "bold",
+        }}
+      />
 
       <Dialog
         open={open}
@@ -158,14 +137,15 @@ const AnnEdit = (props) => {
       >
         <DialogTitle id="form-dialog-title">
           {" "}
-          <span style={sTitle}>Edit Announcement</span>
+          <span style={sTitle}>Make Announcement</span>
         </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
             <span style={sText}>
-              Modify what you want here , remember to check everything before
-              submitting
+              {props.conid == undefined
+                ? "To let our precious students know about the upcoming contest, your brand-new questions, or even just to show off your new iphone, please enter your detail here."
+                : "Feel Free to infrom our students about anything, perhaps extend the contest time, or maybe give more hints? Please enter your detail here."}
             </span>
           </DialogContentText>
           <TextField
@@ -175,7 +155,6 @@ const AnnEdit = (props) => {
             label="Title"
             type="text"
             fullWidth
-            defaultValue={ann.title}
             value={ann.title}
             onChange={setTitle}
             required
@@ -190,12 +169,10 @@ const AnnEdit = (props) => {
             multiline
             rows={10}
             fullWidth
-            defaultValue={ann.description}
             value={ann.description}
             onChange={setDesc}
             inputProps={{ style: sInputfield }}
             InputLabelProps={{ style: sInput }}
-            required
           />
           <div style={{ height: 30 }}></div>
           <FormControlLabel
@@ -235,7 +212,7 @@ const AnnEdit = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <span style={sText}> Your announcement have been edited.</span>
+            <span style={sText}> Your announcement have been created.</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -260,7 +237,7 @@ const AnnEdit = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </span>
   );
 };
 export default AnnEdit;
