@@ -1,17 +1,15 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from "../../../../components/graderCreate/Layout/gSide";
-import GNav from "../../../../components/graderCreate/Layout/gNav";
-
-import Create from "../../../../components/graderCreate/Contest/ConCreate/ConForm";
+import GeneralNoNav from "../../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../../components/graderCreate/GraderCreateLayout/Nav";
+import Gback from "../../../../components/graderCreate/GraderCreateLayout/Background";
+import Create from "../../../../components/graderCreate/Contest/Create/CreateForm";
 const ConCreate = () => {
   return (
     <Fragment>
       <GeneralNoNav>
-        <div style={{ backgroundColor: "#F4F5F7AA" }}>
-          <GNav> </GNav>
-
-          <Create />
-        </div>
+        <GNav> </GNav>
+        <Gback></Gback>
+        <Create />
       </GeneralNoNav>
     </Fragment>
   );

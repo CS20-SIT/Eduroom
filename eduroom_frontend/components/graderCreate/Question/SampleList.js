@@ -1,20 +1,13 @@
 import React from "react";
-import Qsample from "./QSample";
-
+import Qsample from "./SampleEach";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import axios from "../../../api";
 import Chip from "@material-ui/core/Chip";
 
 class Form extends React.Component {
   no = 0;
-
+  _isMounted = false;
   constructor(props) {
     super(props);
-    console.log("---------------------------------------------------------");
-    console.log("first meet");
-    console.log(this.props);
-    // Don't call this.setState() here!
 
     this.state = {
       questionSample: [
@@ -28,18 +21,13 @@ class Form extends React.Component {
   }
 
   handleSet = (old, adder) => {
-    console.log("---------Set---------------");
-    console.log(old);
     this.setState({ questionSample: old });
-    console.log(this.state.questionSample);
     this.no += adder;
-    console.log("------------------------");
   };
   handleChange = (e) => {
     if (["inputsample", "outputsample"].includes(e.target.name)) {
       let questionSample = [...this.state.questionSample];
       questionSample[e.target.dataset.id][e.target.name] = e.target.value;
-      console.log([this.state.questionSample]);
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
@@ -59,8 +47,6 @@ class Form extends React.Component {
         },
       ],
     }));
-    console.log("---------ADD---------------");
-    console.log(this.state.questionSample);
   };
 
   deteteRow = (index) => {
@@ -77,9 +63,18 @@ class Form extends React.Component {
       questionSample: this.state.questionSample.filter((r) => r !== record),
     });
   }
+  componentDidUpdate(prevProps, prevState) {
+    this._isMounted = true;
+
+    if (
+      (prevState.questionSample !== this.state.questionSample) &
+      this._isMounted
+    ) {
+      this.props.handleSample(this.state.questionSample);
+    }
+  }
   render() {
-    this.props.handleSample(this.state.questionSample);
-    let { questionSample } = this.state; //let { notes, date, description, taskList } = this.state
+    let { questionSample } = this.state;
     return (
       <form onChange={this.handleChange}>
         <div className="row" style={{ marginTop: 20 }}>

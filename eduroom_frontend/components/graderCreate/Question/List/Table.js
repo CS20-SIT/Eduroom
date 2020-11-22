@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,133 +8,16 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import axios from "../../../../api";
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import DeleteQuestion from "./QDelete";
+import DeleteQuestion from "./DeleteButton";
 import Grid from "@material-ui/core/Grid";
-
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-//add submit time here
+import { questionTableStyles } from "../../materialUIStyle";
 
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-  },
-  container: {
-    maxHeight: 440,
-  },
-  tableHID: {
-    paddingLeft: 50,
-    paddingRight: 25,
-    paddingTop: 50,
-    "font-family": "Quicksand , sans-serif",
-    borderBottom: "none",
-    "font-size": "1em",
-    color: "#3d467f",
-    "font-weight": "bold",
-    backgroundColor: "white",
-  },
-  tableHEdit: {
-    paddingLeft: 25,
-    paddingRight: 70,
-    paddingTop: 50,
-    textAlign: "center",
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    "font-size": "1em",
-    color: "#3d467f",
-    "font-weight": "bold",
-    backgroundColor: "white",
-  },
-  tableHeader: {
-    paddingRight: 25,
-    paddingTop: 50,
-    "font-family": "Quicksand , sans-serif",
-    borderBottom: "none",
-    "font-size": "1em",
-    color: "#3d467f",
-    "font-weight": "bold",
-    backgroundColor: "white",
-  },
-  tableRow: {
-    "font-family": "Quicksand , sans-serif",
-    borderBottom: "none",
-  },
-  tableCell: {
-    "font-family": "Quicksand , sans-serif",
-    borderBottom: "none",
-    "font-size": "0.9em",
-    color: "#5b5b5b",
-    paddingRight: 45,
-  },
-  tableId: {
-    "font-family": "Quicksand , sans-serif",
-    borderBottom: "none",
-    "font-size": "1em",
-    color: "#5b5b5b",
-
-    paddingLeft: 50,
-    paddingRight: 25,
-  },
-  tableEdit: {
-    "font-family": "Quicksand , sans-serif",
-    borderBottom: "none",
-    "font-size": "1em",
-    color: "#5b5b5b",
-    paddingRight: 50,
-    paddingLeft: 25,
-  },
-  caption: {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    "font-weight": "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  toolbar: {
-    "& > p:nth-of-type(2)": {
-      "font-family": "Quicksand , sans-serif",
-      color: "#5b5b5b",
-      fontSize: "0.775rem",
-      "font-weight": "bold",
-      marginTop: 10,
-      marginBottom: 30,
-    },
-  },
-  select: {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    "font-weight": "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  menuItem: {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    "font-weight": "bold",
-  },
-  actions: {
-    "font-family": "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    "font-weight": "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-});
-const shorten = (text, maxLength) => {
-  if (text && text.length > maxLength) {
-    return text.substr(0, maxLength) + "...";
-  }
-
-  return text;
-};
 const AnnTable = (props) => {
   const router = useRouter();
-  const classes = useStyles();
+  const classes = questionTableStyles();
   const [page, setPage] = useState(0);
 
   const conno = router.query.conno;
@@ -157,8 +39,6 @@ const AnnTable = (props) => {
       }
     };
     GetData();
-    console.log(data);
-    // console.log(props.onSuccess);
   }, [props.update]);
 
   const handleChangePage = (event, newPage) => {
@@ -312,7 +192,6 @@ const AnnTable = (props) => {
         classes={{
           toolbar: classes.toolbar,
           caption: classes.caption,
-          // select: classes.select,
           selectRoot: classes.select,
           menuItem: classes.menuItem,
           actions: classes.actions,

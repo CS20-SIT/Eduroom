@@ -1,29 +1,18 @@
 import React from "react";
-import Link from "next/link";
-import QExisting from "./QAddExisting";
-import QTable from "./QTable";
-import { useState, useEffect } from "react";
+import QExisting from "./AddExisting";
+import QTable from "./Table";
 import Grid from "@material-ui/core/Grid";
-
 import Chip from "@material-ui/core/Chip";
-
+import { useState } from "react";
 import { useRouter } from "next/router";
+import { sBig, sBigTitle } from "../../materialUIStyle";
 
-//prepare for adding abmin log wheen create / edit ann
-// toggle for visiblity https://material-ui.com/components/switches/
-const Test = () => {
+const List = () => {
   const router = useRouter();
   const id = router.query.conno;
   const [refresh, setRefresh] = useState(false);
   const handleUpdate = () => {
     setRefresh(!refresh);
-  };
-  const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "3.5%" };
-  const sBigTitle = {
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "2em",
-    color: "#5b5b5b",
-    fontWeight: "bold",
   };
 
   return (
@@ -55,15 +44,15 @@ const Test = () => {
               );
             }}
             style={{
-              backgroundColor: "#FC8FC3",
+              backgroundColor: "#fb9ccb",
               marginTop: -15,
               marginLeft: 20,
               color: "white",
               height: 30,
               width: 200,
-              "font-family": "Quicksand , sans-serif",
-              "font-size": "1.2em",
-              "font-weight": "600",
+              fontFamily: "Quicksand , sans-serif",
+              fontSize: "1.2em",
+              fontWeight: "600",
             }}
           />
           {id != undefined ? (
@@ -87,4 +76,4 @@ const Test = () => {
     </div>
   );
 };
-export default Test;
+export default List;
