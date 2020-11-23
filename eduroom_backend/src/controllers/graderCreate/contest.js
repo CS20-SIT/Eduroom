@@ -1,19 +1,6 @@
 const ErrorResponse = require("../../utils/errorResponse");
 const pool = require("../../database/db");
 
-const pAdminLog = async (req, res, next) => {
-  const title = req.body.title;
-  const detail = req.body.detail;
-  const adminid = "12345678-1234-1234-1234-123456789123";
-
-  await pool.query(
-    'INSERT INTO adminLog(title,detail,"adminid") VALUES ($1 , $2, $3)',
-    [title, detail, adminid]
-  );
-
-  res.send({ success: true });
-};
-
 const pContest = async (req, res, next) => {
   const title = req.body.title;
   const conRuleType = req.body.conRuleType;
@@ -116,13 +103,7 @@ const eContestAnn = async (req, res, next) => {
   const description = req.body.description;
   const adminId = req.body.adminid;
   const isVisible = req.body.isvisible;
-  console.log(
-    "req.body----------------req.body----------------req.body----------------req.body----------------"
-  );
-  console.log(req.body);
-  console.log(
-    "req.body----------------req.body----------------req.body----------------req.body----------------"
-  );
+
   await pool.query(
     "UPDATE contest_announcements SET (title,description,adminId,isVisible,conid) = ($1 , $2, $3, $4,$5) WHERE coannno = ($6)",
     [title, description, adminId, isVisible, conid, coannno]
@@ -205,7 +186,6 @@ const pContestExistingQuestion = async (req, res, next) => {
 };
 
 module.exports = {
-  pAdminLog,
   pContest,
   pContestAnn,
   pContestQuestion,
