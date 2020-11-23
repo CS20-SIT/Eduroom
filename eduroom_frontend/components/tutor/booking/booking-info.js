@@ -3,7 +3,19 @@ import utils from '../../../styles/tutor/utils'
 
 import { monthConverter, timeFormatter } from '../lib/utils'
 
+import api from '../../../api'
+
 const BookingInfo = ({ bookingGroup, setBookingGroup, instructor, times, date, month, year, students }) => {
+	const post = async (id, startTime, endTime, price, members) => {
+		const res = await api.post('/api/tutor/student/appointments', {
+			id,
+			startTime,
+			endTime,
+			price,
+			members,
+		})
+		console.log(res)
+	}
 	return (
 		<Fragment>
 			{instructor && (
@@ -62,6 +74,13 @@ const BookingInfo = ({ bookingGroup, setBookingGroup, instructor, times, date, m
 							console.log('endTime', `${year}-${date}-${month + 1} ${times[times.length - 1] + 1}:00:00`)
 							console.log('price', times.length * instructor.price * (students.length + 1))
 							console.log('members', students)
+							post(
+								instructor.id,
+								`${year}-${month + 1}-${date} ${times[0]}:00:00`,
+								`${year}-${month + 1}-${date} ${times[times.length - 1] + 1}:00:00`,
+								times.length * instructor.price * (students.length + 1),
+								students
+							)
 							// location.reload();
 						}}
 					>
