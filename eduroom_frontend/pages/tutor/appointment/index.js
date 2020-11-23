@@ -22,6 +22,15 @@ const Appointment = () => {
 	const today = new Date()
 	const now = '' + today.getFullYear() + (today.getMonth() + 1) + today.getDate()
 
+	const post = async (score, desc) => {
+		console.log(reviewModal)
+		await api.post('/api/tutor/appointment/review', {
+			id: reviewModal,
+			score,
+			desc,
+		})
+	}
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const res = await api.get('/api/tutor/student/appointments')
@@ -66,6 +75,7 @@ const Appointment = () => {
 								className="modal-close"
 								onClick={() => {
 									setReviewModal(-1)
+									setStarHover(0)
 								}}
 							>
 								x
@@ -76,6 +86,7 @@ const Appointment = () => {
 								<div className="flex">
 									{[...Array(5)].map((s, i) => (
 										<div
+											key={i}
 											className="relative mx-1 pointer"
 											onMouseEnter={() => {
 												setStarHover(i)
@@ -102,11 +113,15 @@ const Appointment = () => {
 								}}
 							></textarea>
 							<div
-								className="px-8 py-3 rounded-sm bg-navy text-md font-bold text-white pointer"
+								className={`px-8 py-3 rounded-sm bg-navy text-md font-bold text-white ${
+									!desc ? 'disabled' : 'pointer'
+								} `}
 								onClick={() => {
+									if (!desc) return
 									// POST /api/tutor/appointment/review
-									console.log(starHover + 1)
-									console.log(desc)
+									post(starHover + 1, desc)
+									// console.log(starHover + 1)
+									// console.log(desc)
 									// Reload
 									location.reload()
 								}}
