@@ -26,4 +26,5 @@ const getGroupPicture = async (req, res, next) => {
   res.send(mes)
 }
 
-module.exports = { getChatlist, getGroupPicture }
+
+module.exports = { getChatlist, getGroupPicture}
