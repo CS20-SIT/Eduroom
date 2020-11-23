@@ -34,7 +34,6 @@ router.get('/utils/id', getUserInfo)
 // POST
 // TODO
 // NOT IMPLEMENT YET );
-// /instructor/appointments
 // /appointment/review
 
 // DONE
