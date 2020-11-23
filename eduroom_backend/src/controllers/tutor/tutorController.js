@@ -209,7 +209,9 @@ const getInstructorAvailability = async (req, res) => {
         from instructor_appointments
         where starttime >= timestamp '${start} 00:00:00'
           and starttime < timestamp '${end} 00:00:00'
-          and instructorid = '${id}';`)
+		  and instructorid = '${id}'
+			and status = 'true'
+		  ;`)
 		sameDay = result.rows
 
 		result = await pool.query(`
@@ -396,6 +398,47 @@ const updateInstructorAvailabilities = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
+const insertStudentAppointment = async (req, res) => {
+	try {
+		/*
+		body
+         {
+			"id",
+			"startTime": timestamp,
+			"endTime": timestamp,
+			"price": int,
+			"members": [{ "id" }]
+		}
+         */
+
+		// ID from cookies
+		const headerId = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+		const { id, startTime, endTime, price, members } = req.body
+		// 	console.log(headerId)
+		// 	console.log(id, startTime, endTime, price, members)
+		// 	console.log(`
+		// 	insert into instructor_appointments(starttime, endtime, status, price, paymentdue, approvetime, ispaid, instructorid, headerid)
+		// 	values(${startTime}, ${endTime}, null, ${price}, null, null, false, ${id}, ${headerId}) returning appointmentid;
+		// `)
+
+		const result = await pool.query(`
+			insert into instructor_appointments(starttime, endtime, status, price, paymentdue, approvetime, ispaid, instructorid, headerid)
+			values('${startTime}', '${endTime}', null, ${price}, null, null, false, '${id}', '${headerId}') returning appointmentid;
+		`)
+		const { appointmentid } = result.rows[0]
+
+		for (let i = 0; i < members.length; i++) {
+			await pool.query(`
+				insert into instructor_appointment_members(appointmentid, userid, score, description)
+				values ('${appointmentid}','${members[i].id}',null,null);
+			`)
+		}
+
+		res.status(200).send({ test: 'Successs' })
+	} catch (e) {
+		res.status(404).send(e)
+	}
+}
 
 module.exports = {
 	getInstructorAvailabilities,
@@ -407,4 +450,5 @@ module.exports = {
 	getInstructorAvailability,
 	getInstructorAppointments,
 	updateInstructorAvailabilities,
+	insertStudentAppointment,
 }
