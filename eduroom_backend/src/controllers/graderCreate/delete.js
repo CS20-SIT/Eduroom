@@ -76,8 +76,6 @@ const pTestcase = (req, res, next) => {
       ? req.body.questionid
       : req.body.questionid[0];
 
-  // console.log(req.body);
-  // console.log(req.body.questionid);
   let fileNo = 1;
   //stackoverflow.com/questions/55586619/how-to-save-file-locally-and-save-path-on-database-using-multer-on-angular
 
@@ -97,29 +95,24 @@ const pTestcase = (req, res, next) => {
 };
 
 const dTestcase = async (req, res, next) => {
-  console.log("-----------------------------------------------");
   const id = req.query.id;
-  console.log(req.query);
 
   await pool.query(`DELETE FROM QuestionTestcases WHERE questionId = '${id}'`);
   res.send({ success: true });
 };
 
 const dSample = async (req, res, next) => {
-  console.log("-----------------------------------------------");
   const id = req.query.id;
-  console.log(req.query);
 
   await pool.query(`DELETE FROM questionSample WHERE questionId = '${id}'`);
   res.send({ success: true });
 };
 
 const dQuestion = async (req, res, next) => {
-  console.log("-----------------------------------------------");
   const id = req.query.id;
   const title = req.query.title;
   const adminid = req.query.adminid;
-  console.log(req.query);
+
   await pool.query(`DELETE FROM QuestionTestcases WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM Questiontag WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM questionSample WHERE questionId = '${id}'`);
@@ -136,7 +129,6 @@ const dQuestion = async (req, res, next) => {
 };
 
 const dConQuestion = async (req, res, next) => {
-  console.log("-----------------------------------------------");
   const questionid = req.query.id;
   const conid = req.query.conno;
   const title = req.query.title;

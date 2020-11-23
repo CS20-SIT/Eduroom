@@ -44,9 +44,6 @@ const pQuestion = async (req, res, next) => {
               "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
               [id, result.rows[0].tagid]
             );
-            console.log(
-              "----------------InsertnewTagsIds-----------------------------------InsertnewTagsIds --------InsertnewTagsIds "
-            );
           }
         );
       });
@@ -269,5 +266,3 @@ module.exports = {
   gQuestionTag,
   gQuestionTestcase,
 };
-
-///// dont forget to go to routes => graderRoute  and add your api
