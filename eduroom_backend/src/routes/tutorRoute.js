@@ -16,6 +16,7 @@ const {
 	updateInstructorAvailabilities,
 	insertStudentAppointment,
 	updateInstructorAppointment,
+	updateAppointmentReview,
 } = require('../controllers/tutor/tutorController')
 
 // GET
@@ -33,12 +34,12 @@ router.get('/utils/id', getUserInfo)
 
 // POST
 // TODO
-// NOT IMPLEMENT YET );
 // /appointment/review
 
 // DONE
 router.post('/instructor/appointments', updateInstructorAppointment)
 router.post('/student/appointments', insertStudentAppointment)
 router.post('/instructor/availabilities', updateInstructorAvailabilities)
+router.post('/appointment/review', updateAppointmentReview)
 
 module.exports = router

@@ -469,13 +469,38 @@ const updateInstructorAppointment = async (req, res) => {
 		}:${now.getMinutes() > 10 ? now.getMinutes() : '0' + now.getMinutes()}:${
 			now.getSeconds() > 10 ? now.getSeconds() : '0' + now.getSeconds()
 		}`
-		console.log('HELLO WORLD')
-		console.log('time', approveTime)
 
 		await pool.query(`
 			update instructor_appointments
 			set status = ${status}, paymentdue = ${paymentdue},approvetime = '${approveTime}'
 			where appointmentid = '${id}';
+			`)
+
+		res.status(200).send({ test: 'Successs' })
+	} catch (e) {
+		res.status(404).send(e)
+	}
+}
+const updateAppointmentReview = async (req, res) => {
+	try {
+		/*
+		body
+		{
+			"id": AppointmentID,
+			"score": int,
+			"desc": String,
+		}
+		
+         */
+
+		// Cookie
+		const userId = '123e4567-e89b-12d3-a456-426614174000'
+		const { id, score, desc } = req.body
+
+		await pool.query(`
+			update instructor_appointment_members
+			set score = ${score}, description = '${desc}'
+			where appointmentid = '${id}' and userid = '${userId}';
 			`)
 
 		res.status(200).send({ test: 'Successs' })
@@ -496,4 +521,5 @@ module.exports = {
 	updateInstructorAvailabilities,
 	insertStudentAppointment,
 	updateInstructorAppointment,
+	updateAppointmentReview,
 }
