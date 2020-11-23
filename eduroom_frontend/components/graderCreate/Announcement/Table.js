@@ -8,22 +8,31 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import axios from "../../../api";
+import AnnEdit from "./Edit";
 import { useState, useEffect } from "react";
-import { shorten, logTableStyles } from "../materialUIStyle";
+import { shorten, announcementTableStyles } from "../materialUIStyle";
 
-const LogTable = (props) => {
-  const classes = logTableStyles();
+const AnnTable = (props) => {
+  const classes = announcementTableStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const GetData = async () => {
-      const result = await axios("/api/grader/alladminlog");
+      let result = "";
+      if (props.conid == undefined) {
+        result = await axios("/api/grader/ann");
+      } else {
+        const conid = props.conid;
+        result = await axios.get("/api/grader/contestann", {
+          params: { conid },
+        });
+      }
       setData(result.data);
     };
     GetData();
-  }, []);
+  }, [props.update]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -31,7 +40,6 @@ const LogTable = (props) => {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
-
     setPage(0);
   };
 
@@ -45,26 +53,29 @@ const LogTable = (props) => {
         >
           <TableHead>
             <TableRow>
-              <TableCell className={classes.tableHID}> Log No</TableCell>
+              <TableCell className={classes.tableHID}> Id</TableCell>
               <TableCell
                 width="20%"
                 className={classes.tableHeader}
                 align="left"
               >
-                Action
+                Title
               </TableCell>
               <TableCell
-                width="30%"
+                width="45%"
                 className={classes.tableHeader}
                 align="left"
               >
-                On
+                Description
               </TableCell>
               <TableCell className={classes.tableHeader} align="left">
                 Admin{" "}
               </TableCell>
+              <TableCell className={classes.tableHeader} align="left">
+                Created At{" "}
+              </TableCell>
               <TableCell className={classes.tableHEdit} align="left">
-                Timestamp{" "}
+                Edit{" "}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -74,15 +85,13 @@ const LogTable = (props) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow key={row.logno}>
+                  <TableRow key={row.id}>
                     <TableCell
                       className={classes.tableId}
-                      width="12%"
                       component="th"
                       scope="row"
-                      align="center"
                     >
-                      {row.logno}
+                      {row.id}
                     </TableCell>
                     <TableCell
                       className={classes.tableCell}
@@ -96,17 +105,29 @@ const LogTable = (props) => {
                       width="40%"
                       align="left"
                     >
-                      {shorten(row.detail, 100)}
+                      {shorten(row.description, 130)}
                     </TableCell>
                     <TableCell className={classes.tableCell} align="left">
                       {row.displayname}
                     </TableCell>
                     <TableCell
-                      className={classes.tableEdit}
-                      width="30%"
+                      className={classes.tableCell}
+                      width="22%"
                       align="left"
                     >
-                      {row.timestamp}
+                      {row.time}
+                    </TableCell>
+                    <TableCell className={classes.tableEdit} align="left">
+                      <AnnEdit
+                        onSuccess={props.onSuccess}
+                        coannno={row.coannno}
+                        conid={row.conid}
+                        id={row.id}
+                        title={row.title}
+                        description={row.description}
+                        visible={row.isvisible}
+                        adminid={row.adminid} // TODO change to cookies
+                      ></AnnEdit>
                     </TableCell>
                   </TableRow>
                 );
@@ -126,7 +147,6 @@ const LogTable = (props) => {
         classes={{
           toolbar: classes.toolbar,
           caption: classes.caption,
-          // select: classes.select,
           selectRoot: classes.select,
           menuItem: classes.menuItem,
           actions: classes.actions,
@@ -135,4 +155,4 @@ const LogTable = (props) => {
     </Paper>
   );
 };
-export default LogTable;
+export default AnnTable;
