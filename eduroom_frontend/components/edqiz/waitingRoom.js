@@ -13,17 +13,16 @@ const Content = ({ id }) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await api.get('/api/kahoot/roomHistory');
-      setHistory(res.data)
+      // setHistory(res.data)
     };
     fetchData();
   }, []);
 
-  //insert to the database
+
   const handleSubmit = async (body) => {
-    setLoading(true);
-    const res = await api.post('/api/instructor/register', body);
+    console.log('helllo');
+    const res = await api.post('/api/kahoot/roomHistory', body);
     console.log(res.data);
-    setLoading(false);
   };
   const [player, setPlayer] = useState([]);
   const [pin, setPin] = useState(null);
@@ -31,25 +30,25 @@ const Content = ({ id }) => {
   async function randomPin() {
     temppin = await (Math.floor(Math.random() * 10000) + 1000);
     // temppin = "12345";
-  
+
     let duplicate = true;
-    if(kahoot_roomHistory!=null){
-    while(duplicate){
-      duplicate = false;
-      for(let i=0;i<kahoot_roomHistory.length;i++){
-        if(kahoot_roomHistory[i].pin == temppin){
-          temppin = (Math.floor(Math.random() * 10000) + 1000);
-          duplicate = true;
+    if (kahoot_roomHistory != null) {
+      while (duplicate) {
+        duplicate = false;
+        for (let i = 0; i < kahoot_roomHistory.length; i++) {
+          if (kahoot_roomHistory[i].pin == temppin) {
+            temppin = (Math.floor(Math.random() * 10000) + 1000);
+            duplicate = true;
+            break;
+          }
+        }
+        if (duplicate == false) {
           break;
         }
       }
-      if(duplicate == false){
-        break;
-      }
     }
-  }
     setPin(temppin);
-    console.log('setPin',pin)
+    console.log('setPin', pin)
   }
   const setRoomOpen = (ppin) => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
@@ -65,11 +64,11 @@ const Content = ({ id }) => {
       path: "/kahoot",
     });
     const temp = [];
-    console.log('pinResponse',pin)
+    console.log('pinResponse', pin)
 
     socket.on("new-name", (namePlayer, pinTemp) => {
       // if(pin!=null){
-      console.log(namePlayer,pinTemp,temppin)
+      console.log(namePlayer, pinTemp, temppin)
       // }
       temp.push([namePlayer, pinTemp]);
       if (temp[temp.length - 1][1] == pin) {
@@ -93,9 +92,21 @@ const Content = ({ id }) => {
     response();
   }, [pin]);
 
-  useEffect(()=>{
+  useEffect(() => {
     randomPin();
-  },[kahoot_roomHistory])
+  }, [kahoot_roomHistory]);
+
+  //insert to the database
+  console.log('id', id, 'pin:', pin)
+  useEffect(() => {
+    if (pin != null) {
+      const postStatus = { roomid: id.id, pin, isavailable: true }
+      console.log(postStatus);
+      handleSubmit(postStatus);
+    }
+  }, [pin])
+
+
 
   return (
     <Fragment>
