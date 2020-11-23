@@ -11,25 +11,25 @@ const { prependOnceListener } = require('process')
 
 exports.getProfile = async (req, res) => {
 	try {
-		// UserID is in req.user.user
-    const result = await pool.query(`SELECT * from user_profile where userid = '${req.user.user}'`)
-    //init role of user
-    let user = { ...result.rows[0], id: req.user.user, role: 'general' }
+		// UserID is in req.user.id
+		const result = await pool.query(`SELECT * from user_profile where userid = '${req.user.id}'`)
+		//init role of user
+		let user = { ...result.rows[0], id: req.user.id, role: 'general' }
 
-    //get email of user
-    let email = '';
-    const localEmail = await pool.query('SELECT email from local_auth where userid = $1', [req.user.user]);
-    
-    if (localEmail.rowCount !== 0) {
-      email = localEmail.rows[0].email;
-    } else {
-      const oauthEmail = await pool.query('SELECT email from oauth where userid = $1', [req.user.user]);
-      email = oauthEmail.rows[0].email;
-    }
-    user = { ...user, email };
+		//get email of user
+		let email = ''
+		const localEmail = await pool.query('SELECT email from local_auth where userid = $1', [req.user.id])
 
-    //get isInstructor of user
-    const result2 = await pool.query('SELECT isverified from instructor where userid = $1', [req.user.user])
+		if (localEmail.rowCount !== 0) {
+			email = localEmail.rows[0].email
+		} else {
+			const oauthEmail = await pool.query('SELECT email from oauth where userid = $1', [req.user.id])
+			email = oauthEmail.rows[0].email
+		}
+		user = { ...user, email }
+
+		//get isInstructor of user
+		const result2 = await pool.query('SELECT isverified from instructor where userid = $1', [req.user.id])
 		if (result2.rowCount !== 0) {
 			user = { ...user, role: 'instructor', isverified: result2.rows[0].isverified }
 		}
@@ -66,15 +66,14 @@ exports.regisController = async (req, res) => {
 		const userId = uuidv4()
 		const defaultProfilePic = getDefailtProfilePic()
 		console.log(defaultProfilePic)
-		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, createat, updateat) 
+        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
 		await pool.query(user_profileCreationQuery, [''])
 
 		// Create local_auth
 		const local_authCreationQuery = `INSERT INTO local_auth (userid, email, password) 
                                         VALUES ('${userId}', '${user.email}', '${user.password}')`
 		await pool.query(local_authCreationQuery)
-
 		// Create verification token and send it in email
 		const verifyToken = crypto.randomBytes(20).toString('hex')
 		const user_verificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
@@ -88,7 +87,6 @@ exports.regisController = async (req, res) => {
 			htmlMessage: `Please Verify your email by click <a href="${verifyUrl}">here</a>.`,
 		}
 		await sendEmail(emailOptions)
-
 		// Generate JWT for user to login
 		const token = generateCookieJWT(userId)
 		res.cookie('jwt', token)
