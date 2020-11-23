@@ -315,18 +315,21 @@ const getStudentAppointments = async (req, res) => {
 		const id = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
 
 		let result = await pool.query(`
-        select a.appointmentid,u.firstname , u.lastname ,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, to_char( starttime, 'DD MON YYYY') as date, a.status, to_char( starttime, 'YYYYMMDD') as sorted
+		select a.appointmentid,u.firstname , u.lastname ,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, 
+		to_char( starttime, 'DD MON YYYY') as date, a.status, to_char( starttime, 'YYYYMMDD') as sorted, m.score
             from  instructor i, user_profile u, instructor_expert e, instructor_appointments a,instructor_appointment_members m
             where i.instructorid = a.instructorid
             and i.userid = u.userid
             and a.appointmentid = m.appointmentid
             and m.userid = '${id}'
-            and e.instructorid = i.instructorid;
+            and e.instructorid = i.instructorid
+			order by sorted;
         `)
 		appointment = result.rows
 
-		const appointments = []
+		const tmps = []
 		appointment.forEach((a) => {
+			score = a.score ? true : false
 			const starttime = a.starttime > 9 ? '' + a.starttime + ':00' : '0' + a.starttime + ':00'
 			const endtime = a.endtime > 9 ? '' + a.endtime + ':00' : '0' + a.endtime + ':00'
 			let isAgree = 'Pending'
@@ -341,10 +344,28 @@ const getStudentAppointments = async (req, res) => {
 				endtime,
 				isAgree,
 				sorted: a.sorted,
+				score,
 			}
-			appointments.push(tmp)
+			tmps.push(tmp)
 		})
 
+		const today = new Date()
+		const now = '' + today.getFullYear() + (today.getMonth() + 1) + today.getDate()
+
+		const need = []
+		const normal = []
+		tmps.forEach((t) => {
+			if (!t.score && t.isAgree == 'Approved' && t.sorted < now) {
+				need.push(t)
+			} else {
+				normal.push(t)
+			}
+		})
+		// console.log('need', need)
+		// console.log('normal', normal)
+
+		const appointments = [...need, ...normal]
+		// const appointments = [...tmps]
 		res.status(200).send({ appointments })
 	} catch (e) {
 		res.status(404).send(e)
