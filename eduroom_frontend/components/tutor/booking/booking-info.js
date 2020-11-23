@@ -68,12 +68,6 @@ const BookingInfo = ({ bookingGroup, setBookingGroup, instructor, times, date, m
 						}`}
 						onClick={() => {
 							if (times.length == 0) return
-							// POST  /api/tutor/student/appointment
-							// console.log('id', instructor.id)
-							// console.log('startTime', `${year}-${date}-${month + 1} ${times[0]}:00:00`)
-							// console.log('endTime', `${year}-${date}-${month + 1} ${times[times.length - 1] + 1}:00:00`)
-							// console.log('price', times.length * instructor.price * (students.length + 1))
-							// console.log('members', students)
 							post(
 								instructor.id,
 								`${year}-${month + 1}-${date} ${times[0]}:00:00`,

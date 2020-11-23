@@ -40,7 +40,7 @@ const Appointment = () => {
 	}, [])
 
 	const renderIcon = () => {
-		return <i class="fa fa-chevron-left"></i>
+		return <i className="fa fa-chevron-left"></i>
 	}
 
 	const [requestMode, setRequestMode] = useState(0)
