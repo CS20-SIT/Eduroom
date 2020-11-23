@@ -247,13 +247,13 @@ const getInstructorAppointments = async (req, res) => {
 		  and a.headerid = u.userid
 		  and m.appointmentid = a.appointmentid
           and me.userid = m.userid
-        order by appointmentid;
+        order by a.starttime;
         `)
 
 		appointments = result.rows
 		// console.log(appointments)
 
-		const appointment = []
+		const tmps = []
 		let c = -1
 		appointments.forEach((a) => {
 			if (c != a.appointmentid) {
@@ -276,24 +276,33 @@ const getInstructorAppointments = async (req, res) => {
 						id: a.mid,
 						name: a.mfn + ' ' + a.mln,
 					})
-				appointment.push(tmp)
+				tmps.push(tmp)
 			} else {
 				if (a.mid != a.id) {
 					let index = -1
-					appointment.forEach((x, i) => {
+					tmps.forEach((x, i) => {
 						if (x.appointmentID == a.appointmentid) {
 							index = i
 						}
 					})
 					console.log(index)
 
-					appointment[index].members.push({
+					tmps[index].members.push({
 						id: a.mid,
 						name: a.mfn + ' ' + a.mln,
 					})
 				}
 			}
 		})
+		const pending = []
+		const approved = []
+		const rejected = []
+		tmps.forEach((t) => {
+			if (t.status == 'Pending') pending.push(t)
+			if (t.status == 'Approved') approved.push(t)
+			if (t.status == 'Rejected') rejected.push(t)
+		})
+		const appointment = [...pending, ...approved, ...rejected]
 
 		res.status(200).send({ appointment })
 	} catch (e) {
@@ -433,6 +442,41 @@ const insertStudentAppointment = async (req, res) => {
 				values ('${appointmentid}','${members[i].id}',null,null);
 			`)
 		}
+		await pool.query(`
+		insert into instructor_appointment_members(appointmentid, userid, score, description)
+		values ('${appointmentid}','${headerId}',null,null);
+	`)
+		res.status(200).send({ test: 'Successs' })
+	} catch (e) {
+		res.status(404).send(e)
+	}
+}
+const updateInstructorAppointment = async (req, res) => {
+	try {
+		/*
+		body
+          {
+			"id",
+			"status"
+		}
+         */
+
+		const { id, status } = req.body
+		const now = new Date()
+		const paymentdue = status ? 'endtime' : null
+		const approveTime = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()} ${
+			now.getHours() > 10 ? now.getHours() : '0' + now.getHours()
+		}:${now.getMinutes() > 10 ? now.getMinutes() : '0' + now.getMinutes()}:${
+			now.getSeconds() > 10 ? now.getSeconds() : '0' + now.getSeconds()
+		}`
+		console.log('HELLO WORLD')
+		console.log('time', approveTime)
+
+		await pool.query(`
+			update instructor_appointments
+			set status = ${status}, paymentdue = ${paymentdue},approvetime = '${approveTime}'
+			where appointmentid = '${id}';
+			`)
 
 		res.status(200).send({ test: 'Successs' })
 	} catch (e) {
@@ -451,4 +495,5 @@ module.exports = {
 	getInstructorAppointments,
 	updateInstructorAvailabilities,
 	insertStudentAppointment,
+	updateInstructorAppointment,
 }
