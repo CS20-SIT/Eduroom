@@ -26,5 +26,15 @@ const getGroupPicture = async (req, res, next) => {
   res.send(mes)
 }
 
+const inviteCreate = async (req, res, next) =>{
+ await pool.query(`insert into chat_invitation(invitationid, date, chatroomid, invitor_id)
+ values (2,current_date,5,d8bd910c-16fa-4bcf-acbf-a12b1a8322fb);
+ insert into invite_invitees(invitationid, inviteeid)
+ values (5,236ce084-b742-4435-93c7-2e0d1eff1204)`)
 
-module.exports = { getChatlist, getGroupPicture}
+ res.status(200).json({ success: true})
+
+}
+module.exports = { getChatlist, getGroupPicture, inviteCreate}
+
+
