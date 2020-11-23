@@ -23,7 +23,7 @@ const Appointment = () => {
 	const now = '' + today.getFullYear() + (today.getMonth() + 1) + today.getDate()
 
 	const post = async (score, desc) => {
-		console.log(reviewModal)
+		// console.log(reviewModal)
 		await api.post('/api/tutor/appointment/review', {
 			id: reviewModal,
 			score,
@@ -58,6 +58,8 @@ const Appointment = () => {
 				return 0
 			})
 			const tmp = [appointment, approved, rejected, pending]
+			// console.log(tmp)
+
 			setAppointments(tmp)
 		}
 		fetchData()
@@ -203,7 +205,7 @@ const Appointment = () => {
 												<div className="text-lg text-secondary font-bold my-1">
 													{e.starttime} - {e.endtime}
 												</div>
-												{e.isAgree == 'Approved' && e.sorted < now ? (
+												{e.isAgree == 'Approved' && e.sorted < now && !e.score ? (
 													<div
 														className={`text-sm px-3 py-1 border rounded-md opacity-50 pointer animation ${
 															hoverReview == index ? 'bg-secondary text-white' : ''
@@ -215,7 +217,7 @@ const Appointment = () => {
 															setHoverReview(-1)
 														}}
 														onClick={() => {
-															console.log(e.id)
+															// console.log(e.id)
 															setReviewModal(e.id)
 														}}
 													>
