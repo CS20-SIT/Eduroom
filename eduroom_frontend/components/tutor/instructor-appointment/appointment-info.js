@@ -5,7 +5,16 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 
 import { timeFormatter, monthConverter } from '../lib/utils'
 
+import api from '../../../api'
+
 const Appointment = ({ AID, setAID, appointment }) => {
+	const post = async (id, status) => {
+		await api.post('/api/tutor/instructor/appointments', {
+			id,
+			status,
+		})
+	}
+
 	return (
 		<Fragment>
 			<CSSTransition
@@ -46,8 +55,8 @@ const Appointment = ({ AID, setAID, appointment }) => {
 					</div>
 					<div className="flex flex-col my-2 w-full">
 						<div className="my-2 text-lg font-bold">Members</div>
-						{appointment.members.map((m) => (
-							<div className="flex">
+						{appointment.members.map((m, i) => (
+							<div key={i} className="flex">
 								<div className="profile--inside my-2"></div>
 								<div className="mx-4 my-auto text-md font-bold text-secondary">{m.name}</div>
 							</div>
@@ -61,7 +70,9 @@ const Appointment = ({ AID, setAID, appointment }) => {
 								className="pointer text-center font-quicksand text-white py-2 rounded-md my-4"
 								onClick={() => {
 									// POST /api/tutor/instructor/appointment -> true
-									console.log(true)
+									// console.log(AID)
+									// console.log(true)
+									post(AID, true)
 									location.reload()
 								}}
 							>
@@ -72,7 +83,9 @@ const Appointment = ({ AID, setAID, appointment }) => {
 								className="pointer text-center font-quicksand py-2 border-secondary text-secondary bg-white-faded rounded-md"
 								onClick={() => {
 									// POST /api/tutor/instructor/appointment -> false
-									console.log(false)
+									// console.log(AID)
+									// console.log(false)
+									post(AID, false)
 									location.reload()
 								}}
 							>
