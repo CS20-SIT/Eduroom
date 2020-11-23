@@ -34,7 +34,6 @@ router.get('/utils/id', getUserInfo)
 
 // POST
 // TODO
-// /appointment/review
 
 // DONE
 router.post('/instructor/appointments', updateInstructorAppointment)
