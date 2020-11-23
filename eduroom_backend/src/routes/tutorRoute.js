@@ -14,6 +14,7 @@ const {
 	getInstructorAvailability,
 	getUserInfo,
 	updateInstructorAvailabilities,
+	insertStudentAppointment,
 } = require('../controllers/tutor/tutorController')
 
 // GET
@@ -32,8 +33,11 @@ router.get('/utils/id', getUserInfo)
 // POST
 // TODO
 // NOT IMPLEMENT YET );
+// /instructor/appointments
+// /appointment/review
 
 // DONE
+router.post('/student/appointments', insertStudentAppointment)
 router.post('/instructor/availabilities', updateInstructorAvailabilities)
 
 module.exports = router
