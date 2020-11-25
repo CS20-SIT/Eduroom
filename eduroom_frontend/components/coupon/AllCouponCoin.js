@@ -36,6 +36,7 @@ const temp = (props) => {
 					price={item.price}
 					index={index}
 					id={item.id}
+					description={item.description}
 					owner={item.owner}
 					key={item.id}
 				></RenderCoupon>
