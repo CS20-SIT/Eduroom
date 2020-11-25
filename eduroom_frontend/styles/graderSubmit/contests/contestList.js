@@ -9,10 +9,10 @@ export default css`
 		margin-bottom: 1rem;
 	}
 	.top-left {
-		width: 40%;
+		width: 30%;
 	}
 	.top-right {
-		width: 60%;
+		width: 70%;
 		display: flex;
 		justify-content: flex-end;
 	}
