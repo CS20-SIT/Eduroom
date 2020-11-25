@@ -108,6 +108,25 @@ export default css`
     font-family: 'Lato', sans-serif;
     font-weight: bold;
   }
+  .Ad-question-text {
+    font-size: 1.1em;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    color: 000000;
+  }
+  .Ad-header {
+    font-size : 2.7em;
+    font-family:'Lato', san-serif;
+    font-weight: regular;
+    color: #3d467f;
+  }
+  .Ad-description {
+    padding: 5% 0% 10% 0%;
+    font-size: 1em;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    color: #5b5b5b;
+  }
   .Ad-Detail-List-text {
     font-size: 1.25em;
     font-family: 'Lato', sans-serif;
@@ -120,6 +139,16 @@ export default css`
     border-bottom: 5px solid #E1EEFB;
     border-right: 5px solid #E1EEFB;
     background-color:white;
+  }
+  .Get-started-button {
+    border-radius: 25px;
+    padding: 0.75rem 5.3rem;
+    margin-bottom: 5%;
+    margin-top: 2.5%;
+    border: solid;
+    border-color: #3D467F;
+    background-color:#3D467F;
+    outline: none;
   }
   .Get-Ad-button {
     border-radius: 25px;
