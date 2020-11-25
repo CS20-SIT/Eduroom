@@ -8,7 +8,7 @@ const Content = () => {
     return (
         <div>
             <div style = {{marginLeft : '40px', marginTop:'10px'}}>
-            <a className = "ad-header">
+            <a className = "ad-ad-header">
             Need help getting started?
             </a>
             <br></br>
@@ -17,7 +17,7 @@ const Content = () => {
                 </a>
                 </div>
                 <br></br>
-            <a className = "ad-header">
+            <a className = "ad-ad-header">
             FAQs
             </a>
          <style jsx>

@@ -90,7 +90,7 @@ export default function FullWidthTabs() {
           <Tab label="Pricing" style={{fontWeight:'1000'}} {...a11yProps(3)} />
           <Tab label="Help" style={{fontWeight:'1000'}} {...a11yProps(4)} />
           <button
-            className="ad-button"
+            className = "ad-ad-button"
             onClick={() => router.push('/login')}
           >
             <a className="ad-button-text">Start Now</a>
