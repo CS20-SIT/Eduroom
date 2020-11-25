@@ -11,7 +11,8 @@ import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-
+import style from '../../styles/advertisement/ads';
+import { useRouter } from 'next/router';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -57,10 +58,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FullWidthTabs() {
+  const router = useRouter();
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -81,11 +82,17 @@ export default function FullWidthTabs() {
           textColor="secondary"
         >
           
-          <Tab inkBarStyle={{fontColor:'pink'}} label="Advertising" style={{fontWeight:'1000'}} {...a11yProps(0)} />
+          <Tab label="Advertising" style={{fontWeight:'1000'}} {...a11yProps(0)} />
           <Tab label="How it works" style={{fontWeight:'1000'}} {...a11yProps(1)} />
           <Tab label="Condition" style={{fontWeight:'1000'}} {...a11yProps(2)} />
           <Tab label="Pricing" style={{fontWeight:'1000'}} {...a11yProps(3)} />
           <Tab label="Help" style={{fontWeight:'1000'}} {...a11yProps(4)} />
+          <button
+            className="landing-button"
+            onClick={() => router.push('/login')}
+          >
+            <a className="landing-button-text">Start Now</a>
+          </button>
           
        
         </Tabs>
@@ -102,6 +109,7 @@ export default function FullWidthTabs() {
          <Tab3/>
         </TabPanel>
         </Paper>
+        <style jsx>{style}</style>
     </General>
   );
 }
