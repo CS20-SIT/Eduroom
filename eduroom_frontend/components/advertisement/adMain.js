@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import Tab1 from './adMainTab/tab1';
 import Tab2 from './adMainTab/tab2';
 import Tab3 from './adMainTab/tab3';
+import Tab4 from './adMainTab/tab4';
+import Tab5 from './adMainTab/tab5';
 import { makeStyles, useTheme,createMuiTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -88,10 +90,10 @@ export default function FullWidthTabs() {
           <Tab label="Pricing" style={{fontWeight:'1000'}} {...a11yProps(3)} />
           <Tab label="Help" style={{fontWeight:'1000'}} {...a11yProps(4)} />
           <button
-            className="landing-button"
+            className="ad-button"
             onClick={() => router.push('/login')}
           >
-            <a className="landing-button-text">Start Now</a>
+            <a className="ad-button-text">Start Now</a>
           </button>
           
        
@@ -107,6 +109,12 @@ export default function FullWidthTabs() {
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
          <Tab3/>
+        </TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+         <Tab4/>
+        </TabPanel>
+        <TabPanel value={value} index={4} dir={theme.direction}>
+         <Tab5/>
         </TabPanel>
         </Paper>
         <style jsx>{style}</style>
