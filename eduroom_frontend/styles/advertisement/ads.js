@@ -1,6 +1,6 @@
 import css from 'styled-jsx/css';
 export default css`
-  .landing {
+  .ad {
     width: 95%;
     height: 100vh;
     display: flex;
@@ -11,29 +11,30 @@ export default css`
     position: absolute;
     top: 0;
   }
-  .landing-img {
+  .ad-img {
     width: 55%;
   }
-  .landing-content {
+  .ad-content {
     position: absolute;
     left: 5%;
     top: 24%;
     font-family: 'Quicksand', sans-serif;
   }
-  .landing-header {
-    font-size: 3em;
+  .ad-header {
+    font-size: 1.75em;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
     color: #3d467f;
+    
   }
-  .landing-description {
+  .ad-description {
     padding: 5% 0% 10% 0%;
     font-size: 1.1em;
     font-family: 'Quicksand', sans-serif;
     font-weight: 600;
     color: #5b5b5b;
   }
-  .landing-button {
+  .ad-button {
     background: #A880F7;
     border-radius: 2px;
     padding: 0.4rem 1.5rem;
@@ -43,12 +44,12 @@ export default css`
     position: absolute;
     right: 40px;
   }
-  .landing-button:hover {
+  .ad-button:hover {
     cursor: pointer;
     opacity: 0.8;
     transition: 0.25s;
   }
-  .landing-button-text {
+  .ad-button-text {
     color: white;
     font-weight: 700;
     font-size: 1.2em;
