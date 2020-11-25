@@ -1,6 +1,6 @@
 import css from 'styled-jsx/css';
 export default css`
-  .ad {
+  .ad-ad {
     width: 95%;
     height: 100vh;
     display: flex;
@@ -11,30 +11,30 @@ export default css`
     position: absolute;
     top: 0;
   }
-  .ad-img {
+  .ad-ad-img {
     width: 55%;
   }
-  .ad-content {
+  .ad-ad-content {
     position: absolute;
     left: 5%;
     top: 24%;
     font-family: 'Quicksand', sans-serif;
   }
-  .ad-header {
+  .ad-ad-header {
     font-size: 1.75em;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
     color: #3d467f;
     
   }
-  .ad-description {
+  .ad-ad-description {
     padding: 5% 0% 10% 0%;
     font-size: 1.1em;
     font-family: 'Quicksand', sans-serif;
     font-weight: 600;
     color: #5b5b5b;
   }
-  .ad-button {
+  .ad-ad-button {
     background: #A880F7;
     border-radius: 2px;
     padding: 0.4rem 1.5rem;
@@ -44,7 +44,7 @@ export default css`
     position: absolute;
     right: 40px;
   }
-  .ad-button:hover {
+  .ad-ad-button:hover {
     cursor: pointer;
     opacity: 0.8;
     transition: 0.25s;
