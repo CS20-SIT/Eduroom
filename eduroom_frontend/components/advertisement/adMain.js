@@ -75,7 +75,7 @@ export default function FullWidthTabs() {
   return (
     <General>
       
-     <Paper style = {{margin:"0% 5% 0% 5%", padding:"1.5%"}}>
+     <Paper style = {{margin:"0% 5% 5% 5%", padding:"1.5%"}}>
      <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',marginLeft:'2%',position:'absolute', width:'78%', opacity:'50%'}}></div>
         <Tabs
           value={value}
@@ -101,7 +101,7 @@ export default function FullWidthTabs() {
        
    
       
-        <TabPanel value={value} index={0} dir={theme.direction}>
+        <TabPanel value={value} index={0} dir={theme.direction} >
           <Tab1/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
