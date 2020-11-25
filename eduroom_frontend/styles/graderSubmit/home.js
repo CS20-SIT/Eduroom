@@ -30,10 +30,20 @@ export default css`
 		width: 60%;
 	}
 	.contest-box {
+		width: 100%;
 		height: 30%;
+	}
+	.contest-content {
+		display: flex;
+		overflow: scroll;
+		padding: 10px;
 	}
 	.announcement-box {
 		height: 40%;
+	}
+	.contest-content::-webkit-scrollbar {
+		height: 0px;
+		background: transparent;
 	}
 	::-webkit-scrollbar {
 		width: 8px; /* width of the entire scrollbar */

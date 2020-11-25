@@ -52,6 +52,8 @@ const {
 	gContestSubmissions,
 	gAnnouncements,
 	gQuestionTags,
+	gQuestionByTag,
+	gHomePreviewContests,
 } = require('../controllers/graderCreate/graderSubmit')
 
 const multer = require('multer')
@@ -140,5 +142,7 @@ router.get('/getContestProblem', gContestProblems)
 router.get('/getContestSubmission', gContestSubmissions)
 router.get('/getAnnouncement', gAnnouncements)
 router.get('/getQuestionTag', gQuestionTags)
+router.get('/getQuestionByTag', gQuestionByTag)
+router.get('/getHomePreviewContest', gHomePreviewContests)
 
 module.exports = router

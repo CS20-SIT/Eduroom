@@ -15,7 +15,7 @@ const AnnounceBox = () => {
 
 	return (
 		<Fragment>
-			<h2 style={{ color: '#5B5B5B', paddingTop: '20px' }}>ANNOUNCEMENTS</h2>
+			<h2 style={{ color: '#5B5B5B', paddingTop: '20px', paddingLeft: '10px' }}>ANNOUNCEMENTS</h2>
 			<div className="box">
 				<div className="title">
 					<div className="left">
@@ -29,7 +29,13 @@ const AnnounceBox = () => {
 				<div className="announceList">
 					{data.map((element, key) => {
 						return data ? (
-							<Announcements title={element.title} time={element.time} admin={element.displayname} key={key} />
+							<Announcements
+								annID={element.id}
+								title={element.title}
+								time={element.time}
+								admin={element.displayname}
+								key={key}
+							/>
 						) : null
 					})}
 				</div>

@@ -7,6 +7,6 @@ export default css`
 		border-radius: 10px;
 		align-content: center;
 		background-color: #ffffff;
-		box-shadow: 0px 4px 12px #bdbdbd;
+		box-shadow: 0px 4px 6px rgba(189, 189, 189, 0.5);
 	}
 `

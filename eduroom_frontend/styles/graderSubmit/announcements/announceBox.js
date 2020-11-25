@@ -4,10 +4,11 @@ export default css`
 		width: 95%;
 		height: 30%;
 		padding: 1.5rem;
+		margin-left: 10px;
 		background-color: #ffffff;
 		border: 1px solid #ffffff;
 		border-radius: 10px;
-		box-shadow: 0px 4px 12px #bdbdbd;
+		box-shadow: 0px 4px 6px rgba(189, 189, 189, 0.5);
 	}
 	.title,
 	.right {
