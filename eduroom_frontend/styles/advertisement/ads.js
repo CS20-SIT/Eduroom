@@ -27,6 +27,13 @@ export default css`
     color: #3d467f;
     
   }
+  .ad-faq {
+    font-size: 1.2em;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    
+    
+  }
   .ad-ad-description {
     padding: 5% 0% 10% 0%;
     font-size: 1.1em;
