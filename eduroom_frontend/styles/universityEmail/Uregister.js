@@ -55,10 +55,23 @@ export default css`
     font-weight: bold;
     color: #3d467f;
   }
+  .Term-header {
+    font-size: 2em;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    color: #3d467f;
+  }
   .landing-description {
     padding: 5% 0% 10% 0%;
     font-size: 1.1em;
     font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    color: #5b5b5b;
+  }
+  .Term-description {
+    padding: 5% 0% 10% 0%;
+    font-size: 1.5em;
+    font-family: 'Lato', sans-serif;
     font-weight: 600;
     color: #5b5b5b;
   }
@@ -164,5 +177,11 @@ export default css`
     font-size: 1.75em;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
+  }
+  .tab3 {
+    width: 420px;
+    height: 320px;
+    cursor: default;
+    background-image: url('/images/it_support.svg');
   }
 `
