@@ -16,6 +16,7 @@ import Box from '@material-ui/core/Box';
 import style from '../../styles/advertisement/ads';
 import { useRouter } from 'next/router';
 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   
@@ -49,13 +50,16 @@ function a11yProps(index) {
     'aria-controls': `full-width-tabpanel-${index}`,
   };
 }
-
+const bgImage = "../../public/images/BG_Landing.svg";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 500,
-
-   
+    margin:"0% 5% 5% 5%",
+    padding:"1.5%",
+    // backgroundRepeat: 'no-repeat',
+    // backgroundSize: 'auto',
+    // backgroundImage: `url(${bgImage})`,
   },
 }));
 
@@ -64,18 +68,23 @@ export default function FullWidthTabs() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
+  const [background, setBackground] = React.useState('/images/BG_Landing.svg');
+  const handleChange = (event, index) => {
     setValue(index);
+    if(index == 0) setBackground('/images/BG_Landing.svg')
+    else if(index == 1 ) setBackground('/images/register_bg.svg')
+    else if(index == 2) setBackground('')
+    else if(index == 3) setBackground('/images/big-bg.svg')
+    else setBackground('')
   };
 
+  
+  
   return (
     <General>
       
-     <Paper style = {{margin:"0% 5% 5% 5%", padding:"1.5%"}}>
+     <Paper style = {{backgroundImage: `url(${background})`,margin:"0% 5% 5% 5%", padding:"1.5%", backgroundRepeat: 'no-repeat',
+ backgroundSize:'cover'}}>
      <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',marginLeft:'2%',position:'absolute', width:'78%', opacity:'50%'}}></div>
         <Tabs
           value={value}

@@ -91,31 +91,26 @@ export default css`
   .tab1 {
     width: 1635px;
     height: 730px;
-    cursor: default;
-    background-image: url('/images/BG_Landing.svg');
+    // background-image: url('/images/BG_Landing.svg');
   }
   .tab2 {
     width: 93%;
     height: 350px;
-    cursor: default;
-    background-image: url('/images/register_bg.svg');
+    // background-image: url('/images/register_bg.svg');
   }
   .tab3 {
     width: 93%;
     height: 350px;
-    cursor: default;
     background-image: url('/images/subforumbg.svg');
   }
   .tab4 {
     width: 360px;
     height: 300px;
-    cursor: default;
     background-image: url('/images/package/purchesed.svg');
   }
   .ntab4 {
     width: 93%;
     height: 400px;
-    cursor: default;
-    background-image: url('/images/big-bg.svg');
+    // background-image: url('/images/big-bg.svg');
   }
 `;

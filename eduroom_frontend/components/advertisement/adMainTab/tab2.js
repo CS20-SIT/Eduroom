@@ -6,7 +6,7 @@ import {Link,Typography,InputBase, Paper, Grid} from '@material-ui/core'
 
 
 const Content = () => {
-
+    const router = useRouter();
     return (
 
         <Fragment>
@@ -33,7 +33,7 @@ const Content = () => {
               
         </Grid>       
         </Grid>  
-        <div className="tab2" style={{marginTop:"-9%" }}></div>
+        <div className="tab2"></div>
          <style jsx>
          {style}
        </style> 

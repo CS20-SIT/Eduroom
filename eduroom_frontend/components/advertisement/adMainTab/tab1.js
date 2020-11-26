@@ -1,15 +1,16 @@
 import React, { Fragment, useState} from 'react'
 import style from '../../../styles/advertisement/ads'
-import { useRouter } from 'next/router';
+import { useRouter} from 'next/router';
+
 
 
 
 const Content = () => {
-
+  const router = useRouter();
     return (
 
-        <Fragment>
-        
+       
+        <div className="tab1">
         <div style={{paddingTop:"100px" ,marginLeft:"150px"}}>
         <div className="ad-tab1-header">Be seen where </div>
         <div className="ad-tab1-header" style={{marginTop:"-10px"}}>everyone is watching </div>
@@ -26,14 +27,14 @@ const Content = () => {
           >
             <a className="ad-button-text">Start Now</a>
           </button>
-          <div className="tab1" style={{marginTop:"-45%" ,marginLeft:"-200px"}}>
+          
           </div>
          <style jsx>
          {style}
        </style> 
        </div>
         
-        </Fragment>
+     
 
         
         )
