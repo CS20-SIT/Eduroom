@@ -6,6 +6,7 @@ import {Link,Typography,InputBase, Paper, Grid} from '@material-ui/core'
 
 
 const Content = () => {
+    const router = useRouter();
     return (
         <Fragment>
         
@@ -31,8 +32,8 @@ Spend $500 per 1 ads
               
         </Grid>       
         </Grid>  
-        <div className="ntab4" style={{marginTop:"-32%" , marginLeft:"-50px",marginBottom:"10%" }}></div>
-        <div className="tab4" style={{marginTop:"-10%" , marginLeft:"50%",marginBottom:"1.5%" }}></div>
+        <div className="ntab4" ></div>
+        <div className="tab4" style={{marginTop:"-40%" , marginLeft:"50%",marginBottom:"1.5%" }}></div>
         
          <style jsx>
          {style}

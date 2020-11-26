@@ -3,8 +3,10 @@ import React from 'react'
 import style from '../../../styles/universityEmail/Uregister';
 import { Grid} from '@material-ui/core'
 import { ActionOpacity } from 'material-ui/svg-icons';
+import { useRouter} from 'next/router';
 
 const Content = () => {
+  const router = useRouter();
     return (
       <div>
         
@@ -22,7 +24,7 @@ const Content = () => {
 4. If you violate any of these terms, Eduroom will reserve <br></br>the right to advertise your particular advertisement until modified.<br></br>
 
                 </Grid>
-                <div className="tab3" style={{marginLeft:"70%",marginTop:"-80px",marginBottom:"-180px" ,opacity:'50%'}}></div>
+                <div className="tab3" style={{marginLeft:"65%",marginTop:"-80px",marginBottom:"-150px" ,opacity:'50%'}}></div>
                 </div>  
                 
                 <style jsx>

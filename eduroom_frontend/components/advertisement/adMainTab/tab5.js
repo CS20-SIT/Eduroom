@@ -8,7 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 600,
+    maxWidth: 800,
     backgroundColor: theme.palette.background.paper,
   },
   nested: {
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Content = () => {
+  
   const classes = useStyles();
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
@@ -48,10 +49,10 @@ const Content = () => {
         <a className="ad-ad-header">
           FAQs
             </a>
+        
         <MuiThemeProvider>
           <List className={classes.root}>
-   
-            <Grid style={{marginLeft: '10%', marginTop:'3%'}}>
+            <Grid >
               <Grid container spacing={2} direction="column" justify="space-around" alignItems="stretch">
                   <Grid item xs={12} >
                     <Paper>
