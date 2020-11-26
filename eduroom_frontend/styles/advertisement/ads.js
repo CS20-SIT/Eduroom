@@ -100,4 +100,22 @@ export default css`
     cursor: default;
     background-image: url('/images/register_bg.svg');
   }
+  .tab3 {
+    width: 93%;
+    height: 350px;
+    cursor: default;
+    background-image: url('/images/subforumbg.svg');
+  }
+  .tab4 {
+    width: 360px;
+    height: 300px;
+    cursor: default;
+    background-image: url('/images/package/purchesed.svg');
+  }
+  .ntab4 {
+    width: 93%;
+    height: 400px;
+    cursor: default;
+    background-image: url('/images/big-bg.svg');
+  }
 `;

@@ -10,34 +10,34 @@ const Content = () => {
     return (
 
         <Fragment>
-        <div className="tab2" style={{marginTop:"12%" ,marginLeft:"-50px",marginBottom:"100px"}}>
+        
         <Grid containner spacing={3}>  
             <Grid item xs={6}>
-            <div style={{marginTop:"-20px" ,marginLeft:"150px"}}>
-            <div className="ad-tab1-header">Be seen where </div>
-            <div className="ad-tab1-header" style={{marginTop:"-10px"}}>everyone is watching </div>
+            <div style={{marginTop:"100px" ,marginLeft:"150px"}}>
+            <div className="ad-tab1-header">It's easy to advertise 
+</div>
+            <div className="ad-tab1-header" style={{marginTop:"-10px"}}>your business  </div>
         
             <div className="ad-tab1-description">
-                With EDUROOM ads, reach potential customers <br></br>
-                and have them take action when they watch <br></br>
-                or search for videos on YouTube – and only <br></br>
-                pay when they show interest.
+                It’s easier to attract your next customer if they<br></br>
+                know what makes you unique. Introduce your <br></br>
+                business with advertising on EDUROOM.
             </div>
-        
-            <div className="ad-question" >Already have a ADs?</div>
-                <button style={{marginTop:"10px"}}
+            <button style={{marginTop:"10px"}}
                 className = "ad-tab1-button"
                 onClick={() => router.push('/login')}
                 >
                 <a className="ad-button-text">Start Now</a>
-                </button>
+            </button>
             </div>
+              
         </Grid>       
         </Grid>  
+        <div className="tab2" style={{marginTop:"-9%" }}></div>
          <style jsx>
          {style}
        </style> 
-       </div>
+       
         
         </Fragment>
 
