@@ -9,6 +9,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { ContentFlag } from 'material-ui/svg-icons';
 
 const CourseIDLesson = ({ courseDes, id }) => {
 
@@ -20,6 +21,78 @@ const CourseIDLesson = ({ courseDes, id }) => {
     // Set srcc from secBG part
     const [partType,setPartType] = useState(1);
     const [questionNow,setQuestionNow] = useState(0);
+    const [choiceNow,setChoiceNow] = useState([]);
+    const [ansChoice,setAnsChoice] = useState([]);
+    const [submitValid,setSubmitValid] = useState(0);
+    let [styleOfChoice,setStyleOfChoice] = useState({});
+    let [submitYet,setSubmitYet] = useState(0);
+
+    
+    // Green text-grey my-4 py-8 pointer rounded-sm bg-white shadow text-center choice-size border-green
+    const greenBox = "text-white my-4 py-8 rounded-sm bg-green shadow text-center choice-size border-green-2";
+
+    // Blue text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-anti-navy text-center choice-size
+    const blueBox = "text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-anti-navy text-center choice-size";
+    
+    // Red  text-grey my-4 py-8 pointer rounded-sm bg-white shadow text-center choice-size border-red
+    const redBox = "text-white my-4 py-8 rounded-sm bg-red shadow text-center choice-size border-red-2";
+    
+    // White text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-navy text-center choice-size
+    const whiteBox = "text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-navy text-center choice-size";
+
+    // White don't have border
+    const whiteAntiBorderBox = "text-grey my-4 py-8 rounded-sm bg-white shadow  text-center choice-size border-white-2";
+
+
+    const changeChoiceAndCheckSubmit = (qNum) => {
+        if(submitYet == 1) return
+        const arr = [...choiceNow];
+        arr[questionNow] = qNum;
+        setChoiceNow(arr);
+        var count = 0;
+        for(var i = 0; i < arr.length; i++){
+            // console.log("arr[] "+arr[i]);
+            if(arr[i] != -1){
+                count++;
+            }
+        }
+        if(count == arr.length){
+            setSubmitValid(1);
+        }
+        // console.log(count +" "+arr.length);
+    }
+
+    const setAnsChoiceFunc = (qN) => {
+        const arr=[];
+        for(var i = 0; i < qN.length; i++){
+            arr.push(qN[i].answer);
+        }
+        // console.log(arr);
+        setAnsChoice(arr);
+    }
+
+    const showAnswer = () =>{
+        // for(var i = 0; i < courseDes[id-1].section[secBG].part[part].questionNum.length; i++){
+        //     console.log(choiceNow[i]);
+        //     if(choiceNow[i] == i){
+        //         setStyleOfChoice({
+        //             pointerEvents: 'none',
+        //             border: '2px solid #ee5959',
+        //             // backgroundColor: 'green',
+        //         })
+                
+        //         // console.log(styleOfChoice);
+        //     }
+        //     else if(ansChoice[i] == i){
+        //         setStyleOfChoice({
+        //             pointerEvents: 'none',
+        //             border: '2px solid #008000'
+        //         })
+        //     }
+        // }
+        setSubmitYet(1);
+    }
+
 
     const checkIcon = (type) => {
         if(type == 1){
@@ -83,24 +156,47 @@ const CourseIDLesson = ({ courseDes, id }) => {
                             <iframe className="" width="700" height="450" src={srcc}></iframe>
                         </div>
                         <div className={`${partType == 2 ? "inline-block":"hidden"}`}>
-                            <div onClick={() => {
+                            {/* <div onClick={() => {
                                 downloadItem('http://rathcenter.com/Sheet/Logic.pdf');
-                            }}>Download</div>
+                            }}>Download</div> */}
                         </div>
-                        <div className={`${partType == 3 ? "inline-block":"hidden"}`}>
+                        <div className={`${partType == 3 ? "section-part flex flex-col items-center":"hidden"}`}>
+                            <div className={`${submitValid == 0 ? "ml-auto inline-block text-secondary rounded-lg border-grey-2 px-6 py-2 text-sm disabled font-bold" : ( submitYet == 0 ? "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-hover" : "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-anti-hover" )}`} 
+                            onClick={() => {
+                                if(submitValid == 0) return
+                                showAnswer();
+                                // console.log(ansChoice);
+                            }}
+                            
+                            >SUBMIT</div>
                             {courseDes[id-1].section[secBG].part[part].questionNum.map((q, qNum) => (
-                                // <div className={`${questionNow == qNum ? '':"hidden"}`}>
-                                <div className="">
-                                    <div className="font-quicksand text-xxl text-navy font-bold ml-30">{q.question}</div>
-                                    <div className="my-4 text-center mt-10 ml-20">
-                                        {q.choice.map((c)=>(
-                                            <div className="text-grey my-4 py-8 px-12 pointer rounded-sm bg-white shadow hover-navy">{c}</div>
+                                <div key={qNum} className={`${questionNow == qNum ? '':"hidden"}`}>
+                                    <div className="font-quicksand text-center text-xxl text-navy font-bold">{q.question}</div>
+                                    <div className="my-4 mt-10">
+                                        {q.choice.map((c, cNum)=>(
+                                            // <div key={cNum} className={`${choiceNow[questionNow] == cNum ? "text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-anti-navy text-center choice-size":"text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-navy text-center choice-size"}`} style={ cNum === ansChoice[questionNow] && choiceNow[questionNow] === cNum ? styleOfChoice : null} onClick={()=>{
+                                            // <div key={cNum} className={`${submitYet == 0 ? (choiceNow[questionNow] == cNum ? : ) : choiceNow[questionNow] == cNum ? : }`}>
+                                            <div key={cNum} className={`${submitYet == 1 ? (ansChoice[questionNow] == cNum ? (greenBox) : ( choiceNow[questionNow] == cNum ? (redBox) : (whiteAntiBorderBox) ) ) : ( choiceNow[questionNow] == cNum ? (blueBox) : (whiteBox) )}`} onClick={()=>{
+                                                changeChoiceAndCheckSubmit(cNum);
+                                            }}>
+                                                {/* choiceNow[questionNow] == cNum  ? (submitYet == 1 ? (choiceNow[questionNow] == ansChoice[questionNow] ? ({greenBox}) : ({redBox}) ) : ({whiteBox}) ) : ({whiteBox})  */}
+                                                {c}
+                                            </div>
+                                            
                                         ))}
                                     </div>
                                 </div>
                             ))}
+                            <div className="mt-10" width="500px" >
+                                {courseDes[id-1].section[secBG].part[part].questionNum.map((q, qNum) => (
+                                    <div key={qNum} className={`${questionNow == qNum ? ( submitYet == 0 ? "inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-white bg-navy" : ( ansChoice[qNum] == choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-green bg-white" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-red bg-white"  ) ) : submitYet == 0 ? ("inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-navy") : ( ansChoice[qNum] == choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-white bg-green" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-white bg-red"  ) }`} onClick={()=>{
+                                        setQuestionNow(qNum);
+                                    }}>
+                                        {qNum+1}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-
                         {/* Videos / Materials / Quiz */}
 
                         {/* Course Content Box */}
@@ -110,7 +206,7 @@ const CourseIDLesson = ({ courseDes, id }) => {
                             {/* Map Section */}
                             <div>
                             {courseDes[id-1].section.map((e, index) => (
-                                <div>
+                                <div key={index}>
                                     <div className="section-box py-2 px-6 pointer text-lg font-quicksand" onClick={()=>{
                                         if(sec == index){
                                             setSec(-1);
@@ -128,16 +224,19 @@ const CourseIDLesson = ({ courseDes, id }) => {
                                     
                                     <div className={`${sec == index ? '':"hidden"}`}>
                                         {e.part.map((ee, indexx) => (
-                                            <div className={`${secBG == index&&part == indexx ? "py-4 mx-4 selectPart":"py-4 mx-4"}`}>
+                                            <div key={indexx} className={`${secBG == index&&part == indexx ? "py-4 mx-4 selectPart":"py-4 mx-4"}`}>
                                                 <div className="inline-block justify-icon position-ab">
                                                     <img width="24px" src={checkIcon(ee.type)}/>
                                                 </div>
                                                 <div className="font-quicksand px-2 text-ll pointer font-normal-bold inline-block part-word" onClick={()=>{
+                                                    // console.log(indexx)
                                                     setSrc(ee.src);
                                                     setSecBG(index);
                                                     setPart(indexx);
                                                     setPartType(ee.type);
-                                                    // console.log(index+" "+indexx);
+                                                    setChoiceNow(Array(ee.questionNum.length).fill(-1));
+                                                    setAnsChoiceFunc(ee.questionNum);
+
                                                 }}>{"Part " + `${ee.id}` + ": " + `${ee.name}`}</div>
                                             </div>
                                         ))}
@@ -216,6 +315,11 @@ export async function getServerSideProps(contex) {
                                 question: "Who Kill Rama VIII?",
                                 choice: ["IX", "Prede", "Prayut", "Prawit"],
                                 answer: 0,
+                            },
+                            {
+                                question: "Do you here the people sing?",
+                                choice: ["Yes", "No", "O", "K"],
+                                answer: 2,
                             },
                         ]
                     }

@@ -45,6 +45,9 @@ export default css`
   }
 
   /* Font Weight */
+  .font-fucking-bold {
+    font-weight: 900;
+  }
   .font-bold {
     font-weight: 700;
   }
@@ -92,6 +95,13 @@ export default css`
   .text-grey {
     color: #636363;
   }
+  .text-green {
+    color: #27C473;
+  }
+  .text-red {
+    color: #FA6060;
+  }
+
 
   /* BG Color */
   .bg-primary {
@@ -117,6 +127,12 @@ export default css`
   }
   .bg-white {
     background-color: #ffffff;
+  }
+  .bg-green {
+    background-color: #27C473;
+  }
+  .bg-red {
+    background-color: #FA6060;
   }
   .bg-white-faded {
     background-color: rgba(255, 255, 255, 0.6);
@@ -373,17 +389,32 @@ export default css`
     margin-top: 4rem;
     margin-bottom: 4rem;
   }
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
   .mb-10 {
     margin-bottom: 4rem;
   }
   .mt-10 {
     margin-top: 4rem;
   }
+  .ml-8 {
+    margin-left: 2rem;
+  }
+  ml-14 {
+    margin-left: 4rem;
+  }
   .ml-20 {
     margin-left: 8rem;
   }
+  .ml-24 {
+    margin-left: 10rem;
+  }
   .ml-30 {
     margin-left: 14rem;
+  }
+  .ml-auto{
+    margin-left: auto;
   }
   /* Padding */
   .px-auto {
@@ -458,11 +489,10 @@ export default css`
     cursor: not-allowed;
   }
 
-  /* Hover Color */
-  .hover-navy {
-    hover: background-color: "#3d467f";
-    
-  }
+  // /* Hover Color */
+  // .hover-navy {
+  //   hover: background-color: "#3d467f";
+  // }
 
 
 
@@ -497,6 +527,9 @@ export default css`
   .section-box {
     margin-top: 1.6rem;
   }
+  .section-part {
+    margin-right: 300px;
+  }
 
 
   /*  Part Box  */
@@ -523,13 +556,37 @@ export default css`
     border: 1px solid #535353;
   }
   .border-red {
-    border 1px solid #ee5959;
+    border 1px solid #FA6060;
+  }
+  .border-red-2 {
+    border 2px solid #FA6060;
   }
   .border-navy {
     border 1px solid #3d467f;
   }
+  .border-navy-2 {
+    border 2px solid #3d467f;
+  }
   .border-pink {
     border 1px solid #fffaf4;
+  }
+  .border-grey {
+    border: 1px solid #5b5b5b;
+  }
+  .border-white {
+    border: 1px solid #ffffff;
+  }
+  .border-white-2 {
+    border: 2px solid #ffffff;
+  }
+  .border-grey-2 {
+    border: 2px solid #5b5b5b;
+  }
+  .border-green {
+    border: 1px solid #27C473;
+  }
+  .border-green-2 {
+    border: 2px solid #27C473;
   }
   .border-bottom-grey {
     border-bottom: 1px solid #5b5b5b;
@@ -551,6 +608,32 @@ export default css`
 
   .selectPart {
     background-color: #EFF0F6;
+  }
+
+  .hover-navy {
+    border: 2px solid #ffffff;
+  }
+  .hover-navy:hover {
+    border: 2px solid #3d467f;
+  }
+  .hover-anti-navy {
+    border: 2px solid #3d467f;
+  }
+
+  .submit-hover{
+  }
+  .submit-hover:hover {
+    background-color: #3d467f;
+    color: #ffffff;
+  }
+  .submit-anti-hover {
+    background-color: #3d467f;
+    color: #ffffff;
+  }
+
+  .choice-size {
+    width: 540px;
+    // height: 400px;
   }
   
 `;
