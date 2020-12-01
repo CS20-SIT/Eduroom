@@ -1,8 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const { forumTest, createForum } = require('../controllers/forumController')
+const { selectForum, showForum, setForum,createComment,selectRoom} = require('../controllers/forumController')
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
-router.get('/', forumTest)
-router.post('/create', createForum)
+router.get('/', showForum)
+router.post('/create', setForum)
+router.get('/:id', selectForum)
+router.post('/comment',createComment)
+router.get('/room/:roomname',selectRoom)
+router.get('/profile', jwtAuthenicate)
 
 module.exports = router

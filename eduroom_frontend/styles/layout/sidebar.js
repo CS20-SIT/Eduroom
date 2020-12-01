@@ -1,4 +1,4 @@
-import css from 'styled-jsx/css'
+  import css from 'styled-jsx/css'
 export default css`
   .side-item {
     align-items: center;
@@ -38,7 +38,7 @@ export default css`
     flex-flow: column;
     padding-top: 1%;
     z-index:1000;
-    position: sticky;
+    position: fixed;
     top:0;
     left:0;
     height:100vh;

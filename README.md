@@ -1,6 +1,8 @@
 # Eduroom Project
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/CS20-SIT/Eduroom/blob/master/LICENSE)
+![Build, Deploy to GKE and Lighthouse on production](https://github.com/CS20-SIT/Eduroom/workflows/Build,%20Deploy%20to%20GKE%20and%20Lighthouse%20on%20production/badge.svg)
+![Pull Request Building](https://github.com/CS20-SIT/Eduroom/workflows/Pull%20Request%20Building/badge.svg?branch=dev)
 
 Tools: NextJS + Material UI, ExpressJS, PostgreSQL, Docker, Nginx
 
@@ -68,6 +70,14 @@ git pull upstream master
 ### Push pulling to your repo
 ```
 git push -u origin master
+```
+
+### Initialize Database
+```
+docker-compose -f docker-compose.dev.yml run eduroom_backend sh 
+node src/database/seeder.js -i
+node src/database/seeder_patch.js -i
+exit
 ```
 
 ### Run Benchmark

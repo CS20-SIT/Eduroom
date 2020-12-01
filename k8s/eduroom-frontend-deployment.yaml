@@ -21,25 +21,31 @@ spec:
         ports:
         - containerPort: 3000
         env:
-            - name: BACKEND_API
+            - name: NEXT_PUBLIC_ENTRYPOINT_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: prod-configmap
+                  key: ENTRYPOINT_URL
+                  optional: false
+            - name: NEXT_PUBLIC_BACKEND_API
               valueFrom:
                 configMapKeyRef:
                   name: prod-configmap
                   key: BACKEND_API
                   optional: false
-            - name: GRADER_URL
+            - name: NEXT_PUBLIC_GRADER_URL
               valueFrom:
                 configMapKeyRef:
                   name: prod-configmap
                   key: CLIENT_URL
                   optional: false
-            - name: CHAT_SERVER
+            - name: NEXT_PUBLIC_CHAT_SERVER
               valueFrom:
                 configMapKeyRef:
                   name: prod-configmap
                   key: CHAT_SERVER
                   optional: false
-            - name: KAHOOT_URL
+            - name: NEXT_PUBLIC_KAHOOT_URL
               valueFrom:
                 configMapKeyRef:
                   name: prod-configmap
