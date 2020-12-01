@@ -1,11 +1,19 @@
 const express = require('express')
+const passport = require('passport')
 const router = express.Router()
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
+const { getProfile, regisController, loginController, logoutController, verifyEmailController, googleCallbackController } = require('../controllers/authController')
+const { generateCookieJWT } = require('../utils/jwt')
 
-router.get('/login', (req,res,next)=>{
-    res.status(200).json({success:ture})
-})
-router.get('/register', (req,res,next)=>{
-    res.status(200).json({success:ture})
-})
+router.post('/login', loginController)
+router.post('/register', regisController)
+router.get('/verify/:token', verifyEmailController)
+router.get('/logout', logoutController)
+
+router.get('/google', passport.authenticate('google', { scope: ['profile','email'], session: false }))
+
+router.get('/google/callback', passport.authenticate('google', {session: false}), googleCallbackController)
+
+router.get('/profile', jwtAuthenicate , getProfile)
 
 module.exports = router

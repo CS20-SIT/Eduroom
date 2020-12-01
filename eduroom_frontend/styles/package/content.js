@@ -1,25 +1,33 @@
 import css from 'styled-jsx/css'
 export default css`
-.background {
-    background-color: #f4f5f7;
+.bg{
+    position: absolute;
+    bottom: 0%;
     height: 100vh;
+    width: 95vw;
+    background-image: url('/images/package/package-bg');
 }
-
 .package-header {
     display: flex;
     font-size: 1.7em;
-    padding: 3% 6%;
+    padding: 0 6% 3% 6%;
     font-weight: bold;
 }
-.box {
-    background-color: white;
-    width: 90%;
-    height: 85vh;
+.container {
+    background-color: #ffffff;
+    width: 88%;
+    margin-bottom: 5%;
+    padding-top: 4%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 .package-content {
     text-align: center;
     color: #5B5B5B;
-    margin: 7% 0 2%;
+    margin: 7% 0 4%;
     font-size: 23px;
     font-weight: 500;
 }
@@ -28,18 +36,23 @@ export default css`
     font-size: 1.5em;
     padding-bottom: 20px;
 }
+
 .addpackbutton {
     color: #3d467f;
     font-size: 19px;
     cursor: pointer;
-    margin: 3% 10%;
-    padding: 3% 30%;
+    width: 85%;
+    padding: 2% 30%;
     background-color: white;
     border: 1px dashed #9593A0;
+    margin: 5% auto 15%;
 }
-.addbutton:hover {background-color: #F4F5F7;}
-.center {
-    text-align: center;
-}
+.addpackbutton:hover {background-color: #F4F5F7;}
+.background-img {
+    position: absolute;
+    top: 0%;
+    width: 100vw;
+    z-index: -1;
+  }
 
 `

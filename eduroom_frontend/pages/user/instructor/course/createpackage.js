@@ -1,45 +1,58 @@
-import React, { Fragment } from 'react'
-import GeneralNoNav from '../../../../components/template/generalnonav'
-import Upload from '../../../../components/package/imageupload'
-import Courses from '../../../../components/package/courses'
-import style from '../../../../styles/package/createpackage'
+import React, { Fragment, useState, useEffect } from 'react';
+import General from '../../../../components/template/general';
+import style from '../../../../styles/package/createpackage';
+import CreatePackage from '../../../../components/package/createPackage';
+import ConfirmPackage from '../../../../components/package/confirmPackage';
+const CreatePackagePage = () => {
+  const [page, setPage] = useState(1);
+  const [myPackage, setMyPackage] = useState({
+    name: '',
+    discount: 0,
+    category: 'default',
+    detail: '',
+    courses: [],
+  });
+  useEffect(() => {
+    const fetchdata = async () => {
+      // res is mockup data
+      const res = [
+        { pic: '', name: 'Java 101' },
+        { pic: '', name: 'Python 101' },
+        { pic: '', name: 'Advacen Algorithm' },
+      ];
+      setMyPackage({ ...myPackage, courses: res });
+    };
+    fetchdata();
+  }, []);
 
-const CreatePackage = () => {
-    return (
-        <Fragment>
-            <GeneralNoNav>
-            <div className="package-header">Create New Package</div>
-            <div className="container">
-                <div className="typebox">
-                    <div><input type="text" placeholder="Package Name" id="name" name="name"></input></div>
-                    <div style={{ width: '50%' }}><input type="text" placeholder="Package Price" id="price" name="price"></input></div>
-                    <div style={{ width: '50%' }}>
-                        <select name="categories" defaultValue="default">
-                            <option value="default" disabled >Categories</option>
-                            <option value="business">Business</option>
-                            <option value="development">Development</option>
-                            <option value="software">IT+Software</option>
-                            <option value="design">Design</option>
-                            <option value="computer">Computer</option>
-                        </select>
-                    </div>
-                    <div><Upload/></div>
-                    <div className="text">Package Detail</div>
-                    <div><textarea id="detail" name="detail" rows="4" style={{ resize: 'none' }} className="pdetail"></textarea></div>
-                    <div className="text">Select Courses</div>
-                    <div className="coursebox" style={{overflow: 'auto', height: '400px'}}>
-                        <div className="text subtitle">Your Courses</div>
-                        <Courses/>
-                    </div>
-                    <div className="center">
-                        <button onClick={() => console.log('Clicked')} className="createbutton">Create</button>
-                    </div>
-                </div>
-
-            </div>
-            <style jsx>{style}</style>
-            </GeneralNoNav>
-        </Fragment>
-    )
-}
-export default CreatePackage
+  useEffect(() => {
+    console.log(myPackage);
+  }, [myPackage]);
+  const renderPage = () => {
+    if (page === 1) {
+      return (
+        <CreatePackage
+          myPackage={myPackage}
+          setMyPackage={setMyPackage}
+          changePage={(page) => setPage(page)}
+        />
+      );
+    } else if (page === 2) {
+      return (
+        <ConfirmPackage
+          myPackage={myPackage}
+          changePage={(page) => setPage(page)}
+        />
+      );
+    }
+  };
+  return (
+    <Fragment>
+      <General img={'/images/package/bgbelow.svg'}>
+        {renderPage()}
+        <style jsx>{style}</style>
+      </General>
+    </Fragment>
+  );
+};
+export default CreatePackagePage;
