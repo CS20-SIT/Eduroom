@@ -1,14 +1,24 @@
 const express = require('express')
+
 const router = express.Router()
-const {getWishlist,getMycourse,postDeleteWishlist,getProfile,postEditProfile,getCheckPassword,postNewPassword}=require('../controllers/user/user')
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
+const {
+	getWishlist,
+	getMycourse,
+	deleteWishlist,
+	getProfile,
+	editProfile,
+	checkPassword,
+	newPassword,
+} = require('../controllers/user/user')
 
-router.post('/getWishlist', getWishlist)
-router.post('/getMycourse', getMycourse)
-router.post('/postDeleteWishlist', postDeleteWishlist)
+router.get('/getWishlist', jwtAuthenicate, getWishlist)
+router.get('/getMycourse', jwtAuthenicate, getMycourse)
+router.delete('/deleteWishlist', jwtAuthenicate, deleteWishlist)
 
-router.post('/getProfile', getProfile)
-router.post('/postEditProfile', postEditProfile)
-router.post('/getCheckPassword', getCheckPassword)
-router.post('/postNewPassword', postNewPassword)
+router.get('/getProfile', jwtAuthenicate, getProfile)
+router.patch('/postEditProfile', jwtAuthenicate, editProfile)
+router.post('/getCheckPassword', jwtAuthenicate, checkPassword)
+router.patch('/postNewPassword', jwtAuthenicate, newPassword)
 
 module.exports = router
