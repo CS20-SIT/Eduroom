@@ -7,7 +7,7 @@ services:
     volumes:
       - "./eduroom_integrated_test/tests:/eduroom_integrated_test"
       - "./eduroom_integrated_test/screenshots:/screenshots"
-    command: "dockerize -wait http://nginx:80 -wait http://eduroom_backend:5000/api/test -wait http://eduroom_frontend:3000 -timeout 180s mocha --timeout 20000 --recursive /eduroom_integrated_test"
+    command: "dockerize -wait http://nginx:80 -wait http://eduroom_backend:5000/api/test -wait http://eduroom_frontend:3000 -timeout 180s mocha --timeout 20000 --recursive /eduroom_integrated_test/01-landing-page-test.js"
     depends_on:
       - nginx
       - eduroom_backend
