@@ -25,21 +25,21 @@ const Register = () => {
 
   const [data, setData] = useState({
     firstname: {
-      label: 'Firstname',
+      label: 'First Name',
       name: 'firstname',
       type: 'text',
-      errorText: 'Firstname is required',
-      placeholder: 'Firstname',
+      errorText: 'First Name is required',
+      placeholder: 'First Name',
       error: false,
       value: '',
     },
 
     lastname: {
-      label: 'Lastname',
+      label: 'Last Name',
       name: 'lastname',
       type: 'text',
-      errorText: 'lastname is required',
-      placeholder: 'Lastname',
+      errorText: 'Last Name is required',
+      placeholder: 'Last Name',
       error: false,
       value: '',
     },
@@ -123,6 +123,7 @@ const Register = () => {
               <div style={{ textAlign: 'center' }}>
                 <button
                   className="register-button"
+                  id="register-btn"
                   disabled={loading}
                   onClick={handleClick}
                   style={loading ? { opacity: '0.6' } : {}}
@@ -137,6 +138,7 @@ const Register = () => {
                 <button
                   className="register-google-button"
                   onClick={handleGoogleLogin}
+                  id="register-oauth"
                 >
                   <div className="register-google-button-text">
                     <img
