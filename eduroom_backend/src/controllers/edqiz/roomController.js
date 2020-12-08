@@ -15,7 +15,8 @@ exports.createRoom = async (req, res, next) => {
 };
 
 exports.player = async (req, res, next) => { //kahoot_player
-  const userid = '71ac8b74-11e5-465c-ae9e-41b56edbbe00';
+  // const userid = '71ac8b74-11e5-465c-ae9e-41b56edbbe00';
+  const userid=req.user.id;
   const { nameforplay } = req.body;
   console.log('nameForplay', nameforplay)
   const result = await pool.query('SELECT userid from kahoot_player where userid = $1', [userid]);
@@ -40,13 +41,18 @@ exports.player = async (req, res, next) => { //kahoot_player
 };
 
 exports.historyPlayer = async (req, res, next) => { //kahoot_historyPlayer
-  const userid = '71ac8b74-11e5-465c-ae9e-41b56edbbe00';
-  const { sessionid } = req.body;
-  console.log('sessionidbackend', sessionid)
-  const rank='99';
+  const userid=req.user.id;
+  const { sessionid,point } = req.body;
+  const score = await pool.query('SELECT rank from kahoot_roomhistoryplayer where userid = $1 and sessionid=$2', [userid,sessionid]);
+  let scoreUpdate=score.rows[0].rank+parseInt(point);
+  // console.log(score.rows[0].rank,'scoreheere')
+  // console.log('sessionidbackend', sessionidco)
+  console.log(scoreUpdate,'here')
+
+  // console.log('scoreUpdate',score,point,score+point)
   let player = await pool.query(
-    'INSERT INTO kahoot_roomhistoryplayer(sessionid,userid,rank) values($1,$2,$3) RETURNING *',
-    [sessionid,userid,rank]
+    'update kahoot_roomhistoryplayer SET rank=$3 where sessionid=$1 and userid=$2 RETURNING *',
+    [sessionid,userid,scoreUpdate]
   );
   player = player.rows[0];
   res.status(201).json(player);
@@ -64,11 +70,12 @@ exports.createKahootHistory = async (req, res, next) => {
 }
 
 exports.createHistoryPlayerAnswer = async (req, res, next) => {
-  const userid = '71ac8b74-11e5-465c-ae9e-41b56edbbe00';
-  const { sessionid,roomid, pin, isavailable } = req.body;
+  const userid=req.user.id;
+  console.log(req.user.id)
+  const { sessionid, questionid, answerno } = req.body;
   console.log(req.body);
   // let room = await pool.query(
-  //   'INSERT INTO kahoot_roomhistory(roomid, pin, isavailable) values($1,$2,$3) RETURNING * ',
+  //   'INSERT INTO kahoot_roomhistory_playeranswer(sessionid, userid, questionid,answerno) values($1,$2,$3) RETURNING * ',
   //   [roomid, pin, isavailable]
   // );
   // room = room.rows[0];
