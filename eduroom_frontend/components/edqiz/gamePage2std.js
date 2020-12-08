@@ -67,7 +67,7 @@ const Page3 = ({questionNumber,goto,answer,data,id}) => {
         <Grid item xs={4}></Grid>
         <Grid item xs={6}>
           <div className="pin">
-            2000
+          {data[questionNumber].point}
           </div>
         </Grid>
       </Grid>
