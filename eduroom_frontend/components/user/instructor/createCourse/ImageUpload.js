@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
+import api from '../../../../api'
 
-const Upload = ({ index }) => {
+const Upload = ({ index, handleData}) => {
 	const [image, setImage] = useState(null)
 	useEffect(() => {
 		if (image) {
@@ -11,20 +12,31 @@ const Upload = ({ index }) => {
 			// reader.readAsDataURL(image)
 		}
 	}, [image])
-	const handleUplaodFile = (e) => {
+	const handleUplaodFile = async (e) => {
 		let newValue = e.target.files[0]
 		let type = 'image'
-		console.log(newValue)
+		handleData({ el: 'picture', data: newValue })
 		setImage(newValue)
+		const formData = new FormData()
+		formData.append('myImage', newValue)
+		const config = {
+			headers: {
+				'content-type': 'multipart/form-data',
+			},
+		}
+		const res = await api.post('/api/instructor/upload', formData, config)
+		console.log(res.data)
 	}
-
+	const getLabel = () => {
+		return image ? image.name : 'Choose Picture'
+	}
 	return (
 		<Fragment>
 			<div>
 				<div className="imageupload textfield">
 					<input id={'image' + index} type="file" accept="image/*" hidden={true} onChange={handleUplaodFile} />
 					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-						<span style={{ color: '#3d467f', opacity: '0.75' }}>Choose Picture</span>
+						<span style={{ color: '#3d467f', opacity: '0.75' }}>{ getLabel()}</span>
 						<span
 							className="camera"
 							onClick={() => {
@@ -35,6 +47,7 @@ const Upload = ({ index }) => {
 						</span>
 					</div>
 				</div>
+				<img id="show-image0"></img>
 			</div>
 			<style jsx>{`
 				.imageupload {
