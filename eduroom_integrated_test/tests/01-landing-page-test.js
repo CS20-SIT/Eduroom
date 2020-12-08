@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer')
 const assert = require('assert')
-describe("Side Nav Testing", () => {
+describe("Landing Page Testing", () => {
     var browser, page, navigationPromise;
     beforeEach(async () => {
         browser = await puppeteer.launch({
