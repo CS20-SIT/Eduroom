@@ -61,7 +61,18 @@ exports.createKahootHistory = async (req, res, next) => {
   );
   room = room.rows[0];
   res.status(201).json(room);
+}
 
+exports.createHistoryPlayerAnswer = async (req, res, next) => {
+  const userid = '71ac8b74-11e5-465c-ae9e-41b56edbbe00';
+  const { sessionid,roomid, pin, isavailable } = req.body;
+  console.log(req.body);
+  // let room = await pool.query(
+  //   'INSERT INTO kahoot_roomhistory(roomid, pin, isavailable) values($1,$2,$3) RETURNING * ',
+  //   [roomid, pin, isavailable]
+  // );
+  // room = room.rows[0];
+  // res.status(201).json(room);
 }
 
 exports.fetchRoom = async (req, res, next) => {
@@ -85,3 +96,6 @@ exports.fetchExactlyRoom = async (req, res, next) => {
   const exactlyRoom = result.rows[0];
   res.status(200).json(exactlyRoom);
 };
+
+
+

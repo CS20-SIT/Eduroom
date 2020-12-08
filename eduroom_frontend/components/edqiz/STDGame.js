@@ -15,7 +15,7 @@ const Content = ({ id }) => {
   const [nextQuestion, setNextQuestion] = useState([]);
   const [answer, setAnswer] = useState('99');
 
-  console.log(answer)
+
   const handleChangeQuestionNumber = (val) => {
     setquestionNumber(val);
   };

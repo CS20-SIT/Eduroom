@@ -1,117 +1,117 @@
 version: "3"
 services:
-  eduroom_frontend:
-    build:
-      context: ./eduroom_frontend
-      dockerfile: Dockerfile.dev
-    depends_on:
-      - eduroom_backend
-    volumes:
-      - ./eduroom_frontend:/usr/src/app
-      - /usr/src/app/node_modules
-      - ./eduroom_frontend/.next:/usr/src/app/.next
-    environment:
-      - NEXT_PUBLIC_ENTRYPOINT_URL=http://localhost
-      - NEXT_PUBLIC_BACKEND_API=http://localhost:5000
-      - NEXT_PUBLIC_GRADER_URL=http://localhost:3050
-      - NEXT_PUBLIC_CHAT_SERVER=http://localhost:5050
-      - NEXT_PUBLIC_KAHOOT_URL=http://localhost:8000
-    ports:
-      - "3000:3000"
-  nginx:
-    restart: always
-    depends_on:
-      - eduroom_frontend
-      - eduroom_backend
-      - eduroom_grading_server
-      - eduroom_socket_chat
-      - eduroom_socket_kahoot
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./nginx
-    ports:
-      - "80:80"
+    eduroom_frontend:
+        build:
+            context: ./eduroom_frontend
+            dockerfile: Dockerfile.dev
+        depends_on:
+            - eduroom_backend
+        volumes:
+            - ./eduroom_frontend:/usr/src/app
+            - /usr/src/app/node_modules
+            - ./eduroom_frontend/.next:/usr/src/app/.next
+        environment:
+            - NEXT_PUBLIC_ENTRYPOINT_URL=http://localhost
+            - NEXT_PUBLIC_BACKEND_API=http://localhost:5000
+            - NEXT_PUBLIC_GRADER_URL=http://localhost:3050
+            - NEXT_PUBLIC_CHAT_SERVER=http://localhost:5050
+            - NEXT_PUBLIC_KAHOOT_URL=http://localhost:8000
+        ports:
+            - "3000:3000"
+    nginx:
+        restart: always
+        depends_on:
+            - eduroom_frontend
+            - eduroom_backend
+            - eduroom_grading_server
+            - eduroom_socket_chat
+            - eduroom_socket_kahoot
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./nginx
+        ports:
+            - "80:80"
 
-  eduroom_backend:
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./eduroom_backend
-    volumes:
-      - /usr/src/app/node_modules
-      - ./eduroom_backend:/usr/src/app
-    environment:
-      - NODE_ENV=development
-      - PORT=5000
-      - ENTRYPOINT_URL=http://localhost
-      - CLIENT_URL=http://localhost:3000
-      - BACKEND_API=http://localhost:5000
-      - DB_USER=eduroom_user
-      - DB_PASSWORD=dADKHgj86jQoRoff7xwC4TZ
-      - DB_HOST=35.198.234.48
-      - DB_PORT=5432
-      - DB_NAME=eduroom_db
-      - JWT_SECRET=jwtsecret
-      - JWT_EXPIRE=30d
-      - JWT_COOKIE_EXPIRE=30
-      - GOOGLE_CLIENT_ID=915718814816-au5njmbt31b0g4lctg8edqm3rs53vvcn.apps.googleusercontent.com
-      - GOOGLE_SECRET_KEY=dDwssvp5-CCfvXs7vhlNhxIi
-      - SMTP_SECURE=false
-      - SMTP_HOST=eduroom_smtp
-      - SMTP_PORT=1025
-      - SMTP_EMAIL=
-      - SMTP_PASSWORD=
-      - FROM_EMAIL=admin@eduroom.com
-      - FROM_NAME=Eduroom Admin
-      - NODE_TLS_REJECT_UNAUTHORIZED=0
-      - GCS_SA_KEY_PATH=gcs-eduroom.json
-      - GCS_BUCKET_NAME=eduroom
-      - GCS_PROJECT_ID=macbigduck
-    ports:
-      - "5000:5000"
-  eduroom_grading_server:
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./eduroom_grading_server
-    volumes:
-      - /usr/src/app/node_modules
-      - ./eduroom_grading_server:/usr/src/app
-    environment:
-      - NODE_ENV=development
-      - PORT=3050
-      - ENTRYPOINT_URL=http://localhost
-      - CLIENT_URL=http://localhost:3000
-    ports:
-      - "3050:3050"
-  eduroom_socket_chat:
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./eduroom_socket_chat
-    volumes:
-      - /usr/src/app/node_modules
-      - ./eduroom_socket_chat:/usr/src/app
-    environment:
-      - NODE_ENV=development
-      - PORT=5050
-      - ENTRYPOINT_URL=http://localhost
-      - CLIENT_URL=http://localhost:3000
-    ports:
-      - "5050:5050"
-  eduroom_socket_kahoot:
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./eduroom_socket_kahoot
-    volumes:
-      - /usr/src/app/node_modules
-      - ./eduroom_socket_kahoot:/usr/src/app
-    environment:
-      - NODE_ENV=development
-      - PORT=8000
-      - ENTRYPOINT_URL=http://localhost
-      - CLIENT_URL=http://localhost:3000
-    ports:
-      - "8000:8000"
-  eduroom_smtp:
-    image: reachfive/fake-smtp-server
-    ports:
-      - "1025:1025"
-      - "1080:1080"
+    eduroom_backend:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eduroom_backend
+        volumes:
+            - /usr/src/app/node_modules
+            - ./eduroom_backend:/usr/src/app
+        environment:
+            - NODE_ENV=development
+            - PORT=5000
+            - ENTRYPOINT_URL=http://localhost
+            - CLIENT_URL=http://localhost:3000
+            - BACKEND_API=http://localhost:5000
+            - DB_USER=eduroom_user
+            - DB_PASSWORD=dADKHgj86jQoRoff7xwC4TZ
+            - DB_HOST=35.198.234.48
+            - DB_PORT=5432
+            - DB_NAME=eduroom_db
+            - JWT_SECRET=jwtsecret
+            - JWT_EXPIRE=30d
+            - JWT_COOKIE_EXPIRE=30
+            - GOOGLE_CLIENT_ID=915718814816-au5njmbt31b0g4lctg8edqm3rs53vvcn.apps.googleusercontent.com
+            - GOOGLE_SECRET_KEY=dDwssvp5-CCfvXs7vhlNhxIi
+            - SMTP_SECURE=false
+            - SMTP_HOST=eduroom_smtp
+            - SMTP_PORT=1025
+            - SMTP_EMAIL=
+            - SMTP_PASSWORD=
+            - FROM_EMAIL=admin@eduroom.com
+            - FROM_NAME=Eduroom Admin
+            - NODE_TLS_REJECT_UNAUTHORIZED=0
+            - GCS_SA_KEY_PATH=gcs-eduroom.json
+            - GCS_BUCKET_NAME=eduroom-dev
+            - GCS_PROJECT_ID=eduroom
+        ports:
+            - "5000:5000"
+    eduroom_grading_server:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eduroom_grading_server
+        volumes:
+            - /usr/src/app/node_modules
+            - ./eduroom_grading_server:/usr/src/app
+        environment:
+            - NODE_ENV=development
+            - PORT=3050
+            - ENTRYPOINT_URL=http://localhost
+            - CLIENT_URL=http://localhost:3000
+        ports:
+            - "3050:3050"
+    eduroom_socket_chat:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eduroom_socket_chat
+        volumes:
+            - /usr/src/app/node_modules
+            - ./eduroom_socket_chat:/usr/src/app
+        environment:
+            - NODE_ENV=development
+            - PORT=5050
+            - ENTRYPOINT_URL=http://localhost
+            - CLIENT_URL=http://localhost:3000
+        ports:
+            - "5050:5050"
+    eduroom_socket_kahoot:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./eduroom_socket_kahoot
+        volumes:
+            - /usr/src/app/node_modules
+            - ./eduroom_socket_kahoot:/usr/src/app
+        environment:
+            - NODE_ENV=development
+            - PORT=8000
+            - ENTRYPOINT_URL=http://localhost
+            - CLIENT_URL=http://localhost:3000
+        ports:
+            - "8000:8000"
+    eduroom_smtp:
+        image: reachfive/fake-smtp-server
+        ports:
+            - "1025:1025"
+            - "1080:1080"
