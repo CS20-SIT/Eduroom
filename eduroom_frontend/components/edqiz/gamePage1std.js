@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { useRouter } from "next/router";
 import socketIOClient from "socket.io-client";
 
+
 const axios = require("axios");
 const Page1 = ({
   goto,
@@ -18,7 +19,20 @@ const Page1 = ({
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: "/kahoot",
   });
- 
+  const [countPlayer, setCountPlayer] = useState([]);
+  const setCountP = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = [];
+    socket.emit("room", (router.query.id));
+    socket.on("get-countAnswer", (pin, questionNo,playerAnswer) => {
+      temp.push([playerAnswer]);
+      console.log('getCount',playerAnswer)
+      countPlayer.push(temp);
+      console.log(temp,"temp")
+    });
+  };
   // console.log("message", messages);
   const room = { name: "room1", PIN: router.query.id };
 
@@ -26,9 +40,20 @@ const Page1 = ({
   const [diff, setDiff] = useState(null);
 
   //////////////
-
+  const setCountAnswer = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit("set-countAnswer", router.query.id, 1);
+  };
+  useEffect(() => {
+    setCountP();
+    
+  }, [countPlayer]);
   useEffect(() => {
     socket.emit("room", (router.query.id));
+    // socket.on("get-answerPlayer",pin)
+    // socket.emit("set-answerPlayer", (router.query.id,questionNumber,1));
     socket.on("get-diff", (time,pin) => {
       setDiff(time);
       console.log('get-diff',time,pin)
@@ -99,7 +124,7 @@ const Page1 = ({
             <Grid item xs={4}>
               <div className="text-time">ANSWER</div>
               <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
-                0
+                {countPlayer.length}
               </div>
             </Grid>
           </Grid>
@@ -121,7 +146,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#F39AC4" }}
                 onClick={() => {
-                  setAnswer("0"), goto(3);
+                  setAnswer("0"), goto(3),setCountAnswer();
                 }}
               >
                 {setAnswer("0")}
@@ -137,7 +162,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#D5C1FC" }}
                 onClick={() => {
-                  setAnswer(1), goto(3);
+                  setAnswer(1), goto(3),setCountAnswer();
                 }}
               >
                 {/* {goto(3)} */}
@@ -162,7 +187,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#FDD4C1" }}
                 onClick={() => {
-                  setAnswer(2), goto(3);
+                  setAnswer(2), goto(3),setCountAnswer();
                 }}
               >
                 {data[questionNumber].ans[2]}
@@ -177,7 +202,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#A6CEEE" }}
                 onClick={() => {
-                  setAnswer(3), goto(3);
+                  setAnswer(3), goto(3),setCountAnswer();
                 }}
               >
                 {data[questionNumber].ans[3]}
