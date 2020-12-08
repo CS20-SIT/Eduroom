@@ -1,7 +1,9 @@
 import React,{Fragment} from 'react'
 import CategoriesBox from './categoriesBox'
+import {useRouter} from 'next/router'
 
 const CategoriesSet = () => {
+    const router = useRouter();
     const categories = ["Mathematic","Science","Language","Room4","Room5","Room6","Room7"]
     return (
         <Fragment>
@@ -9,7 +11,7 @@ const CategoriesSet = () => {
             {
                 categories.map((el,index)=>{
                     return (
-                        <div className="categoriesItems" key={index}>
+                        <div className="categoriesItems" key={index} onClick={()=>{router.push('/forum/room/' + el)}}>
                             <CategoriesBox content={el} />
                         </div>
                     )
