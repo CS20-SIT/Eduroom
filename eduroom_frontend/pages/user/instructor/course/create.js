@@ -3,10 +3,15 @@ import GeneralNoNav from '../../../../components/template/generalnonav'
 import Page1 from '../../../../components/user/instructor/createCourse/Page1'
 const create = () => {
 	const [page, setPage] = useState(1)
-	const [data, setDat] = useState({ name: '', picture: '', video: '', subject: '' })
+	const [data, setData] = useState({ name: '', picture: '', video: '', subject: '' })
 	const handleChange = (e) => {
-		console.log(e.target)
+		data[e.el] = e.data;
+		setData({ ...data })
 	}
+	useEffect(() => {
+		console.log('data is');
+		console.log(data);
+	}, [data])
 	const renderPage = () => {
 		switch (page) {
 			case 1:
