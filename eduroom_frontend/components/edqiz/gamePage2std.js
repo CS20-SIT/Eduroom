@@ -13,7 +13,7 @@ const Page3 = ({questionNumber,goto,answer,data,id}) => {
  
   useEffect(() => {
     socket.emit("room", (router.query.id));
-    console.log('watiting',answer)
+    // console.log('watiting',answer)
     socket.on('get-diff', (time) => {
       setDiff(time);
       if(time==0){
