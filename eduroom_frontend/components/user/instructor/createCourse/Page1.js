@@ -1,19 +1,15 @@
 import { Fragment } from 'react'
-import Pagination from './Pagination'
 import ImageUpload from './ImageUpload'
 import VideoUpload from './VideoUpload'
 
 const Page1 = (props) => {
-	const subjects = ['Math', 'Computer Science', 'Science']
-
 	const subjectChange = (e) => {
-		console.log(e.target.value)
 		props.handleData({ el: 'subject', data: e.target.value })
 	}
+	
 	return (
 		<Fragment>
-			<div className="box">
-				<Pagination currentPage={1}></Pagination>
+			<div>
 				<div className="container">
 					<div className="text">
 						<div className="title">Coursename</div>
@@ -31,7 +27,7 @@ const Page1 = (props) => {
 						<ImageUpload index={0} handleData={props.handleData}></ImageUpload>
 					</div>
 
-					<div style={{marginTop:'10px'}}>
+					<div style={{ marginTop: '10px' }}>
 						<div className="title">Sample Video</div>
 						<VideoUpload index={1} handleData={props.handleData}></VideoUpload>
 					</div>
@@ -42,10 +38,10 @@ const Page1 = (props) => {
 							<option disabled value="" style={{ color: '#3d467f', opacity: '0.75' }}>
 								Subject
 							</option>
-							{subjects.map((subject, idx) => {
+							{props.subjects.map((subject, idx) => {
 								return (
-									<option value={subject} key={idx}>
-										{subject}
+									<option value={subject.cataname} key={idx}>
+										{subject.cataname}
 									</option>
 								)
 							})}
@@ -54,6 +50,7 @@ const Page1 = (props) => {
 				</div>
 			</div>
 			<style jsx>{`
+
 				select {
 					-webkit-appearance: none;
 					-moz-appearance: none;
@@ -68,14 +65,6 @@ const Page1 = (props) => {
 					font-size: 1.1em;
 					color: #3d467f;
 					padding: 14px;
-				}
-				.box {
-					background: rgba(255, 255, 255, 0.9);
-					box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 2px 15px rgba(0, 0, 0, 0.2);
-					border-radius: 10px;
-					padding: 50px;
-					width: 65%;
-					margin-bottom: 100px;
 				}
 				.container {
 					display: flex;
