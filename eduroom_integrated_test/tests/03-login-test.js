@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer')
-const assert = require('assert')
+const assert = require('assert');
+const { email,password } = require('../config');
 describe("Login Testing", () => {
     var browser, page, navigationPromise;
     beforeEach(async () => {
@@ -61,6 +62,15 @@ describe("Login Testing", () => {
         await page.screenshot({path: '/screenshots/03-login-page-test-05-invalid-email.png'})
         const alert = await page.evaluate(()=>document.getElementById('email-error').innerText)
         assert.strictEqual(alert, "Email is not valid")
+    })
+    it("Can Login", async() => {
+        await page.waitForSelector('#login-email-field')
+        await page.type('input[name="email"]#login-email-field',email)
+        await page.type('input[name="password"]#login-password-field',password)
+        await page.click('#login-btn-submit')
+        await page.waitFor(5000)
+        await page.screenshot({path: '/screenshots/03-login-page-test-06-can-login.png'})
+        assert.strictEqual(page._frameManager._mainFrame._url,'http://nginx/')
     })
     afterEach (() => {
         browser.close()
