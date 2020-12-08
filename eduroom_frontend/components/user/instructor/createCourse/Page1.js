@@ -1,9 +1,15 @@
 import { Fragment } from 'react'
 import Pagination from './Pagination'
 import ImageUpload from './ImageUpload'
-import VideoUpload from './VideoUpload';
+import VideoUpload from './VideoUpload'
 
 const Page1 = (props) => {
+	const subjects = ['Math', 'Computer Science', 'Science']
+
+	const subjectChange = (e) => {
+		console.log(e.target.value)
+		props.handleData({ el: 'subject', data: e.target.value })
+	}
 	return (
 		<Fragment>
 			<div className="box">
@@ -11,26 +17,58 @@ const Page1 = (props) => {
 				<div className="container">
 					<div className="text">
 						<div className="title">Coursename</div>
-						<input name="name" className="textfield" placeholder="Course Title" type="text"></input>
+						<input
+							name="name"
+							className="textfield"
+							placeholder="Course Title"
+							type="text"
+							onChange={(e) => props.handleData({ el: 'name', data: e.target.value })}
+						></input>
 					</div>
 
 					<div className="text">
 						<div className="title">Choose Picture</div>
-						<ImageUpload index={0}></ImageUpload>
+						<ImageUpload index={0} handleData={props.handleData}></ImageUpload>
 					</div>
 
-					<div className="text">
+					<div style={{marginTop:'10px'}}>
 						<div className="title">Sample Video</div>
-						<VideoUpload></VideoUpload>
+						<VideoUpload index={1} handleData={props.handleData}></VideoUpload>
 					</div>
 
 					<div className="text">
 						<div className="title">Subject</div>
-						<input className="textfield" placeholder="Introduction to Programming" type="text"></input>
+						<select name="discount" onChange={subjectChange} value={props.data.subject}>
+							<option disabled value="" style={{ color: '#3d467f', opacity: '0.75' }}>
+								Subject
+							</option>
+							{subjects.map((subject, idx) => {
+								return (
+									<option value={subject} key={idx}>
+										{subject}
+									</option>
+								)
+							})}
+						</select>
 					</div>
 				</div>
 			</div>
 			<style jsx>{`
+				select {
+					-webkit-appearance: none;
+					-moz-appearance: none;
+					background: #eff0f6;
+					background-image: url('/images/instructor/select-arrow.svg');
+					background-repeat: no-repeat;
+					background-position-x: 95.5%;
+					background-position-y: center;
+					border-radius: 10px;
+					width: 400px;
+					border: none;
+					font-size: 1.1em;
+					color: #3d467f;
+					padding: 14px;
+				}
 				.box {
 					background: rgba(255, 255, 255, 0.9);
 					box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 2px 15px rgba(0, 0, 0, 0.2);

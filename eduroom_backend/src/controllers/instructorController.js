@@ -60,3 +60,9 @@ exports.GetCourses = async (req, res, next) => {
 	console.log(result.rows)
 	res.send(result.rows)
 }
+
+exports.Upload = async (req, res, next) => {
+	console.log('body');
+	console.log(req.body);
+	res.send(req.body);
+}
