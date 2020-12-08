@@ -1,11 +1,13 @@
 const express = require('express')
+
 const router = express.Router()
 const { test } = require('../controllers/testController')
 const sendEmail = require('../utils/sendMail.js')
 const { uploadToGCSHandler, uploadToLocalHandler } = require('../middleware/multer')
+const { uploadFile } = require('../utils/cloudStorage')
 
 router.get('/', test)
-router.get('/mail', async (req, res, next) => {
+router.get('/mail', async (req, res) => {
 	sendEmail({ email: 'test@test.com', subject: 'Test SMTP Server', message: 'Woah' })
 	res.status(200).json({ success: true })
 })
@@ -27,8 +29,8 @@ router.post('/multerGCS', uploadToGCSHandler('test1/'), (req, res) => {
 	// ]
 })
 
-router.post('/multerLocal', uploadToLocalHandler(), (req, res) => {
-	res.send(req.files)
+router.post('/multerLocal', uploadToLocalHandler(), async (req, res) => {
+	const filePath = req.files[0].path
 	// This is what you can get in req.files
 	// [
 	//     {
@@ -37,6 +39,10 @@ router.post('/multerLocal', uploadToLocalHandler(), (req, res) => {
 	//         mimetype: <Type of that file>
 	//     }
 	// ]
+	// Manipulate the file
+	// Upload file to gcs
+	const fileUrl = await uploadFile(filePath, 'test1/')
+	res.send({ fileUrl })
 })
 
 module.exports = router
