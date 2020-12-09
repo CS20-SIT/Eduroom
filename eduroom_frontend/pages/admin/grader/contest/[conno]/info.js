@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from "../../../../../components/graderCreate/Layout/gSide";
-import GNav from "../../../../../components/graderCreate/Layout/gNav";
-
-import ConEdit from "../../../../../components/graderCreate/Contest/ConCreate/ConForm";
+import GeneralNoNav from "../../../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../../../components/graderCreate/GraderCreateLayout/Nav";
+import Gback from "../../../../../components/graderCreate/GraderCreateLayout/Background";
+import ConEdit from "../../../../../components/graderCreate/Contest/Create/CreateForm";
 
 const Info = () => {
   return (
@@ -10,6 +10,7 @@ const Info = () => {
       <GeneralNoNav>
         <GNav> </GNav>
         <ConEdit />
+        <Gback></Gback>
       </GeneralNoNav>
     </Fragment>
   );
