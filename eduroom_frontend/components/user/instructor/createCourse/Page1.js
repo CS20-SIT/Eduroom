@@ -17,18 +17,19 @@ const Page1 = (props) => {
 							className="textfield"
 							placeholder="Course Title"
 							type="text"
+							value={props.data.name}
 							onChange={(e) => props.handleData({ el: 'name', data: e.target.value })}
 						></input>
 					</div>
 
 					<div className="text">
 						<div className="title">Choose Picture</div>
-						<ImageUpload index={0} handleData={props.handleData}></ImageUpload>
+						<ImageUpload data={props.data} index={0} handleData={props.handleData}></ImageUpload>
 					</div>
 
 					<div style={{ marginTop: '10px' }}>
 						<div className="title">Sample Video</div>
-						<VideoUpload index={1} handleData={props.handleData}></VideoUpload>
+						<VideoUpload data={props.data} index={1} handleData={props.handleData}></VideoUpload>
 					</div>
 
 					<div className="text">

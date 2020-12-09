@@ -1,25 +1,18 @@
 import React, { Fragment, useState, useEffect } from 'react'
+import api from '../../../../api'
 
-const Upload = ({ index, handleData }) => {
-	const [video, setVideo] = useState(null)
-	useEffect(() => {
-		if (video) {
-			// var reader = new FileReader()
-			// reader.onload = function (e) {
-			// 	document.getElementById('show-image' + index).src = e.target.result
-			// }
-			// reader.readAsDataURL(image)
-		}
-	}, [video])
-	const handleUplaodFile = (e) => {
+const Upload = ({ index, handleData, data }) => {
+	const handleUplaodFile = async (e) => {
 		let newValue = e.target.files[0]
-		handleData({el:'video',data:newValue});
-		console.log(newValue)
-		setVideo(newValue)
+		handleData({ el: 'video', data: newValue })
+		const formData = new FormData()
+		formData.append('course-smaple-video', newValue)
+		// const res = await api.post('/api/instructor/upload', formData)
+		// console.log(res.data)
 	}
 
 	const getLabel = () => {
-		return video ? video.name : 'Choose Video'
+		return data.video ? data.video.name : 'Choose Video'
 	}
 
 	return (
@@ -28,7 +21,7 @@ const Upload = ({ index, handleData }) => {
 				<div className="videoupload textfield">
 					<input id={'video' + index} type="file" accept="video/*" hidden={true} onChange={handleUplaodFile} />
 					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-						<span style={{ color: '#3d467f', opacity: '0.75' }}>{ getLabel()}</span>
+						<span style={{ color: '#3d467f', opacity: '0.75' }}>{getLabel()}</span>
 						<span
 							className="camera"
 							onClick={() => {
