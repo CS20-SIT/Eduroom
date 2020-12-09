@@ -5,6 +5,7 @@ import CreateBlock from "../../components/forum/CreateBlock";
 import GeneralNoNav from "../../components/template/generalnonav";
 import { useRouter } from "next/router";
 import BackButton from "../../components/forum/BackButton";
+import ForumNav from '../../components/forum/layout/forumNav';
 
 const create = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const create = () => {
           }}
         >
           <div id="nav">
-            <NavForum />
+            <ForumNav />
             <div className="content">
               <strong className="topic">CREATE FORUM</strong>
             </div>
@@ -56,7 +57,7 @@ const create = () => {
               }
               .backblock {
                 padding: 0% 1% 0% 1%;
-                margin: 0% 38% 0% 1%;
+                margin: 0% 38% 0% 5%;
                 width: auto;
               }
             `}
