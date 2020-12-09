@@ -6,7 +6,6 @@ const Page1 = (props) => {
 	const subjectChange = (e) => {
 		props.handleData({ el: 'subject', data: e.target.value })
 	}
-	
 	return (
 		<Fragment>
 			<div>
@@ -50,7 +49,6 @@ const Page1 = (props) => {
 				</div>
 			</div>
 			<style jsx>{`
-
 				select {
 					-webkit-appearance: none;
 					-moz-appearance: none;
