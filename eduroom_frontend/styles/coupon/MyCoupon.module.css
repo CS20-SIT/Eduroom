@@ -1,0 +1,13 @@
+.btn{
+    border: 5px solid black;
+    border-style: none;
+    background-color: #FB9CCB;
+    color:white;
+    border-radius:4px;
+    height: 35px;
+    width: 100px;
+    position: absolute;
+    top: 90vh;
+    left: 20vh;
+    font-size: 20px;
+}
