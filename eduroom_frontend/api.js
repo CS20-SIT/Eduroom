@@ -11,6 +11,7 @@ instance.interceptors.response.use(
 	},
 	(error) => {
 		if (!error.response) {
+			console.log(error)
 			console.log('Please check your internet connection.')
 			error.response = { data: {} }
 			error.response.data = { success: 'false', error: 'Server Error' }

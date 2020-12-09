@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import { useRouter } from 'next/router'
 import api from '../../api'
 import { useState, useEffect } from 'react'
+import moment from 'moment'
 
 const ForumInRoom = ({ row }) => {
 	// const [data, setData] = useState([])
@@ -67,10 +68,7 @@ const ForumInRoom = ({ row }) => {
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
 												<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
-													USER NUMBER : {el.userid}{' '}
-												</div>
-												<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b', marginLeft: '12px' }}>
-													DATE : {el.posttime}
+												{el.author}  post  {moment(el.posttime).fromNow()}
 												</div>
 											</div>
 										</div>

@@ -57,6 +57,16 @@ exports.GetProfileDetail = async (req, res, next) => {
 exports.GetCourses = async (req, res, next) => {
 	const instructorId = req.user.instructor
 	const result = await pool.query('SELECT * from course where ownerid = $1', [instructorId])
-	console.log(result.rows)
 	res.send(result.rows)
+}
+
+exports.GetCategories = async (req, res, next) => {
+	const result = await pool.query('SELECT * from categories');
+	res.send(result.rows);
+}
+
+exports.Upload = async (req, res, next) => {
+	console.log('body');
+	console.log(req.body);
+	res.send(req.body);
 }
