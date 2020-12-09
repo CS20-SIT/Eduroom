@@ -5,13 +5,17 @@ const Section = ({ section, idx, handleChangeSection }) => {
 	const changeVideos = (videos) => {
 		section.videos = videos
 		handleChangeSection(section, idx)
-	}
+  }
+  const changeName = (e) => {
+    section.name = e.target.value;
+    handleChangeSection(section,idx);
+  }
 	return (
 		<Fragment>
 			<div className="box">
 				<div className="title">Section Name</div>
-				<input name="name" className="textfield" type="text" value={section.name}></input>
-				<Videos videos={section.videos} changeVideos={changeVideos}></Videos>
+        <input name="name" className="textfield" type="text" value={section.name} onChange={changeName}></input>
+        <Videos videos={section.videos} sectionIndex={idx} changeVideos={changeVideos}></Videos>
 			</div>
 			<style jsx>{`
 				.box {
