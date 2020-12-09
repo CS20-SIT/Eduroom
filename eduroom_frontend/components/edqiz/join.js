@@ -26,7 +26,7 @@ const Page1 = ({ goto, mockData, change, name }) => {
     const res = await api.post('/api/kahoot/player', nameforplay);
     const sessionTemp = sessionid
     console.log(sessionTemp, 'sesstionIDTemp')
-    const resSession = await api.post('/api/kahoot/roomHistoryplayer', sessionTemp);
+    const resSession = await api.post('/api/kahoot/roomHistoryplayerFirstTime', sessionTemp);
     console.log(resSession, 'session success')
 
   };

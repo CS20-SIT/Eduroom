@@ -39,17 +39,25 @@ exports.player = async (req, res, next) => { //kahoot_player
     res.status(400).json({ success: false });
   }
 };
+exports.historyPlayerFirstTime = async (req, res, next) => { //kahoot_historyPlayer
+  const userid=req.user.id;
+  const { sessionid } = req.body;
+  console.log('sessionidbackend', sessionid)
+  const rank='0';
+  let player = await pool.query(
+    'INSERT INTO kahoot_roomhistoryplayer(sessionid,userid,rank) values($1,$2,$3) RETURNING *',
+    [sessionid,userid,rank]
+  );
+  player = player.rows[0];
+  res.status(201).json(player);
+};
 
 exports.historyPlayer = async (req, res, next) => { //kahoot_historyPlayer
   const userid=req.user.id;
   const { sessionid,point } = req.body;
   const score = await pool.query('SELECT rank from kahoot_roomhistoryplayer where userid = $1 and sessionid=$2', [userid,sessionid]);
   let scoreUpdate=score.rows[0].rank+parseInt(point);
-  // console.log(score.rows[0].rank,'scoreheere')
-  // console.log('sessionidbackend', sessionidco)
   console.log(scoreUpdate,'here')
-
-  // console.log('scoreUpdate',score,point,score+point)
   let player = await pool.query(
     'update kahoot_roomhistoryplayer SET rank=$3 where sessionid=$1 and userid=$2 RETURNING *',
     [sessionid,userid,scoreUpdate]
