@@ -68,16 +68,19 @@ exports.GetCategories = async (req, res, next) => {
 
 exports.Upload = async (req, res, next) => {
 	const file = req.files[0]
-	const url = file.linkUrl
-	console.log(url)
-	res.send(req.files)
+	const result = { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	res.send(result)
 }
 
 exports.CreateCourse = async (req, res, next) => {
 	const instructorId = req.user.instructor
 	const courseId = uuidv4()
 	console.log(req.body)
-	// const result = await pool.query(`insert into course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
-	// values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,[courseId])
+	// const {name,}
+	const result = await pool.query(
+		`INSERT INTO course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
+	values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+		[courseId]
+	)
 	res.send({ courseId })
 }
