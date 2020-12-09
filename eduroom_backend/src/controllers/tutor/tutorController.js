@@ -21,8 +21,10 @@ const getInstructorAvailabilities = async (req, res) => {
          */
 
 		// ID from cookies
-		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
+
+		const id = req.user.id
 
 		let result = await pool.query(
 			`select day,time from instructor_availabilities where instructorid = '${id}' order by day, time`
@@ -238,7 +240,8 @@ const getInstructorAppointments = async (req, res) => {
 	try {
 		// ID from cookies
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
-		const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
+		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
+		const id = req.user.id
 
 		let result = await pool.query(`
 		select a.appointmentid, a.headerid as id, u.firstname as firstname, u.lastname as lastname, date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, a.status,to_char( a.starttime, 'DD-MM-YYYY') as date, m.userid as mid, me.firstname as mfn, me.lastname as mln
@@ -312,7 +315,10 @@ const getInstructorAppointments = async (req, res) => {
 const getStudentAppointments = async (req, res) => {
 	try {
 		// ID from cookies
-		const id = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+
+		// const id = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+		const id = req.user.id
+		// console.log(id)
 
 		let result = await pool.query(`
 		select a.appointmentid,u.firstname , u.lastname ,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, 
@@ -410,8 +416,11 @@ const updateInstructorAvailabilities = async (req, res) => {
 		// ID from cookies
 		const { availabilities, price } = req.body
 		// const id = 'bef966c3-c352-4044-a6b7-cdab918611b8'
-		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
+
+		const id = req.user.id
+
 		for (let i = 0; i < 5; i++) {
 			await pool.query(`delete from instructor_availabilities where instructorid = '${id}' and day = ${i}`)
 		}
@@ -442,7 +451,8 @@ const insertStudentAppointment = async (req, res) => {
          */
 
 		// ID from cookies
-		const headerId = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+		// const headerId = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+		const headerId = req.user.id
 		const { id, startTime, endTime, price, members } = req.body
 		// 	console.log(headerId)
 		// 	console.log(id, startTime, endTime, price, members)
@@ -515,7 +525,8 @@ const updateAppointmentReview = async (req, res) => {
          */
 
 		// Cookie
-		const userId = '123e4567-e89b-12d3-a456-426614174000'
+		const userId = req.user.id
+		// const userId = '123e4567-e89b-12d3-a456-426614174000'
 		const { id, score, desc } = req.body
 
 		await pool.query(`
