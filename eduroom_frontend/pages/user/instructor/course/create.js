@@ -8,7 +8,15 @@ import Page3 from '../../../../components/user/instructor/createCourse/Page3'
 import Pagination from '../../../../components/user/instructor/createCourse/Pagination'
 const create = () => {
 	const [page, setPage] = useState(1)
-	const [data, setData] = useState({ name: '', picture: '', video: '', subject: '', sections: [] })
+	const [data, setData] = useState({
+		name: '',
+		picture: '',
+		picturePath: '',
+		video: '',
+		videoPath: '',
+		subject: '',
+		sections: [],
+	})
 	const [subjects, setSubjects] = useState([])
 	const router = useRouter()
 	const handleChange = (e) => {
@@ -42,10 +50,20 @@ const create = () => {
 	}
 	const handleNext = async () => {
 		if (page === 3) {
-			const res = await api.post('/api/instructor/course', data)
-			console.log(res.data)
-			console.log('data is');
-			console.log(data);
+			//upload file to server
+			const pictureFormData = new FormData();
+			pictureFormData.append('course-picture',data.picture);
+			const pictureLink = await api.post('/api/instructor/upload/picture', pictureFormData)
+			data.picturePath = pictureLink.data.linkUrl;
+
+			const sampleVideoFormData = new FormData();
+			sampleVideoFormData.append('course-picture',data.video);
+			let videoLink = await api.post('/api/instructor/upload/sampleVideo', sampleVideoFormData)
+			data.videoPath = videoLink.data.linkUrl;
+
+			console.log('data is')
+			console.log(data)
+			setData({ ...data });
 		} else {
 			setPage(page + 1)
 		}
