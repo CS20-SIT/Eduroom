@@ -195,8 +195,8 @@ exports.googleCallbackController = async (req, res) => {
 		}
 		// Add user to user_profile
 		const userId = uuidv4()
-		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-          VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, createat, updateat) 
+          VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
 		await pool.query(user_profileCreationQuery, [''])
 
 		// Add user to OAuth
