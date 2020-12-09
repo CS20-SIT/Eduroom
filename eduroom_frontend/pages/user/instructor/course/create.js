@@ -8,11 +8,15 @@ import Page3 from '../../../../components/user/instructor/createCourse/Page3'
 import Pagination from '../../../../components/user/instructor/createCourse/Pagination'
 const create = () => {
 	const [page, setPage] = useState(1)
-	const [data, setData] = useState({ name: '', picture: '', video: '', subject: '' })
+	const [data, setData] = useState({ name: '', picture: '', video: '', subject: '', sections: [] })
 	const [subjects, setSubjects] = useState([])
 	const router = useRouter()
 	const handleChange = (e) => {
 		data[e.el] = e.data
+		setData({ ...data })
+	}
+	const changeSections = (sections) => {
+		data.sections = sections
 		setData({ ...data })
 	}
 	useEffect(() => {
@@ -23,15 +27,15 @@ const create = () => {
 		fetchData()
 	}, [])
 	useEffect(() => {
-		console.log('data is')
-		console.log(data)
+		// console.log('data is')
+		// console.log(data)
 	}, [data])
 	const renderPage = () => {
 		switch (page) {
 			case 1:
 				return <Page1 data={data} handleData={handleChange} subjects={subjects} setPage={setPage}></Page1>
 			case 2:
-				return <Page2></Page2>
+				return <Page2 sections={data.sections} changeSections={changeSections}></Page2>
 			case 3:
 				return <Page3></Page3>
 		}
@@ -82,7 +86,7 @@ const create = () => {
 					box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 2px 15px rgba(0, 0, 0, 0.2);
 					border-radius: 10px;
 					padding: 50px;
-					width: 65%;
+					width: 75%;
 					margin-bottom: 100px;
 				}
 				.action {
