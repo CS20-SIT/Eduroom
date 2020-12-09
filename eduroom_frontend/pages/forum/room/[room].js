@@ -9,6 +9,8 @@ import api from '../../../api'
 import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core/styles'
 import BackButton from '../../../components/forum/BackButton'
+import BackForRoom from '../../../components/forum/BackForRoom'
+import ForumNav from '../../../components/forum/layout/forumNav';
 
 const roomID = (props) => {
 	const [data, setData] = useState([])
@@ -49,14 +51,11 @@ const roomID = (props) => {
 					}}
 				>
 					<div id="nav">
-						<NavForum />
-						<div className="backtoforum">
-							<BackButton />
+						<ForumNav />
+						<div className="backforroom">
+							<BackForRoom row={data} />
 						</div>
-						{/* <div className="roomtab">
-							<RoomTab />
-						</div> */}
-						<div className="forumblock">
+					 <div className="forumblock">
 							<ForumInRoom row={data} />
 						</div>
 					</div>

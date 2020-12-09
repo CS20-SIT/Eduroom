@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import api from "../../api";
 import Grid from "@material-ui/core/Grid";
+import moment from 'moment'
 
 const CommentBlock = ({ row, id, data }) => {
   const [auth, setData] = useState([])
@@ -41,17 +42,18 @@ const CommentBlock = ({ row, id, data }) => {
                 return (
                   <Paper className={classes.paper}>
                     <div>
+                      <div className="delete" style={{justifyContent: "space-between"}}>
                       <b>comment {index + 1}</b>
-                      <p>{row.answer}</p>
-                      <div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
-                        {row.userid}
-                      </div>
-                    </div>
-                    <div>
                       {row.userid == auth.userid ? (
                         <i className="fas fa-times"></i>
                       ):null}
                     </div>
+                      <p>{row.answer}</p>
+                      <div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
+                      <p>{row.author}  post in {moment(row.posttime).fromNow()}</p>
+                      </div>
+                    </div>
+                    
                   </Paper>
                 );
               })}
@@ -66,6 +68,10 @@ const CommentBlock = ({ row, id, data }) => {
         {`
           .comment {
             margin-top: 20px;
+          }
+          .delete {
+            display: flex;
+            justify-congtent: space-between;
           }
         `}
       </style>

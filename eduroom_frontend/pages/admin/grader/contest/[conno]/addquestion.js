@@ -1,9 +1,7 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from "../../../../../components/graderCreate/Layout/gSide";
-
-import GNav from "../../../../../components/graderCreate/Layout/gNav";
-
-import Create from "../../../../../components/graderCreate/Question/QCreate";
+import GeneralNoNav from "../../../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../../../components/graderCreate/GraderCreateLayout/Nav";
+import Create from "../../../../../components/graderCreate/Question/Create";
 
 const ConCreate = () => {
   return (

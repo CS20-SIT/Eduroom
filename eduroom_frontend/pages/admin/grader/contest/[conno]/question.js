@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from "../../../../../components/graderCreate/Layout/gSide";
-import GNav from "../../../../../components/graderCreate/Layout/gNav";
+import GeneralNoNav from "../../../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../../../components/graderCreate/GraderCreateLayout/Nav";
 
-import ConQuestionEdit from "../../../../../components/graderCreate/Question/QList/QList";
+import ConQuestionEdit from "../../../../../components/graderCreate/Question/List/List";
 
 const Info = () => {
   return (
