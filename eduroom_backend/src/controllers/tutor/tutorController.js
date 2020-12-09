@@ -26,14 +26,18 @@ const getInstructorAvailabilities = async (req, res) => {
 
 		const id = req.user.id
 
-		let result = await pool.query(
-			`select day,time from instructor_availabilities where instructorid = '${id}' order by day, time`
+		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
+		const { instructorid } = result.rows[0]
+		result = await pool.query(
+			`select day,time from instructor_availabilities where instructorid = '${instructorid}' order by day, time`
 		)
 		const availabilities = [[], [], [], [], []]
 		result.rows.forEach((r) => {
 			availabilities[r.day].push(r.time - 9)
 		})
-		result = await pool.query(`select price from instructor_availabilities_price where instructorid = '${id}'`)
+		result = await pool.query(
+			`select price from instructor_availabilities_price where instructorid = '${instructorid}'`
+		)
 		const { price } = result.rows[0]
 		res.status(200).send({ availabilities, price })
 	} catch (e) {
@@ -242,11 +246,13 @@ const getInstructorAppointments = async (req, res) => {
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
 		const id = req.user.id
+		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
+		const { instructorid } = result.rows[0]
 
 		let result = await pool.query(`
 		select a.appointmentid, a.headerid as id, u.firstname as firstname, u.lastname as lastname, date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, a.status,to_char( a.starttime, 'DD-MM-YYYY') as date, m.userid as mid, me.firstname as mfn, me.lastname as mln
         from instructor_appointments a,user_profile u, instructor_appointment_members m, (select userid, firstname, lastname from user_profile) me
-        where a.instructorid = '${id}'
+        where a.instructorid = '${instructorid}'
 		  and a.headerid = u.userid
 		  and m.appointmentid = a.appointmentid
           and me.userid = m.userid
@@ -420,18 +426,24 @@ const updateInstructorAvailabilities = async (req, res) => {
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
 
 		const id = req.user.id
+		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
+		const { instructorid } = result.rows[0]
 
 		for (let i = 0; i < 5; i++) {
-			await pool.query(`delete from instructor_availabilities where instructorid = '${id}' and day = ${i}`)
+			await pool.query(
+				`delete from instructor_availabilities where instructorid = '${instructorid}' and day = ${i}`
+			)
 		}
 		for (let i = 0; i < availabilities.length; i++) {
 			for (let j = 0; j < availabilities[i].length; j++) {
 				await pool.query(
-					`insert into instructor_availabilities values ('${id}',${i},${availabilities[i][j] + 9})`
+					`insert into instructor_availabilities values ('${instructorid}',${i},${availabilities[i][j] + 9})`
 				)
 			}
 		}
-		await pool.query(`update instructor_availabilities_price set price = ${price} where instructorid = '${id}';`)
+		await pool.query(
+			`update instructor_availabilities_price set price = ${price} where instructorid = '${instructorid}';`
+		)
 		res.status(200).send({ test: 'Successs' })
 	} catch (e) {
 		res.status(404).send(e)
