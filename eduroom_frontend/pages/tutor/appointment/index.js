@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../styles/tutor/utils'
 import Header from '../../../components/tutor/main-header'
-import GeneralNoNav from '../../../components/template/generalnonav'
+import GeneralNoNav from '../../../components/template/general'
 
 import Link from 'next/link'
 
