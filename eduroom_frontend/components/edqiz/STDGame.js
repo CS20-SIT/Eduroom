@@ -3,6 +3,8 @@ import Page1 from "./gamePage1std";
 import Page2 from "./correctAnswer";
 import Page3 from "./gamePage2std";
 import Page4 from "./wrongAnswer";
+import Page5 from "./showRankSTD";
+
 
 import socketIOClient from "socket.io-client";
 import { useRouter } from "next/router";
@@ -74,13 +76,16 @@ const Content = ({ id }) => {
       }
     });
   };
+  // console.log(questionNumber,data.length)
   
   const getQuestionNo = () => {
+    
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     
     socket.on("new-questionNo", (question) => {
+   
      setquestionNumber(question)
      
 
@@ -95,6 +100,7 @@ const Content = ({ id }) => {
       path: "/kahoot",
     });
     socket.on("sent-seconds", (timeTemp) => {
+      
       setTime(timeTemp);
       console.log(timeTemp)
       if (timeTemp == 0) {
@@ -115,10 +121,12 @@ const Content = ({ id }) => {
     });
     const temp = messages.slice();
     socket.on("new-Nextquestion", (isNext, pin, questionNo) => {
+      
       temp.push([isNext, pin, questionNo]);
       setNextQuestion(temp.slice());
       let tempq=questionNumber
       tempq+=1;
+      
       goto(1);
     });
   };
@@ -129,22 +137,31 @@ const Content = ({ id }) => {
     });
     socket.emit("sent-message", data[questionNumber], id.id);
   };
-
+  // let pin=router.query.id;
   useEffect(() => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("room", (router.query.id));
     socket.on("get-Nextquestion", (isNext, pin, questionNo) => {
+  
+      if(questionNo<data.length){
       setquestionNumber(questionNo)
       if(isNext){
         goto(1)
       }
+      }else{
+        goto(5);
+        console.log(pin,'goto 5')
+      }
+      
+     
 
     })
     response();
     getQuestionNo();
     responseTime(answer);
+    console.log(questionNumber,data.length)
   }, [questionNumber]);
   const goto = (val) => {
     setCurrent(val);
@@ -202,7 +219,20 @@ const Content = ({ id }) => {
             answer={answer}
           />
         );
+        case 5:
+        return (
+          <Page5
+            pin={id.id}
+            goto={goto}
+            data={data}
+            questionNumber={questionNumber}
+            ChangeQuestionNumber={handleChangeQuestionNumber}
+            responseNextQuestion={responseNextQuestion}
+            answer={answer}
+          />
+        );
     }
+  
   };
   return (
     <Fragment>
