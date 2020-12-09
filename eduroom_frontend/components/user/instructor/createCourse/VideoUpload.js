@@ -1,34 +1,38 @@
 import React, { Fragment, useState, useEffect } from 'react'
 
-const Upload = ({ index }) => {
-	const [image, setImage] = useState(null)
+const Upload = ({ index, handleData }) => {
+	const [video, setVideo] = useState(null)
 	useEffect(() => {
-		if (image) {
+		if (video) {
 			// var reader = new FileReader()
 			// reader.onload = function (e) {
 			// 	document.getElementById('show-image' + index).src = e.target.result
 			// }
 			// reader.readAsDataURL(image)
 		}
-	}, [image])
+	}, [video])
 	const handleUplaodFile = (e) => {
 		let newValue = e.target.files[0]
-		let type = 'image'
+		handleData({el:'video',data:newValue});
 		console.log(newValue)
-		setImage(newValue)
+		setVideo(newValue)
+	}
+
+	const getLabel = () => {
+		return video ? video.name : 'Choose Video'
 	}
 
 	return (
 		<Fragment>
 			<div>
-				<div className="imageupload textfield">
-					<input id={'image' + index} type="file" accept="video/*" hidden={true} onChange={handleUplaodFile} />
+				<div className="videoupload textfield">
+					<input id={'video' + index} type="file" accept="video/*" hidden={true} onChange={handleUplaodFile} />
 					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-						<span style={{ color: '#3d467f', opacity: '0.75' }}>Choose Video</span>
+						<span style={{ color: '#3d467f', opacity: '0.75' }}>{ getLabel()}</span>
 						<span
 							className="camera"
 							onClick={() => {
-								document.getElementById('image' + index).click()
+								document.getElementById('video' + index).click()
 							}}
 						>
 							<i className="fas fa-video"></i>
@@ -37,7 +41,7 @@ const Upload = ({ index }) => {
 				</div>
 			</div>
 			<style jsx>{`
-				.imageupload {
+				.videoupload {
 					width: 400px;
 				}
 				.textfield {

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 
 import Grid from "@material-ui/core/Grid";
-const Page2 = ({ responseNextQuestion, questionNumber,id }) => {
+const Page2 = ({ responseNextQuestion, questionNumber,id,data }) => {
   useEffect(() => {
     responseNextQuestion();
   }, []);
@@ -38,7 +38,7 @@ const Page2 = ({ responseNextQuestion, questionNumber,id }) => {
         <Grid item xs={4}></Grid>
         <Grid item xs={6}>
           <div className="pin" style={{ color: "#F39AC4" }}>
-            2000
+            {data[questionNumber].point}
           </div>
         </Grid>
       </Grid>

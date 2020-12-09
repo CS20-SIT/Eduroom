@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { useRouter } from "next/router";
 import socketIOClient from "socket.io-client";
+import api from '../../api';
+
 
 const axios = require("axios");
 const Page1 = ({
@@ -12,26 +14,73 @@ const Page1 = ({
   response,
   setAnswer,
   answer,
+  pin
 }) => {
   const router = useRouter();
 
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: "/kahoot",
   });
- 
-  // console.log("message", messages);
+  const [countPlayer, setCountPlayer] = useState([]);
+  const setCountP = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = [];
+    socket.emit("room", (router.query.id));
+    socket.on("get-countAnswer", (pin, questionNo,playerAnswer) => {
+      temp.push([playerAnswer]);
+      countPlayer.push(temp);
+    });
+  };
   const room = { name: "room1", PIN: router.query.id };
-
-  ////////////
   const [diff, setDiff] = useState(null);
+  const setCountAnswer = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit("set-countAnswer", router.query.id, 1);
+  };
+  const [sessionid, setSesstionID] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
 
-  //////////////
+      console.log(pin,'pin')
+      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      // console.log('resdata', res.data.sessionid)
+      setSesstionID(res.data.sessionid)
 
+    };
+    fetchData();
+  }, []);
+
+  const handleUpdateScore = async () => {
+    const sessionTemp = sessionid;
+    console.log('sesstionTemp',sessionTemp)
+    const point=data[questionNumber].point;
+    const postUpdateScore = { sessionid:sessionid, point:point}
+    console.log('postUpdateScore',postUpdateScore)
+    const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
+    console.log('handleUpdateScore',res.data);
+  };
+
+  const updateScore= async (answerTemp)=>{
+    if(data[questionNumber].correct==answerTemp){
+      console.log('yes right answer')
+      handleUpdateScore();
+    }else{
+      console.log('ไอคว๊าย')
+    }
+  }
+
+  useEffect(() => {
+    setCountP();
+    
+  }, [countPlayer]);
   useEffect(() => {
     socket.emit("room", (router.query.id));
     socket.on("get-diff", (time,pin) => {
       setDiff(time);
-      console.log('get-diff',time,pin)
       if (time == 0) {
         if (answer == data[questionNumber].correct) {
           console.log(answer == data[questionNumber].correct);
@@ -99,7 +148,7 @@ const Page1 = ({
             <Grid item xs={4}>
               <div className="text-time">ANSWER</div>
               <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
-                0
+                {countPlayer.length}
               </div>
             </Grid>
           </Grid>
@@ -121,7 +170,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#F39AC4" }}
                 onClick={() => {
-                  setAnswer("0"), goto(3);
+                  setAnswer("0"), goto(3),setCountAnswer(),updateScore(0);
                 }}
               >
                 {setAnswer("0")}
@@ -137,7 +186,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#D5C1FC" }}
                 onClick={() => {
-                  setAnswer(1), goto(3);
+                  setAnswer(1), goto(3),setCountAnswer(),updateScore(1);
                 }}
               >
                 {/* {goto(3)} */}
@@ -162,7 +211,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#FDD4C1" }}
                 onClick={() => {
-                  setAnswer(2), goto(3);
+                  setAnswer(2), goto(3),setCountAnswer(),updateScore(2);
                 }}
               >
                 {data[questionNumber].ans[2]}
@@ -177,7 +226,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#A6CEEE" }}
                 onClick={() => {
-                  setAnswer(3), goto(3);
+                  setAnswer(3), goto(3),setCountAnswer(),updateScore(3);
                 }}
               >
                 {data[questionNumber].ans[3]}
