@@ -40,6 +40,16 @@ const create = () => {
 				return <Page3></Page3>
 		}
 	}
+	const handleNext = async () => {
+		if (page === 3) {
+			const res = await api.post('/api/instructor/course', data)
+			console.log(res.data)
+			console.log('data is');
+			console.log(data);
+		} else {
+			setPage(page + 1)
+		}
+	}
 	return (
 		<Fragment>
 			<GeneralNoNav>
@@ -60,8 +70,8 @@ const create = () => {
 									Back
 								</button>
 							)}
-							<button className="btn" onClick={() => setPage(page + 1)}>
-								Next
+							<button className="btn" onClick={handleNext}>
+								{page === 3 ? 'Create Course' : 'Next'}
 							</button>
 						</div>
 					</div>
