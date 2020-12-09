@@ -1,4 +1,5 @@
 const pool = require('../database/db')
+const { v4: uuidv4 } = require('uuid')
 
 exports.Register = async (req, res, next) => {
 	const data = req.body
@@ -47,8 +48,8 @@ exports.GetProfileDetail = async (req, res, next) => {
 		instructorId,
 	])
 	const degree = degreeResult.rows.map((deg) => {
-		return deg.degree_name;
-	});
+		return deg.degree_name
+	})
 
 	const result = { bio: bioResult.rows[0].biography, expert, degree }
 	res.status(200).json(result)
@@ -61,12 +62,22 @@ exports.GetCourses = async (req, res, next) => {
 }
 
 exports.GetCategories = async (req, res, next) => {
-	const result = await pool.query('SELECT * from categories');
-	res.send(result.rows);
+	const result = await pool.query('SELECT * from categories')
+	res.send(result.rows)
 }
 
 exports.Upload = async (req, res, next) => {
-	console.log('body');
-	console.log(req.body);
-	res.send(req.body);
+	const file = req.files[0]
+	const url = file.linkUrl
+	console.log(url)
+	res.send(req.files)
+}
+
+exports.CreateCourse = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const courseId = uuidv4()
+	console.log(req.body)
+	// const result = await pool.query(`insert into course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
+	// values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,[courseId])
+	res.send({ courseId })
 }
