@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Page1 from './gamePage1';
 import Page2 from './gamePage2';
+import Page3 from "./showRank";
+
 import socketIOClient from 'socket.io-client';
 import { useRouter } from 'next/router';
 
@@ -12,7 +14,11 @@ const Content = ({ id }) => {
   const [messages, setMessages] = useState([]);
 
   const handleChangeQuestionNumber = (val) => {
+    if(questionNumber==data.length-1){
+      goto(3)
+    }
     setquestionNumber(val);
+    console.log('handle',questionNumber,data.length)
   };
 
   const data = [
@@ -55,7 +61,7 @@ const Content = ({ id }) => {
       image: null,
     },
   ];
-  const [time, setTime] = useState(data[questionNumber].time);
+  // const [time, setTime] = useState(data[questionNumber].time);
 
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
@@ -126,7 +132,7 @@ const Content = ({ id }) => {
           <Page1
             id={id}
             goto={goto}
-            time={data[questionNumber].time}
+            // time={data[questionNumber].time}
             endTime={endTime}
             data={data}
             questionNumber={questionNumber}
@@ -143,11 +149,24 @@ const Content = ({ id }) => {
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
             setNextQuestion={setNextQuestion}
-            setTime={setTime}
+            // setTime={setTime}
             setTimeSocket={setTimeSocket}
             id={id.id}
           />
         );
+        case 3:
+          return (
+            <Page3
+              goto={goto}
+              data={data}
+              questionNumber={questionNumber}
+              ChangeQuestionNumber={handleChangeQuestionNumber}
+              setNextQuestion={setNextQuestion}
+              // setTime={setTime}
+              setTimeSocket={setTimeSocket}
+              pin={id.id}
+            />
+          );
     }
   };
   return (
