@@ -25,8 +25,6 @@ const Page4 = ({ data,responseNextQuestion, questionNumber,id }) => {
           style={{ color: "white", fontSize: "10vw" }}
         ></i>
         <span className="correct">Wrong!!</span>
-        <div className="font">-1000000 points for you</div>
-        <div className="font">You are now in 3 th position</div>
       </div>
       <Grid
         container
