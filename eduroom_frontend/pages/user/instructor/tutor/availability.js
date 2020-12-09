@@ -3,13 +3,13 @@ import utils from '../../../../styles/tutor/utils'
 
 import { gridSections, gridAreaDays, gridAreaTimes } from '../../../../components/tutor/data/grid-area'
 
-import { defineGridTime, createTable } from '../../../../components/tutor/lib/time-availability'
+import { defineGridTime } from '../../../../components/tutor/lib/time-availability'
 
-import { dayFormatter, timeFormatter } from '../../../../components/tutor/lib/utils'
+import { timeFormatter } from '../../../../components/tutor/lib/utils'
 
 import api from '../../../../api'
 
-import GeneralNoNav from '../../../../components/template/generalnonav'
+import GeneralNoNav from '../../../../components/template/general'
 import AvailabilityEdit from '../../../../components/tutor/instructor-availability/availability-edit'
 
 const Availability = () => {
