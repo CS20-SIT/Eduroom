@@ -5,7 +5,7 @@ exports.Register = async (req, res, next) => {
 	const data = req.body
 	const userId = req.user.id
 
-	//check whether this user already reguster
+	//check whether this user already register or not
 	const userRows = await pool.query('SELECT userId from instructor where userid = $1', [userId])
 	if (userRows.rowCount > 0) {
 		res.status(200).json({ success: false, err: 'This user already register' })
@@ -21,7 +21,7 @@ exports.Register = async (req, res, next) => {
 		'/certificate.png',
 	])
 	await pool.query(
-		'INSERT INTO instructor_expert(instructorid,expertnumber,subjectname,evidence) VALUES ($1,$2,$3)',
+		'INSERT INTO instructor_expert(instructorid,expertnumber,subjectname,evidence) VALUES ($1,$2,$3,$4)',
 		[id, '1', data.expert, '/certificate.png']
 	)
 	res.status(200).json({ success: true, data: data })
@@ -68,16 +68,19 @@ exports.GetCategories = async (req, res, next) => {
 
 exports.Upload = async (req, res, next) => {
 	const file = req.files[0]
-	const url = file.linkUrl
-	console.log(url)
-	res.send(req.files)
+	const result = { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	res.send(result)
 }
 
 exports.CreateCourse = async (req, res, next) => {
 	const instructorId = req.user.instructor
 	const courseId = uuidv4()
 	console.log(req.body)
-	// const result = await pool.query(`insert into course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
-	// values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,[courseId])
+	// const {name,}
+	const result = await pool.query(
+		`INSERT INTO course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
+	values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+		[courseId]
+	)
 	res.send({ courseId })
 }
