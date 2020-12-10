@@ -7,6 +7,9 @@ import AllCouponFestival from './AllCouponFestival';
 
 
 const CouponShopJa = () => {
+	// const click = () => {
+    //         router.push('/coin-shop/StoreSticker');
+    // };
 	
   const data = [
     { title: 'LEARN TO CODE WITH PYTHON', price: 30,owner:'Bill gates', id: 1 ,description:'Coupon discount 10% for course PYTHON' },
@@ -56,7 +59,7 @@ const data2 = [
 			</div>
 			<div className="box">
 				<input className="input" placeholder="ENTER COUPON" />
-				<button className="btn">MY COUPON</button>
+				<button className="btn" onClick={() => router.push('/user/MyCoupon')}>MY COUPON</button>
 			</div>
       <h1 className="color">FOR COIN</h1>
       <AllCouponCoin item={data}></AllCouponCoin>
