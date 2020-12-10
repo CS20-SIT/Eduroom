@@ -3,7 +3,7 @@ import style from '../../styles/course/orderDetailSt'
 const orderDetail = () => {
     return (
         <Fragment>
-            <div style={{ display: 'flex', justifyContent: 'start', paddingTop: 30, paddingLeft: 65}}>
+            <div style={{ display: 'flex', justifyContent: 'start', paddingLeft: 50}}>
                 <div className="bigDiv" >
                     <div style={{ fontSize: 10 }}>
                         <h1 style={{ margin: 0, fontSize: 24, color: '#5B5B5B' }}>Order Detail</h1>
@@ -21,7 +21,7 @@ const orderDetail = () => {
                                     Learn to code with Python
                         </div>
 
-                                <div className="col-4" style={{ width: 100, height: 100, width: '100vw', fontSize: 15 }}>
+                                <div className="col-4" style={{ width: 100, height: 100, width: '23vw', fontSize: 15 }}>
                                     Price(฿50)
                             <div>
                                         Discount(-฿850)
@@ -32,11 +32,6 @@ const orderDetail = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div style={{paddingBottom:400}}>
-                    <img src="/images/package/payPic.svg"
-                        style={{ width: 300, height: 300}}
-                    />
-                </div> */}
             </div>
             <style jsx>
                 {

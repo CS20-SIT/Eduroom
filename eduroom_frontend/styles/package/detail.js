@@ -1,5 +1,8 @@
 import css from 'styled-jsx/css'
 export default css`
+.pic{
+    background-image: url('/images/package/bgbgbg.svg');
+}
 .textHead{
     font-size: 22px;
     color: #3D467F;
@@ -15,8 +18,9 @@ export default css`
             background: white;
             border-radius: 2vh;
             width: 70vw;
-            height: 43vh;
+            height: 45vh;
             padding-top: 1%;
+            background: rgba(255,255,255,0.7);
 }
 
 .bigCard{
@@ -28,6 +32,7 @@ export default css`
             height: 100%;
             padding-top: 1%;
             flex-direction:column;
+            background: rgba(255,255,255,0.7);
 }
 .bigDiv{
     display: flex;
