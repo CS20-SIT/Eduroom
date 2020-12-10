@@ -4,34 +4,6 @@ import utils from '../../../styles/tutor/utils'
 import api from '../../../api'
 
 const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus }) => {
-	// GET /api/tutor/utils/id
-	// const mockup = [
-	// 	{
-	// 		id: 1,
-	// 		name: 'Thanawat Benjachatriroj',
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		name: 'Alphav Benjachatriroj',
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		name: 'Bravo Benjachatriroj',
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		name: 'Charlie Benjachatriroj',
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		name: 'Delta Benjachatriroj',
-	// 	},
-	// 	{
-	// 		id: 6,
-	// 		name: 'Echo Benjachatriroj',
-	// 	},
-	// ]
-
 	const [hoverSelection, setHoverSelection] = useState(false)
 	const [members, setMembers] = useState([])
 
@@ -48,7 +20,6 @@ const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus 
 			},
 		})
 		const mockup = res.data.students
-
 		const filtered = mockup.filter((x) => {
 			return x.name.toLowerCase().includes(key.toLowerCase())
 		})
