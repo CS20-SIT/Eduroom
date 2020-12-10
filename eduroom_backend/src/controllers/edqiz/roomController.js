@@ -82,12 +82,6 @@ exports.createHistoryPlayerAnswer = async (req, res, next) => {
   console.log(req.user.id)
   const { sessionid, questionid, answerno } = req.body;
   console.log(req.body);
-  // let room = await pool.query(
-  //   'INSERT INTO kahoot_roomhistory_playeranswer(sessionid, userid, questionid,answerno) values($1,$2,$3) RETURNING * ',
-  //   [roomid, pin, isavailable]
-  // );
-  // room = room.rows[0];
-  // res.status(201).json(room);
 }
 
 exports.fetchRoom = async (req, res, next) => {
@@ -112,5 +106,22 @@ exports.fetchExactlyRoom = async (req, res, next) => {
   res.status(200).json(exactlyRoom);
 };
 
+
+exports.fetchScoreRank = async (req, res, next) => {
+  const { sessionid } = req.params;
+  console.log('sessionScoreRank', sessionid)
+  const result = await pool.query('SELECT * from kahoot_roomhistoryplayer where sessionid=$1 order by rank desc fetch first 9 rows only;', [sessionid]);
+  let rank=[];
+  let score=[];
+  for(let i=0;i<result.rows.length;i++){
+      let scoreRank=await pool.query(
+        'SELECT nameforplay from kahoot_player where userid=$1;', [result.rows[i].userid]
+      )
+      rank.push(scoreRank.rows[0].nameforplay)
+      rank[i]=rank[i].replaceAll(' ', '')
+      score.push(result.rows[i].rank);
+  }
+  res.status(200).json({rank,score});
+};
 
 
