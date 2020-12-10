@@ -38,7 +38,9 @@ services:
             context: ./eduroom_backend
         volumes:
             - /usr/src/app/node_modules
-            - ./eduroom_backend:/usr/src/app
+            - ./eduroom_backend/src:/usr/src/app/src
+            - ./eduroom_backend/package-lock.json:/usr/src/app/package-lock.json
+            - ./eduroom_backend/package.json:/usr/src/app/package.json
         environment:
             - NODE_ENV=development
             - PORT=5000
