@@ -13,7 +13,7 @@ const Page3 = ({questionNumber,goto,answer,data,id}) => {
  
   useEffect(() => {
     socket.emit("room", (router.query.id));
-    console.log('watiting',answer)
+    // console.log('watiting',answer)
     socket.on('get-diff', (time) => {
       setDiff(time);
       if(time==0){
@@ -67,7 +67,7 @@ const Page3 = ({questionNumber,goto,answer,data,id}) => {
         <Grid item xs={4}></Grid>
         <Grid item xs={6}>
           <div className="pin">
-            2000
+          {data[questionNumber].point}
           </div>
         </Grid>
       </Grid>

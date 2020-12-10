@@ -26,6 +26,7 @@ export default css`
   .register-content {
     width: 38vw;
     position: absolute;
+    padding: 0rem 2rem 2rem 2rem;
     right: 8%;
     top: 15%;
     z-index: 50;
@@ -56,7 +57,7 @@ export default css`
     background: rgba(255, 255, 255, 0.6);
     box-shadow: 6px 4px 19px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
-    padding: 30px 20px 30px 20px;
+    padding: 2rem 0rem;
   }
   .register-description {
     padding: 5% 0% 5% 0%;
