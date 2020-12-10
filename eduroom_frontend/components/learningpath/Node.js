@@ -7,65 +7,39 @@ const Node = ({ node, isLeft }) => {
 				className="nodes-path"
 				style={{ display: 'flex', width: '100%', justifyContent: 'center', position: 'relative' }}
 			>
-				{isLeft ? (
-					<Fragment>
-						<div className="content left"
-							onMouseEnter={() => {
-								setShow(true)
-							}}
-							onMouseLeave={() => {
-								setShow(false)
-							}}>
-							{show ? (
-								<div className="node-description">
-									<div className="node-title">{node.name}</div>
-									<div className="node-desc">{node.descriptions}</div>
-								</div>
-							) : null}
+				<div
+					className="content left"
+					onMouseEnter={() => {
+						setShow(true)
+					}}
+					onMouseLeave={() => {
+						setShow(false)
+					}}
+				>
+					{isLeft && show ? (
+						<div className="node-description">
+							<div className="node-title">{node.node_name}</div>
+							<div className="node-desc">{node.node_desc}</div>
 						</div>
-						<div
-							className="node"
-							onMouseEnter={() => {
-								setShow(true)
-							}}
-							onMouseLeave={() => {
-								setShow(false)
-							}}
-						>
-							{node.nodeid}
+					) : null}
+				</div>
+				<div
+					className="node"
+					onMouseEnter={() => {
+						setShow(true)
+					}}
+					onMouseLeave={() => {
+						setShow(false)
+					}}
+				></div>
+				<div className="content right">
+					{!isLeft && show ? (
+						<div className="node-description">
+							<div className="node-title">{node.node_name}</div>
+							<div className="node-desc">{node.node_desc}</div>
 						</div>
-						<div className="content right"></div>
-					</Fragment>
-				) : (
-					<Fragment>
-						<div className="content left"></div>
-						<div
-							className="node"
-							onMouseEnter={() => {
-								setShow(true)
-							}}
-							onMouseLeave={() => {
-								setShow(false)
-							}}
-						>
-							{node.nodeid}
-						</div>
-						<div className="content right"
-							onMouseEnter={() => {
-								setShow(true)
-							}}
-							onMouseLeave={() => {
-								setShow(false)
-							}}>
-							{show ? (
-								<div className="node-description">
-									<div className="node-title">{node.name}</div>
-									<div className="node-desc">{node.descriptions}</div>
-								</div>
-							) : null}
-						</div>
-					</Fragment>
-				)}
+					) : null}
+				</div>
 			</div>
 			<style jsx>
 				{`
@@ -82,14 +56,15 @@ const Node = ({ node, isLeft }) => {
 					.content.right {
 						justify-content: flex-start;
 					}
-                    .node-title {
-                        font-size: 1.1em;
-                        font-weight: 600;
-                    }
-                    .node-desc {
-                        font-size: 0.9em;
-                        color:#333333;
-                    }
+					.node-title {
+						font-size: 1.1em;
+						font-weight: 600;
+						color: #ffffff;
+					}
+					.node-desc {
+						font-size: 0.9em;
+						color: #eeeeee;
+					}
 					.node-description {
 						width: 70%;
 						position: absolute;
@@ -98,9 +73,10 @@ const Node = ({ node, isLeft }) => {
 						border-radius: 10px;
 						height: 100px;
 						padding: 1rem;
+						background: #828282ee;
 					}
 					.node {
-						background: #ee223344;
+						background: #d5c1fc;
 						width: 50px;
 						height: 50px;
 						display: flex;
@@ -111,6 +87,12 @@ const Node = ({ node, isLeft }) => {
 						z-index: 25;
 						margin-bottom: 50px;
 					}
+					.nodes-path:first-child .node {
+						background: #fb9ccb;
+					}
+					.nodes-path:last-child .node {
+						background: #fb9ccb;
+					}
 					.nodes-path:not(:last-child) .node::after {
 						content: '';
 						position: absolute;
@@ -118,7 +100,7 @@ const Node = ({ node, isLeft }) => {
 						display: block;
 						width: 2px;
 						height: 50px;
-						background: black;
+						background: #3d467f;
 						top: 50px;
 						z-index: 0;
 						left: 0;

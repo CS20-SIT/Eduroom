@@ -1,54 +1,44 @@
 import React,{Fragment, useState} from 'react'
 import NodeList from './NodeList'
+import api from '../../api'
 const CurrentPath = ({path,back}) => {
     const [nodes,setNodes] = useState([])
     useState(()=>{
-        let temp = [
-            {
-                nodeid: 5,
-                parent_node_id: 4,
-                name: 'Front End 4',
-                descriptions: 'Front End 4 description'
-            },
-            {
-                nodeid:6,
-                parent_node_id:5,
-                name: 'Front End 5',
-                descriptions: 'Front End 5 description'
-            },
-            {
-                nodeid: 2,
-                parent_node_id:null,
-                name: 'Front End 1',
-                descriptions: 'Front End 1 description'
-            },
-            {
-                nodeid:4,
-                parent_node_id:3,
-                name: 'Front End 3',
-                descriptions: 'Front End 3 description'
-            },
-            {
-                nodeid:3,
-                parent_node_id:2,
-                name: 'Front End 2',
-                descriptions: 'Front End 2 description'
-            }
-        ]
-        setNodes(temp)
-        // Call api to get node list of this path
+        api.get(`/api/learningpath/path?pathid=${path.pathid}`).then(res=>{
+            setNodes(res.data.data)
+        }).catch(err=>{
+            console.log(err)
+        })
     },[])
     return (
         <Fragment>
-            <div onClick={back}>
-                back
+            <div className="current-path">
+            <div onClick={back} style={{cursor:'pointer'}}>
+                <i className="fas fa-chevron-left"/> <span> back</span>
             </div>
-            <div>
-            {path.name}
+            <div className="path-name-title">
+            {path.path_name} Path
             </div>
             <div>
                 <NodeList nodes={nodes}/>
             </div>
+            </div>
+            <style jsx>
+                {
+                    `
+                    .path-name-title {
+                        font-size: 1.4rem;
+                        font-weight: 700;
+                        text-align:center;
+                        padding: 1rem 2rem 2rem;
+                    }
+                    .current-path {
+                        display:flex;
+                        flex-flow:column;
+                    }
+                    `
+                }
+            </style>
         </Fragment>
     )
 }

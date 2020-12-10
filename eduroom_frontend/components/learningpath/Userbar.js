@@ -8,7 +8,8 @@ const UserBar = ({user}) => {
                     <div>&#127942; : {user.trophy}/10</div>
                 </div>
                 <div className="row">
-                    {user.exp}/9999
+                    <div style={{background:'#A27CEF',color:'white',padding:'.1rem 1rem',borderRadius:'1rem'}}>
+                    {user.exp}/9999</div>
                 </div>
             </div>
             <style jsx>
