@@ -13,7 +13,6 @@ const Content = ({ id }) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await api.get('/api/kahoot/roomHistory');
-      // setHistory(res.data)
     };
     fetchData();
   }, []);

@@ -54,7 +54,7 @@ const Page1 = ({
     });
   };
   useEffect(() => {
-    setCountP();
+   
     
   }, [countPlayer]);
 
@@ -99,6 +99,9 @@ const Page1 = ({
   function setSkip() {
     clearInterval(intervalID);
     socket.emit("set-skip", true,id.id);
+    if(questionNumber==data.length){
+      goto(5);
+    }
     goto(2);
   }
 
@@ -163,7 +166,7 @@ const Page1 = ({
             <Grid item xs={4}>
               <div className="text-time">ANSWER</div>
               <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
-                {countPlayer.length/2}
+                {countPlayer.length}
               </div>
             </Grid>
           </Grid>
