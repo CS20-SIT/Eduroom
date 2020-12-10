@@ -3,11 +3,12 @@ import Grid from "@material-ui/core/Grid";
 import GeneralNoSide from "../../components/template/generalnoside";
 import api from '../../api';
 
-const Content = () => {
+const page3 = ({pin}) => {
   const [sessionid, setSesstionID] = useState(null);
   const [data, setData] = useState(null);
   const fetchData = async () => {
-    let pin = 9422;
+    // let pin = 9513;
+    console.log('pin',pin)
     const res = await api.get(`/api/kahoot/sessionid/${pin}`);
     setSesstionID(res.data.sessionid)
   };
@@ -54,7 +55,7 @@ const Content = () => {
           <Grid container style={{ height: "10vh" }}>
             <Grid item xs={4} >
               <div className="pin">
-                PIN: <div style={{ color: "#FB9CCB" }}>1234</div>
+  PIN: <div style={{ color: "#FB9CCB" }}>{pin}</div>
               </div>
             </Grid>
             <Grid item xs={4} >
@@ -171,4 +172,4 @@ const Content = () => {
     </Fragment>
   );
 };
-export default Content;
+export default page3;
