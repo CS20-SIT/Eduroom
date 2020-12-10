@@ -69,6 +69,14 @@ export default css`
     position: absolute;
     right: 40px;
   }
+  .next-button {
+    background: #3D467F;
+    border-radius: 20px;
+    padding: 0.6rem 4rem;
+    border: none;
+    outline: none;
+    transition: 0.25s;
+  }
   .ad-tab1-button {
     background: #A880F7;
     border-radius: 2px;
@@ -112,5 +120,8 @@ export default css`
     width: 93%;
     height: 400px;
     // background-image: url('/images/big-bg.svg');
+  }
+  .adinform {
+    background-image: url('/images/package/purchesed.svg');
   }
 `;
