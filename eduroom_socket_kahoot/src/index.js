@@ -43,6 +43,8 @@ io.on("connection", (client) => {
     console.log("this next is ", pin, isNext, questionNo);
     io.sockets.in(pin).emit("get-Nextquestion", isNext, pin, questionNo);
   });
+  
+
 
   client.on("start-game", (room, time) => {
     let endTime = new Date().getTime();
@@ -57,15 +59,20 @@ io.on("connection", (client) => {
   });
 
   client.on("set-diff", (diff, pin) => {
-    console.log("this diff is ", diff, pin);
+    // console.log("this diff is ", diff, pin);
     io.sockets.in(pin).emit("get-diff", diff,pin);
   });
 
   //////////////
   client.on('room', function(room) {
-    console.log('room',room)
+    // console.log('room',room)
     client.join(room);
 });
 
   ///////////////
+  
+  client.on("set-countAnswer", (pin, questionNo,playerAnswer) => {
+    // console.log("answer", pin, questionNo,playerAnswer);
+    io.sockets.in(pin).emit("get-countAnswer",pin, questionNo,playerAnswer);
+  });
 });
