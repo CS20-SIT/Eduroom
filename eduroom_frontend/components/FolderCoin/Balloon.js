@@ -1,3 +1,21 @@
+import React, { Fragment } from 'react'
+import style from '../../styles/CoinStyles/balloon'
+const Balloon = () => {
+    const randomNumber = (start,end) => {
+        let width = end - start;
+        return Math.floor(Math.random() * 100) % width + start;
+    }
+	return (
+		<Fragment>
+			<div className="balloon" style={{left:randomNumber(0,100)+'vw',top:randomNumber(20,90)+'vh',animationDuration: randomNumber(12,25)+'s',animationTimingFunction: `${randomNumber(1,2) % 2 == 0 ? 'ease-in' : 'ease-out'}`}}></div>
+			<style jsx>
+				{style}
+			</style>
+		</Fragment>
+	)
+}
+export default Balloon;
+
 // const temp = () => {
 // 	function random(num) {
 // 		return Math.floor(Math.random() * num)
@@ -12,7 +30,7 @@
 // 		console.log(dur)
 // 		return `
 //         background-color: rgba(${r},${g},${b},0.7);
-//         color: rgba(${r},${g},${b},0.7); 
+//         color: rgba(${r},${g},${b},0.7);
 //         box-shadow: inset -7px -3px 10px rgba(${r - 10},${g - 10},${b - 10},0.7);
 //         margin: ${mt}px 0 0 ${ml}px;
 //         animation: float ${dur}s ease-in infinite;
