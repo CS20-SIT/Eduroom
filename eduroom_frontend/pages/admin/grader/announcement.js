@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from "../../../components/template/generalnonav";
-import GNav from "../../../components/graderCreate/Layout/gNav";
+import GeneralNoNav from "../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../components/graderCreate/GraderCreateLayout/Nav";
 
-import Ann from "../../../components/graderCreate/AnnCom/Ann";
+import Ann from "../../../components/graderCreate/Announcement/Announcement";
 const Announcement = () => {
   return (
     <Fragment>

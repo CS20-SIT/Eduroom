@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 
 import Grid from "@material-ui/core/Grid";
-const Content = ({ responseNextQuestion, questionNumber }) => {
+const Page4 = ({ data,responseNextQuestion, questionNumber,id }) => {
   useEffect(() => {
     responseNextQuestion();
   }, []);
@@ -16,7 +16,7 @@ const Content = ({ responseNextQuestion, questionNumber }) => {
         </Grid>
         <Grid item xs={4}></Grid>
         <Grid item xs={6}>
-          <div className="pin">PIN:00000</div>
+  <div className="pin">PIN:{id}</div>
         </Grid>
       </Grid>
       <div className="main">
@@ -25,8 +25,6 @@ const Content = ({ responseNextQuestion, questionNumber }) => {
           style={{ color: "white", fontSize: "10vw" }}
         ></i>
         <span className="correct">Wrong!!</span>
-        <div className="font">-1000000 points for you</div>
-        <div className="font">You are now in 3 th position</div>
       </div>
       <Grid
         container
@@ -38,7 +36,7 @@ const Content = ({ responseNextQuestion, questionNumber }) => {
         <Grid item xs={4}></Grid>
         <Grid item xs={6}>
           <div className="pin" style={{ color: "#F39AC4" }}>
-            2000
+            {data[questionNumber].point}
           </div>
         </Grid>
       </Grid>
@@ -86,4 +84,4 @@ const Content = ({ responseNextQuestion, questionNumber }) => {
     </Fragment>
   );
 };
-export default Content;
+export default Page4;

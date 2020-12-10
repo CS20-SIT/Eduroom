@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useRouter } from 'next/router';
-import style from '../../styles/landing/content'
-import Image from 'next/image'
+import style from '../../styles/landing/content';
+
 const Content = () => {
   const router = useRouter();
   return (
@@ -18,22 +18,14 @@ const Content = () => {
           </div>
           <button
             className="landing-button"
+            id="get-start-btn"
             onClick={() => router.push('/login')}
           >
             <a className="landing-button-text">GET STARTED</a>
           </button>
         </div>
-        <Image
-          className="landing-img"
-          alt="landing-img"
-          src="/images/landing_img.svg"
-          width="600"
-          height="525"
-        />
       </div>
-      <style jsx>
-        {style}
-      </style>
+      <style jsx>{style}</style>
     </Fragment>
   );
 };

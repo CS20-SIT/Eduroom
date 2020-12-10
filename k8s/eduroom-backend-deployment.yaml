@@ -21,9 +21,13 @@ spec:
       containers:
       - name: cloud-sql-proxy-deployment
         image: gcr.io/cloudsql-docker/gce-proxy:1.17
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
         command:
           - "/cloud_sql_proxy"
-          - "-instances=macbigduck:asia-southeast1:eduroom-postgres=tcp:5432"
+          - "-instances=macbigduck:asia-southeast1:eduroom-postgres-development=tcp:5432"
           - "-credential_file=/secrets/service_account.json"
         securityContext:
           runAsNonRoot: true

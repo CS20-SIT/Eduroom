@@ -1,17 +1,16 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from "../../../../components/template/generalnonav";
-import GNav from "../../../../components/graderCreate/Layout/gNav";
+import GeneralNoNav from "../../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../../components/graderCreate/GraderCreateLayout/Nav";
+import GBack from "../../../../components/graderCreate/GraderCreateLayout/Background";
+import Create from "../../../../components/graderCreate/Question/Create";
 
-import Create from "../../../../components/graderCreate/Question/QCreate";
-
-import AddFile from "../../../../components/graderCreate/Question/addfile";
 const ConCreate = () => {
   return (
     <Fragment>
       <GeneralNoNav>
         <GNav></GNav>
+        <GBack></GBack>
         <Create />
-        <AddFile />
       </GeneralNoNav>
     </Fragment>
   );

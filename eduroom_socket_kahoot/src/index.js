@@ -2,25 +2,26 @@ const server = require("./server");
 const port = process.env.PORT || 8000;
 const socketIO = require("socket.io");
 const { countReset } = require("console");
+const { EDEADLK } = require("constants");
 
 const app = server.listen(port, () => {
   console.log(`Running on ${port}`);
 });
 
 const socketOptions = {
-  path: '/kahoot'
-}
+  path: "/kahoot",
+};
 let user = [];
 const io = socketIO.listen(app, socketOptions);
-io.on('connection', (client) => {
-  console.log('user connected');
+io.on("connection", (client) => {
+  console.log("user connected");
 
   client.on("disconnect", () => {
     console.log("user disconnect");
   });
 
   client.on("sent-message", (msg, pin) => {
-    console.log("This is a new messgae ", msg, pin);
+    // console.log("This is a new messgae ", msg, pin);
     io.sockets.emit("new-message", msg, pin);
   });
 
@@ -33,36 +34,45 @@ io.on('connection', (client) => {
     io.sockets.emit("new-room", isOpen, pin);
   });
 
-  client.on("set-skip", (isSkip, pin,questionNo) => {
-    console.log("this skip is ", pin, isSkip,questionNo);
-    io.sockets.emit("new-question", isSkip, pin,questionNo);
+  client.on("set-skip", (isSkip, pin) => {
+    console.log("this skip is ", pin, isSkip);
+    io.sockets.in(pin).emit("get-skip", isSkip);
   });
 
-  client.on("set-nextQuestion", (isNext, pin,questionNo) => {
-    console.log("this next is ", pin, isNext,questionNo);
-    io.sockets.emit("new-Nextquestion", isNext, pin,questionNo);
+  client.on("set-nextQuestion", (isNext, pin, questionNo) => {
+    console.log("this next is ", pin, isNext, questionNo);
+    io.sockets.in(pin).emit("get-Nextquestion", isNext, pin, questionNo);
   });
+  
 
 
-
-  client.on('set-seconds',(temp,pin) => {
-    console.log('temp'+temp,pin)
-    var interval = setInterval(()=> {
-      if(temp>0){
-      console.log('temp1 '+temp,pin);
-      temp--;
-      io.emit('sent-seconds',temp);
-      }
-      // if(temp <= 0){
-      //   clearInterval(interval);
-        
-      // }
-     
-    }, 1000);
-  })
+  client.on("start-game", (room, time) => {
+    let endTime = new Date().getTime();
+    console.log("sent time success:", room, time);
+    endTime += time * 1000;
+    io.emit("sent-end-time", room, endTime);
+  });
 
   client.on("set-name", (namePlayer, pin) => {
     console.log("this name is ", pin, namePlayer);
     io.sockets.emit("new-name", namePlayer, pin);
+  });
+
+  client.on("set-diff", (diff, pin) => {
+    // console.log("this diff is ", diff, pin);
+    io.sockets.in(pin).emit("get-diff", diff,pin);
+  });
+
+  //////////////
+  client.on('room', function(room) {
+    // console.log('room',room)
+    client.join(room);
+});
+
+  ///////////////
+  
+  client.on("set-countAnswer", (pin, questionNo,playerAnswer) => {
+    // console.log("answer", pin, questionNo,playerAnswer);
+    io.sockets.in(pin).emit("get-countAnswer",pin, questionNo,playerAnswer);
   });
 });

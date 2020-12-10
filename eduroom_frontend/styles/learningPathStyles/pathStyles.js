@@ -4,17 +4,60 @@ body{
 	font-family: 'Raleway', sans-serif;
 	color: #333;
   }
-  
-  header h1{
-	text-align: center;
-	font-weight: bold;
-	margin-top: 0;
+  header{
+	margin: 0 auto;
+	padding: 1em;
+	background: #fe75b7;
+	border-radius: 25px;
   }
-	
-   header p{
-	 text-align: center;
-	 margin-bottom: 0;
+  header span1{
+	font-family:bold;
+	font-size: 32px;
+	padding:0px 10px;
+	border-radius: 25px;
+	  text-align: right;
+	  float:right;
+  }
+  header span2{
+	font-family:bold;
+	font-size: 18px;
+	padding: 5px 0px 5px 10px;
+	  float: left;
+  }
+   header span4{
+	   color:#A880F7;
+	   padding: 5px 10px 0px 10px;
+	   float: left;
    }
+  
+  header span3{
+	font-family:bold;
+	font-size: 18px;
+	padding: 0px 5px 0px 5px;
+	  float: left;
+  }
+  header span5{
+	font-family:bold;
+	font-size: 18px;
+	padding: 5px 2px 5px 5px;
+	  float: left;
+	  color:#A27CEF;
+  }
+  header span6{
+	font-family:bold;
+	font-size: 18px;
+	padding: 5px 0px 5px 0px;
+	  float: left;
+	  
+  }
+	header p{
+		margin: 0px auto 0px 0px ;
+		padding: 5px 15px 5px 15px;
+		text-align : center;
+	background: #A27CEF;
+	color: #ffffff;
+	border-radius: 25px;
+	}
 .circle1 {
 	float: left;
 	position: relative;

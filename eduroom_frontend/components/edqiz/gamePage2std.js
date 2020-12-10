@@ -1,9 +1,41 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect,useState } from "react";
+import socketIOClient from "socket.io-client";
+import { useRouter } from "next/router";
 
 import Grid from "@material-ui/core/Grid";
-const Page3 = ({questionNumber,time}) => {
+const Page3 = ({questionNumber,goto,answer,data,id}) => {
+  const router = useRouter();
+
+  const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+    path: '/kahoot',
+  });
+  const [diff, setDiff] = useState(null);
+ 
   useEffect(() => {
-  
+    socket.emit("room", (router.query.id));
+    // console.log('watiting',answer)
+    socket.on('get-diff', (time) => {
+      setDiff(time);
+      if(time==0){
+        if(answer == data[questionNumber].correct){
+        goto(2)}
+        else{
+          goto(4)
+        }
+      }
+    });
+    socket.on("get-skip", (isSkip) => {
+      console.log('answer',answer);
+      console.log(answer == data[questionNumber].correct);
+      if (isSkip || answer == data[questionNumber].correct) {
+        if (answer == data[questionNumber].correct) {
+          console.log(answer == data[questionNumber].correct);
+          goto(2);
+        } else {
+          goto(4);
+        }
+      }
+    });
   }, []);
   return (
     <Fragment>
@@ -16,14 +48,14 @@ const Page3 = ({questionNumber,time}) => {
         </Grid>
         <Grid item xs={4}></Grid>
         <Grid item xs={6}>
-          <div className="pin">PIN:00000</div>
+  <div className="pin">PIN:{id}</div>
         </Grid>
       </Grid>
       <div className="main">
     
         <span className="correct">Please Wait!</span>
         <div className="font">Another Players</div>
-  <div className="font">time left : {time}</div>
+  <div className="font">time left : {diff}</div>
       </div>
       <Grid
         container
@@ -35,7 +67,7 @@ const Page3 = ({questionNumber,time}) => {
         <Grid item xs={4}></Grid>
         <Grid item xs={6}>
           <div className="pin">
-            2000
+          {data[questionNumber].point}
           </div>
         </Grid>
       </Grid>
