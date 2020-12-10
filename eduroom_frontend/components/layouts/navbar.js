@@ -15,7 +15,7 @@ const Navbar = ({ children }) => {
 	const router = useRouter()
 
 	useEffect(() => {
-		getUser()
+		getUser(router)
 	}, [])
 
 	const getOp = () => {
