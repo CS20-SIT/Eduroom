@@ -1,4 +1,4 @@
-import css from 'styled-jsx/css'
+import css from 'styled-jsx/css';
 export default css`
   .label-text {
     color: #473f47;
@@ -26,9 +26,10 @@ export default css`
   .register-content {
     width: 38vw;
     position: absolute;
+    padding: 0rem 2rem 2rem 2rem;
     right: 8%;
     top: 15%;
-    z-index:50;
+    z-index: 50;
   }
   .register-link {
     font-size: 1em;
@@ -56,7 +57,7 @@ export default css`
     background: rgba(255, 255, 255, 0.6);
     box-shadow: 6px 4px 19px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
-    padding: 30px 20px 30px 20px;
+    padding: 2rem 0rem;
   }
   .register-description {
     padding: 5% 0% 5% 0%;
@@ -118,4 +119,10 @@ export default css`
     font-size: 1em;
     font-family: 'Quicksand', sans-serif;
   }
-`
+  .error {
+    color: red;
+    display: flex;
+    justify-content: flex-end;
+    margin: 4px 0 4px 0;
+  }
+`;

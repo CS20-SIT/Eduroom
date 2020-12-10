@@ -15,22 +15,8 @@ import {
 import GeneralNoNav from "../../components/template/generalnonav";
 import TextField from "@material-ui/core/TextField";
 import api from "../../api";
-// export async function getServerSideProps(ctx) {
-//   try{
-//     if(ctx.req.headers.cookie){
-//       const res = await axios.get('/create',{headers: { cookie: ctx.req.headers.cookie }})
-//       const data1 = await res.data
-//       return { props: { data:{...data1} }}
-//     }
-//     else{
-//       return { props: { data: {err:true}}}
-//     }
-//   }
-//   catch(err){
-//     return {props: {data:{err:true}}}
-//   }
+import Link from "next/link";
 
-// }
 const CreateBlock = () => {
   const [createForm, setForm] = useState({
     title: "",
@@ -47,7 +33,7 @@ const CreateBlock = () => {
   useEffect(() => {
     console.log("render");
   }, []);
-  
+
   const handleChange = (e) => {
     e.preventDefault();
     setForm({ ...createForm, [e.target.name]: e.target.value });
@@ -78,8 +64,13 @@ const CreateBlock = () => {
     if (validator()) {
       console.log(createForm);
       api.post("/api/forum/create", createForm).then((res) => {
-        console.log(res);
-        // router.push("/forum");
+        setForm({
+          title: "",
+          cat: "",
+          subcat: "",
+          content: "",
+        });
+        
       });
     } else {
       console.log("This form is not valid");
@@ -93,7 +84,7 @@ const CreateBlock = () => {
       if (createForm[key] == "") {
         temp[key] = true;
         check = false;
-        console.log(key)
+        console.log(key);
       } else {
         temp[key] = false;
       }
@@ -122,6 +113,7 @@ const CreateBlock = () => {
         marginTop: theme.spacing(6),
         marginBottom: theme.spacing(6),
         padding: theme.spacing(3),
+        
       },
     },
   }));
@@ -152,6 +144,7 @@ const CreateBlock = () => {
                       onChange={handleChange}
                       label="Title of question"
                       error={alert.title}
+                      style={{backgroundColor: "#EFF0F6"}}
                     />
                     {alert.title ? (
                       <span style={{ color: "red", fontSize: "0.8em" }}>
@@ -173,6 +166,7 @@ const CreateBlock = () => {
                       multiline
                       rows={10}
                       label="Content"
+                      style={{backgroundColor: "#EFF0F6"}}
                     />
                     {alert.content ? (
                       <span style={{ color: "red", fontSize: "0.8em" }}>
@@ -189,6 +183,7 @@ const CreateBlock = () => {
                       fullWidth
                       placeholder="category"
                       variant="outlined"
+                      style={{backgroundColor: "#EFF0F6"}}
                     >
                       <MenuItem disabled value="default">
                         --Category--
@@ -216,6 +211,7 @@ const CreateBlock = () => {
                       variant="outlined"
                       placeholder="Subcategory"
                       onChange={handleChange}
+                      style={{backgroundColor: "#EFF0F6",border:'none'}}
                     >
                       <MenuItem disabled value="default">
                         --Subcategory--
@@ -234,21 +230,27 @@ const CreateBlock = () => {
                       </span>
                     ) : null}
                   </Grid>
-                  <Grid container spacing={0}
-                  alignItems="center"
-                  justify="center">
-                <Grid item xs={2} sm={2}>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color={"primary"}
-                    onClick={handleSubmit}
-                    className={classes.submit}
+                  <Grid
+                    container
+                    spacing={0}
+                    alignItems="center"
+                    justify="center"
                   >
-                    Submit
-                  </Button>
-                  </Grid>
+                    <Grid item xs={2} sm={2}>
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color={"primary"}
+                        onClick={handleSubmit}
+                        className={classes.submit}
+                        style={{borderRadius:'23px'}}
+                      >
+                        < Link href="/forum">
+                        Submit
+                        </Link>
+                      </Button>
+                    </Grid>
                   </Grid>
                 </Grid>
               </form>
@@ -260,6 +262,7 @@ const CreateBlock = () => {
         {`
          #form {
              padding:2% 20% 2% 20%;
+             borderRadius:'30px'
             }
             `}
       </style>

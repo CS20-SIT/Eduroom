@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from '../../../components/template/generalnonav';
-import GNav from "../../../components/graderCreate/Layout/gNav"
+import GeneralNoNav from "../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../components/graderCreate/GraderCreateLayout/Nav";
 
 import Log from "../../../components/graderCreate/AdminLog/Log";
 const AdminLog = () => {

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
-import GeneralNoNav from '../../../../components/template/generalnonav';
-import GNav from "../../../../components/graderCreate/Layout/gNav"
-import ConBig from "../../../../components/graderCreate/Contest/ConList/ConBig";
+import GeneralNoNav from "../../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../../components/graderCreate/GraderCreateLayout/Nav";
+import ConBig from "../../../../components/graderCreate/Contest/List/Contests";
 
 const Contest = () => {
   return (
@@ -9,7 +9,6 @@ const Contest = () => {
       <GeneralNoNav>
         <GNav></GNav>
         <ConBig />
-  
       </GeneralNoNav>
     </Fragment>
   );

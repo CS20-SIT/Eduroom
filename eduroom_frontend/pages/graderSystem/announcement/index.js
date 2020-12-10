@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
-import Head from 'next/head';
-import Box from '../../../components/graderSubmit/Box';
-import Layout from '../../../components/graderSubmit/Layout';
+import React, { Fragment } from "react"
+import Head from "next/head"
+import Box from "../../../components/graderSubmit/Box"
+import Layout from "../../../components/graderSubmit/Layout"
 
 const Announcement = () => {
   return (
@@ -10,10 +10,14 @@ const Announcement = () => {
         <title>Announcements</title>
         <meta property="og:title" content="Announcements" key="Announcements" />
       </Head>
-      <Layout page={'0'}>
-        <Box>This is an announcement Page</Box>
+      <Layout page={"announcement"}>
+        <div className="main">
+          <div className="size">
+            <Box>This is an announcement Page</Box>
+          </div>
+        </div>
       </Layout>
     </Fragment>
-  );
-};
-export default Announcement;
+  )
+}
+export default Announcement
