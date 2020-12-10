@@ -1,32 +1,28 @@
-import { useEffect } from 'react'
-import Styles from '../../styles/CoinStyles/test';
+import { Fragment, useEffect } from 'react'
+import Styles from '../../styles/CoinStyles/test'
 import React from 'react'
-
+import Balloon from '../../components/FolderCoin/Balloon'
 const temp = (props) => {
+	const renderBalloon = () => {
+		return Array(10)
+			.fill(0)
+			.map((el, index) => {
+				return (
+					<Fragment>
+						<Balloon />
+					</Fragment>
+				)
+			})
+	}
 	return (
 		<div>
 			Hello
 			<div>
 				<div id="balloon-container">
-					<div className="balloon"></div>
-					<div className="balloon2"></div>
-					<div className="balloon3"></div>
-					<div className="balloon4"></div>
-					<div className="balloon5"></div>
-					<div className="balloon6"></div>
-					<div className="balloon7"></div>
-					<div className="balloon8"></div>
-					<div className="balloon9"></div>
-					<div className="balloon10"></div>
-					<div className="balloon11"></div>
-					<div className="balloon12"></div>
-					<div className="balloon13"></div>
-					<div className="balloon14"></div>
-					<div className="balloon15"></div>
-				</div>
+					{renderBalloon()}</div>
 				<style jsx>{Styles}</style>
+				
 			</div>
-			
 		</div>
 	)
 }

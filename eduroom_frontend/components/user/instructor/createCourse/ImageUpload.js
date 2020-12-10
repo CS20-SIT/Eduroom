@@ -1,34 +1,28 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import api from '../../../../api'
 
-const Upload = ({ index, handleData}) => {
-	const [image, setImage] = useState(null)
-	useEffect(() => {
-		if (image) {
-			// var reader = new FileReader()
-			// reader.onload = function (e) {
-			// 	document.getElementById('show-image' + index).src = e.target.result
-			// }
-			// reader.readAsDataURL(image)
-		}
-	}, [image])
+const Upload = ({ index, handleData, data }) => {
+	// useEffect(() => {
+	// 	if (image) {
+	// 		var reader = new FileReader()
+	// 		reader.onload = function (e) {
+	// 			document.getElementById('show-image' + index).src = e.target.result
+	// 		}
+	// 		reader.readAsDataURL(image)
+	// 	}
+	// }, [image])
 	const handleUplaodFile = async (e) => {
 		let newValue = e.target.files[0]
-		let type = 'image'
 		handleData({ el: 'picture', data: newValue })
-		setImage(newValue)
 		const formData = new FormData()
-		formData.append('myImage', newValue)
-		const config = {
-			headers: {
-				'content-type': 'multipart/form-data',
-			},
-		}
-		const res = await api.post('/api/instructor/upload', formData, config)
-		console.log(res.data)
+		formData.append('course-picture-1', newValue)
+		// formData.append('course-picture-2', newValue)
+		// const res = await api.post('/api/instructor/upload/picture', formData)
+		// console.log(res.data)
+		// handleData({ el: 'picturePath', data: res.data.linkUrl })
 	}
 	const getLabel = () => {
-		return image ? image.name : 'Choose Picture'
+		return data.picture ? data.picture.name : 'Choose Picture'
 	}
 	return (
 		<Fragment>
@@ -36,7 +30,7 @@ const Upload = ({ index, handleData}) => {
 				<div className="imageupload textfield">
 					<input id={'image' + index} type="file" accept="image/*" hidden={true} onChange={handleUplaodFile} />
 					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-						<span style={{ color: '#3d467f', opacity: '0.75' }}>{ getLabel()}</span>
+						<span style={{ color: '#3d467f', opacity: '0.75' }}>{getLabel()}</span>
 						<span
 							className="camera"
 							onClick={() => {
