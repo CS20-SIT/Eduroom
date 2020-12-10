@@ -1,122 +1,126 @@
 import React, { Fragment, useState} from 'react'
-import style from '../../styles/universityEmail/Uregister'
-import {Link,Typography,InputBase, Paper, Grid} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import style from '../../styles/advertisement/ads';
+import {Link,Typography,InputBase, Paper, Grid,List} from '@material-ui/core'
 import General from '../template/general'
-
+import { useRouter } from 'next/router';
 
 
 import api from "../../api";
 
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
-
 const Content = () => {
-  const [createinfo, setinfo] = useState({
-    verifyCode: "",
-  }); 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validator()) {
-      console.log(createForm);
-      api.post("/api/forum/create", createForm).then((res) => {
-        console.log(res);
-        // router.push("/forum");
-      });
-    } else {
-      console.log("This form is not valid");
-    }
-  };
-  const [alert, setAlert] = useState({
-    verifyCode: false,
-  })
-   const [supportForm, setForm] = useState({
-    verifyCode: '',
-    
-  })
-  const validator = () => {
-    let keys = Object.keys(createForm);
-    let temp = { ...alert };
-    let check = true;
-    for (let key of keys) {
-      if (createForm[key] == "") {
-        temp[key] = true;
-        check = false;
-        console.log(key)
-      } else {
-        temp[key] = false;
-      }
-    }
-    setAlert(temp);
-    return check;
-  };
-  const [createForm] = useState({
-    verifyCode: "",
-  });
-  const classes = useStyles();
-  const [checked, setChecked] = React.useState(true);
-  const handleChange = (e) => {
-    e.preventDefault();
-    setinfo({ ...createinfo, [e.target.name]: e.target.value });
-  };
-  //const bull = <span className={classes.bullet}>•</span>;
+  const router = useRouter();
   return (
     <Fragment>
       <General>
-        <div className="Ad-Detail-text" style={{marginLeft: "75px"}}>
-        <Grid container spacing={3}  style={{ marginTop: '-15px' }}>
-                 ADVERTISEMENT
+        <div >
+          <Paper style={{margin:'8% 5% 5% 5%'}}>
+            <div className="ad-ad-header" style={{paddingTop:'100px', marginLeft:'50px',paddingBottom:'50px'}}>
+              information
+            </div>
+            <div>
+            <Grid container spacing={3}>
+              <Grid item xs={4}>
+                <Paper style={{ marginLeft:'50px',padding: 10 , backgroundColor:'#EFF0F6'}}>
+                    
+                      </Paper>
                 </Grid>
-          </div>
-        <Grid container spacing={3} direction="column" alignItems="center"
-                justify="center" style={{ marginTop: '20px' }}>
-              <div style={{
-                height: '5px', width: '90%', backgroundColor: '#c4c4c4', 
-              }}></div>
-        </Grid>
-        <div className="Ad-Detail-List-text">
-        <Grid container spacing={3} direction="column" alignItems="center"
-                justify="center" style={{ marginTop: '50px' }}>
-                  LIST OF ADVERTISEMENT
+                <Grid item xs={4}>
+                <Paper style={{ marginLeft:'5px',padding: 10 , backgroundColor:'#EFF0F6'}}>
+                    <form>
+                      <InputBase
+                        name = "startdate"
+                        fullWidth
+                        autoFocus
+                        type={"datetime-local"}
+                        placeholder = {"start date"}
+                        inputProps={{ 'aria-label': 'naked' }} 
+                      />
+                      </form>
+                      </Paper>
                 </Grid>
-        </div>
-        <Grid container spacing={12} direction="column" alignItems="center"
-                justify="center" style={{ marginTop: '30px' }}>
-                 
+              </Grid>
+            </div>
+            <div>
+            <Grid container spacing={3}>
+              <Grid item xs={4}>
+                <Paper style={{ marginLeft:'50px',padding: 10 , backgroundColor:'#EFF0F6'}}>
+                    <form>
+                      <InputBase
+                        name = "adTag"
+                        fullWidth
+                        autoFocus
+                        type={"text"}
+                        placeholder = {"Ad Tag"}
+                        inputProps={{ 'aria-label': 'naked' }}
+                        
+                      />
+                      </form>
+                      </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                <Paper style={{ marginLeft:'5px',padding: 10 , backgroundColor:'#EFF0F6'}}>
+                    <form>
+                      <InputBase
+                        name = "expiredate"
+                        fullWidth
+                        autoFocus
+                        type={"datetime-local"}
+                        placeholder = {"expire date"}
+                        inputProps={{ 'aria-label': 'naked' }} 
+                      />
+                      </form>
+                      </Paper>
+                </Grid>
+              </Grid>
+            </div>
+            <div>
+            <Grid container spacing={3}>
+            <Grid item xs={4}>
+                <Paper style={{ marginTop:'5px',marginLeft:'50px',padding: 10 , backgroundColor:'#EFF0F6'}}>
+                    <form>
+                      <InputBase
+                        name = "contactEmail"
+                        fullWidth
+                        autoFocus
+                        type={"email"}
+                        placeholder = {"Contact email"}
+                        inputProps={{ 'aria-label': 'naked' }} 
+                      />
+                      </form>
+                      </Paper>
+                      </Grid>
+                 </Grid>
+            </div>
+            <div>
+            <Grid item xs={4}>
+                <Paper style={{ marginTop:'100px',marginLeft:'50px',padding: 10 , backgroundColor:'#EFF0F6'}}>
+                    <form>
+                      <InputBase
+                        name = "imgLocation"
+                        fullWidth
+                        autoFocus
+                        type={"file"}
+                        placeholder = {"attrach your ad img"}
+                        inputProps={{ 'aria-label': 'naked' }} 
+                      />
+                      </form>
+                      </Paper>
+                      
+                 </Grid>
+            </div>
             
-              
-              <Paper style={{ height:'150px', width:'60%', opcacity: '100%' ,marginTop:'30px'}}>
-                <Grid item xs={1} style={{paddingLeft:'20px',marginTop:'30px'}}>
-                        <img src="https://www.flaticon.com/svg/static/icons/svg/3064/3064943.svg"
-                        width='100px' ></img>
-                </Grid>
-              </Paper>
-              
-        </Grid>
-        <Grid container spacing={12} direction="column" alignItems="center"
-                justify="center" style={{ marginTop: '10px' }}>
-                  
-                  <button className="Get-Ad-button"
-                   type="MyCoupon"
-                   onClick={handleSubmit}>
-                    <span className="Get-Ad-text">Get AD!</span>
-                  </button>
-        </Grid>
+            <div style={{marginTop:'50px', display: 'flex',  justifyContent:'center', alignItems:'center',paddingBottom:'50px'}}>
+            <button
+                      className = "next-button"
+                        onClick={() => router.push('/login')}
+                      >
+                       <a className="ad-button-text">Next</a>
+                      </button> 
+            </div>  
+         
+          </Paper>
+        
 
              
              
@@ -127,7 +131,7 @@ const Content = () => {
           
 
         
-
+        </div>
                 <style jsx>
         {style}
       </style> 
