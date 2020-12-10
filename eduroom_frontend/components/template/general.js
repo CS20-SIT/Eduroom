@@ -33,7 +33,7 @@ const General = (props) => {
 						min-height: 100vh;
 					}
 					.background-img {
-						position: absolute;
+						position: fixed;
 						bottom: 0;
 						width: 100vw;
 						z-index: 5;

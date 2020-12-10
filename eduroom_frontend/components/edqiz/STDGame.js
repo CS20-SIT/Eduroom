@@ -6,6 +6,7 @@ import Page4 from "./wrongAnswer";
 
 import socketIOClient from "socket.io-client";
 import { useRouter } from "next/router";
+import api from '../../api';
 
 const Content = ({ id }) => {
   const router = useRouter();
@@ -14,12 +15,13 @@ const Content = ({ id }) => {
   const [messages, setMessages] = useState([]);
   const [nextQuestion, setNextQuestion] = useState([]);
   const [answer, setAnswer] = useState('99');
+  const pin=router.query.id;
 
-  console.log(answer)
   const handleChangeQuestionNumber = (val) => {
     setquestionNumber(val);
   };
-
+  console.log('answer',answer)
+  
   const data = [
     {
       question:
@@ -60,13 +62,13 @@ const Content = ({ id }) => {
       image: null,
     },
   ];
+ 
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("room", (router.query.id));
     socket.on("get-skip", (isSkip) => {
-      console.log('isSkip',isSkip)
       if (isSkip) {
         goto(4);
       }
@@ -161,6 +163,7 @@ const Content = ({ id }) => {
             messages={messages}
             setAnswer={setAnswer}
             responseTime={responseTime}
+            pin={pin}
           />
         );
       case 2:
