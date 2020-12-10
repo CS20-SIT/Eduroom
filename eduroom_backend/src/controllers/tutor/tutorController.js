@@ -32,13 +32,18 @@ const getInstructorAvailabilities = async (req, res) => {
 			`select day,time from instructor_availabilities where instructorid = '${instructorid}' order by day, time`
 		)
 		const availabilities = [[], [], [], [], []]
-		result.rows.forEach((r) => {
-			availabilities[r.day].push(r.time - 9)
-		})
+		if (result.rows.length > 0) {
+			result.rows.forEach((r) => {
+				availabilities[r.day].push(r.time - 9)
+			})
+		}
 		result = await pool.query(
 			`select price from instructor_availabilities_price where instructorid = '${instructorid}'`
 		)
-		const { price } = result.rows[0]
+		let price = 0
+		if (result.rows.length > 0) {
+			price = result.rows[0].price
+		}
 		res.status(200).send({ availabilities, price })
 	} catch (e) {
 		res.status(404).send(e)
@@ -60,6 +65,7 @@ const getInstructorList = async (req, res) => {
         }   
          */
 
+		// WHY INSTRUCTOR EXPERT IS NOT INSERTED ??
 		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
             where p.instructorid = i.instructorid and i.userid = u.userid and e.instructorid = p.instructorid;
         `)
@@ -249,7 +255,7 @@ const getInstructorAppointments = async (req, res) => {
 		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
 		const { instructorid } = result.rows[0]
 
-		let result = await pool.query(`
+		result = await pool.query(`
 		select a.appointmentid, a.headerid as id, u.firstname as firstname, u.lastname as lastname, date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, a.status,to_char( a.starttime, 'DD-MM-YYYY') as date, m.userid as mid, me.firstname as mfn, me.lastname as mln
         from instructor_appointments a,user_profile u, instructor_appointment_members m, (select userid, firstname, lastname from user_profile) me
         where a.instructorid = '${instructorid}'
@@ -428,12 +434,7 @@ const updateInstructorAvailabilities = async (req, res) => {
 		const id = req.user.id
 		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
 		const { instructorid } = result.rows[0]
-
-		for (let i = 0; i < 5; i++) {
-			await pool.query(
-				`delete from instructor_availabilities where instructorid = '${instructorid}' and day = ${i}`
-			)
-		}
+		await pool.query(`delete from instructor_availabilities where instructorid = '${instructorid}'`)
 		for (let i = 0; i < availabilities.length; i++) {
 			for (let j = 0; j < availabilities[i].length; j++) {
 				await pool.query(
@@ -441,9 +442,18 @@ const updateInstructorAvailabilities = async (req, res) => {
 				)
 			}
 		}
-		await pool.query(
-			`update instructor_availabilities_price set price = ${price} where instructorid = '${instructorid}';`
+		result = await pool.query(
+			`select instructorid from instructor_availabilities_price where instructorid = '${instructorid}'`
 		)
+
+		if (result.rows.length == 0) {
+			console.log('IF')
+			await pool.query(`insert into instructor_availabilities_price values ('${instructorid}',${price});`)
+		} else {
+			console.log('ELSE')
+			await pool.query(`
+			update instructor_availabilities_price set price = ${price} where instructorid = '${instructorid}'`)
+		}
 		res.status(200).send({ test: 'Successs' })
 	} catch (e) {
 		res.status(404).send(e)
