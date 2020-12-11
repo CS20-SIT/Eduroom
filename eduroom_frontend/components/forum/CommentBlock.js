@@ -1,21 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import api from "../../api";
 import Grid from "@material-ui/core/Grid";
 import moment from 'moment'
+import UserContext from '../../contexts/user/userContext'
 
 const CommentBlock = ({ row, id, data }) => {
-  const [auth, setData] = useState([])
-	useEffect(() => {
-		const GetData = async () => {
-			const result = await api.get('/api/auth/profile')
-			console.log(result.data)
-			setData(result.data)
-		}
-		GetData()
-		console.log(data)
-	}, [])
+  const userContext = useContext(UserContext);
+  const {user} = userContext
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -44,7 +37,7 @@ const CommentBlock = ({ row, id, data }) => {
                     <div>
                       <div className="delete" style={{justifyContent: "space-between"}}>
                       <b>comment {index + 1}</b>
-                      {row.userid == auth.userid ? (
+                      {user && row.userid == user.userid ? (
                         <i className="fas fa-times"></i>
                       ):null}
                     </div>
