@@ -9,25 +9,42 @@ const Page4 = ({
   image,
   changeDescription,
   changeImage,
+  questionList,
+  name
 }) => {
   const [data, setData] = useState({
-		name: '',
-		picture: '',
-		picturePath: '',
-		video: '',
-		videoPath: '',
-		subject: '',
-		sections: [],
-	})
-  const handleDonePicture = async () => {
-		
-    const pictureFormData = new FormData();
-    pictureFormData.append('course-picture',image);
-    const pictureLink = await api.post('/api/kahoot/upload/picture', pictureFormData)
-    data.picturePath = pictureLink.data.linkUrl;
+    name: '',
+    picture: '',
+    picturePath: '',
+    video: '',
+    videoPath: '',
+    subject: '',
+    sections: [],
+  })
+  console.log('questionList', questionList)
+  console.log('name', name)
+  console.log('description', description)
+ 
 
-  
-}
+
+  const handleDonePicture = async () => {
+    const pictureFormData = new FormData();
+    for (let i = 0; i < questionList.length; i++) {
+      pictureFormData.append('edqiz-question', questionList[i].image);
+      console.log('complete append')
+    }
+    const pictureLink = await api.post('/api/kahoot/upload/picture', pictureFormData)
+
+    return pictureLink.data;
+    
+  }
+  const handleSubmit = async () => {
+    const picturepath= await handleDonePicture();
+    let body = { name: name, description: description, questionList: questionList, picturepath:picturepath }
+    console.log('body', body)
+    const res = await api.post('/api/kahoot/createQuiz', body);
+    console.log(res.data);
+  };
   useEffect(() => {
     if (image) {
       var reader = new FileReader()
@@ -40,9 +57,7 @@ const Page4 = ({
   const handleChange = (e) => {
     changeDescription(e.target.value)
   }
-  const handleUploadFile = (e) => {
-    changeImage(e.target.files[0])
-  }
+
   return (
     <Fragment>
       <div className="col-12">
@@ -54,44 +69,10 @@ const Page4 = ({
         <div className="row row-content">
           <Fragment>
             <div className="col-12">
-              <p className="edqiz-manage-header">COVER IMAGE</p>
-              <p className="">Give your quiz a cover image and description</p>
+              <p className="edqiz-manage-header">Description</p>
+              <p className="">Give your quiz a description</p>
             </div>
-            <div className="col-12 cflex">
-              <div
-                className="imageUpload"
-                onClick={() => {
-                  document.getElementById('image').click()
-                }}
-              >
-                <input
-                  id={'image'}
-                  type="file"
-                  accept="image/*"
-                  hidden={true}
-                  onChange={handleUploadFile}
-                />
-                {image ? (
-                  <div className="show-img">
-                    <img
-                      className="mw-600 mh-240"
-                      width="60%"
-                      src=""
-                      alt="cover-image"
-                      id="cover-image"
-                    />
-                  </div>
-                ) : (
-                  <div>
-                    <span className="fs-13">
-                      <i className="far fa-file"></i>
-                    </span>
-                    <br />
-                    <span>Click here to add a document</span>
-                  </div>
-                )}
-              </div>
-            </div>
+
             <div className="col-12 cflex">
               <div className="w-600">
                 <InputText
@@ -105,8 +86,10 @@ const Page4 = ({
             <div className="col-12">
               <button
                 className="edqiz-manage-button purple big-button"
-                onClick={() => {
-                  goto(5),handleDonePicture()
+                onClick={async () => {
+                  goto(5)
+
+                    , handleSubmit()
                 }}
               >
                 <span className="edqiz-manage-button-text">Done</span>
