@@ -28,7 +28,7 @@ export default css`
   }
   .forumblock{
     padding: 1% 3% 2% 1%;
-    margin: 3% 4% 0% 4%;
+    margin: 1% 4% 0% 4%;
     width: auto;
   }
   .idblock{
@@ -42,7 +42,7 @@ export default css`
     margin-left: 1%;
   }
   .backforroom{
-    margin: 2%;
+    margin: 1%;
     margin-top: 0%;
     margin-left: 7%;
   }

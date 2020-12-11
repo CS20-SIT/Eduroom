@@ -36,6 +36,7 @@ const ForumInRoom = ({ row }) => {
 			justifyContent: 'flexStart',
 			// textAlign: 'center',
 			margin: '15px',
+			marginTop: '10px',
 			color: theme.palette.text.secondary,
 		},
 	}))
