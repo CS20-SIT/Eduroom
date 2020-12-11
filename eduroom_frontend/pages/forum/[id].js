@@ -37,7 +37,8 @@ const ForumID = (props) => {
 						display: 'flex',
 						flex: '1 1 auto',
 						justifyContent: 'space-between',
-						background: '#EFF0F6',
+            background: '#EFF0F6',
+            minHeight: '100vh',
 					}}
 				>
 					<div id="nav">
