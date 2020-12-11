@@ -1,27 +1,15 @@
-
-.balloon {
+.balloon3 {
     height: 125px;
     width: 105px;
     border-radius: 75% 75% 70% 70%;
     position: relative;
-
+    background-color: #FFD9F7;
+    color: #D5C1FC;
+    box-shadow: inset -7px -3px 10px pink;
+    margin: 50px 0 0 100px;
+    left:-50px;
 }
-.balloon:before {
-    content: '';
-    height: 75px;
-    width: 1px;
-    padding: 1px;
-    background-color: #fdfd96;
-    display: block;
-    position: absolute;
-    top: 125px;
-    left: 0;
-    right: 0;
-    margin: auto;
-
-}
-
-.balloon:after {
+.balloon3:after {
     content: '▲';
     text-align: center;
     display: block;
@@ -33,38 +21,126 @@
     margin: auto;
 
 }
-
-
-@keyframes float {
-    0% {
-        transform: translateY(100vh);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-300vh);
-        opacity: 0;
-    }
-}
-.div {
-    background-color: rgba(0, 0, 0, 0.4);
-    position: fixed;
+.balloon3:before {
+    content: '';
+    height: 75px;
+    width: 1px;
+    padding: 1px;
+    background-color: #D5C1FC;
+    display: block;
+    position: absolute;
+    top: 135px;
     left: 0;
     right: 0;
-    top: 0;
-    bottom: 0;
     margin: auto;
-    width: 100vw;
-    height: 1000vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000000;
+
 }
-.white {
-    background-color: white;
-    box-shadow: 0 5px 10px 2px rgba(195, 192, 192, 0.5);
-    padding: 20px;
-    border-radius: 5px 5px;
-    width: 50vw;
-    height: 50vh;
+.balloon2 {
+    height: 125px;
+    width: 105px;
+    border-radius: 75% 75% 70% 70%;
+    position: relative;
+    background-color: #FFD9F7;
+    color: #D5C1FC;
+    box-shadow: inset -7px -3px 10px pink;
+    margin: 50px 0 0 100px;
+    left:-100px;
 }
+.balloon2:after {
+    content: '▲';
+    text-align: center;
+    display: block;
+    position: absolute;
+    color: inherit;
+    top: 120px;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+}
+.balloon2:before {
+    content: '';
+    height: 75px;
+    width: 1px;
+    padding: 1px;
+    background-color: #D5C1FC;
+    display: block;
+    position: absolute;
+    top: 135px;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+}
+    .balloon {
+        height: 125px;
+        width: 105px;
+        border-radius: 75% 75% 70% 70%;
+        position: relative;
+        background-color: rgba(220, 176, 423, 0.7);
+        color: rgba(220, 176, 423, 0.7);
+        box-shadow: inset -7px -3px 10px pink;
+        margin: 50px 0 0 100px;
+        top:-100px
+        
+    }
+    .balloon:after {
+        content: '▲';
+        text-align: center;
+        display: block;
+        position: absolute;
+        color: inherit;
+        top: 120px;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+    }
+    .balloon:before {
+        content: '';
+        height: 75px;
+        width: 1px;
+        padding: 1px;
+        background-color: #D5C1FC;
+        display: block;
+        position: absolute;
+        top: 135px;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+    }
+    .div {
+        background-color: rgba(0, 0, 0, 0.4);
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100vw;
+        height: 1000vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000000;
+    }
+    .balloon-container {
+        height: 100vh;
+        padding: 1em;
+        box-sizing: border-box;
+        overflow: hidden;
+        position:absolute;
+        top:-100px;
+
+    }
+    @keyframes float {
+        0% {
+            transform: translateY(300vh);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-300vh);
+            opacity: 0;
+        }
+    }

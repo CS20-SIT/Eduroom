@@ -73,7 +73,7 @@ const ListSticker = (props) => {
 	const renderList = () => {
 		const stickers = props.item.map((item, index) => {
 			return (
-				<div key={item.id} className={Styles.text}>
+				<div key={item.id}>
 					<ProductSticker_Render
 						title={item.title}
 						price={item.price}
@@ -89,9 +89,26 @@ const ListSticker = (props) => {
 
 	return (
 		<div>
+			<div className={Styles.landing}>
+				<div className={Styles.landingContent}>
+					<div className={Styles.landingHeader}>
+						STICKER STORE <br />
+						<span style={{ fontSize: '1.3em' }}>EXCHANGE</span>
+					</div>
+					<div className={Styles.landingDescription}>
+						StickStores has many stickers for people <br />
+						Who has ambition this Sticker will give love to everyone
+					</div>
+				</div>
+				<img className={Styles.landingImg} alt="landing-img" src="/images/Coin-image/online_shopping_ 1.svg" width="600" height="525" />
+			</div>
+			<h1 className={Styles.text}>TOP CHART</h1>
 			<div className={Styles.box}>{renderSlide()}</div>
+			<h1 className={Styles.text}>LIST ALL STICKERS</h1>
+			<div className={Styles.box2}>
 			<div className={Styles.div}>{renderList()}</div>
+			</div>
 		</div>
-	)
+	);
 }
 export default ListSticker

@@ -65,7 +65,7 @@ export default css`
 	.error {
 		color: red;
 		display: flex;
-		justify-content: flex-end;
+		font-size: .8em;
 		margin: 4px 0 4px 0;
 	}
 	.login-button {
