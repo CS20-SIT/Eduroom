@@ -6,7 +6,7 @@ import {
 
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-import Lifetime from "../../../components/support/gettingstarted/lifetimeaccess";
+import Lifetime from "../../../components/support/lifetimeaccess";
 const lifetimeaccess = () => {
   return <Fragment>
     
@@ -51,7 +51,6 @@ const lifetimeaccess = () => {
               margin: 5%;
             }
             .top {
-
                 padding: 50px 70px 0px 70px;
             }
           `}
