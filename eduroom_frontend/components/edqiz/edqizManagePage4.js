@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import EdquizPagination from './edqizPagination'
 import style from '../../styles/edqiz/managePage'
 import InputText from '../utils/InputText'
+import api from '../../api'
 const Page4 = ({
   goto,
   description,
@@ -9,6 +10,24 @@ const Page4 = ({
   changeDescription,
   changeImage,
 }) => {
+  const [data, setData] = useState({
+		name: '',
+		picture: '',
+		picturePath: '',
+		video: '',
+		videoPath: '',
+		subject: '',
+		sections: [],
+	})
+  const handleDonePicture = async () => {
+		
+    const pictureFormData = new FormData();
+    pictureFormData.append('course-picture',image);
+    const pictureLink = await api.post('/api/kahoot/upload/picture', pictureFormData)
+    data.picturePath = pictureLink.data.linkUrl;
+
+  
+}
   useEffect(() => {
     if (image) {
       var reader = new FileReader()
@@ -56,6 +75,7 @@ const Page4 = ({
                   <div className="show-img">
                     <img
                       className="mw-600 mh-240"
+                      width="60%"
                       src=""
                       alt="cover-image"
                       id="cover-image"
@@ -86,7 +106,7 @@ const Page4 = ({
               <button
                 className="edqiz-manage-button purple big-button"
                 onClick={() => {
-                  goto(5)
+                  goto(5),handleDonePicture()
                 }}
               >
                 <span className="edqiz-manage-button-text">Done</span>

@@ -10,9 +10,7 @@ import api from '../../../../api'
 
 const contestOverview = ({ id }) => {
 	const [data, setData] = useState([])
-	useEffect(() => {
-		console.log(id)
-	}, [id])
+
 	useEffect(() => {
 		const GetData = async () => {
 			const result = await api.get('api/grader/getContestDetail', {

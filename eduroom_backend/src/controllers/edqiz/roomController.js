@@ -124,4 +124,11 @@ exports.fetchScoreRank = async (req, res, next) => {
   res.status(200).json({rank,score});
 };
 
+exports.Upload = async (req, res, next) => {
+	const file = req.files[0]
+  const result = { linkUrl: file.linkUrl, fieldname: file.fieldname }
+  console.log(result)
+	res.send(result)
+};
+
 
