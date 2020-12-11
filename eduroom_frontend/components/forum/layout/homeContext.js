@@ -8,8 +8,8 @@ const HomeContent = () => {
 		api
 			.get('/api/forum')
 			.then((res) => {
-                setForums(res.data.data)
-                console.log(res.data.data)
+				console.log(res.data)
+				setForums(res.data.data)
 			})
 			.catch((err) => [console.log(err)])
 	}, [])
@@ -19,7 +19,11 @@ const HomeContent = () => {
 				<div className="home-title">CHOOSE ROOM</div>
 				<CategoriesSet />
 				{forums.map((el, index) => {
-					return <Fragment key={index}><ForumBox data={el}  /></Fragment>
+					return (
+						<Fragment key={index}>
+							<ForumBox data={el} />
+						</Fragment>
+					)
 				})}
 			</div>
 			<style jsx>
@@ -29,8 +33,7 @@ const HomeContent = () => {
 						flex-flow: column;
 						justify-content: center;
 						align-items: center;
-                        padding: 1.5rem 5rem;
-                        
+						padding: 1.5rem 5rem;
 					}
 					.home-title {
 						color: #3d467f;

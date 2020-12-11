@@ -24,11 +24,11 @@ const ForumBox = ({ data }) => {
 					</div>
 				</div>
 				<div className="forumAction">
-					<div><Icon type="like" /></div>
-					<div onClick={() => {
+					<div style={{display:'flex',alignItems:'center'}}><Icon type="like" /><div>{data.likes}</div></div>
+					<div style={{display:'flex',paddingLeft:'2%',alignItems:'center'}} onClick={() => {
 						router.push(`/forum/${data.forumid}`)
 					}}>
-						<Icon type="comment" />
+						<Icon type="comment" /><div>{data.comments}</div>
 					</div>
 				</div>
 			</div>
