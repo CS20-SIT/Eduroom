@@ -15,14 +15,14 @@ const CreatePackagePage = () => {
 		discount: 0,
 		category: 'default',
 		detail: '',
-		courses: [],
+		selectedCourses: [],
 	})
+	const fetchCourses = async () => {
+		const res = await api.get('/api/package/courses')
+		setCourses(res.data)
+	}
 	useEffect(() => {
-		const fetchdata = async () => {
-			const res = await api.get('/api/package/courses')
-			setCourses(res.data)
-		}
-		fetchdata()
+		fetchCourses()
 	}, [])
 
 	useEffect(() => {
