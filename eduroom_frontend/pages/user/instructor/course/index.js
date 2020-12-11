@@ -13,8 +13,8 @@ const Index = () => {
                     <div className="container">
                         {/* <div className="package-content">You Have Not Create Package Yet</div> */}
                         <div>
-                            <Ownpackage />
-                            <Ownpackage />
+                            <Ownpackage id={11111111100} />
+                            <Ownpackage id={22525} />
                         </div>
                         <div>
                             <Link href="/user/instructor/course/createpackage">

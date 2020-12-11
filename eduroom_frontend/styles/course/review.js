@@ -5,7 +5,7 @@ export default css`
                 background: white;
                 border-radius: 2vh;
                 width: 80vw;
-                height: 100vh;
+                height: 300vh;
                 margin-left: auto;
                 margin-right: auto;
                
@@ -29,4 +29,12 @@ export default css`
         background-image:url('/images/big-bg.svg');
         background-size : cover;
       }
+      .myimgInPost{
+        width:79px;
+        height:79px;
+        object-fit:cover;
+        border-radius:50%;
+       
+      }
+    
 `
