@@ -8,20 +8,19 @@ import api from '../../../../api'
 
 const Index = () => {
 	const [packages, setPackages] = useState(null)
+	const fetchPackages = async () => {
+		const res = await api.get('/api/package/getInstructorPackage')
+		setPackages(res.data)
+	}
 	useEffect(() => {
-		const fetchData = async () => {
-			const res = await api.get('/api/package/getInstructorPackage')
-			setPackages(res.data)
-			// console.log(res.data)
-		}
-		fetchData()
+		fetchPackages()
 	}, [])
 	const renderPackages = () => {
 		if (packages !== null) {
 			if (packages.length === 0) {
 				return <div className="package-content">You Have Not Create Package Yet</div>
 			} else {
-				return <OwnPackages packages={packages}></OwnPackages>
+				return <OwnPackages fetchPackages={fetchPackages} packages={packages}></OwnPackages>
 			}
 		}
 	}

@@ -2,10 +2,10 @@ import { Fragment } from 'react'
 import Ownpackage from './ownpackage'
 import style from '../../styles/package/content'
 
-const ownPakages = ({ packages }) => {
+const ownPakages = ({ packages, fetchPackages }) => {
 	const renderPackages = () => {
 		const arr = packages.map((ownPackage, idx) => {
-			return <Ownpackage ownPackage={ownPackage} key={ownPackage.packageid}></Ownpackage>
+			return <Ownpackage fetchPackages={fetchPackages} ownPackage={ownPackage} key={ownPackage.packageid}></Ownpackage>
 		})
 		return arr
 	}
