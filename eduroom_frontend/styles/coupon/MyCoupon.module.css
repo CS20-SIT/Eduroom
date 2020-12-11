@@ -7,7 +7,57 @@
     height: 35px;
     width: 100px;
     position: absolute;
-    top: 90vh;
-    left: 20vh;
+    top: 92.5vh;
+    left: 15vh;
     font-size: 20px;
+}
+.card{
+    width:80vw;
+    height: 65vh;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: whitesmoke;
+    border-radius: 5%;
+}
+.container{
+    display: flex;
+    justify-content:space-evenly;
+    margin-top:-25px;
+    margin-left:-40px;
+}
+.line{
+    width: 70vw;
+    height: 1.5vh;
+    position: absolute;
+    top: 13%;
+    left:15%;
+    background-color: lightgrey;
+
+
+}
+.box3{
+    width: 25%;
+    height: 20px;
+    position: relative;
+    top:-5px;
+    left: 52.5vw;
+    background: #FB9CCB;
+}
+.box2{
+    width: 25%;
+    height: 20px;
+    position: relative;
+    top:-5px;
+    left: 30vw;
+    background: #FB9CCB;
+}
+.box{
+    width: 25%;
+    height: 20px;
+    position: relative;
+    top:-5px;
+    background: #FB9CCB;
 }
