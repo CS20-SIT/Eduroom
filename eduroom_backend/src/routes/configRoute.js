@@ -18,6 +18,7 @@ const CoinRoute = require('./coinRoute')
 const UserRoute = require('./userRoute')
 const TutorRoute = require('./tutorRoute')
 const LearningRoute = require('./learningPathRoute')
+const ChatRoute = require('./chatRoute')
 
 router.use('/test', TestRoute)
 router.use('/auth', AuthRoute)
@@ -36,5 +37,6 @@ router.use('/learningpath', LearningRoute)
 router.use('/coin', CoinRoute)
 router.use('/user', UserRoute)
 router.use('/tutor', TutorRoute)
+router.use('/chat',ChatRoute)
 
 module.exports = router
