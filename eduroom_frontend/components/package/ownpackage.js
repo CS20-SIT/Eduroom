@@ -4,7 +4,9 @@ import Link from 'next/link'
 import Dialog from '@material-ui/core/Dialog'
 import { useRouter } from 'next/router'
 import api from '../../api'
-const Ownpackage = (props) => {
+import { render } from 'react-dom'
+const Ownpackage = ({ ownPackage }) => {
+	console.log(ownPackage)
 	const [open, setOpen] = useState(false)
 	const router = useRouter()
 	const [type] = useState('created')
@@ -20,24 +22,63 @@ const Ownpackage = (props) => {
 	const handleSubmit = () => {
 		console.log(type)
 	}
-	return (
-		<Fragment>
-			<div
-				className="center pdt-20" onclick={() => {
-                    console.log('test')
-					router.push(`/course/${props.id}/packagePage`)
-				}}
-			>
-				<div className="package">
-					<div style={{ display: 'flex' }}>
-							<div style={{ width: '15%' }}>
-								<div className="picture" onclick={() => {
-					router.push(`/course/${props.id}/packagePage`)
-				}}>Picture</div>
+
+	const renderEdit = () => {
+		if (ownPackage.ispublic) return null
+		return (
+			<Fragment>
+				<button
+					onClick={(e) => {
+						router.push('/user/instructor/course/editpackage')
+						e.stopPropagation()
+					}}
+					className="active pebutton"
+				>
+					<i className="fas fa-pen"></i>edit
+				</button>
+				<style jsx>{style}</style>
+			</Fragment>
+		)
+	}
+	const getPublishClass = () => {
+		return ownPackage.ispublic ? 'disabled pebutton' : 'active pebutton'
+	}
+	const renderPublish = () => {
+		return (
+			<Fragment>
+				<button
+					onClick={(e) => {
+						e.stopPropagation()
+						console.log('hello')
+					}}
+					className={getPublishClass()}
+					disabled={ownPackage.ispublic}
+				>
+					<i className="fas fa-globe"></i>publish
+				</button>
+				<style jsx>{style}</style>
+			</Fragment>
+		)
+	}
+
+	const renderOwnPackage = () => {
+		if (!ownPackage) return null
+		return (
+			<Fragment>
+				<div
+					className="center pdt-20"
+					onClick={() => {
+						router.push(`/course/${ownPackage.packageid}/packagePage`)
+					}}
+				>
+					<div className="package">
+						<div style={{ display: 'flex' }}>
+							<div>
+								<img src={ownPackage.image} className="picture"></img>
 							</div>
 							<div className="block2">
 								<div style={{ display: 'flex' }}>
-									<div className="name" >Package Name</div>
+									<div className="name">{ownPackage.packagename}</div>
 
 									<div style={{ paddingLeft: '10%' }}>
 										<button className="Xbutton" onClick={handleOpenDialog}>
@@ -68,28 +109,27 @@ const Ownpackage = (props) => {
 									</div>
 								</div>
 								<div className="pri-cat">
-									฿<span>price</span>
+									฿<span>{ownPackage.price}</span>
 								</div>
 								<div>
-									<div className="pri-cat">Category</div>
-								
-								<div className="right">
-									<button onClick={() => console.log('Clicked')} className="pebutton">
-										<i className="fas fa-globe"></i>publish
-									</button>
-									<Link href="/user/instructor/course/editpackage">
-										<button onClick={() => console.log('Clicked')} className="pebutton">
-											<i className="fas fa-pen"></i>edit
-										</button>
-									</Link>
+									<div className="pri-cat">Category: {ownPackage.cataname}</div>
+
+									<div className="right">
+										{renderPublish()}
+										{renderEdit()}
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<style jsx>{style}</style>
+				<style jsx>{style}</style>
+			</Fragment>
+		)
+	}
+	return (
+		<Fragment>
+			<div>{renderOwnPackage()}</div>
 		</Fragment>
 	)
 }
