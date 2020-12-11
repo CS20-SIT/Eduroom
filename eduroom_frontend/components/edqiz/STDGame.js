@@ -22,7 +22,6 @@ const Content = ({ id }) => {
   const handleChangeQuestionNumber = (val) => {
     setquestionNumber(val);
   };
-  console.log('answer',answer)
   
   const data = [
     {
@@ -64,53 +63,32 @@ const Content = ({ id }) => {
       image: null,
     },
   ];
- 
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("room", (router.query.id));
-    socket.on("get-skip", (isSkip) => {
-      // if (isSkip) {
-      //   goto(4);
-      // }
-    });
   };
-  // console.log(questionNumber,data.length)
-  
   const getQuestionNo = () => {
-    
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
-    
     socket.on("new-questionNo", (question) => {
-   
      setquestionNumber(question)
-     
-
-      
     });
   };
-
-
   const responseTime = (tempAnswer) => {
- 
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.on("sent-seconds", (timeTemp) => {
       
       setTime(timeTemp);
-      console.log(timeTemp)
       if (timeTemp == 0) {
-        console.log(tempAnswer+'socketInSide')
         if (tempAnswer == data[questionNumber].correct) {
-        console.log('right')
           goto(2);
         } else {
           goto(4);
-          console.log('wrong')
         }
       }
     });
@@ -138,14 +116,12 @@ const Content = ({ id }) => {
     });
     socket.emit("sent-message", data[questionNumber], id.id);
   };
-  // let pin=router.query.id;
   useEffect(() => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("room", (router.query.id));
     socket.on("get-Nextquestion", (isNext, pin, questionNo) => {
-  
       if(questionNo<data.length){
       setquestionNumber(questionNo)
       if(isNext){
@@ -153,21 +129,15 @@ const Content = ({ id }) => {
       }
       }else{
         goto(5);
-        console.log(pin,'goto 5')
       }
-      
-     
-
     })
     response();
     getQuestionNo();
     responseTime(answer);
-    console.log(questionNumber,data.length)
   }, [questionNumber]);
   const goto = (val) => {
     setCurrent(val);
   };
-
   const renderPage = () => {
     switch (current) {
       case 1:

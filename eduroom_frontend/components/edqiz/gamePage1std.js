@@ -47,32 +47,23 @@ const Page1 = ({
 
       console.log(pin,'pin')
       const res = await api.get(`/api/kahoot/sessionid/${pin}`);
-      // console.log('resdata', res.data.sessionid)
       setSesstionID(res.data.sessionid)
-      // console.log(res)
     };
     fetchData();
   }, []);
 
   const handleUpdateScore = async () => {
     const sessionTemp = sessionid;
-    // console.log('sesstionTemp',sessionTemp)
     const point=data[questionNumber].point;
     const postUpdateScore = { sessionid:sessionid, point:point}
-    // console.log('postUpdateScore',postUpdateScore)
     const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
-    // console.log('handleUpdateScore',res.data);
   };
 
   const updateScore= async (answerTemp)=>{
     if(data[questionNumber].correct==answerTemp){
-      console.log('yes right answer')
       handleUpdateScore();
-    }else{
-      console.log('ไอคว๊าย')
     }
   }
-  console.log('answerOutside',answerPage1)
   useEffect(() => {
     setCountP();
     
@@ -90,9 +81,7 @@ const Page1 = ({
 
   useEffect(()=>{
     if (answerPage1==99 &&diff===0) {
-      console.log('answer',answerPage1)
         goto(4);
-        console.log('wrong')
     }
   },[diff])
   return (
