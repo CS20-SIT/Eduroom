@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, Paper,Typography } from "@material-ui/core";
 import style from "../../../styles/forum/showForum";
-import GetStart from "../../../components/support/gettingstart"
+import GetStart from "../../../components/support/gettingstarted/gettingstart"
 import { useRouter } from "next/router";
 import GeneralNonav from "../../../components/template/generalnonav";
 import General from "../../../components/template/general";
