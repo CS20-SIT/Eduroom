@@ -5,7 +5,7 @@ import api from '../../api'
 
 const EditPackage = (props, { index }) => {
 	const [image, setImage] = useState(null)
-	const [data, setData] = useState([])
+	const [data, setData] = useState(null)
 
 	useEffect(() => {
 		const GetData = async () => {
@@ -57,9 +57,10 @@ const EditPackage = (props, { index }) => {
 		props.setMyPackage({ ...props.myPackage, detail: e.target.value })
 	}
 
-	return (
-		<Fragment>
-			<div>
+	const renderPage = () => {
+		if (data === null) return null
+		return (
+			<Fragment>
 				<div className="package-header">EDIT PACKAGE</div>
 				<div className="container pd-4-10">
 					<div className="subtitle mg-40 text-center">PACKAGE INFORMATION</div>
@@ -159,7 +160,15 @@ const EditPackage = (props, { index }) => {
 						Edit
 					</button>
 				</div>
-			</div>
+			</Fragment>
+		)
+	}
+
+	return (
+		<Fragment>
+      <div>
+        { renderPage()}
+      </div>
 			<style jsx>{style}</style>
 		</Fragment>
 	)
