@@ -78,11 +78,11 @@ const IdBlock = () => {
 											</p>
 										</div>
 										<div className="icon" style={{ bottom: 0, right: 0, marginTop: '15px' }}>
-											<div style={{ paddingRight: '30px' }}>
-												<Icon type="like" />
+											<div style={{ paddingRight: '30px',display:'flex',alignItems:'center' }}>
+												<Icon type="like" /><div>{row.likes}</div>
 											</div>
-											<div style={{ paddingRight: '30px' }}>
-												<Icon type="comment" />
+											<div style={{ paddingRight: '30px',display:'flex',alignItems:'center' }}>
+												<Icon type="comment" /><div>{row.comments}</div>
 											</div>
 										</div>
 									</Paper>
