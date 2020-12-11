@@ -14,7 +14,8 @@ const IdBlock = () => {
 	const [edit, setEdit] = useState(false)
 	const userContext = useContext(UserContext)
 	const { user } = userContext
-	const param = useRouter().query.id || ''
+	const router = useRouter()
+	const param = router.query.id || ''
 	const [editData, setEditData] = useState({
 		titlethread: '',
 		content: '',
@@ -77,6 +78,13 @@ const IdBlock = () => {
 			alert('Please Login Before Like na ja')
 		}
 	}
+	const handleDelete = ()=> {
+		api.delete(`/api/forum/${data.forumid}`).then(res=>{
+			router.push('/forum')
+		}).catch(err=>{
+			console.log("Lop mai dai")
+		})
+	}
 	const classes = useStyles()
 
 	return (
@@ -110,7 +118,7 @@ const IdBlock = () => {
 											<i className="fas fa-pen" onClick={openEdit} style={{ size: '2px', marginRight: '20px' }}></i>
 										) : null}
 										{user && data.userid == user.userid && !edit ? (
-											<i className="fas fa-trash-alt" style={{ size: '2px' }}></i>
+											<i className="fas fa-trash-alt" onClick={handleDelete} style={{ size: '2px' }}></i>
 										) : null}
 
 										{user && data.userid == user.userid && edit ? (
