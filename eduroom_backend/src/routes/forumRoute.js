@@ -19,7 +19,7 @@ router.post('/like/:id', jwtAuthenicate, setLike)
 router.post('/comment', jwtAuthenicate, createComment)
 router.post('/create', jwtAuthenicate, setForum)
 router.get('/room/:roomname', jwtAuthenicate, selectRoom)
-router.delete('/comment/:id', jwtAuthenicate, deleteComment)
+router.post('/comment/:id', jwtAuthenicate, deleteComment)
 router.delete('/:id', jwtAuthenicate, deleteForum)
 router.put('/:id', jwtAuthenicate, editForum)
 //router.put = edit // api.put
