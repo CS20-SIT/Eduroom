@@ -1,33 +1,51 @@
 const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
 
-exports.createPackage = async(req,res)=>{
-  const time = await pool.query('SELECT NOW()')
-  // res.status(200).json({success:true,msg: 'test from backend',time:time.rows[0]})
-  // console.log(req)
-  const data = req.body
-  console.log(data);
-  res.send({ success: data})
-  return
-
+exports.createPackage = async (req, res, next) => {
+	const time = await pool.query('SELECT NOW()')
+	const data = req.body
+	res.status(200).json({ success: true, data: data })
+	console.log(data)
+	await pool.query(
+		'INSERT INTO package(packagename, instructorid, discount, ispublic,detail) VALUES ($1,$2,$3,$4,$5)',
+		[data.name, data.instructorid, data.discount, data.ispublic, data.detail]
+	)
 }
 
-// const pool = require('../database/db')
-// exports.getEvent = async (req, res, next) => {
+exports.getPackage = async (req, res, next) => {
+	const id = req.query.packageid
+	const data = await pool.query('select * from package where packageid = $1', [id])
+	const packageInfo = data.rows
+	res.status(200).json({ data: packageInfo })
+}
 
-//     const data = await pool.query('select * from global_event')
-//     res.send(data.rows)
-//     res.status(200).json({ GorgunGetSuccess: true })
-//     return
-// }
+exports.getCourses = async (req, res, next) => {
+  const results = await pool.query('SELECT courseid, coursename, coursepicture from course');
+  res.status(200).send(results.rows);
+}
 
-// exports.createEvent = async (req, res, next) => {
-//     const data = req.body;
-//     console.log(data);
-//     await pool.query('INSERT INTO global_event(title,startdate,enddate,starttime,endtime,detail,place,duration,eventid) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING * ',
-//         [data.title, data.startdate, data.enddate, data.starttime, data.endtime, data.detail, data.place, data.duration, data.eventid])
+exports.getInstructorPackage = async (req, res, next) => {
+  const instructorid = req.user.instructor
+	const result = await pool.query(
+		`select sum(price)-p.discount as price,p.packageid,packagename,p.discount,p.ispublic,p.detail,p.cateid, p.image, ca.cataname  from package p,package_courses pc,course c, categories ca
+  where ownerid = $1 and p.packageid = pc.packageid
+  and c.courseid = pc.courseid
+  and p.cateid = ca.cataid
+  group by p.packageid,ca.cataname`,
+		[instructorid]
+	)
+	res.send(result.rows)
+}
 
-//     res.status(200).json({ GorgunCreateSuccess: true, data: data })
-//     return
-
-// }
+exports.publishPackage = async (req, res, next) => {
+	const packageId = req.body.packageid
+	try {
+		const result = await pool.query('UPDATE package SET ispublic = true where packageid = $1 RETURNING *', [
+			packageId,
+		])
+		res.send({ success: true, packages: result.rows[0] })
+	} catch (err) {
+		console.log(err)
+		res.status(500).send(err)
+	}
+}
