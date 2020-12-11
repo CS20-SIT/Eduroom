@@ -16,23 +16,26 @@ const Page3 = ({questionNumber,goto,answer,data,id}) => {
     // console.log('watiting',answer)
     socket.on('get-diff', (time) => {
       setDiff(time);
-      if(time==0){
+      if(time==0 && answer!=99){
         if(answer == data[questionNumber].correct){
-        goto(2)}
+        goto(2)
+        console.log('right timeup')
+      }
         else{
           goto(4)
+        console.log('wrong timeup')
+
         }
       }
     });
     socket.on("get-skip", (isSkip) => {
-      console.log('answer',answer);
-      console.log(answer == data[questionNumber].correct);
-      if (isSkip || answer == data[questionNumber].correct) {
+      if ((isSkip || answer == data[questionNumber].correct)&&answer!=99) {
         if (answer == data[questionNumber].correct) {
-          console.log(answer == data[questionNumber].correct);
+          console.log(answer == data[questionNumber].correct,'skip');
           goto(2);
         } else {
           goto(4);
+          console.log('wrong skip')
         }
       }
     });

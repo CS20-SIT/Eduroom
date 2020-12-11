@@ -17,7 +17,7 @@ const Page1 = ({
   pin
 }) => {
   const router = useRouter();
-
+  const [answerPage1,setAnswerPage1]=useState(99);
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: "/kahoot",
   });
@@ -49,19 +49,19 @@ const Page1 = ({
       const res = await api.get(`/api/kahoot/sessionid/${pin}`);
       // console.log('resdata', res.data.sessionid)
       setSesstionID(res.data.sessionid)
-      console.log(res)
+      // console.log(res)
     };
     fetchData();
   }, []);
 
   const handleUpdateScore = async () => {
     const sessionTemp = sessionid;
-    console.log('sesstionTemp',sessionTemp)
+    // console.log('sesstionTemp',sessionTemp)
     const point=data[questionNumber].point;
     const postUpdateScore = { sessionid:sessionid, point:point}
-    console.log('postUpdateScore',postUpdateScore)
+    // console.log('postUpdateScore',postUpdateScore)
     const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
-    console.log('handleUpdateScore',res.data);
+    // console.log('handleUpdateScore',res.data);
   };
 
   const updateScore= async (answerTemp)=>{
@@ -72,30 +72,29 @@ const Page1 = ({
       console.log('ไอคว๊าย')
     }
   }
-
+  console.log('answerOutside',answerPage1)
   useEffect(() => {
     setCountP();
     
   }, [countPlayer]);
+  
   useEffect(() => {
     socket.emit("room", (router.query.id));
     socket.on("get-diff", (time,pin) => {
       setDiff(time);
-      if (time == 0) {
-        if (answer == data[questionNumber].correct) {
-          console.log(answer == data[questionNumber].correct);
-          goto(2);
-        } else {
-          goto(4);
-        }
-      }
-    });
-
-  
-
+      
+    },[]);
     sentMessage();
     response();
   }, []);
+
+  useEffect(()=>{
+    if (answerPage1==99 &&diff===0) {
+      console.log('answer',answerPage1)
+        goto(4);
+        console.log('wrong')
+    }
+  },[diff])
   return (
     <Fragment>
       <div className="landing">
@@ -170,10 +169,10 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#F39AC4" }}
                 onClick={() => {
-                  setAnswer("0"), goto(3),setCountAnswer(),updateScore(0);
+                  setAnswerPage1(0),
+                  setAnswer(0), goto(3),setCountAnswer(),updateScore(0);
                 }}
               >
-                {setAnswer("0")}
                 {data[questionNumber].ans[0]}
               </button>
             </Grid>
