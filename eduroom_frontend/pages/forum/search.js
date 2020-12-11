@@ -42,11 +42,13 @@ const Search = () => {
 	return (
 		<Fragment>
 			<GeneralNonav>
+				
 			{
 				dialog ? (
 					<AuthDialog handleClick={()=>{setDialog(false)}}/>
 				) :null
 			}
+				<div style={{background:'#F4F5F7'}}>
 				<ForumNav/>
 				<div className="forum-home">
 					{data.map((el, index) => {
@@ -56,7 +58,7 @@ const Search = () => {
 							</Fragment>
 						)
 					})}
-				</div>
+				</div></div>
 			</GeneralNonav>
 			<style jsx>
 				{`
