@@ -11,12 +11,14 @@ const {
 	editForum,
 	deleteForum,
 	getCategory,
-	searchForum
+	searchForum,
+	category
 } = require('../controllers/forumController')
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 router.get('/', jwtAuthenicate, showForum)
 router.get('/category', getCategory)
+router.get('/subcategory',category)
 router.get('/:id', jwtAuthenicate, selectForum)
 router.post('/like/:id', jwtAuthenicate, setLike)
 router.post('/comment', jwtAuthenicate, createComment)
