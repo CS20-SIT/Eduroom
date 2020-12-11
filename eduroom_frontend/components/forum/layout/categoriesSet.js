@@ -1,18 +1,31 @@
-import React,{Fragment} from 'react'
+import React,{Fragment, useEffect,useState} from 'react'
 import CategoriesBox from './categoriesBox'
 import {useRouter} from 'next/router'
+import api from  '../../../api'
 
 const CategoriesSet = () => {
+
     const router = useRouter();
-    const categories = ["Mathematic","Science","Language","Room4","Room5","Room6","Room7"]
+    const [categories,setCategories] = useState([])
+    useEffect(() => {
+		getCategory()
+	}, [])
+    const getCategory = () =>{
+        api
+            .get('/api/forum/category')
+            .then((res) => {
+				setCategories(res.data.category)
+			})
+			.catch((err) => [console.log(err)])
+    }
     return (
         <Fragment>
             <div className="categoriesSet">
             {
                 categories.map((el,index)=>{
                     return (
-                        <div className="categoriesItems" key={index} onClick={()=>{router.push('/forum/room/' + el)}}>
-                            <CategoriesBox content={el} />
+                        <div className="categoriesItems" key={index} onClick={()=>{router.push('/forum/room/' + el.typename)}}>
+                            <CategoriesBox content={el.typename} />
                         </div>
                     )
                 })

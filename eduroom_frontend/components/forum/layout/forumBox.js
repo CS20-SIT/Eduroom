@@ -20,7 +20,7 @@ const ForumBox = ({ data,onLike }) => {
 						<ForumTag tag={data.subtypename}></ForumTag>
 					</div>
 					<div className="forumDate">
-						{data.author} post {moment(data.posttime).fromNow()}
+						{data.author} post {moment(data.posttime).fromNow()}''
 					</div>
 				</div>
 				<div className="forumAction">
