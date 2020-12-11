@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import GeneralTemplate from '../../../../components/template/generalnonav';
-import style from '../../../../styles/package/createpackage';
-import CreatePackage from '../../../../components/package/createPackage';
-import ConfirmPackage from '../../../../components/package/confirmPackage';
-const CreatePackagePage = () => {
+import GeneralTemplate from '../../../../../../components/template/generalnonav';
+import style from '../../../../../../styles/package/createpackage';
+import EditPackage from '../../../../../../components/package/editPackage';
+import EditConfirm from '../../../../../../components/package/editConfirm';
+const EditPackagePage = ({id}) => {
   const [page, setPage] = useState(1);
   const [myPackage, setMyPackage] = useState({
     pic: '',
@@ -15,15 +15,15 @@ const CreatePackagePage = () => {
   });
   useEffect(() => {
     const fetchdata = async () => {
-      // res is mockup data
       const res = [
-        { pic: '', name: 'Java 101', price: 0 },
-        { pic: '', name: 'Python 101', price: 0 },
-        { pic: '', name: 'Advacen Algorithm', price: 0 },
+        { pic: '', name: 'Java 101' },
+        { pic: '', name: 'Python 101' },
+        { pic: '', name: 'Advacen Algorithm' },
       ];
       setMyPackage({ ...myPackage, courses: res });
     };
     fetchdata();
+    console.log(id);
   }, []);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const CreatePackagePage = () => {
   const renderPage = () => {
     if (page === 1) {
       return (
-        <CreatePackage
+        <EditPackage
           myPackage={myPackage}
           setMyPackage={setMyPackage}
           changePage={(page) => setPage(page)}
@@ -40,7 +40,7 @@ const CreatePackagePage = () => {
       );
     } else if (page === 2) {
       return (
-        <ConfirmPackage
+        <EditConfirm
           myPackage={myPackage}
           changePage={(page) => setPage(page)}
         />
@@ -58,4 +58,13 @@ const CreatePackagePage = () => {
     </Fragment>
   );
 };
-export default CreatePackagePage;
+
+export async function getServerSideProps(ctx) {
+	try {
+		const id = ctx.query.id
+		return { props: { id } }
+	} catch (err) {
+		return { props: { id: '' } }
+	}
+}
+export default EditPackagePage;

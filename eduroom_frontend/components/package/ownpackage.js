@@ -4,10 +4,11 @@ import Dialog from '@material-ui/core/Dialog'
 import { useRouter } from 'next/router'
 import api from '../../api'
 
-const Ownpackage = ({ ownPackage,fetchPackages }) => {
+const Ownpackage = ({ ownPackage, fetchPackages }) => {
 	const [open, setOpen] = useState(false)
 	const router = useRouter()
 	const [type] = useState('created')
+	console.log(ownPackage)
 	const handleOpenDialog = (e) => {
 		e.preventDefault()
 		e.stopPropagation()
@@ -25,14 +26,13 @@ const Ownpackage = ({ ownPackage,fetchPackages }) => {
 
 	const handleDelete = async (e) => {
 		e.stopPropagation()
-
 		// router.push('/user/instructor/course')
 	}
 
 	const handlePublish = async (e) => {
 		e.stopPropagation()
 		await api.post('/api/package/publishPackage', { packageid: ownPackage.packageid })
-		fetchPackages();
+		fetchPackages()
 	}
 
 	const renderEdit = () => {
@@ -41,7 +41,7 @@ const Ownpackage = ({ ownPackage,fetchPackages }) => {
 			<Fragment>
 				<button
 					onClick={(e) => {
-						router.push('/user/instructor/course/editpackage')
+						router.push(`/user/instructor/course/package/${ownPackage.packageid}/editpackage`)
 						e.stopPropagation()
 					}}
 					className="active pebutton"
