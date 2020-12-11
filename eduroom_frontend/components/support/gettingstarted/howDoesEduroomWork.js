@@ -16,7 +16,7 @@ import {
   Link,
   fade,
 } from "@material-ui/core";
-import Studentnav from "./studentsidenav";
+import Studentnav from "../studentsidenav";
 
 const HowDoesEduroomWork = () => {
   const theme = createMuiTheme();
