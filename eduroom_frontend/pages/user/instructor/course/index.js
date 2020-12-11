@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import General from '../../../../components/template/general'
+import React, { Fragment, useState } from 'react'
+import GeneralTemplate from '../../../../components/template/generalnonav'
 import style from '../../../../styles/package/content'
 import Link from 'next/link'
 import Ownpackage from '../../../../components/package/ownpackage'
@@ -7,26 +7,27 @@ import Ownpackage from '../../../../components/package/ownpackage'
 const Index = () => {
     return (
         <Fragment>
-            <General>
-                    <div className="package-header">Package Management </div>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                        <div className="container" >
-                            {/* <div className="package-content">You Have Not Create Package Yet</div> */}
-                            <Ownpackage />
-                            <Ownpackage />
-                            <div style={{ display: "flex", justifyContent: "center" }}>
-                                <Link href="/user/instructor/course/createpackage">
-                                    <button className="addpackbutton">
-                                        <i className="fas fa-plus-circle"></i>
-                                        <br></br>
-                                        Add new package
-                                    </button>
-                                </Link>
-                            </div>
+            <GeneralTemplate>
+                <div className={"package-bg"}>
+                    <div className="package-header">PACKAGE MANAGEMENT</div>
+                    <div className="container">
+                        {/* <div className="package-content">You Have Not Create Package Yet</div> */}
+                        <div>
+                            <Ownpackage id={11111111100} />
+                            <Ownpackage id={22525} />
+                        </div>
+                        <div>
+                            <Link href="/user/instructor/course/createpackage">
+                                <button className="addpackbutton">
+                                    <div><i className="fas fa-plus-circle"></i></div>
+                                    <div>add new package</div>
+                                </button>
+                            </Link>
                         </div>
                     </div>
+                </div>
                 <style jsx>{style}</style>
-            </General>
+            </GeneralTemplate>
         </Fragment>
     )
 }
