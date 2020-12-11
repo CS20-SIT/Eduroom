@@ -6,7 +6,7 @@ import style from '../../styles/layout/navbar'
 import UserContext from '../../contexts/user/userContext'
 import NavContext from '../../contexts/landing/navContext'
 
-const Navbar = ({ children }) => {
+const Navbar = ({ children, protected = false }) => {
 	const userContext = useContext(UserContext)
 	const navContext = useContext(NavContext)
 	const { getUser, logoutUser } = userContext
@@ -15,7 +15,7 @@ const Navbar = ({ children }) => {
 	const router = useRouter()
 
 	useEffect(() => {
-		getUser(router)
+		getUser(router,protected)
 	}, [])
 
 	const getOp = () => {
