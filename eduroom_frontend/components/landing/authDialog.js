@@ -2,9 +2,8 @@ import React, { Fragment, useState } from 'react'
 import LoginBox from './loginBox'
 import RegisterBox from './registerBox'
 
-const AuthDialog = () => {
+const AuthDialog = ({handleClick}) => {
 	const [page, setPage] = useState('login')
-    const handleClick = () => {}
     const getStyle = (text) => {
         if(page == text){
             return {
@@ -63,6 +62,11 @@ const AuthDialog = () => {
 			</div>
 			<style jsx>
 				{`
+					.modal {
+						position: fixed;
+						top: 0;
+						left:0;
+					}
 					.auth-box {
 						display: flex;
 						justify-content: center;
