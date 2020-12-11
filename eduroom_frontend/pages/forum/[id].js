@@ -3,7 +3,6 @@ import IdBlock from "../../components/forum/IdBlock";
 import style from "../../styles/forum/showForum";
 import GeneralNoNav from "../../components/template/generalnonav";
 import ForumNav from '../../components/forum/layout/forumNav';
-import NavForum from "../../components/forum/searchForum";
 import CommentBlock from "../../components/forum/CommentBlock";
 import CreateComment from "../../components/forum/CreateComment";
 import BackButton from "../../components/forum/BackButton";
@@ -38,7 +37,6 @@ const ForumID = (props) => {
                 <BackButton />
               </div>
               <IdBlock />
-
               <CommentBlock  data={data} id ={props.id} />
               <CreateComment GetData={GetData} id ={props.id} />
             </div>
@@ -48,7 +46,7 @@ const ForumID = (props) => {
             {`
               #nav {
                 width: 100%;
-                height: 100vh;
+                height: 100%;
               }
             `}
           </style>

@@ -8,6 +8,8 @@ export default css`
     padding: 2% 5% 0% 5%;
     cursor: default;
     background-image: url('/images/BG_Landing.svg');
+    background-size:cover;
+    background-repeat: no-repeat;
     position: absolute;
     top: 0;
   }

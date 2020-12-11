@@ -12,17 +12,19 @@ exports.forumTest = async (req, res, next) => {
 };
 
 exports.showForum = async (req, res, next) => {
-  const data = await pool.query("select forumid, titlethread, f.userid, displayname as author, posttime, subtypename, typename, c.categorytypeid from forum_form f , category_type c , sub_category s , user_profile u where f.userid = u.userid and f.subcategoryiid = s.subcategoryiid and s.categorytypeid = c.categorytypeid order by posttime desc;");
+  const user = req.user
+  const data = await pool.query("select f.forumid as forumid, titlethread, f.userid as userid, displayname as author, posttime, subtypename, typename, c.categorytypeid as categorytypeid ,likes,comments, forum_from_like.userid AS is_like from forum_form f JOIN forum_form_info ffi ON ffi.forumid = f.forumid JOIN user_profile u ON f.userid = u.userid JOIN sub_category s ON f.subcategoryiid = s.subcategoryiid JOIN category_type c ON s.categorytypeid = c.categorytypeid LEFT JOIN forum_from_like ON f.forumid = forum_from_like.forumid AND forum_from_like.userid = $1 order by posttime desc;",[user?.id??null]);
   const forum = data.rows;
-  res.status(200).json({ success: true, data: forum });
+  res.status(200).json({ success: true, data: forum});
 };
 exports.selectForum = async (req, res, next) => {
   const id = req.params.id;
   console.log('id is ',id);
-  const data = await pool.query("SELECT forumid, f.userid, posttime, titlethread, subcategoryiid, content, isdelete, up.displayname AS author FROM forum_form f JOIN user_profile up on f.userid = up.userid WHERE isdelete = false AND f.userid = up.userid AND forumid = $1", [
-    id,
+  const user = req.user
+  const data = await pool.query("SELECT f.forumid, f.userid, posttime, titlethread, subcategoryiid, content, isdelete, up.displayname AS author,likes, comments, forum_from_like.userid AS is_like FROM forum_form f JOIN user_profile up on f.userid = up.userid JOIN forum_form_info ffi on ffi.forumid = f.forumid LEFT JOIN forum_from_like ON f.forumid = forum_from_like.forumid AND forum_from_like.userid = $2 WHERE isdelete = false AND f.userid = up.userid AND f.forumid = $1", [
+    id,user?.id ?? null
   ]);
-  const data2 = await pool.query("select forumid, answerno, f.userid, displayname as author, anstime, isdelete, answer from forum_answer_form f join user_profile u on f.userid = u.userid where isdelete = false and forumid= $1  ", [
+  const data2 = await pool.query("select f.forumid, answerno, f.userid, displayname as author, anstime, isdelete, answer from forum_answer_form f join user_profile u on f.userid = u.userid where isdelete = false and f.forumid= $1  ", [
     id,
   ]);
   const forum = data.rows;
@@ -38,10 +40,8 @@ exports.room = async (req,res,next) =>{
 exports.selectRoom = async (req, res, next) => {
   const roomname = req.params.roomname;
   console.log('name is ',roomname);
-  const data = await pool.query("select titlethread, f.userid, displayname as author, posttime,typename, subtypename from user_profile u, forum_form f , category_type c , sub_category s where u.userid = f.userid and f.subcategoryiid = s.subcategoryiid and c.categorytypeid=s.categorytypeid and c.typename = $1 order by posttime desc",
-   [
-    roomname,
-  ]);
+  const user = req.user
+  const data = await pool.query("select f.forumid as forumid, titlethread, f.userid as userid, displayname as author, posttime, subtypename, typename, c.categorytypeid as categorytypeid ,likes,comments, forum_from_like.userid AS is_like from forum_form f JOIN forum_form_info ffi ON ffi.forumid = f.forumid JOIN user_profile u ON f.userid = u.userid JOIN sub_category s ON f.subcategoryiid = s.subcategoryiid JOIN category_type c ON s.categorytypeid = c.categorytypeid LEFT JOIN forum_from_like ON f.forumid = forum_from_like.forumid AND forum_from_like.userid = $1 WHERE c.typename = $2 order by posttime desc;",[user?.id??null,roomname]);
   const forum = data.rows;
   res.status(200).json({ success: true, data: forum });
 };
@@ -68,7 +68,7 @@ exports.createComment = async (req, res, next) => {
 exports.deleteComment = async (req,res,next) =>{
   res.status(200).json({ success: true });
 }
-exports.editComment = 
+// exports.editComment = 
 exports.setForum = async (req, res, next) => {
   const temp = req.body;
   const userId = req.user.id
@@ -89,5 +89,21 @@ exports.setForum = async (req, res, next) => {
     return next(new ErrorResponse("Sub Catagory is not valid", 404));
   }
 };
+exports.setLike = async (req, res, next) =>{
+  const forumid = req.params.id;
+  const user = req.user;
+  try{
+    const isLike = await pool.query("SELECT * FROM forum_from_like WHERE userid = $1 AND forumid = $2",[user.id,forumid])
+    if(isLike.rowCount == 1){
+      await pool.query("DELETE FROM forum_from_like WHERE forumid = $1 AND userid = $2",[forumid,user.id])
+    } else {
+      await pool.query("insert into forum_from_like(forumid, userid) VALUES($1,$2)",[forumid,user.id])
+    }
+    res.status(201).json({ success: true });
+    return;  
+  } catch(err) {
+    return next(new ErrorResponse("Unauthorize",401))
+  }
+}
 
 //
