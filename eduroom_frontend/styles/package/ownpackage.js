@@ -8,6 +8,9 @@ export default css`
 .pdt-20 {
     padding-top: 20px;
 }
+.pdt-20:hover{
+    cursor:pointer;
+}
 .package {
     color: black;
     text-align: left;
@@ -19,17 +22,17 @@ export default css`
     margin-bottom: 1%;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-
 }
 .picture {
     border: 1px solid black;
     height: 90px;
     margin: 5px;
+    display: flex;
+    background-color: red;
 }
 .block2 {
-    width: 90%;
-    margin-left: 35px;
-    padding: 4px 0;
+    width: 95%;
+    padding: 4px 5px;
 }
 .name {
     width: 90%;
@@ -67,12 +70,21 @@ export default css`
     margin-left: 10px;
     font-size: 15px;
 }
-.pebutton:hover {
+.active.pebutton:hover {
     cursor: pointer;
     opacity: 0.9;
     box-shadow: 0 0px 6px 2px rgba(0,0,0,0.2);
     transition: 0.25s;
   }
+.disabled{
+    cursor: default;
+    opacity: 0.6;
+}
+// .disabled:hover{
+//     cursor: default;
+//     opacity: 0.6;
+//     box-shadow: 0;
+// }
 .ycbutton {
     background-color: #FB9CCB;
     cursor: pointer;
