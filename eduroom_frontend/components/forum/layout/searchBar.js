@@ -1,11 +1,27 @@
-import React, { Fragment } from 'react'
-
+import React, { Fragment, useEffect, useState} from 'react'
+import { useRouter } from 'next/router'
 const SearchBar = () => {
+	const router = useRouter()
+	const [search, setSearch] = useState('')
+	const searchVal = router.query.q;
+	useEffect(()=>{
+		if(searchVal){
+			setSearch(searchVal)
+		}
+	},[searchVal])
+	const handleChangeSearch = (e)=>{
+		setSearch(e.target.value)
+	}
+	const handleEnter = (e)=>{
+		if(e.key == 'Enter'){
+			router.push(`/forum/search?q=${search}`);
+		}
+	}
 	return (
 		<Fragment>
 			<div className="forumSearch">
 				<i className="fas fa-search searchIcon" />
-				<input className="searchBox" type="text" placeholder="Search" />
+				<input className="searchBox" type="text" placeholder="Search" value={search} onChange={handleChangeSearch} onKeyUp={handleEnter}/>
 			</div>
 			<style jsx>
 				{`
