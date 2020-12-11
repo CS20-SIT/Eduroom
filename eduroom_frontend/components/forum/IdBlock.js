@@ -3,12 +3,10 @@ import Icon from './Icon'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import { EditorBorderColor } from 'material-ui/svg-icons'
 import api from '../../api'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
-import ForumTag from '../../components/forum/layout/forumTag'
 import UserContext from '../../contexts/user/userContext'
 
 const IdBlock = () => {
@@ -16,14 +14,15 @@ const IdBlock = () => {
 	const userContext = useContext(UserContext)
 	const {user} = userContext
 	const param = useRouter().query.id || ''
-	useEffect(() => {
-		const GetData = async () => {
-			if (param != '') {
-				const result = await api.get(`/api/forum/${param}`)
-				console.log(result.data.data.forum)
-				setData(result.data.data.forum)
-			}
+
+	const GetData = async () => {
+		if (param != '') {
+			const result = await api.get(`/api/forum/${param}`)
+			console.log(result.data.data.forum)
+			setData(result.data.data.forum)
 		}
+	}
+	useEffect(() => {
 		GetData()
 		console.log(data)
 	}, [param])
@@ -40,6 +39,18 @@ const IdBlock = () => {
 			color: theme.palette.text.secondary,
 		},
 	}))
+	const handleLike = (id,callback) => {
+		if(user){
+			api.post(`/api/forum/like/${id}`).then(res=>{
+				GetData()
+				callback()
+			}).catch(err=>{
+				console.log(err)
+			})
+		} else {
+			alert("Please Login Before Like na ja")
+		}
+	}
 	const classes = useStyles()
 
 	return (
@@ -72,10 +83,10 @@ const IdBlock = () => {
 										</div>
 										<div className="icon" style={{ bottom: 0, right: 0, marginTop: '15px' }}>
 											<div style={{ paddingRight: '30px',display:'flex',alignItems:'center' }}>
-												<Icon type="like" /><div>{row.likes}</div>
+												<Icon type="like" isHover={row.is_like != null} clicked={(callback)=>{handleLike(row.forumid,callback)}}/><div>{row.likes}</div>
 											</div>
 											<div style={{ paddingRight: '30px',display:'flex',alignItems:'center' }}>
-												<Icon type="comment" /><div>{row.comments}</div>
+												<Icon type="comment" changeHover={false} /><div>{row.comments}</div>
 											</div>
 										</div>
 									</Paper>
