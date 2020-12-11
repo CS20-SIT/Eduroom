@@ -31,3 +31,14 @@ exports.getInstructorPackage = async (req, res, next) => {
 	)
 	res.send(result.rows)
 }
+
+exports.publishPackage = async (req, res, next) => {
+  const packageId = req.body.packageid
+	try {
+    const result = await pool.query('UPDATE package SET ispublic = true where packageid = $1', [packageId])
+    res.send()
+  } catch (err) {
+    console.log(err);
+		res.status(500).send(err)
+	}
+}
