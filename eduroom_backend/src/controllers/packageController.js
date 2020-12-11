@@ -19,8 +19,13 @@ exports.getPackage = async (req, res, next) => {
 	res.status(200).json({ data: packageInfo })
 }
 
+exports.getCourses = async (req, res, next) => {
+  const results = await pool.query('SELECT courseid, coursename, coursepicture from course');
+  res.status(200).send(results.rows);
+}
+
 exports.getInstructorPackage = async (req, res, next) => {
-	const instructorid = req.user.instructor
+  const instructorid = req.user.instructor
 	const result = await pool.query(
 		`select sum(price)-p.discount as price,p.packageid,packagename,p.discount,p.ispublic,p.detail,p.cateid, p.image, ca.cataname  from package p,package_courses pc,course c, categories ca
   where ownerid = $1 and p.packageid = pc.packageid
@@ -33,12 +38,14 @@ exports.getInstructorPackage = async (req, res, next) => {
 }
 
 exports.publishPackage = async (req, res, next) => {
-  const packageId = req.body.packageid
+	const packageId = req.body.packageid
 	try {
-    const result = await pool.query('UPDATE package SET ispublic = true where packageid = $1', [packageId])
-    res.send()
-  } catch (err) {
-    console.log(err);
+		const result = await pool.query('UPDATE package SET ispublic = true where packageid = $1 RETURNING *', [
+			packageId,
+		])
+		res.send({ success: true, packages: result.rows[0] })
+	} catch (err) {
+		console.log(err)
 		res.status(500).send(err)
 	}
 }
