@@ -1,11 +1,17 @@
 import css from 'styled-jsx/css'
 export default css`
 
-
+.center{
+    display: flex;
+    justify-content: center;
+}
+.pdt-20 {
+    padding-top: 20px;
+}
 .package {
     color: black;
     text-align: left;
-    font-size: 20px;
+    font-size: 18px;
     width: 85%;
     padding: 0.5% 2%;
     background-color: #e1eefb;
@@ -13,6 +19,42 @@ export default css`
     margin-bottom: 1%;
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+
+}
+.picture {
+    border: 1px solid black;
+    height: 90px;
+    margin: 5px;
+}
+.block2 {
+    width: 90%;
+    margin-left: 35px;
+    padding: 4px 0;
+}
+.name {
+    width: 90%;
+    font-size: 20px;
+    font-weight: 550;
+}
+.pri-cat {
+    font-size: 15px;
+    font-weight: 500;
+    padding-top: 4px;
+}
+.Xbutton {
+    background-color: #e1eefb;
+    border: none;
+    cursor: pointer;
+    color: #3D467F;
+    font-weight: 600;
+}
+.right {
+    display: flex;
+    justify-content: flex-end;
+}
+.dialog-content {
+    font-size: 28px;
+    color: #3D467F;
 }
 .pebutton {
     background-color: #5b5b5b;
@@ -74,17 +116,8 @@ export default css`
     justify-content: center; 
     flex-wrap: wrap; 
     display: flex
-    flex-direction: column-reverse;
-}
-.Unselected {
-	color: black;
-	border: 1px solid black;
+    flex-direction: column;
 }
 
-.Selected {
-	color: white;
-	background-color: black;
-	border: 1px solid white;
-}
 
 `
