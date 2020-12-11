@@ -10,7 +10,8 @@ const {
 	setLike,
 	editForum,
 	deleteForum,
-    getCategory,
+	getCategory,
+	searchForum
 } = require('../controllers/forumController')
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
@@ -24,6 +25,7 @@ router.get('/room/:roomname', jwtAuthenicate, selectRoom)
 router.post('/comment/:id', jwtAuthenicate, deleteComment)
 router.delete('/:id', jwtAuthenicate, deleteForum)
 router.put('/:id', jwtAuthenicate, editForum)
+router.post('/search',jwtAuthenicate, searchForum)
 //router.put = edit // api.put
 
 module.exports = router

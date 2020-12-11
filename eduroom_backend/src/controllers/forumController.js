@@ -9,7 +9,20 @@ exports.forumTest = async (req, res, next) => {
 	res.status(200).json({ success: true, data: data })
 	return
 }
-
+exports.searchForum = async (req, res, next) => {
+  const search = req.body.search;
+  const user = req.user
+  if(search){
+	  const data = await pool.query(
+		'select f.forumid as forumid, titlethread, f.userid as userid, displayname as author, posttime, subtypename, typename, c.categorytypeid as categorytypeid ,likes,comments, forum_from_like.userid AS is_like from forum_form f JOIN forum_form_info ffi ON ffi.forumid = f.forumid JOIN user_profile u ON f.userid = u.userid JOIN sub_category s ON f.subcategoryiid = s.subcategoryiid JOIN category_type c ON s.categorytypeid = c.categorytypeid LEFT JOIN forum_from_like ON f.forumid = forum_from_like.forumid AND forum_from_like.userid = $1 WHERE UPPER(titlethread) LIKE $2 order by posttime desc;',
+		[user?.id ?? null,'%'+search.toUpperCase()+'%']
+	)
+  const forum = data.rows
+	res.status(200).json({ success: true, data: forum })
+  } else {
+    return next(new ErrorResponse("Not Found",404))
+  }
+}
 exports.showForum = async (req, res, next) => {
 	const user = req.user
 	const data = await pool.query(
