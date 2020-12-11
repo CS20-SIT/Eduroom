@@ -1,9 +1,31 @@
-import React, { Fragment, useState } from 'react';
-import Upload from './imageupload';
+import React, { Fragment, useState, useEffect } from 'react';
 import Courses from './courses';
 import style from '../../styles/package/createpackage';
 
-const CreatePackage = (props) => {
+const CreatePackage = (props, { index }) => {
+  const [image, setImage] = useState(null);
+  const [alert, setAlert] = useState({
+    pic: false,
+    name: false,
+    category: false,
+    detail: false,
+    courses: false
+  })
+  useEffect(() => {
+    if (image) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("show-image" + index).src = e.target.result;
+      };
+      reader.readAsDataURL(image);
+    };
+  }, [image]);
+  const handleUplaodFile = (e) => {
+    let newValue = e.target.files[0];
+    let type = "image";
+    console.log(newValue);
+    setImage(newValue);
+  };
   const numDiscount = [5, 10, 20, 30, 40, 50, 60, 70];
   const discount = numDiscount.map((num) => {
     return { label: num + '%', value: num };
@@ -13,7 +35,7 @@ const CreatePackage = (props) => {
       ...props.myPackage,
       discount: parseInt(e.target.value),
     });
-  }; 
+  };
   const categories = [
     { value: 'business', label: 'Business' },
     { value: 'development', label: 'Development' },
@@ -30,103 +52,145 @@ const CreatePackage = (props) => {
   const detailChange = (e) => {
     props.setMyPackage({ ...props.myPackage, detail: e.target.value });
   };
+  const handleClick = (e) => {
+    if (validator()) {
+      props.changePage(2);
+    }
+  }
+  const validator = () => {
+    if (
+      props.myPackage.name == '' ||
+      props.myPackage.category == 'default' ||
+      props.myPackage.detail == '' ||
+      props.myPackage.courses == 0) {
+      setAlert({ name: true, category: true, detail: true, courses: true })
+      return false
+    }
+    return true;
+
+  }
+
   return (
     <Fragment>
-      <div style={{ backgroundColor: '#f4f5f7' }}>
+      <div >
         <div className="package-header">CREATE NEW PACKAGE</div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div className="container">
-            <div style={{ padding: '4% 15%' }}>
-              <div className="subtitle" style={{marginBottom: '40px'}}>PACKAGE INFORMATION</div>
-              <div style={{ display: 'flex' }}>
-                <div style={{ width: '50%', marginRight: '5%' }}>
-                    <Upload index={0} />
-                </div>
-                <div style={{ width: '60%' }}>
+        <div className="container pd-4-10">
+          <div className="subtitle mg-40 text-center">PACKAGE INFORMATION</div>
+          <div style={{ display: 'flex' }}>
+            <div className="img-upload">
+              <div className="imageupload"
+                onClick={() => {
+                  document.getElementById("image" + index).click();
+                }}
+              >
+                <input
+                  id={"image" + index}
+                  type="file"
+                  accept="image/*"
+                  hidden={true}
+                  onChange={handleUplaodFile}
+                />
+                
+                {image ? (
                   <div>
-                    <input
-                      type="text"
-                      placeholder="Package Name"
-                      name="name"
-                      id="name"
-                      onChange={nameChange}
-                      value={props.myPackage.name}
-                    ></input>
+                    <img
+                      src=""
+                      id={"show-image" + index}
+                      style={{ maxWidth: 420, maxHeight: 235 }}
+                    />
                   </div>
-
-                  <div>
-                    <select
-                      name="discount"
-                      onChange={discountChange}
-                      value={props.myPackage.discount}
-                    >
-                      <option disabled value={0}>
-                        Discount
-                      </option>
-                      {discount.map((dis, idx) => {
-                        return (
-                          <option value={dis.value} key={idx}>
-                            {dis.label}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-
-                  <div>
-                    <select
-                      name="category"
-                      onChange={categoryChange}
-                      value={props.myPackage.category}
-                    >
-                      <option disabled value="default">
-                        Category
-                      </option>
-                      {categories.map((el, idx) => {
-                        return (
-                          <option value={el.value} key={idx}>
-                            {el.label}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                  <div>
-                    <textarea
-                      placeholder="Package Detail"
-                      name="detail"
-                      id="pdetail"
-                      rows="4"
-                      style={{ resize: 'none' }}
-                      className="pdetail"
-                      onChange={detailChange}
-                      value={props.myPackage.detail}
-                    ></textarea>
-                  </div>
-                </div>
+                ) : (
+                    <div>
+                      <div><i className="fas fa-camera"></i></div>
+                      <div>Click here to add photo</div>
+                    </div>
+                  )} 
               </div>
+              {/* {alert.pic ? (<div className="alert-text center">* Image is required</div>) : null}   */}
+            </div>
+
+            <div style={{ width: '50%' }}>
               <div>
-                <div className="subtitle" style={{fontWeight: 550}}>Courses</div>
-                <div
-                  className="coursebox create"
-                  style={{ overflow: 'auto', height: '400px' }}
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  id="name"
+                  className="mgt-0"
+                  onChange={nameChange}
+                  value={props.myPackage.name}
+                  error={alert.name}
+                />
+                {alert.name ? (<div className="alert-text">* Name is required</div>) : null}
+              </div>
+
+              <div>
+                <select
+                  name="discount"
+                  onChange={discountChange}
+                  value={props.myPackage.discount}
                 >
-                  <div>
-                    <Courses />
-                  </div>
-                </div>
+                  <option disabled value={0}>
+                    Discount
+                      </option>
+                  {discount.map((dis, idx) => {
+                    return (
+                      <option value={dis.value} key={idx}>
+                        {dis.label}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+
+              <div>
+                <select
+                  name="category"
+                  onChange={categoryChange}
+                  value={props.myPackage.category}
+                  error={alert.category}
+                >
+                  <option disabled value="default">
+                    Category
+                      </option>
+                  {categories.map((el, idx) => {
+                    return (
+                      <option value={el.value} key={idx}>
+                        {el.label}
+                      </option>
+                    );
+                  })}
+                </select>
+                {alert.category ? (<div className="alert-text">* Category is required</div>) : null}
+              
+              </div>
+
+              <div>
+                <textarea
+                  placeholder="Detail"
+                  name="detail"
+                  id="detail"
+                  rows="4"
+                  style={{ resize: 'none' }}
+                  onChange={detailChange}
+                  value={props.myPackage.detail}
+                  error={alert.detail}
+                />
+                {alert.detail ? (<div className="alert-text">* Detail is required</div>) : null}
+              
               </div>
             </div>
           </div>
+
+          <div>
+            <div className="subtitle2">Courses</div>
+            <div className="coursebox">
+              <Courses />
+            </div>
+          </div>
         </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: '5%',
-          }}
-        >
-          <button onClick={() => props.changePage(2)} className="createbutton">
+        <div className="center">
+          <button className="createbutton mgb-5" onClick={handleClick}>
             Create
           </button>
         </div>

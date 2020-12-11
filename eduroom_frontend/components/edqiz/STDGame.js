@@ -22,7 +22,6 @@ const Content = ({ id }) => {
   const handleChangeQuestionNumber = (val) => {
     setquestionNumber(val);
   };
-  console.log('answer',answer)
   
   const data = [
     {
@@ -41,7 +40,7 @@ const Content = ({ id }) => {
     },
     {
       question: ' COVID-19 and related health topics?',
-      time: '45',
+      time: '10',
       point: '2000',
       ans: ['Abortion: Safety Abortion: Safety · Addictive behaviours: Gaming disorder', ' Ageing: Global population Ageing: Global ', ' Care and support at home', 'What assistance can I get at home'],
       correct: 1,
@@ -49,7 +48,7 @@ const Content = ({ id }) => {
     },
     {
       question: 'Browse the WebMD Questions and Answers',
-      time: '60',
+      time: '10',
       point: '1000',
       ans: ['A-Z library for insights and advice for better health', 'tap Edit question or Delete question', 'When your question is answered', ' you will get a notification'],
       correct: 2,
@@ -57,56 +56,36 @@ const Content = ({ id }) => {
     },
     {
       question: ' can have difficulty finding the right words or phrases to answer?',
-      time: '90',
+      time: '10',
       point: '3000',
       ans: ['simple questions. Here are 20 of the most common questions', 'We have compiled a list of 46 common interview questions you might be asked', 'plus advice on how to answer each and every one of them', 'Read tips and example answers for 125 of the most common job interview'],
       correct: 3,
       image: null,
     },
   ];
- 
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("room", (router.query.id));
-    socket.on("get-skip", (isSkip) => {
-      if (isSkip) {
-        goto(4);
-      }
-    });
   };
-  // console.log(questionNumber,data.length)
-  
   const getQuestionNo = () => {
-    
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
-    
     socket.on("new-questionNo", (question) => {
-   
      setquestionNumber(question)
-     
-
-      
     });
   };
-
-
   const responseTime = (tempAnswer) => {
- 
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.on("sent-seconds", (timeTemp) => {
       
       setTime(timeTemp);
-      console.log(timeTemp)
       if (timeTemp == 0) {
-        console.log(tempAnswer+'socketInSide')
         if (tempAnswer == data[questionNumber].correct) {
-        
           goto(2);
         } else {
           goto(4);
@@ -137,14 +116,12 @@ const Content = ({ id }) => {
     });
     socket.emit("sent-message", data[questionNumber], id.id);
   };
-  // let pin=router.query.id;
   useEffect(() => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("room", (router.query.id));
     socket.on("get-Nextquestion", (isNext, pin, questionNo) => {
-  
       if(questionNo<data.length){
       setquestionNumber(questionNo)
       if(isNext){
@@ -152,21 +129,15 @@ const Content = ({ id }) => {
       }
       }else{
         goto(5);
-        console.log(pin,'goto 5')
       }
-      
-     
-
     })
     response();
     getQuestionNo();
     responseTime(answer);
-    console.log(questionNumber,data.length)
   }, [questionNumber]);
   const goto = (val) => {
     setCurrent(val);
   };
-
   const renderPage = () => {
     switch (current) {
       case 1:
@@ -179,6 +150,7 @@ const Content = ({ id }) => {
             response={response}
             messages={messages}
             setAnswer={setAnswer}
+            answer={answer}
             responseTime={responseTime}
             pin={pin}
           />
