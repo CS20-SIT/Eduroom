@@ -90,6 +90,10 @@ exports.deleteComment = async (req, res, next) => {
 		return next(new ErrorResponse('Unauthorize', 401))
 	}
 }
+exports.getCategory = async(req,res,next) =>{
+  const cat = await pool.query ('SELECT typename from category_type');
+  res.status(200).json({success: true , category:cat.rows})
+}
 exports.deleteForum = async (req, res, next) => {
 	const forumid = req.params.id
 	const user = req.user
