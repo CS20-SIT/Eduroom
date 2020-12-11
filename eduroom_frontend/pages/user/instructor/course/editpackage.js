@@ -1,11 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import General from '../../../../components/template/general';
+import GeneralTemplate from '../../../../components/template/generalnonav';
 import style from '../../../../styles/package/createpackage';
 import EditPackage from '../../../../components/package/editPackage';
 import EditConfirm from '../../../../components/package/editConfirm';
 const EditPackagePage = () => {
   const [page, setPage] = useState(1);
   const [myPackage, setMyPackage] = useState({
+    pic: '',
     name: '',
     discount: 0,
     category: 'default',
@@ -14,7 +15,6 @@ const EditPackagePage = () => {
   });
   useEffect(() => {
     const fetchdata = async () => {
-      // res is mockup data
       const res = [
         { pic: '', name: 'Java 101' },
         { pic: '', name: 'Python 101' },
@@ -48,10 +48,12 @@ const EditPackagePage = () => {
   };
   return (
     <Fragment>
-      <General>
+      <GeneralTemplate>
+        <div className="package-bg">
         {renderPage()}
+        </div>
         <style jsx>{style}</style>
-      </General>
+      </GeneralTemplate>
     </Fragment>
   );
 };
