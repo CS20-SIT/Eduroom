@@ -10,10 +10,14 @@ const Node = ({ node, isLeft }) => {
 				<div
 					className="content left"
 					onMouseEnter={() => {
-						setShow(true)
+						if (isLeft) {
+							setShow(true)
+						}
 					}}
 					onMouseLeave={() => {
-						setShow(false)
+						if (isLeft) {
+							setShow(false)
+						}
 					}}
 				>
 					{isLeft && show ? (
@@ -32,7 +36,19 @@ const Node = ({ node, isLeft }) => {
 						setShow(false)
 					}}
 				></div>
-				<div className="content right">
+				<div
+					className="content right"
+					onMouseEnter={() => {
+						if (!isLeft) {
+							setShow(true)
+						}
+					}}
+					onMouseLeave={() => {
+						if (!isLeft) {
+							setShow(false)
+						}
+					}}
+				>
 					{!isLeft && show ? (
 						<div className="node-description">
 							<div className="node-title">{node.node_name}</div>
