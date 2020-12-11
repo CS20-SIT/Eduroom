@@ -32,22 +32,13 @@ export default css`
 		display: flex;
 		justify-content: center;
 	}
+
 	.button-container {
-		width: 50%;
+		width: fit-content;
 		color: #a27cef;
 		margin-top: 30px;
 		display: inherit;
 		justify-content: space-evenly;
-	}
-	.first-button,
-	.second-button,
-	.third-button,
-	.forth-button,
-	.fifth-button {
-		border: 1px solid #ffffff;
-		border-radius: 4px;
-		padding: 0.25rem 1rem;
-		box-shadow: 0px 4px 6px rgba(189, 189, 189, 0.5);
 	}
 
 	::-webkit-scrollbar {

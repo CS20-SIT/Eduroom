@@ -6,18 +6,16 @@ import style from '../../../styles/graderSubmit/announcements/announcementPage'
 import api from '../../../api'
 import { useRouter } from 'next/router'
 
-const Announcement = (props) => {
-	const router = useRouter()
-
-	// const [data, setData] = useState([])
-	// useEffect(() => {
-	// 	const GetData = async () => {
-	// 		const result = await api.get('api/grader/getAnnouncement')
-	// 		setData(result.data)
-	// 	}
-	// 	GetData()
-	// }, [])
-
+const Announcement = ({ id }) => {
+	const [data, setData] = useState([])
+	useEffect(() => {
+		const GetData = async () => {
+			const result = await api.get('api/grader/getAnnouncementById', { params: { id } })
+			setData(result.data[0])
+		}
+		GetData()
+	}, [])
+	console.log(data)
 	return (
 		<Fragment>
 			<Head>
@@ -27,12 +25,25 @@ const Announcement = (props) => {
 			<Layout page={'announcement'}>
 				<div className="main">
 					<div className="size">
-						<Box>This is an announcement Page</Box>
+						<Box>
+							<h2 className="announcement">ANNOUNCEMENT</h2>
+							<h2 className="title">{data.title.toUpperCase()}</h2>
+							<div className="description">Description: {data.description}</div>
+						</Box>
 					</div>
 				</div>
 			</Layout>
 			<style jsx>{style}</style>
 		</Fragment>
 	)
+}
+
+export async function getServerSideProps(ctx) {
+	try {
+		const id = ctx.query.id
+		return { props: { id } }
+	} catch (err) {
+		return { props: { id: '' } }
+	}
 }
 export default Announcement
