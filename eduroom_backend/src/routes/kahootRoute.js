@@ -3,7 +3,9 @@ const router = express.Router();
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 const { fetchRoom, createRoom,fetchRoomHistory,createKahootHistory, 
     player,fetchExactlyRoom,historyPlayer,createHistoryPlayerAnswer,
-    historyPlayerFirstTime ,fetchScoreRank} = require('../controllers/edqiz/roomController');
+    historyPlayerFirstTime ,fetchScoreRank,Upload} = require('../controllers/edqiz/roomController');
+const { isInstructor } = require('../middleware/isInstructor')
+const { uploadToGCSHandler } = require('../middleware/multer')
 
 router.get('/rooms', fetchRoom);
 router.post('/room', createRoom);
@@ -15,6 +17,7 @@ router.post('/roomHistoryplayerFirstTime',jwtAuthenicate, historyPlayerFirstTime
 router.post('/player', jwtAuthenicate,player);
 router.get('/sessionid/:pin', fetchExactlyRoom);
 router.get('/getRankScore/:sessionid', fetchScoreRank);
+router.post('/upload/picture', jwtAuthenicate, isInstructor, uploadToGCSHandler('edqiz/question'), Upload)
 
 router.post('/createHistoryPlayerAnswer',jwtAuthenicate,createHistoryPlayerAnswer);
 
