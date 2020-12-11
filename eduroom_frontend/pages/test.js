@@ -1,18 +1,18 @@
-import React, {Fragment} from 'react'
-import axios from 'axios'
-const Test = () => {
-    const handleCreateTeam = () => {
-        axios.post('https://contest.thaifstt.org/api/createTeam',{teamName:"FSTT-AI-011"})
-    }
-    const handleQuery = () => {
-        axios.get('https://contest.thaifstt.org/api/room').then(res=>{
-            console.log(res.data)
-        })
-    }
+import React, {Fragment, useState} from 'react'
+import AuthDialog from '../components/landing/authDialog'
+import General from '../components/template/general'
+const Test =  () => {
+    const [dialog,setDialog] = useState(false)
     return (
         <Fragment>
-            <button onClick={handleCreateTeam}>Create Team</button>
-            <button onClick={handleQuery}>Query</button>
+            <General>
+                <button onClick={()=>{setDialog(!dialog)}}>click</button>
+                {
+                    dialog ? (
+                        <AuthDialog/>
+                    ) :null
+                }
+            </General>
         </Fragment>
     )
 }

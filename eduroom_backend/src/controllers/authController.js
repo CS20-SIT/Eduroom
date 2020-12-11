@@ -9,42 +9,44 @@ const errorHandler = require('../middleware/error')
 const { getDefailtProfilePic } = require('../utils/cloudStorage')
 const { prependOnceListener } = require('process')
 const ErrorResponse = require('../utils/errorResponse')
-exports.getProfile = async (req, res) => {
+exports.getProfile = async (req, res, next) => {
 	try {
 		// UserID is in req.user.id
-		const result = await pool.query(`SELECT * from user_profile where userid = '${req.user.id}'`)
-		//init role of user
-		let user = { ...result.rows[0], id: req.user.id, role: 'general' }
+		if (req.user) {
+			const result = await pool.query(`SELECT * from user_profile where userid = '${req.user.id}'`)
+			//init role of user
+			let user = { ...result.rows[0], id: req.user.id, role: 'general' }
 
-		//get email of user
-		let email = ''
-		let isVerify = false
-		const localEmail = await pool.query('SELECT email from local_auth where userid = $1', [req.user.id])
+			//get email of user
+			let email = ''
+			let isVerify = false
+			const localEmail = await pool.query('SELECT email from local_auth where userid = $1', [req.user.id])
 
-		if (localEmail.rowCount !== 0) {
-			email = localEmail.rows[0].email
-			const verify = await pool.query('SELECT * FROM user_verification WHERE userid = $1 AND isverified = $2',[req.user.id,true])
-			isVerify = verify.rowCount == 1
+			if (localEmail.rowCount !== 0) {
+				email = localEmail.rows[0].email
+				const verify = await pool.query(
+					'SELECT * FROM user_verification WHERE userid = $1 AND isverified = $2',
+					[req.user.id, true]
+				)
+				isVerify = verify.rowCount == 1
+			} else {
+				const oauthEmail = await pool.query('SELECT email from oauth where userid = $1', [req.user.id])
+				email = oauthEmail.rows[0].email
+				isVerify = true
+			}
+			user = { ...user, email, verify: isVerify }
+
+			//get isInstructor of user
+			const result2 = await pool.query('SELECT isverified from instructor where userid = $1', [req.user.id])
+			if (result2.rowCount !== 0) {
+				user = { ...user, role: 'instructor', isverified: result2.rows[0].isverified }
+			}
+			res.send(user)
 		} else {
-			const oauthEmail = await pool.query('SELECT email from oauth where userid = $1', [req.user.id])
-			email = oauthEmail.rows[0].email
-			isVerify = true
+			return next(new ErrorResponse('Unauthorize', 401))
 		}
-		user = { ...user, email, verify:isVerify }
-
-		//get isInstructor of user
-		const result2 = await pool.query('SELECT isverified from instructor where userid = $1', [req.user.id])
-		if (result2.rowCount !== 0) {
-			user = { ...user, role: 'instructor', isverified: result2.rows[0].isverified }
-		}
-		res.send(user)
 	} catch (error) {
-		console.log(error)
-		const err = {
-			statusCode: 500,
-			message: error,
-		}
-		return errorHandler(err, req, res)
+		return next(new ErrorResponse(error,500))
 	}
 }
 
@@ -130,7 +132,7 @@ exports.verifyEmailController = async (req, res) => {
 		}
 		await pool.query(`UPDATE user_verification SET isverified = true WHERE token = '${token}'`)
 		// TODO: Should redirect to verification success page
-		res.status(200).json({success:true})
+		res.status(200).json({ success: true })
 	} catch (error) {
 		// TODO: Should redirect to verification error page
 		const err = {
@@ -165,7 +167,10 @@ exports.loginController = async (req, res, next) => {
 			return errorHandler(err, req, res)
 		}
 		const userId = localAuth.rows[0].userid
-		const isVerify = await pool.query("SELECT * FROM user_verification WHERE userid = $1 AND isverified = $2",[userId,true]);
+		const isVerify = await pool.query('SELECT * FROM user_verification WHERE userid = $1 AND isverified = $2', [
+			userId,
+			true,
+		])
 		let verify = isVerify.rowCount == 1
 		const token = generateCookieJWT(userId)
 		res.cookie('jwt', token)
