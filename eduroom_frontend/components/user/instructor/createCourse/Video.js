@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from 'react'
 import CourseVideoUpload from './CourseVideoUpload'
-const Video = ({ video, idx, handleVideos, sectionIndex, addVideo }) => {
+const Video = ({ video, idx, handleVideos, sectionIndex, addVideo, removeVideo }) => {
 	const nameChange = (e) => {
 		video.name = e.target.value
 		handleVideos(video, idx)
@@ -9,35 +9,33 @@ const Video = ({ video, idx, handleVideos, sectionIndex, addVideo }) => {
 		video.data = data
 		handleVideos(video, idx)
 	}
-	const renderAdd = () => {
-		if (idx === 0) {
-			return (
-				<Fragment>
-					<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-						<i onClick={addVideo} className="fas fa-plus plus"></i>
-					</div>
-					<style jsx>{`
-						.plus {
-							opacity: 0.6;
-							transition: 0.25s;
-						}
-						.plus:hover {
-							opacity: 0.9;
-							transition: 0.25s;
-							cursor: pointer;
-						}
-					`}</style>
-				</Fragment>
-			)
-		} else {
-			return null
-		}
+	const renderIcon = () => {
+		return (
+			<Fragment>
+				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+					{idx === 0 ? <i key="add" onClick={addVideo} className="fas fa-plus icon"></i> : null}
+					<i onClick={() => removeVideo(idx)} className="fas fa-times icon"></i>
+				</div>
+				<style jsx>{`
+					.icon {
+						margin-left: 10px;
+						opacity: 0.6;
+						transition: 0.25s;
+					}
+					.icon:hover {
+						opacity: 0.9;
+						transition: 0.25s;
+						cursor: pointer;
+					}
+				`}</style>
+			</Fragment>
+		)
 	}
 	return (
 		<Fragment>
 			<div className="box">
 				<div>
-					{renderAdd()}
+					{renderIcon()}
 					<div className="form">
 						<div style={{ width: '50%' }}>
 							<div className="title">Video Name</div>
