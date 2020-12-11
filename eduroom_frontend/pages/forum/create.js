@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-import NavForum from "../../components/forum/searchForum";
 import style from "../../styles/forum/showForum";
 import CreateBlock from "../../components/forum/CreateBlock";
 import GeneralNoNav from "../../components/template/generalnonav";
