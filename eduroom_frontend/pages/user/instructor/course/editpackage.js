@@ -50,7 +50,7 @@ const EditPackagePage = () => {
     <Fragment>
       <GeneralTemplate>
         <div className="package-bg">
-        {renderPage()}
+        {/* {renderPage()} */}
         </div>
         <style jsx>{style}</style>
       </GeneralTemplate>
