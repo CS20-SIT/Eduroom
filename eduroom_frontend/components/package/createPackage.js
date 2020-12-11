@@ -81,7 +81,7 @@ const CreatePackage = (props) => {
 									document.getElementById('image-1').click()
 								}}
 							>
-								<input id='image-1' type="file" accept="image/*" hidden={true} onChange={handleUplaodFile} />
+								<input id="image-1" type="file" accept="image/*" hidden={true} onChange={handleUplaodFile} />
 
 								{props.myPackage.pic ? (
 									<div>
@@ -102,13 +102,13 @@ const CreatePackage = (props) => {
 						<div style={{ width: '50%' }}>
 							<div>
 								<input
-                  type="text"
-                  placeholder="Name"
-                  name="name"
-                  id="name"
-                  className="mgt-0"
-                  onChange={nameChange}
-                  value={props.myPackage.name}
+									type="text"
+									placeholder="Name"
+									name="name"
+									id="name"
+									className="mgt-0"
+									onChange={nameChange}
+									value={props.myPackage.name}
 								/>
 								{alert.name ? <div className="alert-text">* Name is required</div> : null}
 							</div>
@@ -129,11 +129,7 @@ const CreatePackage = (props) => {
 							</div>
 
 							<div>
-								<select
-									name="category"
-									onChange={categoryChange}
-									value={props.myPackage.category}
-								>
+								<select name="category" onChange={categoryChange} value={props.myPackage.category}>
 									<option disabled value="default">
 										Category
 									</option>
@@ -165,9 +161,7 @@ const CreatePackage = (props) => {
 
 					<div>
 						<div className="subtitle2">Courses</div>
-						<div className="coursebox">
-							<Courses courses={props.courses} />
-						</div>
+						<Courses courses={props.courses} />
 					</div>
 				</div>
 				<div className="center">
