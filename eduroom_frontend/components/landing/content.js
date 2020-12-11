@@ -18,6 +18,7 @@ const Content = () => {
           </div>
           <button
             className="landing-button"
+            id="get-start-btn"
             onClick={() => router.push('/login')}
           >
             <a className="landing-button-text">GET STARTED</a>

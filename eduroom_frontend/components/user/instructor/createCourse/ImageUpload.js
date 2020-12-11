@@ -1,30 +1,36 @@
 import React, { Fragment, useState, useEffect } from 'react'
+import api from '../../../../api'
 
-const Upload = ({ index }) => {
-	const [image, setImage] = useState(null)
-	useEffect(() => {
-		if (image) {
-			// var reader = new FileReader()
-			// reader.onload = function (e) {
-			// 	document.getElementById('show-image' + index).src = e.target.result
-			// }
-			// reader.readAsDataURL(image)
-		}
-	}, [image])
-	const handleUplaodFile = (e) => {
+const Upload = ({ index, handleData, data }) => {
+	// useEffect(() => {
+	// 	if (image) {
+	// 		var reader = new FileReader()
+	// 		reader.onload = function (e) {
+	// 			document.getElementById('show-image' + index).src = e.target.result
+	// 		}
+	// 		reader.readAsDataURL(image)
+	// 	}
+	// }, [image])
+	const handleUplaodFile = async (e) => {
 		let newValue = e.target.files[0]
-		let type = 'image'
-		console.log(newValue)
-		setImage(newValue)
+		handleData({ el: 'picture', data: newValue })
+		const formData = new FormData()
+		formData.append('course-picture-1', newValue)
+		// formData.append('course-picture-2', newValue)
+		// const res = await api.post('/api/instructor/upload/picture', formData)
+		// console.log(res.data)
+		// handleData({ el: 'picturePath', data: res.data.linkUrl })
 	}
-
+	const getLabel = () => {
+		return data.picture ? data.picture.name : 'Choose Picture'
+	}
 	return (
 		<Fragment>
 			<div>
 				<div className="imageupload textfield">
 					<input id={'image' + index} type="file" accept="image/*" hidden={true} onChange={handleUplaodFile} />
 					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-						<span style={{ color: '#3d467f', opacity: '0.75' }}>Choose Picture</span>
+						<span style={{ color: '#3d467f', opacity: '0.75' }}>{getLabel()}</span>
 						<span
 							className="camera"
 							onClick={() => {
@@ -35,6 +41,7 @@ const Upload = ({ index }) => {
 						</span>
 					</div>
 				</div>
+				<img id="show-image0"></img>
 			</div>
 			<style jsx>{`
 				.imageupload {
