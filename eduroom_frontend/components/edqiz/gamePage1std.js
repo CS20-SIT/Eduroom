@@ -49,7 +49,7 @@ const Page1 = ({
       const res = await api.get(`/api/kahoot/sessionid/${pin}`);
       // console.log('resdata', res.data.sessionid)
       setSesstionID(res.data.sessionid)
-
+      console.log(res)
     };
     fetchData();
   }, []);

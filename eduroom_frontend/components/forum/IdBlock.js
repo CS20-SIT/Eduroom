@@ -1,36 +1,28 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Icon from './Icon'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import { EditorBorderColor } from 'material-ui/svg-icons'
 import api from '../../api'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
-import ForumTag from '../../components/forum/layout/forumTag'
+import UserContext from '../../contexts/user/userContext'
 
 const IdBlock = () => {
 	const [data, setData] = useState([])
-	const [auth, setAuth] = useState([])
-	useEffect(() => {
-		const GetAuth = async () => {
-			const result = await api.get('/api/auth/profile')
-			console.log(result.data)
-			setAuth(result.data)
-		}
-		GetAuth()
-		console.log(auth)
-	}, [])
+	const userContext = useContext(UserContext)
+	const {user} = userContext
 	const param = useRouter().query.id || ''
-	useEffect(() => {
-		const GetData = async () => {
-			if (param != '') {
-				const result = await api.get(`/api/forum/${param}`)
-				console.log(result.data.data.forum)
-				setData(result.data.data.forum)
-			}
+
+	const GetData = async () => {
+		if (param != '') {
+			const result = await api.get(`/api/forum/${param}`)
+			console.log(result.data.data.forum)
+			setData(result.data.data.forum)
 		}
+	}
+	useEffect(() => {
 		GetData()
 		console.log(data)
 	}, [param])
@@ -47,6 +39,18 @@ const IdBlock = () => {
 			color: theme.palette.text.secondary,
 		},
 	}))
+	const handleLike = (id,callback) => {
+		if(user){
+			api.post(`/api/forum/like/${id}`).then(res=>{
+				GetData()
+				callback()
+			}).catch(err=>{
+				console.log(err)
+			})
+		} else {
+			alert("Please Login Before Like na ja")
+		}
+	}
 	const classes = useStyles()
 
 	return (
@@ -68,8 +72,8 @@ const IdBlock = () => {
 											}}
 										>
 										<div>	<b>{row.titlethread}</b></div>
-										<div>{row.userid == auth.userid ? <i className="fas fa-pen" style={{ size: '2px', marginRight:'20px' }}></i> : null}
-                      {row.userid == auth.userid ? <i className="fas fa-times" style={{ size: '2px' }}></i> :null}</div>	
+										<div>{user && row.userid == user.userid ? <i className="fas fa-pen" style={{ size: '2px', marginRight:'20px' }}></i> : null}
+                      {user && row.userid == user.userid ? <i className="fas fa-times" style={{ size: '2px' }}></i> :null}</div>	
 										</div>
 										<div>{row.content}</div>
 										<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
@@ -78,11 +82,11 @@ const IdBlock = () => {
 											</p>
 										</div>
 										<div className="icon" style={{ bottom: 0, right: 0, marginTop: '15px' }}>
-											<div style={{ paddingRight: '30px' }}>
-												<Icon type="like" />
+											<div style={{ paddingRight: '30px',display:'flex',alignItems:'center' }}>
+												<Icon type="like" isHover={row.is_like != null} clicked={(callback)=>{handleLike(row.forumid,callback)}}/><div>{row.likes}</div>
 											</div>
-											<div style={{ paddingRight: '30px' }}>
-												<Icon type="comment" />
+											<div style={{ paddingRight: '30px',display:'flex',alignItems:'center' }}>
+												<Icon type="comment" changeHover={false} /><div>{row.comments}</div>
 											</div>
 										</div>
 									</Paper>
