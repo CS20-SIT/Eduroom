@@ -13,9 +13,8 @@ exports.createPackage = async(req,res,next)=>{
 exports.getPackage  = async (req, res, next) => {
   const id = req.query.packageid;
   const data = await pool.query('select * from package where packageid = $1', [id]);
-  const package = data.rows;
-  // res.status(200).json({ data: package });
-  res.send(package);
+  const packageInfo = data.rows;
+  res.status(200).json({ data: packageInfo });
 }
 
 
