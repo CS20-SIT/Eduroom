@@ -1,13 +1,10 @@
-import Courselist from './courselist'
+import CourseCheck from './courseCheck'
 import style from '../../styles/package/createpackage'
+
 const Courses = ({ courses }) => {
 	const renderCourses = () => {
 		const arr = courses.map((course, idx) => {
-			return (
-				<div>
-          <Courselist course={course}></Courselist>
-				</div>
-			)
+			return <CourseCheck course={course} key={idx} />
 		})
 		return arr
 	}

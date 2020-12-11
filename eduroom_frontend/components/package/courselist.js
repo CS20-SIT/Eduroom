@@ -5,7 +5,6 @@ const Courselist = ({ course }) => {
 	return (
 		<Fragment>
 			<div style={{ display: 'flex', marginTop: '20px' }}>
-				<input style={{ margin: 'auto 20px' }} type="checkbox" name="courseid" value="courseid"></input>
 				<div
 					style={{
 						border: '1px solid black',
