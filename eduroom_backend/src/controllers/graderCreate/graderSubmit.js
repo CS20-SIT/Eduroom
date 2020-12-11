@@ -3,11 +3,27 @@ const pool = require('../../database/db')
 
 //Toei
 const gPreviewQuestions = async (req, res, next) => {
+	const offset = req.query.offset
 	const data = await pool.query(
 		`select id, title, description, difficulty
-    	from questions`
+		from questions
+		where visibility = true
+		order by id
+		offset ${offset} limit  1`
 	)
 	const ann = data.rows
+	res.send(ann)
+}
+
+const gCountAllQuestions = async (req, res, next) => {
+	const data = await pool.query(`
+	select count(*)
+	from questions
+	where visibility = true
+	`)
+	const ann = data.rows[0]
+	ann.count = parseInt(ann.count)
+	console.log(ann)
 	res.send(ann)
 }
 
@@ -111,15 +127,35 @@ const gQuestionByTag = async (req, res, next) => {
 }
 
 const gHomePreviewContests = async (req, res, next) => {
-	const data = await pool.query(
-		`select conno, title, description, conruletype,starttime, endtime
+	try {
+		const data = await pool.query(
+			`select conno, title, description, conruletype,starttime, endtime
 		from contest
 		where status = true
 			and endtime >= current_timestamp
 		order by endtime desc;`
-	)
-	const ann = data.rows
-	res.send(ann)
+		)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
+const gAnnouncementById = async (req, res, next) => {
+	try {
+		const id = req.query.id
+		const data = await pool.query(`
+	select a.id, a.title, a.description, a.time, al.displayname
+	from announcements a, admin_login al
+	where a.adminid = al.adminid
+  		and id = ${id};
+	`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
 }
 
 module.exports = {
@@ -133,4 +169,6 @@ module.exports = {
 	gQuestionTags,
 	gQuestionByTag,
 	gHomePreviewContests,
+	gAnnouncementById,
+	gCountAllQuestions,
 }
