@@ -8,7 +8,7 @@ const Announcements = (props) => {
 	return (
 		<Fragment>
 			{props.admin ? (
-				<div className="click" onClick={() => router.push('/graderSystem/announcement')}>
+				<div className="click" onClick={() => router.push(`/graderSystem/announcement/${props.annID}`)}>
 					<div className="list">
 						<div className="title">{props.title}</div>
 						<div className="status">
