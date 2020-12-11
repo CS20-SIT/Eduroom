@@ -15,7 +15,7 @@ const Upload = ({ index, handleData, data }) => {
 		let newValue = e.target.files[0]
 		handleData({ el: 'picture', data: newValue })
 		const formData = new FormData()
-		formData.append('course-picture-1', newValue)
+		// formData.append('course-picture-1', newValue)
 		// formData.append('course-picture-2', newValue)
 		// const res = await api.post('/api/instructor/upload/picture', formData)
 		// console.log(res.data)
