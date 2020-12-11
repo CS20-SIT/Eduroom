@@ -9,7 +9,7 @@ const jwtAuthenicate = (req, res, next) => {
     }
     if (!user) {
       res.clearCookie('jwt');
-      return next(new ErrorResponse("Unauthorized", 401));
+      req.user = null;
     }
     req.user = user;
     return next();
