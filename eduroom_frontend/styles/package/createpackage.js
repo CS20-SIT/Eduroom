@@ -1,5 +1,11 @@
 import css from 'styled-jsx/css'
 export default css`
+.course-image{
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 100px;
+}
 .package-header {
     display: flex;
     font-size: 1.7em;
@@ -41,7 +47,6 @@ input,select,textarea {
     border-radius: 5px;
     font-size: 1em;
     margin-top: 6px;
-    cursor: pointer;
     color: #3d467f;
     font-weight: 500;
     background-color: rgba(255,255,255,0.1);
@@ -141,7 +146,7 @@ input[type=checkbox] {
     background-color: #e1eefb;
     text-align: left;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     box-shadow: 1px 2px 5px rgba(0,0,0,0.2);  
 }
 .mgb-5 {
