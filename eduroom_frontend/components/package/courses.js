@@ -2,7 +2,7 @@ import Courselist from './courselist'
 import style from '../../styles/package/createpackage'
 const Courses = () => {
   return (
-    <div>
+    <div id="course-checkbox">
       <div className="list"><input style={{margin: "auto 20px"}} type="checkbox" name="courseid" value="courseid"></input><Courselist name="course1"></Courselist></div>
       <div className="list"><input style={{margin: "auto 20px"}} type="checkbox" name="courseid" value="courseid"></input><Courselist name="course2"></Courselist></div>
       <div className="list"><input style={{margin: "auto 20px"}} type="checkbox" name="courseid" value="courseid"></input><Courselist name="course3"></Courselist></div>
