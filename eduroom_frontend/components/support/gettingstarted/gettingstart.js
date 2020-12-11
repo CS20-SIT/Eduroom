@@ -13,7 +13,7 @@ import {
   Link,
   fade,
 } from "@material-ui/core";
-import Studentnav from "../support/studentsidenav";
+import Studentnav from "../studentsidenav";
 
 const GetStart = () => {
   const theme = createMuiTheme({

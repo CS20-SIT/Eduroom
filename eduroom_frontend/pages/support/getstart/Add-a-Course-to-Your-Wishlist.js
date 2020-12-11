@@ -6,7 +6,7 @@ import {
 
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-import Addacourse from "../../../components/support/addacourse";
+import Addacourse from "../../../components/support/gettingstarted/addacourse";
 const courseinstandteaching = () => {
   return <Fragment>
     
