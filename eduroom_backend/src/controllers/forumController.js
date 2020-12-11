@@ -23,6 +23,22 @@ exports.searchForum = async (req, res, next) => {
     return next(new ErrorResponse("Not Found",404))
   }
 }
+exports.category = async(req,res,next) =>{
+  const catQuery = await pool.query('SELECT typename, subtypename from category_type c, sub_category s where c.categorytypeid = s.categorytypeid ORDER BY c.categorytypeid,s.subcategoryiid')
+  const cat = catQuery.rows
+  const subcategory = {}
+  const category = []
+  cat.map(el=>{
+    if(subcategory[el.typename]){
+      subcategory[el.typename].push(el.subtypename)
+    } else {
+      subcategory[el.typename] = [el.subtypename]
+      category.push(el.typename)
+    }
+  })
+  res.status(200).json({success: true, category, subcategory})
+}
+
 exports.showForum = async (req, res, next) => {
 	const user = req.user
 	const data = await pool.query(
