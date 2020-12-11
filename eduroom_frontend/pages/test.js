@@ -9,7 +9,7 @@ const Test =  () => {
                 <button onClick={()=>{setDialog(!dialog)}}>click</button>
                 {
                     dialog ? (
-                        <AuthDialog/>
+                        <AuthDialog handleClick={()=>{setDialog(false)}}/>
                     ) :null
                 }
             </General>

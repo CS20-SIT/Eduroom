@@ -7,8 +7,10 @@ import api from '../../../../../api'
 
 const CreatePackagePage = () => {
 	const [page, setPage] = useState(1)
+	const [courses, setCourses] = useState([])
 	const [myPackage, setMyPackage] = useState({
 		pic: '',
+		picPath: '',
 		name: '',
 		discount: 0,
 		category: 'default',
@@ -17,8 +19,8 @@ const CreatePackagePage = () => {
 	})
 	useEffect(() => {
 		const fetchdata = async () => {
-      const res = await api.get('/api/package/courses');
-			setMyPackage({ ...myPackage, courses: res.data })
+			const res = await api.get('/api/package/courses')
+			setCourses(res.data)
 		}
 		fetchdata()
 	}, [])
@@ -28,7 +30,14 @@ const CreatePackagePage = () => {
 	}, [myPackage])
 	const renderPage = () => {
 		if (page === 1) {
-			return <CreatePackage myPackage={myPackage} setMyPackage={setMyPackage} changePage={(page) => setPage(page)} />
+			return (
+				<CreatePackage
+					myPackage={myPackage}
+					courses={courses}
+					setMyPackage={setMyPackage}
+					changePage={(page) => setPage(page)}
+				/>
+			)
 		} else if (page === 2) {
 			return <ConfirmPackage myPackage={myPackage} changePage={(page) => setPage(page)} />
 		}
