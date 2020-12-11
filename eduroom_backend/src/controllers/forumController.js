@@ -12,17 +12,17 @@ exports.forumTest = async (req, res, next) => {
 };
 
 exports.showForum = async (req, res, next) => {
-  const data = await pool.query("select forumid, titlethread, f.userid, displayname as author, posttime, subtypename, typename, c.categorytypeid from forum_form f , category_type c , sub_category s , user_profile u where f.userid = u.userid and f.subcategoryiid = s.subcategoryiid and s.categorytypeid = c.categorytypeid order by posttime desc;");
+  const data = await pool.query("select f.forumid as forumid, titlethread, f.userid as userid, displayname as author, posttime, subtypename, typename, c.categorytypeid as categorytypeid ,likes,comments from forum_form f , category_type c , sub_category s , user_profile u,forum_form_info ffi where ffi.forumid = f.forumid and f.userid = u.userid and f.subcategoryiid = s.subcategoryiid and s.categorytypeid = c.categorytypeid order by posttime desc;");
   const forum = data.rows;
-  res.status(200).json({ success: true, data: forum });
+  res.status(200).json({ success: true, data: forum});
 };
 exports.selectForum = async (req, res, next) => {
   const id = req.params.id;
   console.log('id is ',id);
-  const data = await pool.query("SELECT forumid, f.userid, posttime, titlethread, subcategoryiid, content, isdelete, up.displayname AS author FROM forum_form f JOIN user_profile up on f.userid = up.userid WHERE isdelete = false AND f.userid = up.userid AND forumid = $1", [
+  const data = await pool.query("SELECT f.forumid, f.userid, posttime, titlethread, subcategoryiid, content, isdelete, up.displayname AS author,likes, comments FROM forum_form f JOIN user_profile up on f.userid = up.userid JOIN forum_form_info ffi on ffi.forumid = f.forumid WHERE isdelete = false AND f.userid = up.userid AND f.forumid = $1", [
     id,
   ]);
-  const data2 = await pool.query("select forumid, answerno, f.userid, displayname as author, anstime, isdelete, answer from forum_answer_form f join user_profile u on f.userid = u.userid where isdelete = false and forumid= $1  ", [
+  const data2 = await pool.query("select f.forumid, answerno, f.userid, displayname as author, anstime, isdelete, answer from forum_answer_form f join user_profile u on f.userid = u.userid where isdelete = false and f.forumid= $1  ", [
     id,
   ]);
   const forum = data.rows;
