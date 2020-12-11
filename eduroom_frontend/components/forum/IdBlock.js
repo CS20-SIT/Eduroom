@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Icon from './Icon'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -9,19 +9,12 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import ForumTag from '../../components/forum/layout/forumTag'
+import UserContext from '../../contexts/user/userContext'
 
 const IdBlock = () => {
 	const [data, setData] = useState([])
-	const [auth, setAuth] = useState([])
-	useEffect(() => {
-		const GetAuth = async () => {
-			const result = await api.get('/api/auth/profile')
-			console.log(result.data)
-			setAuth(result.data)
-		}
-		GetAuth()
-		console.log(auth)
-	}, [])
+	const userContext = useContext(UserContext)
+	const {user} = userContext
 	const param = useRouter().query.id || ''
 	useEffect(() => {
 		const GetData = async () => {
@@ -68,8 +61,8 @@ const IdBlock = () => {
 											}}
 										>
 										<div>	<b>{row.titlethread}</b></div>
-										<div>{row.userid == auth.userid ? <i className="fas fa-pen" style={{ size: '2px', marginRight:'20px' }}></i> : null}
-                      {row.userid == auth.userid ? <i className="fas fa-times" style={{ size: '2px' }}></i> :null}</div>	
+										<div>{user && row.userid == user.userid ? <i className="fas fa-pen" style={{ size: '2px', marginRight:'20px' }}></i> : null}
+                      {user && row.userid == user.userid ? <i className="fas fa-times" style={{ size: '2px' }}></i> :null}</div>	
 										</div>
 										<div>{row.content}</div>
 										<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>

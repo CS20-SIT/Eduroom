@@ -38,7 +38,7 @@ exports.room = async (req,res,next) =>{
 exports.selectRoom = async (req, res, next) => {
   const roomname = req.params.roomname;
   console.log('name is ',roomname);
-  const data = await pool.query("select titlethread, f.userid, displayname as author, posttime,typename, subtypename from user_profile u, forum_form f , category_type c , sub_category s where u.userid = f.userid and f.subcategoryiid = s.subcategoryiid and c.categorytypeid=s.categorytypeid and c.typename = $1 order by posttime desc",
+  const data = await pool.query("select forumid,titlethread, f.userid, displayname as author, posttime,typename, subtypename from user_profile u, forum_form f , category_type c , sub_category s where u.userid = f.userid and f.subcategoryiid = s.subcategoryiid and c.categorytypeid=s.categorytypeid and c.typename = $1 order by posttime desc",
    [
     roomname,
   ]);
