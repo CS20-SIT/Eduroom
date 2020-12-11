@@ -1,5 +1,16 @@
 import React, {Fragment, useEffect} from 'react'
+import api from '../../api'
+
 const Preview = ({index,data}) => {
+    const handleNext = async () => {
+		
+			const pictureFormData = new FormData();
+			pictureFormData.append('course-picture',data.picture);
+            const pictureLink = await api.post('/api/kahoot/upload/picture', pictureFormData)
+			data.picturePath = pictureLink.data.linkUrl;
+
+		
+	}
     useEffect(()=>{
         if(data.image){
             var reader = new FileReader();
@@ -7,7 +18,12 @@ const Preview = ({index,data}) => {
             document.getElementById('img-preview'+index).style.backgroundImage = "url('"+e.target.result+"')";
             }
             console.log(data)
+            console.log(data.image)
+           
+        
             reader.readAsDataURL(data.image);
+
+           
         }
     },[])
     return (
