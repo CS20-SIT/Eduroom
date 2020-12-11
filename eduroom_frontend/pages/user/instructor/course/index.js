@@ -13,12 +13,12 @@ const Index = () => {
                     <div className="container">
                         {/* <div className="package-content">You Have Not Create Package Yet</div> */}
                         <div>
-                            <Ownpackage id={11111111100} />
-                            <Ownpackage id={22525} />
+                            <Ownpackage id={'b7c2c25b-01e4-43e4-a72d-739d194a5bcd'} />
+                            <Ownpackage id={'0bd06850-0ab6-4912-8c1c-4d802c8724cb'} />
                         </div>
                         <div>
                             <Link href="/user/instructor/course/createpackage">
-                                <button className="addpackbutton">
+                                <button id="add-pack-button" className="addpackbutton">
                                     <div><i className="fas fa-plus-circle"></i></div>
                                     <div>add new package</div>
                                 </button>

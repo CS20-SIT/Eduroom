@@ -64,7 +64,7 @@ const EditPackage = (props, { index }) => {
         <div className="container pd-4-10">
           <div className="subtitle mg-40 text-center">PACKAGE INFORMATION</div>
           <div style={{ display: 'flex' }}>
-            <div className="img-upload">
+            <div id="img-upload-btn" className="img-upload">
               <div className="imageupload"
                 onClick={() => {
                   document.getElementById("image" + index).click();
@@ -100,7 +100,7 @@ const EditPackage = (props, { index }) => {
                   type="text"
                   placeholder="Name"
                   name="name"
-                  id="name"
+                  id="package-name-field"
                   onChange={nameChange}
                   value={props.myPackage.name}
                 ></input>
@@ -109,6 +109,7 @@ const EditPackage = (props, { index }) => {
                 
               <div>
                 <select
+                  id="package-discount-field"
                   name="discount"
                   onChange={discountChange}
                   value={props.myPackage.discount}
@@ -129,6 +130,7 @@ const EditPackage = (props, { index }) => {
 
               <div>
                 <select
+                  id="package-category-field"
                   name="category"
                   onChange={categoryChange}
                   value={props.myPackage.category}
@@ -150,7 +152,7 @@ const EditPackage = (props, { index }) => {
                 <textarea
                   placeholder="Detail"
                   name="detail"
-                  id="pdetail"
+                  id="package-detail-field"
                   rows="4"
                   style={{ resize: 'none' }}
                   className="pdetail"
@@ -170,7 +172,7 @@ const EditPackage = (props, { index }) => {
           </div>
         </div>
         <div className="center">
-          <button className="createbutton mgb-5" onClick={() => props.changePage(2)}>
+          <button id="edit-btn" className="createbutton mgb-5" onClick={() => props.changePage(2)}>
             Edit
           </button>
         </div>

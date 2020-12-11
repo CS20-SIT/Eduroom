@@ -77,7 +77,7 @@ const CreatePackage = (props, { index }) => {
         <div className="container pd-4-10">
           <div className="subtitle mg-40 text-center">PACKAGE INFORMATION</div>
           <div style={{ display: 'flex' }}>
-            <div className="img-upload">
+            <div id="img-upload" className="img-upload">
               <div className="imageupload"
                 onClick={() => {
                   document.getElementById("image" + index).click();
@@ -115,7 +115,7 @@ const CreatePackage = (props, { index }) => {
                   type="text"
                   placeholder="Name"
                   name="name"
-                  id="name"
+                  id="package-name-field"
                   className="mgt-0"
                   onChange={nameChange}
                   value={props.myPackage.name}
@@ -126,6 +126,7 @@ const CreatePackage = (props, { index }) => {
 
               <div>
                 <select
+                  id="package-discount-field"
                   name="discount"
                   onChange={discountChange}
                   value={props.myPackage.discount}
@@ -145,6 +146,7 @@ const CreatePackage = (props, { index }) => {
 
               <div>
                 <select
+                id="package-category-field"
                   name="category"
                   onChange={categoryChange}
                   value={props.myPackage.category}
@@ -169,7 +171,7 @@ const CreatePackage = (props, { index }) => {
                 <textarea
                   placeholder="Detail"
                   name="detail"
-                  id="detail"
+                  id="package-detail-field"
                   rows="4"
                   style={{ resize: 'none' }}
                   onChange={detailChange}
@@ -190,7 +192,7 @@ const CreatePackage = (props, { index }) => {
           </div>
         </div>
         <div className="center">
-          <button className="createbutton mgb-5" onClick={handleClick}>
+          <button id="create-btn" className="createbutton mgb-5" onClick={handleClick}>
             Create
           </button>
         </div>
