@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import moment from 'moment'
 import UserContext from '../../contexts/user/userContext'
 
-const CommentBlock = ({ row, id, data }) => {
+const CommentBlock = ({ data, handleDelete }) => {
   const userContext = useContext(UserContext);
   const {user} = userContext
   const useStyles = makeStyles((theme) => ({
@@ -23,7 +23,6 @@ const CommentBlock = ({ row, id, data }) => {
       color: theme.palette.text.secondary,
     },
   }));
-
   const classes = useStyles();
   return (
     <Fragment>
@@ -38,7 +37,7 @@ const CommentBlock = ({ row, id, data }) => {
                       <div className="delete" style={{justifyContent: "space-between"}}>
                       <b>comment {index + 1}</b>
                       {user && row.userid == user.userid ? (
-                        <i className="fas fa-times"></i>
+                        <i className="fas fa-times" onClick={()=>{handleDelete(row.forumid,row.answerno)}}></i>
                       ):null}
                     </div>
                       <p>{row.answer}</p>
