@@ -8,7 +8,7 @@ const sendEmail = require('../utils/sendMail')
 const errorHandler = require('../middleware/error')
 const { getDefailtProfilePic } = require('../utils/cloudStorage')
 const { prependOnceListener } = require('process')
-
+const ErrorResponse = require('../utils/errorResponse')
 exports.getProfile = async (req, res) => {
 	try {
 		// UserID is in req.user.id
@@ -18,15 +18,19 @@ exports.getProfile = async (req, res) => {
 
 		//get email of user
 		let email = ''
+		let isVerify = false
 		const localEmail = await pool.query('SELECT email from local_auth where userid = $1', [req.user.id])
 
 		if (localEmail.rowCount !== 0) {
 			email = localEmail.rows[0].email
+			const verify = await pool.query('SELECT * FROM user_verification WHERE userid = $1 AND isverified = $2',[req.user.id,true])
+			isVerify = verify.rowCount == 1
 		} else {
 			const oauthEmail = await pool.query('SELECT email from oauth where userid = $1', [req.user.id])
 			email = oauthEmail.rows[0].email
+			isVerify = true
 		}
-		user = { ...user, email }
+		user = { ...user, email, verify:isVerify }
 
 		//get isInstructor of user
 		const result2 = await pool.query('SELECT isverified from instructor where userid = $1', [req.user.id])
@@ -35,6 +39,7 @@ exports.getProfile = async (req, res) => {
 		}
 		res.send(user)
 	} catch (error) {
+		console.log(error)
 		const err = {
 			statusCode: 500,
 			message: error,
@@ -66,29 +71,27 @@ exports.regisController = async (req, res) => {
 		const userId = uuidv4()
 		const defaultProfilePic = getDefailtProfilePic()
 		console.log(defaultProfilePic)
-		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, createat, updateat) 
+        VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
 		await pool.query(user_profileCreationQuery, [''])
 
 		// Create local_auth
 		const local_authCreationQuery = `INSERT INTO local_auth (userid, email, password) 
                                         VALUES ('${userId}', '${user.email}', '${user.password}')`
 		await pool.query(local_authCreationQuery)
-
 		// Create verification token and send it in email
 		const verifyToken = crypto.randomBytes(20).toString('hex')
 		const user_verificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
         VALUES ('${userId}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + (120 * interval '1 minute'), '${verifyToken}', false)`
 		await pool.query(user_verificationCreationQuery)
 
-		const verifyUrl = `${process.env.ENTRYPOINT_URL}/api/auth/verify/${verifyToken}`
+		const verifyUrl = `${process.env.ENTRYPOINT_URL}/verify/${verifyToken}`
 		const emailOptions = {
 			email: user.email,
 			subject: 'Eduroom Email Verification',
 			htmlMessage: `Please Verify your email by click <a href="${verifyUrl}">here</a>.`,
 		}
 		await sendEmail(emailOptions)
-
 		// Generate JWT for user to login
 		const token = generateCookieJWT(userId)
 		res.cookie('jwt', token)
@@ -127,7 +130,7 @@ exports.verifyEmailController = async (req, res) => {
 		}
 		await pool.query(`UPDATE user_verification SET isverified = true WHERE token = '${token}'`)
 		// TODO: Should redirect to verification success page
-		res.redirect(`${process.env.ENTRYPOINT_URL}/login`)
+		res.status(200).json({success:true})
 	} catch (error) {
 		// TODO: Should redirect to verification error page
 		const err = {
@@ -138,7 +141,7 @@ exports.verifyEmailController = async (req, res) => {
 	}
 }
 
-exports.loginController = async (req, res) => {
+exports.loginController = async (req, res, next) => {
 	try {
 		// {
 		//     email: <String>
@@ -149,7 +152,7 @@ exports.loginController = async (req, res) => {
 		if (localAuth.rowCount != 1) {
 			const err = {
 				statusCode: 400,
-				message: 'Email or password is in correct',
+				message: 'Email or password is incorrect',
 			}
 			return errorHandler(err, req, res)
 		}
@@ -157,14 +160,16 @@ exports.loginController = async (req, res) => {
 		if (!passwordMatch) {
 			const err = {
 				statusCode: 400,
-				message: 'Email or password is in correct',
+				message: 'Email or password is incorrect',
 			}
 			return errorHandler(err, req, res)
 		}
 		const userId = localAuth.rows[0].userid
+		const isVerify = await pool.query("SELECT * FROM user_verification WHERE userid = $1 AND isverified = $2",[userId,true]);
+		let verify = isVerify.rowCount == 1
 		const token = generateCookieJWT(userId)
 		res.cookie('jwt', token)
-		res.status(200).send({ success: true })
+		res.status(200).send({ success: true, isVerify: verify })
 	} catch (error) {
 		// TODO: Should redirect to verification error page
 		const err = {
@@ -197,8 +202,8 @@ exports.googleCallbackController = async (req, res) => {
 		}
 		// Add user to user_profile
 		const userId = uuidv4()
-		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, isstudent, createat, updateat) 
-          VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
+		const user_profileCreationQuery = `INSERT INTO user_profile (userid, firstname, lastname, birthdate, initial, phoneno, displayname, bio, avatar, createat, updateat) 
+          VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
 		await pool.query(user_profileCreationQuery, [''])
 
 		// Add user to OAuth
