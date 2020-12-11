@@ -47,7 +47,7 @@ const cart = () => {
                   </div>
                 </div>
                 <a
-                  className="col"
+                  className="remove"
                   href="default.asp"
                   style={{
                     width: 100,
@@ -107,7 +107,8 @@ const cart = () => {
                         color: "#3D467F",
                         fontSize: 18,
                         width: 80,
-                        paddingTop: 10,
+                        paddingTop: 10
+                        
                       }}
                     >
                       Total :

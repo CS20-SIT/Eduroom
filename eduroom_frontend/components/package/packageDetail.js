@@ -12,7 +12,7 @@ const Package = () => {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                 
                     <div className="bigCard">
-                    {/* <div style={{backgroundImage: "url("+"/images/package/pgbg.svg"+")"}}> */}
+            
                         <div style={{display:'flex', marginLeft:30, flexDirection:'column'}}> 
                         
                             <h1 className="textHead">Package Detail</h1>

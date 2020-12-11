@@ -1,5 +1,14 @@
 import css from 'styled-jsx/css'
 export default css`
+
+
+.BGBG {
+    max-width: 100vw;
+    min-height: 100vh;
+    background-image: url('/images/package/payment.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 select{
     height: 40px;
     border-radius: 1.5vh;
@@ -46,25 +55,22 @@ input[type='radio']:after {
     display: flex;
     flexDirection: column;
     justify-content: center;
+    height: 10%;
 }
 .test{
     display: flex;
     justify-content: center;
     border: black; 
 }
-.bg{
-    background-color: #F4F5F7;
-    height: 100%;
-    overflow-y: auto;
-}
+
 
 .card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
             background: rgba(255,255,255,0.7);
             border-radius: 2vh;
             width: 70vw;
-            height: 85vh;
-            padding-top: 1%;
+            height: 90vh;
+            padding-top: 2%;
 }
 
 .CheckoutBar {
