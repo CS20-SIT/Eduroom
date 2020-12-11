@@ -73,7 +73,22 @@ exports.createComment = async (req, res, next) => {
 	return
 }
 exports.deleteComment = async (req, res, next) => {
-	res.status(200).json({ success: true })
+  
+}
+exports.deleteForum = async (req, res, next) => {
+	const forumid = req.params.id
+	const user = req.user
+	if (user) {
+		await pool.query('UPDATE forum_form SET  isdelete = $1 where forumid=$2 and userid=$3', [
+			true,
+			forumid,
+			user.id,
+		])
+		res.status(200).json({ success: true })
+		return
+	} else {
+		return next(new ErrorResponse('Unauthorize', 401))
+	}
 }
 exports.editForum = async (req, res, next) => {
 	const temp = req.body
