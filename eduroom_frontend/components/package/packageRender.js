@@ -1,6 +1,4 @@
-import Card from '@material-ui/core/Card';
-import Styles from '../../styles/package/test';
-import CardContent from '@material-ui/core/CardContent';
+import Styles from '../../styles/package/pShop';
 import { useState, Fragment } from 'react';
 
 const Name = (props) => {
