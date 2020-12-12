@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import style from '../../../styles/graderSubmit/contests/contestPageList'
 import { useRouter } from 'next/router'
 import { compareAsc, format } from 'date-fns'
-
 import { differenceInMinutes, parseISO } from 'date-fns'
 
 const ContestList = (props) => {
@@ -91,7 +90,7 @@ const ContestList = (props) => {
 					<div className="detail">
 						<div className="date">
 							<img src="../../images/graderSubmit/calendarIcon.svg" />
-							<p>{format(Date.parse(props.starttime), 'P') + ' ' + format(Date.parse(props.starttime), 'pp')}</p>
+							<p>{format(Date.parse(props.starttime), 'PP') + ' ' + format(Date.parse(props.starttime), 'pp')}</p>
 						</div>
 						<div className="duration">
 							<img src="../../images/graderSubmit/clockIcon.svg" />
