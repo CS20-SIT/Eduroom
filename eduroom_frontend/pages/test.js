@@ -1,19 +1,12 @@
-import React, {Fragment, useState} from 'react'
-import AuthDialog from '../components/landing/authDialog'
+import React, { Fragment, useState } from 'react'
 import General from '../components/template/general'
-const Test =  () => {
-    const [dialog,setDialog] = useState(false)
-    return (
-        <Fragment>
-            <General>
-                <button onClick={()=>{setDialog(!dialog)}}>click</button>
-                {
-                    dialog ? (
-                        <AuthDialog/>
-                    ) :null
-                }
-            </General>
-        </Fragment>
-    )
+const Test = () => {
+	return (
+		<Fragment>
+			<General>
+            TEST PAGE
+			</General>
+		</Fragment>
+	)
 }
-export default Test;
+export default Test

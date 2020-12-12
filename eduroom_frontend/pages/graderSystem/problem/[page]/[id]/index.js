@@ -5,13 +5,7 @@ import style from '../../../../../styles/graderSubmit/problems/problemSolvePage'
 import ProblemLayout from '../../../../../components/graderSubmit/problems/ProblemLayout'
 import { useRouter } from 'next/router'
 
-const ProblemID = () => {
-	const [id, setId] = useState(null)
-	const router = useRouter()
-	useEffect(() => {
-		const ID = router.query.id
-		setId(ID)
-	}, [])
+const ProblemID = ({ id }) => {
 	return (
 		<Fragment>
 			<Layout page="problem">
@@ -27,4 +21,14 @@ const ProblemID = () => {
 		</Fragment>
 	)
 }
+
+export async function getServerSideProps(ctx) {
+	try {
+		const id = ctx.query.page
+		return { props: { id } }
+	} catch (err) {
+		return { props: { id: '' } }
+	}
+}
+
 export default ProblemID
