@@ -52,13 +52,11 @@ const Problems = ({ page }) => {
 		// 	}
 		// }
 
-		console.log(overflow)
 		return <Fragment>{arr}</Fragment>
 	}
 
 	useEffect(() => {
 		api.get(`api/grader/getQuestionByTag?tag=${tag}`).then((res) => {
-			console.log(res.data)
 			setQuestionsData(res.data)
 		})
 	}, [tag])
@@ -81,6 +79,7 @@ const Problems = ({ page }) => {
 												return (
 													<Fragment>
 														<ProblemList
+															pageID={page}
 															id={element.id}
 															title={element.title}
 															description={element.description}
@@ -111,6 +110,7 @@ const Problems = ({ page }) => {
 												key={key}
 												changeTag={(tag) => setTag(tag)}
 												currentTag={tag}
+												key={key}
 											/>
 										)
 									})}
