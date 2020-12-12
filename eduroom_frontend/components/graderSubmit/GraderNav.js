@@ -1,14 +1,26 @@
+import { useEffect, useState } from 'react'
 import style from '../../styles/graderSubmit/graderNav'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import api from '../../api'
 
 const GraderNav = (props) => {
 	const router = useRouter()
+	const [Data, setData] = useState([])
+
+	useEffect(() => {
+		const GetData = async () => {
+			let result = await api.get('api/auth/profile')
+			setData(result.data)
+		}
+		GetData()
+	}, [])
+
 	const menus = [
 		{ text: 'Home', link: '/graderSystem', page: 'home' },
 		{ text: 'Problems', link: '/graderSystem/problem/1', page: 'problem' },
 		{ text: 'Contests', link: '/graderSystem/contest', page: 'contest' },
-		{ text: 'Ranks', link: '/graderSystem/rank', page: 'rank' },
+		{ text: 'Ranks', link: '/graderSystem/rank/oi', page: 'rank' },
 	]
 	const getClass = (text) => {
 		if (text.toLowerCase() === props.page.toLowerCase()) {
@@ -33,10 +45,10 @@ const GraderNav = (props) => {
 					)
 				})}
 				<div className="link">
-					<div className="text" onClick={() => router.push('/graderSystem/profile')}>
+					<div className="text" onClick={() => router.push('/user')}>
 						<span className="profile">
 							Profile
-							<img src="../../../images/graderSubmit/profile.svg" />
+							<img src={`${Data != null ? Data.avatar : null}`} style={{ borderRadius: '50%' }} />
 						</span>
 					</div>
 				</div>

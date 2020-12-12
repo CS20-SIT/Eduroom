@@ -22,7 +22,10 @@ const ProblemList = (props) => {
 						<p className="difficulty">{props.difficulty.charAt(0).toUpperCase() + props.difficulty.slice(1)}</p>
 					</div>
 					<div className="right-bottom">
-						<div className="try-button" onClick={() => router.push(`/graderSystem/problem/${props.id}`)}>
+						<div
+							className="try-button"
+							onClick={() => router.push(`/graderSystem/problem/${props.pageID}/${props.id}`)}
+						>
 							<button id="myButton">Try</button>
 						</div>
 					</div>

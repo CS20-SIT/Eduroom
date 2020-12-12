@@ -8,13 +8,13 @@ import ContestOverviewList from '../../../../components/graderSubmit/contests/al
 import { compareAsc, parseISO } from 'date-fns'
 import api from '../../../../api'
 
-const contestOverview = ({ id }) => {
+const contestOverview = ({ contestId }) => {
 	const [data, setData] = useState([])
 
 	useEffect(() => {
 		const GetData = async () => {
 			const result = await api.get('api/grader/getContestDetail', {
-				params: { id },
+				params: { contestId },
 			})
 			setData(result.data[0])
 		}
@@ -81,7 +81,7 @@ const contestOverview = ({ id }) => {
 				<div className="main">
 					<div className="size">
 						<Box>
-							<ContestLayout page="overview" id={id}>
+							<ContestLayout page="overview" id={contestId}>
 								<div className="overview-info">
 									<div className="overview-info-detail">
 										<p className="overview-title">{data.title}</p>
@@ -124,10 +124,10 @@ const contestOverview = ({ id }) => {
 }
 export async function getServerSideProps(ctx) {
 	try {
-		const id = ctx.query.id
-		return { props: { id } }
+		const contestId = ctx.query.contestId
+		return { props: { contestId } }
 	} catch (err) {
-		return { props: { id: '' } }
+		return { props: { contestId: '' } }
 	}
 }
 export default contestOverview

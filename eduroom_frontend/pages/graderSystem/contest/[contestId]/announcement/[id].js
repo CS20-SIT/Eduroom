@@ -1,16 +1,16 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import Head from 'next/head'
-import Box from '../../../components/graderSubmit/Box'
-import Layout from '../../../components/graderSubmit/Layout'
-import style from '../../../styles/graderSubmit/announcements/announcementPage'
-import api from '../../../api'
+import Box from '../../../../../components/graderSubmit/Box'
+import Layout from '../../../../../components/graderSubmit/Layout'
+import style from '../../../../../styles/graderSubmit/announcements/announcementPage'
+import api from '../../../../../api'
 import { format } from 'date-fns'
 
-const Announcement = ({ id }) => {
+const Announcement = ({ id, contestId }) => {
 	const [data, setData] = useState(null)
 	useEffect(() => {
 		const GetData = async () => {
-			const result = await api.get('api/grader/getAnnouncementById', { params: { id } })
+			const result = await api.get('api/grader/getContestAnnouncementDetail', { params: { contestId, id } })
 			setData(result.data[0])
 			console.log(result.data[0])
 		}
@@ -54,9 +54,10 @@ const Announcement = ({ id }) => {
 export async function getServerSideProps(ctx) {
 	try {
 		const id = ctx.query.id
-		return { props: { id } }
+		const contestId = ctx.query.contestId
+		return { props: { id, contestId } }
 	} catch (err) {
-		return { props: { id: '' } }
+		return { props: { id: '', contestId: '' } }
 	}
 }
 export default Announcement
