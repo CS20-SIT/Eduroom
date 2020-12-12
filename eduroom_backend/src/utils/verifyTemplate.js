@@ -1,6 +1,10 @@
 exports.verifyTemplate = (verifyToken) => {
-	return `<div class="verify-box">
-    <img src="https://eduroom.cscms.me/images/verify/eduroom_logo_long.sv" alt="eduroom_logo" />
+	return `<link
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  ></link>
+  <div class="verify-box">
+    <img src="https://eduroom.cscms.me/images/eduroom_logo_long.sv" alt="eduroom_logo" />
     <div class="verify-image">
         <img src="https://eduroom.cscms.me/images/verify/verify_sent.svg" alt="verify-image" />
     </div>
@@ -13,13 +17,14 @@ exports.verifyTemplate = (verifyToken) => {
         <div class="ver-text">Verify</div>
     </div>
     </a>
-    <div class="verify-text">
+    <div class="verify-text sm">
         You’re receiving this email because you recently created a new Eduroom account.
     </div>
-    <div class="verify-text">if this wasn’t you, please ignore this email</div>
+    <div class="verify-text sm">if this wasn’t you, please ignore this email</div>
 </div>
 <style>
         .verify-box {
+            font-family: "Quicksand", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,6 +32,10 @@ exports.verifyTemplate = (verifyToken) => {
             flex-flow: column;
             padding: 1rem;
             cursor: default;
+            background-image: url(https://eduroom.cscms.me/images/verify/verify-bg.svg);
+            background-position: center;
+            background-size: cover; 
+            background-repeat:no-repeat;
         }
         .verify-image {
             margin: 0.2rem 0;
@@ -36,6 +45,9 @@ exports.verifyTemplate = (verifyToken) => {
             font-size: 1.1em;
             color: #a7abc5;
         }
+        .verify-text.sm {
+            font-size: 0.9em;
+        }
         .verify-head {
             font-weight: bold;
             font-size: 1.5em;
@@ -44,10 +56,10 @@ exports.verifyTemplate = (verifyToken) => {
             text-transform: uppercase;
         }
         .ver-btn {
-            padding: 0.5rem 1.5rem;
+            padding: 0.5rem 2.5rem;
             border-radius: 25px;
             border: 1px solid #3d467f;
-            margin-top: 1.2rem;
+            margin: 1.2rem;
             cursor: pointer;
             background: #3d467f;
             color: #ffffff;

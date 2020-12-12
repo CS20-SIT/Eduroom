@@ -7,6 +7,7 @@ import api from '../../../../../api'
 
 const CreatePackagePage = () => {
 	const [page, setPage] = useState(1)
+	const [pagination, setPagonation] = useState(1)
 	const [courses, setCourses] = useState([])
 	const [myPackage, setMyPackage] = useState({
 		pic: '',
@@ -18,7 +19,7 @@ const CreatePackagePage = () => {
 		selectedCourses: [],
 	})
 	const fetchCourses = async () => {
-		const res = await api.get('/api/package/courses')
+		const res = await api.get('/api/package/courses', { params: { page: pagination } })
 		setCourses(res.data)
 	}
 	useEffect(() => {
@@ -36,6 +37,7 @@ const CreatePackagePage = () => {
 					courses={courses}
 					setMyPackage={setMyPackage}
 					changePage={(page) => setPage(page)}
+					pagination={pagination}
 				/>
 			)
 		} else if (page === 2) {
