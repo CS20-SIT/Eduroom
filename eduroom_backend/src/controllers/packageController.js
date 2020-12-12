@@ -20,6 +20,8 @@ exports.getPackage = async (req, res, next) => {
 }
 
 exports.getCourses = async (req, res, next) => {
+	const { page } = req.query;
+	console.log('page is',page);
   const results = await pool.query('SELECT courseid, coursename, coursepicture, price from course');
   res.status(200).send(results.rows);
 }
