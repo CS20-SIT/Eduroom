@@ -1,13 +1,18 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import ForumBox from '../../components/forum/layout/forumBox'
 import api from '../../api'
 import ForumNav from '../../components/forum/layout/forumNav'
 import GeneralNonav from '../../components/template/generalnonav'
+import AuthDialog from '../../components/landing/authDialog'
+import UserContext from '../../contexts/user/userContext'
 const Search = () => {
+	const [dialog,setDialog] = useState(false)
 	const router = useRouter()
     const [data, setData] = useState([])
 	const search = router.query.q
+	const userContext = useContext(UserContext)
+	const {user} = userContext
 	useEffect(() => {
         getData(search)
 	}, [search])
@@ -31,12 +36,19 @@ const Search = () => {
 					console.log(err)
 				})
 		} else {
-			alert('Please Login Before Like na ja')
+			setDialog(!dialog)
 		}
 	}
 	return (
 		<Fragment>
 			<GeneralNonav>
+				
+			{
+				dialog ? (
+					<AuthDialog handleClick={()=>{setDialog(false)}}/>
+				) :null
+			}
+				<div style={{background:'#F4F5F7'}}>
 				<ForumNav/>
 				<div className="forum-home">
 					{data.map((el, index) => {
@@ -46,7 +58,7 @@ const Search = () => {
 							</Fragment>
 						)
 					})}
-				</div>
+				</div></div>
 			</GeneralNonav>
 			<style jsx>
 				{`

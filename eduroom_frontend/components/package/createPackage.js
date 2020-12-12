@@ -3,8 +3,6 @@ import Courses from './courses'
 import style from '../../styles/package/createpackage'
 
 const CreatePackage = (props) => {
-  const [index, setIndex] = useState(1);
-	const [image, setImage] = useState(null)
 	const [alert, setAlert] = useState({
 		pic: false,
 		name: false,
@@ -12,20 +10,18 @@ const CreatePackage = (props) => {
 		detail: false,
 		courses: false,
 	})
-	// useEffect(() => {
-	// 	if (image) {
-	// 		var reader = new FileReader()
-	// 		reader.onload = function (e) {
-	// 			document.getElementById('show-image' + index).src = e.target.result
-	// 		}
-	// 		reader.readAsDataURL(image)
-	// 	}
-	// }, [image])
+	useEffect(() => {
+		if (props.myPackage.pic) {
+			var reader = new FileReader()
+			reader.onload = function (e) {
+				document.getElementById('show-package-image-1').src = e.target.result
+			}
+			reader.readAsDataURL(props.myPackage.pic)
+		}
+	}, [props.myPackage.pic])
 	const handleUplaodFile = (e) => {
 		let newValue = e.target.files[0]
-		let type = 'image'
-		console.log(newValue)
-		setImage(newValue)
+		props.setMyPackage({ ...props.myPackage, pic: newValue })
 	}
 	const numDiscount = [5, 10, 20, 30, 40, 50, 60, 70]
 	const discount = numDiscount.map((num) => {
@@ -82,14 +78,14 @@ const CreatePackage = (props) => {
 							<div
 								className="imageupload"
 								onClick={() => {
-									document.getElementById('image' + index).click()
+									document.getElementById('image-1').click()
 								}}
 							>
-								<input id={'image' + index} type="file" accept="image/*" hidden={true} onChange={handleUplaodFile} />
+								<input id="image-1" type="file" accept="image/*" hidden={true} onChange={handleUplaodFile} />
 
-								{image ? (
+								{props.myPackage.pic ? (
 									<div>
-										<img src="" id={'show-image' + index} style={{ maxWidth: 420, maxHeight: 235 }} />
+										<img src="" id="show-package-image-1" style={{ maxWidth: '100%', maxHeight: '100%' }} />
 									</div>
 								) : (
 									<div>
@@ -100,7 +96,7 @@ const CreatePackage = (props) => {
 									</div>
 								)}
 							</div>
-							{alert.pic ? (<div className="alert-text center">* Image is required</div>) : null}  
+							{alert.pic ? <div className="alert-text center">* Image is required</div> : null}
 						</div>
 
 						<div style={{ width: '50%' }}>
@@ -113,7 +109,6 @@ const CreatePackage = (props) => {
 									className="mgt-0"
 									onChange={nameChange}
 									value={props.myPackage.name}
-									error={alert.name}
 								/>
 								{alert.name ? <div className="alert-text">* Name is required</div> : null}
 							</div>
@@ -134,12 +129,7 @@ const CreatePackage = (props) => {
 							</div>
 
 							<div>
-								<select
-									name="category"
-									onChange={categoryChange}
-									value={props.myPackage.category}
-									error={alert.category}
-								>
+								<select name="category" onChange={categoryChange} value={props.myPackage.category}>
 									<option disabled value="default">
 										Category
 									</option>
@@ -163,7 +153,6 @@ const CreatePackage = (props) => {
 									style={{ resize: 'none' }}
 									onChange={detailChange}
 									value={props.myPackage.detail}
-									error={alert.detail}
 								/>
 								{alert.detail ? <div className="alert-text">* Detail is required</div> : null}
 							</div>
@@ -172,9 +161,7 @@ const CreatePackage = (props) => {
 
 					<div>
 						<div className="subtitle2">Courses</div>
-						<div className="coursebox">
-              <Courses courses={props.myPackage.courses}/>
-						</div>
+						<Courses courses={props.courses} />
 					</div>
 				</div>
 				<div className="center">

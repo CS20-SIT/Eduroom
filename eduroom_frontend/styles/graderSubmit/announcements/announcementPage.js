@@ -16,9 +16,30 @@ export default css`
 		text-align: center;
 	}
 	.title {
+		margin-top: 0;
 		color: #3d467f;
 	}
-	.description {
+	p {
+		height: 57vh;
 		color: #828282;
+		margin-bottom: 0;
+		padding: 0 2rem;
+	}
+
+	.items {
+		display: flex;
+	}
+	.left,
+	.right {
+		height: 62vh;
+	}
+	.left {
+		width: 80%;
+	}
+	.right {
+		text-align: end;
+		color: #828282;
+		width: 20%;
+		font-weight: bold;
 	}
 `
