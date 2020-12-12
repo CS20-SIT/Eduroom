@@ -1,9 +1,11 @@
 import React, { Fragment, useEffect, useState, useContext } from 'react'
 import CategoriesSet from './categoriesSet'
 import api from '../../../api'
+import AuthDialog from '../../landing/authDialog'
 import ForumBox from './forumBox'
 import UserContext from '../../../contexts/user/userContext'
 const HomeContent = () => {
+	const [dialog,setDialog] = useState(false)
 	const [forums, setForums] = useState([])
 	const userContext = useContext(UserContext)
 	const {user} = userContext
@@ -28,11 +30,16 @@ const HomeContent = () => {
 				console.log(err)
 			})
 		} else {
-			alert("Please Login Before Like na ja")
+			setDialog(!dialog)
 		}
 	}
 	return (
 		<Fragment>
+		{
+				dialog ? (
+					<AuthDialog handleClick={()=>{setDialog(false)}}/>
+				) :null
+			}
 			<div className="forum-home">
 				<div className="home-title">CHOOSE ROOM</div>
 				<CategoriesSet />
