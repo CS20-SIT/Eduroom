@@ -20,14 +20,24 @@ exports.getPackage = async (req, res, next) => {
 }
 
 exports.getCourses = async (req, res, next) => {
-	const { page } = req.query;
-	console.log('page is',page);
-  const results = await pool.query('SELECT courseid, coursename, coursepicture, price from course');
-  res.status(200).send(results.rows);
+	const { page } = req.query
+	console.log('page is', page)
+	const num = 3;
+	const offset = (page - 1) * num
+	const results = await pool.query(
+		'SELECT courseid, coursename, coursepicture, price from course offset $1 limit $2',
+		[offset,num]
+	)
+	res.status(200).send(results.rows)
+}
+
+exports.getNumCourses = async (req, res, next) => {
+	const result = await pool.query('select count(*) as count from course');
+	res.status(200).send({ count:parseInt(result.rows[0].count) });
 }
 
 exports.getInstructorPackage = async (req, res, next) => {
-  const instructorid = req.user.instructor
+	const instructorid = req.user.instructor
 	const result = await pool.query(
 		`select sum(price)-p.discount as price,p.packageid,packagename,p.discount,p.ispublic,p.detail,p.cateid, p.image, ca.cataname  from package p,package_courses pc,course c, categories ca
   where ownerid = $1 and p.packageid = pc.packageid
