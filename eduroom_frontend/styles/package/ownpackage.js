@@ -27,15 +27,18 @@ export default css`
     border: 1px solid black;
     height: 90px;
     margin: 5px;
+<<<<<<< HEAD
     display: flex;
     background-color: red;
+=======
+    cursor: pointer;
+>>>>>>> cf9aef62a90b052c775f64a70db3d471cc10d932
 }
 .block2 {
     width: 95%;
     padding: 4px 5px;
 }
 .name {
-    width: 90%;
     font-size: 20px;
     font-weight: 550;
 }
@@ -50,6 +53,16 @@ export default css`
     cursor: pointer;
     color: #3D467F;
     font-weight: 600;
+}
+.block4{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10%;
+    cursor: pointer;
+}
+.block3{
+    display: flex;
 }
 .right {
     display: flex;
