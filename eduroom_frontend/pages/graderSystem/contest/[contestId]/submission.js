@@ -1,22 +1,20 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Box from '../../../../components/graderSubmit/Box'
 import Layout from '../../../../components/graderSubmit/Layout'
-import style from '../../../../styles/graderSubmit/contests/contestPage/announcement/contestAnnouncementPage'
+import style from '../../../../styles/graderSubmit/contests/contestPage/submission/contestSubmissionPage'
 import ContestLayout from '../../../../components/graderSubmit/contests/ContestLayout'
-import ContestAnnouncementList from '../../../../components/graderSubmit/contests/allList/ContestAnnouncementList'
+import ContestSubmissionList from '../../../../components/graderSubmit/contests/allList/ContestSubmissionList'
 import api from '../../../../api'
 
-const contestAnnouncement = ({ id }) => {
+const contestSubmission = ({ contestId }) => {
 	const [data, setData] = useState([])
 
 	useEffect(() => {
 		const GetData = async () => {
-			console.log(id)
-			const result = await api.get('api/grader/getContestAnnouncement', {
-				params: { id },
+			const result = await api.get('api/grader/getContestSubmission', {
+				params: { contestId },
 			})
 			setData(result.data)
-			console.log(result.data)
 		}
 		GetData()
 	}, [])
@@ -27,35 +25,39 @@ const contestAnnouncement = ({ id }) => {
 				<div className="main">
 					<div className="size">
 						<Box>
-							<ContestLayout page="announcement" id={id}>
+							<ContestLayout page="submission" id={contestId}>
 								<center>
-									<h2>CONTEST ANNOUNCEMENTS</h2>
+									<h2>SUBMISSIONS</h2>
 								</center>
-								<div className="announcement-list">
+								<div className="submission-list">
 									<div className="flex-container">
 										<div className="flex-item" style={{ flexBasis: '20%' }}>
-											Admin
+											Time
 										</div>
 										<div className="flex-item" style={{ flexBasis: '20%' }}>
-											Title
-										</div>
-										<div className="flex-item" style={{ flexBasis: '40%' }}>
-											Description
+											Author
 										</div>
 										<div className="flex-item" style={{ flexBasis: '20%' }}>
-											Date
+											Status
+										</div>
+										<div className="flex-item" style={{ flexBasis: '20%' }}>
+											Problem
+										</div>
+										<div className="flex-item" style={{ flexBasis: '20%' }}>
+											Language
 										</div>
 									</div>
 									{data.map((element, key) => {
-										return (
-											<ContestAnnouncementList
-												title={element.title}
-												description={element.description}
-												name={element.displayname}
-												time={element.time}
+										return data ? (
+											<ContestSubmissionList
+												time={element.whentime}
+												author={element.displayname}
+												status={element.status}
+												problem={element.conquestionno}
+												language={element.language}
 												key={key}
 											/>
-										)
+										) : null
 									})}
 								</div>
 							</ContestLayout>
@@ -70,11 +72,11 @@ const contestAnnouncement = ({ id }) => {
 
 export async function getServerSideProps(ctx) {
 	try {
-		const id = ctx.query.id
-		return { props: { id } }
+		const contestId = ctx.query.contestId
+		return { props: { contestId } }
 	} catch (err) {
-		return { props: { id: '' } }
+		return { props: { contestId: '' } }
 	}
 }
 
-export default contestAnnouncement
+export default contestSubmission

@@ -51,27 +51,27 @@ const gPreviewContests = async (req, res, next) => {
 }
 
 const gContestDetails = async (req, res, next) => {
-	const id = req.query.id
+	const contestId = req.query.contestId
 	const data = await pool.query(
 		`select conno, title, description, conruletype,starttime, endtime, status, displayname
     from contest c, admin_login a
     where c.adminid = a.adminid
         and status = true
-        and conno = '${id}';`
+        and conno = '${contestId}';`
 	)
 	const ann = data.rows
 	res.send(ann)
 }
 
 const gContestAnnouncements = async (req, res, next) => {
-	const id = req.query.id
+	const contestId = req.query.contestId
 	const data = await pool.query(
-		`select cn.title, cn.description, a.displayname, cn.time
+		`select cn.coannno, cn.title, cn.description, a.displayname, cn.time
     from contest c, admin_login a, contest_announcements cn
     where cn.adminid = c.adminid
         and c.adminid = a.adminid
         and isvisible = true
-        and conno = '${id}'
+        and conno = '${contestId}'
     order by time;`
 	)
 	const ann = data.rows
@@ -79,27 +79,27 @@ const gContestAnnouncements = async (req, res, next) => {
 }
 
 const gContestProblems = async (req, res, next) => {
-	const id = req.query.id
+	const contestId = req.query.contestId
 	const data = await pool.query(`
-	select q.title, cq.conquestionno, q.difficulty, q.description
+	select q.id, q.title, cq.conquestionno, q.difficulty, q.description
 	from contest c, contest_question cq, questions q
 	where cq.questionid = q.id
 		and c.conno = cq.conid
 		and visibility = true
-		and conno = '${id}'
+		and conno = '${contestId}'
 	order by conquestionno;`)
 	const ann = data.rows
 	res.send(ann)
 }
 
 const gContestSubmissions = async (req, res, next) => {
-	const id = req.query.id
+	const contestId = req.query.contestId
 	const data = await pool.query(`
 	select qa.whentime ,u.displayname, qa.status , qc.conquestionno, qa.language
 	from user_profile u, question_attempt qa, contest_question qc, contest c
 	where qa.userid = u.userid
 		and qa.questionid = qc.questionid
-		and conno = '${id}'
+		and conno = '${contestId}'
 	order by whentime desc;`)
 	const ann = data.rows
 	res.send(ann)
@@ -158,6 +158,106 @@ const gAnnouncementById = async (req, res, next) => {
 	}
 }
 
+const gOIRankingTopSix = async (req, res, next) => {
+	try {
+		const data = await pool.query(`
+		select r.name, r.totalcorrect, u.avatar
+		from oi_rank r, user_profile u
+		where r.userid = u.userid
+		order by totalcorrect desc
+		limit 6;
+	`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
+const gACMRankingTopSix = async (req, res, next) => {
+	try {
+		const data = await pool.query(`
+		select r.name, r.totalcorrect, u.avatar
+		from acm_rank r, user_profile u
+		where r.userid = u.userid
+		order by totalcorrect desc
+		limit 6;
+	`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+const gContestAnnouncementDetail = async (req, res, next) => {
+	try {
+		const id = req.query.id
+		const contestId = req.query.contestId
+		const data = await pool.query(`
+		select ca.coannno,title, description, a.displayname, ca.time
+		from contest_announcements ca, admin_login a
+		where ca.adminid = a.adminid
+			and isvisible = true
+			and conid = ${contestId}
+			and coannno = ${id};
+	`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
+const gContestQuestionDetail = async (req, res, next) => {
+	try {
+		const contestId = req.query.contestId
+		const id = req.query.id
+		const data = await pool.query(`
+		select cq.conquestionno, q.id, title, description, hint, intputdes, outputdes, timelimit, memorylimit, difficulty, ruletype, displayname
+		from contest_question cq,questions q, admin_login a
+		where cq.questionid = q.id
+			and q.adminid = a.adminid
+			and q.id = ${id}
+			and cq.conid = ${contestId}	`)
+		const ann = data.rows[0]
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
+const gQuestionTestCase = async (req, res, next) => {
+	try {
+		const id = req.query.id
+		const data = await pool.query(`
+		select filepath
+		from questiontestcases
+		where questionid = ${id}
+		order by fileno desc
+		limit 1;`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
+const gQuestionDetail = async (req, res, next) => {
+	try {
+		const id = req.query.id
+		const data = await pool.query(`
+		select id, title, description, hint, intputdes, outputdes, timelimit, memorylimit, difficulty, ruletype, displayname
+		from questions q, admin_login a
+		where cq.questionid = q.id
+			and q.adminid = a.adminid
+			and q.id = ${id}`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
 module.exports = {
 	gPreviewQuestions,
 	gPreviewContests,
@@ -171,4 +271,10 @@ module.exports = {
 	gHomePreviewContests,
 	gAnnouncementById,
 	gCountAllQuestions,
+	gOIRankingTopSix,
+	gACMRankingTopSix,
+	gContestAnnouncementDetail,
+	gContestQuestionDetail,
+	gQuestionTestCase,
+	gQuestionDetail,
 }
