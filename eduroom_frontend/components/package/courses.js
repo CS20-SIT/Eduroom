@@ -1,16 +1,23 @@
 import { Fragment, useEffect, useState } from 'react'
 import CourseCheck from './courseCheck'
+import Paginations from './paginations'
 import api from '../../api'
 
 const Courses = (props) => {
 	const [pagination, setPagonation] = useState(1)
 	const [courses, setCourses] = useState([])
+	const [numCourses, setNumCourses] = useState(0)
+	const fetchNumCourses = async () => {
+		const res = await api.get('/api/package/numCourses')
+		setNumCourses(res.data.count)
+	}
 	const fetchCourses = async () => {
 		const res = await api.get('/api/package/courses', { params: { page: pagination } })
 		setCourses(res.data)
 	}
 	useEffect(() => {
 		fetchCourses()
+		fetchNumCourses()
 	}, [])
 
 	const handleClick = (id) => {
@@ -44,7 +51,14 @@ const Courses = (props) => {
 	}
 	return (
 		<div>
-			<div className="container">{renderCourses()}</div>
+			<div className="container">
+				{renderCourses()}
+				<Paginations
+					numCourses={numCourses}
+					page={pagination}
+					setPage={(newPage) => setPagonation(newPage)}
+				></Paginations>
+			</div>
 			<style jsx>{`
 				.container {
 					display: flex;

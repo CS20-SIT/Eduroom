@@ -125,19 +125,6 @@ input[type=checkbox] {
     overflow: auto;
     height: 300px;
 }
-::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1); 
-}
-::-webkit-scrollbar {
-    width: 10px;
-} 
-::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.1);
-}
-  
-::-webkit-scrollbar-thumb:hover {
-    background: #d3d4da;
-}
 .list {
     border: 1px solid #EFF0F6;
     border-radius: 10px;
