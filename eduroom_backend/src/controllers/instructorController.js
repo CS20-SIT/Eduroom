@@ -18,11 +18,12 @@ exports.Register = async (req, res, next) => {
 	await pool.query('INSERT INTO instructor_degree(instructorid,degree_name,evidence) VALUES ($1,$2,$3)', [
 		id,
 		data.degree,
-		'/certificate.png',
+		data.degreepath
+
 	])
 	await pool.query(
 		'INSERT INTO instructor_expert(instructorid,expertnumber,subjectname,evidence) VALUES ($1,$2,$3,$4)',
-		[id, '1', data.expert, '/certificate.png']
+		[id, '1', data.expert, data.expertpath]
 	)
 	res.status(200).json({ success: true, data: data })
 }
@@ -53,6 +54,31 @@ exports.GetProfileDetail = async (req, res, next) => {
 
 	const result = { bio: bioResult.rows[0].biography, expert, degree }
 	res.status(200).json(result)
+}
+
+exports.UpdateProfile = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const data = req.body
+	await pool.query('UPDATE instructor_degree SET degree_name = $2 where instructorid = $1',[instructorId, data.degree])
+	await pool.query('UPDATE instructor_expert SET subjectname = $2 where instructorid = $1',[instructorId, data.expert])
+	await pool.query('UPDATE instructor SET bio = $2 where instructorid = $1',[instructorId, data.bio])
+	res.status(200).json({ success: true, data: data })
+}
+
+exports.UpdateAvatar = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const file = req.files[0]
+	const result = { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	await pool.query('UPDATE instructor SET avatar = $2 where instructorid = $1',[instructorId, result])
+	res.status(200).json({ success: true, data: data })	
+}
+
+exports.UpdateWallpaper = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const file = req.files[0]
+	const result = { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	await pool.query('UPDATE instructor SET wallpaper = $2 where instructorid = $1',[instructorId, result])
+	res.status(200).json({ success: true, data: data })	
 }
 
 exports.GetCourses = async (req, res, next) => {
