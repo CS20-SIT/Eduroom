@@ -9,6 +9,7 @@ const errorHandler = require('../middleware/error')
 const { getDefailtProfilePic } = require('../utils/cloudStorage')
 
 const ErrorResponse = require('../utils/errorResponse')
+const { verifyTemplate } = require('../utils/verifyTemplate')
 
 exports.getProfile = async (req, res, next) => {
 	try {
@@ -87,11 +88,11 @@ exports.regisController = async (req, res) => {
         VALUES ('${userId}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + (120 * interval '1 minute'), '${verifyToken}', false)`
 		await pool.query(userVerificationCreationQuery)
 
-		const verifyUrl = `${process.env.ENTRYPOINT_URL}/verify/${verifyToken}`
+		const htmlMessage = verifyTemplate(verifyToken)
 		const emailOptions = {
 			email: user.email,
 			subject: 'Eduroom Email Verification',
-			htmlMessage: `Please Verify your email by click <a href="${verifyUrl}">here</a>.`,
+			htmlMessage: htmlMessage,
 		}
 		await sendEmail(emailOptions)
 		// Generate JWT for user to login

@@ -1,12 +1,11 @@
 import React, {Fragment} from 'react'
 import GeneralTemplate from '../../components/template/general';
+import VerifyAccount from '../../components/verify/verifyAccount'
 const Verify = () => {
     return (
         <Fragment>
             <GeneralTemplate>
-                <div>
-                    Please check your email to verify account
-                </div>
+                <VerifyAccount/>
             </GeneralTemplate>
         </Fragment>
     )
