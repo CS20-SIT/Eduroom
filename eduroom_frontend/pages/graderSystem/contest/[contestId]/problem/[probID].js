@@ -5,14 +5,16 @@ import style from '../../../../../styles/graderSubmit/problems/problemSolvePage'
 import ProblemLayout from '../../../../../components/graderSubmit/problems/ProblemLayout'
 import { useRouter } from 'next/router'
 
-const ProblemID = ({ id }) => {
+const Temp = ({ probID, contestId }) => {
+	const [id, setId] = useState(null)
+
 	return (
 		<Fragment>
-			<Layout page="problem">
+			<Layout page="contest">
 				<div className="main">
 					<div className="size">
 						<Box>
-							<ProblemLayout page="description" id={id} />
+							<ProblemLayout page="description" id={probID} contestId={contestId} />
 						</Box>
 					</div>
 				</div>
@@ -24,11 +26,11 @@ const ProblemID = ({ id }) => {
 
 export async function getServerSideProps(ctx) {
 	try {
-		const id = ctx.query.page
-		return { props: { id } }
+		const probID = ctx.query.probID
+		const contestId = ctx.query.contestId
+		return { props: { probID, contestId } }
 	} catch (err) {
-		return { props: { id: '' } }
+		return { props: { probID: '', contestId: '' } }
 	}
 }
-
-export default ProblemID
+export default Temp
