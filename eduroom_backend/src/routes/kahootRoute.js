@@ -7,7 +7,7 @@ const { fetchRoom, createRoom,fetchRoomHistory,createKahootHistory,
 const { isInstructor } = require('../middleware/isInstructor')
 const { uploadToGCSHandler } = require('../middleware/multer')
 
-router.get('/rooms', fetchRoom);
+router.get('/rooms',jwtAuthenicate, isInstructor, fetchRoom);
 router.post('/room', createRoom);
 router.get('/roomHistory', fetchRoomHistory);
 router.post('/roomHistory', createKahootHistory);
