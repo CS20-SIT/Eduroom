@@ -1,9 +1,12 @@
 import { Fragment } from 'react'
 
-const CourseCheck = ({ course }) => {
+const CourseCheck = ({ course, handleClick, isSelected }) => {
+	const getBoxClass = () => {
+		return isSelected ? 'active box' : 'box';
+	}
 	return (
 		<Fragment>
-			<div className="box">
+			<div className={getBoxClass()} onClick={() => handleClick(course.courseid)}>
 				<div className="image-container">
 					<img src={course.coursepicture} className="coursepic"></img>
 				</div>
@@ -16,14 +19,18 @@ const CourseCheck = ({ course }) => {
 					background: #ffffff;
 					box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 					border-radius: 10px;
-          opacity: 0.75;
-          transition: 0.25s
+					opacity: 0.75;
+					transition: 0.25s;
 				}
-        .box:hover{
-          opacity: 1;
-          transition: 0.25s;
-          cursor: pointer;
-        }
+				.box:hover {
+					opacity: 1;
+					transition: 0.25s;
+					cursor: pointer;
+				}
+				.active{
+					opacity: 1;
+					transition: 0.25s;
+				}
 				.image-container {
 					height: 120px;
 					overflow: hidden;
