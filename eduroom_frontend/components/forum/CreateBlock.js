@@ -31,27 +31,18 @@ const CreateBlock = () => {
     content: false,
   });
   useEffect(() => {
-    console.log("render");
+    api.get('/api/forum/subcategory').then(res=>{
+      setCategory(res.data.category)
+      setSubCategory(res.data.subcategory)
+    })
   }, []);
 
   const handleChange = (e) => {
     e.preventDefault();
     setForm({ ...createForm, [e.target.name]: e.target.value });
   };
-  const Category = ["Math", "Science", "Language", "etc."];
-  const subCategory = {
-    Math: [
-      "Real Number",
-      "Statistic",
-      "Possibility",
-      "Polynomial",
-      "Exponential",
-      "Calculus",
-    ],
-    Science: ["Physic", "Bio", "Chemistry"],
-    Language: ["English", "Chinese", "French", "German"],
-    "etc.": ["Other category"],
-  };
+  const [Category,setCategory] = useState([])
+  const [subCategory,setSubCategory] = useState(null)
   const [subCat, setSubCat] = useState([]);
   const handleSelect = (e) => {
     if (e.target.name == "cat") {

@@ -31,8 +31,6 @@ module.exports = {
         'https://eduroom.cscms.me/graderSystem',
         'https://eduroom.cscms.me/graderSystem/profile',
         'https://eduroom.cscms.me/graderSystem/rank',
-        'https://eduroom.cscms.me/graderSystem/announcement',
-        'https://eduroom.cscms.me/graderSystem/problem',
         'https://eduroom.cscms.me/graderSystem/contest',
         // GROUP 9
         'https://eduroom.cscms.me/coin-shop',
