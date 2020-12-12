@@ -1,5 +1,19 @@
 import css from 'styled-jsx/css'
 export default css`
+	.nav {
+		margin: 10px 50px 0 50px;
+		display: flex;
+	}
+	.textNav{
+		color: black;
+		transition: 0.25s;
+		margin: 0 20px 0 0;
+	}
+	.textNav:hover{
+		cursor: pointer;
+		color: #3d467f;
+		transition: 0.25s;
+	}
 	.container {
 		padding: 30px 50px;
 		display: flex;
@@ -39,31 +53,50 @@ export default css`
 	}
 	.detailProfile {
 		padding: 5px 40px;
-  }
-  
-  .avatar {
-    border-radius: 20px;
-  }
-  .topic {
-    color: #fb9ccb;
-    font-weight: 700;
+	}
+
+	.avatar {
+		border-radius: 20px;
+	}
+	.topic {
+		color: #fb9ccb;
+		font-weight: 700;
 		min-width: 100px;
-  }
-  .box {
-    width: 275px;
-    display: flex;
+	}
+	.box {
+		width: 275px;
+		display: flex;
 		margin-top: 20px;
-  }
-  .det {
+	}
+	.det {
 		color: #858585;
 	}
-	
-	.boxBio{
+
+	.boxBio {
 		width: 100%;
-    display: flex;
+		display: flex;
 		margin-top: 20px;
 	}
-	.detBio{
+	.detBio {
 		color: #858585;
+	}
+	.boxPackage {
+		margin-top: 50px;
+		background: #ffffff;
+		box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		border-radius: 10px;
+		padding: 20px 10px;
+		margin-bottom: 20px;
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		transition: 0.3s;
+	}
+	.boxPackage:hover {
+		opacity: 0.7;
+		transition: 0.3s;
+		cursor: pointer;
 	}
 `
