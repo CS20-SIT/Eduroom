@@ -52,12 +52,12 @@ const EditConfirm = (props) => {
                 </div>
                 <div className="cfbutton">
                     <div>
-                        <button className="backbutton" onClick={() => props.changePage(1)}>
+                        <button id="back-btn" className="backbutton" onClick={() => props.changePage(1)}>
                             <i className="fas fa-arrow-left"></i>
                         </button>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                        <button className="createbutton mgb-10" onClick={handleOpenDialog}>
+                        <button id="confirm-edit-btn" className="createbutton mgb-10" onClick={handleOpenDialog}>
                             Confirm and Update
             </button>
                     </div>
@@ -67,7 +67,7 @@ const EditConfirm = (props) => {
                         <div className="dialog">
                             <div className="indialog">
                                 <div className="right">
-                                    <button className="buttonX" onClick={() => router.push("/user/instructor/course")}>X</button>
+                                    <button id="close-btn" className="buttonX" onClick={() => router.push("/user/instructor/course")}>X</button>
                                 </div>
                                 <div><img
                                     src="/images/package/edited.svg"
