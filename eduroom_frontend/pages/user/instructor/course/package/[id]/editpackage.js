@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import GeneralTemplate from '../../../../components/template/generalnonav';
-import style from '../../../../styles/package/createpackage';
-import EditPackage from '../../../../components/package/editPackage';
-import EditConfirm from '../../../../components/package/editConfirm';
-const EditPackagePage = () => {
+import GeneralTemplate from '../../../../../../components/template/generalnonav';
+import style from '../../../../../../styles/package/createpackage';
+import EditPackage from '../../../../../../components/package/editPackage';
+import EditConfirm from '../../../../../../components/package/editConfirm';
+const EditPackagePage = ({id}) => {
   const [page, setPage] = useState(1);
   const [myPackage, setMyPackage] = useState({
     pic: '',
@@ -23,6 +23,7 @@ const EditPackagePage = () => {
       setMyPackage({ ...myPackage, courses: res });
     };
     fetchdata();
+    console.log(id);
   }, []);
 
   useEffect(() => {
@@ -57,4 +58,13 @@ const EditPackagePage = () => {
     </Fragment>
   );
 };
+
+export async function getServerSideProps(ctx) {
+	try {
+		const id = ctx.query.id
+		return { props: { id } }
+	} catch (err) {
+		return { props: { id: '' } }
+	}
+}
 export default EditPackagePage;
