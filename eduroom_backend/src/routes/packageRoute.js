@@ -9,12 +9,14 @@ const {
 	getInstructorPackage,
 	publishPackage,
 	getCourses,
+	getNumCourses
 } = require('../controllers/packageController')
 
 router.post('/createPackage', createPackage)
 router.get('/getPackage', getPackage)
 router.get('/courses',getCourses)
 router.get('/getInstructorPackage', jwtAuthenicate, isInstructor, getInstructorPackage)
+router.get('/numCourses', getNumCourses);
 router.post('/publishPackage', jwtAuthenicate, isInstructor, publishPackage)
 
 module.exports = router

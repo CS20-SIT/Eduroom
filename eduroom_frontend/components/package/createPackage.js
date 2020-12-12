@@ -19,6 +19,9 @@ const CreatePackage = (props) => {
 			reader.readAsDataURL(props.myPackage.pic)
 		}
 	}, [props.myPackage.pic])
+	const handleSelectedCourses = (newSelected) => {
+		props.setMyPackage({ ...props.myPackage, selectedCourses: newSelected })
+	}
 	const handleUplaodFile = (e) => {
 		let newValue = e.target.files[0]
 		props.setMyPackage({ ...props.myPackage, pic: newValue })
@@ -161,7 +164,7 @@ const CreatePackage = (props) => {
 
 					<div>
 						<div className="subtitle2">Courses</div>
-						<Courses courses={props.courses} />
+						<Courses handleSelectedCourses={handleSelectedCourses} selectedCourses={props.myPackage.selectedCourses} />
 					</div>
 				</div>
 				<div className="center">
