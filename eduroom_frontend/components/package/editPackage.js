@@ -7,6 +7,7 @@ const EditPackage = (props, { index }) => {
 	const [image, setImage] = useState(null)
 	const [data, setData] = useState(null)
 
+<<<<<<< HEAD
 	useEffect(() => {
 		const GetData = async () => {
 			const result = await api.get('/api/package/getPackage', {
@@ -168,6 +169,127 @@ const EditPackage = (props, { index }) => {
 		<Fragment>
       <div>
         { renderPage()}
+=======
+  return (
+    <Fragment>
+      <div >
+        <div className="package-header">EDIT PACKAGE</div>
+        <div className="container pd-4-10">
+          <div className="subtitle mg-40 text-center">PACKAGE INFORMATION</div>
+          <div style={{ display: 'flex' }}>
+            <div id="img-upload-btn" className="img-upload">
+              <div className="imageupload"
+                onClick={() => {
+                  document.getElementById("image" + index).click();
+                }}
+              >
+                <input
+                  id={"image" + index}
+                  type="file"
+                  accept="image/*"
+                  hidden={true}
+                  onChange={handleUplaodFile}
+                />
+                {image ? (
+                  <div>
+                    <img
+                      src=""
+                      id={"show-image" + index}
+                      style={{ maxWidth: 420, maxHeight: 235 }}
+                    />
+                  </div>
+                ) : (
+                    <div>
+                      <div><i className="fas fa-camera"></i></div>
+                      <div>Click here to add photo</div>
+                    </div>
+                  )}
+              </div>
+            </div>
+
+            <div style={{ width: '50%' }}>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  id="package-name-field"
+                  onChange={nameChange}
+                  value={props.myPackage.name}
+                ></input>
+                <div>{data.packagename}</div>
+              </div>
+                
+              <div>
+                <select
+                  id="package-discount-field"
+                  name="discount"
+                  onChange={discountChange}
+                  value={props.myPackage.discount}
+                >
+                  <option disabled value={0}>
+                    Discount
+                      </option>
+                  {discount.map((dis, idx) => {
+                    return (
+                      <option value={dis.value} key={idx}>
+                        {dis.label}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div>{data.discount}</div>
+              </div>
+
+              <div>
+                <select
+                  id="package-category-field"
+                  name="category"
+                  onChange={categoryChange}
+                  value={props.myPackage.category}
+                >
+                  <option disabled value="default">
+                    Category
+                      </option>
+                  {categories.map((el, idx) => {
+                    return (
+                      <option value={el.value} key={idx}>
+                        {el.label}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+
+              <div>
+                <textarea
+                  placeholder="Detail"
+                  name="detail"
+                  id="package-detail-field"
+                  rows="4"
+                  style={{ resize: 'none' }}
+                  className="pdetail"
+                  onChange={detailChange}
+                  value={props.myPackage.detail}
+                ></textarea>
+                 <div>{data.detail}</div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="subtitle2">Courses</div>
+            <div className="coursebox">
+              <Courses />
+            </div>
+          </div>
+        </div>
+        <div className="center">
+          <button id="edit-btn" className="createbutton mgb-5" onClick={() => props.changePage(2)}>
+            Edit
+          </button>
+        </div>
+>>>>>>> cf9aef62a90b052c775f64a70db3d471cc10d932
       </div>
 			<style jsx>{style}</style>
 		</Fragment>
