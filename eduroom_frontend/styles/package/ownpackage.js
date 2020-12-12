@@ -27,12 +27,7 @@ export default css`
     border: 1px solid black;
     height: 90px;
     margin: 5px;
-<<<<<<< HEAD
     display: flex;
-    background-color: red;
-=======
-    cursor: pointer;
->>>>>>> cf9aef62a90b052c775f64a70db3d471cc10d932
 }
 .block2 {
     width: 95%;
@@ -88,16 +83,11 @@ export default css`
     opacity: 0.9;
     box-shadow: 0 0px 6px 2px rgba(0,0,0,0.2);
     transition: 0.25s;
-  }
+}
 .disabled{
     cursor: default;
     opacity: 0.6;
 }
-// .disabled:hover{
-//     cursor: default;
-//     opacity: 0.6;
-//     box-shadow: 0;
-// }
 .ycbutton {
     background-color: #FB9CCB;
     cursor: pointer;
