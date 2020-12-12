@@ -27,6 +27,10 @@ exports.verifyTemplate = (verifyToken) => {
             flex-flow: column;
             padding: 1rem;
             cursor: default;
+            backgroundImage: url(https://eduroom.cscms.me/images/verify/verify-bg.svg);
+            backgroundPosition: center;
+            backgroundSize: cover; 
+            backgroundRepeat:no-repeat;
         }
         .verify-image {
             margin: 0.2rem 0;
