@@ -1,14 +1,15 @@
 import React, { Fragment } from 'react'
 import Image from 'next/image'
-const VerifyAccount = ({error}) => {
+const VerifyAccount = () => {
 	return (
 		<Fragment>
 			<div className="verify-box">
+				<div className="verify-text">Try again</div>
 				<div className="verify-image">
-					<Image src="/images/verify/verify_sent.svg" width="390" height="360" alt="verify-image" />
+					<Image src="/images/verify/verify_fail.svg" width="390" height="360" alt="verify-image" />
 				</div>
 				<div className="verify-head">Fail to Verify!</div>
-				<div className="verify-text">{error}</div>
+				<div className="verify-text">You have some mistaked while you verify the account</div>
 				<div className="re-btn">
 					<div className="re-text">Resend Email</div>
 				</div>
