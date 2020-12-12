@@ -22,12 +22,18 @@ exports.getPackage = async (req, res, next) => {
 exports.getCourses = async (req, res, next) => {
 	const { page } = req.query
 	console.log('page is', page)
-	const offset = (page - 1) * 9
+	const num = 3;
+	const offset = (page - 1) * num
 	const results = await pool.query(
-		'SELECT courseid, coursename, coursepicture, price from course offset $1 limit 9',
-		[offset]
+		'SELECT courseid, coursename, coursepicture, price from course offset $1 limit $2',
+		[offset,num]
 	)
 	res.status(200).send(results.rows)
+}
+
+exports.getNumCourses = async (req, res, next) => {
+	const result = await pool.query('select count(*) as count from course');
+	res.status(200).send({ count:parseInt(result.rows[0].count) });
 }
 
 exports.getInstructorPackage = async (req, res, next) => {
