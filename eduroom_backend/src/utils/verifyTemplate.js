@@ -1,6 +1,10 @@
 exports.verifyTemplate = (verifyToken) => {
-	return `<div class="verify-box">
-    <img src="https://eduroom.cscms.me/images/verify/eduroom_logo_long.sv" alt="eduroom_logo" />
+	return `<link
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  ></link>
+  <div class="verify-box">
+    <img src="https://eduroom.cscms.me/images/eduroom_logo_long.sv" alt="eduroom_logo" />
     <div class="verify-image">
         <img src="https://eduroom.cscms.me/images/verify/verify_sent.svg" alt="verify-image" />
     </div>
@@ -20,6 +24,7 @@ exports.verifyTemplate = (verifyToken) => {
 </div>
 <style>
         .verify-box {
+            font-family: "Quicksand", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,10 +32,10 @@ exports.verifyTemplate = (verifyToken) => {
             flex-flow: column;
             padding: 1rem;
             cursor: default;
-            backgroundImage: url(https://eduroom.cscms.me/images/verify/verify-bg.svg);
-            backgroundPosition: center;
-            backgroundSize: cover; 
-            backgroundRepeat:no-repeat;
+            background-image: url(https://eduroom.cscms.me/images/verify/verify-bg.svg);
+            background-position: center;
+            background-size: cover; 
+            background-repeat:no-repeat;
         }
         .verify-image {
             margin: 0.2rem 0;
