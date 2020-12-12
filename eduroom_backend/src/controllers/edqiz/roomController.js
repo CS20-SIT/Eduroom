@@ -85,7 +85,8 @@ exports.createHistoryPlayerAnswer = async (req, res, next) => {
 }
 
 exports.fetchRoom = async (req, res, next) => {
-  const result = await pool.query('SELECT * from kahoot_room');
+  const userid = req.user.instructor;
+  const result = await pool.query('SELECT * from kahoot_room where instructorid=$1', [userid]);
   const rooms = result.rows;
   res.status(200).json(rooms);
 };
@@ -129,7 +130,7 @@ exports.Upload = async (req, res, next) => {
   const result = files.map(file => {
     return { linkUrl: file.linkUrl, fieldname: file.fieldname }
   })
-  console.log('resultATHIP',result)
+  console.log('resultATHIP', result)
   res.send(result)
 };
 //not done yet no route
@@ -146,12 +147,32 @@ exports.createQuiz = async (req, res, next) => {
   console.log('questionlist', questionList)
   console.log('picturePath111', picturepath);
   const roomid = quiz.rows[0].id;
+  let question
+  let answerQuiz = []
+  let questionid
   for (let i = 0; i < questionList.length; i++) {
-    let question = await pool.query(
+    question = await pool.query(
       'INSERT INTO kahoot_question(roomid, questionno, text,time,point,picturepath) values($1,$2,$3,$4,$5,$6) RETURNING * ',
       [roomid, i, questionList[i].question, questionList[i].time, questionList[i].point, picturepath[i].linkUrl]
     );
+    let answer = [false, false, false, false]
+    answer[questionList[i].correct] = true;
+    console.log(answer, questionList[i].correct);
+    answerQuiz.push(answer);
+    questionid = question.rows[0].questionid;
+    console.log('questionid', questionid)
+    for (let j = 0; j < 4; j++) {
+      answerQ = await pool.query(
+        'INSERT INTO kahoot_answer(questionid, answerno, text,iscorrect) values($1,$2,$3,$4) RETURNING * ',
+        [questionid, j, questionList[i].answer[j], answerQuiz[i][j]]
+
+      );
+      console.log('answerQuiz', answerQ)
+
+    }
   }
+  console.log('answerQuiz', answerQuiz)
   console.log('question', question)
-  // res.status(201).json({result,question});
+  res.status(201).json({ result, question });
+
 }
