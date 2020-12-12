@@ -17,10 +17,10 @@ exports.verifyTemplate = (verifyToken) => {
         <div class="ver-text">Verify</div>
     </div>
     </a>
-    <div class="verify-text">
+    <div class="verify-text sm">
         You’re receiving this email because you recently created a new Eduroom account.
     </div>
-    <div class="verify-text">if this wasn’t you, please ignore this email</div>
+    <div class="verify-text sm">if this wasn’t you, please ignore this email</div>
 </div>
 <style>
         .verify-box {
@@ -45,6 +45,9 @@ exports.verifyTemplate = (verifyToken) => {
             font-size: 1.1em;
             color: #a7abc5;
         }
+        .verify-text.sm {
+            font-size: 0.9em;
+        }
         .verify-head {
             font-weight: bold;
             font-size: 1.5em;
@@ -53,10 +56,10 @@ exports.verifyTemplate = (verifyToken) => {
             text-transform: uppercase;
         }
         .ver-btn {
-            padding: 0.5rem 1.5rem;
+            padding: 0.5rem 2.5rem;
             border-radius: 25px;
             border: 1px solid #3d467f;
-            margin-top: 1.2rem;
+            margin: 1.2rem;
             cursor: pointer;
             background: #3d467f;
             color: #ffffff;
