@@ -157,7 +157,7 @@ export default css`
 
 }
 .d-top{
-  height 75px;
+  height: 75px;
   color: #3D467F;
   font-weight : bold;
   text-align : center;

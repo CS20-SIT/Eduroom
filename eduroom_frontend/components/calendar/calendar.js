@@ -314,7 +314,6 @@ const Content = () => {
 
                         
                         
-                        
                         `
         }
       </style>

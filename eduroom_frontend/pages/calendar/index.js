@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import GeneralTemplate from '../../components/template/generalnonav';
 import CalendarCom from '../../components/calendar/calendar'
 import style from '../../styles/calendar/calendar'
+import Image from 'next/image'
 
 const Calendar = () => {
   return (
