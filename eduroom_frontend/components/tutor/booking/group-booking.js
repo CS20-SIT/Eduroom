@@ -48,7 +48,7 @@ const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus,
 					</div>
 				</div>
 				<div className="relative">
-					<form className="relative">
+					<div className="relative">
 						<input
 							className="input--members"
 							type="text"
@@ -69,7 +69,7 @@ const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus,
 								color: 'rgba(83, 83, 83, 0.4)',
 							}}
 						></i>
-					</form>
+					</div>
 					{focus && members.length > 0 ? (
 						<div className="dropdown--list">
 							{members.map((m, i) => (
