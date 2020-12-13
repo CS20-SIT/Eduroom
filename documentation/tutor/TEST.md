@@ -35,9 +35,9 @@
 ### #booking-group-btn
 `Add booking group section`
 - **#booking-group** must show
-- **#booking-group-searchbar** must show
+- **#searchbar** must show
   
-### #booking-group-searchbar
+### #searchbar
 `Search name from database for every typing`
 - **.members-add** must show
   
