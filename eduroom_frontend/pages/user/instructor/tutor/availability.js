@@ -114,6 +114,7 @@ const Availability = () => {
 									</div>
 									{!mode ? (
 										<div
+											id="update-ins-availabilities"
 											className="w-full bg-navy text-white py-2 pointer my-2"
 											style={{ textAlign: 'center', borderRadius: 4 + 'px' }}
 											onClick={() => {
@@ -127,6 +128,7 @@ const Availability = () => {
 										</div>
 									) : (
 										<div
+											id="edit-ins-availabilities"
 											className="w-full bg-navy text-white py-2 pointer my-2"
 											style={{ textAlign: 'center', borderRadius: 4 + 'px' }}
 											onClick={() => {

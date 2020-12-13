@@ -32,7 +32,7 @@ const Tutor = () => {
 						</div>
 						{instructors &&
 							instructors.map((e, index) => (
-								<Link href={`/tutor/${e.instructorid}`} key={index}>
+								<Link href={`/tutor/${e.instructorid}`} key={index} className="instructor-info-list">
 									<div>
 										<div
 											className={`px-8 py-4 my-8 bg-white-faded shadow rounded-md flex pointer animation ${

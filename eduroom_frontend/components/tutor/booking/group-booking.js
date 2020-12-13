@@ -28,7 +28,7 @@ const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus 
 
 	return (
 		<Fragment>
-			<div className={`w-full px-8 my-2 py-8 mx-4 shadow rounded-md bg-white-faded relative`}>
+			<div id="booking-group" className={`w-full px-8 my-2 py-8 mx-4 shadow rounded-md bg-white-faded relative`}>
 				<div
 					className="text-lg font-bold font-lato absolute top-0 right-0 mx-4 my-2 px-2 py-2 pointer text-secondary"
 					onClick={() => {
@@ -74,7 +74,7 @@ const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus 
 							{members.map((m, i) => (
 								<div
 									key={i}
-									className={`dropdown--item pointer ${hoverSelection == i ? 'bg-secondary-faded ' : ''}`}
+									className={`members-add dropdown--item pointer ${hoverSelection == i ? 'bg-secondary-faded ' : ''}`}
 									onClick={() => {
 										setMembers([])
 										setFocus(false)
@@ -104,7 +104,7 @@ const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus 
 				</div>
 				<div className="flex flex-wrap">
 					{students.map((s, i) => (
-						<span key={i} className="shadow rounded-md px-2 py-1 mx-1 my-1">
+						<span key={i} className="members-removal shadow rounded-md px-2 py-1 mx-1 my-1">
 							<span className="text-md font-bold text-secondary opacity-80">
 								{s.name}{' '}
 								<span
