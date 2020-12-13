@@ -2,7 +2,7 @@ const pool = require('../database/db')
 exports.getEvent = async (req, res, next) => {
 
     const data = await pool.query(
-      'select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(HOUR FROM starttime) as Hstart, EXTRACT(MINUTE FROM starttime) as Mstart,EXTRACT(HOUR FROM endtime) as Hend, EXTRACT(MINUTE FROM endtime) as Mend from global_event')
+      'select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) as Hstart, EXTRACT(MINUTE FROM starttime) as Mstart,EXTRACT(HOUR FROM endtime) as Hend, EXTRACT(MINUTE FROM endtime) as Mend from global_event')
  
     res.send(data.rows)
     return

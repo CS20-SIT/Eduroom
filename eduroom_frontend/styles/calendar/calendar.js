@@ -114,7 +114,7 @@ export default css`
 
 .d-calendar {
   width: 35vw;
-  height: 50vh;
+  height: 65vh;
   background-image: url('/images/createEvent/d-bg.svg');
   bacground-size : cover;
   position: fixed;
@@ -139,7 +139,7 @@ export default css`
   z-index : 2;
 }
 .bg-overlay{
- background-color : rgba(255, 255 ,255 , .2);
+ background-color : rgba(255, 255 ,255 , .6);
   height : 100vh;
   width : 100vw;
   position : fixed;
@@ -148,8 +148,8 @@ export default css`
 }
 
 .content{
-  height : 77%;
-  overflow-y : scroll;
+  height : 65%;
+  overflow : auto;
 
 }
 .content *{
@@ -181,14 +181,16 @@ export default css`
   background: #f39ac4;
   border-radius: 25px;
   padding: 0.5rem 2.3rem;
-  margin-bottom: 5%;
+  margin-top: 20%;
   border: none;
   transition: 0.25s;
   font-size : 18px;
   color : #FFFFFF;
 }
 .button:hover{
-
+  cursor: pointer;
+  opacity: 0.9;
+  transition: 0.2s;
 }
 
 .d-block{
@@ -196,6 +198,7 @@ export default css`
   padding : 15px 20px 24px 29px;
   margin : 10px 40px 10px 40px;
   border-radius : 10px;
+  
 }
 .title{
   color : #3d467f;
@@ -205,7 +208,6 @@ export default css`
 }
 .detail{
   color :  #3d467f;
-  position : absolute;
   margin-top : -15px;
   margin-left : 20px;
 }
@@ -229,6 +231,30 @@ ul li::before {
   display: inline-block; 
   
   margin-left: -35px;
+}
+
+
+
+
+.createEvent{
+  position: absolute;
+  margin-top : 48rem;
+  left : 43%;
+}
+.bt-createEvent{
+  background: #f39ac4;
+  border-radius: 25px;
+  padding: 0.5rem 2.3rem;
+  margin-bottom: 5%;
+  border: none;
+  transition: 0.25s;
+  font-size : 18px;
+  color : #FFFFFF;
+}
+.bt-createEvent:hover{
+  cursor: pointer;
+    opacity: 0.9;
+    transition: 0.2s;
 }
 
 
