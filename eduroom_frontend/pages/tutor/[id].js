@@ -94,6 +94,7 @@ const Instructor = ({ id }) => {
 											setStudents={setStudents}
 											focus={focus}
 											setFocus={setFocus}
+											iid={id}
 										/>
 									) : null}
 									<BookingInfo

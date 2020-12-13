@@ -3,7 +3,7 @@ import utils from '../../../styles/tutor/utils'
 
 import api from '../../../api'
 
-const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus }) => {
+const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus, iid }) => {
 	const [hoverSelection, setHoverSelection] = useState(false)
 	const [members, setMembers] = useState([])
 
@@ -17,6 +17,7 @@ const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus 
 		const res = await api.get('/api/tutor/utils/id', {
 			params: {
 				name: key,
+				iid,
 			},
 		})
 		const mockup = res.data.students
