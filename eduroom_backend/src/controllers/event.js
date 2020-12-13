@@ -11,25 +11,19 @@ exports.getEvent = async (req, res, next) => {
 }
 
 exports.createEvent = async (req, res, next) => {
-  const title = req.body.title;
-  const type = req.body.type;
-  const detail = req.body.description;
-  const startDate = req.body.startDate;
-  const endDate = req.body.endDate;
-  const startTime = req.body.startTime;
-  const endTime = req.body.endTime;
-  const adminid = req.body.adminid;
-  const place = req.body.place;
+  const title = 'SA';
+  const type = 1;
+  const detail = 'sa';
+  const startDate = '2020-12-14';
+  const endDate = '2020-12-14';
+  const startTime = '13:00';
+  const endTime = '16:00';
+  const adminid = '12345678-1234-1234-1234-123456789123';
+  const place = 'CB2312';
   await pool.query(
     `insert into global_event(title, startdate, enddate, starttime, endtime, detail, place, typeid, adminid) 
         VALUES ($1 , $2, $3 , $4, $5, $6, $7, $8, $9)`
     [title,startDate,endDate,startTime,endTime,detail,place,type,adminid]
-  );
-  const lgTitle = "Add Event";
-  const lgDetail = `Event title.${title}`;
-  await pool.query(
-    'INSERT INTO adminlog(title,detail,"adminid") VALUES ($1 , $2, $3)',
-    [lgTitle, lgDetail, adminid]
   );
   res.send({ success: true });
 
