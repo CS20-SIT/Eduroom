@@ -30,7 +30,7 @@ router.get('/instructor/availability', getInstructorAvailability)
 router.get('/instructor/appointments', jwtAuthenicate, getInstructorAppointments)
 router.get('/instructor/review', getInstructorReview)
 router.get('/student/appointments', jwtAuthenicate, getStudentAppointments)
-router.get('/utils/id', getUserInfo)
+router.get('/utils/id', jwtAuthenicate, getUserInfo)
 
 // POST
 // TODO
