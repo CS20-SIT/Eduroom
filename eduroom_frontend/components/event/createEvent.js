@@ -34,8 +34,15 @@ const content = () => {
   });
   const createEvent = async () => {};
   const handleCreate = (e) => {
+
+    if(eventInfo.type =='Global'){
+      eventInfo.type = '1'
+    }else{
+      eventInfo.type = '2'
+    }
+    console.log(eventInfo);
     // if (validator()) {
-      api.post("/api/event/createEvent", {
+      /* api.post("/api/event/createEvent", {
         title: eventInfo.title,
         type: eventInfo.type,
         description: eventInfo.description,
@@ -44,7 +51,7 @@ const content = () => {
         startTime: eventInfo.startTime,
         endTime: eventInfo.endTime,
         place: eventInfo.place,
-      });
+      }); */
     // }
   };
 
@@ -54,7 +61,7 @@ const content = () => {
 
   const [selectedDate, handleDateChange] = useState(new Date());
 
-  const eventType = ["Holiday", "Meeting", "Seminar"];
+  const eventType = ["Course", "Global"];
 
   return (
     <Fragment>
@@ -101,6 +108,7 @@ const content = () => {
           <Grid container justify="center">
             <div>
               <input
+                
                 className="event-title"
                 onChange={(e) =>
                   setEventInfo({ ...eventInfo, title: e.target.value })

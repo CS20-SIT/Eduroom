@@ -4,7 +4,7 @@ import HeadCell from "../../components/calendar/calendarHeader";
 import BlankCell from "../../components/calendar/calendarBlankCell";
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Image from "next/image";
-import axios from 'axios'
+import axios from 'axios';
 
 
 // import { useRouter } from 'next/router';
@@ -26,8 +26,13 @@ import {
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { useRouter } from "next/router";
 
 const Content = () => {
+  //create Eventpage
+  const router = useRouter();
+
+
   // Pop-up-event
 
 
@@ -125,7 +130,22 @@ const Content = () => {
   };
 
   const [open, setOpen] = useState(false);
+  const [openEvent, setOpenEvent] = useState(false);
   const [showDate, setShowDate] = useState(-1);
+
+
+
+
+
+  // ---------------------tap---------------------------
+
+
+
+
+
+
+
+  //--------------------end tap--------------------------
 
   return (
     <Fragment>
@@ -148,15 +168,25 @@ const Content = () => {
 
             <div className="content">
               <div>
+
                 {data.map((row) => {
-                  return (showDate == row.startday?
+
+                  return (showDate == row.startday && currentMonthNo == row.nowmonth ?
+
+
                     <div className="d-block">
+
+
                       <div className="title">{row.title}</div>
-                      <div className="point" style={{background:"#fdd4c1"}}></div>
-                      <div className="detail">{row.hstart}.{row.mstart} - {row.hend}.{row.mend} | {row.place}
-                      </div>
+                      <div className="point" style={{ background: "#fdd4c1" }}></div>
+                      <div className="detail">{row.hstart}.{row.mstart} - {row.hend}.{row.mend} | {row.place}</div>
                     </div>
-                    : '')
+
+
+
+
+
+                    : "")
                 })}
 
 
@@ -165,15 +195,27 @@ const Content = () => {
               </div>
             </div>
             <div className="d-buttom">
-              <div >
+              <div onClick={() => { setOpenEvent(true) }} >
                 <button className="button">
                   Edit
                 </button>
               </div>
             </div>
           </div>
+
+
         </div>
       </CSSTransition>
+
+      <div className="createEvent">
+        <button className="bt-createEvent"
+          onClick={() => {
+            router.push(`/event`)
+          }}>
+          createEvent
+        </button>
+      </div>
+
 
 
       <div className="month-color text-center">
