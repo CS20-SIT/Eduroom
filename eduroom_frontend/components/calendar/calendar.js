@@ -150,6 +150,17 @@ const Content = () => {
   return (
     <Fragment>
 
+
+
+      <div className="bg-calendar">
+        <Image
+          alt="image"
+          src="/images/createEvent/calendar.svg"
+          width="425"
+          height="425"
+        />
+      </div>
+
       <CSSTransition
         mountOnEnter
         unmountOnExit
@@ -276,14 +287,7 @@ const Content = () => {
 
 
 
-      <div>
-        <Image
-          alt="right-arrow"
-          src="/images/createEvent/calendar.svg"
-          width="435"
-          height="326"
-        />
-      </div>
+     
 
       <style jsx>{style}</style>
       <style jsx>
