@@ -151,7 +151,7 @@ export default css`
 
 .content{
   height : 65%;
-  overflow-y : hidden;
+  overflow-y : auto;
 
 }
 .content *{
