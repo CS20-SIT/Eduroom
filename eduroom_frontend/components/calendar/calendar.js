@@ -44,7 +44,6 @@ const Content = () => {
   const [day, setDay] = useState({
     dateObject: moment(),
   });
-  const [isToday, setIsToday] = useState(true);
   //state chage 1 month per click
   const addMonth = () => {
     const dateObject = day.dateObject.add(1, "M");
@@ -103,9 +102,7 @@ const Content = () => {
 
 
 
-
   useEffect(() => {
-    isTodayInThisMonthAndYear();
     const GetData = async () => {
       const result = await axios("http://localhost/api/event/getEvent");
       setData(result.data);
@@ -121,13 +118,13 @@ const Content = () => {
 
 
 
-  const isTodayInThisMonthAndYear = () => {
-    if (TodayMonth === currentMonthNo && TodayYear === currentYear) {
-      setIsToday(true);
-    } else {
-      setIsToday(false);
-    }
-  };
+  // const isTodayInThisMonthAndYear = () => {
+  //   if (TodayMonth === currentMonthNo && TodayYear === currentYear) {
+  //     setIsToday(true);
+  //   } else {
+  //     setIsToday(false);
+  //   }
+  // };
 
   const [open, setOpen] = useState(false);
   const [openEvent, setOpenEvent] = useState(false);
@@ -275,7 +272,7 @@ const Content = () => {
           })}
 
           {daysInMonth.map((day) => {
-            return <Cell TodayDate={TodayDate} setOpen={setOpen} Content={day} setShowDate={setShowDate} isNow={isToday} />;
+            return <Cell todayDate={TodayDate} todayMonth={TodayMonth} todayYear={TodayYear} currentMonthNo={currentMonthNo} currentYear={currentYear}  setOpen={setOpen} Content={day} setShowDate={setShowDate}  />;
           })}
 
           {blankEnd.map((blank) => {
