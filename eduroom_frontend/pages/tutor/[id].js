@@ -1,11 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../styles/tutor/utils'
-import GeneralNoNav from '../../components/template/generalnonav'
-import { timeFormatter, monthConverter } from '../../components/tutor/lib/utils'
+import GeneralNoNav from '../../components/template/general'
 
 import api from '../../api'
-
-import Link from 'next/link'
 
 import Calendar from '../../components/tutor/booking/calendar'
 import Rating from '../../components/tutor/booking/rating'
@@ -97,6 +94,7 @@ const Instructor = ({ id }) => {
 											setStudents={setStudents}
 											focus={focus}
 											setFocus={setFocus}
+											iid={id}
 										/>
 									) : null}
 									<BookingInfo
