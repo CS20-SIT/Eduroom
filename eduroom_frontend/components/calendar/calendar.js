@@ -122,7 +122,7 @@ const Content = () => {
 
 
   const isTodayInThisMonthAndYear = () => {
-    if (TodayMonth === currentMonthNo && TodayYear === currentYear) {
+    if (TodayMonth === currentMonthNo && TodayYear === currentYear ) {
       setIsToday(true);
     } else {
       setIsToday(false);
@@ -183,25 +183,13 @@ const Content = () => {
                 {data.map((row) => {
 
                   return (showDate == row.startday && currentMonthNo == row.nowmonth ?
-
-
                     <div className="d-block">
-
-
                       <div className="title">{row.title}</div>
                       <div className="point" style={{ background: "#fdd4c1" }}></div>
                       <div className="detail">{row.hstart}.{row.mstart} - {row.hend}.{row.mend} | {row.place}</div>
                     </div>
-
-
-
-
-
                     : "")
                 })}
-
-
-
 
               </div>
             </div>
@@ -217,6 +205,8 @@ const Content = () => {
 
         </div>
       </CSSTransition>
+
+      
 
       <div className="createEvent">
         <button className="bt-createEvent"
@@ -287,7 +277,7 @@ const Content = () => {
 
 
 
-     
+
 
       <style jsx>{style}</style>
       <style jsx>
