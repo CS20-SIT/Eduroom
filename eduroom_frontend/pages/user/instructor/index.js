@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import General from '../../../components/template/general'
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import Courses from '../../../components/user/instructor/Courses'
@@ -92,13 +93,25 @@ const InstructorProfile = () => {
 						<div style={{ margin: '30px 40px', borderTop: '2px solid #DEDEDE' }}>{renderDetail()}</div>
 					</div>
 				</div>
+
 				<style jsx>{styles}</style>
 			</div>
 		)
 	}
 	return (
 		<Fragment>
-			<General>{renderPage()}</General>
+			<General>
+				<div className="nav">
+					<h4 className="textNav" style={{ color: '#3d467f' }}>
+						Your Courses
+					</h4>
+					<Link href="/user/instructor/course/package">
+						<h4 className="textNav">Package Management</h4>
+					</Link>
+				</div>
+				{renderPage()}
+				<style jsx>{styles}</style>
+			</General>
 		</Fragment>
 	)
 }

@@ -1,4 +1,4 @@
-import css from 'styled-jsx/css'
+import css from "styled-jsx/css";
 export default css`
   .navStyle {
     padding: 1% 4% 0% 4%;
@@ -12,7 +12,7 @@ export default css`
     color: #3d467f;
     font-size: 2em;
     font-weight: bold;
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
     cursor: pointer;
   }
   .navItem {
@@ -23,12 +23,12 @@ export default css`
     transition: 0.25s;
   }
   .navItem:hover {
-    color: #fe75b7;
+    color: #fb9ccb;
     transition: 0.25s;
     cursor: pointer;
   }
   .navLogin {
-    background: #fe75b7;
+    background: #fb9ccb;
     border-radius: 25px;
     padding: 0.5rem 1.5rem;
     border: none;
@@ -45,7 +45,7 @@ export default css`
     color: white;
     font-weight: 700;
     font-size: 1.2em;
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
   }
   .navforumStyle {
     padding: 1% 4% 0% 4%;
@@ -56,7 +56,7 @@ export default css`
     width: auto;
     cursor: default;
   }
-  .buttonAdd{
+  .buttonAdd {
     padding: 1% 4% 0% 4%;
     display: flex;
     align-items: center;
@@ -64,10 +64,9 @@ export default css`
     width: 100%;
     cursor: default;
   }
-  .searchBox{
+  .searchBox {
     width: 300px;
     heigh: 500 px;
-    padding: 8px 48px 8px 12px
+    padding: 8px 48px 8px 12px;
   }
-  
-`
+`;
