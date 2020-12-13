@@ -1,13 +1,21 @@
 import React, {Fragment, useEffect} from 'react'
+import api from '../../api'
+
 const Preview = ({index,data}) => {
+    
     useEffect(()=>{
         if(data.image){
             var reader = new FileReader();
             reader.onload = function(e) {
             document.getElementById('img-preview'+index).style.backgroundImage = "url('"+e.target.result+"')";
             }
-            console.log(data)
+            console.log('data',data)
+            
+           
+        
             reader.readAsDataURL(data.image);
+
+           
         }
     },[])
     return (

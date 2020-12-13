@@ -1,0 +1,15 @@
+version: "3"
+services:
+  integrated_tests:
+    build:
+      context: eduroom_integrated_test
+      dockerfile: Dockerfile
+    volumes:
+      - "./eduroom_integrated_test/tests:/eduroom_integrated_test"
+      - "./eduroom_integrated_test/config.js:/config.js"
+      - "./eduroom_integrated_test/screenshots:/screenshots"
+    command: "dockerize -wait http://nginx:80 -wait http://eduroom_backend:5000/api/test -wait http://eduroom_frontend:3000 -timeout 180s mocha --timeout 10000 --recursive /eduroom_integrated_test/02-register-test.js"
+    depends_on:
+      - nginx
+      - eduroom_backend
+      - eduroom_frontend

@@ -1,5 +1,5 @@
 import React from "react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState,useContext} from "react";
 import {
   Grid,
   Button,
@@ -16,17 +16,12 @@ import {
 import GeneralNoNav from "../../components/template/generalnonav";
 import TextField from "@material-ui/core/TextField";
 import api from "../../api";
+import UserContext from '../../contexts/user/userContext'
+import AuthDialog from '../../components/landing/authDialog'
 const CreateComment = (props) => {
-  // const create = async(e) =>{
-  //   e.preventDefault();
-  //   alert("comment")
-  // }
-  // return (
-  //     <button type = 'submit' onClick={create}>
-  //         press
-  //     </button>
-  // )
-
+  const userContext = useContext(UserContext)
+  const {user} = userContext
+  const [dialog,setDialog] = useState(false)
   const [createForm, setForm] = useState({
     comment: "",
     id: props.id,
@@ -45,6 +40,8 @@ const CreateComment = (props) => {
     e.preventDefault();
     if (validator()) {
       console.log(createForm);
+      if(user){
+        
       api.post("/api/forum/comment", createForm).then((res) => {
         console.log(res);
         setForm({
@@ -53,6 +50,9 @@ const CreateComment = (props) => {
         props.GetData();
         //router.push("/forum");
       });
+      }else{
+        setDialog(!dialog)
+      }
     } else {
       console.log("Please write your comment");
     }
@@ -100,6 +100,11 @@ const CreateComment = (props) => {
   });
   return (
     <Fragment>
+      {
+				dialog ? (
+					<AuthDialog handleClick={()=>{setDialog(false)}}/>
+				) :null
+			}
           <div className={classes.root}>
             <Grid container spacing={3} variant="outlined">
               <Grid item xs={12}>

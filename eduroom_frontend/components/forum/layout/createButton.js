@@ -1,8 +1,13 @@
 import React, { Fragment } from 'react'
+import { useRouter } from "next/router";
 const CreateButton = () => {
+      const router = useRouter();
 	return (
 		<Fragment>
-			<button className="createButton">
+            <button className="createButton" 
+            onClick={() => {
+						router.push(`/forum/create`)
+					}}>
 				<span className="createButtonText">
                     <i className="fas fa-plus" />
                     <span className="createText">ADD FORUM</span>

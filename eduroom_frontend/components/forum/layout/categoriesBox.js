@@ -1,17 +1,18 @@
 import React, { Fragment } from 'react'
 import CategoriesIcon from './categoriesIcon'
-import Link from 'next/link'
-const CategoriesBox = ({ icon, content }) => {
+
+const CategoriesBox = ({ content }) => {
+	
 	return (
 		<Fragment>
-			<Link href={'/forum/' + content}>
+			
 				<div className="categoriesBox">
 					<div className="categoriesIcon">
-						<CategoriesIcon type={icon} />
+						<CategoriesIcon type={content} />
 					</div>
 					<div className="categoriesContent">{content}</div>
 				</div>
-			</Link>
+		
 			<style jsx>
 				{`
 					.categoriesBox {
@@ -25,6 +26,9 @@ const CategoriesBox = ({ icon, content }) => {
 						justify-content: center;
                         align-items: center;
                         cursor: pointer;
+					}
+					.categoriesContent {
+						text-align:center;
 					}
 					.categoriesBox:hover {
 						background: rgba(255, 255, 255, 0.1);

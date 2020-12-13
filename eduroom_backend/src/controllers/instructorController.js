@@ -1,10 +1,11 @@
 const pool = require('../database/db')
+const { v4: uuidv4 } = require('uuid')
 
 exports.Register = async (req, res, next) => {
 	const data = req.body
 	const userId = req.user.id
 
-	//check whether this user already reguster
+	//check whether this user already register or not
 	const userRows = await pool.query('SELECT userId from instructor where userid = $1', [userId])
 	if (userRows.rowCount > 0) {
 		res.status(200).json({ success: false, err: 'This user already register' })
@@ -17,11 +18,12 @@ exports.Register = async (req, res, next) => {
 	await pool.query('INSERT INTO instructor_degree(instructorid,degree_name,evidence) VALUES ($1,$2,$3)', [
 		id,
 		data.degree,
-		'/certificate.png',
+		data.degreepath
+
 	])
 	await pool.query(
-		'INSERT INTO instructor_expert(instructorid,expertnumber,subjectname,evidence) VALUES ($1,$2,$3)',
-		[id, '1', data.expert, '/certificate.png']
+		'INSERT INTO instructor_expert(instructorid,expertnumber,subjectname,evidence) VALUES ($1,$2,$3,$4)',
+		[id, '1', data.expert, data.expertpath]
 	)
 	res.status(200).json({ success: true, data: data })
 }
@@ -47,16 +49,64 @@ exports.GetProfileDetail = async (req, res, next) => {
 		instructorId,
 	])
 	const degree = degreeResult.rows.map((deg) => {
-		return deg.degree_name;
-	});
+		return deg.degree_name
+	})
 
 	const result = { bio: bioResult.rows[0].biography, expert, degree }
 	res.status(200).json(result)
 }
 
+exports.UpdateProfile = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const data = req.body
+	await pool.query('UPDATE instructor_degree SET degree_name = $2 where instructorid = $1',[instructorId, data.degree])
+	await pool.query('UPDATE instructor_expert SET subjectname = $2 where instructorid = $1',[instructorId, data.expert])
+	await pool.query('UPDATE instructor SET bio = $2 where instructorid = $1',[instructorId, data.bio])
+	res.status(200).json({ success: true, data: data })
+}
+
+exports.UpdateAvatar = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const file = req.files[0]
+	const result = { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	await pool.query('UPDATE instructor SET avatar = $2 where instructorid = $1',[instructorId, result])
+	res.status(200).json({ success: true, data: data })	
+}
+
+exports.UpdateWallpaper = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const file = req.files[0]
+	const result = { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	await pool.query('UPDATE instructor SET wallpaper = $2 where instructorid = $1',[instructorId, result])
+	res.status(200).json({ success: true, data: data })	
+}
+
 exports.GetCourses = async (req, res, next) => {
 	const instructorId = req.user.instructor
 	const result = await pool.query('SELECT * from course where ownerid = $1', [instructorId])
-	console.log(result.rows)
 	res.send(result.rows)
+}
+
+exports.GetCategories = async (req, res, next) => {
+	const result = await pool.query('SELECT * from categories')
+	res.send(result.rows)
+}
+
+exports.Upload = async (req, res, next) => {
+	const file = req.files[0]
+	const result = { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	res.send(result)
+}
+
+exports.CreateCourse = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const courseId = uuidv4()
+	console.log(req.body)
+	// const {name,}
+	const result = await pool.query(
+		`INSERT INTO course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
+	values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+		[courseId]
+	)
+	res.send({ courseId })
 }

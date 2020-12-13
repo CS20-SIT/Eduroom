@@ -3,9 +3,12 @@ import Page1 from "./gamePage1std";
 import Page2 from "./correctAnswer";
 import Page3 from "./gamePage2std";
 import Page4 from "./wrongAnswer";
+import Page5 from "./showRankSTD";
+
 
 import socketIOClient from "socket.io-client";
 import { useRouter } from "next/router";
+import api from '../../api';
 
 const Content = ({ id }) => {
   const router = useRouter();
@@ -14,12 +17,12 @@ const Content = ({ id }) => {
   const [messages, setMessages] = useState([]);
   const [nextQuestion, setNextQuestion] = useState([]);
   const [answer, setAnswer] = useState('99');
+  const pin=router.query.id;
 
-  console.log(answer)
   const handleChangeQuestionNumber = (val) => {
     setquestionNumber(val);
   };
-
+  
   const data = [
     {
       question:
@@ -37,7 +40,7 @@ const Content = ({ id }) => {
     },
     {
       question: ' COVID-19 and related health topics?',
-      time: '45',
+      time: '10',
       point: '2000',
       ans: ['Abortion: Safety Abortion: Safety · Addictive behaviours: Gaming disorder', ' Ageing: Global population Ageing: Global ', ' Care and support at home', 'What assistance can I get at home'],
       correct: 1,
@@ -45,7 +48,7 @@ const Content = ({ id }) => {
     },
     {
       question: 'Browse the WebMD Questions and Answers',
-      time: '60',
+      time: '10',
       point: '1000',
       ans: ['A-Z library for insights and advice for better health', 'tap Edit question or Delete question', 'When your question is answered', ' you will get a notification'],
       correct: 2,
@@ -53,7 +56,7 @@ const Content = ({ id }) => {
     },
     {
       question: ' can have difficulty finding the right words or phrases to answer?',
-      time: '90',
+      time: '10',
       point: '3000',
       ans: ['simple questions. Here are 20 of the most common questions', 'We have compiled a list of 46 common interview questions you might be asked', 'plus advice on how to answer each and every one of them', 'Read tips and example answers for 125 of the most common job interview'],
       correct: 3,
@@ -65,40 +68,24 @@ const Content = ({ id }) => {
       path: "/kahoot",
     });
     socket.emit("room", (router.query.id));
-    socket.on("get-skip", (isSkip) => {
-      console.log('isSkip',isSkip)
-      if (isSkip) {
-        goto(4);
-      }
-    });
   };
-  
   const getQuestionNo = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
-    
     socket.on("new-questionNo", (question) => {
      setquestionNumber(question)
-     
-
-      
     });
   };
-
-
   const responseTime = (tempAnswer) => {
- 
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.on("sent-seconds", (timeTemp) => {
+      
       setTime(timeTemp);
-      console.log(timeTemp)
       if (timeTemp == 0) {
-        console.log(tempAnswer+'socketInSide')
         if (tempAnswer == data[questionNumber].correct) {
-        
           goto(2);
         } else {
           goto(4);
@@ -113,10 +100,12 @@ const Content = ({ id }) => {
     });
     const temp = messages.slice();
     socket.on("new-Nextquestion", (isNext, pin, questionNo) => {
+      
       temp.push([isNext, pin, questionNo]);
       setNextQuestion(temp.slice());
       let tempq=questionNumber
       tempq+=1;
+      
       goto(1);
     });
   };
@@ -127,18 +116,20 @@ const Content = ({ id }) => {
     });
     socket.emit("sent-message", data[questionNumber], id.id);
   };
-
   useEffect(() => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("room", (router.query.id));
     socket.on("get-Nextquestion", (isNext, pin, questionNo) => {
+      if(questionNo<data.length){
       setquestionNumber(questionNo)
       if(isNext){
         goto(1)
       }
-
+      }else{
+        goto(5);
+      }
     })
     response();
     getQuestionNo();
@@ -147,7 +138,6 @@ const Content = ({ id }) => {
   const goto = (val) => {
     setCurrent(val);
   };
-
   const renderPage = () => {
     switch (current) {
       case 1:
@@ -160,7 +150,9 @@ const Content = ({ id }) => {
             response={response}
             messages={messages}
             setAnswer={setAnswer}
+            answer={answer}
             responseTime={responseTime}
+            pin={pin}
           />
         );
       case 2:
@@ -199,7 +191,20 @@ const Content = ({ id }) => {
             answer={answer}
           />
         );
+        case 5:
+        return (
+          <Page5
+            pin={id.id}
+            goto={goto}
+            data={data}
+            questionNumber={questionNumber}
+            ChangeQuestionNumber={handleChangeQuestionNumber}
+            responseNextQuestion={responseNextQuestion}
+            answer={answer}
+          />
+        );
     }
+  
   };
   return (
     <Fragment>
