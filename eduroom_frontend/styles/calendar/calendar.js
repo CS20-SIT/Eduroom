@@ -43,6 +43,8 @@ export default css`
     font-weight : bold;
     text-align : center;
     padding-top : 7rem;
+    position : relative
+    
   }
   .headerCell {
     background-color: rgba(255,255,255);
@@ -149,7 +151,7 @@ export default css`
 
 .content{
   height : 65%;
-  overflow : auto;
+  overflow-y : hidden;
 
 }
 .content *{
@@ -162,7 +164,6 @@ export default css`
   font-weight : bold;
   text-align : center;
   margin-top : 5%;
- 
   font-size : 24px;
 }
 .d-buttom{
@@ -257,7 +258,14 @@ ul li::before {
     transition: 0.2s;
 }
 
+.bg-calendar{
 
+  position : absolute;
+  top : 60%;
+  left : 67%;
+  z-index: 2; 
+  
+}
 
 
 `;
