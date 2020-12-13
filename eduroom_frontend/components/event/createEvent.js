@@ -6,21 +6,7 @@ import { KeyboardTimePicker } from "@material-ui/pickers";
 import Image from "next/image";
 import api from "../../api";
 const content = () => {
-  const [data,setDate] = useState([])
-   useEffect(() => {
 
-    const GetData = async () => {
-      const GetData = async () => {
-      const result = await api("http://localhost:5000/api/grader/ann");
-      setData(result.data);
-      alert('hi');
-    };
-    GetData();
-    console.log(data);
-   
-    }
-  
-  },[]);
   const [eventInfo, setEventInfo] = useState({
     title: "",
     type: "",
@@ -115,6 +101,8 @@ const content = () => {
                 placeholder="Event Title"
               ></input>
             </div>
+
+
             <div>
               <select
                 className="event-type"
@@ -134,6 +122,8 @@ const content = () => {
                 })}
               </select>
             </div>
+
+            
             <div>
               <textarea
                 className="event-des"

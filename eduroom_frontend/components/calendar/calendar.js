@@ -27,6 +27,7 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
+import api from "../../api";
 
 const Content = () => {
   //create Eventpage
@@ -126,16 +127,41 @@ const Content = () => {
 
 
 
-  // ---------------------tap---------------------------
+  // ---------------------createEvent---------------------------
+  const [eventInfo, setEventInfo] = useState({
+    title: "",
+    type: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    startTime: "",
+    endTime: "",
+    place: "",
+  });
+  const handleCreate = (e) => {
 
+    if (eventInfo.type == 'Global') {
+      eventInfo.type = '1'
+    } else {
+      eventInfo.type = '2'
+    }
+    console.log(eventInfo);
+    // if (validator()) {
+    api.post("/api/event/createEvent", {
+      title: eventInfo.title,
+      type: eventInfo.type,
+      description: eventInfo.description,
+      startDate: eventInfo.startDate,
+      endDate: eventInfo.endDate,
+      startTime: eventInfo.startTime,
+      endTime: eventInfo.endTime,
+      place: eventInfo.place,
+    });
+    // }
+  };
+  const eventType = ["Course", "Global"];
 
-
-
-
-
-
-  //--------------------end tap--------------------------
-
+  // ------------------code below----------------------//
   return (
     <Fragment>
 
@@ -194,8 +220,161 @@ const Content = () => {
 
         </div>
       </CSSTransition>
+      {/*  ------------------------------ dialog-createevent------------------------------------------ */}
+      <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={openEvent}
+        timeout={{ enter: 700, exit: 100 }}
+        classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
+      >
 
-      
+        <div className="D-create">
+          <div style={{ height: "10%" }}>
+            
+          </div>
+          <div className="d-close2" onClick={() => { setOpenEvent(false), setOpen(false) }}>
+            <h1>X</h1>
+          </div>
+          <div className="text-create"
+            >
+            Create Event
+          </div>
+
+          {/* ---------------------- ---------eventtitle------------------------------- */}
+          <div>
+            <input
+              className="event-title"
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, title: e.target.value })
+              }
+              placeholder="Event Title"
+              style={{ height: "50px" }}
+            ></input>
+          </div>
+
+          {/* ---------------------- ---------eventType------------------------------- */}
+          <div>
+            <select
+              className="event-type"
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, type: e.target.value })
+              }
+            >
+              <option value="default" disabled>
+                Event Type
+                </option>
+              {eventType.map((type) => {
+                return (
+                  <option value={type} key={type}>
+                    {type}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          {/* ---------------------- ---------eventdescript------------------------------- */}
+          <div>
+            <input
+              className="event-detail"
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, title: e.target.value })
+              }
+              placeholder="Description"
+              style={{ height: "50px" }}
+            ></input>
+          </div>
+          {/* ---------------------- ---------time------------------------------- */}
+
+
+          <div className="startdate">
+            <div>startDate</div>
+            <input
+              className="event-startDate"
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, startDate: e.target.value })
+              }
+              placeholder="Start date"
+              type="date"
+
+            ></input>
+          </div>
+
+
+
+          <div className="startTime">
+            <div>startTime</div>
+            <input
+              className="event-startTime"
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, startDate: e.target.value })
+              }
+              placeholder="Start Time"
+              type="Time"
+
+            ></input>
+          </div>
+
+
+          <div className="enddate">
+            <div>endDate</div>
+            <input
+              className="event-startDate"
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, startDate: e.target.value })
+              }
+              placeholder="end date"
+              type="date"
+
+            ></input>
+          </div>
+
+
+          <div className="endtime">
+            <div>endTime</div>
+            <input
+              className="event-endTime"
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, startDate: e.target.value })
+              }
+              placeholder="end Time"
+              type="time"
+
+            ></input>
+          </div>
+
+
+
+          {/* ---------------------- ---------place------------------------------- */}
+          <div>
+            <input
+              className="event-place"
+              onChange={(e) =>
+                setEventInfo({ ...eventInfo, title: e.target.value })
+              }
+              placeholder="Event Place"
+              style={{ height: "50px" }}
+            ></input>
+          </div>
+
+
+          <div className="confirmBT">
+            <button className="event-confirm" onClick={handleCreate}>
+              <a className="event-confirmText">CONFIRM</a>
+            </button>
+          </div>
+          <div className="cancelBT" onClick={() => { setOpenEvent(false) }}>
+            <button className="event-cancel">
+              <a className="event-cancelText">CANCEL</a>
+            </button>
+          </div>
+
+
+        </div>
+      </CSSTransition>
+
+
 
       <div className="createEvent">
         <button className="bt-createEvent"
@@ -254,7 +433,7 @@ const Content = () => {
           })}
 
           {daysInMonth.map((day) => {
-            return <Cell todayDate={TodayDate} todayMonth={TodayMonth} todayYear={TodayYear} currentMonthNo={currentMonthNo} currentYear={currentYear}  setOpen={setOpen} Content={day} setShowDate={setShowDate}  />;
+            return <Cell todayDate={TodayDate} todayMonth={TodayMonth} todayYear={TodayYear} currentMonthNo={currentMonthNo} currentYear={currentYear} setOpen={setOpen} Content={day} setShowDate={setShowDate} />;
           })}
 
           {blankEnd.map((blank) => {
