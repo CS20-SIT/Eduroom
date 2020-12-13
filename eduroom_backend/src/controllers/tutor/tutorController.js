@@ -1,6 +1,8 @@
 const pool = require('../../database/db')
 const app = require('../../server')
 
+const ErrorResponse = require('../../utils/errorResponse')
+
 // INSTRUCTOR
 // 1: 9e6cfde7-af2c-4f56-b76e-2c68d97e847f
 // 2: 14bbc17c-e4cd-4e16-851f-29298171381d
@@ -11,7 +13,7 @@ const app = require('../../server')
 // 3: 08e9d239-b3f2-4db8-b29a-da99a314df92
 
 // GET
-const getInstructorAvailabilities = async (req, res) => {
+const getInstructorAvailabilities = async (req, res, next) => {
 	try {
 		/*
          {
@@ -25,7 +27,9 @@ const getInstructorAvailabilities = async (req, res) => {
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
 
 		const id = req.user.id
-
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
 		const { instructorid } = result.rows[0]
 		result = await pool.query(
@@ -246,12 +250,15 @@ const getInstructorAvailability = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const getInstructorAppointments = async (req, res) => {
+const getInstructorAppointments = async (req, res, next) => {
 	try {
 		// ID from cookies
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
 		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
 		const { instructorid } = result.rows[0]
 
@@ -324,12 +331,15 @@ const getInstructorAppointments = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const getStudentAppointments = async (req, res) => {
+const getStudentAppointments = async (req, res, next) => {
 	try {
 		// ID from cookies
 
 		// const id = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
 		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 		// console.log(id)
 
 		let result = await pool.query(`
@@ -389,24 +399,39 @@ const getStudentAppointments = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const getUserInfo = async (req, res) => {
+const getUserInfo = async (req, res, next) => {
 	try {
 		// name : name key
-		const { name } = req.query
+		const { name, iid } = req.query
 		console.log(name)
+
+		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+
+		let result = await pool.query(`select userid from instructor where instructorid = '${iid}'`)
+		let insID = ''
+		if (result.rows[0]) insID = result.rows[0].userid
 
 		// name : hardcode
 		// const name = 'ka'
-		let result = await pool.query(`
+		result = await pool.query(`
         select userid, firstname, lastname from user_profile where  CONCAT(lower(firstname),' ',lower(lastname)) like '%${name}%'  limit 5
         `)
 		const students = []
+
 		result.rows.forEach((s) => {
-			let tmp = {
-				id: s.userid,
-				name: s.firstname + ' ' + s.lastname,
+			console.log(s.firstname)
+			console.log(s.userid, id)
+
+			if (s.userid != id && s.userid != insID) {
+				let tmp = {
+					id: s.userid,
+					name: s.firstname + ' ' + s.lastname,
+				}
+				students.push(tmp)
 			}
-			students.push(tmp)
 		})
 		res.status(200).send({ students })
 	} catch (e) {
@@ -415,7 +440,7 @@ const getUserInfo = async (req, res) => {
 }
 
 // POST
-const updateInstructorAvailabilities = async (req, res) => {
+const updateInstructorAvailabilities = async (req, res, next) => {
 	try {
 		/*
 		body
@@ -432,6 +457,9 @@ const updateInstructorAvailabilities = async (req, res) => {
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
 
 		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
 		const { instructorid } = result.rows[0]
 		await pool.query(`delete from instructor_availabilities where instructorid = '${instructorid}'`)
@@ -459,7 +487,7 @@ const updateInstructorAvailabilities = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const insertStudentAppointment = async (req, res) => {
+const insertStudentAppointment = async (req, res, next) => {
 	try {
 		/*
 		body
@@ -475,6 +503,10 @@ const insertStudentAppointment = async (req, res) => {
 		// ID from cookies
 		// const headerId = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
 		const headerId = req.user.id
+
+		if (!headerId) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 		const { id, startTime, endTime, price, members } = req.body
 		// 	console.log(headerId)
 		// 	console.log(id, startTime, endTime, price, members)
@@ -534,7 +566,7 @@ const updateInstructorAppointment = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const updateAppointmentReview = async (req, res) => {
+const updateAppointmentReview = async (req, res, next) => {
 	try {
 		/*
 		body
@@ -548,6 +580,10 @@ const updateAppointmentReview = async (req, res) => {
 
 		// Cookie
 		const userId = req.user.id
+
+		if (!userId) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 		// const userId = '123e4567-e89b-12d3-a456-426614174000'
 		const { id, score, desc } = req.body
 
