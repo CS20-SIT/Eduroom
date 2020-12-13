@@ -3,7 +3,6 @@ import React, { Fragment, useState,useEffect } from "react";
 import style from "../../styles/event/event";
 import { Button, Grid, Container, TextField } from "@material-ui/core";
 import { KeyboardTimePicker } from "@material-ui/pickers";
-
 import Image from "next/image";
 import api from "../../api";
 const content = () => {
@@ -42,7 +41,7 @@ const content = () => {
     }
     console.log(eventInfo);
     // if (validator()) {
-      /* api.post("/api/event/createEvent", {
+       api.post("/api/event/createEvent", {
         title: eventInfo.title,
         type: eventInfo.type,
         description: eventInfo.description,
@@ -51,7 +50,7 @@ const content = () => {
         startTime: eventInfo.startTime,
         endTime: eventInfo.endTime,
         place: eventInfo.place,
-      }); */
+      }); 
     // }
   };
 
