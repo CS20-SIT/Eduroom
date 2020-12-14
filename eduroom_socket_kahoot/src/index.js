@@ -14,10 +14,10 @@ const socketOptions = {
 let user = [];
 const io = socketIO.listen(app, socketOptions);
 io.on("connection", (client) => {
-  console.log("user connected");
+  // console.log("user connected");
 
   client.on("disconnect", () => {
-    console.log("user disconnect");
+    // console.log("user disconnect");
   });
 
   client.on("sent-message", (msg, pin) => {
