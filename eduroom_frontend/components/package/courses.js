@@ -4,7 +4,8 @@ import Paginations from './paginations'
 import api from '../../api'
 
 const Courses = (props) => {
-	const [pagination, setPagonation] = useState(1)
+	const [startPage, setStartPage] = useState(1);
+	const [pagination, setPagination] = useState(1)
 	const [courses, setCourses] = useState([])
 	const [numCourses, setNumCourses] = useState(0)
 	const fetchNumCourses = async () => {
@@ -54,9 +55,13 @@ const Courses = (props) => {
 			<div className="container">
 				{renderCourses()}
 				<Paginations
-					numCourses={numCourses}
+					startPage={startPage}
+					setStartPage={(newStartPage) => setStartPage(newStartPage)}
+					numData={numCourses}
 					page={pagination}
-					setPage={(newPage) => setPagonation(newPage)}
+					setPage={(newPage) => setPagination(newPage)}
+					mxDataPerPage={3}
+					numPagination={3}
 				></Paginations>
 			</div>
 			<style jsx>{`
