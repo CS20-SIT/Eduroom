@@ -18,19 +18,14 @@ const Paginations = ({ startPage, numData, page, setPage, mxDataPerPage, numPagi
 		)
 	}
 	const handleLeft = () => {
-		if (startPage !== 1) {
-			setPage(startPage - 3)
-			setStartPage(startPage - 3)
-		}
+		setPage(startPage - 3)
+		setStartPage(startPage - 3)
 	}
 	const handleRight = () => {
-		const numPage = Math.ceil(numData / mxDataPerPage)
-		if (startPage + 3 <= numPage) {
-			setPage(startPage + 3)
-			setStartPage(startPage + 3)
-		}
+		setPage(startPage + 3)
+		setStartPage(startPage + 3)
 	}
-	
+
 	const renderLeft = () => {
 		if (startPage !== 1) {
 			return (
@@ -57,7 +52,7 @@ const Paginations = ({ startPage, numData, page, setPage, mxDataPerPage, numPagi
 			)
 		}
 	}
-	
+
 	return (
 		<Fragment>
 			<div className="container">

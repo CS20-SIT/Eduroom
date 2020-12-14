@@ -4,7 +4,7 @@ import Paginations from './paginations'
 import api from '../../api'
 
 const Courses = (props) => {
-	const [startPage, setStartPage] = useState(1);
+	const [startPage, setStartPage] = useState(1)
 	const [pagination, setPagination] = useState(1)
 	const [courses, setCourses] = useState([])
 	const [numCourses, setNumCourses] = useState(0)
@@ -13,9 +13,14 @@ const Courses = (props) => {
 		setNumCourses(res.data.count)
 	}
 	const fetchCourses = async () => {
-		const res = await api.get('/api/package/courses', { params: { page: pagination } })
+		const res = await api.get('/api/package/courses', { params: { page: pagination, mxData: 3 } })
 		setCourses(res.data)
 	}
+
+	useEffect(() => {
+		fetchCourses()
+	}, [pagination])
+
 	useEffect(() => {
 		fetchCourses()
 		fetchNumCourses()
