@@ -15,10 +15,11 @@ const CreatePackagePage = () => {
 		category: 'default',
 		detail: '',
 		selectedCourses: [],
+		totalPrice: 0
 	})
-	console.log(myPackage);
+	
 	useEffect(() => {
-		console.log(myPackage)
+		// console.log(myPackage)
 	}, [myPackage])
 	const renderPage = () => {
 		if (page === 1) {

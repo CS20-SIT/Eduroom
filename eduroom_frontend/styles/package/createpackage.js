@@ -121,7 +121,6 @@ input[type=checkbox] {
     border: 3px solid rgba(255,255,255,0.1);
     margin-bottom: 3%;
     width: 101.5%;
-    text-align: center;
     overflow: auto;
     height: 300px;
 }
@@ -231,6 +230,7 @@ input[type=checkbox] {
     font-weight: 500;
     padding-bottom: 20px;
     color: #5b5b5b;
+    display: flex;
 }
 .category {
     font-size: 16px;
@@ -260,6 +260,24 @@ input[type=checkbox] {
 .old-price {
     padding-left: 15px;
     text-decoration: line-through;
+}
+
+.confirm-course{
+    background: #EFF0F6;
+    border-radius: 10px;
+    display: flex;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.confirm-text{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-detail{
+    display: flex;
+    margin-left: 25px;
 }
 
 `
