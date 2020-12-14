@@ -4,7 +4,7 @@ import React from 'react'
 import Balloon from '../../components/FolderCoin/Balloon'
 const temp = (props) => {
 	const renderBalloon = () => {
-		return Array(10)
+		return Array(50)
 			.fill(0)
 			.map((el, index) => {
 				return (

@@ -26,15 +26,15 @@ const CouponShopJa = () => {
     { title: 'LEARN TO CODE WITH PYTHON', price: 18,owner:'Wssa gates', id: 12 ,description:'Coupon discount 150% for course PYTHON'}
 ];
 const data2 = [
-	{ title: 'PUBLIC COUPON', price: 1,owner:'Wssa gates', id: 1 },
-	{ title: 'PUBLIC COUPON', price: 13,owner:'Wssa asd', id: 2 },
-	{ title: 'PUBLIC COUPON', price: 18,owner:'wqe gates', id: 3 },
-	{ title: 'PUBLIC COUPON', price: 17,owner:'Wssa fqe', id: 4 },
-	{ title: 'PUBLIC COUPON', price: 23,owner:'qwe gates', id: 5 },
-	{ title: 'PUBLIC COUPON', price: 43,owner:'asd gates', id: 6 },
-	{ title: 'PUBLIC COUPON', price: 66,owner:'Wssa dsgf', id: 7 },
-	{ title: 'PUBLIC COUPON', price: 99,owner:'asd wqe', id: 8 },
-	{ title: 'PUBLIC COUPON', price: 99,owner:'asd wqe', id: 9 },
+	{ title: 'PUBLIC COUPON', price: 1,owner:'Wssa gates', id: 1, id: 12 ,description:'Public discount 10%' },
+	{ title: 'PUBLIC COUPON', price: 13,owner:'Wssa asd', id: 2 , id: 12 ,description:'Coupon discount 15%'},
+	{ title: 'PUBLIC COUPON', price: 18,owner:'wqe gates', id: 3 , id: 12 ,description:'Coupon discount 14%'},
+	{ title: 'PUBLIC COUPON', price: 17,owner:'Wssa fqe', id: 4 , id: 12 ,description:'Coupon discount 20%'},
+	{ title: 'PUBLIC COUPON', price: 23,owner:'qwe gates', id: 5 , id: 12 ,description:'Coupon discount 10%'},
+	{ title: 'PUBLIC COUPON', price: 43,owner:'asd gates', id: 6,description:'Public discount 10%' },
+	{ title: 'PUBLIC COUPON', price: 66,owner:'Wssa dsgf', id: 7 ,description:'Public discount 10%'},
+	{ title: 'PUBLIC COUPON', price: 99,owner:'asd wqe', id: 8 ,description:'Public discount 10%'},
+	{ title: 'PUBLIC COUPON', price: 99,owner:'asd wqe', id: 9 ,description:'Public discount 10%'},
 
 ]
 	const router = useRouter()
