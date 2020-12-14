@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import style from '../../styles/package/detail'
 import Instructors from '../../components/package/instructorCard'
-import SelectedCourse from '../../components/package/selectedcourse'
+// import SelectedCourse from '../../components/package/selectedcourse'
 
 const Package = () => {
 	// const router = useRouter();
@@ -29,7 +29,7 @@ const Package = () => {
 								<h1 className="textHead">Courses in Package</h1>
 								<div style={{ marginBottom: '30px' }}>
 									<div style={{ width: '60vw', marginLeft: 40 }}>
-										<SelectedCourse />
+										{/* <SelectedCourse /> */}
 									</div>
 								</div>
 							</div>
