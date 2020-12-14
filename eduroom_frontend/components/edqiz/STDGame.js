@@ -22,47 +22,65 @@ const Content = ({ id }) => {
   const handleChangeQuestionNumber = (val) => {
     setquestionNumber(val);
   };
-  
-  const data = [
-    {
-      question:
-        'directory anything else. The name cannot be changed and is the only directory used to serve static assets?',
-      time: '10',
-      point: '2000',
-      ans: [
-        'have a static file with the same',
-        'directory at build time will be served',
-        "Files added at runtime won't be available",
-        'ecommend using a third party service ',
-      ],
-      correct: 0,
-      image: null,
-    },
-    {
-      question: ' COVID-19 and related health topics?',
-      time: '10',
-      point: '2000',
-      ans: ['Abortion: Safety Abortion: Safety · Addictive behaviours: Gaming disorder', ' Ageing: Global population Ageing: Global ', ' Care and support at home', 'What assistance can I get at home'],
-      correct: 1,
-      image: null,
-    },
-    {
-      question: 'Browse the WebMD Questions and Answers',
-      time: '10',
-      point: '1000',
-      ans: ['A-Z library for insights and advice for better health', 'tap Edit question or Delete question', 'When your question is answered', ' you will get a notification'],
-      correct: 2,
-      image: null,
-    },
-    {
-      question: ' can have difficulty finding the right words or phrases to answer?',
-      time: '10',
-      point: '3000',
-      ans: ['simple questions. Here are 20 of the most common questions', 'We have compiled a list of 46 common interview questions you might be asked', 'plus advice on how to answer each and every one of them', 'Read tips and example answers for 125 of the most common job interview'],
-      correct: 3,
-      image: null,
-    },
-  ];
+  const [sessionid, setSesstionID] = useState(null);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      let pin = router.query.room
+      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      console.log('resdata', res.data)
+      setSesstionID(res.data)
+    };
+    const fetchQuestion = async () => {
+      const res = await api.get(`/api/kahoot/question/${sessionid}`);
+      setData(res.data)
+      console.log('fetchQuestion',res);
+      
+    };
+    fetchSession();
+    fetchQuestion();
+  }, []);
+  // const data = [
+  //   {
+  //     question:
+  //       'directory anything else. The name cannot be changed and is the only directory used to serve static assets?',
+  //     time: '10',
+  //     point: '2000',
+  //     ans: [
+  //       'have a static file with the same',
+  //       'directory at build time will be served',
+  //       "Files added at runtime won't be available",
+  //       'ecommend using a third party service ',
+  //     ],
+  //     correct: 0,
+  //     image: null,
+  //   },
+  //   {
+  //     question: ' COVID-19 and related health topics?',
+  //     time: '10',
+  //     point: '2000',
+  //     ans: ['Abortion: Safety Abortion: Safety · Addictive behaviours: Gaming disorder', ' Ageing: Global population Ageing: Global ', ' Care and support at home', 'What assistance can I get at home'],
+  //     correct: 1,
+  //     image: null,
+  //   },
+  //   {
+  //     question: 'Browse the WebMD Questions and Answers',
+  //     time: '10',
+  //     point: '1000',
+  //     ans: ['A-Z library for insights and advice for better health', 'tap Edit question or Delete question', 'When your question is answered', ' you will get a notification'],
+  //     correct: 2,
+  //     image: null,
+  //   },
+  //   {
+  //     question: ' can have difficulty finding the right words or phrases to answer?',
+  //     time: '10',
+  //     point: '3000',
+  //     ans: ['simple questions. Here are 20 of the most common questions', 'We have compiled a list of 46 common interview questions you might be asked', 'plus advice on how to answer each and every one of them', 'Read tips and example answers for 125 of the most common job interview'],
+  //     correct: 3,
+  //     image: null,
+  //   },
+  // ];
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",

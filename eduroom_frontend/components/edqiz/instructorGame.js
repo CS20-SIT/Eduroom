@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Page1 from './gamePage1';
 import Page2 from './gamePage2';
 import Page3 from "./showRank";
-
+import api from '../../api';
 import socketIOClient from 'socket.io-client';
 import { useRouter } from 'next/router';
 
@@ -12,15 +12,87 @@ const Content = ({ id }) => {
   const [endTime, setEndTime] = useState(null);
   const [questionNumber, setquestionNumber] = useState(0);
   const [messages, setMessages] = useState([]);
+  const [answerAll, setAnswerAll] = useState([]);
 
+
+  const [questionList, setQuestionList] = useState([])
+  const [correct, setCorrrect] = useState([])
   const handleChangeQuestionNumber = (val) => {
-    if(questionNumber==data.length-1){
+    if (questionNumber == questionList.length - 1) {
       goto(3)
     }
     setquestionNumber(val);
-    console.log('handle',questionNumber,data.length)
+    console.log('handle', questionNumber, data.length)
   };
 
+  const [sessionid, setSesstionID] = useState(null);
+  const [data1, setData] = useState([]);
+  useEffect(() => {
+    const fetchSession = async () => {
+      let pin = router.query.id
+      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      console.log('resdata', res.data)
+      setSesstionID(res.data.sessionid)
+    };
+    fetchSession();
+
+  }, []);
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      const question = await api.get(`/api/kahoot/question/${sessionid}`);
+      setData(question.data.question.rows)
+
+      console.log('answerAll', question.data.answerAll)
+      answerAll.push(question.data.answerAll)
+      console.log('correct', question.data.correct[1])
+      correct.push(question.data.correct)
+      console.log('correctQuestion', correct[0][0])
+    };
+    if (sessionid != null)
+      fetchQuestion();
+
+  }, [sessionid]);
+  useEffect(() => {
+    console.log('datalenght', data1.length)
+    if (answerAll[0]) {
+      // console.log('before');
+      // console.log(questionTemplate)
+      for (let i = 0; i < data1.length; i++) {
+        let questionTemplate = {
+          question: '',
+          time: '',
+          point: '',
+          ans: ['', '', '', ''],
+          correct: 0,
+          image: null,
+        }
+        questionTemplate.question = data1[i].text;
+        questionTemplate.time = data1[i].time;
+        questionTemplate.point = data1[i].point
+        questionTemplate.ans[0] = answerAll[0][i][0].text
+        questionTemplate.ans[1] = answerAll[0][i][1].text
+        questionTemplate.ans[2] = answerAll[0][i][2].text
+        questionTemplate.ans[3] = answerAll[0][i][3].text
+        questionTemplate.correct = correct[0][i]
+        questionTemplate.image = '../../image'
+        console.log('template');
+        console.log(questionTemplate);
+        questionList.push(questionTemplate);
+      }
+      setQuestionList([...questionList])
+    }
+
+
+
+  }, [data1, answerAll]);
+  useEffect(() => {
+    
+      console.log('questionList', questionList)
+      console.log('data', data)
+
+
+      
+  }, [questionList])
   const data = [
     {
       question:
@@ -61,7 +133,7 @@ const Content = ({ id }) => {
       image: null,
     },
   ];
-  // const [time, setTime] = useState(data[questionNumber].time);
+
 
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
@@ -134,7 +206,7 @@ const Content = ({ id }) => {
             goto={goto}
             // time={data[questionNumber].time}
             endTime={endTime}
-            data={data}
+            data={questionList}
             questionNumber={questionNumber}
             sentMessage={sentMessage}
             response={response}
@@ -145,7 +217,7 @@ const Content = ({ id }) => {
         return (
           <Page2
             goto={goto}
-            data={data}
+            data={questionList}
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
             setNextQuestion={setNextQuestion}
@@ -154,19 +226,19 @@ const Content = ({ id }) => {
             id={id.id}
           />
         );
-        case 3:
-          return (
-            <Page3
-              goto={goto}
-              data={data}
-              questionNumber={questionNumber}
-              ChangeQuestionNumber={handleChangeQuestionNumber}
-              setNextQuestion={setNextQuestion}
-              // setTime={setTime}
-              setTimeSocket={setTimeSocket}
-              pin={id.id}
-            />
-          );
+      case 3:
+        return (
+          <Page3
+            goto={goto}
+            data={questionList}
+            questionNumber={questionNumber}
+            ChangeQuestionNumber={handleChangeQuestionNumber}
+            setNextQuestion={setNextQuestion}
+            // setTime={setTime}
+            setTimeSocket={setTimeSocket}
+            pin={id.id}
+          />
+        );
     }
   };
   return (

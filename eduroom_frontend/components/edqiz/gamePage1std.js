@@ -92,6 +92,7 @@ const Page1 = ({
             <div className="text-title">
               NICKNAME : <div>katak</div>
               PIN :<div style={{ color: "#FB9CCB" }}>{room.PIN}</div>
+              
             </div>
           </Grid>
           <Grid
