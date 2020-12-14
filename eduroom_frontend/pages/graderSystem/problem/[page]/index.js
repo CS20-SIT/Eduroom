@@ -16,9 +16,9 @@ const Problems = ({ page }) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			const questionsQuery = await api.get('api/grader/getPreviewQuestion', { params: { offset: page - 1 } })
-			const countQuery = await api.get('api/grader/CountAllQuestion')
-			const tagsQuery = await api.get('api/grader/getQuestionTag')
+			const questionsQuery = await api.get('/api/grader/getPreviewQuestion', { params: { offset: page - 1 } })
+			const countQuery = await api.get('/api/grader/CountAllQuestion')
+			const tagsQuery = await api.get('/api/grader/getQuestionTag')
 			setQuestionsData(questionsQuery.data)
 			setCountData(countQuery.data.count)
 			setTagsData(tagsQuery.data)

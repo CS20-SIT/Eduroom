@@ -38,7 +38,7 @@ const Appointment = ({ AID, setAID, appointment }) => {
 				timeout={{ enter: 600, exit: 600 }}
 				classNames={{ enterActive: 'slide-in', exitActive: 'slide-out' }}
 			>
-				<div className="modal-container" onClick={() => {}}>
+				<div className="modal-container" id="appointment-info" onClick={() => {}}>
 					<div className="profile--app  my-2"></div>
 					<div className="text-lg font-bold my-2">{appointment.name}</div>
 					<div className="flex flex-col my-2 w-full">
@@ -66,6 +66,7 @@ const Appointment = ({ AID, setAID, appointment }) => {
 					{appointment.status == 'Pending' ? (
 						<div>
 							<div
+								id="approve-btn"
 								style={{ width: '10rem', backgroundColor: '#EB7DB1' }}
 								className="pointer text-center font-quicksand text-white py-2 rounded-md my-4"
 								onClick={() => {
@@ -79,6 +80,7 @@ const Appointment = ({ AID, setAID, appointment }) => {
 								Approve
 							</div>
 							<div
+								id="reject-btn"
 								style={{ width: '10rem' }}
 								className="pointer text-center font-quicksand py-2 border-secondary text-secondary bg-white-faded rounded-md"
 								onClick={() => {

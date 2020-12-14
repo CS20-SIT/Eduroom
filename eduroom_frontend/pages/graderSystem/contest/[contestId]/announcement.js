@@ -11,7 +11,7 @@ const contestAnnouncement = ({ contestId }) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			const result = await api.get('api/grader/getContestAnnouncement', {
+			const result = await api.get('/api/grader/getContestAnnouncement', {
 				params: { contestId },
 			})
 			setData(result.data)

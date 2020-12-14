@@ -11,7 +11,6 @@ const Page1 = ({ goto, mockData, change, name }) => {
   useEffect(() => {
     const fetchData = async () => {
       let pin = router.query.room
-      // console.log(pin,'pin')
       const res = await api.get(`/api/kahoot/sessionid/${pin}`);
       console.log('resdata', res.data)
       setSesstionID(res.data)

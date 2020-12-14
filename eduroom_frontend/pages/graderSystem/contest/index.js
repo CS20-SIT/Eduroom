@@ -12,7 +12,7 @@ const Contests = () => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			const result = await api.get('api/grader/getPreviewContest')
+			const result = await api.get('/api/grader/getPreviewContest')
 			setData(result.data)
 		}
 		GetData()
