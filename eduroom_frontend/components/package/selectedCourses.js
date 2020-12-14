@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import SelectedCourse from './selectedCourse'
+import SelectedCourse from './selectedcourse'
 import style from '../../styles/package/createpackage'
 const SelectedCourses = ({ courses }) => {
 	const renderCourses = () => {
