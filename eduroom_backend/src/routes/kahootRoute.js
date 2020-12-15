@@ -19,7 +19,6 @@ router.post('/player', jwtAuthenicate,player);
 router.get('/sessionid/:pin', fetchExactlyRoom);
 router.get('/getRankScore/:sessionid', fetchScoreRank);
 router.post('/upload/picture', jwtAuthenicate, isInstructor, uploadToGCSHandler('edqiz/question'), Upload)
-
 router.post('/createHistoryPlayerAnswer',jwtAuthenicate,createHistoryPlayerAnswer);
 
 module.exports = router;
