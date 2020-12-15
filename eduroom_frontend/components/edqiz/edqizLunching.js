@@ -7,6 +7,7 @@ import api from '../../api';
 const Page3 = (props) => {
   const router = useRouter();
   const [room, setRoom] = useState(null);
+  
   const fetchData = async () => {
     const res = await api.get('/api/kahoot/rooms');
     setRoom(res.data[router.query.id-1])
