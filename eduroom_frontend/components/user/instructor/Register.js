@@ -43,6 +43,7 @@ const Register = (props) => {
 		try {
 			setLoading(true)
 			const res = await api.post('/api/instructor/register', body)
+			setLoading(false)
 			props.complete()
 		} catch (err) {}
 		setLoading(false)
@@ -70,10 +71,13 @@ const Register = (props) => {
 		if (i != -1) {
 			document.getElementsByName(data[i].name)[0].focus()
 		} else {
-			const formData = {}
+			let formData = {}
 			Object.keys(temp).map((el) => {
 				formData[el] = temp[el].value
 			})
+			//This is mock up data
+			formData.expertpath = '/images/user/test'
+			formData.degreepath = '/images/user/test'
 			handleSubmit(formData)
 		}
 		setData(temp)

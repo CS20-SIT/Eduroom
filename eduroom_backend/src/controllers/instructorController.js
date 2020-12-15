@@ -19,7 +19,6 @@ exports.Register = async (req, res, next) => {
 		id,
 		data.degree,
 		data.degreepath
-
 	])
 	await pool.query(
 		'INSERT INTO instructor_expert(instructorid,expertnumber,subjectname,evidence) VALUES ($1,$2,$3,$4)',

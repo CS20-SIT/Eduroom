@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/package/ownpackage'
 import Dialog from '@material-ui/core/Dialog'
 import { useRouter } from 'next/router'
@@ -82,7 +82,7 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 								<img src={ownPackage.image} className="picture"></img>
 							</div>
 							<div className="block2">
-								<div style={{ display: 'flex' }}>
+								<div style={{ display: 'flex', justifyContent:'space-between' }}>
 									<div className="name">{ownPackage.packagename}</div>
 									<div style={{ paddingLeft: '10%' }}>
 										<button className="Xbutton" onClick={handleOpenDialog}>
@@ -133,3 +133,4 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 	)
 }
 export default Ownpackage
+
