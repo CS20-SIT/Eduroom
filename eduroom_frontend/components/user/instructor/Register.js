@@ -43,9 +43,7 @@ const Register = (props) => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(true)
 	useEffect(() => {
-		console.log(data.degree.value.length, data.expert.value.length, data.bio.value.length)
 		if (data.degree.value.length && data.expert.value.length && data.bio.value.length) {
-			console.log('hello false')
 			setError(false)
 		} else {
 			setError(true)
@@ -53,8 +51,8 @@ const Register = (props) => {
 	}, [data])
 	const handleSubmit = async (body) => {
 		try {
-			setLoading(true)
 			const res = await api.post('/api/instructor/register', body)
+			console.log('success')
 			setLoading(false)
 			props.complete()
 		} catch (err) {}
@@ -68,18 +66,19 @@ const Register = (props) => {
 	}
 
 	const handleClick = async (e) => {
-		let formData = { degree: data.degree.value, expert: data.expert.value, bio: data.bio.value }
-		const myForm = new FormData()
-		myForm.append('evidence-degree-1', data.degreePicture)
-		myForm.append('evidence-expert-1', data.expertPicture)
-		const res = await api.post('/api/instructor/upload/evidence', myForm)
-		console.log(res.data)
-		const degreepath = res.data[0].linkUrl
-		const expertpath = res.data[1].linkUrl
-		formData.degreepath = degreepath
-		formData.expertpath = expertpath
-		console.log(formData)
-		// handleSubmit(formData)
+		setLoading(true)
+		try {
+			let formData = { degree: data.degree.value, expert: data.expert.value, bio: data.bio.value }
+			const myForm = new FormData()
+			myForm.append('evidence-degree-1', data.degreePicture)
+			myForm.append('evidence-expert-1', data.expertPicture)
+			const res = await api.post('/api/instructor/upload/evidence', myForm)
+			const degreepath = res.data[0].linkUrl
+			const expertpath = res.data[1].linkUrl
+			formData.degreepath = degreepath
+			formData.expertpath = expertpath
+			handleSubmit(formData)
+		} catch (err) {}
 	}
 
 	const changeDegreePic = (e) => {
