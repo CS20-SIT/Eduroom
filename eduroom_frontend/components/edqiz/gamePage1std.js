@@ -35,12 +35,14 @@ const Page1 = ({
   };
   const room = { name: "room1", PIN: router.query.id };
   const [diff, setDiff] = useState(null);
+
   const setCountAnswer = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("set-countAnswer", router.query.id, 1);
   };
+
   const [sessionid, setSesstionID] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +53,7 @@ const Page1 = ({
     };
     fetchData();
   }, []);
+  
 
   const handleUpdateScore = async () => {
     const sessionTemp = sessionid;
@@ -68,6 +71,22 @@ const Page1 = ({
     setCountP();
     
   }, [countPlayer]);
+
+  const getSkip=()=>{
+
+    console.log('answer',answer)
+    socket.on("get-skip", (isSkip) => {
+      console.log('getskip from page 1')
+      if ((isSkip || answer == data[questionNumber].correct)&&answer==99) {
+    
+          console.log(answer == data[questionNumber].correct,'skip');
+          goto(4);
+        
+      }
+    });
+    setAnswer('99');
+    console.log('answer99',answer)
+  }
   
   useEffect(() => {
     socket.emit("room", (router.query.id));
@@ -76,8 +95,9 @@ const Page1 = ({
       
     },[]);
     sentMessage();
+    getSkip();
     response();
-  }, []);
+  }, [answer]);
 
   useEffect(()=>{
     if (answerPage1==99 &&diff===0) {
@@ -85,6 +105,7 @@ const Page1 = ({
     }
   },[diff])
   return (
+    (data[questionNumber]?
     <Fragment>
       <div className="landing">
         <Grid container style={{ marginTop: "4vh" }}>
@@ -326,6 +347,7 @@ const Page1 = ({
         `}
       </style>
     </Fragment>
+    :null)
   );
 };
 export default Page1;

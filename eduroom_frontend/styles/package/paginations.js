@@ -16,9 +16,11 @@ export default css`
   margin-left: 20px;
   transition: 0.25s;
 }
+.active{
+  background-color: #3D467F;
+  color: white !important;
+}
 .btn:hover{
-  background: whitesmoke;
-  transition: 0.25s;
   cursor: pointer;
 }
 `

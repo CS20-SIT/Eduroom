@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import General from '../../../components/template/general'
 import React, { Fragment, useState, useContext, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Courses from '../../../components/user/instructor/Courses'
 import CreateCourseButton from '../../../components/user/instructor/CreateCourseButton'
 import UserContext from '../../../contexts/user/userContext'
@@ -11,9 +12,14 @@ const InstructorProfile = () => {
 	const userContext = useContext(UserContext)
 	const user = userContext.user
 	const [instructor, setInstructor] = useState(null)
+	const router = useRouter()
 	const fetchInstructor = async () => {
-		const res = await api.get('/api/instructor/profileDetail')
-		setInstructor(res.data)
+		try {
+			const res = await api.get('/api/instructor/profileDetail')
+			setInstructor(res.data)
+		} catch (err) {
+			router.push('/user')
+		}
 	}
 	useEffect(() => {
 		fetchInstructor()
@@ -107,6 +113,15 @@ const InstructorProfile = () => {
 					</h4>
 					<Link href="/user/instructor/course/package">
 						<h4 className="textNav">Package Management</h4>
+					</Link>
+					<Link href="/user/instructor/tutor/appointment">
+						<h4 className="textNav">Appointment</h4>
+					</Link>
+					<Link href="/user/instructor/tutor/availability">
+						<h4 className="textNav">Private Tutor</h4>
+					</Link>
+					<Link href="/edqiz/edqizList">
+						<h4 className="textNav">Edqiz</h4>
 					</Link>
 				</div>
 				{renderPage()}

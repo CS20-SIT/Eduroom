@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import style from '../../styles/package/createpackage';
-import Selected from './selectedcourse';
+// import Selected from './selectedcourse';
 import Dialog from '@material-ui/core/Dialog';
 import { useRouter } from 'next/router';
 import api from '../../api';
@@ -47,7 +47,7 @@ const EditConfirm = (props) => {
                     <div className="detail">{props.myPackage.detail}</div>
                     <div className="subtitle">Selected Courses</div>
                     <div className="coursebox box-cf">
-                        <Selected />
+                        {/* <Selected /> */}
                     </div>
                 </div>
                 <div className="cfbutton">
