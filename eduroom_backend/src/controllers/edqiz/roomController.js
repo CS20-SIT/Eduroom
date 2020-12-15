@@ -170,10 +170,10 @@ exports.fetchQuiz = async (req, res, next) => {
   const { sessionid } = req.params;
   const room = await pool.query('SELECT * from kahoot_roomhistory where sessionid=$1;', [sessionid]);
   const question = await pool.query('SELECT * from kahoot_question where roomid=$1;', [room.rows[0].roomid]);
-  const exactlyQuestion = await pool.query('SELECT * from kahoot_question where roomid=$1;', [question.rows[0].roomid]);
+  const exactlyQuestion = await pool.query('SELECT * from kahoot_question where roomid=$1 order by questionid asc;', [question.rows[0].roomid]);
+  // console.log('exacllQuestion',exactlyQuestion)
   const answerAll = [];
   const correct=[]
-  console.log('rows',exactlyQuestion.rows.length)
   for (let i = 0; i < exactlyQuestion.rows.length; i++) {
     const answer = [];
     const tempAnswer = await pool.query('select * from kahoot_answer where questionid=$1;', [exactlyQuestion.rows[i].questionid]);
@@ -183,9 +183,8 @@ exports.fetchQuiz = async (req, res, next) => {
     const correctTemp = await pool.query(`select case when iscorrect =true then answerno END as correct from kahoot_answer where questionid=$1
     order by correct fetch first 1 rows only;`, [exactlyQuestion.rows[i].questionid]);
     correct.push(correctTemp.rows[0].correct)
-    // console.log('coorectTemp',correctTemp.rows[0].correct)
     answerAll.push(answer);
   }
-  console.log('answerAll',answerAll)
+  // console.log('answerAll',answerAll)
   res.status(200).json({ room, question, answerAll, correct });
 };
