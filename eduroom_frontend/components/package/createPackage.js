@@ -88,7 +88,7 @@ const CreatePackage = (props) => {
 
 								{props.myPackage.pic ? (
 									<div>
-										<img src="" id="show-package-image-1" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+										<img src="" id="show-package-image-1" style={{ maxWidth: '100%', maxHeight: '235px' }} />
 									</div>
 								) : (
 									<div>
@@ -164,7 +164,10 @@ const CreatePackage = (props) => {
 
 					<div>
 						<div className="subtitle2">Courses</div>
-						<Courses handleSelectedCourses={handleSelectedCourses} selectedCourses={props.myPackage.selectedCourses} />
+						<Courses
+							handleSelectedCourses={handleSelectedCourses}
+							selectedCourses={props.myPackage.selectedCourses}
+						/>
 					</div>
 				</div>
 				<div className="center">
