@@ -1,4 +1,5 @@
 const passport = require("passport");
+const { verifyCookieAdminJWT} = require('../utils/jwt')
 const ErrorResponse = require("../utils/errorResponse");
 
 const jwtAuthenicate = (req, res, next) => {
@@ -16,6 +17,20 @@ const jwtAuthenicate = (req, res, next) => {
   })(req, res, next);
 }
 
+const jwtAdminAuthenticate = (req, res, next) => {
+  const token = req.cookies.jwt
+  const adminId = verifyCookieAdminJWT(token)
+  console.log(adminId);
+  if(adminId != null){
+    req.user = {
+      id: adminId
+    }
+    return next()
+  }
+  return next(new ErrorResponse('Not Authenticate', 401));
+}
+
 module.exports = {
-  jwtAuthenicate
+  jwtAuthenicate,
+  jwtAdminAuthenticate
 }
