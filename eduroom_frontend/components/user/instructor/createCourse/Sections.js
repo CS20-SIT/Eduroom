@@ -8,7 +8,6 @@ const Sections = (props) => {
 		props.section[idx].name = name
 	}
 	const handleChangeSection = (section, idx) => {
-		// console.log('hello', section, idx);
 		props.sections[idx] = section
 		props.changeSections(props.sections)
 	}
