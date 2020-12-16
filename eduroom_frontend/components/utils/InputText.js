@@ -47,14 +47,14 @@ const InputText = ({
             font-size: 0.8em;
             color: #ed3f14;
             font-weight: 500;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
           }
           .textfield {
             background: #eff0f6;
             border-radius: 10px;
             width: 100%;
             border: none;
-            font-size: 1.1em;
+            font-size: 1em;
             color: #3d467f;
           }
           .textfield.error {

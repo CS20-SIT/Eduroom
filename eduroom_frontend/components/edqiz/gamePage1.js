@@ -59,10 +59,12 @@ const Page1 = ({
   }, [countPlayer]);
 
   useEffect(() => {
+    if(data[questionNumber]){
     socket.emit("start-game", id.id, data[questionNumber].time);
     setCountP();
     responseTime();
-  }, []);
+    }
+  }, [data]);
   useEffect(() => {
     responseTime();
     if (diff != null) {
@@ -104,10 +106,11 @@ const Page1 = ({
     }
     goto(2);
   }
-
-  return (
-    <Fragment>
-      <div className="landing">
+  
+  return  (
+    
+      (data[questionNumber]?
+        <Fragment><div className="landing">
         <Grid container style={{ marginTop: "4vh" }}>
           <Grid item xs={10}>
             <div className="text-title">
@@ -240,6 +243,7 @@ const Page1 = ({
           </Grid>
         </div>
       </div>
+      
       <style jsx>
         {`
           .buttonAnswer {
@@ -342,6 +346,7 @@ const Page1 = ({
         `}
       </style>
     </Fragment>
+      :null)
   );
 };
 export default Page1;

@@ -12,24 +12,22 @@ const instructor = () => {
                             <img
                                 src="/images/package/somsri.svg"
                                 className="google-logo"
-                                style={{ width: 130, height: 130, marginRight: 40 }}
+                                style={{ width: 120, height: 120, marginRight: 40 }}
                             />
 
                         </div>
                         <div className="col-6">
                             <h1>Savannah Nguyen</h1>
-                            <div style={{ fontSize: 15, marginBottom: 25 }}>Massachusetts Institute of Technology</div>
+                            <div style={{ fontSize: 15, marginBottom: 15 }}>Massachusetts Institute of Technology</div>
                             <div style={{display:'flex', flexDirection:'row'}}>
                                 <div className="col-6" >
                                     <img
                                         src="/images/package/book.svg"
                                         className="google-logo"
-                                        style={{ width: 30, height: 30, marginRight: 10 }}
+                                        style={{ width: 25, height: 30, margin: '0 10px 5px 0' }}
                                     />
                                 </div>
-
-                                <div className="col-6" style={{display:'flex',fontSize: 13, paddingTop:10}}>5 courses</div>
-
+                                <div className="col-6" style={{display:'flex',fontSize: 13, paddingTop: 7}}>5 courses</div>
                             </div>
                         </div>
                     </div>

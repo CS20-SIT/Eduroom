@@ -1,11 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../../styles/tutor/utils'
 
-import CSSTransition from 'react-transition-group/CSSTransition'
-
 import api from '../../../../api'
 
-import GeneralNoNav from '../../../../components/template/generalnonav'
+import GeneralNoNav from '../../../../components/template/general'
 
 import AppointmentList from '../../../../components/tutor/instructor-appointment/appointment-list'
 import AppointmentInfo from '../../../../components/tutor/instructor-appointment/appointment-info'

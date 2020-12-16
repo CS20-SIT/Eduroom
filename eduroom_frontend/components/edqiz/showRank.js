@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import GeneralNoSide from "../../components/template/generalnoside";
 import api from '../../api';
+import Link from "next/link";
 
 const page3 = ({pin}) => {
   const [sessionid, setSesstionID] = useState(null);
@@ -64,9 +65,11 @@ const page3 = ({pin}) => {
               </div>
             </Grid>
             <Grid item xs={4} >
+            <Link href={`/edqiz/edqizList`}>
               <div className="buttonAREA">
                 <button className="button">GO TO EDQIZ LIST</button>
               </div>
+              </Link>
             </Grid>
             <Grid item xs={12} style={{ justifyContent: 'center', display: 'flex' }}>
               <div className="card">
