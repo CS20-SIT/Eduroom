@@ -263,8 +263,6 @@ exports.adminLoginController = async (req, res) => {
 		return errorHandler(err, req, res)
 	}
 
-	console.log(existingAdmin.rows[0].password);
-	console.log(password);
 	const matchedPassword = await bcrypt.compare(password, existingAdmin.rows[0].password)
 	if(!matchedPassword){
 		const err = {
@@ -281,6 +279,6 @@ exports.adminLoginController = async (req, res) => {
 
 exports.adminProfileController = async (req, res) => {
 	const adminId = req.user.id
-	const admin = await pool.query(`SELECT SELECT displayname, firstname, lastname, avatar, role FROM admin_login FROM admin_login WHERE adminid = '${adminId}';`)
+	const admin = await pool.query(`SELECT displayname, firstname, lastname, avatar, role FROM admin_login WHERE adminid = '${adminId}';`)
 	res.send(admin.rows[0])
 }

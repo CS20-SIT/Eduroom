@@ -19,8 +19,8 @@ const jwtAuthenicate = (req, res, next) => {
 
 const jwtAdminAuthenticate = (req, res, next) => {
   const token = req.cookies.jwt
+  if(!token) return next(new ErrorResponse('Not Authenticate', 401));
   const adminId = verifyCookieAdminJWT(token)
-  console.log(adminId);
   if(adminId != null){
     req.user = {
       id: adminId
