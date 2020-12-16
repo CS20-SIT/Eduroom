@@ -31,6 +31,34 @@ module.exports = {
 				message: 'Hello this is test',
 				sendtime: '07/11',
 			},
+			{
+				chatroomid: 4,
+				firstname: 'John',
+				roomname: 'test4',
+				message: 'Hello this is test',
+				sendtime: '07/11',
+			},
+			{
+				chatroomid: 5,
+				firstname: 'John',
+				roomname: 'test4',
+				message: 'Hello this is test',
+				sendtime: '07/11',
+			},
+			{
+				chatroomid: 6,
+				firstname: 'John',
+				roomname: 'test4',
+				message: 'Hello this is test',
+				sendtime: '07/11',
+			},
+			{
+				chatroomid: 7,
+				firstname: 'John',
+				roomname: 'test4',
+				message: 'Hello this is test',
+				sendtime: '07/11',
+			},
 		]
 	},
 	getChatRoomProfilePictureMockup1: (chatRoomID) => {
@@ -67,7 +95,7 @@ module.exports = {
 					userFirstName: 'jimmy',
 					userLastName: 'supawit',
 					display: 'jim',
-					email: 'test',
+					email: 'test@mail.com',
 					userProfile: 'test.png',
 				},
 				{
@@ -75,10 +103,31 @@ module.exports = {
 					userFirstName: 'jimmy2',
 					userLastName: 'supawit',
 					display: 'jim2',
-					email: 'test2',
+					email: 'test2@mail.com',
+					userProfile: 'test.png',
+				},
+				{
+					userID: 1232,
+					userFirstName: 'jimmy3',
+					userLastName: 'supawit',
+					display: 'jim2',
+					email: 'test3@mail.com',
+					userProfile: 'test.png',
+				},
+				{
+					userID: 122436,
+					userFirstName: 'jimmy4',
+					userLastName: 'supawit',
+					display: 'jim2',
+					email: 'test4@mail.com',
 					userProfile: 'test.png',
 				},
 			],
+		}
+	},
+	selectSearchResultMockup:(userID)=>{
+		return {
+			success: true,
 		}
 	},
 	createGroupChatMockup: (profilePic, chatRoomName, members) => {
@@ -88,12 +137,33 @@ module.exports = {
 	},
 	getInvitationListMockup: (userID) => {
 		return {
-			invitaions: [
+			invitations: [
 				{
 					invitaionID: 1,
 					chatRoomID: 2,
 					chatRoomName: 'Krishadawut',
 					invitor: 'Jimmy',
+					profilePicture: 'test.png',
+				},
+				{
+					invitaionID: 2,
+					chatRoomID: 4,
+					chatRoomName: 'Client',
+					invitor: 'Krishadawut',
+					profilePicture: 'test.png',
+				},
+			],
+		}
+	},
+	getInvitationListMockup2: (userID) => {
+		return {
+			invitations: [
+				{
+					invitaionID: 1,
+					chatRoomID: 2,
+					chatRoomName: 'Krishadawut',
+					invitor: 'Jimmy',
+					profilePicture: 'test.png',
 				},
 			],
 		}
