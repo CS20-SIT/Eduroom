@@ -1,0 +1,32 @@
+.disable {
+    border: solid 8px;
+    opacity: 0.5;
+    /* background-color: #f39ac4; */
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    color: #f39ac4;
+    font-size: 50px;
+      font-weight: 1000;
+    }
+    .btn {
+      border: solid 8px;
+      opacity: 1;
+      /* background-color: #f39ac4; */
+      border: none;
+      outline: none;
+      border-radius: 12px;
+      color: #f39ac4;
+      font-size: 50px;
+      font-weight: 1000;
+    }
+    .box{
+      position: relative;
+  
+    }
+    .cardContainer{
+        margin:10%;
+    }
+    
+  
+  

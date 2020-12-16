@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import Page1 from './gamePage1';
 import Page2 from './gamePage2';
 import Page3 from "./showRank";
-
+import api from '../../api';
 import socketIOClient from 'socket.io-client';
 import { useRouter } from 'next/router';
 
@@ -12,56 +12,80 @@ const Content = ({ id }) => {
   const [endTime, setEndTime] = useState(null);
   const [questionNumber, setquestionNumber] = useState(0);
   const [messages, setMessages] = useState([]);
+  const [answerAll, setAnswerAll] = useState([]);
 
+
+  const [questionList, setQuestionList] = useState([])
+  const [correct, setCorrrect] = useState([])
   const handleChangeQuestionNumber = (val) => {
-    if(questionNumber==data.length-1){
+    if (questionNumber == questionList.length - 1) {
       goto(3)
     }
     setquestionNumber(val);
-    console.log('handle',questionNumber,data.length)
+    // console.log('handle', questionNumber, data.length)
   };
 
-  const data = [
-    {
-      question:
-        'directory anything else. The name cannot be changed and is the only directory used to serve static assets?',
-      time: '10',
-      point: '2000',
-      ans: [
-        'have a static file with the same',
-        'directory at build time will be served',
-        "Files added at runtime won't be available",
-        'ecommend using a third party service ',
-      ],
-      correct: 0,
-      image: null,
-    },
-    {
-      question: ' COVID-19 and related health topics?',
-      time: '10',
-      point: '2000',
-      ans: ['Abortion: Safety Abortion: Safety · Addictive behaviours: Gaming disorder', ' Ageing: Global population Ageing: Global ', ' Care and support at home', 'What assistance can I get at home'],
-      correct: 1,
-      image: null,
-    },
-    {
-      question: 'Browse the WebMD Questions and Answers',
-      time: '10',
-      point: '2000',
-      ans: ['A-Z library for insights and advice for better health', 'tap Edit question or Delete question', 'When your question is answered', ' you will get a notification'],
-      correct: 2,
-      image: null,
-    },
-    {
-      question: ' can have difficulty finding the right words or phrases to answer?',
-      time: '10',
-      point: '2000',
-      ans: ['simple questions. Here are 20 of the most common questions', 'We have compiled a list of 46 common interview questions you might be asked', 'plus advice on how to answer each and every one of them', 'Read tips and example answers for 125 of the most common job interview'],
-      correct: 3,
-      image: null,
-    },
-  ];
-  // const [time, setTime] = useState(data[questionNumber].time);
+  const [sessionid, setSesstionID] = useState(null);
+  const [data1, setData] = useState([]);
+  useEffect(() => {
+    const fetchSession = async () => {
+      let pin = router.query.id
+      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      console.log('resdata', res.data)
+      setSesstionID(res.data.sessionid)
+    };
+    fetchSession();
+
+  }, []);
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      const question = await api.get(`/api/kahoot/question/${sessionid}`);
+      setData(question.data.question.rows)
+
+      console.log('answerAll', question.data.answerAll)
+      answerAll.push(question.data.answerAll)
+      console.log('correct', question.data.correct[1])
+      correct.push(question.data.correct)
+      console.log('correctQuestion', correct[0][0])
+    };
+    if (sessionid != null)
+      fetchQuestion();
+
+  }, [sessionid]);
+  useEffect(() => {
+    console.log('datalenght', data1.length)
+    if (answerAll[0]) {
+      let j=0
+      for (let i = 0; i <data1.length; i++) {
+        let questionTemplate = {
+          question: '',
+          time: '',
+          point: '',
+          ans: ['', '', '', ''],
+          correct: 0,
+          image: null,
+        }
+        questionTemplate.question = data1[i].text;
+        console.log('question',data1[i].text)
+        questionTemplate.time = data1[i].time;
+        questionTemplate.point = data1[i].point
+        questionTemplate.ans[0] = answerAll[0][i][0].text
+        questionTemplate.ans[1] = answerAll[0][i][1].text
+        questionTemplate.ans[2] = answerAll[0][i][2].text
+        questionTemplate.ans[3] = answerAll[0][i][3].text
+        questionTemplate.correct = correct[0][i]
+        j++
+        questionTemplate.image = '../../image'
+        console.log('template');
+        console.log(questionTemplate);
+        questionList.push(questionTemplate);
+      }
+      setQuestionList([...questionList])
+    }
+  }, [data1, answerAll]);
+  useEffect(() => {
+    console.log('questionList',questionList)
+  }, [questionList])
 
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
@@ -134,7 +158,7 @@ const Content = ({ id }) => {
             goto={goto}
             // time={data[questionNumber].time}
             endTime={endTime}
-            data={data}
+            data={questionList}
             questionNumber={questionNumber}
             sentMessage={sentMessage}
             response={response}
@@ -145,7 +169,7 @@ const Content = ({ id }) => {
         return (
           <Page2
             goto={goto}
-            data={data}
+            data={questionList}
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
             setNextQuestion={setNextQuestion}
@@ -154,19 +178,19 @@ const Content = ({ id }) => {
             id={id.id}
           />
         );
-        case 3:
-          return (
-            <Page3
-              goto={goto}
-              data={data}
-              questionNumber={questionNumber}
-              ChangeQuestionNumber={handleChangeQuestionNumber}
-              setNextQuestion={setNextQuestion}
-              // setTime={setTime}
-              setTimeSocket={setTimeSocket}
-              pin={id.id}
-            />
-          );
+      case 3:
+        return (
+          <Page3
+            goto={goto}
+            data={questionList}
+            questionNumber={questionNumber}
+            ChangeQuestionNumber={handleChangeQuestionNumber}
+            setNextQuestion={setNextQuestion}
+            // setTime={setTime}
+            setTimeSocket={setTimeSocket}
+            pin={id.id}
+          />
+        );
     }
   };
   return (
