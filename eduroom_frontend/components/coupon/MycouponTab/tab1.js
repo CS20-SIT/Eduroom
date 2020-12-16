@@ -11,7 +11,7 @@ const Content = () => {
 
        
         <div className="tab1">
-        <div style={{paddingTop:"100px"}}>
+        <div style={{paddingTop:"100px" ,marginLeft:"150px"}}>
         <div className="ad-tab1-header">Be seen where </div>
         <div className="ad-tab1-header" style={{marginTop:"-10px"}}>everyone is watching </div>
           <div className="ad-tab1-description">

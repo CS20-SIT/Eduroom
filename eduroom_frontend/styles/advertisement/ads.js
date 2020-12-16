@@ -97,7 +97,7 @@ export default css`
     font-family: 'Quicksand', sans-serif;
   }
   .tab1 {
-    width: 1635px;
+    
     height: 730px;
     // background-image: url('/images/BG_Landing.svg');
   }
@@ -123,5 +123,8 @@ export default css`
   }
   .adinform {
     background-image: url('/images/package/purchesed.svg');
+  }
+  .background{
+    background-image:url('/images/big-bg.svg')
   }
 `;
