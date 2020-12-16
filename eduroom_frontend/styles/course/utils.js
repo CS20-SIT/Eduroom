@@ -225,6 +225,9 @@ export default css`
   .h-full {
     height: 100%;
   }
+  .h-20 {
+    height: 20%;
+  }
   .h-40 {
     height: 40%;
   }
@@ -234,6 +237,7 @@ export default css`
   .h-screen {
     height: 100vh;
   }
+  
 
   /* Width */
   .w-1 {
@@ -508,6 +512,10 @@ export default css`
   /* Course Picture */
   .pic-1 {
     border-radius: 30px 30px 0px 0px;
+  }
+  .pic-2 {
+    width: 550px;
+    height: 400px;
   }
 
 
