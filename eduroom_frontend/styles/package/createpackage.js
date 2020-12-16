@@ -157,6 +157,14 @@ input[type=checkbox] {
     box-shadow: 0 0px 6px 2px rgba(0,0,0,0.1);
     transition: 0.25s;
 }
+.disabled{
+    opacity: 0.75;
+}
+.disabled:hover{
+    cursor: default;
+    opacity: 0.75;
+    box-shadow: none;
+}
 .cfbutton {
     display: grid;
     justify-content: space-around;
