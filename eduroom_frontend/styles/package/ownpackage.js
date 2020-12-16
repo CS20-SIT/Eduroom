@@ -101,7 +101,15 @@ export default css`
 .ycbutton:hover {
     cursor: pointer;
     opacity: 0.9;
-  }
+}
+.disabled{
+    cursor: default;
+    opacity: 0.9;
+}
+.disabled:hover{
+    cursor: default;
+    opacity: 0.9;
+}
 
 .fa-pen {
     padding-right: 8px;

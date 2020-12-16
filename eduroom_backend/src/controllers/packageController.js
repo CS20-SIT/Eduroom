@@ -10,16 +10,12 @@ exports.getCategories = async (req, res, next) => {
 }
 exports.createPackage = async (req, res, next) => {
 	const instructorId = req.user.instructor
-	console.log('id is ', instructorId)
 	let data = req.body
 	data.category = parseInt(data.category)
-	console.log('data is ', data)
 	const results = await pool.query(
 		'INSERT INTO package(packagename, instructorid, discount, ispublic,detail,image,cateid) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
 		[data.name, instructorId, data.discount, data.ispublic, data.detail, data.image, data.category]
 	)
-	console.log('result is')
-	console.log(results.rows[0])
 	const { packageid } = results.rows[0]
 	const { courses } = req.body
 	for (let i = 0; i < courses.length; i++) {
@@ -27,9 +23,16 @@ exports.createPackage = async (req, res, next) => {
 			packageid,
 			courses[i],
 		])
-		console.log('insert ', courses[i], ' success')
 	}
 	res.send(results.rows[0])
+}
+
+exports.deletePackage = async (req, res, next) => {
+	const { packageid } = req.body
+	console.log('id is ',packageid)
+	await pool.query(`DELETE FROM package_courses where packageid = $1`, [packageid])
+	await pool.query(`DELETE FROM package where packageid = $1`,[packageid])
+	res.send({success: true})
 }
 
 exports.getPackage = async (req, res, next) => {
