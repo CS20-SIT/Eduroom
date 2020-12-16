@@ -154,4 +154,3 @@ export default Course;
 // 		</Fragment>
 // 	)
 // }
-export default packages
