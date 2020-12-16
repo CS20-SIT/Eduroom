@@ -6,7 +6,7 @@ import style from '../../styles/layout/navbar'
 import UserContext from '../../contexts/user/userContext'
 import NavContext from '../../contexts/landing/navContext'
 
-const Navbar = ({ children }) => {
+const Navbar = ({ children, isProtected = false }) => {
 	const userContext = useContext(UserContext)
 	const navContext = useContext(NavContext)
 	const { getUser, logoutUser } = userContext
@@ -15,7 +15,7 @@ const Navbar = ({ children }) => {
 	const router = useRouter()
 
 	useEffect(() => {
-		getUser()
+		getUser(router,isProtected)
 	}, [])
 
 	const getOp = () => {
@@ -37,11 +37,11 @@ const Navbar = ({ children }) => {
 						<div style={{width:'50%'}}>{children}</div>
 						<div className="navDefault">
 							{user ? (
-								<div className="navItem">
+								<div className="navItem" id="fav-btn">
 									<i className="fas fa-heart"></i>
 								</div>
 							) : null}
-							<div className="navItem">
+							<div className="navItem" id="cart-btn">
 								<i className="fas fa-shopping-cart" />
 							</div>
 							{user ? (
@@ -52,16 +52,16 @@ const Navbar = ({ children }) => {
 									<div className="navItem" onClick={handleLogout}>
 										<span style={{ color: '#3d467f' }}>Logout</span>
 									</div>
-									<div className="navItem" onClick={gotoProfile}>
+									<div className="navItem" onClick={gotoProfile} id="acc-btn">
 										<img className="avatar" src={user.avatar} width="40" height="40" alt="avatar"></img>
 									</div>
 								</Fragment>
 							) : (
 								<Fragment>
-									<div className="navItem">
+									<div className="navItem" id="login-btn">
 										<Link href="/login">Login</Link>
 									</div>
-									<div className="navAction">
+									<div className="navAction" id="signup-btn">
 										<Link href="/register">
 											<button className="navLogin">
 												<span className="navLoginText">Sign Up</span>

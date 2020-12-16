@@ -7,12 +7,13 @@ const bestSeller = () => {
         <Fragment>
             <div>
 
-                <Button style={{ backgroundColor: '#DED3FF', borderRadius: 24, fontSize: 13, height: '25', marginRight: 20, marginBottom: 10, width: 'auto', padding: 'auto' }}>
+                <Button style={{ backgroundColor: '#DED3FF', borderRadius: 24, fontSize: 12, margin: '10 20', fontWeight: 650, color:'#2A00A2' }}>
                     <img
                         src="/images/package/Tag.svg"
-                        style={{ width: 20, height: 20, marginRight: 5 }}
+                        style={{ width: 20, height: 20, marginRight: 5, padding: '0px 0px 2px 0px' }}
                     />
-                    Best Seller</Button>
+                    Best Seller
+                </Button>
             </div>
             <style jsx>
                 {

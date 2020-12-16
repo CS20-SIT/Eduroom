@@ -4,6 +4,7 @@ import {Link,Typography,InputBase, Paper, Grid} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import General from '../template/general'
 
+
 import api from "../../api";
 
 
@@ -29,15 +30,43 @@ const Content = () => {
     verifyCode: "",
   }); 
   const handleSubmit = (e) => {
-      console.log(createinfo);
-      // api.post("/api/registerUemail", createinfo).then((res) => {
-      //   console.log(res);
-      //   router.push("/registerUemail");
-      //   console.log("PASSPUSH");
-      // });
-     
-      
+    e.preventDefault();
+    if (validator()) {
+      console.log(createForm);
+      api.post("/api/forum/create", createForm).then((res) => {
+        console.log(res);
+        // router.push("/forum");
+      });
+    } else {
+      console.log("This form is not valid");
+    }
   };
+  const [alert, setAlert] = useState({
+    verifyCode: false,
+  })
+   const [supportForm, setForm] = useState({
+    verifyCode: '',
+    
+  })
+  const validator = () => {
+    let keys = Object.keys(createForm);
+    let temp = { ...alert };
+    let check = true;
+    for (let key of keys) {
+      if (createForm[key] == "") {
+        temp[key] = true;
+        check = false;
+        console.log(key)
+      } else {
+        temp[key] = false;
+      }
+    }
+    setAlert(temp);
+    return check;
+  };
+  const [createForm] = useState({
+    verifyCode: "",
+  });
   const classes = useStyles();
   const [checked, setChecked] = React.useState(true);
   const handleChange = (e) => {
@@ -89,13 +118,21 @@ const Content = () => {
                         fullWidth
                         autoFocus
                         type={"text"}
-                        value={createinfo.localPart}
+                        //value={createinfo.localPart}
                         className={classes.margin}
                         placeholder = {"XXXXXXXXXX"}
                         inputProps={{ 'aria-label': 'naked' }}
+                        //error={alert.verifyCode}
                       />
-                    </form>
+                      </form>
+                      
+                    
                   </Paper>
+                  {alert.verifyCode ? (
+                      <span style={{ color: 'red', fontSize: '0.8em' }}>
+                        Please insert code!
+                      </span>
+                    ) : null}
                   </Grid>
 
                 <Grid container spacing={3} direction="column"

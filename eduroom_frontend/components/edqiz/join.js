@@ -11,7 +11,6 @@ const Page1 = ({ goto, mockData, change, name }) => {
   useEffect(() => {
     const fetchData = async () => {
       let pin = router.query.room
-      // console.log(pin,'pin')
       const res = await api.get(`/api/kahoot/sessionid/${pin}`);
       console.log('resdata', res.data)
       setSesstionID(res.data)
@@ -26,7 +25,7 @@ const Page1 = ({ goto, mockData, change, name }) => {
     const res = await api.post('/api/kahoot/player', nameforplay);
     const sessionTemp = sessionid
     console.log(sessionTemp, 'sesstionIDTemp')
-    const resSession = await api.post('/api/kahoot/roomHistoryplayer', sessionTemp);
+    const resSession = await api.post('/api/kahoot/roomHistoryplayerFirstTime', sessionTemp);
     console.log(resSession, 'session success')
 
   };

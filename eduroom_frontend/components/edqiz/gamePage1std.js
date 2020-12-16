@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { useRouter } from "next/router";
 import socketIOClient from "socket.io-client";
+import api from '../../api';
+
 
 const axios = require("axios");
 const Page1 = ({
@@ -12,42 +14,98 @@ const Page1 = ({
   response,
   setAnswer,
   answer,
+  pin
 }) => {
   const router = useRouter();
-
+  const [answerPage1,setAnswerPage1]=useState(99);
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: "/kahoot",
   });
- 
-  // console.log("message", messages);
+  const [countPlayer, setCountPlayer] = useState([]);
+  const setCountP = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = [];
+    socket.emit("room", (router.query.id));
+    socket.on("get-countAnswer", (pin, questionNo,playerAnswer) => {
+      temp.push([playerAnswer]);
+      countPlayer.push(temp);
+    });
+  };
   const room = { name: "room1", PIN: router.query.id };
-
-  ////////////
   const [diff, setDiff] = useState(null);
 
-  //////////////
+  const setCountAnswer = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    socket.emit("set-countAnswer", router.query.id, 1);
+  };
 
+  const [sessionid, setSesstionID] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+
+      console.log(pin,'pin')
+      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      setSesstionID(res.data.sessionid)
+    };
+    fetchData();
+  }, []);
+  
+
+  const handleUpdateScore = async () => {
+    const sessionTemp = sessionid;
+    const point=data[questionNumber].point;
+    const postUpdateScore = { sessionid:sessionid, point:point}
+    const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
+  };
+
+  const updateScore= async (answerTemp)=>{
+    if(data[questionNumber].correct==answerTemp){
+      handleUpdateScore();
+    }
+  }
+  useEffect(() => {
+    setCountP();
+    
+  }, [countPlayer]);
+
+  const getSkip=()=>{
+
+    console.log('answer',answer)
+    socket.on("get-skip", (isSkip) => {
+      console.log('getskip from page 1')
+      if ((isSkip || answer == data[questionNumber].correct)&&answer==99) {
+    
+          console.log(answer == data[questionNumber].correct,'skip');
+          goto(4);
+        
+      }
+    });
+    setAnswer('99');
+    console.log('answer99',answer)
+  }
+  
   useEffect(() => {
     socket.emit("room", (router.query.id));
     socket.on("get-diff", (time,pin) => {
       setDiff(time);
-      console.log('get-diff',time,pin)
-      if (time == 0) {
-        if (answer == data[questionNumber].correct) {
-          console.log(answer == data[questionNumber].correct);
-          goto(2);
-        } else {
-          goto(4);
-        }
-      }
-    });
-
-  
-
+      
+    },[]);
     sentMessage();
+    getSkip();
     response();
-  }, []);
+  }, [answer]);
+
+  useEffect(()=>{
+    if (answerPage1==99 &&diff===0) {
+        goto(4);
+    }
+  },[diff])
   return (
+    (data[questionNumber]?
     <Fragment>
       <div className="landing">
         <Grid container style={{ marginTop: "4vh" }}>
@@ -55,6 +113,7 @@ const Page1 = ({
             <div className="text-title">
               NICKNAME : <div>katak</div>
               PIN :<div style={{ color: "#FB9CCB" }}>{room.PIN}</div>
+              
             </div>
           </Grid>
           <Grid
@@ -99,7 +158,7 @@ const Page1 = ({
             <Grid item xs={4}>
               <div className="text-time">ANSWER</div>
               <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
-                0
+                {countPlayer.length}
               </div>
             </Grid>
           </Grid>
@@ -121,10 +180,10 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#F39AC4" }}
                 onClick={() => {
-                  setAnswer("0"), goto(3);
+                  setAnswerPage1(0),
+                  setAnswer(0), goto(3),setCountAnswer(),updateScore(0);
                 }}
               >
-                {setAnswer("0")}
                 {data[questionNumber].ans[0]}
               </button>
             </Grid>
@@ -137,7 +196,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#D5C1FC" }}
                 onClick={() => {
-                  setAnswer(1), goto(3);
+                  setAnswer(1), goto(3),setCountAnswer(),updateScore(1);
                 }}
               >
                 {/* {goto(3)} */}
@@ -162,7 +221,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#FDD4C1" }}
                 onClick={() => {
-                  setAnswer(2), goto(3);
+                  setAnswer(2), goto(3),setCountAnswer(),updateScore(2);
                 }}
               >
                 {data[questionNumber].ans[2]}
@@ -177,7 +236,7 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#A6CEEE" }}
                 onClick={() => {
-                  setAnswer(3), goto(3);
+                  setAnswer(3), goto(3),setCountAnswer(),updateScore(3);
                 }}
               >
                 {data[questionNumber].ans[3]}
@@ -288,6 +347,7 @@ const Page1 = ({
         `}
       </style>
     </Fragment>
+    :null)
   );
 };
 export default Page1;
