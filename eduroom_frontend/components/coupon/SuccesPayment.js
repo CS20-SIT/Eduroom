@@ -12,7 +12,7 @@ const successPopup = (props) => {
                 PURCHASED !
             </h1>
             <img className={Styles.photoPurchase} src='../../images/Coin-image/paypal 1.svg' />
-            <button className={Styles.btn} onClick={props.close}>Go to Sticker Store</button>
+            <button className={Styles.btn} onClick={props.close}>Go to Coupon Store</button>
         </div>
     );
 }
