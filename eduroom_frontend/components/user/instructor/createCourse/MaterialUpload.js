@@ -1,23 +1,24 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../../../styles/user/instructor/createCourse/create'
 
-const CourseVideoUpload = ({ video, sectionIndex, index, handleData }) => {
+const MaterialUpload = ({material,sectionIndex, index, handleData}) => {
 	const handleUplaodFile = (e) => {
-		let newValue = e.target.files[0]
-		handleData(newValue)
+    let newValue = e.target.files[0]
+    handleData(newValue)
 	}
 
-	const getLabel = () => {
-		return video.data ? video.data.name : 'Choose Video'
+  const getLabel = () => {
+    console.log('material is ',material)
+		return material.data ? material.data.name : 'Choose pdf file'
 	}
 
 	return (
 		<Fragment>
 			<div className="textfield">
 				<input
-					id={'video-section' + sectionIndex + '-' + index}
+					id={'material-section' + sectionIndex + '-' + index}
 					type="file"
-					accept="video/*"
+					accept="application/pdf"
 					hidden={true}
 					onChange={handleUplaodFile}
 				/>
@@ -26,7 +27,7 @@ const CourseVideoUpload = ({ video, sectionIndex, index, handleData }) => {
 					<span
 						className="camera"
 						onClick={() => {
-							document.getElementById('video-section' + sectionIndex + '-' + index).click()
+							document.getElementById('material-section' + sectionIndex + '-' + index).click()
 						}}
 					>
 						<i className="fas fa-video"></i>
@@ -37,4 +38,4 @@ const CourseVideoUpload = ({ video, sectionIndex, index, handleData }) => {
 		</Fragment>
 	)
 }
-export default CourseVideoUpload
+export default MaterialUpload
