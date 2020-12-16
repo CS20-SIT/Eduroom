@@ -2,10 +2,65 @@ import React, { Fragment, useState, useEffect } from "react";
 import axios from 'axios';
 import style from "../../styles/calendar/calendar";
 import Image from "next/image";
+import CSSTransition from 'react-transition-group/CSSTransition';
 
 
 const edit = (props) => {
-    return (
+
+  const [editOpen, setEditOpen] = useState(false);
+  const [eventInfo, setEventInfo] = useState({
+    title: "",
+    type: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    startTime: "",
+    endTime: "",
+    place: "",
+  });
+  const handleCreate = (e) => {
+
+    if (eventInfo.type == 'Global') {
+      eventInfo.type = '1'
+    } else {
+      eventInfo.type = '2'
+    }
+    console.log(eventInfo);
+    // if (validator()) {
+    api.post("/api/event/createEvent", {
+      title: eventInfo.title,
+      type: eventInfo.type,
+      description: eventInfo.description,
+      startDate: eventInfo.startDate,
+      endDate: eventInfo.endDate,
+      startTime: eventInfo.startTime,
+      endTime: eventInfo.endTime,
+      place: eventInfo.place,
+    });
+    // }
+  };
+  const eventType = ["Course", "Global"];
+
+
+
+
+  return (
+    <Fragment>
+
+      <div onClick={() => { setEditOpen(true) }}>
+        <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
+      </div>
+
+
+      <CSSTransition
+        mountOnEnter
+        unmountOnExit
+        in={editOpen}
+        timeout={{ enter: 700, exit: 100 }}
+        classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
+      >
+        asdasdasd
+      </CSSTransition>
 
 
 
@@ -15,8 +70,6 @@ const edit = (props) => {
 
 
 
-        <Fragment>
-            <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
 
 
 
@@ -30,39 +83,10 @@ const edit = (props) => {
 
 
 
-            <style jsx>{style}</style>
-            <style jsx>
-                {
-                    `
-                        .fade-in {
-                          animation: fade-in 0.3s forwards;
-                        }
-                        .fade-out {
-                          animation: fade-out 0.3s forwards;
-                        }
-                        @keyframes fade-in {
-                          0% {
-                            opacity: 0;
-                          }
-                          100% {
-                            opacity: 1;
-                          }
-                        }
-                        @keyframes fade-out {
-                          0% {
-                            opacity: 1;
-                          }
-                          100% {
-                            opacity: 0;
-                          }
-                        }
 
-                        
-                        
-                        `
-                }
-            </style>
-        </Fragment>
-    )
+      <style jsx>{style}</style>
+
+    </Fragment>
+  )
 };
 export default edit;

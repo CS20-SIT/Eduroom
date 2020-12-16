@@ -1,6 +1,6 @@
 const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
-exports.getEvent = async (req, res, next) => {
+exports.getGlobalEvent = async (req, res, next) => {
 
   const data = await pool.query(
     `select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) 
@@ -10,11 +10,23 @@ exports.getEvent = async (req, res, next) => {
   res.send(data.rows)
   return
 }
-exports.GetCourses = async (req, res, next) => {
-	const instructorId = req.user.instructor
-	const result = await pool.query("select courseid,coursename from course where ownerid= $1", [instructorId])
-	res.send(result.rows)
+
+
+exports.getCourseEvent = async (req, res, next) => {
+
+  const data = await pool.query(
+    `select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) 
+      as Hstart, EXTRACT(MINUTE FROM starttime) as Mstart,EXTRACT(HOUR FROM endtime) 
+      as Hend, EXTRACT(MINUTE FROM endtime) as Mend from course_event`
+  )
+  res.send(data.rows)
+  return
 }
+// exports.GetCourses = async (req, res, next) => {
+// 	const instructorId = req.user.instructor
+// 	const result = await pool.query("select courseid,coursename from course where ownerid= $1", [instructorId])
+// 	res.send(result.rows)
+// }
 exports.createEvent = async (req, res, next) => {
   const title = req.body.title;
   // title: eventInfo.title,

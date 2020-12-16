@@ -202,16 +202,6 @@ export default css`
   border-radius : 10px;
   
 }
-.d-block-unhover {
-  animation: down 0.2s forwards;
-}
-.d-block:hover {
-  animation: up 0.2s forwards ease-out;
-  cursor : pointer;
-}
-
-
-
 
 
 
@@ -275,7 +265,7 @@ ul li::before {
 .bg-calendar{
 
   position : absolute;
-  top : 60%;
+  top : 64%;
   left : 67%;
   z-index: 2; 
   
