@@ -102,11 +102,11 @@ export default css`
     cursor: pointer;
     opacity: 0.9;
 }
-.disabled{
+.btnDisabled{
     cursor: default;
     opacity: 0.9;
 }
-.disabled:hover{
+.btnDisabled:hover{
     cursor: default;
     opacity: 0.9;
 }
