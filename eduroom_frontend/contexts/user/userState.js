@@ -31,11 +31,7 @@ const userState = (props) => {
 			const login = await api.post('/api/auth/login', body)
 			const user = await api.get('/api/auth/profile')
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: user.data })
-			if(!login.data.isVerify){
-				router.push(`/verify`)
-			} else {
-				router.push('/')
-			}
+			router.push('/')
 		} catch (err) {
 			const error = err.response.data.error
 			dispatch({ type: LOGIN_USER_FAIL, payload: error })
@@ -57,10 +53,10 @@ const userState = (props) => {
 		}
 	}
 
-	const getUser = async (router) => {
+	const getUser = async (router,needVerify = false) => {
 		try {
 			const res = await api.get('/api/auth/profile')
-			if(!res.data.verify){
+			if(needVerify && !res.data.verify){
 				router.push('/verify')
 			}
 			dispatch({ type: GET_USER_SUCCESS, payload: res.data })

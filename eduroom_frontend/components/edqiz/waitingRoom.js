@@ -19,7 +19,6 @@ const Content = ({ id }) => {
 
 
   const handleSubmit = async (body) => {
-    console.log('helllo');
     const res = await api.post('/api/kahoot/roomHistory', body);
     console.log(res.data);
   };

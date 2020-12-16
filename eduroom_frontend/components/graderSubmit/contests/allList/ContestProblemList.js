@@ -1,7 +1,9 @@
 import { Fragment } from 'react'
+import { useRouter } from 'next/router'
 import style from '../../../../styles/graderSubmit/contests/contestPage/problem/contestProblemList'
 
 const ContestProblemList = (props) => {
+	const router = useRouter()
 	const difficultyColor = (props) => {
 		switch (props.difficulty.toLowerCase()) {
 			case 'easy':
@@ -34,7 +36,12 @@ const ContestProblemList = (props) => {
 	return (
 		<Fragment>
 			{props.number ? (
-				<div className="flex-container">
+				<div
+					className="flex-container"
+					onClick={() => {
+						router.push(`/graderSystem/contest/${props.contestID}/problem/${props.id}`)
+					}}
+				>
 					<div className="flex-item" style={{ flexBasis: '15%' }}>
 						{props.number}
 					</div>

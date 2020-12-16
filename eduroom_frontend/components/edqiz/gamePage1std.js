@@ -17,7 +17,7 @@ const Page1 = ({
   pin
 }) => {
   const router = useRouter();
-
+  const [answerPage1,setAnswerPage1]=useState(99);
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: "/kahoot",
   });
@@ -35,68 +35,77 @@ const Page1 = ({
   };
   const room = { name: "room1", PIN: router.query.id };
   const [diff, setDiff] = useState(null);
+
   const setCountAnswer = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
     socket.emit("set-countAnswer", router.query.id, 1);
   };
+
   const [sessionid, setSesstionID] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
 
       console.log(pin,'pin')
       const res = await api.get(`/api/kahoot/sessionid/${pin}`);
-      // console.log('resdata', res.data.sessionid)
       setSesstionID(res.data.sessionid)
-      console.log(res)
     };
     fetchData();
   }, []);
+  
 
   const handleUpdateScore = async () => {
     const sessionTemp = sessionid;
-    console.log('sesstionTemp',sessionTemp)
     const point=data[questionNumber].point;
     const postUpdateScore = { sessionid:sessionid, point:point}
-    console.log('postUpdateScore',postUpdateScore)
     const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
-    console.log('handleUpdateScore',res.data);
   };
 
   const updateScore= async (answerTemp)=>{
     if(data[questionNumber].correct==answerTemp){
-      console.log('yes right answer')
       handleUpdateScore();
-    }else{
-      console.log('ไอคว๊าย')
     }
   }
-
   useEffect(() => {
     setCountP();
     
   }, [countPlayer]);
+
+  const getSkip=()=>{
+
+    console.log('answer',answer)
+    socket.on("get-skip", (isSkip) => {
+      console.log('getskip from page 1')
+      if ((isSkip || answer == data[questionNumber].correct)&&answer==99) {
+    
+          console.log(answer == data[questionNumber].correct,'skip');
+          goto(4);
+        
+      }
+    });
+    setAnswer('99');
+    console.log('answer99',answer)
+  }
+  
   useEffect(() => {
     socket.emit("room", (router.query.id));
     socket.on("get-diff", (time,pin) => {
       setDiff(time);
-      if (time == 0) {
-        if (answer == data[questionNumber].correct) {
-          console.log(answer == data[questionNumber].correct);
-          goto(2);
-        } else {
-          goto(4);
-        }
-      }
-    });
-
-  
-
+      
+    },[]);
     sentMessage();
+    getSkip();
     response();
-  }, []);
+  }, [answer]);
+
+  useEffect(()=>{
+    if (answerPage1==99 &&diff===0) {
+        goto(4);
+    }
+  },[diff])
   return (
+    (data[questionNumber]?
     <Fragment>
       <div className="landing">
         <Grid container style={{ marginTop: "4vh" }}>
@@ -104,6 +113,7 @@ const Page1 = ({
             <div className="text-title">
               NICKNAME : <div>katak</div>
               PIN :<div style={{ color: "#FB9CCB" }}>{room.PIN}</div>
+              
             </div>
           </Grid>
           <Grid
@@ -170,10 +180,10 @@ const Page1 = ({
                 className="buttonAnswer"
                 style={{ backgroundColor: "#F39AC4" }}
                 onClick={() => {
-                  setAnswer("0"), goto(3),setCountAnswer(),updateScore(0);
+                  setAnswerPage1(0),
+                  setAnswer(0), goto(3),setCountAnswer(),updateScore(0);
                 }}
               >
-                {setAnswer("0")}
                 {data[questionNumber].ans[0]}
               </button>
             </Grid>
@@ -337,6 +347,7 @@ const Page1 = ({
         `}
       </style>
     </Fragment>
+    :null)
   );
 };
 export default Page1;
