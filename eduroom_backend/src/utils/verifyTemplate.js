@@ -4,7 +4,7 @@ exports.verifyTemplate = (verifyToken) => {
     rel="stylesheet"
   ></link>
   <div class="verify-box">
-    <img src="https://eduroom.cscms.me/images/eduroom_logo_long.sv" alt="eduroom_logo" />
+    <img src="https://eduroom.cscms.me/images/eduroom_logo_long.svg" alt="eduroom_logo" />
     <div class="verify-image">
         <img src="https://eduroom.cscms.me/images/verify/verify_sent.svg" alt="verify-image" />
     </div>
