@@ -22,6 +22,10 @@ export default css`
 		box-sizing: border-box;
 		overflow: hidden;
 		position: absolute;
+		z-index:-1;
 		
+	}
+	#test{
+		z-index:100;
 	}
 `

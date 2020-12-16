@@ -1,21 +1,35 @@
 import { Fragment } from 'react'
 import Videos from './Videos'
+import Materials from './Materials'
 
 const Section = ({ section, idx, handleChangeSection }) => {
 	const changeVideos = (videos) => {
 		section.videos = videos
 		handleChangeSection(section, idx)
-  }
-  const changeName = (e) => {
-    section.name = e.target.value;
-    handleChangeSection(section,idx);
-  }
+	}
+	const changeName = (e) => {
+		section.name = e.target.value
+		handleChangeSection(section, idx)
+	}
+	const changeMaterials = (materials) => {
+		section.materials = materials
+		handleChangeSection(section, idx)
+	}
+	console.log('section is ', section)
 	return (
 		<Fragment>
 			<div className="box">
 				<div className="title">Section Name</div>
-        <input name="name" className="textfield" type="text" value={section.name} onChange={changeName}></input>
-        <Videos videos={section.videos} sectionIndex={idx} changeVideos={changeVideos}></Videos>
+				<input
+					name="name"
+					className="textfield"
+					type="text"
+					placeholder="Section name"
+					value={section.name}
+					onChange={changeName}
+				></input>
+				<Videos videos={section.videos} sectionIndex={idx} changeVideos={changeVideos}></Videos>
+				<Materials materials={section.materials} sectionIndex={idx} changeMaterials={changeMaterials}></Materials>
 			</div>
 			<style jsx>{`
 				.box {
