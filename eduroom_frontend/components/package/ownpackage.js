@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import api from '../../api'
 
 const Ownpackage = ({ ownPackage, fetchPackages }) => {
+	const [loading, setLoading] = useState(false)
 	const [open, setOpen] = useState(false)
 	const router = useRouter()
 	const [type] = useState('created')
@@ -16,7 +17,6 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 		handleSubmit()
 	}
 	const handleCloseDialog = (e) => {
-		e.preventDefault()
 		e.stopPropagation()
 		setOpen(false)
 	}
@@ -25,8 +25,11 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 	}
 
 	const handleDelete = async (e) => {
-		e.stopPropagation()
-		// router.push('/user/instructor/course')
+		setLoading(true)
+		await api.post('/api/package/delete/package', { packageid: ownPackage.packageid })
+		await fetchPackages()
+		setLoading(false)
+		setOpen(false)
 	}
 
 	const handlePublish = async (e) => {
