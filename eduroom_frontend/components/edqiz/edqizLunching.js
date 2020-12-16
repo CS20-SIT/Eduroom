@@ -1,31 +1,29 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState,useEffect } from 'react';
 import { useRouter } from 'next/router';
 import EdqizText from './edqizText';
 import style from '../../styles/edqiz/landing';
+import api from '../../api';
+
 const Page3 = (props) => {
   const router = useRouter();
-  const [data, setData] = useState([
-    {
-      roomid: '1',
-      quizname: 'quizname1',
-      description: 'this is a test of description1',
-    },
-    {
-      roomid: '2',
-      quizname: 'quizname2',
-      description: 'this is a test of description2',
-    },
-    {
-      roomid: '5',
-      quizname: 'quizname3',
-      description: 'this is a test of description3',
-    },
-    {
-      roomid: '10',
-      quizname: 'quizname4',
-      description: 'this is a test of description4',
-    },
-  ]);
+  const [room, setRoom] = useState(null);
+  
+  const fetchData = async () => {
+    const res = await api.get('/api/kahoot/rooms');
+    setRoom(res.data[router.query.id-1])
+    console.log('resdata',room)
+  };
+  useEffect(() => {
+    fetchData();
+  },[]);
+  useEffect(() => {
+    console.log('resdata',room)
+    
+  },[room]);
+  const renderQuizName=()=>{
+    if(room!=null)
+  return <div>{room.name}</div>
+  }
   return (
     <Fragment>
       <div className="landing">
@@ -57,7 +55,7 @@ const Page3 = (props) => {
                   color: '#5B5B5B',
                 }}
               >
-                {data[parseInt(props.id) - 1].quizname}
+                {renderQuizName()}
                 {/* query database by using id */}
               </div>
             </div>
@@ -65,7 +63,7 @@ const Page3 = (props) => {
               <button
                 className="landing-button"
                 onClick={() =>
-                  router.push(`/edqiz/waitingRoom/${router.query.id}`)
+                  router.push(`/edqiz/waitingRoom/${room.id}`)
                 }
               >
                 <span className="landing-button-text">Launch {'>'}</span>

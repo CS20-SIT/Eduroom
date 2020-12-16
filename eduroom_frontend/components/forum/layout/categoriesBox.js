@@ -27,6 +27,9 @@ const CategoriesBox = ({ content }) => {
                         align-items: center;
                         cursor: pointer;
 					}
+					.categoriesContent {
+						text-align:center;
+					}
 					.categoriesBox:hover {
 						background: rgba(255, 255, 255, 0.1);
 					}
