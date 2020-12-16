@@ -202,6 +202,19 @@ export default css`
   border-radius : 10px;
   
 }
+.d-block-unhover {
+  animation: down 0.2s forwards;
+}
+.d-block:hover {
+  animation: up 0.2s forwards ease-out;
+  cursor : pointer;
+}
+
+
+
+
+
+
 .title{
   color : #3d467f;
   font-weight : bold;
@@ -269,7 +282,7 @@ ul li::before {
 }
 
 
-//------------------------------------------- dialog create event
+//------------------------------------------- dialog create event----------------------------------------------
 
 
 .D-create{
@@ -474,6 +487,11 @@ ul li::before {
   
 }
 
+// ---------------------------------Edit-------------------------------------
+.edit{
+  float : right;
+  cursor : pointer;
+}
 
 
 
