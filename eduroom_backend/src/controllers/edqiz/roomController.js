@@ -130,22 +130,17 @@ exports.Upload = async (req, res, next) => {
   const result = files.map(file => {
     return { linkUrl: file.linkUrl, fieldname: file.fieldname }
   })
-  console.log('resultATHIP', result)
   res.send(result)
 };
-//not done yet no route
+
 exports.createQuiz = async (req, res, next) => {
   const userid = req.user.instructor;//
   const { name, description, questionList, picturepath } = req.body;
-  console.log('request', req.body);
   let quiz = await pool.query(
     'INSERT INTO kahoot_room(name, instructorid, description) values($1,$2,$3) RETURNING * ',
     [name, userid, description]
   );
   result = quiz.rows[0].id;
-  console.log('result', result)
-  console.log('questionlist', questionList)
-  console.log('picturePath111', picturepath);
   const roomid = quiz.rows[0].id;
   let question
   let answerQuiz = []
@@ -157,22 +152,39 @@ exports.createQuiz = async (req, res, next) => {
     );
     let answer = [false, false, false, false]
     answer[questionList[i].correct] = true;
-    console.log(answer, questionList[i].correct);
     answerQuiz.push(answer);
     questionid = question.rows[0].questionid;
-    console.log('questionid', questionid)
     for (let j = 0; j < 4; j++) {
       answerQ = await pool.query(
         'INSERT INTO kahoot_answer(questionid, answerno, text,iscorrect) values($1,$2,$3,$4) RETURNING * ',
         [questionid, j, questionList[i].answer[j], answerQuiz[i][j]]
 
       );
-      console.log('answerQuiz', answerQ)
-
     }
   }
-  console.log('answerQuiz', answerQuiz)
-  console.log('question', question)
   res.status(201).json({ result, question });
 
 }
+
+exports.fetchQuiz = async (req, res, next) => {
+  const { sessionid } = req.params;
+  const room = await pool.query('SELECT * from kahoot_roomhistory where sessionid=$1;', [sessionid]);
+  const question = await pool.query('SELECT * from kahoot_question where roomid=$1;', [room.rows[0].roomid]);
+  const exactlyQuestion = await pool.query('SELECT * from kahoot_question where roomid=$1 order by questionid asc;', [question.rows[0].roomid]);
+  // console.log('exacllQuestion',exactlyQuestion)
+  const answerAll = [];
+  const correct=[]
+  for (let i = 0; i < exactlyQuestion.rows.length; i++) {
+    const answer = [];
+    const tempAnswer = await pool.query('select * from kahoot_answer where questionid=$1;', [exactlyQuestion.rows[i].questionid]);
+    for (let j = 0; j < 4; j++) {
+      answer.push(tempAnswer.rows[j])
+    }
+    const correctTemp = await pool.query(`select case when iscorrect =true then answerno END as correct from kahoot_answer where questionid=$1
+    order by correct fetch first 1 rows only;`, [exactlyQuestion.rows[i].questionid]);
+    correct.push(correctTemp.rows[0].correct)
+    answerAll.push(answer);
+  }
+  // console.log('answerAll',answerAll)
+  res.status(200).json({ room, question, answerAll, correct });
+};

@@ -65,7 +65,9 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 			</Fragment>
 		)
 	}
-
+	const getPrice = () => {
+		return ownPackage.price? parseFloat(ownPackage.price).toFixed(2):null
+	}
 	const renderOwnPackage = () => {
 		if (!ownPackage) return null
 		return (
@@ -79,10 +81,10 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 					<div className="package">
 						<div style={{ display: 'flex' }}>
 							<div>
-								<img src={ownPackage.image} className="picture"></img>
+								<img src={ownPackage.image} className="picture" width="140px" height="120px"></img>
 							</div>
 							<div className="block2">
-								<div style={{ display: 'flex' }}>
+								<div style={{ display: 'flex', justifyContent:'space-between' }}>
 									<div className="name">{ownPackage.packagename}</div>
 									<div style={{ paddingLeft: '10%' }}>
 										<button className="Xbutton" onClick={handleOpenDialog}>
@@ -91,7 +93,7 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 									</div>
 								</div>
 								<div className="pri-cat">
-									฿<span>{ownPackage.price}</span>
+									฿<span>{getPrice()}</span>
 								</div>
 								<div>
 									<div className="pri-cat">Category: {ownPackage.cataname}</div>

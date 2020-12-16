@@ -69,7 +69,7 @@ const Calendar = ({ date, setDate, month, setMonth, year, setYear, times, setTim
 									setDate(-1)
 									setTimes([])
 								}}
-								className="px-2 pointer"
+								className="px-2 pointer month-picker"
 							>{`<`}</div>
 						) : (
 							''
@@ -88,13 +88,15 @@ const Calendar = ({ date, setDate, month, setMonth, year, setYear, times, setTim
 								setDate(-1)
 								setTimes([])
 							}}
-							className="px-2 pointer"
+							className="px-2 pointer month-picker"
 						>{`>`}</div>
 					</div>
 					<div className="calendar my-6">
 						{calendar.map((i, index) => (
 							<span
-								className={`text-sm font-bold ${i < today.date && month == today.month ? 'disabled' : 'pointer'}`}
+								className={`text-sm font-bold date-picker ${
+									i < today.date && month == today.month ? 'disabled' : 'pointer'
+								}`}
 								key={index}
 								onClick={() => {
 									if (i < today.date && month == today.month) return
@@ -142,7 +144,7 @@ const Calendar = ({ date, setDate, month, setMonth, year, setYear, times, setTim
 											})
 											setTimes(timeSelectedTmp)
 										}}
-										className={`pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
+										className={`time-picker pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
 											times.includes(e) ? 'time-selected' : 'border'
 										}`}
 									>

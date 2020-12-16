@@ -1,12 +1,12 @@
 import Head from "next/head";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState,useEffect } from "react";
 import style from "../../styles/event/event";
 import { Button, Grid, Container, TextField } from "@material-ui/core";
 import { KeyboardTimePicker } from "@material-ui/pickers";
-
 import Image from "next/image";
 import api from "../../api";
 const content = () => {
+
   const [eventInfo, setEventInfo] = useState({
     title: "",
     type: "",
@@ -19,8 +19,15 @@ const content = () => {
   });
   const createEvent = async () => {};
   const handleCreate = (e) => {
+
+    if(eventInfo.type =='Global'){
+      eventInfo.type = '1'
+    }else{
+      eventInfo.type = '2'
+    }
+    console.log(eventInfo);
     // if (validator()) {
-      api.post("/api/event/createEvent", {
+       api.post("/api/event/createEvent", {
         title: eventInfo.title,
         type: eventInfo.type,
         description: eventInfo.description,
@@ -29,7 +36,7 @@ const content = () => {
         startTime: eventInfo.startTime,
         endTime: eventInfo.endTime,
         place: eventInfo.place,
-      });
+      }); 
     // }
   };
 
@@ -39,7 +46,7 @@ const content = () => {
 
   const [selectedDate, handleDateChange] = useState(new Date());
 
-  const eventType = ["Holiday", "Meeting", "Seminar"];
+  const eventType = ["Course", "Global"];
 
   return (
     <Fragment>
@@ -86,6 +93,7 @@ const content = () => {
           <Grid container justify="center">
             <div>
               <input
+                
                 className="event-title"
                 onChange={(e) =>
                   setEventInfo({ ...eventInfo, title: e.target.value })
@@ -93,6 +101,8 @@ const content = () => {
                 placeholder="Event Title"
               ></input>
             </div>
+
+
             <div>
               <select
                 className="event-type"
@@ -112,6 +122,8 @@ const content = () => {
                 })}
               </select>
             </div>
+
+            
             <div>
               <textarea
                 className="event-des"
