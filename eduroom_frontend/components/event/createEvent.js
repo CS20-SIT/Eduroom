@@ -47,6 +47,7 @@ const content = () => {
   const [selectedDate, handleDateChange] = useState(new Date());
 
   const eventType = ["Course", "Global"];
+  const course = ["God Biology"];
 
   return (
     <Fragment>
@@ -123,6 +124,25 @@ const content = () => {
               </select>
             </div>
 
+            <div>
+              <select
+                className="event-type"
+                onChange={(e) =>
+                  setEventInfo({ ...eventInfo, type: e.target.value })
+                }
+              >
+                <option value="default" disabled>
+                  Choose a course..
+                </option>
+                {course.map((type) => {
+                  return (
+                    <option value={type} key={type}>
+                      {type}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
             
             <div>
               <textarea

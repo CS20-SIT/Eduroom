@@ -10,7 +10,11 @@ exports.getEvent = async (req, res, next) => {
   res.send(data.rows)
   return
 }
-
+exports.GetCourses = async (req, res, next) => {
+	const instructorId = req.user.instructor
+	const result = await pool.query("select courseid,coursename from course where ownerid= $1", [instructorId])
+	res.send(result.rows)
+}
 exports.createEvent = async (req, res, next) => {
   const title = req.body.title;
   // title: eventInfo.title,
