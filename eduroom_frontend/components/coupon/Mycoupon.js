@@ -1,12 +1,9 @@
-
-import General from '../../components/template/general';
-import React from 'react';
+//import General from '../../components/template/general';
+import React, { Fragment, useState} from 'react'
 import PropTypes from 'prop-types';
-import Tab1 from './adMainTab/tab1';
-import Tab2 from './adMainTab/tab2';
-import Tab3 from './adMainTab/tab3';
-import Tab4 from './adMainTab/tab4';
-import Tab5 from './adMainTab/tab5';
+import Tab1 from './MycouponTab/tab1';
+import Tab2 from './MycouponTab/tab2';
+import Tab3 from './MycouponTab/tab3';
 import { makeStyles, useTheme,createMuiTheme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -57,10 +54,14 @@ const useStyles = makeStyles((theme) => ({
     width: 500,
     margin:"0% 5% 5% 5%",
     padding:"1.5%",
+    display:"flex"
     // backgroundRepeat: 'no-repeat',
     // backgroundSize: 'auto',
     // backgroundImage: `url(${bgImage})`,
   },
+  Tabs:{
+      centered:true
+  }
 }));
 
 export default function FullWidthTabs() {
@@ -68,50 +69,42 @@ export default function FullWidthTabs() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const [background, setBackground] = React.useState('/images/BG_Landing.svg');
+  const [background, setBackground] = React.useState('/images/big-bg.svg');
   const handleChange = (event, index) => {
     setValue(index);
-    if(index == 0) setBackground('/images/BG_Landing.svg')
-    else if(index == 1 ) setBackground('/images/register_bg.svg')
-    else if(index == 2) setBackground('')
-    else if(index == 3) setBackground('/images/big-bg.svg')
-    else setBackground('')
+
   };
 
   
   
   return (
-    <General>
+    <Fragment>
       
-     <Paper style = {{backgroundImage: `url(${background})`,margin:"0% 5% 5% 5%", padding:"1.5%", backgroundRepeat: 'no-repeat',
- backgroundSize:'cover'}}>
+     <div className="background">
+     <Paper style = {{margin:" 0% 5% 5% 5% ",opacity:"40%"}}>
+
      <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',marginLeft:'2%',position:'absolute', width:'78%', opacity:'50%'}}></div>
         <Tabs
           value={value}
           onChange={handleChange}
           indicatorColor="secondary"
           textColor="secondary"
+          centered={true}
         >
           
-          <Tab label="Advertising" style={{fontWeight:'1000'}} {...a11yProps(0)} />
-          <Tab label="How it works" style={{fontWeight:'1000'}} {...a11yProps(1)} />
-          <Tab label="Condition" style={{fontWeight:'1000'}} {...a11yProps(2)} />
-          <Tab label="Pricing" style={{fontWeight:'1000'}} {...a11yProps(3)} />
-          <Tab label="Help" style={{fontWeight:'1000'}} {...a11yProps(4)} />
-          <button
-            className = "ad-ad-button"
-            onClick={() => router.push('/advertisement/adinform')}
-          >
-            <a className="ad-button-text">Start Now</a>
-          </button>
+          <Tab label="My coupon" style={{fontWeight:'2000'}} {...a11yProps(0)} />
+          <Tab label="History" style={{fontWeight:'2000'}} {...a11yProps(1)} />
+          <Tab label="Expire" style={{fontWeight:'2000'}} {...a11yProps(2)} />
           
        
         </Tabs>
+        </Paper>
+        
        
    
-      
+      <Paper style={{margin:"5% 5% 0% 5%"}}>
         <TabPanel value={value} index={0} dir={theme.direction} >
-          <Tab1/>
+        <Tab1/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Tab2/>
@@ -119,14 +112,13 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={2} dir={theme.direction}>
          <Tab3/>
         </TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}>
-         <Tab4/>
-        </TabPanel>
-        <TabPanel value={value} index={4} dir={theme.direction}>
-         <Tab5/>
-        </TabPanel>
         </Paper>
+        
+        
+        
+        
         <style jsx>{style}</style>
-    </General>
+        </div>
+    </Fragment>
   );
 }
