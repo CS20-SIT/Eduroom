@@ -1,22 +1,23 @@
 import React,{Fragment,useState,useEffect,useContext} from 'react';
 import Wishlists from '../../components/user/wishlists';
-import General from '../../components/user/general';
+import General from '../../components/template/general'
 import axios from 'axios';
 import api from '../../api';
-import UserContext from '../../contexts/user/userContext'
+// import UserContext from '../../contexts/user/userContext'
+
 
 
 const Wishlist = () => {
     // const user="08e9d239-b3f2-4db8-b29a-da99a314df92";
-    const userContext = useContext(UserContext)
-    const users = userContext.user.userid;
+    // const userContext = useContext(UserContext)
+    // const users = userContext.user.userid;
     let con='';
     let order='addtime desc';
     useEffect(()=>{
         const fetchData=async()=>{
             const res=await api.get('api/user/getWishlist', {
                 params:{
-                    userid:user,
+                    // userid:user,
                     condition:'',
                     orderby: 'addtime desc'
                 }
@@ -26,12 +27,13 @@ const Wishlist = () => {
         fetchData();
     },[]);
     const[totalList,setTotalList]=useState([]);
-    const del=(userid,courseid)=>{
-        api.delete('api/user/deleteWishlist', {
-            userid:userid,
-            courseid:courseid
+    const del=(courseid)=>{
+        api.post('api/user/deleteWishlist', {
+            // data:{
+                courseid:courseid
+            // }
         }).then(()=>{
-            console.log(con+' '+order);
+            console.log(courseid+' '+con+' '+order);
             searchEngine(con,order);
         });
     }
@@ -39,7 +41,7 @@ const Wishlist = () => {
     const searchEngine=(condition,orderby)=>{
         api.get('api/user/getWishlist', {
             params:{
-                userid:user,
+                // userid:user,
                 condition: condition,
                 orderby: orderby
             }
@@ -50,7 +52,19 @@ const Wishlist = () => {
         order=orderby;
     };
 
-
+    // const user=()=>{
+    //     api.get('api/user/getWishlist', {
+    //         // params:{
+    //             // userid:user,
+    //             condition: condition,
+    //             orderby: orderby
+    //         // }
+    //     }).then((response)=>{
+    //         setTotalList(response.data);
+    //     });
+    //     con=condition;
+    //     order=orderby;
+    // };
 
     const searching=()=>{
         let searchvalue=document.getElementById('search').value;
@@ -76,6 +90,7 @@ const Wishlist = () => {
         <General>
                 <center>
                 <h1>Wishlist</h1>
+                
                 <input type="text" id="search" placeholder='Search course'></input>
                 <br></br>
                 Sort by
