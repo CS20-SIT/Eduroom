@@ -1,8 +1,9 @@
 const nodemailer = require('nodemailer')
 
 const sendEmail = async (options) => {
+  let transportOptions
   if (process.env.SMTP_SECURE === 'true') {
-    transport_options = {
+    transportOptions = {
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       auth: {
@@ -11,13 +12,13 @@ const sendEmail = async (options) => {
       },
     }
   } else {
-    transport_options = {
+    transportOptions = {
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: false,
     }
   }
-  const transporter = nodemailer.createTransport(transport_options)
+  const transporter = nodemailer.createTransport(transportOptions)
   const message = {
     from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
     to: options.email,
