@@ -3,14 +3,14 @@ import { Link, Paper,Typography } from "@material-ui/core";
 import style from "../../styles/forum/showForum";
 import SupportForm from "../../components/support/supportform"
 import { useRouter } from "next/router";
-import GeneralNonav from "../../components/template/generalnonav";
+import General from "../../components/template/general";
 
 const create = () => {
     const router = useRouter();
 
     return (
         <Fragment>
-            <GeneralNonav>
+            <General>
             <div
                 style={{
                     display: "flex",
@@ -57,7 +57,7 @@ const create = () => {
           `}
                 </style>
             </div>
-            </GeneralNonav>
+            </General>
         </Fragment>
     );
 };
