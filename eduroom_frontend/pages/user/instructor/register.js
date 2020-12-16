@@ -13,8 +13,6 @@ const InstructorRegister = () => {
 		try {
 			const res = await api.get('/api/instructor/profile')
 			setUser(res.data)
-			console.log('user is');
-			console.log(res.data);
 		} catch (err) {
 			router.push('/login');
 		}
@@ -25,9 +23,7 @@ const InstructorRegister = () => {
 	}, [])
 
 	const handleComplete = async () => {
-		console.log('submit complete');
 		await fetchUSer()
-		console.log('fetch complete');
 	}
 
 	const renderPage = () => {
