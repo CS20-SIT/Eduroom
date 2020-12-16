@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react'
 import Certificate from '../../../components/user/certificate'
+import {renderToStaticMarkup} from 'react-dom/server'
 const Certificates = (props) => {
     return (
         <div style={{width:'707px',height:'500px',border:'1px solid black'}}>
@@ -15,10 +16,6 @@ export async function getServerSideProps({req,res,query}) {
         courseName: 'Python For Everybody',
         finishDate: '16 December 2020'
     }
-    // const buffer = PDFGen.componentToPDF(<Certificate data={data}/>)
-    // res.setHeader("Content-Type","application/pdf")
-    // console.log(buffer)
-    // res.send({success:true})
 	return { props: {data} }
 }
 
