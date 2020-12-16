@@ -2,17 +2,17 @@ const bcrypt = require('bcryptjs')
 const errorHandler = require('../../middleware/error')
 const pool = require('../../database/db')
 
+
 const test = async (req, res) => {
 	const time = await pool.query('SELECT NOW()')
 
 	res.send({ time })
 }
-
+// const user = req.user.id
 // const user="08e9d239-b3f2-4db8-b29a-da99a314df92";
 const getWishlist = async (req, res) => {
 	try {
 		const user = req.user.id
-		// const user = req.user.id
 		const condition = req.query.condition
 		// const condition='';
 		const orderby = req.query.orderby

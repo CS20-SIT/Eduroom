@@ -1,12 +1,14 @@
-import React, { Fragment } from 'react'
-import Link from 'next/link'
+import React, { Fragment, useState, useEffect, useContext } from 'react'
+import General from '../../components/template/general'
+import UserEditProfile from '../../components/user/editprofile'
+
 const UserEdit = () => {
-  return (
-    <Fragment>
-      <button>
-        <Link href="/user">Apply</Link>
-      </button>
-    </Fragment>
-  )
+	return (
+		<Fragment>
+			<General>
+				<UserEditProfile></UserEditProfile>
+			</General>
+		</Fragment>
+	)
 }
 export default UserEdit

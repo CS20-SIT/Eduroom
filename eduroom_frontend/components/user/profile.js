@@ -2,13 +2,13 @@ import React, { Fragment, useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
+import { useRouter } from 'next/router'
 
 const Profile = () => {
 	const userContext = useContext(UserContext)
 	const user = userContext.user
 	const [birth, setBirth] = useState(null)
 	const [joined, setJoined] = useState(null)
-	console.log(user)
 	useEffect(() => {
 		if (user) {
 			const d = new Date(user.birthdate)
@@ -44,12 +44,14 @@ const Profile = () => {
 							{user.firstname} {user.lastname}
 						</h1>
 						<div style={{ marginTop: '20px' }}>
+							<Link href="/user/edit">
 							<div className="edit">
 								<h2 className="editText" style={{ margin: '0' }}>
 									Edit
 								</h2>
 								<i className="fas fa-edit edit-icon" style={{ marginTop: '7px' }}></i>
 							</div>
+							</Link>
 						</div>
 					</div>
 
