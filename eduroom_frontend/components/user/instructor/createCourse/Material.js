@@ -1,20 +1,17 @@
 import { Fragment, useEffect } from 'react'
-import CourseVideoUpload from './CourseVideoUpload'
-const Video = ({ video, idx, handleVideos, sectionIndex, addVideo, removeVideo }) => {
-	const nameChange = (e) => {
-		video.name = e.target.value
-		handleVideos(video, idx)
-	}
+import MaterialUpload from './MaterialUpload'
+
+const Material = ({ material, sectionIndex, idx, handleMaterials, removeMaterial }) => {
 	const handleUpload = (data) => {
-		video.data = data
-		handleVideos(video, idx)
+		console.log('data is ', data)
+		material.data = data
+		handleMaterials(material, idx)
 	}
 	const renderIcon = () => {
 		return (
 			<Fragment>
 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-					{idx === 0 ? <i key="add" onClick={addVideo} className="fas fa-plus icon"></i> : null}
-					{idx === 0 ? null : <i onClick={() => removeVideo(idx)} className="fas fa-times icon"></i>}
+					<i onClick={() => removeMaterial(idx)} className="fas fa-times icon"></i>
 				</div>
 				<style jsx>{`
 					.icon {
@@ -37,25 +34,14 @@ const Video = ({ video, idx, handleVideos, sectionIndex, addVideo, removeVideo }
 				<div>
 					{renderIcon()}
 					<div className="form">
-						<div style={{ width: '50%' }}>
-							<div className="title">Video Name</div>
-							<input
-								name="name"
-								className="textfield"
-								placeholder="Video Title"
-								type="text"
-								value={video.name}
-								onChange={nameChange}
-							></input>
-						</div>
-						<div style={{ width: '50%' }}>
-							<div className="title">Video Upload</div>
-							<CourseVideoUpload
-								video={video}
+						<div style={{ width: '100%' }}>
+							<div className="title">Material File Upload</div>
+							<MaterialUpload
+								material={material}
 								index={idx}
 								sectionIndex={sectionIndex}
 								handleData={handleUpload}
-							></CourseVideoUpload>
+							></MaterialUpload>
 						</div>
 					</div>
 				</div>
@@ -99,4 +85,4 @@ const Video = ({ video, idx, handleVideos, sectionIndex, addVideo, removeVideo }
 	)
 }
 
-export default Video
+export default Material
