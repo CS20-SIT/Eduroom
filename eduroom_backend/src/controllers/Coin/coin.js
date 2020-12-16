@@ -7,9 +7,9 @@ dayjs.extend(utc)
 
 
 //getDaliyReward
-//buyCoupon
-//getCoinFromEdqiz
-//getCoinFromCourse
+//buyCoupon 
+//getCoinFromEdqiz  Done
+//getCoinFromCourse 
 //jwt
 //uploadFile
 exports.getStickers = async (req, res, next) => {
@@ -59,7 +59,7 @@ exports.showCoinOwner = async (req, res) => {
 }
 exports.showStickerOwner = async (req, res) => {
     try {
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId= req.body.id
         const result = await pool.query(`SELECT stickername,stickertype,stickerimg,stickerprice FROM sticker_owner
         JOIN sticker_all ON sticker_owner.stickerid = sticker_all.stickerid
         WHERE userid='${userId}';`)
