@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import api from '../../api'
 
 const ConfirmPackage = ({ myPackage, changePage }) => {
+	console.log(myPackage)
+	const [loading, setLoading] = useState(false)
 	const [courses, setCourses] = useState([])
 	const [totalPrice, setTotalPrice] = useState(null)
 	const [open, setOpen] = useState(false)
@@ -41,19 +43,21 @@ const ConfirmPackage = ({ myPackage, changePage }) => {
 	}, [myPackage.pic])
 
 	const handleSubmit = async () => {
+		setLoading(true)
 		const formData = new FormData()
 		formData.append('course-picture-1', myPackage.pic)
-		const res = await api.post('/api/package/uploadPackagePic', formData)
-		console.log(res.data)
-		// api.post('/api/package/createPackage', {
-		// 	name: myPackage.name,
-		// 	instructorid: '1a9fa554-0c66-4ece-acb4-13a5078aa3b7',
-		// 	discount: myPackage.discount,
-		// 	category: myPackage.category,
-		// 	detail: myPackage.detail,
-		// 	courses: myPackage.courses,
-		// 	ispublic: false,
-		// })
+		const pic = await api.post('/api/package/uploadPackagePic', formData)
+		const body = {
+			name: myPackage.name,
+			discount: myPackage.discount,
+			category: myPackage.category,
+			detail: myPackage.detail,
+			courses: myPackage.selectedCourses,
+			ispublic: false,
+			image: pic.data.linkUrl,
+		}
+		const res = await api.post('/api/package/createPackage', body)
+		setLoading(false)
 	}
 
 	return (
@@ -73,7 +77,7 @@ const ConfirmPackage = ({ myPackage, changePage }) => {
 							(<span style={{ textDecoration: 'line-through' }}>฿{totalPrice}</span>)
 						</div>
 					</div>
-					<div className="category">{myPackage.category}</div>
+					<div className="category">{myPackage.categoryText}</div>
 					<div className="subtitle">Package Detail</div>
 					<div className="detail">{myPackage.detail}</div>
 					<div className="subtitle">Selected Courses</div>
@@ -88,7 +92,12 @@ const ConfirmPackage = ({ myPackage, changePage }) => {
 						</button>
 					</div>
 					<div style={{ textAlign: 'center' }}>
-						<button id="confirm-create-btn" className="createbutton mgb-10" onClick={handleOpenDialog}>
+						<button
+							id="confirm-create-btn"
+							disabled={loading}
+							className={`createbutton mgb-10 ${loading ? 'disabled' : ''}`}
+							onClick={handleOpenDialog}
+						>
 							Confirm and Create
 						</button>
 					</div>
@@ -99,7 +108,7 @@ const ConfirmPackage = ({ myPackage, changePage }) => {
 				<div className="dialog">
 					<div className="indialog">
 						<div className="dialog-buttonX">
-							<button id="close-btn" className="buttonX" onClick={() => router.push('/user/instructor/course')}>
+							<button id="close-btn" className="buttonX" onClick={() => router.push('/user/instructor/course/package')}>
 								X
 							</button>
 						</div>
