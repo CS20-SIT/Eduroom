@@ -41,7 +41,7 @@ export default function chatContact(props) {
 						paddingRight: 20,
 					}}
 				>
-					<p style={{ fontSize: 12 }}>{contact.resentMessageDate}</p>
+					<p style={{ fontSize: 12 }}>{moment(contact.recentMessageDate).fromNow()}</p>
 				</div>
 			</div>
 			<style jsx>{`

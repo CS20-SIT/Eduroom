@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import SearchChat from '../chat/searchChat'
 import ContactPerson from '../chat/contactPerson'
@@ -40,6 +40,27 @@ export default function chatContact(props) {
 		const res = await api.get(`/api/chat/getSearchResultMockup`)
 		setSearchResult(res.data)
 	}
+	useEffect(() => {
+		const contact = [
+			{
+				name: 'Krishadawut',
+				recentMessage: 'Hi Tom',
+				recentMessageDate: new Date("12/14/2020").getTime(),
+			},
+			{
+				name: 'Boyplus',
+				recentMessage: 'Hi Tom',
+				recentMessageDate: new Date().getTime() - 10000,
+			},
+			{
+				name: 'GGolfz',
+				recentMessage: 'Hi Tom',
+				recentMessageDate: new Date("12/08/2020").getTime(),
+			},
+    ]
+    contact.sort((a,b)=>b.resentMessageDate - a.resentMessageDate)
+    setContact(contact)
+	}, [])
 
 	const handleClickOpenNotification = () => {
 		setOpenNotification(true)
@@ -193,6 +214,9 @@ export default function chatContact(props) {
 									/>
 								)
 							}
+						})}
+						{contact?.map((el) => {
+							return <ContactPerson contact={el} />
 						})}
 				</div>
 			</div>

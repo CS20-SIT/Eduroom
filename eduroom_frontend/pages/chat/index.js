@@ -50,3 +50,9 @@ export default function Chat() {
 		</>
 	)
 }
+
+// You need to implement backend first to get all chat room and
+// you should implement sending message and store in backend
+// after you finish all you implement socket in same function that call backend api
+// in the then of api.post().then() to ensure that backend need to success before
+// we sent notify and [id].js you can delete it :)
