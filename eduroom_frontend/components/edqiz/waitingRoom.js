@@ -13,14 +13,12 @@ const Content = ({ id }) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await api.get('/api/kahoot/roomHistory');
-      // setHistory(res.data)
     };
     fetchData();
   }, []);
 
 
   const handleSubmit = async (body) => {
-    console.log('helllo');
     const res = await api.post('/api/kahoot/roomHistory', body);
     console.log(res.data);
   };

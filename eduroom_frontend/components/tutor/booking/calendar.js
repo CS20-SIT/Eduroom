@@ -1,10 +1,31 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../styles/tutor/utils'
 
+import api from '../../../api'
 import { monthConverter, timeFormatter } from '../lib/utils'
 
-const Calendar = ({ date, setDate, month, setMonth, year, setYear, times, setTimes, instructor }) => {
+const Calendar = ({ date, setDate, month, setMonth, year, setYear, times, setTimes, id }) => {
 	var now = new Date()
+
+	const [availability, setAvailability] = useState(null)
+	const fetchTimes = async (i) => {
+		let res = await api.get('/api/tutor/instructor/availability', {
+			params: { id, dates: `${year}-${month + 1}-${i}` },
+		})
+		setAvailability(res.data)
+	}
+	useEffect(() => {
+		const fetchData = async () => {
+			let res = await api.get('/api/tutor/instructor/availability', {
+				params: { id, dates: `${year}-${month + 1}-${date}` },
+			})
+			setAvailability(res.data)
+		}
+		fetchData()
+		return () => {
+			setAvailability(null)
+		}
+	}, [])
 
 	// SETUP DATE AND DAY
 	const today = {
@@ -33,104 +54,109 @@ const Calendar = ({ date, setDate, month, setMonth, year, setYear, times, setTim
 
 	return (
 		<Fragment>
-			<div style={{ width: 44 + '%' }} className={`px-4 py-2`}>
-				<div className="flex my-2">
-					{month != today.month || year != today.year ? (
+			{availability && (
+				<div style={{ width: 44 + '%' }} className={`px-4 py-2`}>
+					<div className="flex my-2">
+						{month != today.month || year != today.year ? (
+							<div
+								onClick={() => {
+									if (month == 0) {
+										setMonth(11)
+										setYear(year - 1)
+									} else {
+										setMonth(month - 1)
+									}
+									setDate(-1)
+									setTimes([])
+								}}
+								className="px-2 pointer month-picker"
+							>{`<`}</div>
+						) : (
+							''
+						)}
+						<div className="w-full flex justify-center font-lato font-bold">
+							{monthConverter(month)} {year}
+						</div>
 						<div
 							onClick={() => {
-								if (month == 0) {
-									setMonth(11)
-									setYear(year - 1)
+								if (month == 11) {
+									setMonth(0)
+									setYear(year + 1)
 								} else {
-									setMonth(month - 1)
+									setMonth(month + 1)
 								}
 								setDate(-1)
 								setTimes([])
 							}}
-							className="px-2 pointer"
-						>{`<`}</div>
-					) : (
-						''
-					)}
-					<div className="w-full flex justify-center font-lato font-bold">
-						{monthConverter(month)} {year}
+							className="px-2 pointer month-picker"
+						>{`>`}</div>
 					</div>
-					<div
-						onClick={() => {
-							if (month == 11) {
-								setMonth(0)
-								setYear(year + 1)
-							} else {
-								setMonth(month + 1)
-							}
-							setDate(-1)
-							setTimes([])
-						}}
-						className="px-2 pointer"
-					>{`>`}</div>
-				</div>
-				<div className="calendar my-6">
-					{calendar.map((i, index) => (
-						<span
-							className={`text-sm font-bold ${i < today.date && month == today.month ? 'disabled' : 'pointer'}`}
-							key={index}
-							onClick={() => {
-								if (i < today.date && month == today.month) return
-								setDate(i)
-								setTimes([])
-							}}
-						>
-							{index > 6 ? (i > 0 ? i : ' ') : i}
-							<span className={i == date ? 'selected' : i == today.date && month == today.month ? 'today' : ''} />
-						</span>
-					))}
-				</div>
-				<div className="my-4">
-					<div className="my-4 text-md font-bold text-secondary font-lato">Available Time</div>
-					{date == -1 ? (
-						<div className="flex justify-center items-center border-dashed px-4 py-3">
-							<div className="font-quicksand font-bold text-secondary text-md">
-								Please select date before select time slots
-							</div>
-						</div>
-					) : (
-						<div className="grid">
-							{instructor.times[date - 1].time.map((e, i) => (
-								<div
-									key={i}
-									onClick={() => {
-										timeSelectedTmp = [...times]
-										if (timeSelectedTmp[0] - e > 1) {
-											alert('Please select consecutive time slots')
-											return
-										}
-										if (e - timeSelectedTmp[timeSelectedTmp.length - 1] > 1) {
-											alert('Please select consecutive time slots')
-											return
-										}
-										timeSelectedTmp.includes(e)
-											? timeSelectedTmp.splice(
-													timeSelectedTmp.findIndex((x) => x == e),
-													1
-											  )
-											: timeSelectedTmp.push(e)
-										timeSelectedTmp.sort(function (a, b) {
-											return +a - +b
-										})
-										setTimes(timeSelectedTmp)
-									}}
-									className={`pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
-										times.includes(e) ? 'time-selected' : 'border'
-									}`}
-								>
-									{timeFormatter(e)} - {timeFormatter(e + 1)}
+					<div className="calendar my-6">
+						{calendar.map((i, index) => (
+							<span
+								className={`text-sm font-bold date-picker ${
+									i < today.date && month == today.month ? 'disabled' : 'pointer'
+								}`}
+								key={index}
+								onClick={() => {
+									if (i < today.date && month == today.month) return
+									setDate(i)
+									setTimes([])
+									fetchTimes(i)
+								}}
+							>
+								{index > 6 ? (i > 0 ? i : ' ') : i}
+								<span className={i == date ? 'selected' : i == today.date && month == today.month ? 'today' : ''} />
+							</span>
+						))}
+					</div>
+					<div className="my-4">
+						<div className="my-4 text-md font-bold text-secondary font-lato">Available Time</div>
+						{date == -1 ? (
+							<div className="flex justify-center items-center border-dashed px-4 py-3">
+								<div className="font-quicksand font-bold text-secondary text-md">
+									Please select date before select time slots
 								</div>
-							))}
-						</div>
-					)}
-					<div className="text-error text-md my-4">* Please Select Consecutive Appointment Time Slots</div>
+							</div>
+						) : (
+							<div className="grid">
+								{availability.times.map((e, i) => (
+									<div
+										key={i}
+										onClick={() => {
+											timeSelectedTmp = [...times]
+											if (timeSelectedTmp[0] - e > 1) {
+												alert('Please select consecutive time slots')
+												return
+											}
+											if (e - timeSelectedTmp[timeSelectedTmp.length - 1] > 1) {
+												alert('Please select consecutive time slots')
+												return
+											}
+											timeSelectedTmp.includes(e)
+												? timeSelectedTmp.splice(
+														timeSelectedTmp.findIndex((x) => x == e),
+														1
+												  )
+												: timeSelectedTmp.push(e)
+											timeSelectedTmp.sort(function (a, b) {
+												return +a - +b
+											})
+											setTimes(timeSelectedTmp)
+										}}
+										className={`time-picker pointer text-sm text-secondary font-bold rounded-md px-1 py-1 flex justify-center ${
+											times.includes(e) ? 'time-selected' : 'border'
+										}`}
+									>
+										{timeFormatter(e)} - {timeFormatter(e + 1)}
+									</div>
+								))}
+							</div>
+						)}
+						<div className="text-error text-md my-4">* Please Select Consecutive Appointment Time Slots</div>
+					</div>
 				</div>
-			</div>
+			)}
 			<style jsx>{utils}</style>
 			<style jsx>{`
 				.grid {

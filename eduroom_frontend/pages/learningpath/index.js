@@ -1,20 +1,14 @@
-import React,{Fragment} from 'react'
-import Pathline from '../../components/learningpath/Path'
-import Navbar from '../../components/layouts/navbar'
-import SideNav from '../../components/layouts/sidenav/sidenav'
-import Styles from '../../styles/CoinStyles/coin-shop.module.css';
-const Temp = (props) => {
-    return <Fragment>  
-      <div className={Styles.img}>
-        <SideNav />
-        <div id="content">
-          <Navbar />
-          <main>{props.children}</main>
-          <Pathline></Pathline>
-        </div>
-        </div>
-        <style jsx>
-        {`
+import React, { Fragment } from 'react'
+import LearningPath from '../../components/learningpath/LearningPath'
+import GeneralTemplate from '../../components/template/general'
+const Temp = () => {
+	return (
+		<Fragment>
+			<GeneralTemplate>
+				<LearningPath/>
+			</GeneralTemplate>
+			<style jsx>
+				{`
           #content {
             width: 95%;
             left: 5%;
@@ -24,7 +18,8 @@ const Temp = (props) => {
             overflow-y: auto;
             position: fixed;
         `}
-      </style>
-    </Fragment>
+			</style>
+		</Fragment>
+	)
 }
 export default Temp

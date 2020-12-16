@@ -4,7 +4,7 @@ const Course = ({ course }) => {
 		<Fragment>
 			<div className="container">
 				<div style={{ display: 'flex' }}>
-					<img src="/images/user/Blue-cone.png" alt="course-img" width="150px" height="120px"></img>
+					<img src={course.coursepicture} alt="course-img" width="150px" height="120px"></img>
 					<div style={{ marginLeft: '30px' }}>
 						<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 							<h2 style={{ margin: '0' }}>{course.coursename}</h2>

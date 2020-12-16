@@ -15,7 +15,7 @@ export default css`
 		border: none;
 		font-size: 1.1em;
 		color: #3d467f;
-		margin-top: 2%;
+		margin-top: 16px;
 	}
 	.login-textfield ::placeholder {
 		color: #3d467f;
@@ -65,7 +65,7 @@ export default css`
 	.error {
 		color: red;
 		display: flex;
-		justify-content: flex-end;
+		font-size: .8em;
 		margin: 4px 0 4px 0;
 	}
 	.login-button {
@@ -76,7 +76,7 @@ export default css`
 		border: none;
 		transition: 0.25s;
 		outline: none;
-		margin-top: 5px;
+		margin-top: 12px;
 	}
 	.login-button:hover {
 		cursor: pointer;
