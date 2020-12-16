@@ -29,10 +29,10 @@ exports.createPackage = async (req, res, next) => {
 
 exports.deletePackage = async (req, res, next) => {
 	const { packageid } = req.body
-	console.log('id is ',packageid)
+	console.log('id is ', packageid)
 	await pool.query(`DELETE FROM package_courses where packageid = $1`, [packageid])
-	await pool.query(`DELETE FROM package where packageid = $1`,[packageid])
-	res.send({success: true})
+	await pool.query(`DELETE FROM package where packageid = $1`, [packageid])
+	res.send({ success: true })
 }
 
 exports.getPackage = async (req, res, next) => {
@@ -80,13 +80,13 @@ exports.getNumCourses = async (req, res, next) => {
 exports.getInstructorPackage = async (req, res, next) => {
 	const instructorid = req.user.instructor
 	const result = await pool.query(
-		`select sum(price)*((100-p.discount)/100) as price,p.packageid,packagename,p.discount,p.ispublic,p.detail,p.cateid, p.image, ca.cataname
-		from package p,package_courses pc,course c, categories ca
+		`select sum(price)*((100-p.discount)/100) as price,p.packageid,packagename,p.discount,p.ispublic,p.detail,p.cateid, p.image, ca.cate_name
+		from package p,package_courses pc,course c, package_category ca
 			where p.packageid = pc.packageid
 				and p.instructorid = $1
 			and c.courseid = pc.courseid
-			and p.cateid = ca.cataid
-			group by p.packageid,ca.cataname`,
+			and p.cateid = ca.cateid
+			group by p.packageid,ca.cate_name`,
 		[instructorid]
 	)
 	res.send(result.rows)

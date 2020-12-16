@@ -1,21 +1,16 @@
 const nodemailer = require('nodemailer')
 
 const sendEmail = async (options) => {
-  let transportOptions
-  if (process.env.SMTP_SECURE === 'true') {
-    transportOptions = {
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      auth: {
-        user: process.env.SMTP_EMAIL,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    }
-  } else {
-    transportOptions = {
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      secure: false,
+  const transportOptions = {
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: false
+  }
+  if(process.env.NODE_ENV === 'production'){
+    transportOptions.secure = true
+    transportOptions.auth = {
+      user: process.env.SMTP_EMAIL,
+      pass: process.env.SMTP_PASSWORD,
     }
   }
   const transporter = nodemailer.createTransport(transportOptions)
