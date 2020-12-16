@@ -1,7 +1,17 @@
 const { jwtAuthenicate } = require('../../middleware/jwtAuthenticate');
 const pool = require('../../database/db');
 const errorHandler = require('../../middleware/error');
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+dayjs.extend(utc)
 
+
+//getDaliyReward
+//buyCoupon
+//getCoinFromEdqiz
+//getCoinFromCourse
+//jwt
+//uploadFile
 exports.getStickers = async (req, res, next) => {
     try {
         const result = await pool.query('SELECT * from sticker_all');
@@ -22,13 +32,19 @@ exports.getStickers = async (req, res, next) => {
 };
 exports.getDailyRewardStatus = async (req, res, next) => {
     try {
-        res.send({
-            success: true
-        })
-
+        const today = dayjs.utc().utcOffset(7).format('YYYY-MM-DD')
+        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const getDate = await pool.query(`SELECT date FROM dailyreward_history WHERE userid='${userId}';`)
+        if (getDate !== '') {
+            const date = getDate.rows[0].date
+            if (date === today) {
+                console.log(today)
+            }
+        }
     } catch (error) {
         errorHandler(error, req, res);
     }
+    //amountOfcoin, cointransaction 
 }
 exports.showCoinOwner = async (req, res) => {
     try {
@@ -76,7 +92,7 @@ exports.buySticker = async (req, res) => {
         const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
         const stickerId = req.body.stickerId
         const getCoinSticker = await pool.query(`SELECT stickerprice FROM sticker_all WHERE stickerid=${stickerId};`)
-        if(getCoinSticker.rowCount === 0){
+        if (getCoinSticker.rowCount === 0) {
             const error = {
                 statusCode: 400,
                 message: 'Sticker is not founded'
@@ -93,7 +109,7 @@ exports.buySticker = async (req, res) => {
             await pool.query(`INSERT INTO coin_transaction(userid, date, amountofcointransaction) VALUES ('${userId}',current_timestamp, -${stickerPrice})`)
             await pool.query(`INSERT INTO sticker_owner(stickerid, userid) VALUES (${stickerId} ,'${userId}');`)
             res.status(201).send({ coin: amountCoin })
-        }else{
+        } else {
             const error = {
                 statusCode: 400,
                 message: 'Coin is not enough'
@@ -101,9 +117,38 @@ exports.buySticker = async (req, res) => {
             errorHandler(error, req, res)
         }
 
-        
+
 
     } catch (error) {
         errorHandler(error, req, res);
+    }
+}
+exports.buyCoupon = async (req, res) => {
+    try {
+        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+
+    } catch {
+
+    }
+}
+exports.getCoinFromEdqiz = async (req, res) => {
+    try {
+        const userIds = req.body;
+        const coins = [15,10,5]
+        console.log(userIds)
+        for (let index = 0; index < userIds.length; index++) {
+            const userId = userIds[index];
+            //get amount of coin from coin_owner
+            const getCoinOwner = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}';`)
+            let amountOfCoin = getCoinOwner.rows[0].amountofcoin;
+            amountOfCoin += coins[index];
+            await pool.query(`INSERT INTO coin_transaction(userid, date, amountofcointransaction)
+                 VALUES ('${userId}',current_timestamp,${coins[index]});`)
+            await pool.query(`UPDATE coin_owner SET amountofcoin=${amountOfCoin} WHERE userid='${userId}';`)
+            
+        }
+        res.status(201).send({ success: true })
+    } catch (error) {
+        errorHandler(error, req, res)
     }
 }
