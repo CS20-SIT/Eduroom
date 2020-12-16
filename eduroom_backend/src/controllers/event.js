@@ -12,26 +12,39 @@ exports.getEvent = async (req, res, next) => {
 }
 
 exports.createEvent = async (req, res, next) => {
-  const title = 'SA';
-  const type = 1;
-  const detail = 'sa';
-  const startDate = '2020-12-14';
-  const endDate = '2020-12-14';
-  const startTime = '13:00';
-  const endTime = '16:00';
-  const place = 'CB2312';
-  const intructor =req.instructor
-  const course = '836a91fa-aeaa-4eeb-a4b8-5761c90a7021'
-  const user = req.instructor;
+  const title = req.body.title;
+  // title: eventInfo.title,
+  //       type: eventInfo.type,
+  //       description: eventInfo.description,
+  //       startDate: eventInfo.startDate,
+  //       endDate: eventInfo.endDate,
+  //       startTime: eventInfo.startTime,
+  //       endTime: eventInfo.endTime,
+  //       place: eventInfo.place,
+  const courseid = '836a91fa-aeaa-4eeb-a4b8-5761c90a7021';
+  const startdate  = req.body.startDate;
+  const enddate  = req.body.endDate;
+  const starttime  = req.body.startTime;
+  const endtime  = req.body.endTime;
+  const detail  = req.body.description;
+  const place = req.body.place;
+  const typeid = req.body.type;
+  const userid = req.user.id;
+  // const instructorid = '217de492-650e-4bab-8d0d-ba2ec00d3a2b';
+  const temp = await pool.query("select instructorid from instructor where userid = $1 and isverified = true",[userid]);
+  const instructorid = temp.rows[0].instructorid;
+  // console.log("Hello!!!!!"+instructorid);
+  // const user = req.instructor;
 
-  if (user) {
-    await pool.query(
-      `insert into course_event(title, startdate,courseid, enddate, starttime, endtime, detail, place, typeid, instructorid) 
-          VALUES ($1 , $2, $3 , $4, $5, $6, $7, $8, $9, $10)`
-      [title, startDate,course, endDate, startTime, endTime, detail, place, type, intructor]
+    const data = await pool.query(
+      "insert into course_event(title,courseid, startdate, enddate, starttime, endtime, detail, place, typeid, instructorid) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+      [title,courseid,startdate,enddate,starttime,endtime,detail,place,typeid,instructorid]
     );
-    res.send({ success: true });
-  }
+    const event = data.rows[0];
+    res.status(200).json({
+      success: true,data:event});
+      return
+    // res.send({ success: true });
 
 
 
