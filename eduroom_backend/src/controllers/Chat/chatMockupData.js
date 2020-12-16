@@ -15,28 +15,28 @@ module.exports = {
 				firstName: 'John',
 				roomname: 'test4',
 				message: 'Hello this is test',
-				sendtime: '07/11',
+				sendtime: "10/24/2020",
 			},
 			{
 				chatroomid: 2,
 				firstname: 'John',
 				roomname: 'test4',
 				message: 'Hello this is test',
-				sendtime: '07/11',
+				sendtime: "12/09/2020",
 			},
 			{
 				chatroomid: 3,
 				firstname: 'John',
 				roomname: 'test4',
 				message: 'Hello this is test',
-				sendtime: '07/11',
+				sendtime: "12/14/2020",
 			},
 			{
 				chatroomid: 4,
 				firstname: 'John',
 				roomname: 'test4',
 				message: 'Hello this is test',
-				sendtime: '07/11',
+				sendtime: "12/08/2020",
 			},
 			{
 				chatroomid: 5,
@@ -187,19 +187,114 @@ module.exports = {
         //add column "status" in to chatRoomMember  (if member are kickout it will be invalid or if the chat room is deleted all member will be invalid(chatRoomProlfilePic, chatMessage, systemMessage, stickerMessage))
 		return {
 			chatRoomID: 2,
-            chatRoomName: 'Krishadawut Olde Monnikhof',
-            themeColoe: {
-                senderColor:"#121243",
-                recieverColor:"#235363",
+			chatRoomName: 'test4',
+			chatRoomProfile:'test.png',
+            themeColor: {
+                sendColor:"#EB7DB1",
+                recieveColor:"#5B5B5B",
             },
             membersID: [435,346,2342,67876],
 			messages: [
 				{
+                    system: true,
+                    sticker: false,
+					message: 'Test4 Have Joined the Chat',
+                    //if sticker "path:'test.png' instead of message"
+					sendTime: '13:50',
+					reader: [
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+					],
+				},
+				{
                     system: false,
                     sticker: false,
 					messageID: 23,
-                    senderID: 213124,
-                    message: 'Hello Tom',
+					senderID: 213124,
+					message: 'Hello Tom',
+					senderName: 'test4',
+					senderProfilePic: 'test.png',
+                    //if sticker "path:'test.png' instead of message"
+					sendTime: '13:50',
+					reader: [
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+					],
+				},
+				{
+                    system: false,
+                    sticker: false,
+					messageID: 23,
+                    senderID: 23432,
+					message: 'Hello Tom',
+					senderName: 'Krishadawut',
+					senderProfilePic: 'test.png',
+                    //if sticker "path:'test.png' instead of message"
+					sendTime: '13:50',
+					reader: [
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+					],
+				},
+				{
+                    system: true,
+                    sticker: false,
+					message: 'Krishadawut Have Left the Chat',
+                    //if sticker "path:'test.png' instead of message"
+					sendTime: '13:50',
+					reader: [
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+						{
+							readerID: 32342,
+							readTime: '13:54',
+						},
+					],
+				},
+				{
+                    system: false,
+                    sticker: false,
+					messageID: 23,
+					senderID: 213124,
+					senderName: 'test4',
+					message: 'Hello Tom',
+					senderProfilePic: 'test.png',
                     //if sticker "path:'test.png' instead of message"
 					sendTime: '13:50',
 					reader: [
@@ -232,7 +327,7 @@ module.exports = {
     },
     sendMessageMockup: (userID,chatRoomID,message)=>{
         return {
-			success: true,
+			success: false,
 		}
     },
     sendStickerMockup: (userID,chatRoomID,stickerID)=>{
