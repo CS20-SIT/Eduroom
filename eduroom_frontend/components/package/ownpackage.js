@@ -98,7 +98,7 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 									฿<span>{getPrice()}</span>
 								</div>
 								<div>
-									<div className="pri-cat">Category: {ownPackage.cataname}</div>
+									<div className="pri-cat">Category: {ownPackage.cate_name}</div>
 									<div className="right">
 										{renderPublish()}
 										{renderEdit()}
