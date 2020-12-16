@@ -53,11 +53,12 @@ export default css`
     font-weight: 600;
     color: #5b5b5b;
   }
-  .ad-question {
-    font-size: 1em;
+  .ad-topic {
+    margin-left:10px;
+    font-size: 1.20em;
     font-family: 'Quicksand', sans-serif;
     font-weight: bold;
-    color: 00000;
+    color: #6b6b6b;
   }
   .ad-ad-button {
     background: #A880F7;
@@ -115,6 +116,13 @@ export default css`
     width: 360px;
     height: 300px;
     background-image: url('/images/package/purchesed.svg');
+  }
+  .img-spaceship{
+    margin-left:30%;
+    width: 445px;
+    height: 325px;
+    position:absolute;
+    background-image: url('/images/Coupon/NotebookSpaceship.svg');
   }
   .ntab4 {
     width: 93%;

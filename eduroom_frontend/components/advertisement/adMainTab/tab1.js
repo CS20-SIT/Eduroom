@@ -23,7 +23,7 @@ const Content = () => {
         <div className="ad-question" style={{marginTop:"-30px"}}>Already have a ADs?</div>
         <button style={{marginTop:"10px"}}
             className = "ad-tab1-button"
-            onClick={() => router.push('/login')}
+            onClick={() => router.push('/advertisement/adinform')}
           >
             <a className="ad-button-text">Start Now</a>
           </button>
