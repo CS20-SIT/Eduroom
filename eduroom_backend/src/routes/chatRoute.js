@@ -8,11 +8,11 @@ router.get('/getGroupPicture', getGroupPicture)
 router.get('/inviteCreate', inviteCreate)
 
 //Mockup
-router.get('/getUserProfileMockup',(req,res)=>{
-  res.send(mockup.getUserProfileMockup(23432));
+router.get('/getUserProfile',(req,res)=>{
+  res.send(getUserProfile(23432));
 })
-router.get('/getChatListMockup',(req,res)=>{
-  res.send(mockup.getChatListMockup(32234));
+router.get('/getChatList',(req,res)=>{
+  res.send(mockup.getChatList(32234));
 })
 router.get('/getChatRoomProfilePictureMockup1',(req,res)=>{
   res.send(mockup.getChatRoomProfilePictureMockup1(5435));
@@ -32,11 +32,8 @@ router.post('/createGroupChatMockup',(req,res)=>{
 router.get('/getInvitationListMockup',(req,res)=>{
   res.send(mockup.getInvitationListMockup(35332));
 })
-router.get('/getInvitationListMockup2',(req,res)=>{
-  res.send(mockup.getInvitationListMockup2(35332));
-})
-router.get('/acceptInvitationMockup',(req,res)=>{
-  res.send(mockup.getInvitationListMockup(2));
+router.get('/acceptInvitation',(req,res)=>{
+  res.send(getInvitationListMockup(2));
 })
 router.get('/declineInvitationMockup',(req,res)=>{
   res.send(mockup.getInvitationListMockup(2));
@@ -83,8 +80,8 @@ router.get('/deleteMemberMockup',(req,res)=>{
 router.get('/leaveChatRoomMockup',(req,res)=>{
   res.send(mockup.leveChatRoomMockup(2,3545));
 })
-router.get('/deleteChatRoomMockup',(req,res)=>{
-  res.send(mockup.deleteChatRoomMockup(2));
+router.get('/deleteChatRoom',(req,res)=>{
+  res.send(mockup.deleteChatRoom(2));
 })
 
 
