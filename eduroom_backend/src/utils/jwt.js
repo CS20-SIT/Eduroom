@@ -12,7 +12,7 @@ const jwtVerifySignOption = {
 }
 
 const generateCookieJWT = (payload) => {
-	return jwt.sign({ id: payload, role: 'admin' }, jwtSecret, jwtCookieSignOption)
+	return jwt.sign({ id: payload, role: 'user' }, jwtSecret, jwtCookieSignOption)
 }
 
 const generateVerifyJWT = (payload) => {
