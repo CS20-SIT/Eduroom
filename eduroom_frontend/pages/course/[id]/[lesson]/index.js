@@ -1,7 +1,9 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import utils from '../../../../styles/course/utils';
 import GeneralNoNav from '../../../../components/template/generalnonav';
 import Link from 'next/link';
+
+import api from '../../../../api'
 
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,13 +13,23 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { ContentFlag } from 'material-ui/svg-icons';
 
-const CourseIDLesson = ({ courseDes, id }) => {
+// const CourseIDLesson = ({ courseDes, id }) => {
+const CourseIDLesson = ({ id }) => {
+    useEffect(() => {
+        console.log(id)
+        const fetchData = async () => {
+        let res = await api.post('/api/course/getCourseFromID', { courseID: id })
+        console.log(res.data)
+        setCourseDes(res.data);
+        }
+        fetchData()
+    }, [])
 
     const [sec,setSec] = useState(0); 
     const [secBG, setSecBG] = useState(0);
     const [part,setPart] = useState(0);
     var secNow = 0, partNow = 0;
-    const [srcc,setSrc] = useState("https://www.youtube.com/embed/mWU6_86B10c");
+    const [srcc,setSrc] = useState(courseDes[0].section[secBG].part[part].src);
     // Set srcc from secBG part
     const [partType,setPartType] = useState(1);
     const [questionNow,setQuestionNow] = useState(0);
@@ -467,7 +479,7 @@ export async function getServerSideProps(contex) {
     
     return {
       props: {
-        courseDes,
+        // courseDes,
         id,
       },
     };
