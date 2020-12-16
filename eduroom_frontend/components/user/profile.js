@@ -45,9 +45,11 @@ const Profile = () => {
 						</h1>
 						<div style={{ marginTop: '20px' }}>
 							<div className="edit">
-								<h2 className="editText" style={{ margin: '0' }}>
-									Edit
-								</h2>
+								<Link href="/user/edit">
+									<h2 className="editText" style={{ margin: '0' }}>
+										Edit
+									</h2>
+								</Link>
 								<i className="fas fa-edit edit-icon" style={{ marginTop: '7px' }}></i>
 							</div>
 						</div>
