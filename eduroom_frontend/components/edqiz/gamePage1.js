@@ -154,7 +154,7 @@ const Page1 = ({
             <Grid item xs={4}>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <img
-                  src="/images/questionPic.jpg "
+                  src={data[questionNumber].image}
                   alt="my image"
                   style={{
                     width: "90%",

@@ -92,8 +92,9 @@ exports.regisController = async (req, res) => {
 		const emailOptions = {
 			email: user.email,
 			subject: 'Eduroom Email Verification',
-			htmlMessage: htmlMessage,
+			htmlMessage,
 		}
+	
 		await sendEmail(emailOptions)
 		// Generate JWT for user to login
 		const token = generateCookieJWT(userId)
