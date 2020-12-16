@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import Courses from './courses'
+import api from '../../api'
 import style from '../../styles/package/createpackage'
 
 const CreatePackage = (props) => {
@@ -10,6 +11,16 @@ const CreatePackage = (props) => {
 		detail: false,
 		courses: false,
 	})
+	const [categories, setCategories] = useState([])
+	const [error, setError] = useState(true)
+	const fetchCategories = async () => {
+		const res = await api.get('/api/package/categories')
+		console.log(res.data)
+		setCategories(res.data)
+	}
+	useEffect(() => {
+		fetchCategories()
+	}, [])
 	useEffect(() => {
 		if (props.myPackage.pic) {
 			var reader = new FileReader()
@@ -36,15 +47,16 @@ const CreatePackage = (props) => {
 			discount: parseInt(e.target.value),
 		})
 	}
-	const categories = [
-		{ value: 'business', label: 'Business' },
-		{ value: 'development', label: 'Development' },
-		{ value: 'software', label: 'IT+Software' },
-		{ value: 'design', label: 'Design' },
-		{ value: 'computer', label: 'Computer' },
-	]
+
 	const categoryChange = (e) => {
-		props.setMyPackage({ ...props.myPackage, category: e.target.value })
+		let categoryText = ''
+		for (let i = 0; i < categories.length; i++) {
+			if (categories[i].value == e.target.value) {
+				categoryText = categories[i].label
+				break
+			}
+		}
+		props.setMyPackage({ ...props.myPackage, category: e.target.value, categoryText })
 	}
 	const nameChange = (e) => {
 		props.setMyPackage({ ...props.myPackage, name: e.target.value })
@@ -53,23 +65,29 @@ const CreatePackage = (props) => {
 		props.setMyPackage({ ...props.myPackage, detail: e.target.value })
 	}
 	const handleClick = (e) => {
-		if (validator()) {
-			props.changePage(2)
-		}
+		props.changePage(2)
 	}
+
 	const validator = () => {
 		if (
 			props.myPackage.name == '' ||
-			props.myPackage.category == 'default' ||
+			props.myPackage.category == '' ||
+			props.myPackage.discount === 0 ||
 			props.myPackage.detail == '' ||
-			props.myPackage.courses == 0
+			props.myPackage.courses == 0 ||
+			props.myPackage.pic === '' ||
+			props.myPackage.selectedCourses.length === 0
 		) {
-			setAlert({ name: true, category: true, detail: true, courses: true })
+			setError(true)
 			return false
+		} else {
+			setError(false)
+			return true
 		}
-		return true
 	}
-
+	useEffect(() => {
+		validator()
+	}, [props.myPackage])
 	return (
 		<Fragment>
 			<div>
@@ -133,7 +151,7 @@ const CreatePackage = (props) => {
 
 							<div>
 								<select name="category" onChange={categoryChange} value={props.myPackage.category}>
-									<option disabled value="default">
+									<option disabled value="">
 										Category
 									</option>
 									{categories.map((el, idx) => {
@@ -164,14 +182,11 @@ const CreatePackage = (props) => {
 
 					<div>
 						<div className="subtitle2">Courses</div>
-						<Courses
-							handleSelectedCourses={handleSelectedCourses}
-							selectedCourses={props.myPackage.selectedCourses}
-						/>
+						<Courses handleSelectedCourses={handleSelectedCourses} selectedCourses={props.myPackage.selectedCourses} />
 					</div>
 				</div>
 				<div className="center">
-					<button className="createbutton mgb-5" onClick={handleClick}>
+					<button className={`createbutton mgb-5 ${error ? 'disabled' : ''}`} disabled={error} onClick={handleClick}>
 						Create
 					</button>
 				</div>
