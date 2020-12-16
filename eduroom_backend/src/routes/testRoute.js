@@ -8,7 +8,7 @@ const { uploadFile } = require('../utils/cloudStorage')
 
 router.get('/', test)
 router.get('/mail', async (req, res) => {
-	sendEmail({ email: 'test@test.com', subject: 'Test SMTP Server', message: 'Woah' })
+	sendEmail({ email: 'thetkpark@gmail.com', subject: 'Test SMTP Server', message: 'Woah' })
 	res.status(200).json({ success: true })
 })
 
