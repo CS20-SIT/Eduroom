@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import SearchIcon from "./icons/SearchIcon";
+import searchResult from "./searchResult";
 
 export default function seacrhChat(props) {
   const [message, setMesaage] = useState(props.message);
   return (
     <div>
-      <div style={{ position: "relative", marginLeft: 14 }}>
+      <div style={{ position: "relative"}}>
         <SearchIcon
           style={{
             position: "absolute",
-            marginTop: 6,
+            marginTop: 8,
             marginLeft: 8,
             opacity: 0.5,
             fontSize: 20,
           }}
         />
         <input
+          value={props.input}
+          onChange={e => {
+            props.setInput(e.target.value)
+            props.getSearchResult()
+          }}
           className='search'
           style={{ paddingLeft: 35, width: "100%" }}
           placeholder="Search"

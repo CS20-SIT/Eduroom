@@ -17,7 +17,6 @@ export default function chatRoom(props) {
   const [scrollBarStyle, setScrollBarStyle] = useState('nochat');
   const [scrollDownStyle, setScrollDownStyle] = useState({
     fontSize: 50,
-    display: "none",
     cursor: "pointer",
   });
   const handleExpand = () => {
@@ -103,7 +102,7 @@ export default function chatRoom(props) {
     text: 'Hello Text',
     sentTime: '13:50',
   }]
-  React.useEffect(() => {
+  useEffect(() => {
     console.log(style);
     scrollDown();
     setSmoothScroll({ overflowY: "scroll", scrollBehavior: "smooth" });
