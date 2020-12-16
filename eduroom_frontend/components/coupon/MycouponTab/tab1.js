@@ -1,6 +1,7 @@
 import React, { Fragment, useState} from 'react'
 import style from '../../../styles/advertisement/ads'
 import { useRouter} from 'next/router';
+import {Link,Typography,InputBase, Paper, Grid,List} from '@material-ui/core'
 
 
 
@@ -11,24 +12,15 @@ const Content = () => {
 
        
         <div className="tab1">
-        <div style={{paddingTop:"100px" ,marginLeft:"150px"}}>
-        <div className="ad-tab1-header">Be seen where </div>
-        <div className="ad-tab1-header" style={{marginTop:"-10px"}}>everyone is watching </div>
-          <div className="ad-tab1-description">
-            With EDUROOM ads, reach potential customers <br></br>
-            and have them take action when they watch <br></br>
-            or search for videos on YouTube – and only <br></br>
-            pay when they show interest.
-        </div>
-        <div className="ad-question" style={{marginTop:"-30px"}}>Already have a ADs?</div>
-        <button style={{marginTop:"10px"}}
-            className = "ad-tab1-button"
-            onClick={() => router.push('/login')}
-          >
-            <a className="ad-button-text">Start Now</a>
-          </button>
-          
-          </div>
+        <Grid container spacing ={3}>
+        <Grid item xs ={4}>
+        <Paper style={{paddingLeft: "50px"}}>
+          <div style={{paddingLeft:"25px",paddingTop:"10px"}}><h2>coupon discount 10%</h2></div>
+          <img src="https://www.flaticon.com/svg/static/icons/svg/815/815252.svg" style={{width: 300 , heigth: 600, marginTop:"-50px"}}></img>
+          <div style={{paddingLeft:"75px", marginTop:"-30px",paddingBottom:"10px",color:"#A880F7"}}><h4>expire 30 Jun 2022</h4></div>
+        </Paper>
+        </Grid>
+        </Grid>
          <style jsx>
          {style}
        </style> 

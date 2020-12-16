@@ -135,4 +135,49 @@ export default css`
   .background{
     background-image:url('/images/big-bg.svg')
   }
+  .detail{
+    position:relative;
+    left:50%;
+    top:25px;
+  
+    transform:translate(-50%,-50%);
+  }
+  .adList{
+    background-image: url('/images/big-bg.svg');
+    height:100vh;
+    position:absolute;
+    top:0;
+    width:93.5vw;
+    backgroundRepeat: 'no-repeat'
+  }
+  .card{
+    position:relative;
+    top:20px;
+    left:50px;
+    background-color:whitesmoke;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width:450px;
+    height:400px;
+  }
+  .ad-border{
+    border: 2px solid #FB9CCB;
+    border-radius: 5px;
+    height:150px;
+    width:1000px;
+  }
+  .ad-border-new{
+    border: 2px dotted #828282;
+    border-radius: 5px;
+    height:150px;
+    width:1000px;
+  }
+  .circle{
+    border: 5px solid #3D457F;
+    border-radius: 50%;
+    height:150px;
+    width:150px;
+    background-color: white;
+    display: inline-block
+  }
 `;
+5
