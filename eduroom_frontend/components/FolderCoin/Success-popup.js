@@ -1,5 +1,3 @@
-import { formatMs } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
 import { useState } from 'react';
 import Styles from '../../styles/CoinStyles/ensurePayment.module.css';
 const successPopup = (props) => {
