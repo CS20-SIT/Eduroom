@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../styles/tutor/utils'
 import Header from '../../../components/tutor/main-header'
-import GeneralNoNav from '../../../components/template/generalnonav'
+import GeneralNoNav from '../../../components/template/general'
 
 import Link from 'next/link'
 
@@ -71,7 +71,7 @@ const Appointment = () => {
 		<Fragment>
 			<GeneralNoNav>
 				{reviewModal >= 0 ? (
-					<div className="modal-bg">
+					<div className="modal-bg" id="review-pop-up">
 						<div className="modal-container bg-pink">
 							<div
 								className="modal-close"
@@ -115,6 +115,7 @@ const Appointment = () => {
 								}}
 							></textarea>
 							<div
+								id="submit-rating-btn"
 								className={`px-8 py-3 rounded-sm bg-navy text-md font-bold text-white ${
 									!desc ? 'disabled' : 'pointer'
 								} `}
@@ -156,7 +157,7 @@ const Appointment = () => {
 						</div>
 						{appointments &&
 							appointments[requestMode].map((e, index) => (
-								<div key={index}>
+								<div key={index} className="appointment-info-list">
 									<div
 										className={`px-8 py-4 my-8 shadow bg-white-faded rounded-md flex items-center justify-between animation ${
 											hoverIns == index ? 'bigger' : ''
@@ -207,7 +208,7 @@ const Appointment = () => {
 												</div>
 												{e.isAgree == 'Approved' && e.sorted < now && !e.score ? (
 													<div
-														className={`text-sm px-3 py-1 border rounded-md opacity-50 pointer animation ${
+														className={`rating-btn text-sm px-3 py-1 border rounded-md opacity-50 pointer animation ${
 															hoverReview == index ? 'bg-secondary text-white' : ''
 														}`}
 														onPointerEnter={() => {
