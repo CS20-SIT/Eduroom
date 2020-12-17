@@ -1,45 +1,32 @@
 import React, { Fragment, useState} from 'react'
 import style from '../../../styles/advertisement/ads'
-import { useRouter } from 'next/router';
-import {Link,Typography,InputBase, Paper, Grid} from '@material-ui/core'
+import { useRouter} from 'next/router';
+import {Link,Typography,InputBase, Paper, Grid,List} from '@material-ui/core'
+
 
 
 
 const Content = () => {
-    const router = useRouter();
+  const router = useRouter();
     return (
 
-        <Fragment>
-        
-        <Grid containner spacing={3}>  
-            <Grid item xs={6}>
-            <div style={{marginTop:"100px" }}>
-            <div className="ad-tab1-header">It's easy to advertise 
-</div>
-            <div className="ad-tab1-header" style={{marginTop:"-10px"}}>your business  </div>
-        
-            <div className="ad-tab1-description">
-                It’s easier to attract your next customer if they<br></br>
-                know what makes you unique. Introduce your <br></br>
-                business with advertising on EDUROOM.
-            </div>
-            <button style={{marginTop:"10px"}}
-                className = "ad-tab1-button"
-                onClick={() => router.push('/login')}
-                >
-                <a className="ad-button-text">Start Now</a>
-            </button>
-            </div>
-              
-        </Grid>       
-        </Grid>  
-        <div className="tab2"></div>
+       
+        <div className="tab1">
+        <Grid container spacing ={3}>
+        <Grid item xs ={4}>
+        <Paper style={{paddingLeft: "50px"}}>
+          <div style={{paddingLeft:"25px",paddingTop:"10px"}}><h2>coupon discount 10%</h2></div>
+          <img src="https://www.flaticon.com/svg/static/icons/svg/815/815252.svg" style={{width: 300 , heigth: 600, marginTop:"-50px"}}></img>
+          <div style={{paddingLeft:"130px", marginTop:"-30px",paddingBottom:"10px",color:"#A880F7"}}><h4>Used</h4></div>
+        </Paper>
+        </Grid>
+        </Grid>
          <style jsx>
          {style}
        </style> 
-       
+       </div>
         
-        </Fragment>
+     
 
         
         )
