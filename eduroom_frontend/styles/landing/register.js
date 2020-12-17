@@ -57,7 +57,7 @@ export default css`
     background: rgba(255, 255, 255, 0.6);
     box-shadow: 6px 4px 19px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
-    padding: 2rem 0rem;
+    padding: 2rem 10%;
   }
   .register-description {
     padding: 5% 0% 5% 0%;

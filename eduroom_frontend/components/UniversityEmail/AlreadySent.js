@@ -11,6 +11,7 @@ import General from '../template/general'
 import api from "../../api";
 
 
+
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -29,19 +30,10 @@ const useStyles = makeStyles({
 });
 
 const Content = () => {
-  const [createinfo, setinfo] = useState({
-    localPart: "",
-    domainName: ""
-  }); 
-  const handleSubmit = (e) => {
-      console.log(createinfo);
-      // api.post("/api/registerUemail", createinfo).then((res) => {
-      //   console.log(res);
-      //   router.push("/registerUemail");
-      //   console.log("PASSPUSH");
-      // });
-      
-  };
+  
+  
+
+  
   const classes = useStyles();
   const [checked, setChecked] = React.useState(true);
   const handleChange = (e) => {
@@ -96,7 +88,7 @@ const Content = () => {
                 <Grid item xs={6} >
                   <button className="register-button"
                    type="submit"
-                   onClick={handleSubmit}>
+                   >
                     <span className="register-button-text">Next</span>
                   </button>
                 </Grid>

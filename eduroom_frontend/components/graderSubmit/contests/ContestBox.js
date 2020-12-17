@@ -5,9 +5,15 @@ import style from '../../../styles/graderSubmit/contests/contestBox'
 const ContestBox = (props) => {
 	return (
 		<div>
-			<h2 style={{ color: '#5B5B5B', paddingTop: '20px' }}>CONTESTS</h2>
 			<div className="box">
-				<Contests id={props.id} />
+				<Contests
+					id={props.id}
+					title={props.title}
+					description={props.description}
+					rule={props.rule}
+					starttime={props.starttime}
+					endtime={props.endtime}
+				/>
 			</div>
 			<style jsx>{style}</style>
 		</div>

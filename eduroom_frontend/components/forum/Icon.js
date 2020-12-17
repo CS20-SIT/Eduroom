@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-const Icon = ({ type, isHover, changeHover = true, clicked = () => {} }) => {
+const Icon = ({ type, isHover, changeHover = true,isPointer=true, clicked = () => {} }) => {
 	const [hover, setHover] = useState(isHover)
 	const handleClick = () => {
 		clicked(() => {
@@ -13,7 +13,7 @@ const Icon = ({ type, isHover, changeHover = true, clicked = () => {} }) => {
 			return (
 				<Fragment>
 					<div
-						style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '1rem' }}
+						style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '1rem',cursor:`${isPointer?'pointer':'default'}` }}
 						onClick={handleClick}
 					>
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@ const Icon = ({ type, isHover, changeHover = true, clicked = () => {} }) => {
 			return (
 				<Fragment>
 					<div
-						style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '1rem' }}
+						style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: '1rem',cursor:`${isPointer?'pointer':'default'}` }}
 						onClick={handleClick}
 					>
 						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

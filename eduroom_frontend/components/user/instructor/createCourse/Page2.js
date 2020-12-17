@@ -6,9 +6,9 @@ const Page2 = (props) => {
 	const addSection = () => {
 		const temp = props.sections.slice()
 		temp.push({
-			name:`Section ${temp.length+1}`,
-			videos: [{ name: 'Video Name', data: '',path:'' }],
-			material: {data:'',path:''},
+			name: '',
+			videos: [{ name: '', data: '', path: '' }],
+			materials: [],
 			questions: [{ q: '', choices: ['', '', '', ''], correct: '' }],
 		})
 		props.changeSections(temp)
