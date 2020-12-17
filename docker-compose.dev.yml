@@ -71,19 +71,41 @@ services:
         ports:
             - "5000:5000"
     eduroom_grading_server:
-        build:
-            dockerfile: Dockerfile.dev
-            context: ./eduroom_grading_server
+        image: judge0/judge0:latest
         volumes:
-            - /usr/src/app/node_modules
-            - ./eduroom_grading_server:/usr/src/app
-        environment:
-            - NODE_ENV=development
-            - PORT=3050
-            - ENTRYPOINT_URL=http://localhost
-            - CLIENT_URL=http://localhost:3000
+            - ./eduroom_grading_server/judge0.conf:/judge0.conf:ro
+        privileged: true
+        restart: always
+        depends_on:
+            - eduroom_grading_worker
+            - eduroom_grading_db
+            - eduroom_grading_redis
         ports:
-            - "3050:3050"
+            - "3050:3000"
+    eduroom_grading_worker:
+        image: judge0/judge0:latest
+        command: ["./scripts/workers"]
+        volumes:
+            - ./eduroom_grading_server/judge0.conf:/judge0.conf:ro
+        privileged: true
+        restart: always
+    eduroom_grading_db:
+        image: postgres:13.0
+        env_file: ./eduroom_grading_server/judge0.conf
+        volumes:
+            - postgres-data:/var/lib/postgresql/data/
+        restart: always
+    eduroom_grading_redis:
+        image: redis:6.0
+        command: [
+            "bash", "-c",
+            'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"'
+        ]
+        env_file: ./eduroom_grading_server/judge0.conf
+        volumes:
+            - redis-data:/data
+        restart: always
+    
     eduroom_socket_chat:
         build:
             dockerfile: Dockerfile.dev
@@ -117,3 +139,6 @@ services:
         ports:
             - "1025:1025"
             - "1080:1080"
+volumes:
+    postgres-data:
+    redis-data:
