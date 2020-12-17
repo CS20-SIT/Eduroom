@@ -1,5 +1,6 @@
 const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
+const errorHandler = require('../middleware/error');
 
 exports.getCategories = async (req, res, next) => {
 	const results = await pool.query('SELECT * from package_category')
@@ -29,10 +30,10 @@ exports.createPackage = async (req, res, next) => {
 
 exports.deletePackage = async (req, res, next) => {
 	const { packageid } = req.body
-	console.log('id is ',packageid)
+	console.log('id is ', packageid)
 	await pool.query(`DELETE FROM package_courses where packageid = $1`, [packageid])
-	await pool.query(`DELETE FROM package where packageid = $1`,[packageid])
-	res.send({success: true})
+	await pool.query(`DELETE FROM package where packageid = $1`, [packageid])
+	res.send({ success: true })
 }
 
 exports.getPackage = async (req, res, next) => {
@@ -41,6 +42,30 @@ exports.getPackage = async (req, res, next) => {
 	const packageInfo = data.rows
 	res.status(200).json({ data: packageInfo })
 }
+
+exports.getAllPackage = async (req, res, next) => {
+	try {
+		const data = await pool.query('select * from instructor join user_profile up on instructor.userid = up.userid join package p on instructor.instructorid = p.instructorid where ispublic = true')
+		const packageInfo = data.rows;
+		const temp = packageInfo.map(package => {
+			return {
+				id: package.packageid,
+				title: package.packagename,
+				instructor: package.instructorid,
+				detail: package.detail,
+				image: package.image,
+				discount: package.discount,
+				public: package.ispublic,
+				cateid: package.cateid,
+				infname: package.firstname,
+				inlname: package.lastname,
+			};
+		});
+		res.status(200).json(temp);
+	} catch (error) {
+		errorHandler(error, req, res);
+	}
+};
 
 exports.getCourses = async (req, res, next) => {
 	const { page, mxData } = req.query
