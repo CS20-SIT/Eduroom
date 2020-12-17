@@ -8,23 +8,24 @@ import {Link,Typography,InputBase, Paper, Grid} from '@material-ui/core'
 const Content = () => {
     const router = useRouter();
     return (
+
         <Fragment>
         
         <Grid containner spacing={3}>  
-            <Grid item xs={7}>
-            <div style={{marginTop:"100px" ,marginLeft:"150px"}}>
-            <div className="ad-tab1-header">Set a budget that works 
-
+            <Grid item xs={6}>
+            <div style={{marginTop:"100px" }}>
+            <div className="ad-tab1-header">It's easy to advertise 
 </div>
-            <div className="ad-tab1-header" style={{marginTop:"-10px"}}>for your business  </div>
+            <div className="ad-tab1-header" style={{marginTop:"-10px"}}>your business  </div>
         
             <div className="ad-tab1-description">
-            Put your business in front of the people you want to reach.<br></br>
-Spend $500 per 1 ads
+                It’s easier to attract your next customer if they<br></br>
+                know what makes you unique. Introduce your <br></br>
+                business with advertising on EDUROOM.
             </div>
             <button style={{marginTop:"10px"}}
                 className = "ad-tab1-button"
-                onClick={() => router.push('/advertisement/adinform')}
+                onClick={() => router.push('/login')}
                 >
                 <a className="ad-button-text">Start Now</a>
             </button>
@@ -32,15 +33,15 @@ Spend $500 per 1 ads
               
         </Grid>       
         </Grid>  
-        <div className="ntab4" ></div>
-        <div className="tab4" style={{marginTop:"-40%" , marginLeft:"50%",marginBottom:"1.5%" }}></div>
-        
+        <div className="tab2"></div>
          <style jsx>
          {style}
        </style> 
-       </Fragment>
+       
         
+        </Fragment>
 
+        
         )
     }
     export default Content

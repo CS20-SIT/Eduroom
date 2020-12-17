@@ -11,7 +11,7 @@ const Content = () => {
 
        
         <div className="tab1">
-        <div style={{paddingTop:"100px"}}>
+        <div style={{paddingTop:"100px" ,marginLeft:"150px"}}>
         <div className="ad-tab1-header">Be seen where </div>
         <div className="ad-tab1-header" style={{marginTop:"-10px"}}>everyone is watching </div>
           <div className="ad-tab1-description">
@@ -23,7 +23,7 @@ const Content = () => {
         <div className="ad-question" style={{marginTop:"-30px"}}>Already have a ADs?</div>
         <button style={{marginTop:"10px"}}
             className = "ad-tab1-button"
-            onClick={() => router.push('/advertisement/adinform')}
+            onClick={() => router.push('/login')}
           >
             <a className="ad-button-text">Start Now</a>
           </button>
