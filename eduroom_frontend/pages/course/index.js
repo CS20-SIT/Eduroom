@@ -42,9 +42,10 @@ const Course = () => {
             <div className='text-center categoryTab'>
               <Link href={`/course`}>
                 <span className='text-lg text-secondary mx-4 font-quicksand pointer'>GENERAL</span></Link>
+                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MATH</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT & SOFTWARE</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>DESIGN</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MARGETING</span>
+              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MARKETING</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>BUSINESS</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>OTHER</span>
             </div>
