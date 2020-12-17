@@ -1,7 +1,7 @@
 const pool = require('../database/db')
 
 const getChatlist = async (req, res, next) => {
-	const userid = req.user.id
+	const userid = '3c93e461-7eab-45fb-b8ce-587b47286f8c'
 	const chatlist = await pool.query(
 		`select chat.chatroomid, usp.firstname, roomname, message, sendtime from chat, chat_message cm, 
     user_profile usp where cm.chatroomid in ( select crm.chatroomid from chat_roommember crm where userid = '${userid}' ) 
@@ -15,7 +15,7 @@ const getChatlist = async (req, res, next) => {
 }
 
 const getGroupPicture = async (req, res, next) => {
-	let chatroomid = req.chat.chatroomid
+	let chatroomid = 3
 	const messagelist = await pool.query(`select avatar
   from user_profile, chat_roommember
   where user_profile.userid = chat_roommember.userid and
@@ -54,46 +54,7 @@ const deleteChatRoom = async (req, res, next) => {
 // 	res.send(color)
 // }
 
-
-const getUserProfile = async (req, res, next) => {
-  const userid = req.user.id
-  const userProfile = await pool.query(`select firstname, lastname, displayname, avatar 
-                                        from user_profile 
-                                        where userid = $1`, [userid]);
-
-    const usp = userProfile.rows[0]
-    res.send(usp)
-}
-
-const acceptInvitation = async (req, res, next) =>{
-  const userid = req.user.id
-  const chatroomid = req.chat.chatroomid
-  const result = await pool.query(`insert into chat_roommember(chatroomid, userid, nickname, sender_color, receiver_color, hide)
-values ($1,$2,null,'#A27CEF','#5B5B5B',false);
-delete from invite_invitees
-where invitationid = 3 and inviteeid = $2`,[chatroomid], [userid])
-res.status(200).json({ success: True})
-}
-
-
-const deleteMessage = async (req, res, next) =>{
-  const mesid = req.chat.messageID
-  const del = await pool.query(`delete from chat_message where messageid = $1 ` [mesid])
-		res.send({ success: true })
-}
-
-const hideMessage = async (req, res, next) =>{
-  const userid = req.user.id
-  const chatroomid = req.chat.chatroomid
-  const result = await pool.query(`update chat_roommember set hide = 'True' where userid = $1 and chatroomid = $2`, [userid], [chatroomid])
-res.status(200).json({ success: true })
-}
-
-
-
 module.exports = { getChatlist, 
   getGroupPicture, 
   inviteCreate, 
-  deleteChatRoom, 
-  getUserProfile,
-  acceptInvitation}
+  deleteChatRoom}
