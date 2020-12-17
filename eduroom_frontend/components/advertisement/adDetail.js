@@ -15,14 +15,14 @@ const Content = () =>{
                     <div style={{margin:"0% 0% 0% 42%", paddingTop:"20px"}}><h1>Advertisement</h1></div>
                 <Grid container spacing={3} style={{paddingBottom:"1%"}}>
                 <div style={{backgroundColor:'#828282', height:'10px',marginTop:'145px',marginLeft:'18%',position:'absolute', width:'50%', opacity:'50%'}}></div>
-                <div className="circle" style={{margin:"5% 0% 0% 18.5%"}}></div>
-                <div className="circle" style={{margin:"5% 0% 0% 16%"}}></div>
-                <div className="circle" style={{margin:"5% 0% 0% 16%"}}></div><br></br>
+                <div className="circle" style={{margin:"5% 0% 0% 15.5%",position:'absolute'}}></div>
+                <div className="circle" style={{margin:"5% 0% 0% 38.5%",position:'absolute'}}></div>
+                <div className="circle" style={{margin:"5% 0% 0% 60.5%",position:'absolute'}}></div><br></br>
                 <div className="ad-ad-header"  style={{margin:"1% 0% 0% 20.7%"}}>paid</div>
                 <div className="ad-ad-header"  style={{margin:"1% 0% 0% 23%"}}>wait</div>
                 <div className="ad-ad-header"  style={{margin:"1% 0% 0% 20.7%"}}>success</div>
                 </Grid>
-                <div style={{margin:"5% 0% 2% 25%"}}><h1>Information</h1></div>
+                <div style={{margin:"20% 0% 2% 25%"}}><h1>Information</h1></div>
                 <Grid container spacing={3}>
                     <Grid item xs></Grid>
                     <Grid item xs><h2>AD Name<br></br>
