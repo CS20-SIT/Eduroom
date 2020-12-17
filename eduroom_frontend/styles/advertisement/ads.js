@@ -135,4 +135,107 @@ export default css`
   .background{
     background-image:url('/images/big-bg.svg')
   }
+  .ad-id {
+    margin-left:10px;
+    font-size: 1em;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    color: #3d467f;
+  }
+  .ad-owner {
+    margin-left:10px;
+    font-size:0.7em;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    color: #3d467f;
+  }
+  .ad-price {
+    margin-left:10px;
+    font-size: 1em;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    color: #3d467f;
+  }
+  .ad-remove-button {
+    background: #A7ABC5;
+    border-radius: 2px;
+    padding: 0.4rem 1.5rem;
+    border: none;
+    outline: none;
+    transition: 0.25s;
+    right: 40px;
+  }
+  .ad-description {
+    padding: 5% 0% 10% 0%;
+    font-size: 0.6em;
+    margin-left:20px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    color: #5b5b5b;
+    opacity
+  }
+  .ad-check-out-button {
+    background: #A880F7;
+    border-radius: 2px;
+    padding: 0.4rem 1.5rem;
+    border: none;
+    outline: none;
+    transition: 0.25s;
+    right: 40px;
+    border-radius: 10px;
+    height: 42px;
+
+
+  }
+  .ad-check-out-button-text {
+    color: white;
+    font-weight: 700;
+    font-size: 1.5em;
+    font-family: 'Quicksand', sans-serif;
+  }
+  .detail{
+    position:relative;
+    left:50%;
+    top:25px;
+  
+    transform:translate(-50%,-50%);
+  }
+  .adList{
+    background-image: url('/images/big-bg.svg');
+    height:100vh;
+    position:absolute;
+    top:0;
+    width:93.5vw;
+    backgroundRepeat: 'no-repeat'
+  }
+  .card{
+    position:relative;
+    top:20px;
+    left:50px;
+    background-color:whitesmoke;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width:450px;
+    height:400px;
+  }
+  .ad-border{
+    border: 2px solid #FB9CCB;
+    border-radius: 5px;
+    height:150px;
+    width:1000px;
+  }
+  .ad-border-new{
+    border: 2px dotted #828282;
+    border-radius: 5px;
+    height:150px;
+    width:1000px;
+  }
+  .circle{
+    border: 5px solid #3D457F;
+    border-radius: 50%;
+    height:150px;
+    width:150px;
+    background-color: white;
+    display: inline-block
+  }
 `;
+5

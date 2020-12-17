@@ -81,9 +81,10 @@ export default function FullWidthTabs() {
     <Fragment>
       
      <div className="background">
-     <Paper style = {{margin:" 0% 5% 5% 5% ",opacity:"40%"}}>
+       <div style={{marginTop:"20px"}}></div>
+     <div style = {{margin:" 0% 5% 5% 5% ", paddingBottom:"20px", backgroundColor:"transparent"}}>
 
-     <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',marginLeft:'2%',position:'absolute', width:'78%', opacity:'50%'}}></div>
+     <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',marginLeft:'22.5%',position:'absolute', width:'40%', opacity:'50%'}}></div>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -98,11 +99,11 @@ export default function FullWidthTabs() {
           
        
         </Tabs>
-        </Paper>
+        </div>
         
        
    
-      <Paper style={{margin:"5% 5% 0% 5%"}}>
+      <Paper style={{margin:"-4% 5% 3% 5%",background: 'rgba(255, 255, 255, 0.7)'}}>
         <TabPanel value={value} index={0} dir={theme.direction} >
         <Tab1/>
         </TabPanel>
