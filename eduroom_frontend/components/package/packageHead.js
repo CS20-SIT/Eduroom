@@ -14,7 +14,7 @@ const Package = () => {
                             <h1 className="title">Coding with Python</h1>
                             <div className="bestsell-tag">
                                 <BestSeller />
-                                <div className="text2">3 course in this package</div>
+                                <div className="text2">3 courses in this package</div>
                             </div>
                             <div className="instructor">
                                 <div style={{ marginRight: 10 }}>Instructors</div>

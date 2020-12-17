@@ -2,7 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import utils from '../../styles/course/utils';
 import GeneralNoNav from '../../components/template/generalnonav';
 import Link from 'next/link';
-import Test from '../../components/course/courseRender';
+import SearchBar from '../../components/course/searchBar'
+import Name from '../../components/course/courseRender'
 
 import api from '../../api'
 
@@ -38,16 +39,13 @@ const Course = () => {
 
                 {/* Search bar and Categories select */}
                 <div className='text-center my-6'>
-                    <input className='font-quicksand input-tab mx-4 rounded-sss' placeholder="What do you want to learn?"></input>
+                    <SearchBar/>
                     <select className='font-quicksand cate-tab mx-4 pointer rounded-sss' placeholder="Categories">
                         <option>Development</option>
                         <option>Finance</option>
                         <option>Music</option>
                     </select>
                 </div>
-
-                <Test></Test>
-
                 {/* Box of each course */}
                 <div className='text-center my-10'>
                 {courseDes.map((e, index) => (

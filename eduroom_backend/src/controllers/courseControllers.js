@@ -1,8 +1,9 @@
+const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
 
 const getAllCourse = async (req, res) => {
     try {
-        const { rows } = await pool.query(`SELECT * FROM course
+        const { rows } = await pool.query(`select * from course
         join instructor i on course.ownerid = i.instructorid
         join user_profile up on i.userid = up.userid`)
 
@@ -10,6 +11,7 @@ const getAllCourse = async (req, res) => {
             res.status(404).send({msg: 'Not Found'})
 
         res.status(200).send(rows)
+        
     } catch(err) {
         res.status(400).send(err.message)
     }
@@ -56,8 +58,25 @@ const getCourseSectionPart = async (req, res) => {
     }
 }
 
+const searchCourse = async (req, res, next) => {
+    const search = req.body.search;
+    const user = req.user
+    if(search){
+        const data = await pool.query(
+            'select * from course join instructor i on course.ownerid = i.instructorid join user_profile up on i.userid = up.userid  AND course.courseid = $1 WHERE UPPER(coursename) LIKE $2',
+            [user?.id ?? null,'%'+search.toUpperCase()+'%']
+      )
+    const course = data.rows
+      res.status(200).json({ success: true, data: course })
+    } else {
+      return next(new ErrorResponse("Not Found",404))
+    }
+}
+
+
 module.exports = {
     getAllCourse,
     getCourseFromID,
-    getCourseSectionPart
+    getCourseSectionPart,
+    searchCourse
 }
