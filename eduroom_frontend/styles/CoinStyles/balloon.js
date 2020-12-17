@@ -16,7 +16,7 @@ export default css`
 		width: 105px;
 		border-radius: 75% 75% 70% 70%;
 		position: absolute;
-		opacity:90%;
+		opacity:60%;
 		color:#d5c1fc;
 		margin: 50px 0 0 100px;
 		left: 950px;
@@ -24,17 +24,7 @@ export default css`
 		animation: float ;
 		animation-timing-function: ease-in;
 	}
-	.balloon:after {
-		content: '▲';
-		text-align: center;
-		display: block;
-		position: absolute;
-		color: inherit;
-		top: 110px;
-		left: 0;
-		right: 0;
-		margin: auto;
-	}
+
 	.balloon:before {
 		content: '';
 		height: 75px;
@@ -43,7 +33,7 @@ export default css`
 		background-color: #d5c1fc;
 		display: block;
 		position: absolute;
-		top: 135px;
+		top: 125px;
 		left: 0;
 		right: 0;
 		margin: auto;
