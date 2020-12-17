@@ -45,9 +45,11 @@ jobs:
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --build-arg BUILDKIT_INLINE_CACHE=1 \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
           eduroom_backend
+#           --build-arg BUILDKIT_INLINE_CACHE=1 \
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
+#             eduroom_backend
+    
 
     - name: Build Eduroom Frontend Image
       run: |-
@@ -56,9 +58,10 @@ jobs:
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --build-arg BUILDKIT_INLINE_CACHE=1 \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
           eduroom_frontend
+#           --build-arg BUILDKIT_INLINE_CACHE=1 \
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
+#           eduroom_frontend
 
     - name: Build Eduroom Grading Server Image
       run: |-
@@ -67,9 +70,10 @@ jobs:
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --build-arg BUILDKIT_INLINE_CACHE=1 \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
           eduroom_grading_server
+#           --build-arg BUILDKIT_INLINE_CACHE=1 \
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
+#           eduroom_grading_server
 
     - name: Build Eduroom Socket Chat Image
       run: |-
@@ -78,9 +82,10 @@ jobs:
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --build-arg BUILDKIT_INLINE_CACHE=1 \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat" \
           eduroom_socket_chat
+#           --build-arg BUILDKIT_INLINE_CACHE=1 \
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat" \
+#           eduroom_socket_chat
 
     - name: Build Eduroom Socket Kahoot Image
       run: |-
@@ -89,9 +94,10 @@ jobs:
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --build-arg BUILDKIT_INLINE_CACHE=1 \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot" \
           eduroom_socket_kahoot
+#           --build-arg BUILDKIT_INLINE_CACHE=1 \
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot" \
+#           eduroom_socket_kahoot
           
     
     # Push the Docker image to Google Container Registry
