@@ -53,7 +53,6 @@ const Content = ({ id }) => {
   useEffect(() => {
     console.log('datalenght', data1.length)
     if (answerAll[0]) {
-      let j=0
       for (let i =0; i<data1.length; i++)  {
         let questionTemplate = {
           question: '',
@@ -71,8 +70,7 @@ const Content = ({ id }) => {
         questionTemplate.ans[2] = answerAll[0][i][2].text
         questionTemplate.ans[3] = answerAll[0][i][3].text
         questionTemplate.correct = correct[0][i]
-        j++
-        questionTemplate.image = '../../image'
+        questionTemplate.image = data1[i].picturepath
         questionList.push(questionTemplate);
       }
       setQuestionList([...questionList])
