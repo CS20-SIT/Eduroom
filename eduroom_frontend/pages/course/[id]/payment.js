@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import Payment from '../../../components/payment/paymentDetail'
 import General from '../../../components/template/general'
 import style from '../../../styles/course/paymentPage'
-// import TestCarousel from '../../../components/course/carousel'
+import TestCardPack from '../../../components/package/packageStore'
 const checkout = () => {
 	return (
 		<Fragment>
