@@ -68,7 +68,7 @@ const getUserProfile = async (req, res, next) => {
 const acceptInvitation = async (req, res, next) =>{
   const userid = req.user.id
   const chatroomid = req.chat.chatroomid
-  const result = await.pool.query(`insert into chat_roommember(chatroomid, userid, nickname, sender_color, receiver_color, hide)
+  const result = await pool.query(`insert into chat_roommember(chatroomid, userid, nickname, sender_color, receiver_color, hide)
 values ($1,$2,null,'#A27CEF','#5B5B5B',false);
 delete from invite_invitees
 where invitationid = 3 and inviteeid = $2`,[chatroomid], [userid])
@@ -90,7 +90,6 @@ res.status(200).json({ success: true })
 }
 
 
-const
 
 module.exports = { getChatlist, 
   getGroupPicture, 
