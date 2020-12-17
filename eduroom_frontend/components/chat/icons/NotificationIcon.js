@@ -1,25 +1,47 @@
-import React from "react";
+import React from 'react'
 
 export default function App(props) {
-  return (
-    <>
-      <svg
-        width="18"
-        height="22"
-        viewBox="0 0 16 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style={props.style}
-        onClick={props.onClick}
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M15.2901 15.04L14.0001 13.75V8.75C14.0001 5.67999 12.3602 3.10999 9.50011 2.42999V1.75C9.50011 0.920013 8.83019 0.25 8.00011 0.25C7.17015 0.25 6.50011 0.920013 6.50011 1.75V2.42999C3.63011 3.10999 2.00011 5.67001 2.00011 8.75V13.75L0.710191 15.04C0.080186 15.67 0.520127 16.75 1.41014 16.75H14.5802C15.4802 16.75 15.9202 15.67 15.2901 15.04ZM4.00011 14.75V8.75C4.00011 6.26999 5.51012 4.25 8.00011 4.25C10.4901 4.25 12.0001 6.26999 12.0001 8.75V14.75H4.00011ZM10.0001 17.75C10.0001 18.85 9.10008 19.75 8.00011 19.75C6.89012 19.75 6.00011 18.85 6.00011 17.75H10.0001Z"
-          fill="black"
-          fill-opacity="0.54"
-        />
-      </svg>
-    </>
-  );
+	return (
+		<>
+			{(() => {
+				if (props.dot) {
+					return (
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							style={props.style}
+							onClick={props.onClick}
+						>
+							<path
+								d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+								fill="#828282"
+							/>
+							<circle cx="17" cy="7" r="3" fill="#FB9CCB" />
+						</svg>
+					)
+				} else {
+					return (
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							style={props.style}
+							onClick={props.onClick}
+						>
+							>
+							<path
+								d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.64 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16ZM16 17H8V11C8 8.52 9.51 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17Z"
+								fill="#828282"
+							/>
+						</svg>
+					)
+				}
+			})()}
+		</>
+	)
 }
