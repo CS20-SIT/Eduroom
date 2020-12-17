@@ -30,6 +30,19 @@ exports.getStickers = async (req, res, next) => {
         errorHandler(error, req, res);
     }
 };
+exports.getStickerInPackage = async (req , res ,next)=>{
+    try{
+        
+        const id = req.query.stickerid;
+        const data = await pool.query(`SELECT p.stickerimg,p.stickerid, p.stickernumber,s.stickername from pack_sticker  p,sticker_all s where p.stickerid = s.stickerid AND s.stickerid = ${id}` );
+        const package = data.rows;
+        res.send(package);
+        console.log(id);
+
+    }catch (error) {
+        errorHandler(error, req, res);
+    }
+};
 exports.getDailyRewardStatus = async (req, res, next) => {
     try {
         const today = dayjs.utc().utcOffset(7).format('YYYY-MM-DD')
