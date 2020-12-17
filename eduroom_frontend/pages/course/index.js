@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import utils from '../../styles/course/utils';
 import GeneralNoNav from '../../components/template/generalnonav';
 import Link from 'next/link';
+import SearchBar from '../../components/course/searchBar'
+import Name from '../../components/course/courseRender'
 
 import api from '../../api'
 
@@ -44,7 +46,6 @@ const Course = () => {
                         <option>Music</option>
                     </select>
                 </div>
-
                 {/* Box of each course */}
                 <div className='text-center my-10'>
                 {courseDes.map((e, index) => (
