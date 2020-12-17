@@ -6,10 +6,10 @@ const utc = require('dayjs/plugin/utc')
 dayjs.extend(utc)
 
 
-//getDaliyReward
-//buyCoupon
-//getCoinFromEdqiz
-//getCoinFromCourse
+//getDaliyReward  Done
+//buyCoupon 
+//getCoinFromEdqiz  Done
+//getCoinFromCourse 
 //jwt
 //uploadFile
 exports.getStickers = async (req, res, next) => {
@@ -47,12 +47,11 @@ exports.getDailyRewardStatus = async (req, res, next) => {
     try {
         const today = dayjs.utc().utcOffset(7).format('YYYY-MM-DD')
         const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
-        const getDate = await pool.query(`SELECT date FROM dailyreward_history WHERE userid='${userId}';`)
-        if (getDate !== '') {
-            const date = getDate.rows[0].date
-            if (date === today) {
-                console.log(today)
-            }
+        const getDate = await pool.query(`SELECT * FROM dailyreward_history WHERE userid='${userId}' AND date = '${today}';`)
+        if (getDate.rowCount === 0) {
+            res.send({ canGet: true })
+        } else {
+            res.send({ canGet: false })
         }
     } catch (error) {
         errorHandler(error, req, res);
@@ -72,11 +71,34 @@ exports.showCoinOwner = async (req, res) => {
 }
 exports.showStickerOwner = async (req, res) => {
     try {
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
-        const result = await pool.query(`SELECT stickername,stickertype,stickerimg,stickerprice FROM sticker_owner
+        const userId= req.body.id
+        // const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const getOwnerSticker = await pool.query(`SELECT sticker_owner.stickerid,stickername,stickertype,stickerimg FROM sticker_owner
         JOIN sticker_all ON sticker_owner.stickerid = sticker_all.stickerid
         WHERE userid='${userId}';`)
-        res.send(result.rows)
+
+
+        const result = [];
+
+        for (let index = 0; index < getOwnerSticker.rows.length; index++) {
+            const stickers = []
+            const stickerId = getOwnerSticker.rows[index].stickerid
+            const stickerAll = getOwnerSticker.rows[index]
+
+            // console.log(result);
+            const getPackStickerOfOwner = await pool.query(`SELECT stickernumber,stickerimg FROM pack_sticker WHERE stickerid=${stickerId};`)
+            for (let id = 0; id < getPackStickerOfOwner.rows.length; id++) {
+                const stickerNum = getPackStickerOfOwner.rows[id]
+                stickers.push(stickerNum)
+            }
+            stickerAll.stickers = stickers
+            result.push(stickerAll)
+            // console.log(result[index]);
+            // console.log(stickers)
+        }
+        res.send(result)
+
+
     } catch (error) {
         errorHandler(error, req, res);
     }
@@ -147,7 +169,7 @@ exports.buyCoupon = async (req, res) => {
 exports.getCoinFromEdqiz = async (req, res) => {
     try {
         const userIds = req.body;
-        const coins = [15,10,5]
+        const coins = [15, 10, 5]
         console.log(userIds)
         for (let index = 0; index < userIds.length; index++) {
             const userId = userIds[index];
@@ -158,7 +180,7 @@ exports.getCoinFromEdqiz = async (req, res) => {
             await pool.query(`INSERT INTO coin_transaction(userid, date, amountofcointransaction)
                  VALUES ('${userId}',current_timestamp,${coins[index]});`)
             await pool.query(`UPDATE coin_owner SET amountofcoin=${amountOfCoin} WHERE userid='${userId}';`)
-            
+
         }
         res.status(201).send({ success: true })
     } catch (error) {
