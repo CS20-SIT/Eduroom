@@ -14,8 +14,8 @@ jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: [self-hosted, linux, x64]
-    env:
-      DOCKER_BUILDKIT: '1'
+#    env:
+     # DOCKER_BUILDKIT: '1'
     steps:
     - name: Checkout
       uses: actions/checkout@v2
