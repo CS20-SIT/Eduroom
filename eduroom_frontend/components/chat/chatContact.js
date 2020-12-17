@@ -16,18 +16,13 @@ export default function chatContact(props) {
 	const [peopleTest, setPeopleTest] = useState('nopeople')
 	const [openNotification, setOpenNotification] = useState(false)
 	const [openCreateChat, setOpenCreateChat] = useState(false)
-	const [userProfile, setUserProfile] = useState(null)
+	const [userProfile, setUserProfile] = useState(props.userProfile)
 	const [chatList, setChatList] = useState(null)
 	const [searchInput, setSearchInput] = useState('')
 	const [searchResult, setSearchResult] = useState(null)
 	const [ignoreBlur, setIgnoreBlur] = useState(false)
 	const [invitations, setInvitations] = useState(null)
 
-	const getUserProfileInfo = async () => {
-		api.get(`/api/chat/getUserProfileMockup`).then((res) => {
-			setUserProfile(res.data)
-		})
-	}
     const getInvitations = async () => {
 		const res = await api.get(`/api/chat/getInvitationListMockup`)
 		setInvitations(res.data)
@@ -40,27 +35,6 @@ export default function chatContact(props) {
 		const res = await api.get(`/api/chat/getSearchResultMockup`)
 		setSearchResult(res.data)
 	}
-	useEffect(() => {
-		const contact = [
-			{
-				name: 'Krishadawut',
-				recentMessage: 'Hi Tom',
-				recentMessageDate: new Date("12/14/2020").getTime(),
-			},
-			{
-				name: 'Boyplus',
-				recentMessage: 'Hi Tom',
-				recentMessageDate: new Date().getTime() - 10000,
-			},
-			{
-				name: 'GGolfz',
-				recentMessage: 'Hi Tom',
-				recentMessageDate: new Date("12/08/2020").getTime(),
-			},
-    ]
-    contact.sort((a,b)=>b.resentMessageDate - a.resentMessageDate)
-    setContact(contact)
-	}, [])
 
 	const handleClickOpenNotification = () => {
 		setOpenNotification(true)
@@ -81,10 +55,20 @@ export default function chatContact(props) {
 		setSearchResult(null)
 	}
 	useEffect(() => {
-		getUserProfileInfo()
 		getChatList()
 		getInvitations()
 	}, [])
+	useEffect(()=>{
+		if(contact){
+			contact.sort((a,b)=>b.resentMessageDate - a.resentMessageDate)
+        setContact(contact)
+		}
+	},[contact])
+	useEffect(() => {
+		if(chatList){
+			props.setSelectChat(chatList[0])
+		}
+	}, [chatList])
 
 	return (
 		<>
@@ -142,9 +126,11 @@ export default function chatContact(props) {
 						}}
 						onFocus={() => {
 							getSearchResult()
+							setIgnoreBlur(false)
 						}}
 						onBlur={() => {
 							if (!ignoreBlur) {
+								setIgnoreBlur(false)
 								setSearchResult(null)
 							}
 						}}
@@ -198,8 +184,10 @@ export default function chatContact(props) {
 											chatRoomID: el.chatroomid,
 											name: el.firstname,
 											resentMessage: el.firstname + ': ' + el.message,
-											resentMessageDate: el.sendtime,
+											resentMessageDate: new Date(el.sendtime).getTime(),
 										}}
+										onClick={()=>{props.setSelectChat(el)}}
+										selectChat={props.selectChat}
 									/>
 								)
 							} else {
@@ -207,16 +195,16 @@ export default function chatContact(props) {
 									<ContactPerson
 										key={el.chatroomid}
 										contact={{
+											chatRoomID: el.chatroomid,
 											name: el.roomname,
 											resentMessage: el.firstname + ': ' + el.message,
-											resentMessageDate: el.sendtime,
+											resentMessageDate: new Date(el.sendtime).getTime(),
 										}}
+										onClick={()=>{props.setSelectChat(el)}}
+										selectChat={props.selectChat}
 									/>
 								)
 							}
-						})}
-						{contact?.map((el) => {
-							return <ContactPerson contact={el} />
 						})}
 				</div>
 			</div>

@@ -107,6 +107,7 @@ export default function createChatRoom(props) {
 						onFocus={() => {
 							setIsFocus(true)
 							getSearchResult()
+							setIgnoreBlur(false)
 						}}
 						onBlur={() => {
 							if(!ignoreBlur){
