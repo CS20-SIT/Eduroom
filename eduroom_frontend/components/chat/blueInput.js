@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 export default function blueInout(props) {
-  const [message, setMesaage] = useState(props.message);
   return (
     <>
       <div style={{ position: "relative", marginLeft: 14,marginTop:20,marginBottom:30}}>
         <input
+        value={props.input.groupName}
+        onChange={e=>{props.setInput({...props.input, groupName:e.target.value})}}
           className='search'
           style={{ width: "100%",textAlign: 'center',fontSize:16}}
           placeholder="Chat name"
