@@ -3,13 +3,20 @@ const ErrorResponse = require("../utils/errorResponse");
 
 const jwtAuthenicate = (req, res, next) => {
   passport.authenticate("jwt", { session: false }, (err, user) => {
-    if (err) {
-      res.clearCookie('jwt');
-      return next(new ErrorResponse());
+    if (err || !user || user.role !== 'user') {
+      // res.clearCookie('jwt');
+      return next(new ErrorResponse('Not Authenticate', 401));
     }
-    if (!user) {
-      res.clearCookie('jwt');
-      req.user = null;
+    req.user = user;
+    return next();
+  })(req, res, next);
+}
+
+const jwtAdminAuthenticate = (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user) => {
+    if (err || !user || user.role !== 'admin') {
+      // res.clearCookie('jwt');
+      return next(new ErrorResponse('Not Authenticate', 401));
     }
     req.user = user;
     return next();
@@ -17,5 +24,6 @@ const jwtAuthenicate = (req, res, next) => {
 }
 
 module.exports = {
-  jwtAuthenicate
+  jwtAuthenicate,
+  jwtAdminAuthenticate
 }
