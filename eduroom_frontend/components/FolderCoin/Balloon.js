@@ -14,7 +14,7 @@ const Balloon = () => {
 	return (
 		<Fragment>
 			<div className="box">
-			<div className="balloon" style={{left:randomNumber(0,90)+'vw',backgroundColor:'rgb('+`${r},${g},${b}`+')',boxShadow:'inset -7px -3px 10px'+' rgb('+`${r},${g},${b}`+')' , top:randomNumber(20,90)+'vh',animationDuration: randomNumber(12,25)+'s',animationTimingFunction: `${randomNumber(1,2) % 2 == 0 ? 'ease-in' : 'ease-out'}`}}></div>
+			<div className="balloon" style={{left:randomNumber(0,90)+'vw',backgroundColor:'rgb('+`${r},${g},${b}`+')',boxShadow:'inset -7px -3px 10px'+' rgb('+`${r},${g},${b}`+')' , top:randomNumber(20,90)+'vh',animationDuration: randomNumber(5,25)+'s',animationTimingFunction: `${randomNumber(1,2) % 2 == 0 ? 'ease-in' : 'ease-out'}`}}></div>
 			</div>
 			<style jsx>
 				{style}
