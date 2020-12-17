@@ -14,8 +14,8 @@ jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
     runs-on: [self-hosted, linux, x64]
-#    env:
-     # DOCKER_BUILDKIT: '1'
+    env:
+      DOCKER_BUILDKIT: '1'
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -42,11 +42,11 @@ jobs:
       run: |-
         docker build -f eduroom_backend/Dockerfile \
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-backend:$GITHUB_SHA" \
-          --tag "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
-            eduroom_backend
+           eduroom_backend
+#           --tag "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-backend" \
 #           --build-arg BUILDKIT_INLINE_CACHE=1 \
     
 
@@ -54,44 +54,40 @@ jobs:
       run: |-
         docker build -f eduroom_frontend/Dockerfile \
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-frontend:$GITHUB_SHA" \
-          --tag "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
-            eduroom_frontend
+           eduroom_frontend
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
 #           --build-arg BUILDKIT_INLINE_CACHE=1 \
 
     - name: Build Eduroom Grading Server Image
       run: |-
         docker build -f eduroom_grading_server/Dockerfile \
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-grading-server:$GITHUB_SHA" \
-          --tag "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
-            eduroom_grading_server
+           eduroom_grading_server
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
 #           --build-arg BUILDKIT_INLINE_CACHE=1 \
 
     - name: Build Eduroom Socket Chat Image
       run: |-
         docker build -f eduroom_socket_chat/Dockerfile \
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat:$GITHUB_SHA" \
-          --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat" \
-            eduroom_socket_chat
+           eduroom_socket_chat
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat" \
 #           --build-arg BUILDKIT_INLINE_CACHE=1 \
 
     - name: Build Eduroom Socket Kahoot Image
       run: |-
         docker build -f eduroom_socket_kahoot/Dockerfile \
           --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot:$GITHUB_SHA" \
-          --tag "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot" \
-            eduroom_socket_kahoot
+           eduroom_socket_kahoot
+#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot" \
 #           --build-arg BUILDKIT_INLINE_CACHE=1 \
           
     
