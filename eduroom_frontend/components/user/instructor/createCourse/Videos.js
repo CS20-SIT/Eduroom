@@ -1,11 +1,9 @@
 import { Fragment } from 'react'
 import Video from './Video'
-
+import style from '../../../../styles/user/instructor/createCourse/create'
 const Videos = ({ videos, changeVideos, sectionIndex }) => {
 	const removeVideo = (idx) => {
-		videos.splice(idx, 1);
-		console.log('new list is');
-		console.log(videos);
+		videos.splice(idx, 1)
 		changeVideos(videos)
 	}
 	const handleVideos = (video, idx) => {
@@ -34,8 +32,11 @@ const Videos = ({ videos, changeVideos, sectionIndex }) => {
 	}
 	return (
 		<Fragment>
-			<div style={{ marginTop: '30px' }}>{renderVideos()}</div>
-			<style jsx>{``}</style>
+			<div style={{ marginTop: '30px' }}>
+				<h2 className="title">Videos</h2>
+				{renderVideos()}
+			</div>
+			<style jsx>{style}</style>
 		</Fragment>
 	)
 }
