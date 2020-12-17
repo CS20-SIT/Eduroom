@@ -101,7 +101,7 @@ const Content = () => {
     }
     console.log(body);
     await api.post('/api/ads/addAds', body)
-    // router.push('/universityemail/verifycodesent')
+    router.push('/advertisement/adpayment')
   }
 
   return (
