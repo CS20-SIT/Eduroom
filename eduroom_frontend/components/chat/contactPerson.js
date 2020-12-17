@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
-
+import moment from 'moment'
 export default function chatContact(props) {
   const [contact, setContact] = useState(props.contact);
+  
   return (
     <div>
       <div className="chatBox">
@@ -16,7 +17,7 @@ export default function chatContact(props) {
           <div>
             <h5 style={{ display: "inline" }}>{contact.name}</h5>
             <br />
-            <span style={{ fontSize: 12 }}>{contact.resentMessage}</span>
+            <span style={{ fontSize: 12 }}>{contact.recentMessage}</span>
           </div>
         </div>
         <div
@@ -26,7 +27,7 @@ export default function chatContact(props) {
             paddingRight: 20,
           }}
         >
-          <p style={{ fontSize: 12 }}>{contact.resentMessageDate}</p>
+          <p style={{ fontSize: 12 }}>{moment(contact.recentMessageDate).fromNow()}</p>
         </div>
       </div>
       <style jsx>{`

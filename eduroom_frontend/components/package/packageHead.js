@@ -53,7 +53,7 @@ const Package = () => {
 
 
                             <Button id="buynow-btn" style={{ marginRight: 10, backgroundColor: '#3D467F', color: 'white', borderRadius: 10 }}
-                                onClick={() => router.push("/course/id/paymentTest")}
+                                onClick={() => router.push("/course/id/payment")}
                             > Buy Now
                                 <img
                                     src="/images/package/buyNow.svg"
