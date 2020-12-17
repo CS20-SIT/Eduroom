@@ -63,8 +63,8 @@ const searchCourse = async (req, res, next) => {
     const user = req.user
     if(search){
         const data = await pool.query(
-            'select * from course join instructor i on course.ownerid = i.instructorid join user_profile up on i.userid = up.userid  AND course.courseid = $1 WHERE UPPER(coursename) LIKE $2',
-            [user?.id ?? null,'%'+search.toUpperCase()+'%']
+            'select * from course join instructor i on course.ownerid = i.instructorid join user_profile up on i.userid = up.userid WHERE UPPER(coursename) LIKE $1',
+            ['%' + search.toUpperCase()+'%']
       )
     const course = data.rows
       res.status(200).json({ success: true, data: course })

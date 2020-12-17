@@ -26,13 +26,24 @@ const Search = () => {
   return (
     <Fragment>
       <GeneralNonav>
-
         <div className='bg-little-grey'>
           <div className='container'>
 
+            {/* Search bar and Categories select */}
+            <div className='text-center flex my-6'>
+              <SearchBar />
+              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox' placeholder="category">
+                <option>Category</option>
+                <option>Development</option>
+                <option>Finance</option>
+                <option>Music</option>
+              </select>
+            </div>
+
             {/* Categories Name */}
             <div className='text-center my-4'>
-              <Link href={`/course`}><span className='text-lg text-secondary mx-4 font-quicksand pointer'>General</span></Link>
+              <Link href={`/course`}>
+                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>General</span></Link>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT & Software</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>Design</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>Marketing</span>
@@ -40,15 +51,6 @@ const Search = () => {
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>Other</span>
             </div>
 
-            {/* Search bar and Categories select */}
-            <div className='text-center my-6'>
-              <SearchBar />
-              <select className='font-quicksand cate-tab mx-4 pointer rounded-sss' placeholder="Categories">
-                <option>Development</option>
-                <option>Finance</option>
-                <option>Music</option>
-              </select>
-            </div>
             {/* Box of each course */}
             <div className='text-center my-10'>
               {data.map((e, index) => (
@@ -63,24 +65,23 @@ const Search = () => {
                   </div>
                 </Link>
               ))}
-
-
             </div>
-            <div style={{ background: '#F4F5F7' }}>
-              <div>
-                {data.map((el, index) => {
-                  return (
-                    <Fragment key={index}>
-                      <ForumBox data={el} />
-                    </Fragment>
-                  )
-                })}
-              </div>
-            </div>
+
           </div>
         </div>
       </GeneralNonav>
       <style jsx>{utils}</style>
+      <style jsx>
+        {`
+					.cateBox { 
+						border: none;
+            outlined: none;
+            padding-left: 15px;
+            font-size: 0.8rem;
+            width: 250px;
+          }
+				`}
+      </style>
     </Fragment>
   )
 }

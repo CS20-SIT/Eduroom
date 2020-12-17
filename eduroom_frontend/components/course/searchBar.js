@@ -20,8 +20,37 @@ const SearchBar = () => {
 	}
 	return (
 		<Fragment>
-			<input className='font-quicksand input-tab mx-4 rounded-sss' type="text" placeholder="What do you want to learn?"  value={search} onChange={handleChangeSearch} onKeyUp={handleEnter}></input>
+			<div className="shadow searchCourse">
+			<i className="fas fa-search"></i>
+			<input className='font-quicksand input-tab rounded-sss font-normal-bold searchBox' type="text" placeholder="What do you want to learn?"  value={search} onChange={handleChangeSearch} onKeyUp={handleEnter}></input>
+			</div>
 			<style jsx>{utils}</style>
+			<style jsx>
+				{`
+					.searchCourse {
+						background: white;
+						padding-left: 1rem;
+						border-radius: 5px;
+						display: flex;
+                        align-items: center;
+						flex: 1;
+						width: 600px;
+						margin-right: 1.5rem;
+					}
+					.fa-search {
+						color: rgba(17, 17, 17, 0.48);
+						font-size: 0.8rem;
+					}
+					.searchBox {
+						background: none;
+						margin-left: 0.7rem; 
+						border: none;
+						outlined: none;
+                        flex: 1;
+                    }
+				`}
+			</style>
+			
 		</Fragment>
 	)
 }
