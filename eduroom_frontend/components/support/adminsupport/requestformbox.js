@@ -10,12 +10,10 @@ const RequestFormBox = ({ data }) => {
 		<Fragment>
 			<div className="forumBox" >
 				<div
-					// onClick={() => {
-					// 	router.push(`/admin/support/${data.ticketid}`)
-					// }}
+					onClick={() => {
+						router.push(`/admin/support/${data.ticketid}`)
+					}}
 				>
-					<div className="forumTag">
-					<RequestFormTag tag={data.subname}></RequestFormTag></div>
 					<div className="forumTitle">{data.title}</div>
 					<div className="forumTag">
 						<RequestFormTag tag={data.typename}></RequestFormTag>
