@@ -10,16 +10,12 @@ exports.getCategories = async (req, res, next) => {
 }
 exports.createPackage = async (req, res, next) => {
 	const instructorId = req.user.instructor
-	console.log('id is ', instructorId)
 	let data = req.body
 	data.category = parseInt(data.category)
-	console.log('data is ', data)
 	const results = await pool.query(
 		'INSERT INTO package(packagename, instructorid, discount, ispublic,detail,image,cateid) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
 		[data.name, instructorId, data.discount, data.ispublic, data.detail, data.image, data.category]
 	)
-	console.log('result is')
-	console.log(results.rows[0])
 	const { packageid } = results.rows[0]
 	const { courses } = req.body
 	for (let i = 0; i < courses.length; i++) {
@@ -27,9 +23,16 @@ exports.createPackage = async (req, res, next) => {
 			packageid,
 			courses[i],
 		])
-		console.log('insert ', courses[i], ' success')
 	}
 	res.send(results.rows[0])
+}
+
+exports.deletePackage = async (req, res, next) => {
+	const { packageid } = req.body
+	console.log('id is ', packageid)
+	await pool.query(`DELETE FROM package_courses where packageid = $1`, [packageid])
+	await pool.query(`DELETE FROM package where packageid = $1`, [packageid])
+	res.send({ success: true })
 }
 
 exports.getPackage = async (req, res, next) => {
@@ -77,13 +80,13 @@ exports.getNumCourses = async (req, res, next) => {
 exports.getInstructorPackage = async (req, res, next) => {
 	const instructorid = req.user.instructor
 	const result = await pool.query(
-		`select sum(price)*((100-p.discount)/100) as price,p.packageid,packagename,p.discount,p.ispublic,p.detail,p.cateid, p.image, ca.cataname
-		from package p,package_courses pc,course c, categories ca
+		`select sum(price)*((100-p.discount)/100) as price,p.packageid,packagename,p.discount,p.ispublic,p.detail,p.cateid, p.image, ca.cate_name
+		from package p,package_courses pc,course c, package_category ca
 			where p.packageid = pc.packageid
 				and p.instructorid = $1
 			and c.courseid = pc.courseid
-			and p.cateid = ca.cataid
-			group by p.packageid,ca.cataname`,
+			and p.cateid = ca.cateid
+			group by p.packageid,ca.cate_name`,
 		[instructorid]
 	)
 	res.send(result.rows)
