@@ -9,14 +9,15 @@ body {
 	margin: 0 auto;
 	padding: 1em;
 	text-align: center;
-	background: #fe75b7;
+	
 	border-radius: 25px;
 	
 }
 .container > header h1 {
-  font-weight: 500;
-	font-size: 3em;
+  font-weight: 400;
+	font-size: 2em;
 	margin: 0;
+	color: #5b5b5b;
 }
 .wrapper {
 	line-height: 1.5em;
@@ -31,14 +32,13 @@ table {
     border-collapse: collapse;
     width: 100%;
 	background: #fff;
-	border:solid;
-    border-color:#D5C1FC;
+	
 	
 }
 th {
-    background-color: #FF93D9;
+    
     font-weight: bold;
-    color: #fff;
+    color: #5b5b5b;
 	white-space: nowrap;
 	
 }
@@ -58,7 +58,7 @@ tbody tr:nth-child(1){
 	transition: all .125s ease-in-out;
 }
 tbody tr:nth-child(2){
-	background-color: #E9E9E9;
+	background-color: #E1EEF5;
 	transition: all .125s ease-in-out;
 }
 tbody tr:nth-child(3){
