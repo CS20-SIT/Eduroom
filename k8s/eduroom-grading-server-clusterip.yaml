@@ -3,8 +3,10 @@ kind: Service
 metadata:
   name: eduroom-grading-server-clusterip
 spec:
+  type: NodePort
   selector:
     app: eduroom-grading-server-deployment
   ports:
-  - port: 3050
-    targetPort: 3050
+  - port: 3000
+    targetPort: 3000
+    nodePort: 30000

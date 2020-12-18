@@ -2,13 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import Section from './Section'
 
 const Sections = (props) => {
-	console.log('sections is')
-	console.log(props.sections)
-	const changeSectionName = (name, idx) => {
-		props.section[idx].name = name
-	}
 	const handleChangeSection = (section, idx) => {
-		// console.log('hello', section, idx);
 		props.sections[idx] = section
 		props.changeSections(props.sections)
 	}
