@@ -83,7 +83,7 @@ const Content = (props) => {
                 </div>
             </CSSTransition>
 
-            <CreateEventDialog setOpen={setOpen} openEvent={openEvent} setOpenEvent={setOpenEvent} />
+            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} />
             <style jsx>
                 {style}
             </style>

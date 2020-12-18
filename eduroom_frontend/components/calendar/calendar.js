@@ -2,12 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import Cell from "../../components/calendar/calendarCell";
 import HeadCell from "../../components/calendar/calendarHeader";
 import BlankCell from "../../components/calendar/calendarBlankCell";
-import CSSTransition from 'react-transition-group/CSSTransition';
 import ViewEvent from '../../components/calendar/viewEvent';
 import Image from "next/image";
-import axios from 'axios';
-import Edit from "../../components/calendar/edit"
-
 
 // import { useRouter } from 'next/router';
 import style from "../../styles/calendar/calendar";
@@ -15,30 +11,13 @@ import moment from "moment";
 import Link from "next/link";
 import {
   Grid,
-  Container,
-  DialogContent,
-  Dialog,
-  DialogTitle,
-  Button,
-  DialogContentText,
-  DialogActions,
-  TextField,
-
+  Container
 } from "@material-ui/core";
-import Popover from "@material-ui/core/Popover";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from "next/router";
-import api from "../../api";
 
 const Content = () => {
   //create Eventpage
   const router = useRouter();
-
-
-  // Pop-up-event
-
-
 
   //Array of short names of the day.
   //Mon Tue ...
@@ -48,12 +27,12 @@ const Content = () => {
   const [day, setDay] = useState({
     dateObject: moment(),
   });
+
   //state chage 1 month per click
   const addMonth = () => {
     const dateObject = day.dateObject.add(1, "M");
     setDay({ ...day, dateObject: dateObject });
   };
-
   const minusMonth = () => {
     const dateObject = day.dateObject.add(-1, "M");
     setDay({ ...day, dateObject: dateObject });
@@ -90,8 +69,6 @@ const Content = () => {
     count++;
   }
 
-  console.log(blankEnd);
-
   const Today = new Date();
   const TodayDate = Today.getDate();
   const TodayMonth = Today.getMonth() + 1;
@@ -105,10 +82,6 @@ const Content = () => {
 
   const [showDate, setShowDate] = useState(-1);
   const [open, setOpen] = useState(false);
-
-
-
-
 
 
   // ------------------code below----------------------//
@@ -128,10 +101,10 @@ const Content = () => {
 
       <ViewEvent open={open} setOpen={setOpen} showDate={showDate} currentMonth={currentMonth} currentMonthNo={currentMonthNo} currentYear={currentYear} />
 
-      
 
-      
-      
+
+
+
       {/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
       <div className="createEvent">
         <button className="bt-createEvent"
@@ -201,41 +174,7 @@ const Content = () => {
       </div>
 
 
-
-
-
       <style jsx>{style}</style>
-      <style jsx>
-        {
-          `
-                        .fade-in {
-                          animation: fade-in 0.3s forwards;
-                        }
-                        .fade-out {
-                          animation: fade-out 0.3s forwards;
-                        }
-                        @keyframes fade-in {
-                          0% {
-                            opacity: 0;
-                          }
-                          100% {
-                            opacity: 1;
-                          }
-                        }
-                        @keyframes fade-out {
-                          0% {
-                            opacity: 1;
-                          }
-                          100% {
-                            opacity: 0;
-                          }
-                        }
-
-                        
-                        
-                        `
-        }
-      </style>
     </Fragment>
   );
 };
