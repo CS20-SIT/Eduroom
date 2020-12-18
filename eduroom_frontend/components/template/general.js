@@ -10,7 +10,7 @@ const General = (props) => {
 			<div>
 				<SideNav />
 				<div id="content">
-					<Navbar />
+					<Navbar isProtected={props.isProtected ?? false}/>
 					<div style={{ paddingLeft: '5%' }}>
 						<main>{props.children}</main>
 					</div>
