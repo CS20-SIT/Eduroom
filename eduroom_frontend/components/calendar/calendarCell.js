@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState} from "react";
+import React, { Fragment, useEffect, useState } from "react";
 // import { useRouter } from 'next/router';
 import style from "../../styles/calendar/calendar";
 const Content = (props) => {
@@ -24,8 +24,22 @@ const Content = (props) => {
  
   return (
     <Fragment>
-      <div onClick={() => { setOpen(true);setShowDate(content); }} className={`${props.isToday&&content == todayDate ? 'currentDate' : ''} gridItem`} style={{cursor:"pointer",color:`${hasEvent?'red':'black'}`}}>{content}</div>
+      <div onClick={() => { setOpen(true);setShowDate(content); }} className={`${props.isToday&&content == todayDate ? 'currentDate' : ''} gridItem`} 
+      style={{cursor:"pointer",position:"relative"}}>{content}
+      {hasEvent?<span className="event"/>:null}
+      </div>
       <style jsx>{style}</style>
+      <style jsx>{`
+      .event{
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #999;
+        top: 3.25rem;
+        left: 6.1rem;
+      }
+      `}</style>
     </Fragment>
   );
 };
