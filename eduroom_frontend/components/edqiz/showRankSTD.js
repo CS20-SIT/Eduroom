@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import GeneralNoSide from "../../components/template/generalnoside";
 import api from '../../api';
-
+import Link from "next/link";
 const page5 = ({pin}) => {
   const [sessionid, setSesstionID] = useState(null);
   const [data, setData] = useState(null);
@@ -15,7 +15,7 @@ const page5 = ({pin}) => {
   const fetchDataRank = async () => {
 
     if (sessionid != null) {
-      const res1 = await api.get(`/api/kahoot/getRankScore/${sessionid}`);
+      const res1 = await api.get(`/api/kahoot/getRankScorePlayer/${sessionid}`);
       setData(res1.data)
     }
 
@@ -64,9 +64,11 @@ const page5 = ({pin}) => {
               </div>
             </Grid>
             <Grid item xs={4} >
+            <Link href={`/`}>
               <div className="buttonAREA">
-                <button className="button">GO TO EDQIZ LIST</button>
+                <button className="button">HOMEPAGE</button>
               </div>
+              </Link>
             </Grid>
             <Grid item xs={12} style={{ justifyContent: 'center', display: 'flex' }}>
               <div className="card">

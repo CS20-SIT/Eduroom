@@ -9,10 +9,10 @@ export default function chatRoomTopBar(props) {
       <div className="topBar" >
         <Avatar
           alt={chatRoom.name}
-          src=""
+          src={chatRoom.profilePic}
           style={{ marginTop: 4, marginLeft: 10, marginRight: 10 }}
         />
-        <p style={{ marginRight: 10 }}>{chatRoom.name}</p>
+        <p style={{ marginRight: 10, fontWeight:'bold' }}>{chatRoom.name}</p>
         <SettingsIcon
           style={{ float: "right", marginLeft: "auto", marginRight: 10,cursor: "pointer",}}
           onClick={chatRoom.handleExpand}

@@ -4,9 +4,9 @@ exports.verifyTemplate = (verifyToken) => {
     rel="stylesheet"
   ></link>
   <div class="verify-box">
-    <img src="https://eduroom.cscms.me/images/eduroom_logo_long.sv" alt="eduroom_logo" />
+    <img src="https://storage.googleapis.com/eduroom/verifyemail/eduroom_logo_long.png" alt="eduroom_logo" />
     <div class="verify-image">
-        <img src="https://eduroom.cscms.me/images/verify/verify_sent.svg" alt="verify-image" />
+        <img src="https://storage.googleapis.com/eduroom/verifyemail/verify_sent.png" alt="verify-image" />
     </div>
     <div class="verify-head">Verify your email address</div>
     <div class="verify-text">Welcome to <a href="https://eduroom.cscms.me" style="color:#FB9CCB">eduroom.cscms.me</a></div>
@@ -32,7 +32,7 @@ exports.verifyTemplate = (verifyToken) => {
             flex-flow: column;
             padding: 1rem;
             cursor: default;
-            background-image: url(https://eduroom.cscms.me/images/verify/verify-bg.svg);
+            background-image: url(https://storage.googleapis.com/eduroom/verifyemail/verify-bg.png);
             background-position: center;
             background-size: cover; 
             background-repeat:no-repeat;

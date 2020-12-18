@@ -219,7 +219,7 @@ const gContestQuestionDetail = async (req, res, next) => {
 			and q.adminid = a.adminid
 			and q.id = ${id}
 			and cq.conid = ${contestId}	`)
-		const ann = data.rows[0]
+		const ann = data.rows
 		res.send(ann)
 	} catch (err) {
 		return new ErrorResponse('ERROR', 400)
@@ -248,9 +248,40 @@ const gQuestionDetail = async (req, res, next) => {
 		const data = await pool.query(`
 		select id, title, description, hint, intputdes, outputdes, timelimit, memorylimit, difficulty, ruletype, displayname
 		from questions q, admin_login a
-		where cq.questionid = q.id
-			and q.adminid = a.adminid
+		where q.adminid = a.adminid
 			and q.id = ${id}`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
+const gQuestionSubmission = async (req, res, next) => {
+	try {
+		const questionId = req.query.questionId
+		const userId = req.query.userId
+		const data = await pool.query(`
+		select *
+		from question_attempt
+		where questionid = ${questionId}
+			and userid='${userId}'`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
+const gCountQuestionByTag = async (req, res, next) => {
+	try {
+		const tag = req.query.tag
+		const data = await pool.query(`
+		select  count(*)
+		from tags t, questiontag qt, questions q
+		where t.tagid = qt.tagid
+    		and q.id = qt.questionid
+    		and t.tagname = '${tag}';`)
 		const ann = data.rows
 		res.send(ann)
 	} catch (err) {
@@ -277,4 +308,6 @@ module.exports = {
 	gContestQuestionDetail,
 	gQuestionTestCase,
 	gQuestionDetail,
+	gQuestionSubmission,
+	gCountQuestionByTag,
 }

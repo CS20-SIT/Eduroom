@@ -13,10 +13,10 @@ const OI = ({ type }) => {
 		const GetData = async () => {
 			let result = []
 			if (type === 'oi') {
-				result = await api.get('api/grader/getOIRankingTopSix')
+				result = await api.get('/api/grader/getOIRankingTopSix')
 				setData(result.data)
 			} else if (type === 'acm') {
-				result = await api.get('api/grader/getACMRankingTopSix')
+				result = await api.get('/api/grader/getACMRankingTopSix')
 				setData(result.data)
 			}
 		}

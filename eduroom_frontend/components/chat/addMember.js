@@ -4,9 +4,14 @@ import GroupAddIcon from './icons/GroupAddIcon';
 
 export default function addMember(props) {
   return (
-    <div style={{width:'90%',marginTop:10,marginBottom:10}}>
+    <div>
       <div style={{ position: "relative"}}>
         <Input
+          value={props.input}
+          onChange={e => {
+            props.setInput(e.target.value)
+            props.getSearchResult()
+          }}
           style={{ paddingRight: 30, width: "100%" }}
           placeholder="Add Member"
         />

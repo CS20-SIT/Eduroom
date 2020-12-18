@@ -79,6 +79,7 @@ export default css`
 		border-radius: 12px;
 		z-index: 10000;
 		outline: none;
+		cursor:pointer;
 	}
 	.box {
 		margin: 20px;

@@ -6,9 +6,26 @@ import Page1 from '../../../../components/user/instructor/createCourse/Page1'
 import Page2 from '../../../../components/user/instructor/createCourse/Page2'
 import Page3 from '../../../../components/user/instructor/createCourse/Page3'
 import Pagination from '../../../../components/user/instructor/createCourse/Pagination'
-import styles from '../../../../styles/user/instructor/createCourse/create';
+import styles from '../../../../styles/user/instructor/createCourse/create'
 
 const create = () => {
+	
+	useEffect(() => {
+		const GetData = async () => {
+			const result = await axios('http://localhost/api/event/getCourseEvent')
+			console.log(result.data)
+			setData(result.data)
+		}
+		const GetEventInfo = async () => {
+			const result = await axios('http://localhost/api/event/getEventInfo')
+			console.log(result.data)
+			setEvent(result.data)
+		}
+		GetData()
+		GetEventInfo()
+		console.log(data)
+	}, [])
+
 	const [page, setPage] = useState(1)
 	const [data, setData] = useState({
 		name: '',
@@ -50,22 +67,58 @@ const create = () => {
 				return <Page3></Page3>
 		}
 	}
+	const getInfosPath = async (el, data) => {
+		console.log(el)
+		let sections = data.sections
+		for (let i = 0; i < sections.length; i++) {
+			let section = sections[i]
+			for (let j = 0; j < section[el].length; j++) {
+				let element = section[el][j].data
+				let formData = new FormData()
+				formData.append(el, element)
+				let res = await api.post(`/api/instructor/upload/${el}`, formData)
+				const link = res.data[0].linkUrl
+				section[el][j].path = link
+			}
+			sections[i] = section
+		}
+		data.sections = sections
+		return data
+	}
+	const getBody = () => {
+		let body = { ...data }
+		delete body.picture
+		delete body.video
+		let newSections = body.sections.map((section, idx) => {
+			let newVideos = section.videos.map((video) => {
+				return { path: video.path, name: video.name }
+			})
+		})
+	}
 	const handleNext = async () => {
 		if (page === 3) {
 			//upload file to server
-			const pictureFormData = new FormData();
-			pictureFormData.append('course-picture',data.picture);
+			let newData = { ...data }
+			const pictureFormData = new FormData()
+			pictureFormData.append('course-picture', newData.picture)
 			const pictureLink = await api.post('/api/instructor/upload/picture', pictureFormData)
-			data.picturePath = pictureLink.data.linkUrl;
+			newData.picturePath = pictureLink.data[0].linkUrl
 
-			const sampleVideoFormData = new FormData();
-			sampleVideoFormData.append('course-picture',data.video);
+			const sampleVideoFormData = new FormData()
+			sampleVideoFormData.append('course-picture', newData.video)
 			let videoLink = await api.post('/api/instructor/upload/sampleVideo', sampleVideoFormData)
-			data.videoPath = videoLink.data.linkUrl;
+			newData.videoPath = videoLink.data[0].linkUrl
 
-			console.log('data is')
-			console.log(data)
-			setData({ ...data });
+			// console.log('newData is')
+			// console.log(newData)
+			newData = await getInfosPath('videos', newData)
+			newData = await getInfosPath('materials', newData)
+			console.log('after get path new data is')
+			console.log(newData)
+
+			const res = await api.post('/api/instructor/course', newData)
+			console.log('res is ', res.data)
+			setData({ ...newData })
 		} else {
 			setPage(page + 1)
 		}
