@@ -2,8 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import Cell from "../../components/calendar/calendarCell";
 import HeadCell from "../../components/calendar/calendarHeader";
 import BlankCell from "../../components/calendar/calendarBlankCell";
-import CreateEventDialog from "../../components/calendar/createEventDialog";
 import CSSTransition from 'react-transition-group/CSSTransition';
+import ViewEvent from '../../components/calendar/viewEvent';
 import Image from "next/image";
 import axios from 'axios';
 import Edit from "../../components/calendar/edit"
@@ -37,6 +37,7 @@ const Content = () => {
 
 
   // Pop-up-event
+
 
 
   //Array of short names of the day.
@@ -100,65 +101,15 @@ const Content = () => {
   const currentMonth = day.dateObject.format("MMMM");
   const currentMonthNo = parseInt(day.dateObject.format("M"));
   const currentYear = parseInt(day.dateObject.format("YYYY"));
-  const [data, setData] = useState([])
 
 
-
-
-  useEffect(() => {
-    const GetData = async () => {
-      const result = await axios("http://localhost/api/event/getCourseEvent");
-      setData(result.data);
-    };
-    GetData();
-    console.log(data);
-  },[]);
-
-  
-
-
-
-
-  const [open, setOpen] = useState(false);
   const [showDate, setShowDate] = useState(-1);
+  const [open, setOpen] = useState(false);
 
 
 
 
 
-  // ---------------------createEvent---------------------------
-  const [eventInfo, setEventInfo] = useState({
-    title: "",
-    type: "",
-    description: "",
-    startDate: "",
-    endDate: "",
-    startTime: "",
-    endTime: "",
-    place: "",
-  });
-  const handleCreate = (e) => {
-
-    if (eventInfo.type == 'Global') {
-      eventInfo.type = '1'
-    } else {
-      eventInfo.type = '2'
-    }
-    console.log(eventInfo);
-    // if (validator()) {
-    api.post("/api/event/createEvent", {
-      title: eventInfo.title,
-      type: eventInfo.type,
-      description: eventInfo.description,
-      startDate: eventInfo.startDate,
-      endDate: eventInfo.endDate,
-      startTime: eventInfo.startTime,
-      endTime: eventInfo.endTime,
-      place: eventInfo.place,
-    });
-    // }
-  };
-  const eventType = ["Course", "Global"];
 
   // ------------------code below----------------------//
   return (
@@ -175,57 +126,11 @@ const Content = () => {
         />
       </div>
 
-      <CSSTransition
-        mountOnEnter
-        unmountOnExit
-        in={open}
-        timeout={{ enter: 300, exit: 300 }}
-        classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
-      >
-        <div className='bg-overlay'>
-          <div className='d-calendar'>
-            <div onClick={() => setOpen(false)} className="d-close">
-              X
-            </div>
-            <div className="d-top">
-              <div className="d-day">{showDate} {currentMonth} {currentYear}</div>
-            </div>
-
-            <div className="content">
-              <div>
-
-                {data.map((row) => {
-
-                  return (showDate == row.startday && currentMonthNo == row.nowmonth ?
-                    <div className="d-block">
-                        <div className="edit">
-                        <Edit></Edit>
-                        </div>
-                      <div className="title">{row.title}</div>
-                      <div className="point" style={{ background: "#fdd4c1" }}></div>
-                      <div className="detail">{row.hstart}.{row.mstart} - {row.hend}.{row.mend} | {row.place}</div>
-                    </div>
-                    : "")
-                })}
-
-              </div>
-            </div>
-            <div className="d-buttom">
-              <div onClick={() => { setOpenEvent(true) }} >
-                <button className="button">
-                  Add New Event
-                </button>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-      </CSSTransition>
+      <ViewEvent open={open} setOpen={setOpen} showDate={showDate} currentMonth={currentMonth} currentMonthNo={currentMonthNo} currentYear={currentYear} />
 
       
-      {/*  ------------------------------ dialog-createevent------------------------------------------ */}
-      <CreateEventDialog />
+
+      
       
       {/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
       <div className="createEvent">
