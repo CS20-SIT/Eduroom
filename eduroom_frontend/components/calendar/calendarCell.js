@@ -8,16 +8,6 @@ const Content = (props) => {
   const todayDate = props.todayDate;
   const setOpen = props.setOpen;
   const setShowDate = props.setShowDate;
-<<<<<<< HEAD
-
-
-  return (
-    <Fragment>
-      <div onClick={() => { setOpen(true); setShowDate(content); }} className={`${props.isToday && content == todayDate ? 'currentDate' : ''} gridItem`}
-        style={{ cursor: "pointer", position: "relative" }}>{content}
-        {true ? <span className="event" /> : null}
-      </div>
-=======
   const [hasEvent,setEvent] = useState(false)
   useEffect(()=>{
     let event = false
@@ -34,8 +24,10 @@ const Content = (props) => {
  
   return (
     <Fragment>
-      <div onClick={() => { setOpen(true);setShowDate(content); }} className={`${props.isToday&&content == todayDate ? 'currentDate' : ''} gridItem`} style={{cursor:"pointer",color:`${hasEvent?'red':'black'}`}}>{content}</div>
->>>>>>> 950bc489a622de108fe61b2fffbe1cd5a2ddbeb3
+      <div onClick={() => { setOpen(true);setShowDate(content); }} className={`${props.isToday&&content == todayDate ? 'currentDate' : ''} gridItem`} 
+      style={{cursor:"pointer",position:"relative"}}>{content}
+      {hasEvent?<span className="event"/>:null}
+      </div>
       <style jsx>{style}</style>
       <style jsx>{`
       .event{
@@ -43,9 +35,9 @@ const Content = (props) => {
         width: 5px;
         height: 5px;
         border-radius: 50%;
-        background: #ccc;
+        background: #999;
         top: 3.25rem;
-        left: 4.5rem;
+        left: 6.1rem;
       }
       `}</style>
     </Fragment>
