@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
-const Choice = ({ idx, choice, correct,chnageCorrec }) => {
-	console.log(choice, correct)
+const Choice = ({ idx, choice, correct, changeCorrect }) => {
 	const renderCheck = () => {
 		if (correct === idx) {
 			return <i style={{ color: '#27AE60' }} className="fas fa-check"></i>
@@ -11,8 +10,10 @@ const Choice = ({ idx, choice, correct,chnageCorrec }) => {
 	return (
 		<Fragment>
 			<div className="choice">
-				<div className="check">{renderCheck()}</div>
-        <input name="choice" className="textfield" placeholder={`Choice ${idx+1}`} type="text"></input>
+				<div className="check" onClick={() => changeCorrect(idx)}>
+					{renderCheck()}
+				</div>
+				<input name="choice" className="textfield" placeholder={`Choice ${idx + 1}`} type="text"></input>
 			</div>
 			<style jsx>{`
 				.choice {
@@ -28,11 +29,11 @@ const Choice = ({ idx, choice, correct,chnageCorrec }) => {
 					justify-content: center;
 					align-items: center;
 					margin-right: 10px;
-          width: 60px;
+					width: 60px;
 				}
-        .check:hover{
-          cursor: pointer;
-        }
+				.check:hover {
+					cursor: pointer;
+				}
 				.textfield {
 					background: #eff0f6;
 					border-radius: 10px;
