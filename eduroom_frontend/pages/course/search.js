@@ -26,7 +26,7 @@ const Search = () => {
   return (
     <Fragment>
       <GeneralNonav>
-        <div className='bg-little-grey'>
+      <div className='bg'>
           <div className='container'>
 
             {/* Search bar and Categories select */}
@@ -41,21 +41,22 @@ const Search = () => {
             </div>
 
             {/* Categories Name */}
-            <div className='text-center my-4'>
+            <div className='text-center categoryTab'>
               <Link href={`/course`}>
-                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>General</span></Link>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT & Software</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>Design</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>Marketing</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>Business</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>Other</span>
+                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>GENERAL</span></Link>
+                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MATH</span>
+              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT & SOFTWARE</span>
+              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>DESIGN</span>
+              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MARKETING</span>
+              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>BUSINESS</span>
+              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>OTHER</span>
             </div>
 
             {/* Box of each course */}
             <div className='text-center my-10'>
               {data.map((e, index) => (
                 <Link href={`/course/${e.courseid}`}>
-                  <div className='mx-6 my-6 box-1 bg-white inline-block shadow rounded-lg pointer'>
+                  <div className='mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer'>
                     <div className="w-full h-60"><img className="pic-1" alt="python" src={`${e.coursepicture}`} width="100%" height="100%"></img></div>
                     <div className="w-full h-40 font-quicksand">
                       <div className="text-navy text-lg box-left my-4 mx-4 h-20">{e.coursename}</div>
@@ -79,6 +80,12 @@ const Search = () => {
             padding-left: 15px;
             font-size: 0.8rem;
             width: 250px;
+          }
+          .categoryTab{
+            margin-top: 3rem;
+          }
+          .bg{
+            background: #F9F7FE;
           }
 				`}
       </style>

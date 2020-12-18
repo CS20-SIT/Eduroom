@@ -6,6 +6,7 @@ const {
     getCourseFromID,
     getCourseSectionPart,
     searchCourse,
+    getCategory
 } = require('../controllers/courseControllers')
 
 Router.get('/getAllCourse', getAllCourse)
@@ -15,6 +16,8 @@ Router.post('/getCourseFromID', getCourseFromID)
 Router.get('/getCourseSectionPart', getCourseSectionPart)
 
 Router.post('/search', searchCourse)
+
+Router.get('/category', getCategory)
 
 
 module.exports = Router
