@@ -4,7 +4,7 @@ import HeadCell from "../../components/calendar/calendarHeader";
 import BlankCell from "../../components/calendar/calendarBlankCell";
 import ViewEvent from '../../components/calendar/viewEvent';
 import Image from "next/image";
-
+import api from "../../api";
 // import { useRouter } from 'next/router';
 import style from "../../styles/calendar/calendar";
 import moment from "moment";
@@ -84,6 +84,18 @@ const Content = () => {
   const [open, setOpen] = useState(false);
 
 
+  const [isInstructor, setInstructor] = useState(false);
+  useEffect(() => {
+    api.get('/api/auth/profile').then(res => {
+      if (res.data.role == 'instructor') {
+        setInstructor(true);
+      }
+    }
+    ).catch(err=>{
+
+    })
+  }, [])
+
   // ------------------code below----------------------//
   return (
     <Fragment>
@@ -106,14 +118,20 @@ const Content = () => {
 
 
       {/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
-      <div className="createEvent">
-        <button className="bt-createEvent"
-          onClick={() => {
-            router.push(`/event`)
-          }}>
-          createEvent
+      {
+        isInstructor ? (
+          <div className="createEvent">
+            <button className="bt-createEvent"
+              onClick={() => {
+                router.push(`/event`)
+              }}>
+              createEvent
         </button>
-      </div>
+          </div>
+        ):null
+}
+
+
 
 
       {/* ------------------------------Calendar Header---------------------------------------- */}
@@ -163,7 +181,7 @@ const Content = () => {
           })}
 
           {daysInMonth.map((day) => {
-            return <Cell todayDate={TodayDate} todayMonth={TodayMonth} todayYear={TodayYear} currentMonthNo={currentMonthNo} currentYear={currentYear} setOpen={setOpen} Content={day} setShowDate={setShowDate} />;
+            return <Cell isToday={TodayDate == day && TodayMonth == currentMonthNo && TodayYear == currentYear} todayDate={TodayDate} setOpen={setOpen} Content={day} setShowDate={setShowDate} />;
           })}
 
           {blankEnd.map((blank) => {
