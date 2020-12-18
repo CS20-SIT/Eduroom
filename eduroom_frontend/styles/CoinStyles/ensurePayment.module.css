@@ -15,6 +15,7 @@
     background-color: #FB9CCB;
     border: none;
     border-radius: 10px;
+    cursor: pointer;
     
 }
 .cardPay h2 {
@@ -44,5 +45,6 @@
     background-color:#A880F7;
     border: none;
     border-radius: 10px;
+    cursor: pointer;
   }
   

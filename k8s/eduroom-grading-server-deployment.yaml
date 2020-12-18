@@ -12,23 +12,60 @@ spec:
         app: eduroom-grading-server-deployment
     spec:
       containers:
-      - name: eduroom-grading-server-deployment
-        image: asia.gcr.io/macbigduck/eduroom-grading-server
-        # resources:
-        #   limits:
-        #     memory: "128Mi"
-        #     cpu: "500m"
-        ports:
-        - containerPort: 3050
-        env:
-            - name: NODE_ENV
-              valueFrom:
-                configMapKeyRef:
-                  name: prod-configmap
-                  key: NODE_ENV
-            - name: CLIENT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: prod-configmap
-                  key: CLIENT_URL
-                  optional: false
+        - name: eduroom-grading-server
+          image: judge0/judge0:latest
+          securityContext:
+            privileged: true
+          # resources:
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m"
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: grader-env-configmap
+            # - secretRef:
+            #     name: eduroom-grader-secret
+        - name: eduroom-grading-worker
+          image: judge0/judge0:latest
+          command:
+            - "./scripts/workers"
+          securityContext:
+            privileged: true
+          # resources:
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m"
+          envFrom:
+            - configMapRef:
+                name: grader-env-configmap
+            # - secretRef:
+            #     name: eduroom-grader-secret
+        - name: eduroom-grading-db
+          image: postgres:13.0
+          # resources:
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: grader-env-configmap
+            # - secretRef:
+            #     name: eduroom-grader-secret
+        - name: eduroom-grading-redis
+          image: redis:6.0
+          # resources:
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m"
+          command: ["/bin/sh", "-c", 'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"']
+          ports:
+            - containerPort: 6379
+          envFrom:
+            - configMapRef:
+                name: grader-env-configmap
+            # - secretRef:
+            #     name: eduroom-grader-secret

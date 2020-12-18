@@ -32,6 +32,7 @@ const getInstructorAvailabilities = async (req, res, next) => {
 		}
 		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
 		const { instructorid } = result.rows[0]
+
 		result = await pool.query(
 			`select day,time from instructor_availabilities where instructorid = '${instructorid}' order by day, time`
 		)
@@ -70,19 +71,26 @@ const getInstructorList = async (req, res) => {
          */
 
 		// WHY INSTRUCTOR EXPERT IS NOT INSERTED ??
-		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
+		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname 
+			from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
             where p.instructorid = i.instructorid and i.userid = u.userid and e.instructorid = p.instructorid;
         `)
-		instructorInfo = result.rows
+		const instructorInfoTmp = result.rows
+		const instructorInfo = []
+		instructorInfoTmp.forEach((e) => {
+			if (instructorInfo.findIndex((x) => x.instructorid == e.instructorid) == -1) {
+				instructorInfo.push(e)
+			} else {
+				instructorInfo[
+					instructorInfo.findIndex((x) => x.instructorid == e.instructorid)
+				].subjectname += `, ${e.subjectname}`
+			}
+		})
+
 		result = await pool.query(
 			`select i.instructorid, m.score from instructor_appointment_members m,instructor_appointments i where i.appointmentid = m.appointmentid AND m.score is not null;`
 		)
 		instructorRating = result.rows
-
-		result = await pool.query(
-			`select COUNT(*),i.instructorid from instructor_appointment_members m,instructor_appointments i where i.appointmentid = m.appointmentid AND m.score is not null group by i.instructorid;`
-		)
-		instructorRatingCount = result.rows
 
 		instructorInfo.forEach((i) => {
 			i.name = i.firstname + ' ' + i.lastname
@@ -94,10 +102,11 @@ const getInstructorList = async (req, res) => {
 					c++
 				}
 			})
-			i.rating = (sum / c).toFixed(1)
-			instructorRatingCount.forEach((c) => {
-				if (i.instructorid == c.instructorid) i.ratingCount = c.count
-			})
+			console.log(i.instructorid, sum, c)
+
+			i.rating = c == 0 ? 0 : (sum / c).toFixed(1)
+			i.ratingCount = c
+
 			delete i.firstname
 			delete i.lastname
 		})
@@ -129,7 +138,8 @@ const getInstructorInfo = async (req, res) => {
 		// ID : hardcode
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 
-		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname, i.biography,p.price from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
+		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname, i.biography,p.price 
+		from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
         where i.instructorid = '${id}' and p.instructorid = i.instructorid and i.userid = u.userid and e.instructorid = p.instructorid;
         `)
 		instructorInfo = result.rows[0]
@@ -147,21 +157,13 @@ const getInstructorInfo = async (req, res) => {
 			c++
 		})
 
-		result = await pool.query(`select COUNT(*) from instructor_appointment_members m,instructor_appointments i
-		where instructorid = '${id}'
-		  and i.appointmentid = m.appointmentid
-		  AND m.score is not null
-		group by i.instructorid;
-		`)
-		instructorRatingCount = result.rows[0]
-
 		let instructor = {
 			id: instructorInfo.instructorid,
 			name: instructorInfo.firstname + ' ' + instructorInfo.lastname,
 			info: instructorInfo.subjectname,
 			text: instructorInfo.biography,
-			rating: (sum / c).toFixed(1),
-			ratingCount: instructorRatingCount.count,
+			rating: c == 0 ? 0 : (sum / c).toFixed(1),
+			ratingCount: c,
 			price: instructorInfo.price,
 		}
 
@@ -235,9 +237,10 @@ const getInstructorAvailability = async (req, res) => {
         where day = '${day}'
           and instructorid = '${id}';`)
 		const times = []
-		result.rows.forEach((r) => {
-			times.push(r.time)
-		})
+		if (result.rows.length > 0)
+			result.rows.forEach((r) => {
+				times.push(r.time)
+			})
 
 		sameDay.forEach((d) => {
 			const removal = parseInt(d.endtime) - parseInt(d.starttime)

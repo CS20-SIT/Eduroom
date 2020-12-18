@@ -16,11 +16,10 @@ const Section = ({ section, idx, handleChangeSection }) => {
 		section.materials = materials
 		handleChangeSection(section, idx)
 	}
-	const changeQuestions = (questoins) => {
-		section.questoins = questoins
+	const changeQuestions = (questions) => {
+		section.questions = questions
 		handleChangeSection(section, idx)
 	}
-	console.log('section is ', section)
 	return (
 		<Fragment>
 			<div className="box">
@@ -35,7 +34,7 @@ const Section = ({ section, idx, handleChangeSection }) => {
 				></input>
 				<Videos videos={section.videos} sectionIndex={idx} changeVideos={changeVideos}></Videos>
 				<Materials materials={section.materials} sectionIndex={idx} changeMaterials={changeMaterials}></Materials>
-				<Questions questoins={section.questoins} sectionIndex={idx} changeQuestions={changeQuestions}></Questions>
+				<Questions questions={section.questions} sectionIndex={idx} changeQuestions={changeQuestions}></Questions>
 			</div>
 			<style jsx>{`
 				.box {

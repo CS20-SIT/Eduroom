@@ -202,6 +202,9 @@ export default css`
   border-radius : 10px;
   
 }
+
+
+
 .title{
   color : #3d467f;
   font-weight : bold;
@@ -262,18 +265,18 @@ ul li::before {
 .bg-calendar{
 
   position : absolute;
-  top : 60%;
+  top : 64%;
   left : 67%;
   z-index: 2; 
   
 }
 
 
-//------------------------------------------- dialog create event
+//------------------------------------------- dialog create event----------------------------------------------
 
 
 .D-create{
-  width: 35vw;
+  width: 45vw;
   height: 65vh;
   background-image: url('/images/createEvent/d-bg.svg');
   bacground-size : cover;
@@ -330,7 +333,7 @@ ul li::before {
   color : #969BBA;
 }
 .event-startDate{
-  width:70%;
+  width:85%;
   height:50px;
   margin-top : 0%;
   background-color:#EFF0F6;
@@ -363,7 +366,7 @@ ul li::before {
   color : #969BBA;
 }
 .event-endDate{
-  width:70%;
+  width:85%;
   height:50px;
   margin-top : 0%;
   background-color:#EFF0F6;
@@ -474,6 +477,11 @@ ul li::before {
   
 }
 
+// ---------------------------------Edit-------------------------------------
+.edit{
+  float : right;
+  cursor : pointer;
+}
 
 
 
