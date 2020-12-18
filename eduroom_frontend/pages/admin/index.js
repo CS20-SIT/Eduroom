@@ -1,5 +1,9 @@
-import React,{Fragment} from 'react'
+import React, { Fragment, useContext } from 'react'
+import ProtectedAdminRoute from '../../components/admin/protectedAdminRoute'
+import AdminContext from '../../contexts/admin/adminContext'
 const Admin = () => {
-    return <Fragment></Fragment>
+	const adminContext = useContext(AdminContext)
+	const { logoutAdmin } = adminContext
+	return <ProtectedAdminRoute>Hello Admin <button onClick={logoutAdmin}>logout</button></ProtectedAdminRoute>
 }
 export default Admin
