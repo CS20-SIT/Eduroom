@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-import React, { Fragment, useState } from "react"
-import { useRouter } from "next/router"
-import style from "../../../styles/graderSubmit/problems/problemList"
-import { addProblemBoxClass } from "../animationBoxUtil";
-=======
 import React, { Fragment, useState } from 'react'
 import { useRouter } from 'next/router'
 import style from '../../../styles/graderSubmit/problems/problemList'
 import { addProblemBoxClass } from '../animationBoxUtil'
->>>>>>> b7b77696ef519ad32e5ee7b9a6662d49527d18c3
 
 const ProblemList = (props) => {
 	const router = useRouter()

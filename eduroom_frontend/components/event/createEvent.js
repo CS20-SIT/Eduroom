@@ -9,7 +9,6 @@ const content = () => {
 
   const [eventInfo, setEventInfo] = useState({
     title: "",
-    type: "",
     description: "",
     startDate: "",
     endDate: "",
@@ -20,23 +19,17 @@ const content = () => {
   const createEvent = async () => {};
   const handleCreate = (e) => {
 
-    if(eventInfo.type =='Global'){
-      eventInfo.type = '1'
-    }else{
-      eventInfo.type = '2'
-    }
     console.log(eventInfo);
     // if (validator()) {
-       api.post("/api/event/createEvent", {
+       api.post("/api/event/createEvent",eventInfo)/*  {
         title: eventInfo.title,
-        type: eventInfo.type,
         description: eventInfo.description,
         startDate: eventInfo.startDate,
         endDate: eventInfo.endDate,
         startTime: eventInfo.startTime,
         endTime: eventInfo.endTime,
         place: eventInfo.place,
-      }); 
+      });  */
     // }
   };
 
