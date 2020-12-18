@@ -33,7 +33,7 @@ const Wishlist = () => {
                 courseid:courseid
             // }
         }).then(()=>{
-            console.log(courseid+' '+con+' '+order);
+            // console.log(courseid+' '+con+' '+order);
             searchEngine(con,order);
         });
     }

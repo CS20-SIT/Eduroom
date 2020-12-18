@@ -119,9 +119,9 @@ const editProfile = async (req, res) => {
 		const lastname = req.body.lastname
 		const birthdate = req.body.birthdate
 		const bio = req.body.bio
-		const phoneno = req.body.phoneno
+		// const phoneno = req.body.phoneno , phoneno='${phoneno}'
 		const updateUserQuery = `update user_profile set avatar='${avatar}', updateat=CURRENT_TIMESTAMP,
-		firstname='${firstname}', lastname='${lastname}', birthdate='${birthdate}', bio='${bio}', phoneno='${phoneno}'
+		firstname='${firstname}', lastname='${lastname}', birthdate='${birthdate}', bio='${bio}'
 		where userid = '${user}'`
 		console.log(updateUserQuery)
 		await pool.query(updateUserQuery)
