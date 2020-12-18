@@ -23,7 +23,6 @@ services:
         depends_on:
             - eduroom_frontend
             - eduroom_backend
-            - eduroom_grading_server
             - eduroom_socket_chat
             - eduroom_socket_kahoot
         build:
