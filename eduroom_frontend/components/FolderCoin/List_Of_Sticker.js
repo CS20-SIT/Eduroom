@@ -40,6 +40,7 @@ const ListSticker = (props) => {
 					index={index}
 					id={item.id}
 					key={item.id}
+					img={item.img}
 				></ProductSticker_Render>
 			)
 		})
@@ -80,6 +81,7 @@ const ListSticker = (props) => {
 						index={index}
 						id={item.id}
 						key={item.id}
+						img={item.img}
 					></ProductSticker_Render>
 				</div>
 			)

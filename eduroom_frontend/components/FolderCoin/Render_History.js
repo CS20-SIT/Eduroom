@@ -5,8 +5,8 @@ const RenderHistory = props => {
             return (
                 <div key={item.id}>
                     <DetailHistory
-                        title={item.title}
-                        price={item.price}
+                        title={item.stickername}
+                        price={item.stickerprice}
                         index={index}
                         id={item.id}
                         choose={props.choose}
