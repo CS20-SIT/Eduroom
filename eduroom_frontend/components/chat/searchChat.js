@@ -3,7 +3,6 @@ import SearchIcon from "./icons/SearchIcon";
 import searchResult from "./searchResult";
 
 export default function seacrhChat(props) {
-  const [message, setMesaage] = useState(props.message);
   return (
     <div>
       <div style={{ position: "relative"}}>

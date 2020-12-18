@@ -32,7 +32,7 @@ router.post('/createGroupChatMockup',(req,res)=>{
 router.get('/getInvitationListMockup',(req,res)=>{
   res.send(mockup.getInvitationListMockup(35332));
 })
-router.get('/acceptInvitationMockup',(req,res)=>{
+router.get('/acceptInvitationMockup2',(req,res)=>{
   res.send(mockup.getInvitationListMockup(2));
 })
 router.get('/declineInvitationMockup',(req,res)=>{
