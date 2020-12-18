@@ -47,18 +47,18 @@ exports.getAllPackage = async (req, res, next) => {
 	try {
 		const data = await pool.query('select * from instructor join user_profile up on instructor.userid = up.userid join package p on instructor.instructorid = p.instructorid where ispublic = true')
 		const packageInfo = data.rows;
-		const temp = packageInfo.map(package => {
+		const temp = packageInfo.map(pack => {
 			return {
-				id: package.packageid,
-				title: package.packagename,
-				instructor: package.instructorid,
-				detail: package.detail,
-				image: package.image,
-				discount: package.discount,
-				public: package.ispublic,
-				cateid: package.cateid,
-				infname: package.firstname,
-				inlname: package.lastname,
+				id: pack.packageid,
+				title: pack.packagename,
+				instructor: pack.instructorid,
+				detail: pack.detail,
+				image: pack.image,
+				discount: pack.discount,
+				public: pack.ispublic,
+				cateid: pack.cateid,
+				infname: pack.firstname,
+				inlname: pack.lastname,
 			};
 		});
 		res.status(200).json(temp);
