@@ -14,7 +14,7 @@ const Temp = ({ probID, contestId }) => {
 				<div className="main">
 					<div className="size">
 						<Box>
-							<ProblemLayout page="description" id={probID} contestId={contestId} />
+							<ProblemLayout page="description" id={probID} contestID={contestId} />
 						</Box>
 					</div>
 				</div>

@@ -5,7 +5,11 @@ import style from '../../../../styles/user/instructor/createCourse/create'
 const Question = ({ idx, question, handleQuestion, removeQuestion }) => {
 	const qChange = (e) => {
 		question.q = e.target.value
-		handleQuestion(question)
+		handleQuestion(question,idx)
+	}
+	const questionChange = (newQuestion) => {
+		question = newQuestion
+		handleQuestion(question,idx)
 	}
 	const renderIcon = () => {
 		return (
@@ -32,8 +36,10 @@ const Question = ({ idx, question, handleQuestion, removeQuestion }) => {
 							onChange={qChange}
 							value={question.q}
 						></input>
-            <div className="title" style={{margin:'10px 0'}}>Choices</div>
-						<Choices question={question} qChange={qChange}></Choices>
+						<div className="title" style={{ margin: '10px 0' }}>
+							Choices
+						</div>
+						<Choices question={question} questionChange={questionChange}></Choices>
 					</div>
 				</div>
 				<style jsx>{`

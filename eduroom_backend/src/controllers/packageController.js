@@ -1,5 +1,6 @@
 const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
+const errorHandler = require('../middleware/error');
 
 exports.getCategories = async (req, res, next) => {
 	const results = await pool.query('SELECT * from package_category')
@@ -41,6 +42,30 @@ exports.getPackage = async (req, res, next) => {
 	const packageInfo = data.rows
 	res.status(200).json({ data: packageInfo })
 }
+
+exports.getAllPackage = async (req, res, next) => {
+	try {
+		const data = await pool.query('select * from instructor join user_profile up on instructor.userid = up.userid join package p on instructor.instructorid = p.instructorid where ispublic = true')
+		const packageInfo = data.rows;
+		const temp = packageInfo.map(pack => {
+			return {
+				id: pack.packageid,
+				title: pack.packagename,
+				instructor: pack.instructorid,
+				detail: pack.detail,
+				image: pack.image,
+				discount: pack.discount,
+				public: pack.ispublic,
+				cateid: pack.cateid,
+				infname: pack.firstname,
+				inlname: pack.lastname,
+			};
+		});
+		res.status(200).json(temp);
+	} catch (error) {
+		errorHandler(error, req, res);
+	}
+};
 
 exports.getCourses = async (req, res, next) => {
 	const { page, mxData } = req.query
