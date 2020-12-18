@@ -71,6 +71,7 @@ const AuthDialog = ({ handleClick }) => {
 						display: flex;
 						justify-content: center;
 						align-items: center;
+						z-index: 10;
 					}
 					.auth-box {
 						display: flex;
