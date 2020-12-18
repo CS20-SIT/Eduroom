@@ -2,17 +2,17 @@ const bcrypt = require('bcryptjs')
 const errorHandler = require('../../middleware/error')
 const pool = require('../../database/db')
 
+
 const test = async (req, res) => {
 	const time = await pool.query('SELECT NOW()')
 
 	res.send({ time })
 }
-
+// const user = req.user.id
 // const user="08e9d239-b3f2-4db8-b29a-da99a314df92";
 const getWishlist = async (req, res) => {
 	try {
 		const user = req.user.id
-		// const user = req.user.id
 		const condition = req.query.condition
 		// const condition='';
 		const orderby = req.query.orderby
@@ -119,9 +119,9 @@ const editProfile = async (req, res) => {
 		const lastname = req.body.lastname
 		const birthdate = req.body.birthdate
 		const bio = req.body.bio
-		const phoneno = req.body.phoneno
+		// const phoneno = req.body.phoneno , phoneno='${phoneno}'
 		const updateUserQuery = `update user_profile set avatar='${avatar}', updateat=CURRENT_TIMESTAMP,
-		firstname='${firstname}', lastname='${lastname}', birthdate='${birthdate}', bio='${bio}', phoneno='${phoneno}'
+		firstname='${firstname}', lastname='${lastname}', birthdate='${birthdate}', bio='${bio}'
 		where userid = '${user}'`
 		console.log(updateUserQuery)
 		await pool.query(updateUserQuery)
