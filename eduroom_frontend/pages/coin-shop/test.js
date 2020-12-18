@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import Styles from '../../styles/CoinStyles/test'
 import React from 'react'
 import Balloon from '../../components/FolderCoin/Balloon'
+import Comment from '../../components/FolderCoin/Comment'
 const temp = (props) => {
 	const [check, setCheck] = useState(false)
 	const renderBalloon = () => {
@@ -39,6 +40,7 @@ const temp = (props) => {
 			>
 				BAllon
 			</button>
+			<Comment/>
 			<style jsx>{Styles}</style>
 		</div>
 	)

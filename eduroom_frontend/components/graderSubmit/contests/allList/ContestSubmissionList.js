@@ -1,14 +1,21 @@
 import { Fragment } from 'react'
 import style from '../../../../styles/graderSubmit/contests/contestPage/submission/contestSubmissionList'
+import { format } from 'date-fns'
+import { useRouter } from 'next/router'
 
 const ContestSubmission = (props) => {
-	console.log(props)
+	const router = useRouter()
 	return (
 		<Fragment>
 			{props.time ? (
-				<div className="flex-container">
+				<div
+					className="flex-container"
+					onClick={() => {
+						router.push('/')
+					}}
+				>
 					<div className="flex-item" style={{ flexBasis: '20%' }}>
-						{props.time}
+						{format(Date.parse(props.time), 'P') + ' ' + format(Date.parse(props.time), 'pp')}
 					</div>
 					<div className="flex-item" style={{ flexBasis: '20%' }}>
 						{props.author}
