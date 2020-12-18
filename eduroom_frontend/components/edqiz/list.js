@@ -74,7 +74,8 @@ const Page1 = ({ data, goto, handleQuestionNumber,questionNumber }) => {
           background: white;
           padding: 0px;
           transition: 0.3s;
-          width: 95vw;
+          width: 93vw;
+          margin-left:4vw;
           border-radius: 5vh;
           padding: 20px;
         }
