@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from 'react'
 import api from '../../api'
 import Rank from './rank'
+import {useRouter} from 'next/router'
 const LeaderBoard = ({ mini }) => {
 	const [data, setData] = useState([])
+	const router = useRouter() 
 	useState(() => {
 		api
 			.get('/api/leaderboard')
@@ -37,7 +39,7 @@ const LeaderBoard = ({ mini }) => {
 			{data.map((el, index) => {
 				return <Rank key={index + 1} mini={mini} data={{ ...el, rank: index + 1 }} />
 			})}
-            <div style={{color:'#E0E0E0',fontWeight:'bold',textDecorationLine: 'underline',cursor:'pointer',textAlign:'center'}}>
+            <div style={{color:'#E5E5E5',fontWeight:'bold',textDecorationLine: 'underline',cursor:'pointer',textAlign:'center'}} onClick={() => router.push('/leaderboard')}>
                 View All
             </div>
 			<style jsx>

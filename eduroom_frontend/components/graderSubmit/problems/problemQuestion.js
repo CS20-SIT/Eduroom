@@ -8,31 +8,30 @@ const ProblemQuestion = (props) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			if (props.contestId) {
-				const result = await api.get('/api/grader/getContestQuestionDetail', {
-					params: { id: props.id, contestId: props.contestId },
-				})
-				const testCaseResult = await api.get('/api/grader/getQuestionTestCase', {
-					params: { id: props.id },
-				})
-				setData(result.data)
-				setTestCaseData(testCaseResult.data[0])
-			} else {
+			if (props.contestID === undefined) {
 				const result = await api.get('/api/grader/getQuestionDetail', {
-					params: { id: props.id, contestId: props.contestId },
+					params: { id: props.questionId },
 				})
-				const testCaseResult = await api.get('/api/grader/getQuestionTestCase', {
-					params: { id: props.id },
+				setData(result.data[0])
+			} else {
+				const result = await api.get('/api/grader/getContestQuestionDetail', {
+					params: { id: props.questionId, contestId: props.contestID },
 				})
-				setData(result.data)
-				setTestCaseData(testCaseResult.data[0])
+
+				setData(result.data[0])
 			}
+			const testCaseResult = await api.get('/api/grader/getQuestionTestCase', {
+				params: { id: props.questionId },
+			})
+
+			setTestCaseData(testCaseResult.data[0])
 		}
 		GetData()
 	}, [])
 
 	console.log(data)
-	console.log(props.contestId)
+	console.log(props.questionId)
+	console.log(props.contestID)
 
 	return (
 		<Fragment>
@@ -40,7 +39,7 @@ const ProblemQuestion = (props) => {
 				<Fragment>
 					<div className="box">
 						<div className="title" style={{ flex: '1' }}>
-							<div>{`${data.conquestionno}. ${data.title}`}</div>
+							<div>{`${data.conquestionno != null ? data.conquestionno`.` : ''} ${data.title}`}</div>
 							<div className="admin-name">by {data.displayname}</div>
 						</div>
 						<div className="tag" style={{ flex: '0.5' }}>
@@ -91,7 +90,7 @@ const ProblemQuestion = (props) => {
 							</div>
 							<div className="sub-box testcases">
 								<div className="des-title">Test cases</div>
-								<div className="des-data">{data.hint}</div>
+								<div className="des-data">Some test cases</div>
 							</div>
 						</div>
 					</div>
