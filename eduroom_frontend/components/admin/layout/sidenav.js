@@ -4,7 +4,7 @@ import { item } from './data/item'
 const AdminSideNav = () => {
 	const [isExpand, setExpand] = useState(false)
 	const handleExpand = () => {
-		document.getElementById('sidenav').style.width = '20%'
+		document.getElementById('sidenav').style.width = '17%'
 		setExpand(true)
 	}
 	const handleReduce = () => {
