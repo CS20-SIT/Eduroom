@@ -30,6 +30,50 @@ exports.getStickers = async (req, res, next) => {
         errorHandler(error, req, res);
     }
 };
+exports.getStickerInPackage = async (req , res ,next)=>{
+    try{
+        
+        const id = req.query.stickerid;
+        const data = await pool.query(`SELECT p.stickerimg,p.stickerid, p.stickernumber,s.stickername from pack_sticker  p,sticker_all s where p.stickerid = s.stickerid AND s.stickerid = ${id}` );
+        const package = data.rows;
+        res.send(package);
+        console.log(id);
+
+    }catch (error) {
+        errorHandler(error, req, res);
+    }
+};
+// exports.packStickerStore = async (req, res) => {
+//     try {
+//         const id = req.params.id
+//         const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+//         const coins = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}';`)
+//         const packSticker = await pool.query(`SELECT s.stickername, s.stickerimg, s.stickerprice,
+//         ps.stickernumber, ps.stickerimg FROM sticker_all s
+//         INNER JOIN pack_sticker ps on s.stickerid = ps.stickerid
+//         WHERE ps.stickerid=${id};`)
+//         const result= []
+//         const stickers = []
+//         for (let index = 0; index < packSticker.rows.length; index++) {
+//             const element = packSticker.rows[index];
+//             stickers.push(element)
+//             const mycoins = coins.rows[0].amountofcoin
+//             mycoins.stickers = stickers
+//             result.push(mycoins)
+//         }
+
+//         const result = {
+//             mycoin: mycoins.rows[0].amountofcoin,
+//             stickers: stickers
+//         }
+
+//         res.send(result)
+//         res.send(result)
+
+//     } catch (error) {
+
+//     }
+// }
 exports.getDailyRewardStatus = async (req, res, next) => {
     try {
         const today = dayjs.utc().utcOffset(7).format('YYYY-MM-DD')
@@ -58,7 +102,7 @@ exports.showCoinOwner = async (req, res) => {
 }
 exports.showStickerOwner = async (req, res) => {
     try {
-        const userId= req.body.id
+        const userId = req.body.id
         // const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
         const getOwnerSticker = await pool.query(`SELECT sticker_owner.stickerid,stickername,stickertype,stickerimg FROM sticker_owner
         JOIN sticker_all ON sticker_owner.stickerid = sticker_all.stickerid
@@ -148,7 +192,7 @@ exports.buySticker = async (req, res) => {
 exports.buyCoupon = async (req, res) => {
     try {
         const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
-
+        // const getCoinOwner = await pool.query
     } catch {
 
     }
