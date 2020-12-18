@@ -24,10 +24,20 @@ const getCourseFromID = async (req, res) => {
         join user_profile up on i.userid = up.userid
         WHERE course.courseid = $1`,
 			[courseID]
-        )
-        
+		)
 		if (result.rowCount > 0) {
-			return res.status(200).send(result.rows[0])
+			let answer = { ...result.rows[0], isOwn: false }
+			if (!req.user) {
+				return res.status(200).send(result.rows[0])
+			}
+			const isOwnResult = await pool.query(
+				`SELECT count(*) as count from user_mycourse where courseid= $2 and userid = $1`,
+				[req.user.id, courseID]
+			)
+			if (isOwnResult.rows[0].count > 0) {
+				answer.isOwn = true
+			}
+			return res.status(200).send(answer)
 		} else {
 			res.send(null)
 		}
