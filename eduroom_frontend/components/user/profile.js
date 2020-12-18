@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
+import TextField from '@material-ui/core/TextField';
 import { useRouter } from 'next/router'
 
 const Profile = () => {
@@ -74,7 +75,16 @@ const Profile = () => {
 
 					<div className="topic">
 						<p className="header">Bio</p>
-						<span>{user.bio ? user.bio : '-'}</span>
+						<TextField
+							multiline
+							rows={4}
+							defaultValue={user.bio ? user.bio : '-'}
+							inputProps={{ readOnly: true }}
+						/>
+						{/* <textarea rows="4" cols="50" readonly>
+							{user.bio ? user.bio : '-'}
+						</textarea> */}
+						{/* <span>{user.bio ? user.bio : '-'}</span> */}
 					</div>
 					{renderRegister()}
 				</div>
