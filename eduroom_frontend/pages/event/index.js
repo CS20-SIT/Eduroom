@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import GeneralNoNav from '../../components/template/generalnonav';
+import GeneralNoNav from '../../components/template/general';
 import EventComp from '../../components/event/createEvent'
 import style from '../../styles/event/event'
 
