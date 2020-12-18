@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../styles/course/utils'
-import GeneralNoNav from '../../../components/template/generalnonav'
+import General from '../../../components/template/general'
 import Link from 'next/link'
 import api from '../../../api'
 
@@ -12,22 +12,11 @@ const CourseID = ({ id }) => {
 	}
 	useEffect(() => {
 		fetchCourse()
-  }, [])
-  const renderButtons = () => {
-    
-  }
-	const renderCourse = () => {
-		if (!course) return null
-		return (
-			<Fragment>
-				<div className="my-2">
-					<span className="text-xl text-navy font-quicksand">{course.coursename}</span>
-					{/* <span>
-                        <button className='text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer'>Add to cart</button>
-                    </span>
-                    <span>
-                        <button className='text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer'>Buy</button>
-                    </span> */}
+	}, [])
+	const renderButtons = () => {
+		if (course.iwOwn) {
+			return (
+				<Fragment>
 					<span>
 						<Link href={`/course/${id}/lesson`}>
 							<button className="text-md text-white font-quicksand bg-navy border-navy rounded-lg go-study-butt pointer">
@@ -35,6 +24,34 @@ const CourseID = ({ id }) => {
 							</button>
 						</Link>
 					</span>
+					<style jsx>{utils}</style>
+				</Fragment>
+			)
+		} else {
+			return (
+				<Fragment>
+					<span>
+						<button className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer">
+							Add to cart
+						</button>
+					</span>
+					<span>
+						<button className="text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer">
+							Buy
+						</button>
+					</span>
+					<style jsx>{utils}</style>
+				</Fragment>
+			)
+		}
+	}
+	const renderCourse = () => {
+		if (!course) return null
+		return (
+			<Fragment>
+				<div className="my-2">
+          <span className="text-xl text-navy font-quicksand">{course.coursename}</span>
+          {renderButtons()}
 					<span className="share-icon pointer">
 						<img
 							alt="shareIcon"
@@ -82,15 +99,19 @@ const CourseID = ({ id }) => {
 
 	return (
 		<Fragment>
-			<GeneralNoNav>
+			<General>
 				<div className="bg-little-grey ">
-					<Link href={`/course`}>
-						<span className="text-primary text-lg font-quicksand py-8 px-8 pointer">Back</span>
-					</Link>
-					<div className="container">{renderCourse()}</div>
+					<div>
+						<Link href="/course">
+							<i className="fas fa-chevron-left backIcon"></i>
+						</Link>
+					</div>
+					<div className="container" style={{ padding: '0' }}>
+						{renderCourse()}
+					</div>
 				</div>
 				<style jsx>{utils}</style>
-			</GeneralNoNav>
+			</General>
 		</Fragment>
 	)
 }
