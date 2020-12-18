@@ -31,6 +31,9 @@ exports.getCourseEvent = async (req, res, next) => {
 
 
 exports.createEvent = async (req, res, next) => {
+  try{
+
+  
   const title = req.body.title;
   const courseid = '836a91fa-aeaa-4eeb-a4b8-5761c90a7021';
   const startdate = req.body.startDate;
@@ -41,21 +44,6 @@ exports.createEvent = async (req, res, next) => {
   const place = req.body.place;
 
   const userid = req.user.id;
-  //--------------------sendMail-------------------------
-  //getEmail
- /*  const tempMail = await pool.query("select universityemail from user_student_verification where userid = 'da229e56-e47d-4748-bbab-cf706c333b85'")
-  const studentMail = tempMail.rows[0].universityemail;
-
-  //getsubject
-  const tempTitle = await pool.query("select title from course_event where title = $1", [title])
-  const subject = tempTitle.rows[0].title;
-
-  //getmessage
-  const tempDetail = await pool.query("select detail from course_event where detail = $1", [detail])
-  const message = tempDetail.rows[0].detail;
-  sendEmail({ email: studentMail, subject: subject, message: message, }) */
-
-  //----------------------------------------------------------
 
   const temp = await pool.query("select instructorid from instructor where userid = $1 and isverified = true", [userid]);
   const instructorid = temp.rows[0].instructorid;
@@ -64,11 +52,25 @@ exports.createEvent = async (req, res, next) => {
     "insert into course_event(title,courseid, startdate, enddate, starttime, endtime, detail, place, instructorid) values ($1,$2,$3,$4,$5,$6,$7,$8,$9)",
     [title, courseid, startdate, enddate, starttime, endtime, detail, place, instructorid]
   );
+
+  //--------------------sendMail-------------------------
+  //getEmail
+  const tempMail = await pool.query("select universityemail from user_student_verification where userid = 'da229e56-e47d-4748-bbab-cf706c333b85'")
+  const studentMail = tempMail.rows[0].universityemail;
+
+
+  sendEmail({ email: studentMail, subject: title, message: detail, })
+
+  //----------------------------------------------------------
+
   const event = data.rows[0];
   res.status(200).json({
     success: true, data: event
   });
   return
+}catch(err){
+  return next(new ErrorResponse("Cannot create event",400));
+}
 
 
 

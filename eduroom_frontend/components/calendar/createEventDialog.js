@@ -2,9 +2,10 @@ import React, { Fragment, useState, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import style from '../../styles/calendar/calendar'
 import api from '../../api'
+import { useRouter } from "next/router";
 
 const Content = (props) => {
-    //   const router = useRouter();
+    const router = useRouter();
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
 
@@ -20,25 +21,28 @@ const Content = (props) => {
         place: '',
     })
     const handleCreate = (e) => {
-        if (eventInfo.type == 'Global') {
-            eventInfo.type = '1'
-        } else {
-            eventInfo.type = '2'
-        }
-        console.log(eventInfo)
+
+        console.log(eventInfo);
         // if (validator()) {
-        api.post('/api/event/createEvent', {
+        api.post("/api/event/createEvent", eventInfo).then(
+            (res) => {
+                alert("success");
+
+                router.push("/calendar")
+            }
+        ).catch(err => {
+            console.log(err);
+        })/*  {
             title: eventInfo.title,
-            type: eventInfo.type,
             description: eventInfo.description,
             startDate: eventInfo.startDate,
             endDate: eventInfo.endDate,
             startTime: eventInfo.startTime,
             endTime: eventInfo.endTime,
             place: eventInfo.place,
-        })
+          });  */
         // }
-    }
+    };
     const eventType = ['Course', 'Global']
 
     return (
@@ -142,7 +146,7 @@ const Content = (props) => {
                     </div>
 
                     <div className="confirmBT">
-                        <button className="event-confirm" onClick={handleCreate}>
+                        <button className="event-confirm" onClick={handleCreate} >
                             <a className="event-confirmText">CONFIRM</a>
                         </button>
                     </div>
