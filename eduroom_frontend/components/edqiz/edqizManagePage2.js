@@ -3,6 +3,7 @@ import EdquizPagination from './edqizPagination'
 import style from '../../styles/edqiz/managePage'
 import QuestionCard from './questionCard'
 import QuizName from './edqizEditName'
+import Balloon from '../../components/FolderCoin/Balloon';
 const Page2 = ({
   name,
   goto,

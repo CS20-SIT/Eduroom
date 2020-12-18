@@ -1,10 +1,13 @@
-import Styles from '../../styles/coupon/MyCoupon.module.css';
-import General from '../../components/template/general';
-const temp = ()=>{
-    return(<div>
-        <General>
-        <button className={Styles.btn} >back</button>
-        </General>
-    </div>)
-}
-export default temp;
+import React, { Fragment } from 'react'
+import GeneralTemplate from '../../components/template/general'
+import MyCoupon from '../../components/coupon/Mycoupon'
+const MyCouponPage = () => {
+	return (
+	  <Fragment>
+		<GeneralTemplate>
+			<MyCoupon />
+		</GeneralTemplate>
+	  </Fragment>
+	)
+  }
+export default MyCouponPage

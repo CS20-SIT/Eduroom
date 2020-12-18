@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
+import Avatar from '@material-ui/core/Avatar'
 
 export default function messageLeft(props) {
   const message = props.message;
   return (
-    <div>
+    <div style={{display:'flex',alignItems:'center'}}>
+      <Avatar
+						style={{ width: 40, height: 40, marginLeft:50,marginRight:14,marginTop:20}}
+						alt={message.name}
+						src={message.profilePic}
+					/>
+          <div style={{marginBottom:0}}>
+      <div style={{  marginBottom:0,marginTop:15 }}>{message.name}</div>
       <div style={{ textAlign: "left", width: "100%" }}>
         <div className="messageLeft">
           <span style={{ fontSize: 18 }}>{message.text}</span>
         </div>
-        <br />
-        <span style={{ paddingLeft: 50 }}>{message.sentTime}</span>
+        </div>
+        <span style={{}}>{message.sentTime}</span>
       </div>
       <style jsx>{`
         .messageLeft {
@@ -20,8 +28,7 @@ export default function messageLeft(props) {
           padding-bottom: 10px;
           padding-left: 20px;
           padding-right: 20px;
-          margin-top: 20px;
-          margin-left: 50px;
+          margin-top: 5px;
           margin-right: 50px;
           display: inline-block;
         }

@@ -1,7 +1,9 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useRouter } from 'next/router';
 import socketIOClient from 'socket.io-client';
+import Balloon from '../../components/FolderCoin/Balloon';
+
 const Page1 = ({
   responseTime,
   goto,
@@ -11,6 +13,22 @@ const Page1 = ({
   setTime,
   id,
 }) => {
+  useEffect(()=>{
+    
+    console.log('from page 2 balllone')
+  },[])
+  const renderBalloon = () => {
+			return Array(50)
+				.fill(0)
+				.map((el, index) => {
+					return (
+						<Fragment>
+							<Balloon />
+						</Fragment>
+					)
+				})
+		} 
+	
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: '/kahoot',
   });
@@ -484,6 +502,7 @@ const Page1 = ({
   return (
     <Fragment>
       <div className="landing">
+        {renderBalloon()}
         <Grid container style={{ marginTop: '4vh' }}>
           <Grid item xs={10}>
             <div className="text-title">
@@ -609,8 +628,8 @@ const Page1 = ({
 
           .landing {
             padding: 0px;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             background-image: url('/images/edqiz/BGgame.svg');
             background-size: cover;
             overflow: auto;

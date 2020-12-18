@@ -9,6 +9,35 @@ exports.forumTest = async (req, res, next) => {
 	res.status(200).json({ success: true, data: data })
 	return
 }
+exports.searchForum = async (req, res, next) => {
+  const search = req.body.search;
+  const user = req.user
+  if(search){
+	  const data = await pool.query(
+		'select f.forumid as forumid, titlethread, f.userid as userid, displayname as author, posttime, subtypename, typename, c.categorytypeid as categorytypeid ,likes,comments, forum_from_like.userid AS is_like from forum_form f JOIN forum_form_info ffi ON ffi.forumid = f.forumid JOIN user_profile u ON f.userid = u.userid JOIN sub_category s ON f.subcategoryiid = s.subcategoryiid JOIN category_type c ON s.categorytypeid = c.categorytypeid LEFT JOIN forum_from_like ON f.forumid = forum_from_like.forumid AND forum_from_like.userid = $1 WHERE UPPER(titlethread) LIKE $2 order by posttime desc;',
+		[user?.id ?? null,'%'+search.toUpperCase()+'%']
+	)
+  const forum = data.rows
+	res.status(200).json({ success: true, data: forum })
+  } else {
+    return next(new ErrorResponse("Not Found",404))
+  }
+}
+exports.category = async(req,res,next) =>{
+  const catQuery = await pool.query('SELECT typename, subtypename from category_type c, sub_category s where c.categorytypeid = s.categorytypeid ORDER BY c.categorytypeid,s.subcategoryiid')
+  const cat = catQuery.rows
+  const subcategory = {}
+  const category = []
+  cat.map(el=>{
+    if(subcategory[el.typename]){
+      subcategory[el.typename].push(el.subtypename)
+    } else {
+      subcategory[el.typename] = [el.subtypename]
+      category.push(el.typename)
+    }
+  })
+  res.status(200).json({success: true, category, subcategory})
+}
 
 exports.showForum = async (req, res, next) => {
 	const user = req.user
@@ -89,6 +118,10 @@ exports.deleteComment = async (req, res, next) => {
 	} else {
 		return next(new ErrorResponse('Unauthorize', 401))
 	}
+}
+exports.getCategory = async(req,res,next) =>{
+  const cat = await pool.query ('SELECT typename from category_type');
+  res.status(200).json({success: true , category:cat.rows})
 }
 exports.deleteForum = async (req, res, next) => {
 	const forumid = req.params.id

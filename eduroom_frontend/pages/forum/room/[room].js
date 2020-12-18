@@ -57,6 +57,7 @@ const roomID = (props) => {
 						flex: '1 1 auto',
 						justifyContent: 'space-between',
 						background: '#EFF0F6',
+						minHeight: '100vh',
 					}}
 				>
 					<div id="nav">
@@ -85,6 +86,7 @@ const roomID = (props) => {
 								position: absolute;
 								bottom: 0;
 								width: 100%;
+								height: 100%;
 							}
 						`}
 					</style>
