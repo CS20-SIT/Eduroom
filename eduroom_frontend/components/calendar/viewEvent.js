@@ -6,7 +6,7 @@ import Image from "next/image";
 import axios from 'axios';
 import style from "../../styles/calendar/calendar";
 import api from "../../api";
-
+import Delete from "../../components/calendar/delete"
 
 const Content = (props) => {
     //   const router = useRouter();
@@ -72,11 +72,19 @@ const Content = (props) => {
                                 {data.map((row) => {
 
                                     return (showDate == row.startday && currentMonthNo == row.nowmonth ?
-                                        
+
                                         <div className="d-block">
-                                            <div className="edit">
-                                                <Edit></Edit>
-                                            </div>
+                                            {
+                                                isInstructor ? (
+                                                    <div className="edit">
+                                                        <Edit id={row.eventid} ></Edit>
+                                                        <Delete id={row.eventid}></Delete>
+                                                    </div>
+
+
+                                                ) : null
+                                            }
+
                                             <div className="title">{row.title}</div>
 
                                             {row.event_type == 'course' ? <div className="point" style={{ background: "#fdd4c1" }}></div>
@@ -107,7 +115,8 @@ const Content = (props) => {
                 </div>
             </CSSTransition>
 
-            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} />
+            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} date={showDate} monthNo={currentMonthNo} year={currentYear} />
+
             <style jsx>
                 {style}
             </style>

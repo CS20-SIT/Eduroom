@@ -394,7 +394,7 @@ ul li::before {
   width:70%;
   height:50px;
   margin-left : 15%;
-  margin-top : 17%;
+  margin-top : 13%;
   background-color:#EFF0F6;
   border: 0px solid #A7ABC5;
   border-radius: 5px;
@@ -456,12 +456,12 @@ ul li::before {
 .confirmBT{
   position : absolute;
   margin-top: 3%;
-  left : 25%;
+  left : 32%;
 }
 .cancelBT{
   position : absolute;
   margin-top: 3%;
-  left : 50%;
+  left : 53%;
 }
 .d-close2{
   position: fixed;
