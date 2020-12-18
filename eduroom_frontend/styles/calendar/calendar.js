@@ -95,7 +95,6 @@ export default css`
   border: none;
   outline: none;
   position : absolute;
-  background : #f4f5f7;
   cursor: pointer;
   margin-left: 18rem;
   
@@ -103,7 +102,6 @@ export default css`
 .forward-m {
   border: none;
   outline: none;
-  background : #f4f5f7;
   cursor: pointer;
   position : absolute;
   margin-left :51rem;
@@ -264,9 +262,9 @@ ul li::before {
 
 .bg-calendar{
 
-  position : absolute;
-  top : 64%;
-  left : 67%;
+  position : relative;
+  margin-left : 80%;
+  margin-top : -9%;
   z-index: 2; 
   
 }
