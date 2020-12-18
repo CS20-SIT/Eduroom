@@ -41,9 +41,9 @@ const ListPackage = props => {
                     instructor={item.instructor}
                     index={index}
                     id={item.id}
+                    image={item.image}
                     infname={item.infname}
                     inlname={item.inlname}
-                    // owner={item.owner}
                     key={item.id}
                 ></PackageRender>
             );

@@ -1,5 +1,6 @@
 const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
+const errorHandler = require('../middleware/error');
 
 const getAllCourse = async (req, res) => {
     try {
@@ -73,10 +74,38 @@ const searchCourse = async (req, res, next) => {
     }
 }
 
+//course shop page
+const getCourse = async (req, res, next) => {
+	try {
+        const data = await pool.query
+        (`select u.firstname,u.lastname, c.coursename, c.coursepicture,c.price
+        from course c , instructor i, user_profile u 
+        where i.userid = u.userid and c.status = 'Approved' 
+        and i.instructorid = c.ownerid `)
+        const courseInfo = data.rows;
+		const temp = courseInfo.map(course => {
+			return {
+				id: course.courseid,
+				title: course.coursename,
+				owner: course.ownerid,
+				image: course.coursepicture,
+				infname: course.firstname,
+				inlname: course.lastname,
+				price: parseFloat(course.price).toFixed(2)
+			};
+		});
+		res.status(200).json(temp);
+	} catch(err) {
+        console.log(err.message);
+        res.status(400).send(err.message)
+    }
+};
+
 
 module.exports = {
     getAllCourse,
     getCourseFromID,
     getCourseSectionPart,
-    searchCourse
+    searchCourse,
+    getCourse
 }

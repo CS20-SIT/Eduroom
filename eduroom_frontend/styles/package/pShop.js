@@ -2,7 +2,8 @@ import css from 'styled-jsx/css'
 
 export default css`
 	img {
-    width:20.13vw;
+    width:100%;
+    height:60%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 	}
@@ -33,5 +34,16 @@ export default css`
 	.text {
     font-size: 20px;
     
-	}
+  }
+  .packageLanding{
+    margin-left:100px;
+    font-weight: 700;
+    font-size: 30px;
+    color:#3D467F;
+    margin-bottom:10px;
+    margin-top :30px;
+  }
+  .package{
+   margin-left: 60px;
+  }
 `
