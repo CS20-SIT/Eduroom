@@ -1,36 +1,26 @@
-import React, { Fragment } from 'react'
-import Icon from './Icon'
+import React, { Fragment, useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import { EditorBorderColor } from 'material-ui/svg-icons'
-import api from '../../api'
+import api from '../../../api'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
-import ForumTag from '../../components/forum/layout/forumTag'
-
+import UserContext from '../../../contexts/user/userContext'
 const IdBlock = () => {
+	const userContext = useContext(UserContext)
+	const { user } = userContext
+	const router = useRouter()
 	const [data, setData] = useState([])
-	const [auth, setAuth] = useState([])
-	useEffect(() => {
-		const GetAuth = async () => {
-			const result = await api.get('/api/auth/profile')
-			console.log(result.data)
-			setAuth(result.data)
+	const param = router.query.id || ''
+	const GetData = async () => {
+		if (param != '') {
+			const result = await api.get(`/api/support/${param}`)
+			console.log(result.data.data)
+			setData(result.data.data)
 		}
-		GetAuth()
-		console.log(auth)
-	}, [])
-	const param = useRouter().query.id || ''
+	}
 	useEffect(() => {
-		const GetData = async () => {
-			if (param != '') {
-				const result = await api.get(`/api/forum/${param}`)
-				console.log(result.data.data.forum)
-				setData(result.data.data.forum)
-			}
-		}
 		GetData()
 		console.log(data)
 	}, [param])
@@ -47,6 +37,7 @@ const IdBlock = () => {
 			color: theme.palette.text.secondary,
 		},
 	}))
+
 	const classes = useStyles()
 
 	return (
@@ -55,39 +46,30 @@ const IdBlock = () => {
 				<Grid container spacing={3} variant="outlined">
 					<Grid item xs={12} borderColor="#a27cef">
 						<div>
-							{data.map((row) => {
-								return (
-									<Paper className={classes.paper} style={{ border: '2px solid #d5c1fc' }}>
-										<div
-											style={{
-												fontSize: '25px',
-												marginBottom: '20px',
-												color: '#5B5B5B',
-												display: 'flex',
-												justifyContent: 'space-between',
-											}}
-										>
-										<div>	<b>{row.titlethread}</b></div>
-										<div>{row.userid == auth.userid ? <i className="fas fa-pen" style={{ size: '2px', marginRight:'20px' }}></i> : null}
-                      {row.userid == auth.userid ? <i className="fas fa-times" style={{ size: '2px' }}></i> :null}</div>	
+							<Paper className={classes.paper} style={{ border: '2px solid #d5c1fc' }}>
+								<div
+									style={{
+										fontSize: '25px',
+										marginBottom: '20px',
+										color: '#5B5B5B',
+										display: 'flex',
+										justifyContent: 'space-between',
+									}}
+								>
+										<div>
+											<b>{data.title}</b>
 										</div>
-										<div>{row.content}</div>
-										<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
-											<p>
-												{row.author} post in {moment(row.posttime).fromNow()}
-											</p>
-										</div>
-										<div className="icon" style={{ bottom: 0, right: 0, marginTop: '15px' }}>
-											<div style={{ paddingRight: '30px' }}>
-												<Icon type="like" />
-											</div>
-											<div style={{ paddingRight: '30px' }}>
-												<Icon type="comment" />
-											</div>
-										</div>
-									</Paper>
-								)
-							})}
+
+								</div>
+
+									<div>{data.description}</div>
+
+								<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
+									<p>
+										{data.author} post in {moment(data.requesttime).fromNow()}
+									</p>
+								</div>
+							</Paper>
 						</div>
 					</Grid>
 				</Grid>
@@ -108,6 +90,30 @@ const IdBlock = () => {
 						justify-content: end;
 						flex-direction: row;
 						align-items: flex-end;
+					}
+					div.edit-title {
+						width: 80%;
+					}
+					div.edit-content {
+						width: 80%;
+					}
+					.edit-content textarea {
+						width: 100%;
+						line-height: 32px;
+						font-size: 1em;
+						min-height: 160px;
+						border: 0.13rem solid rgb(213, 193, 252);
+						border-radius: 5px;
+						padding: 0.25rem 0.5rem;
+					}
+					.edit-title input {
+						width: 100%;
+						line-height: 32px;
+						font-size: 1.1em;
+						font-weight: 500;
+						border: 0.13rem solid rgb(213, 193, 252);
+						border-radius: 5px;
+						padding: 0.25rem 0.5rem;
 					}
 				`}
 			</style>

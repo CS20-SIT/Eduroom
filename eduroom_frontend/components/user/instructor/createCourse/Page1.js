@@ -34,13 +34,13 @@ const Page1 = (props) => {
 
 					<div className="text">
 						<div className="title">Subject</div>
-						<select name="discount" onChange={subjectChange} value={props.data.subject}>
+						<select name="subject" onChange={subjectChange} value={props.data.subject}>
 							<option disabled value="" style={{ color: '#3d467f', opacity: '0.75' }}>
 								Subject
 							</option>
 							{props.subjects.map((subject, idx) => {
 								return (
-									<option value={subject.cataname} key={idx}>
+									<option value={subject.cataid} key={idx}>
 										{subject.cataname}
 									</option>
 								)

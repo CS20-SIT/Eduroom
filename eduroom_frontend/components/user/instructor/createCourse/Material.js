@@ -3,7 +3,6 @@ import MaterialUpload from './MaterialUpload'
 
 const Material = ({ material, sectionIndex, idx, handleMaterials, removeMaterial }) => {
 	const handleUpload = (data) => {
-		console.log('data is ', data)
 		material.data = data
 		handleMaterials(material, idx)
 	}

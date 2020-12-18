@@ -18,16 +18,15 @@
 	font-size: 22px;
 	border-radius: 12px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	z-index: 10000;
-	outline: none;
+	cursor: pointer;
 }
 .top {
 	padding-top: 100px;
 }
 .btnHistory {
 	position: absolute;
-	top: 250vh;
-	left: 20%;
+	top: 72vh;
+	left: 70%;
 	z-index: 10000;
 }
 .animation2 {
@@ -50,6 +49,7 @@
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	z-index: 10000;
 	outline: none;
+	;
 }
 .btnPop:hover {
 	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
@@ -87,6 +87,7 @@
 	border-radius: 12px;
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	outline: none;
+	
 }
 .btn:hover {
 	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.2), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
