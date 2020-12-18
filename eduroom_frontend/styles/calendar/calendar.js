@@ -276,7 +276,7 @@ ul li::before {
 
 
 .D-create{
-  width: 35vw;
+  width: 45vw;
   height: 65vh;
   background-image: url('/images/createEvent/d-bg.svg');
   bacground-size : cover;
@@ -333,7 +333,7 @@ ul li::before {
   color : #969BBA;
 }
 .event-startDate{
-  width:70%;
+  width:85%;
   height:50px;
   margin-top : 0%;
   background-color:#EFF0F6;
@@ -366,7 +366,7 @@ ul li::before {
   color : #969BBA;
 }
 .event-endDate{
-  width:70%;
+  width:85%;
   height:50px;
   margin-top : 0%;
   background-color:#EFF0F6;
