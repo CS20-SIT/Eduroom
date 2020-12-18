@@ -19,4 +19,5 @@ Router.post('/search', searchCourse)
 
 Router.get('/category', getCategory)
 
+
 module.exports = Router
