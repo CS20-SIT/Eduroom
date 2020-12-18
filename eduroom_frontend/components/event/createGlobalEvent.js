@@ -1,12 +1,12 @@
 import Head from "next/head";
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { Fragment, useState,useEffect } from "react";
 import style from "../../styles/event/event";
 import { Button, Grid, Container, TextField } from "@material-ui/core";
 import { KeyboardTimePicker } from "@material-ui/pickers";
 import Image from "next/image";
 import api from "../../api";
 const content = () => {
- 
+
   const [eventInfo, setEventInfo] = useState({
     title: "",
     description: "",
@@ -16,18 +16,12 @@ const content = () => {
     endTime: "",
     place: "",
   });
-  
+  const createEvent = async () => {};
   const handleCreate = (e) => {
 
     console.log(eventInfo);
     // if (validator()) {
-    api.post("/api/event/createEvent", eventInfo).then(
-      (res) => {
-        alert("success");
-      }
-    ).catch(err => {
-      console.log(err);
-    })/*  {
+       api.post("/api/event/createEvent",eventInfo)/*  {
         title: eventInfo.title,
         description: eventInfo.description,
         startDate: eventInfo.startDate,
@@ -40,7 +34,7 @@ const content = () => {
   };
 
   const validator = () => {
-
+    
   };
 
   const [selectedDate, handleDateChange] = useState(new Date());
@@ -59,7 +53,7 @@ const content = () => {
       <Container>
         <div className="head">
           <Grid container spacing={2}>
-            <Grid item xs={5}>
+            <Grid item xs={5.5}>
               <Image
                 alt="meeting-img"
                 src="/images/createEvent/image.svg"
@@ -93,7 +87,7 @@ const content = () => {
           <Grid container justify="center">
             <div>
               <input
-
+                
                 className="event-title"
                 onChange={(e) =>
                   setEventInfo({ ...eventInfo, title: e.target.value })
@@ -103,28 +97,10 @@ const content = () => {
             </div>
 
 
-            <div>
-              <select
-                className="event-type"
-                onChange={(e) =>
-                  setEventInfo({ ...eventInfo, type: e.target.value })
-                }
-              >
-                <option value="default" disabled>
-                  Event Type
-                </option>
-                {eventType.map((type) => {
-                  return (
-                    <option value={type} key={type}>
-                      {type}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+            
 
-
-
+          
+            
             <div>
               <textarea
                 className="event-des"
