@@ -5,7 +5,8 @@ const jwtAuthenicate = (req, res, next) => {
   passport.authenticate("jwt", { session: false }, (err, user) => {
     if (err || !user || user.role !== 'user') {
       // res.clearCookie('jwt');
-      return next(new ErrorResponse('Not Authenticate', 401));
+      req.user = null;
+      return next();
     }
     req.user = user;
     return next();
