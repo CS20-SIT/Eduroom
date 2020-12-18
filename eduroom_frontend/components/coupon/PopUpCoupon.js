@@ -13,11 +13,8 @@ const temp = (props) => {
         if(show){
             return (<div> 
                 <h1 className="text">Condition for using Coupon</h1>
-                <h1>...</h1>
-                <h1>...</h1>
-                <h1>...</h1>
-                <h1>...</h1>
-                <h1>...</h1>
+                <h1></h1>
+                
                 <button onClick={()=>setShow(false)} className="condition"> V </button>
                 <style jsx>{Styles}</style>
             </div>); 

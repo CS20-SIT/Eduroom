@@ -14,7 +14,7 @@ const Package = () => {
                             <h1 className="title">Coding with Python</h1>
                             <div className="bestsell-tag">
                                 <BestSeller />
-                                <div className="text2">3 course in this package</div>
+                                <div className="text2">3 courses in this package</div>
                             </div>
                             <div className="instructor">
                                 <div style={{ marginRight: 10 }}>Instructors</div>
@@ -53,7 +53,7 @@ const Package = () => {
 
 
                             <Button id="buynow-btn" style={{ marginRight: 10, backgroundColor: '#3D467F', color: 'white', borderRadius: 10 }}
-                                onClick={() => router.push("/course/id/paymentTest")}
+                                onClick={() => router.push("/course/id/payment")}
                             > Buy Now
                                 <img
                                     src="/images/package/buyNow.svg"
