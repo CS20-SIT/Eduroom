@@ -250,10 +250,10 @@ exports.adminRegisController = async (req, res) => {
 	VALUES ('${adminId}', '${username}', '${hashedPassword}', $1, $1, $1, $1, $1)`
 	await pool.query(insertAdminQuery, [''])
 
-	res.status(201).send({ success: true })
+	const token = generateCookieAdminJWT(adminId)
+	res.cookie('jwt', token)
 
-	// const token = generateCookieAdminJWT(adminId)
-	// res.cookie('jwt', token)
+	res.status(201).send({ success: true })
 	// res.redirect(process.env.ENTRYPOINT_URL)
 }
 
