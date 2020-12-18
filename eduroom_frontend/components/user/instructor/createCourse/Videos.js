@@ -11,7 +11,7 @@ const Videos = ({ videos, changeVideos, sectionIndex }) => {
 		changeVideos(videos)
 	}
 	const addVideo = () => {
-		videos.push({ name: '', data: '' })
+		videos.push({ name: '', data: '', path: '' })
 		changeVideos(videos)
 	}
 	const renderVideos = () => {

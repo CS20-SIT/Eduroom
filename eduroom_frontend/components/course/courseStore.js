@@ -16,7 +16,7 @@ const courses = () => {
         { title: 'Business Course4',instructor: 'Mr.X', price: 30, id: 12 }
     ];
     return (
-        <div>
+        <div>         
             <ListOfCourse item={data}></ListOfCourse>
         </div>
     );

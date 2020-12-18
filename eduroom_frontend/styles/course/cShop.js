@@ -3,14 +3,17 @@ import css from "styled-jsx/css"
 export default css`
 img{
   width:20.13vw;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
-#test{
-  width: 95vw;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+.page{
+  margin-bottom: 50px;
 }
+.head{
+  margin-left: 90px;
+  color:#3D467F;
+}
+
   .sticker_list {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -18,9 +21,9 @@ img{
     width: 100vw;
   }
   .container {
-    background-color: #f0ffff;
     color: black;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
+    padding-left:20px;
   }
   .cardContainer {
     text-align: start;
@@ -28,14 +31,21 @@ img{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 20px;
   width: 290px;
-  height: 300px;
+  height: 330px;
   margin:auto; 
   
   }
   .text {
     font-size: 20px;
   }
-  
+  .textInst{
+    font-size:15px;
+    color: #4E4B66;
+  }
+  .BS{
+    margin-top: 10px;
+    display:position;
+  }
 `;
