@@ -5,9 +5,9 @@ import api from "../../api";
 
 const Content = (props) => {
     //   const router = useRouter();
-    const header = props.head;
-
-    const [openEvent, setOpenEvent] = useState(false);
+    const setOpen = props.setOpen;
+    const openEvent = props.openEvent;
+    const setOpenEvent = props.setOpenEvent;
 
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
@@ -57,7 +57,7 @@ const Content = (props) => {
                     <div style={{ height: "10%" }}>
 
                     </div>
-                    <div className="d-close2" onClick={() => { setOpenEvent(false), setOpen(false) }}>
+                    <div className="d-close2" onClick={() => {setOpenEvent(false),setOpen(false)}}>
                         <h1>X</h1>
                     </div>
                     <div className="text-create"
