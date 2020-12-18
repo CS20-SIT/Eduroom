@@ -2,16 +2,21 @@ const express = require('express')
 const Router = express.Router()
 
 const {
-	getAllCourse,
-	getCourseFromID,
-	getCourseSectionPart,
-	searchCourse,
+    getAllCourse,
+    getCourseFromID,
+    getCourseSectionPart,
+    searchCourse,
+    getCategory
 } = require('../controllers/courseControllers')
 
-const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 Router.get('/getAllCourse', getAllCourse)
-Router.get('/getCourseFromID', jwtAuthenicate, getCourseFromID)
+
+Router.post('/getCourseFromID', getCourseFromID)
+
 Router.get('/getCourseSectionPart', getCourseSectionPart)
+
 Router.post('/search', searchCourse)
+
+Router.get('/category', getCategory)
 
 module.exports = Router
