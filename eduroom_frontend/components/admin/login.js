@@ -7,8 +7,15 @@ import AdminContext from '../../contexts/admin/adminContext'
 import {useRouter} from 'next/router'
 const Login = () => {
   const adminContext = useContext(AdminContext)
-  const {loginAdmin} = adminContext
+  const {loginAdmin,admin,getAdminProfile} = adminContext
   const router =useRouter()
+  useEffect(()=>{
+    if(admin){
+      router.push('/admin')
+    } else {
+      getAdminProfile()
+    }
+  },[admin])
   const [data,setData] = useState({username:{
     label: 'Username',
     name: 'username',
