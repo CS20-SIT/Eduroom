@@ -68,7 +68,6 @@ exports.packStickerStore = async (req, res) => {
             stickers: stickers
         }
 
-        console.log(result)
         res.send(result)
 
     } catch (error) {
