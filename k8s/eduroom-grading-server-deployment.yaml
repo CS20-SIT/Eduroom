@@ -23,8 +23,10 @@ spec:
           ports:
             - containerPort: 3000
           envFrom:
-            - secretRef:
-                name: eduroom-grader-secret
+            - configMapRef:
+                name: grader-env-configmap
+            # - secretRef:
+            #     name: eduroom-grader-secret
         - name: eduroom-grading-worker
           image: judge0/judge0:latest
           command:
@@ -36,8 +38,10 @@ spec:
           #     memory: "128Mi"
           #     cpu: "500m"
           envFrom:
-            - secretRef:
-                name: eduroom-grader-secret
+            - configMapRef:
+                name: grader-env-configmap
+            # - secretRef:
+            #     name: eduroom-grader-secret
         - name: eduroom-grading-db
           image: postgres:13.0
           # resources:
@@ -47,8 +51,10 @@ spec:
           ports:
             - containerPort: 5432
           envFrom:
-            - secretRef:
-                name: eduroom-grader-secret
+            - configMapRef:
+                name: grader-env-configmap
+            # - secretRef:
+            #     name: eduroom-grader-secret
         - name: eduroom-grading-redis
           image: redis:6.0
           # resources:
@@ -59,5 +65,7 @@ spec:
           ports:
             - containerPort: 6379
           envFrom:
-            - secretRef:
-                name: eduroom-grader-secret
+            - configMapRef:
+                name: grader-env-configmap
+            # - secretRef:
+            #     name: eduroom-grader-secret
