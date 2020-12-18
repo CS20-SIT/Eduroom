@@ -4,7 +4,7 @@ export default css`
     max-width: 1024px;
     min-height: 100vh;
     margin: 0 auto;
-    padding: 4rem;
+    padding: 4rem 1rem;
   }
   .container-2 {
     max-width: 1024px;
@@ -307,7 +307,7 @@ export default css`
   }
   /* Categories-Tab */
   .cate-tab {
-    width: 120px;
+    width: 160px;
     height: 30px;
   }
 
@@ -511,7 +511,7 @@ export default css`
   }
   /* Course Picture */
   .pic-1 {
-    border-radius: 30px 30px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
   }
   .pic-2 {
     width: 550px;

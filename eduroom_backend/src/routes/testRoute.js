@@ -5,11 +5,13 @@ const { test } = require('../controllers/testController')
 const sendEmail = require('../utils/sendMail.js')
 const { uploadToGCSHandler, uploadToLocalHandler } = require('../middleware/multer')
 const { uploadFile } = require('../utils/cloudStorage')
+const { verifyTemplate } = require('../utils/verifyTemplate')
 
 router.get('/', test)
 router.get('/mail', async (req, res) => {
 	try {
-		await sendEmail({ email: 'thetkpark@gmail.com', subject: 'Test SMTP Server', message: 'Woah' })
+		const htmlMessage = verifyTemplate('somethingnotreal')
+		await sendEmail({ email: 'thetkpark@gmail.com', subject: 'Test Verification Email', htmlMessage })
 		res.status(200).json({ success: true })
 	} catch (error) {
 		res.status(500).send(error.message)

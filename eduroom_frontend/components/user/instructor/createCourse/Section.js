@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import Videos from './Videos'
 import Materials from './Materials'
+import Questions from './Questions'
 
 const Section = ({ section, idx, handleChangeSection }) => {
 	const changeVideos = (videos) => {
@@ -13,6 +14,10 @@ const Section = ({ section, idx, handleChangeSection }) => {
 	}
 	const changeMaterials = (materials) => {
 		section.materials = materials
+		handleChangeSection(section, idx)
+	}
+	const changeQuestions = (questoins) => {
+		section.questoins = questoins
 		handleChangeSection(section, idx)
 	}
 	console.log('section is ', section)
@@ -30,6 +35,7 @@ const Section = ({ section, idx, handleChangeSection }) => {
 				></input>
 				<Videos videos={section.videos} sectionIndex={idx} changeVideos={changeVideos}></Videos>
 				<Materials materials={section.materials} sectionIndex={idx} changeMaterials={changeMaterials}></Materials>
+				<Questions questions={section.questions} sectionIndex={idx} changeQuestions={changeQuestions}></Questions>
 			</div>
 			<style jsx>{`
 				.box {
