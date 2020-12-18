@@ -62,17 +62,6 @@ jobs:
 #           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-frontend" \
 #           --build-arg BUILDKIT_INLINE_CACHE=1 \
 
-    - name: Build Eduroom Grading Server Image
-      run: |-
-        docker build -f eduroom_grading_server/Dockerfile \
-          --tag "asia.gcr.io/$PROJECT_ID/eduroom-grading-server:$GITHUB_SHA" \
-          --tag "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          --build-arg GITHUB_REF="$GITHUB_REF" \
-           eduroom_grading_server
-#           --cache-from "asia.gcr.io/$PROJECT_ID/eduroom-grading-server" \
-#           --build-arg BUILDKIT_INLINE_CACHE=1 \
-
     - name: Build Eduroom Socket Chat Image
       run: |-
         docker build -f eduroom_socket_chat/Dockerfile \
@@ -101,7 +90,6 @@ jobs:
       run: |-
         docker push "asia.gcr.io/$PROJECT_ID/eduroom-backend"
         docker push "asia.gcr.io/$PROJECT_ID/eduroom-frontend"
-        docker push "asia.gcr.io/$PROJECT_ID/eduroom-grading-server"
         docker push "asia.gcr.io/$PROJECT_ID/eduroom-socket-chat"
         docker push "asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot"
 
@@ -116,7 +104,6 @@ jobs:
       run: |-
         ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-backend=asia.gcr.io/$PROJECT_ID/eduroom-backend:$GITHUB_SHA
         ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-frontend=asia.gcr.io/$PROJECT_ID/eduroom-frontend:$GITHUB_SHA
-        ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-grading-server=asia.gcr.io/$PROJECT_ID/eduroom-grading-server:$GITHUB_SHA
         ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-socket-chat=asia.gcr.io/$PROJECT_ID/eduroom-socket-chat:$GITHUB_SHA
         ./kustomize edit set image asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot=asia.gcr.io/$PROJECT_ID/eduroom-socket-kahoot:$GITHUB_SHA
         ./kustomize build . | kubectl apply -f -
