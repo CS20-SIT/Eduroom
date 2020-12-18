@@ -5,6 +5,7 @@ const { getStickers,getDailyRewardStatus,showCoinOwner,showStickerOwner, buyStic
 
 router.get('/stickers', getStickers);
 router.get('/dailyReward',getDailyRewardStatus);
+// router.get('/stickers/:id', packStickerStore)
 // router.post('/coinTransaction',setCoinTransaction);
 router.get('/coinOwner',showCoinOwner);
 router.get('/stickerOwner',showStickerOwner);
