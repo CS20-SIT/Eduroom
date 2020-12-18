@@ -2,11 +2,11 @@ const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
 const sendEmail = require('../utils/sendMail')
 exports.getGlobalEvent = async (req, res, next) => {
-  const type = 1;
+  
   const data = await pool.query(
     `select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) 
       as Hstart, EXTRACT(MINUTE FROM starttime) as Mstart,EXTRACT(HOUR FROM endtime) 
-      as Hend, EXTRACT(MINUTE FROM endtime) as Mend from global_event`
+      as Hend, EXTRACT(MINUTE FROM endtime) as Mend, eventid,'global' as event_type from global_event`
   )
   res.send(data.rows)
   return
@@ -15,7 +15,7 @@ exports.getGlobalEvent = async (req, res, next) => {
 exports.getEventInMonthYear = async (req, res, next) => {
   const user = req.user;
   const {m,y} = req.query;
-  if(user){
+  if(user){1
     // need to have more check that user has this event 
     const data = await pool.query("SELECT startdate, enddate \
     FROM course_event\
@@ -29,11 +29,11 @@ exports.getEventInMonthYear = async (req, res, next) => {
 }
 
 exports.getCourseEvent = async (req, res, next) => {
-  const type = 2;
+  
   const data = await pool.query(
     `select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) 
       as Hstart, EXTRACT(MINUTE FROM starttime) as Mstart,EXTRACT(HOUR FROM endtime) 
-      as Hend, EXTRACT(MINUTE FROM endtime) as Mend from course_event`
+      as Hend, EXTRACT(MINUTE FROM endtime) as Mend, eventid,'course' as event_type from course_event`
   )
   res.send(data.rows)
   return

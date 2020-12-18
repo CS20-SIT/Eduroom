@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import CreateEventDialog from "../../components/calendar/createEventDialog";
+import Edit from "../../components/calendar/edit"
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Image from "next/image";
 import axios from 'axios';
@@ -71,12 +72,14 @@ const Content = (props) => {
                                 {data.map((row) => {
 
                                     return (showDate == row.startday && currentMonthNo == row.nowmonth ?
+                                        
                                         <div className="d-block">
                                             <div className="edit">
-                                                {/* <Edit></Edit> */}
+                                                <Edit></Edit>
                                             </div>
                                             <div className="title">{row.title}</div>
-                                            {true ? <div className="point" style={{ background: "#fdd4c1" }}></div>
+
+                                            {row.event_type == 'course' ? <div className="point" style={{ background: "#fdd4c1" }}></div>
                                                 :
                                                 <div className="point" style={{ background: "#A880F7" }}></div>}
                                             <div className="detail">{row.hstart}:{row.mstart} - {row.hend}:{row.mend} | {row.place}</div>
@@ -86,6 +89,8 @@ const Content = (props) => {
 
                             </div>
                         </div>
+
+
                         {isInstructor ? (
                             <div className="d-buttom">
                                 <div onClick={() => { setOpenEvent(true) }} >
@@ -94,7 +99,7 @@ const Content = (props) => {
                                 </button>
                                 </div>
                             </div>
-                        ):null}
+                        ) : null}
 
                     </div>
 
