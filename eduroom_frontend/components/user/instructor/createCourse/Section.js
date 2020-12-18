@@ -35,7 +35,7 @@ const Section = ({ section, idx, handleChangeSection }) => {
 				></input>
 				<Videos videos={section.videos} sectionIndex={idx} changeVideos={changeVideos}></Videos>
 				<Materials materials={section.materials} sectionIndex={idx} changeMaterials={changeMaterials}></Materials>
-				<Questions questoins={section.questoins} sectionIndex={idx} changeQuestions={changeQuestions}></Questions>
+				<Questions questions={section.questions} sectionIndex={idx} changeQuestions={changeQuestions}></Questions>
 			</div>
 			<style jsx>{`
 				.box {
