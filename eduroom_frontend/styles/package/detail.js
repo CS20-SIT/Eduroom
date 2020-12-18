@@ -107,4 +107,16 @@ export default css`
     color: white;
     border-radius: 10px;
 }
+.bs{
+    background-color:#DED3FF;
+		outline: none;
+		border: none;
+		padding:6px;
+		border-radius: 30px;
+		color:#2A00A2;
+		position:relative;
+		top:-45px;
+        left:120px;
+        font-size:15px;
+}
 `
