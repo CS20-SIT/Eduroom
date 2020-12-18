@@ -2,7 +2,7 @@ const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
 const sendEmail = require('../utils/sendMail')
 exports.getGlobalEvent = async (req, res, next) => {
-
+  const type = 1;
   const data = await pool.query(
     `select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) 
       as Hstart, EXTRACT(MINUTE FROM starttime) as Mstart,EXTRACT(HOUR FROM endtime) 
@@ -14,7 +14,7 @@ exports.getGlobalEvent = async (req, res, next) => {
 
 
 exports.getCourseEvent = async (req, res, next) => {
-
+  const type = 2;
   const data = await pool.query(
     `select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) 
       as Hstart, EXTRACT(MINUTE FROM starttime) as Mstart,EXTRACT(HOUR FROM endtime) 
@@ -57,10 +57,7 @@ exports.createEvent = async (req, res, next) => {
   //getEmail
   const tempMail = await pool.query("select universityemail from user_student_verification where userid = 'da229e56-e47d-4748-bbab-cf706c333b85'")
   const studentMail = tempMail.rows[0].universityemail;
-
-
   sendEmail({ email: studentMail, subject: title, message: detail, })
-
   //----------------------------------------------------------
 
   const event = data.rows[0];

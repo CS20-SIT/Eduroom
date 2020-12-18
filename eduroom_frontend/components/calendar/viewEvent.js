@@ -4,11 +4,12 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import Image from "next/image";
 import axios from 'axios';
 import style from "../../styles/calendar/calendar";
+import api from "../../api";
 
 
 const Content = (props) => {
     //   const router = useRouter();
-    
+
     const showDate = props.showDate;
     const open = props.open;
     const setOpen = props.setOpen;
@@ -20,16 +21,29 @@ const Content = (props) => {
 
     useEffect(() => {
         const GetData = async () => {
-            const result = await axios("http://localhost/api/event/getCourseEvent");
-            setData(result.data);
+            const result1 = await axios("http://localhost/api/event/getCourseEvent");
+            const result2 = await axios("http://localhost/api/event/getGlobalEvent");
+            const allResult = (result1.data).concat(result2.data)
+            setData(allResult);
         };
         GetData();
-        console.log(data);
+
     }, []);
 
 
-    
+
     const [openEvent, setOpenEvent] = useState(false);
+    const [isInstructor, setInstructor] = useState(false);
+    useEffect(() => {
+        api.get('/api/auth/profile').then(res => {
+            if (res.data.role == 'instructor') {
+                setInstructor(true);
+            }
+        }
+        ).catch(err => {
+
+        })
+    }, [])
 
 
 
@@ -44,7 +58,7 @@ const Content = (props) => {
             >
                 <div className='bg-overlay'>
                     <div className='d-calendar'>
-                        <div onClick={() =>setOpen(false)} className="d-close">
+                        <div onClick={() => setOpen(false)} className="d-close">
                             X
             </div>
                         <div className="d-top">
@@ -62,21 +76,26 @@ const Content = (props) => {
                                                 {/* <Edit></Edit> */}
                                             </div>
                                             <div className="title">{row.title}</div>
-                                            <div className="point" style={{ background: "#fdd4c1" }}></div>
-                                            <div className="detail">{row.hstart}.{row.mstart} - {row.hend}.{row.mend} | {row.place}</div>
+                                            {true ? <div className="point" style={{ background: "#fdd4c1" }}></div>
+                                                :
+                                                <div className="point" style={{ background: "#A880F7" }}></div>}
+                                            <div className="detail">{row.hstart}:{row.mstart} - {row.hend}:{row.mend} | {row.place}</div>
                                         </div>
                                         : "")
                                 })}
 
                             </div>
                         </div>
-                        <div className="d-buttom">
-                            <div onClick={() => {setOpenEvent(true)}} >
-                                <button className="button">
-                                    Add New Event
-                </button>
+                        {isInstructor ? (
+                            <div className="d-buttom">
+                                <div onClick={() => { setOpenEvent(true) }} >
+                                    <button className="button">
+                                        Add New Event
+                                </button>
+                                </div>
                             </div>
-                        </div>
+                        ):null}
+
                     </div>
 
 
