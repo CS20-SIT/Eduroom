@@ -14,7 +14,7 @@ const temp = (props) => {
     useEffect(()=>{
         const fetchData = async ()=>{
             console.log(props.id);
-            const res = await api.get('api/coin/packsticker',{params:{stickerid:props.id}});
+            const res = await api.get('/api/coin/packsticker',{params:{stickerid:props.id}});
             setData(res.data);
         };
         fetchData();
