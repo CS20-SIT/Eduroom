@@ -17,7 +17,18 @@
     transform: translateY(-4px);
     box-shadow: 0 6px 12px #bdbdbd;
 }
+.picture{
+    position: relative;
+    top:20px;
+    width:100px;
+    height:100px;
+}
+.text2{
+    font-size: 20px;
+}
 .text {
+    position: relative;
+    top:-30px;
     font-size: 20px;
 }
 .coin {
@@ -27,7 +38,7 @@
 .btn {
     margin-top: 50px;
     position: relative;
-    top: 20px;
+    top: -10px;
     padding: 12px 70px;
     background-color: #a880f7;
     border: none;
@@ -37,4 +48,5 @@
     font-size: 18px;
     border-radius: 12px;
     outline: none;
+    cursor: pointer;
 }
