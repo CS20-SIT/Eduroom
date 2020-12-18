@@ -16,11 +16,10 @@ const Section = ({ section, idx, handleChangeSection }) => {
 		section.materials = materials
 		handleChangeSection(section, idx)
 	}
-	const changeQuestions = (questoins) => {
-		section.questoins = questoins
+	const changeQuestions = (questions) => {
+		section.questions = questions
 		handleChangeSection(section, idx)
 	}
-	console.log('section is ', section)
 	return (
 		<Fragment>
 			<div className="box">
