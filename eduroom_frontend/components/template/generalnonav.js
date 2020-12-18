@@ -29,7 +29,7 @@ const GeneralNonav = (props) => {
             height: 100vh;
             overflow-y: auto;
             position: fixed;
-            background: '#F4F5F7',
+            background: #F4F5F7,
           }
           .background-img {
             position: fixed;
