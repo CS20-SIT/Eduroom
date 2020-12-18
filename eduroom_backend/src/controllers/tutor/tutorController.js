@@ -70,6 +70,11 @@ const getInstructorList = async (req, res) => {
         }   
          */
 
+		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+
 		// WHY INSTRUCTOR EXPERT IS NOT INSERTED ??
 		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname 
 			from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
@@ -135,6 +140,11 @@ const getInstructorInfo = async (req, res) => {
 		const { id } = req.query
 		console.log('id', id)
 
+		const u = req.user.id
+		if (!u) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+
 		// ID : hardcode
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 
@@ -178,6 +188,11 @@ const getInstructorReview = async (req, res) => {
 		const { id } = req.query
 		console.log(id)
 
+		const u = req.user.id
+		if (!u) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+
 		// ID : hardcode
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 
@@ -207,6 +222,10 @@ const getInstructorReview = async (req, res) => {
 }
 const getInstructorAvailability = async (req, res) => {
 	try {
+		const u = req.user.id
+		if (!u) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 		// id, dates : instructorID + dd-mm-yyyy
 		const { id, dates } = req.query
 		// console.log('INSTRUCTOR AVAILABILITTY')
@@ -548,6 +567,10 @@ const updateInstructorAppointment = async (req, res) => {
 			"status"
 		}
          */
+		const u = req.user.id
+		if (!u) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 
 		const { id, status } = req.body
 		const now = new Date()
