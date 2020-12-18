@@ -30,7 +30,7 @@ const MaterialUpload = ({material,sectionIndex, index, handleData}) => {
 							document.getElementById('material-section' + sectionIndex + '-' + index).click()
 						}}
 					>
-						<i className="fas fa-video"></i>
+						<i className="fas fa-paperclip"></i>
 					</span>
 				</div>
 			</div>

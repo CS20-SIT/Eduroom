@@ -8,33 +8,34 @@ import Dialog from '@material-ui/core/Dialog'
 import CreateChatRoom from '../chat/createChatRoom'
 import NotificationIcon from './icons/NotificationIcon'
 import ChatInvitation from '../chat/chatInvitation'
+import SearchResult from '../chat/searchResult'
+import api from '../../api'
 
 export default function chatContact(props) {
 	const [contact, setContact] = useState(props.contact)
-	const [peopleTest, setPeopleTest] = useState('nochat')
-	const [openNotification, setOpenNotification] = React.useState(false)
-	const [openCreateChat, setOpenCreateChat] = React.useState(false)
-	useEffect(() => {
-		const contact = [
-			{
-				name: 'Krishadawut',
-				recentMessage: 'Hi Tom',
-				recentMessageDate: new Date("12/14/2020").getTime(),
-			},
-			{
-				name: 'Boyplus',
-				recentMessage: 'Hi Tom',
-				recentMessageDate: new Date().getTime() - 10000,
-			},
-			{
-				name: 'GGolfz',
-				recentMessage: 'Hi Tom',
-				recentMessageDate: new Date("12/08/2020").getTime(),
-			},
-    ]
-    contact.sort((a,b)=>b.resentMessageDate - a.resentMessageDate)
-    setContact(contact)
-	}, [])
+	const [peopleTest, setPeopleTest] = useState('nopeople')
+	const [openNotification, setOpenNotification] = useState(false)
+	const [openCreateChat, setOpenCreateChat] = useState(false)
+	const [userProfile, setUserProfile] = useState(props.userProfile)
+	const [chatList, setChatList] = useState(null)
+	const [searchInput, setSearchInput] = useState('')
+	const [searchResult, setSearchResult] = useState(null)
+	const [ignoreBlur, setIgnoreBlur] = useState(false)
+	const [invitations, setInvitations] = useState(null)
+
+    const getInvitations = async () => {
+		const res = await api.get(`/api/chat/getInvitationListMockup`)
+		setInvitations(res.data)
+  }
+	const getChatList = async () => {
+		const res = await api.get(`/api/chat/getChatListMockup`)
+		setChatList(res.data)
+	}
+	const getSearchResult = async () => {
+		const res = await api.get(`/api/chat/getSearchResultMockup`)
+		setSearchResult(res.data)
+	}
+
 	const handleClickOpenNotification = () => {
 		setOpenNotification(true)
 	}
@@ -47,8 +48,30 @@ export default function chatContact(props) {
 	const handleCloseCreateChat = () => {
 		setOpenCreateChat(false)
 	}
+	const handleSelect = (el) => {
+		if (true) {
+			console.log('check')
+		}
+		setSearchResult(null)
+	}
+	useEffect(() => {
+		getChatList()
+		getInvitations()
+	}, [])
+	useEffect(()=>{
+		if(contact){
+			contact.sort((a,b)=>b.resentMessageDate - a.resentMessageDate)
+        setContact(contact)
+		}
+	},[contact])
+	useEffect(() => {
+		if(chatList){
+			props.setSelectChat(chatList[0])
+		}
+	}, [chatList])
+
 	return (
-		<Fragment>
+		<>
 			<div
 				className={peopleTest}
 				style={{
@@ -63,7 +86,7 @@ export default function chatContact(props) {
 					setPeopleTest('nopeople')
 				}}
 			>
-				<NotificationIcon
+				{<NotificationIcon
 					style={{
 						position: 'absolute',
 						top: 20,
@@ -72,7 +95,8 @@ export default function chatContact(props) {
 						cursor: 'pointer',
 					}}
 					onClick={handleClickOpenNotification}
-				/>
+					dot={invitations&&invitations.invitations.length>0}
+				/>}
 				<Dialog disableBackdropClick onClose={handleCloseNotification} open={openNotification}>
 					<ChatInvitation handleClose={handleCloseNotification} />
 				</Dialog>
@@ -83,18 +107,54 @@ export default function chatContact(props) {
 						alignItems: 'center',
 						paddingTop: 20,
 						flexDirection: 'column',
+						marginLeft: 14,
 					}}
 				>
-					<Avatar style={{ width: 60, height: 60 }} alt="Krishadawut Olde Monnikhof" src="" />
-					<h4 style={{ textAlign: 'center' }}>Krishadawut Olde Monnikhof</h4>
+					<Avatar
+						style={{ width: 60, height: 60 }}
+						alt={userProfile && userProfile.userFirstName + ' ' + userProfile.userLastName}
+						src={userProfile && userProfile.profilePicture}
+					/>
+					<h4 style={{ textAlign: 'center' }}>
+						{userProfile && userProfile.userFirstName + ' ' + userProfile.userLastName}
+					</h4>
 					<div
 						style={{
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
 						}}
+						onFocus={() => {
+							getSearchResult()
+							setIgnoreBlur(false)
+						}}
+						onBlur={() => {
+							if (!ignoreBlur) {
+								setIgnoreBlur(false)
+								setSearchResult(null)
+							}
+						}}
 					>
-						<SearchChat />
+						<div style={{ position: 'relative', display: 'inline-block' }}>
+							<SearchChat
+								input={searchInput}
+								setInput={setSearchInput}
+								getSearchResult={getSearchResult}
+								searchResult={searchResult}
+							/>
+							{(() => {
+								if (!searchInput == null || !searchInput == '') {
+									return (
+										<SearchResult
+											searchResult={searchResult}
+											setSearchResult={setSearchResult}
+											setIgnoreBlur={setIgnoreBlur}
+											handleSelect={handleSelect}
+										/>
+									)
+								}
+							})()}
+						</div>
 						<AddCircleIcon
 							style={{ marginLeft: 20, color: '#FB9CCB', cursor: 'pointer' }}
 							onClick={handleClickOpenCreateChat}
@@ -114,12 +174,41 @@ export default function chatContact(props) {
 				</div>
 				<div style={{ marginLeft: 14 }}>
 					<h4 style={{ marginLeft: 14 }}>Chat</h4>
-					{contact?.map((el) => {
-						return <ContactPerson contact={el} />
-					})}
+					{chatList &&
+						chatList.map((el) => {
+							if (el.roomname == null) {
+								return (
+									<ContactPerson
+										key={el.chatroomid}
+										contact={{
+											chatRoomID: el.chatroomid,
+											name: el.firstname,
+											resentMessage: el.firstname + ': ' + el.message,
+											resentMessageDate: new Date(el.sendtime).getTime(),
+										}}
+										onClick={()=>{props.setSelectChat(el)}}
+										selectChat={props.selectChat}
+									/>
+								)
+							} else {
+								return (
+									<ContactPerson
+										key={el.chatroomid}
+										contact={{
+											chatRoomID: el.chatroomid,
+											name: el.roomname,
+											resentMessage: el.firstname + ': ' + el.message,
+											resentMessageDate: new Date(el.sendtime).getTime(),
+										}}
+										onClick={()=>{props.setSelectChat(el)}}
+										selectChat={props.selectChat}
+									/>
+								)
+							}
+						})}
 				</div>
 			</div>
 			<style jsx>{style}</style>
-		</Fragment>
+		</>
 	)
 }
