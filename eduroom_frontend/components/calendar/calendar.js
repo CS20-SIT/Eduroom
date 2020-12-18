@@ -105,9 +105,6 @@ const Content = () => {
 	// ------------------code below----------------------//
 	return (
 		<Fragment>
-			<div className="bg-calendar">
-				<Image alt="image" src="/images/createEvent/calendar.svg" width="331" height="300" />
-			</div>
 
 			<ViewEvent
 				open={open}
@@ -180,7 +177,9 @@ const Content = () => {
 					})}
 				</div>
 			</div>
-
+			<div className="bg-calendar">
+				<Image alt="image" src="/images/createEvent/calendar.svg" width="700" height="600" />
+			</div>
 			<style jsx>{style}</style>
 		</Fragment>
 	)
