@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react'
 import List from "../../components/edqiz/edlunch";
-import GeneralNoSide from "../../components/template/generalnoside";
-
+import GeneralNoNav from '../../components/template/generalnonav'
 const CreatePage = () => {
   return (
     <Fragment>
- <GeneralNoSide/>
-      <List/>
-      <GeneralNoSide/>
+      <GeneralNoNav />
+      <List />
+    
     </Fragment>
   )
 }
