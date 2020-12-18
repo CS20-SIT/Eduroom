@@ -3,16 +3,19 @@ import Styles from '../../styles/package/package.module.css';
 import { useEffect, useState } from 'react';
 
 const ListCourse = props => {
-    const [course, setCourse] = useState([]);
     const [page, setPage] = useState(1);
     const [max, setMax] = useState(1);
 
     useEffect(() => {
-        const data = props.item.slice(0, 12);
-        setCourse(data);
-        const mx = Math.ceil(data.length / 3);
-        setMax(mx);
-    }, []);
+		console.log(max, page)
+	}, [max, page])
+	useEffect(() => {
+		if (props.item.length > 0) {
+			const mx = Math.ceil(props.item.length / 3)
+			setMax(mx)
+		}
+    }, [props.item])
+    
     const getLeftClass = () => {
         if (page === 1) {
             return Styles.disable;
@@ -29,17 +32,19 @@ const ListCourse = props => {
     };
 
     const renderSlide = () => {
-        const nowSlide = course.slice(page * 3 - 3, page * 3);
+        const nowSlide = props.item.slice(page * 3 - 3, page * 3)
         const arr = nowSlide.map((item, index) => {
             return (
                 <CourseRender
                     title={item.title}
                     price={item.price}
-                    instructor={item.instructor}
+                    owner={item.owner}
                     index={index}
                     id={item.id}
-                    owner={item.owner}
                     key={item.id}
+                    image={item.image}
+                    infname={item.infname}
+                    inlname={item.inlname}
                 ></CourseRender>
             );
         });
@@ -87,4 +92,5 @@ const ListCourse = props => {
     );
 };
 export default ListCourse;
+
 

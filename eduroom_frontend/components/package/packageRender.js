@@ -12,8 +12,8 @@ const temp = (props) => {
 				<div>
 					<div className="container">
 						<h1 className="text">{props.title}</h1>
-						{/* <div className="text">{props.price} $</div> */}
-						<div className="text">{props.infname}{props.inlname}</div>
+						<div className="text">{props.infname}  {props.inlname}</div>
+						<div className="text">${props.price}</div>
 					</div>
 				</div>
 			</div>
