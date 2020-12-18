@@ -10,7 +10,7 @@ const {
 
 Router.get('/getAllCourse', getAllCourse)
 
-Router.post('/getCourseFromID', getCourseFromID)
+Router.get('/getCourseFromID', getCourseFromID)
 
 Router.get('/getCourseSectionPart', getCourseSectionPart)
 
