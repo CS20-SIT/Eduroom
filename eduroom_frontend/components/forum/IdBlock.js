@@ -4,12 +4,14 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import api from '../../api'
+import AuthDialog from '../landing/authDialog'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
 import UserContext from '../../contexts/user/userContext'
 import InputText from '../utils/InputText'
 const IdBlock = () => {
+	const [dialog,setDialog] = useState(false)
 	const [data, setData] = useState([])
 	const [edit, setEdit] = useState(false)
 	const userContext = useContext(UserContext)
@@ -75,7 +77,7 @@ const IdBlock = () => {
 					console.log(err)
 				})
 		} else {
-			alert('Please Login Before Like na ja')
+			setDialog(!dialog)
 		}
 	}
 	const handleDelete = ()=> {
@@ -89,6 +91,11 @@ const IdBlock = () => {
 
 	return (
 		<Fragment>
+			{
+				dialog ? (
+					<AuthDialog handleClick={()=>{setDialog(false)}}/>
+				) :null
+			}
 			<div className={classes.root}>
 				<Grid container spacing={3} variant="outlined">
 					<Grid item xs={12} borderColor="#a27cef">
@@ -152,11 +159,13 @@ const IdBlock = () => {
 											clicked={(callback) => {
 												handleLike(data.forumid, callback)
 											}}
+											isPointer={true}
 										/>
-										<div>{data.likes}</div>
+										<div style={{cursor:'default !important'}}>{data.likes}</div>
 									</div>
-									<div style={{ paddingRight: '30px', display: 'flex', alignItems: 'center' }}>
-										<Icon type="comment" changeHover={false} />
+									<div style={{ paddingRight: '30px', display: 'flex', alignItems: 'center',cursor:'default !important' }}>
+										<Icon type="comment" changeHover={false} 
+											isPointer={false}/>
 										<div>{data.comments}</div>
 									</div>
 								</div>

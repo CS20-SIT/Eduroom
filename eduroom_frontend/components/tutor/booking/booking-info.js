@@ -54,6 +54,7 @@ const BookingInfo = ({ bookingGroup, setBookingGroup, instructor, times, date, m
 						''
 					) : (
 						<div
+							id="booking-group-btn"
 							className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 my-4 mx-8 flex justify-center pointer text-navy`}
 							onClick={() => {
 								setBookingGroup(true)
@@ -63,6 +64,7 @@ const BookingInfo = ({ bookingGroup, setBookingGroup, instructor, times, date, m
 						</div>
 					)}
 					<div
+						id="book-btn"
 						className={`font-lato font-bold text-md border-navy bg-white rounded-md py-2 mx-8 flex justify-center text-navy ${
 							times.length == 0 ? 'disabled' : 'pointer'
 						}`}

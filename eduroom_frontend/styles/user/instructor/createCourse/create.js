@@ -43,4 +43,101 @@ export default css`
 		opacity: 0.75;
 		transition: 0.25s;
 	}
+	.materialCard {
+		background: #ffffff;
+		box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		border-radius: 10px;
+	}
+	.addContainer {
+		background: #ffffff;
+		box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		border-radius: 10px;
+		padding: 20px 10px;
+		margin-bottom: 20px;
+		height: 150px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		transition: 0.3s;
+	}
+	.addContainer:hover {
+		opacity: 0.7;
+		transition: 0.3s;
+		cursor: pointer;
+	}
+
+	.addMaterialContainer {
+		background: #ffffff;
+		box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		border-radius: 10px;
+		padding: 10px 5px;
+		margin-bottom: 20px;
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		transition: 0.3s;
+	}
+	.addMaterialContainer:hover {
+		opacity: 0.7;
+		transition: 0.3s;
+		cursor: pointer;
+	}
+	.plus {
+		font-size: 40px;
+		padding: 0 0 10px 0;
+		color: #3d467f;
+	}
+	.circle {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 10px;
+		width: 45px;
+		height: 45px;
+		border: 1px solid #3d467f;
+		box-sizing: border-box;
+		border-radius: 100px;
+	}
+	.textfield {
+		background: #eff0f6;
+		border-radius: 10px;
+		max-width: 100%;
+		border: none;
+		font-size: 1.1em;
+		color: #3d467f;
+		padding: 14px;
+	}
+	.textfield.error {
+		border: 1px solid #ed3f14;
+	}
+	.textfield ::placeholder {
+		color: #3d467f;
+		opacity: 0.75;
+	}
+	.camera {
+		opacity: 1;
+		transition: 0.3s;
+	}
+	.camera:hover {
+		opacity: 0.75;
+		transition: 0.3s;
+		cursor: pointer;
+	}
+	.title {
+		color: #353e6c;
+	}
+	.icon {
+		margin-left: 10px;
+		opacity: 0.6;
+		transition: 0.25s;
+	}
+	.icon:hover {
+		opacity: 0.9;
+		transition: 0.25s;
+		cursor: pointer;
+	}
 `

@@ -49,7 +49,9 @@ const AvailabilityEdit = ({
 							}}
 							key={i}
 							className={` px-4 py-6 shadow relative  ${
-								timeSections[parseInt(i % 5)].includes(parseInt(i / 5)) ? 'bg-pink minus' : 'bg-yellow-faded plus'
+								timeSections[parseInt(i % 5)].includes(parseInt(i / 5))
+									? 'bg-pink minus time-slots-remove'
+									: 'bg-yellow-faded plus time-slots-add'
 							}`}
 						></div>
 					))}

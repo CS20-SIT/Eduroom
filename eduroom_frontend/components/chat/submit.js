@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-export default function deleteGroup(props) {
+export default function submit(props) {
   return (
     <>
       <div
         style={{
           marginTop:20,
-          cursor: "pointer",
         }}
       />
       <div
@@ -14,6 +13,7 @@ export default function deleteGroup(props) {
           margin: "auto 20px 50px",
           cursor: "pointer",
         }}
+        onClick={props.onClick}
       >
         <div
           style={{

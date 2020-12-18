@@ -5,7 +5,7 @@ import utils from '../../styles/tutor/utils'
 
 import Header from '../../components/tutor/main-header'
 
-import GeneralNoNav from '../../components/template/generalnonav'
+import GeneralNoNav from '../../components/template/general'
 
 import api from '../../api'
 
@@ -32,7 +32,7 @@ const Tutor = () => {
 						</div>
 						{instructors &&
 							instructors.map((e, index) => (
-								<Link href={`/tutor/${e.instructorid}`} key={index}>
+								<Link href={`/tutor/${e.instructorid}`} key={index} className="instructor-info-list">
 									<div>
 										<div
 											className={`px-8 py-4 my-8 bg-white-faded shadow rounded-md flex pointer animation ${

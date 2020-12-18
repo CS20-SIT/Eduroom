@@ -65,8 +65,14 @@ exports.items = [
       link: '/user/certificates',
     },
     {
+      icon: 'ads',
+      text: 'Advertisement',
+      link: '/advertisement',
+    },
+    {
       icon: 'setting',
       text: 'Setting',
       link: '/user/edit',
     },
+    
   ];

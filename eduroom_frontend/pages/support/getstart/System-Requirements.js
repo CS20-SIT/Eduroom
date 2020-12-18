@@ -6,7 +6,7 @@ import {
 
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-import Systemrequirement from "../../../components/support/systemrequirement";
+import Systemrequirement from "../../../components/support/gettingstarted/systemrequirement";
 const courseinstandteaching = () => {
   return <Fragment>
     

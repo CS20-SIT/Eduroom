@@ -1,20 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react'
+import style from '../../../../styles/user/instructor/createCourse/create'
 
-const CourseVideoUpload = ({ sectionIndex, index, handleData }) => {
-	const [video, setVideo] = useState(null)
-	useEffect(() => {
-		if (video) {
-		}
-	}, [video])
+const CourseVideoUpload = ({ video, sectionIndex, index, handleData }) => {
 	const handleUplaodFile = (e) => {
 		let newValue = e.target.files[0]
-		handleData({ el: 'video', data: newValue })
-		console.log(newValue)
-		setVideo(newValue)
+		handleData(newValue)
 	}
 
 	const getLabel = () => {
-		return video ? video.name : 'Choose Video'
+		return video.data ? video.data.name : 'Choose Video'
 	}
 
 	return (
@@ -39,33 +33,7 @@ const CourseVideoUpload = ({ sectionIndex, index, handleData }) => {
 					</span>
 				</div>
 			</div>
-			<style jsx>{`
-				.textfield {
-					background: #eff0f6;
-					border-radius: 10px;
-					max-width: 100%;
-					border: none;
-					font-size: 1.1em;
-					color: #3d467f;
-					padding: 14px;
-				}
-				.textfield.error {
-					border: 1px solid #ed3f14;
-				}
-				.textfield ::placeholder {
-					color: #3d467f;
-					opacity: 0.75;
-				}
-				.camera {
-					opacity: 1;
-					transition: 0.3s;
-				}
-				.camera:hover {
-					opacity: 0.75;
-					transition: 0.3s;
-					cursor: pointer;
-				}
-			`}</style>
+			<style jsx>{style}</style>
 		</Fragment>
 	)
 }
