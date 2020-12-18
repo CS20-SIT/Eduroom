@@ -1,0 +1,46 @@
+.box{
+    width:70vw;
+    height: 200px;
+    background-color: #F2ECFE;
+    padding:20px;
+    margin:20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+}
+.circle{
+    height: 100px;
+    width: 100px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+.name{
+    position: relative;
+    top:-10px;
+    font-size: 20px;
+    margin-left: 20px;
+}
+.row{
+    display: flex;
+}
+.date{
+    font-size: 15px;
+    padding: -20px;
+    color:#C4C4C4;
+    position: relative;
+    left:200px;
+    top:-20px
+
+}
+.comment{
+    margin-left: 15px;  
+}
+.text{
+    position: relative;
+    top:5px;
+    left:30px;
+    color:white;
+    font-size:30px;
+}
