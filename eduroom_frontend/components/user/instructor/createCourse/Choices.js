@@ -7,11 +7,16 @@ const Choices = ({ question, questionChange }) => {
 		question.correct = idx
 		questionChange(question)
 	}
+	const changeChoice = (idx, newText) => {
+		question.choices[idx] = newText
+		questionChange(question)
+	}
 	const renderChoices = () => {
 		const arr = question.choices.map((choice, idx) => {
 			return (
 				<Choice
 					choice={choice}
+					changeChoice={changeChoice}
 					key={idx}
 					idx={idx}
 					changeCorrect={changeCorrect}
