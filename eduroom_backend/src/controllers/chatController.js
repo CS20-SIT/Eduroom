@@ -1,19 +1,25 @@
 const pool = require('../database/db')
 
 const getChatlist = async (req, res, next) => {
-	const userid = '3c93e461-7eab-45fb-b8ce-587b47286f8c'
 	const chatlist = await pool.query(
-		`select chat.chatroomid, usp.firstname, roomname, message, sendtime from chat, chat_message cm, 
-    user_profile usp where cm.chatroomid in ( select crm.chatroomid from chat_roommember crm where userid = '${userid}' ) 
-    and cm.userid = usp.userid and chat.chatroomid in ( select chat.chatroomid from chat where sendtime = 
-      (select max(sendtime) from chat_message where chat.chatroomid = chat_message.chatroomid) 
-      group by chat.chatroomid ) order by sendtime desc `
+		`select chat.chatroomid,
+    case when chat.roomname is not null or cr.chatroomid in (select chatroomid from chat_group)
+    then chat.roomname
+    else (select concat(firstname,concat(' ', lastname)) as roomname from user_profile
+    join chat_roommember c on user_profile.userid = c.userid
+    where c.chatroomid = chat.chatroomid and c.userid <> '236ce084-b742-4435-93c7-2e0d1eff1204' and cr.chatroomid not in (select chatroomid from chat_group))
+    end
+    , cm2.message, cm.sendtime from chat
+    left join (select chatroomid, max(sendtime) sendtime from chat_message group by chatroomid) cm on chat.chatroomid = cm.chatroomid
+    left join (select chatroomid, message, sendtime from chat_message ) cm2 on cm.chatroomid = cm2.chatroomid and cm.sendtime = cm2.sendtime
+    left join chat_roommember cr on chat.chatroomid = cr.chatroomid
+    where userid = '236ce084-b742-4435-93c7-2e0d1eff1204'
+    order by sendtime desc;`
 	)
 
 	const list = chatlist.rows
 	res.send(list)
 }
-
 const getGroupPicture = async (req, res, next) => {
 	let chatroomid = 3
 	const messagelist = await pool.query(`select avatar
@@ -48,12 +54,12 @@ const deleteChatRoom = async (req, res, next) => {
 }
 
 const getUserProfile = async (req, res, next) => {
-  const userid = req.user.id
+  const userid = '3c93e461-7eab-45fb-b8ce-587b47286f8c'
   const userProfile = await pool.query(`select firstname, lastname, displayname, avatar 
                                         from user_profile 
-                                        where userid = $1`, [userid]);
+                                        where userid = '${userid}'`)
 
-    const usp = userProfile.rows[0]
+    const usp = userProfile.rows
     res.send(usp)
 }
 
@@ -88,7 +94,23 @@ res.status(200).json({ success: true })
 // 	res.send(color)
 // }
 
+const getChatRoomDetail = async (req, res, next) =>{
+  const messageQuery = await pool.query 
+  (`select * from (select cm.chatroomid, sendtime as sendTime,cm.userid as senderID, concat(up.firstname,concat(' ', up.lastname)) as senderName, up.avatar as senderProfilePic ,
+  Array(select concat( (case when crm.nickname is not null then crm.nickname else concat(firstname,concat(' ', lastname)) end) ,concat(',',cms.readtime::text))
+from chat_message_readtime cms , user_profile as up, chat_roommember crm where cms.messageid = cm.messageid and cms.userid = up.userid and cms.userid = crm.userid and cm.chatroomid = crm.chatroomid) as reader, message, issticker as sticker, false as system
+from chat_message cm, user_profile up where cm.userid = up.userid
+union select chatroomid, sendtime,null,null,null,null,null message, false, true from chat_systemmessage) as chat
+where chatroomid = '3'
+order by sendtime asc ;`)
+  const crd = messageQuery.rows
+  const message = {message: crd}
+  res.send(message);
+}
+
 module.exports = { getChatlist, 
   getGroupPicture, 
   inviteCreate, 
-  deleteChatRoom}
+  deleteChatRoom,
+  getUserProfile,
+getChatRoomDetail}
