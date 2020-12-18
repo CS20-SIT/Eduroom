@@ -12,6 +12,21 @@ exports.getGlobalEvent = async (req, res, next) => {
   return
 }
 
+exports.getEventInMonthYear = async (req, res, next) => {
+  const user = req.user;
+  const {m,y} = req.query;
+  if(user){
+    // need to have more check that user has this event 
+    const data = await pool.query("SELECT startdate, enddate \
+    FROM course_event\
+    WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
+      AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2",[m,y])
+    res.status(200).json({success:true,data:data.rows})
+    return;
+  } else {
+    return next(new ErrorResponse("Unauthorize",401))
+  }
+}
 
 exports.getCourseEvent = async (req, res, next) => {
 
