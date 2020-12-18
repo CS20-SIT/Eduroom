@@ -9,7 +9,7 @@ const packages = () => {
 			<General>
 				<div>
 					<div>
-						<ProductPackage></ProductPackage>
+						<ProductPackage/>
 					</div>
 				</div>
 			</General>

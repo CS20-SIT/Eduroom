@@ -9,6 +9,7 @@
     position: absolute;
     top: 92.5vh;
     left: 15vh;
+    cursor: pointer;
     font-size: 20px;
 }
 .card{

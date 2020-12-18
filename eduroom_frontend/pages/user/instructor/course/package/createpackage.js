@@ -12,23 +12,19 @@ const CreatePackagePage = () => {
 		picPath: '',
 		name: '',
 		discount: 0,
-		category: 'default',
+		category: '',
+		categoryText: '',
 		detail: '',
 		selectedCourses: [],
+		totalPrice: 0,
 	})
-	console.log(myPackage);
+
 	useEffect(() => {
-		console.log(myPackage)
+		// console.log(myPackage)
 	}, [myPackage])
 	const renderPage = () => {
 		if (page === 1) {
-			return (
-				<CreatePackage
-					myPackage={myPackage}
-					setMyPackage={setMyPackage}
-					changePage={(page) => setPage(page)}
-				/>
-			)
+			return <CreatePackage myPackage={myPackage} setMyPackage={setMyPackage} changePage={(page) => setPage(page)} />
 		} else if (page === 2) {
 			return <ConfirmPackage myPackage={myPackage} changePage={(page) => setPage(page)} />
 		}

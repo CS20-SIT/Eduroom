@@ -1,15 +1,14 @@
 import Head from "next/head";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import style from "../../styles/event/event";
 import { Button, Grid, Container, TextField } from "@material-ui/core";
 import { KeyboardTimePicker } from "@material-ui/pickers";
-
 import Image from "next/image";
 import api from "../../api";
 const content = () => {
+ 
   const [eventInfo, setEventInfo] = useState({
     title: "",
-    type: "",
     description: "",
     startDate: "",
     endDate: "",
@@ -17,29 +16,37 @@ const content = () => {
     endTime: "",
     place: "",
   });
-  const createEvent = async () => {};
+  
   const handleCreate = (e) => {
+
+    console.log(eventInfo);
     // if (validator()) {
-      api.post("/api/event/createEvent", {
+    api.post("/api/event/createEvent", eventInfo).then(
+      (res) => {
+        alert("success");
+      }
+    ).catch(err => {
+      console.log(err);
+    })/*  {
         title: eventInfo.title,
-        type: eventInfo.type,
         description: eventInfo.description,
         startDate: eventInfo.startDate,
         endDate: eventInfo.endDate,
         startTime: eventInfo.startTime,
         endTime: eventInfo.endTime,
         place: eventInfo.place,
-      });
+      });  */
     // }
   };
 
   const validator = () => {
-    
+
   };
 
   const [selectedDate, handleDateChange] = useState(new Date());
 
-  const eventType = ["Holiday", "Meeting", "Seminar"];
+  const eventType = ["Course", "Global"];
+  const course = ["God Biology"];
 
   return (
     <Fragment>
@@ -52,7 +59,7 @@ const content = () => {
       <Container>
         <div className="head">
           <Grid container spacing={2}>
-            <Grid item xs={5.5}>
+            <Grid item xs={5}>
               <Image
                 alt="meeting-img"
                 src="/images/createEvent/image.svg"
@@ -86,6 +93,7 @@ const content = () => {
           <Grid container justify="center">
             <div>
               <input
+
                 className="event-title"
                 onChange={(e) =>
                   setEventInfo({ ...eventInfo, title: e.target.value })
@@ -93,6 +101,8 @@ const content = () => {
                 placeholder="Event Title"
               ></input>
             </div>
+
+
             <div>
               <select
                 className="event-type"
@@ -112,6 +122,9 @@ const content = () => {
                 })}
               </select>
             </div>
+
+
+
             <div>
               <textarea
                 className="event-des"

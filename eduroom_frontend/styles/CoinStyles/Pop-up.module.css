@@ -13,21 +13,25 @@ margin-left: 20%;
 }
 .showPhoto {
   position: relative;
-  top: 20px;
+  top: 10px;
   left: 30px;
   padding: 0%;
   margin-right: 20% ;
   /* padding-bottom: 20%; */
   /* border: 2px solid black;
   background-color: slategrey; */
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
+}
+.setPhotoMoney{
+  position: relative;
+  top: 20px;
 }
 .setMoney{
   display: flex;
   position: relative;
-  top: -30px;
-  left: 45px;
+  top: 20px;
+  left:60px;
 }
 .coinPhoto{
   width: 20%;
@@ -87,5 +91,6 @@ margin-left: 20%;
   position: relative;
   top: -15%;
 }
+
 
 

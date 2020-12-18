@@ -5,12 +5,21 @@ const { test } = require('../controllers/testController')
 const sendEmail = require('../utils/sendMail.js')
 const { uploadToGCSHandler, uploadToLocalHandler } = require('../middleware/multer')
 const { uploadFile } = require('../utils/cloudStorage')
+const { zipTest} = require('../controllers/testController')
+const { verifyTemplate } = require('../utils/verifyTemplate')
 
 router.get('/', test)
 router.get('/mail', async (req, res) => {
-	sendEmail({ email: 'test@test.com', subject: 'Test SMTP Server', message: 'Woah' })
-	res.status(200).json({ success: true })
+	try {
+		const htmlMessage = verifyTemplate('somethingnotreal')
+		await sendEmail({ email: 'thetkpark@gmail.com', subject: 'Test Verification Email', htmlMessage })
+		res.status(200).json({ success: true })
+	} catch (error) {
+		res.status(500).send(error.message)
+	}
 })
+
+router.get('/zipTest', zipTest)
 
 // Upload Handler
 // uploadToLocalHandler -> Use when you have to manipuate the file before upload to Google Cloud Storage (I will update how to upload later)

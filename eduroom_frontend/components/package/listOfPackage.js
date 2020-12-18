@@ -3,16 +3,19 @@ import Styles from '../../styles/package/package.module.css';
 import { useEffect, useState } from 'react';
 
 const ListPackage = props => {
-    const [packages, setPackage] = useState([]);
     const [page, setPage] = useState(1);
     const [max, setMax] = useState(1);
 
     useEffect(() => {
-        const data = props.item.slice(0, 12);
-        setPackage(data);
-        const mx = Math.ceil(data.length / 3);
-        setMax(mx);
-    }, []);
+		console.log(max, page)
+	}, [max, page])
+	useEffect(() => {
+		if (props.item.length > 0) {
+			const mx = Math.ceil(props.item.length / 3)
+			setMax(mx)
+		}
+    }, [props.item])
+    
     const getLeftClass = () => {
         if (page === 1) {
             return Styles.disable;
@@ -29,16 +32,18 @@ const ListPackage = props => {
     };
 
     const renderSlide = () => {
-        const nowSlide = packages.slice(page * 3 - 3, page * 3);
-        const arr = nowSlide.map((item, index) => {
-            return (
+        const nowSlide = props.item.slice(page * 3 - 3, page * 3)
+		const arr = nowSlide.map((item, index) => {
+			return (
                 <PackageRender
                     title={item.title}
                     price={item.price}
                     instructor={item.instructor}
                     index={index}
                     id={item.id}
-                    owner={item.owner}
+                    infname={item.infname}
+                    inlname={item.inlname}
+                    // owner={item.owner}
                     key={item.id}
                 ></PackageRender>
             );
