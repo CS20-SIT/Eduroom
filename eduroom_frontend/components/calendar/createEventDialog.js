@@ -9,6 +9,8 @@ const Content = (props) => {
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
 
+
+    
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
         title: '',
