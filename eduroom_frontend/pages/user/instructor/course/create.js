@@ -9,6 +9,23 @@ import Pagination from '../../../../components/user/instructor/createCourse/Pagi
 import styles from '../../../../styles/user/instructor/createCourse/create'
 
 const create = () => {
+	
+	useEffect(() => {
+		const GetData = async () => {
+			const result = await axios('http://localhost/api/event/getCourseEvent')
+			console.log(result.data)
+			setData(result.data)
+		}
+		const GetEventInfo = async () => {
+			const result = await axios('http://localhost/api/event/getEventInfo')
+			console.log(result.data)
+			setEvent(result.data)
+		}
+		GetData()
+		GetEventInfo()
+		console.log(data)
+	}, [])
+
 	const [page, setPage] = useState(1)
 	const [data, setData] = useState({
 		name: '',
@@ -50,7 +67,7 @@ const create = () => {
 				return <Page3></Page3>
 		}
 	}
-	const getInfosPath = async (el,data) => {
+	const getInfosPath = async (el, data) => {
 		console.log(el)
 		let sections = data.sections
 		for (let i = 0; i < sections.length; i++) {
@@ -76,13 +93,12 @@ const create = () => {
 			let newVideos = section.videos.map((video) => {
 				return { path: video.path, name: video.name }
 			})
-			
 		})
 	}
 	const handleNext = async () => {
 		if (page === 3) {
 			//upload file to server
-			let newData = {...data}
+			let newData = { ...data }
 			const pictureFormData = new FormData()
 			pictureFormData.append('course-picture', newData.picture)
 			const pictureLink = await api.post('/api/instructor/upload/picture', pictureFormData)
@@ -95,13 +111,13 @@ const create = () => {
 
 			// console.log('newData is')
 			// console.log(newData)
-			newData = await getInfosPath('videos',newData)
-			newData = await getInfosPath('materials',newData)
+			newData = await getInfosPath('videos', newData)
+			newData = await getInfosPath('materials', newData)
 			console.log('after get path new data is')
 			console.log(newData)
 
 			const res = await api.post('/api/instructor/course', newData)
-			console.log('res is ',res.data)
+			console.log('res is ', res.data)
 			setData({ ...newData })
 		} else {
 			setPage(page + 1)
