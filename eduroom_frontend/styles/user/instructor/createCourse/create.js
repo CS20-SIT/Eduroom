@@ -127,4 +127,17 @@ export default css`
 		transition: 0.3s;
 		cursor: pointer;
 	}
+	.title {
+		color: #353e6c;
+	}
+	.icon {
+		margin-left: 10px;
+		opacity: 0.6;
+		transition: 0.25s;
+	}
+	.icon:hover {
+		opacity: 0.9;
+		transition: 0.25s;
+		cursor: pointer;
+	}
 `

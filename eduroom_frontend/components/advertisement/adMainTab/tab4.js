@@ -11,7 +11,7 @@ const Content = () => {
         <Fragment>
         
         <Grid containner spacing={3}>  
-            <Grid item xs={6}>
+            <Grid item xs={7}>
             <div style={{marginTop:"100px" ,marginLeft:"150px"}}>
             <div className="ad-tab1-header">Set a budget that works 
 
@@ -24,7 +24,7 @@ Spend $500 per 1 ads
             </div>
             <button style={{marginTop:"10px"}}
                 className = "ad-tab1-button"
-                onClick={() => router.push('/login')}
+                onClick={() => router.push('/advertisement/adinform')}
                 >
                 <a className="ad-button-text">Start Now</a>
             </button>
