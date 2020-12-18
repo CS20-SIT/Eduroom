@@ -26,7 +26,7 @@ export default function chatContact(props) {
     const getInvitations = async () => {
 		const res = await api.get(`/api/chat/getInvitationListMockup`)
 		setInvitations(res.data)
-  }
+    }
 	const getChatList = async () => {
 		const res = await api.get(`/api/chat/getChatListMockup`)
 		setChatList(res.data)
@@ -42,16 +42,13 @@ export default function chatContact(props) {
 	const handleCloseNotification = () => {
 		setOpenNotification(false)
 	}
-	const handleClickOpenCreateChat = () => {
+	const handleOpenCreateChat = () => {
 		setOpenCreateChat(true)
 	}
 	const handleCloseCreateChat = () => {
 		setOpenCreateChat(false)
 	}
 	const handleSelect = (el) => {
-		if (true) {
-			console.log('check')
-		}
 		setSearchResult(null)
 	}
 	useEffect(() => {
@@ -130,8 +127,8 @@ export default function chatContact(props) {
 						}}
 						onBlur={() => {
 							if (!ignoreBlur) {
-								setIgnoreBlur(false)
 								setSearchResult(null)
+								setIgnoreBlur(false)
 							}
 						}}
 					>
@@ -147,7 +144,6 @@ export default function chatContact(props) {
 									return (
 										<SearchResult
 											searchResult={searchResult}
-											setSearchResult={setSearchResult}
 											setIgnoreBlur={setIgnoreBlur}
 											handleSelect={handleSelect}
 										/>
@@ -157,12 +153,12 @@ export default function chatContact(props) {
 						</div>
 						<AddCircleIcon
 							style={{ marginLeft: 20, color: '#FB9CCB', cursor: 'pointer' }}
-							onClick={handleClickOpenCreateChat}
+							onClick={handleOpenCreateChat}
 						/>
-						<Dialog disableBackdropClick onClose={handleCloseCreateChat} open={openCreateChat}>
-							<CreateChatRoom handleClose={handleCloseCreateChat} />
-						</Dialog>
 					</div>
+					<Dialog disableBackdropClick onClose={handleCloseCreateChat} open={openCreateChat}>
+							<CreateChatRoom handleClose={handleCloseCreateChat} />
+					</Dialog>
 					<div
 						style={{
 							width: '100%',
