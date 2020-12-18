@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-const Choice = ({ idx, choice, correct, changeCorrect }) => {
+const Choice = ({ idx, choice, changeChoice, correct, changeCorrect }) => {
 	const renderCheck = () => {
 		if (correct === idx) {
 			return <i style={{ color: '#27AE60' }} className="fas fa-check"></i>
@@ -13,7 +13,14 @@ const Choice = ({ idx, choice, correct, changeCorrect }) => {
 				<div className="check" onClick={() => changeCorrect(idx)}>
 					{renderCheck()}
 				</div>
-				<input name="choice" className="textfield" placeholder={`Choice ${idx + 1}`} type="text"></input>
+				<input
+					name="choice"
+					className="textfield"
+					placeholder={`Choice ${idx + 1}`}
+					type="text"
+					value={choice}
+					onChange={(e) => changeChoice(idx, e.target.value)}
+				></input>
 			</div>
 			<style jsx>{`
 				.choice {
