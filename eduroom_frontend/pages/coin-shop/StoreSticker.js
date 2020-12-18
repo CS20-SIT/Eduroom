@@ -34,14 +34,14 @@ const Temp = () => {
 								<Product_Sticker></Product_Sticker>
 							</div>
 						</div>
-						<button
+						{/* <button
 							onClick={() => {
 								setShow(true)
 							}}
 							className={Styles.btnPop}
 						>
 							TestPopup
-						</button>
+						</button> */}
 						<div className={Styles.btnHistory}>
 							<button onClick={() => click()} className={Styles.btnHistory2}>
 								History
