@@ -67,20 +67,25 @@ exports.createSubmission = async (req, res) => {
 			submissionRequestBody.submissions.push(submission)
 		}
 		const batchSubmissionResponse = await grader.post('/submissions/batch?base64_encoded=true', submissionRequestBody)
-
-		// Send API of get batch submission to judge0
 		let submissionTokensParams = ""
 		batchSubmissionResponse.data.forEach(ele => {
 			submissionTokensParams += `${ele.token},`
 		})
-		// const getSubmissionsResponse = await grader.get('/submissions/batch', {
-		// 	params: {
-		// 		base64_encoded: false,
-		// 		tokens: submissionTokensParams
-		// 	}
-		// })
 
-		res.status(201).send({ tokens: stringToBase64(submissionTokensParams) })
+		await pool.query(`INSERT INTO question_attempt (userid, questionid, score, status, time, memory, language, code, whentime) VALUES ('${userId}',${problemId},0,'Pending',0,0,'${language}','${sourceCode}',CURRENT_TIMESTAMP);`)
+		const attempId = await pool.query(`SELECT attempno FROM question_attempt WHERE code = '${sourceCode}' AND userid = '${userId}' AND status = 'Pending' ORDER BY whentime DESC LIMIT 1;`)
+
+		const insertQuestionAttempTestcase = []
+		for(let i=0; i<testcaseNumber; i++){
+			const queryPromise = pool.query(`INSERT INTO question_attempt_testcase (attemptid, testcaseno, status, memory, time, score) VALUES (${attempId.rows[0].attempno},${i+1},'Pending',0,0,0);`) 
+			insertQuestionAttempTestcase.push(queryPromise)
+		}
+		await Promise.all(insertQuestionAttempTestcase)
+
+		res.status(201).send({ 
+			attempId: attempId.rows[0].attempno,
+			tokens: stringToBase64(submissionTokensParams) 
+		})
 	} catch (error) {
         errorHandler(error, req, res)
     }
@@ -89,13 +94,18 @@ exports.createSubmission = async (req, res) => {
 exports.getSubmission = async (req, res) => {
 	try {
 		const userId = '9c2822a0-cf80-487c-9189-a4682916d2b5'
+		const { attempId } = req.query
 		const tokens = base64ToString(req.query.tokens)
+		// Send API of get batch submission to judge0
 		const getSubmissionsResponse = await grader.get('/submissions/batch', {
 			params: {
 				base64_encoded: false,
 				tokens
 			}
 		})
+		// Check submission result
+
+
 		res.send(getSubmissionsResponse.data)
 	} catch (error) {
 		errorHandler(error, req, res)
