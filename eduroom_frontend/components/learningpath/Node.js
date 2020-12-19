@@ -8,6 +8,7 @@ const Node = ({ node, isLeft }) => {
 				style={{ display: 'flex', width: '100%', justifyContent: 'center', position: 'relative' }}
 			>
 				<div
+					o
 					className="content left"
 					onMouseEnter={() => {
 						if (isLeft) {

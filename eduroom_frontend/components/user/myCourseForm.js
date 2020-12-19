@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import Styles from '../../styles/user/wishlistForm.module.css';
 import CardContent from '@material-ui/core/CardContent';
 
-import Image from 'next/image'
+// import Image from 'next/image'
 const MyCourseForm = (props) => {
     // console.log(props.test);
     const checkComplete=(boolean)=>{
@@ -20,7 +20,7 @@ const MyCourseForm = (props) => {
         <div className={Styles.container}>
           <Link href={`../../course/${props.id}`}>
               <span>
-                  <Image src={props.picture} width="200" height="200"/>
+                  <img src={props.picture} width="200" height="200"/>
                   <div>Title: {props.title}</div>
                   <div>Teach By: {props.ownerF} {props.ownerL}</div>
                   <div>Status: {checkComplete(props.isCompleted)}</div>
