@@ -237,5 +237,23 @@ export default css`
     background-color: white;
     display: inline-block
   }
+  .search-coupon{
+    border: 2px solid #828282;
+    border-radius: 7%;
+    background-color: white;
+    opacity: 70%
+  }
+  .online{
+    border-radius: 50%;
+    height:25px;
+    width:25px;
+    background-color: green;
+    display: inline-block
+  }
+  coupon-tab-h{
+    background-color:purple;
+    height:50px;
+    width:60%
+  }
 `;
 5
