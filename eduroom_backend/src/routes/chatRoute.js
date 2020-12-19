@@ -12,7 +12,8 @@ const {getChatlist,
   sendmessage,
   changeThemeColor,
   changeChatRoomProfilePicture,
-  changeChatRoomName} = require('../controllers/chatController')
+  changeChatRoomName,
+  unsendMessage} = require('../controllers/chatController')
 
 router.get('/getChatlist', getChatlist)
 router.get('/getGroupPicture', getGroupPicture)
@@ -26,6 +27,7 @@ router.get('/sendmessage', sendmessage)
 router.get('/changeThemeColor', changeThemeColor)
 router.get('/changeChatroomProfile', changeChatRoomProfilePicture)
 router.get('/changeChatRoomName', changeChatRoomName)
+router.get('/unsendMessage', unsendMessage)
 
 
 //Mockup

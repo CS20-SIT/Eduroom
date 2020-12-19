@@ -63,36 +63,6 @@ const getUserProfile = async (req, res, next) => {
 	res.send(usp)
 }
 
-const acceptInvitation = async (req, res, next) => {
-	const userid = req.user.id
-	const chatroomid = req.chat.chatroomid
-	const result = await pool.query(
-		`insert into chat_roommember(chatroomid, userid, nickname, sender_color, receiver_color, hide)
-values ($1,$2,null,'#A27CEF','#5B5B5B',false);
-delete from invite_invitees
-where invitationid = 3 and inviteeid = $2`,
-		[chatroomid],
-		[userid]
-	)
-	res.status(200).json({ success: True })
-}
-
-const deleteMessage = async (req, res, next) => {
-	const mesid = req.chat.messageID
-	const del = await pool.query(`delete from chat_message where messageid = $1 `[mesid])
-	res.send({ success: true })
-}
-
-const hideMessage = async (req, res, next) => {
-	const userid = req.user.id
-	const chatroomid = req.chat.chatroomid
-	const result = await pool.query(
-		`update chat_roommember set hide = 'True' where userid = $1 and chatroomid = $2`,
-		[userid],
-		[chatroomid]
-	)
-	res.status(200).json({ success: true })
-}
 
 // const getColorChatRoom = async (req, res, next) => {
 // 	const color = await pool.query(`select color
@@ -268,9 +238,15 @@ const changeChatRoomName = async (req, res, next) => {
 	}
 }
 
+const unsendMessage = async(req, res, next) =>{
+	const messageID = 18
+	const chatRoomID = 3
 
-
-
+	const deleteMessage = await pool.query(
+		`delete from chat_message where messageid = ${messageID} and chatroomid = ${chatRoomID}`
+	)
+	res.status(200).json({ success: true })
+}
 
 
 
@@ -286,6 +262,7 @@ module.exports = {
   	getChatRoomProfile,
   	sendmessage,
   	changeThemeColor,
-	  changeChatRoomProfilePicture,
-	  changeChatRoomName
+	changeChatRoomProfilePicture,
+	changeChatRoomName,
+	unsendMessage
 }
