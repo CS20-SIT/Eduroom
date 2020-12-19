@@ -1,165 +1,176 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import style from '../../styles/calendar/calendar'
-import api from '../../api'
+import style from '../../../styles/calendar/calendar'
+import Image from "next/image";
+import api from '../../../api'
 import { useRouter } from "next/router";
-import Course from '../admin/layout/icons/course';
 
-const Content = (props) => {
+const edit = (props) => {
     const router = useRouter();
-    const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
-    const [courseList, setCourseList] = useState([])
-    const date = props.date;
-    const year = props.year;
-    const monthNo = props.monthNo;
+    const [EditOpen, setEditOpen] = useState(false);
+    const handleClickOpen = () => {
+        setEditOpen(true);
+    };
+    const [data, setData] = useState([])
+    const [eventInfo, setEventInfo] = useState(null)
+    useEffect(() => {
+        const GetData = async () => {
+            const result1 = await api.get("/api/event/getAdminEvent",
+                {
+                    params: {
+                        id: props.id
+                    }
+                });
+                console.log('data is ',result1.data[0])
+            setData(result1.data[0]);
+            setEventInfo(result1.data[0]);
 
-    const [stDate, setSTDate] = useState(year + "-" + monthNo + "-" + date)
+        };
+        GetData();
+
+    }, []);
+    console.log(data)
 
     // ---------------------createEvent---------------------------
-    const [eventInfo, setEventInfo] = useState({
-        title: '',
-        description: '',
-        startDate: props.year + '-' + props.monthNo + '-' + props.date,
-        endDate: '',
-        startTime: '',
-        endTime: '',
-        place: '',
-        courseid: '',
-    })
-
-    useEffect(() => {
-
-        api.get('/api/event/getMyCourse').then(
-            (res) => {
-                setCourseList(res.data.data);
-                // setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
-            }
-        ).catch(err => { });
-    }, [])
 
 
 
-
-    console.log();
-    useEffect(() => {
-        console.log(date);
-        setSTDate(year + "-" + monthNo + "-" + date);
-        setEventInfo({ ...eventInfo, startDate: stDate })
-    }, [date, stDate])
-
+    console.log(eventInfo);
     const handleCreate = (e) => {
-
+        console.log('info is')
         console.log(eventInfo);
         // if (validator()) {
-        api.post("/api/event/createEvent", eventInfo).then(
+        api.post("/api/event/eAdminEvent", { ...eventInfo, id: props.id }).then(
             (res) => {
                 alert("success");
                 window.location.reload();
-
             }
         ).catch(err => {
             console.log(err);
         })
-    };
 
+
+    };
+    const eventType = ['Course', 'Global']
 
     return (
         <Fragment>
+            <div style={{ marginBottom: "20px" }}>
+                <button
+                    style={{
+                        padding: 0,
+                        border: "none",
+                        background: "none",
+                        cursor: "pointer",
+                    }}
+                    onClick={handleClickOpen}
+                >
+                    {" "}
+                    <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
+                </button>
+            </div>
+
             <CSSTransition
                 mountOnEnter
                 unmountOnExit
-                in={openEvent}
+                in={EditOpen}
                 timeout={{ enter: 700, exit: 100 }}
                 classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
             >
                 <div className="D-create">
                     <div style={{ height: '10%' }}></div>
-                    <div className="text-create">Create Event</div>
+                    <div className="text-create">Edit Event</div>
 
                     {/* ---------------------- ---------eventtitle------------------------------- */}
                     <div>
-                        <input
+                        {data != null ? <input
+
+                            defaultValue={data?.title}
                             className="event-title"
                             onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
                             placeholder="Event Title"
-                            style={{ height: '50px' }}
+                            style={{ height: '50px', fontSize: '18px' }}
                         ></input>
+                            : null
+
+                        }
                     </div>
 
                     {/* ---------------------- ---------eventType------------------------------- */}
-                    <div>
-                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
-                            {courseList.map((course) => {
-                                return (
-                                    <option value={course.courseid} key={course.courseid}>
-                                        {course.coursename}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </div>
+
 
                     {/* ---------------------- ---------eventdescript------------------------------- */}
                     <div>
                         <input
+                            defaultValue={data?.detail}
                             className="event-detail"
-                            onChange={(e) => setEventInfo({ ...eventInfo, description: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, detail: e.target.value })}
                             placeholder="Description"
-                            style={{ height: '50px' }}
+                            style={{ height: '50px', fontSize: '18px' }}
                         ></input>
                     </div>
                     {/* ---------------------- ---------time------------------------------- */}
 
-                    <div className="startdate" >
+                    <div className="startdate">
                         <div>startDate</div>
 
                         <input
-                            value={stDate}
+                            defaultValue={data?.startdate}
                             className="event-startDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, startdate: e.target.value })}
                             placeholder="Start date"
                             type="date"
+                            style={{ fontSize: '14px' }}
                         ></input>
                     </div>
 
                     <div className="startTime">
                         <div>startTime</div>
                         <input
+                            defaultValue={data?.starttime}
                             className="event-startTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startTime: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, starttime: e.target.value })}
                             placeholder="Start Time"
                             type="Time"
+                            style={{ fontSize: '14px' }}
                         ></input>
                     </div>
 
                     <div className="enddate">
                         <div>endDate</div>
                         <input
-                            className="event-startDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endDate: e.target.value })}
+                            defaultValue={data?.enddate}
+                            className="event-endDate"
+                            onChange={(e) => setEventInfo({ ...eventInfo, enddate: e.target.value })}
                             placeholder="end date"
                             type="date"
+                            style={{ fontSize: '14px' }}
+
                         ></input>
                     </div>
 
                     <div className="endtime">
                         <div>endTime</div>
                         <input
+                            defaultValue={data?.endtime}
                             className="event-endTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endTime: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, endtime: e.target.value })}
                             placeholder="end Time"
                             type="time"
+                            style={{ fontSize: '14px' }}
+
                         ></input>
                     </div>
 
                     {/* -------------------------------place------------------------------- */}
                     <div>
                         <input
+                            defaultValue={data?.place}
                             className="event-place"
                             onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
                             placeholder="Event Place"
-                            style={{ height: '50px' }}
+                            style={{ height: '50px', fontSize: '18px' }}
                         ></input>
                     </div>
 
@@ -171,7 +182,7 @@ const Content = (props) => {
                     <div
                         className="cancelBT"
                         onClick={() => {
-                            setOpenEvent(false)
+                            setEditOpen(false)
                         }}
                     >
                         <button className="event-cancel">
@@ -208,7 +219,8 @@ const Content = (props) => {
 					}
 				`}
             </style>
+
         </Fragment>
     )
-}
-export default Content
+};
+export default edit;
