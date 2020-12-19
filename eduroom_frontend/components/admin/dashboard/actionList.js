@@ -4,35 +4,43 @@ const ActionList = () => {
 	const data = [
 		{
 			img: '/images/admin/instructor-approve.png',
-			title: 'Instructor Approve 1',
+			title: 'Instructor Approve',
 			subtitle: 'To approve an instructor',
 			buttonText: 'Go Approve',
             buttonColor: '#FB9CCB',
             url: '/admin/instructor'
 		},
 		{
-			img: '/images/admin/instructor-approve.png',
-			title: 'Instructor Approve 2',
-			subtitle: 'To approve an instructor',
+			img: '/images/admin/course-approve.png',
+			title: 'Course Approve',
+			subtitle: 'To approve the course',
 			buttonText: 'Go Approve',
-			buttonColor: '#FB9CCB',
-            url: '/admin/instructor'
+			buttonColor: '#A27CEF',
+            url: '/admin/course'
 		},
 		{
-			img: '/images/admin/instructor-approve.png',
-			title: 'Instructor Approve 3',
-			subtitle: 'To approve an instructor',
-			buttonText: 'Go Approve',
-			buttonColor: '#FB9CCB',
-            url: '/admin/instructor'
+			img: '/images/admin/grader.png',
+			title: 'Grader',
+			subtitle: 'To create questions and contest',
+			buttonText: 'Go create',
+			buttonColor: '#F3B496',
+            url: '/admin/grader'
 		},
 		{
-			img: '/images/admin/instructor-approve.png',
-			title: 'Instructor Approve 4',
-			subtitle: 'To approve an instructor',
+			img: '/images/admin/ads-approve.png',
+			title: 'Ads Approve',
+			subtitle: 'To approve an Ads',
 			buttonText: 'Go Approve',
 			buttonColor: '#FB9CCB',
-            url: '/admin/instructor'
+            url: '/admin/advertisement'
+		},
+		{
+			img: '/images/admin/coupon-management.png',
+			title: 'Coupon Management',
+			subtitle: 'To manage the coupon',
+			buttonText: 'Go Manage',
+			buttonColor: '#FB9CCB',
+            url: '/admin/coupon'
 		},
 	]
 	const [current, setCurrent] = useState(0)
@@ -67,7 +75,7 @@ const ActionList = () => {
 				{`
 					.action-list {
 						width: 100%;
-						padding: 1rem 5rem;
+						padding: 1rem 3rem;
                         grid-gap: 2.5rem;
                         position: relative;
 						display: grid;
@@ -87,10 +95,10 @@ const ActionList = () => {
                         height: 60px;
                     }
                     .arrow.left {
-                        left: 0%;
+                        left: -1%;
                     }
                     .arrow.right {
-                        right: 0%
+                        right: -1%
                     }
 				`}
 			</style>

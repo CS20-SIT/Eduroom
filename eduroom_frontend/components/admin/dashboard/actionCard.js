@@ -22,7 +22,7 @@ const ActionCard = ({img,title,subtitle,buttonText,buttonColor,url}) => {
                 {
                     `
                     .action-card {
-                        min-height: 300px;
+                        min-height: 400px;
                         width: 100%;
                         border-radius: 25px;
                         background:white;
@@ -32,7 +32,7 @@ const ActionCard = ({img,title,subtitle,buttonText,buttonColor,url}) => {
                         filter: drop-shadow(0px 3px 10px #EBEBEB);
                     }
                     .action-card-image {
-                        height: 50%;
+                        height: 60%;
                         width:100%;
                         background-repeat: no-repeat;
                         background-size: cover;
