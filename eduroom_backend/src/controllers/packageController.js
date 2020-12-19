@@ -51,7 +51,7 @@ exports.getAllPackage = async (req, res, next) => {
 		where p.packageid = pc.packageid and c.courseid = pc.courseid and p.cateid = ca.cateid and p.instructorid = i.instructorid and i.userid = u.userid and ispublic = true 
 		group by p.packageid, ca.cate_name,u.firstname,u.lastname`)
 		const packageInfo = data.rows;
-		const temp = packageInfo.map(package => {
+		const temp = packageInfo.map(pack => {
 			return {
 				id: package.packageid,
 				title: package.packagename,
