@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react'
 import LandingPage from '../../components/edqiz/edqizLanding'
-import GeneralNoNav from "../../components/template/generalnonav";
+import GeneralTemplate from '../../components/template/general'
 import UserContext from '../../contexts/user/userContext';
 import AuthDialog from '../../components/landing/authDialog';
 const Content = () => {
@@ -14,14 +14,15 @@ const Content = () => {
   }, [])
   return (
     <Fragment>
-      <GeneralNoNav>
+      <GeneralTemplate>
         {
           dialog ? (
             <AuthDialog handleClick={()=>{setDialog(false)}}/>
           ):null
         }
+        
         <LandingPage />
-      </GeneralNoNav>
+      </GeneralTemplate>
     </Fragment>
   )
 }
