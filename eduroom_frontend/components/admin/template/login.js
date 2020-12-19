@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import Header from '../layouts/header'
-const Admin = (props) => {
+import Header from '../../layouts/header'
+const AdminTemplate = (props) => {
   return (
     <Fragment>
       <Header />
@@ -8,4 +8,4 @@ const Admin = (props) => {
     </Fragment>
   )
 }
-export default Admin
+export default AdminTemplate

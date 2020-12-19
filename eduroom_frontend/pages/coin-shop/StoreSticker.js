@@ -47,9 +47,9 @@ const Temp = () => {
 								History
 							</button>
 						</div>
-						<button onClick={() => warp()}>Test</button>
 					</div>
 				</div>
+				
 			</General>
 		</Fragment>
 	)
