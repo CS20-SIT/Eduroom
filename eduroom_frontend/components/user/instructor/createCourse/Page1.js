@@ -1,43 +1,81 @@
 import { Fragment } from 'react'
-import Pagination from './Pagination'
 import ImageUpload from './ImageUpload'
-import VideoUpload from './VideoUpload';
+import VideoUpload from './VideoUpload'
 
 const Page1 = (props) => {
+	const subjectChange = (e) => {
+		props.handleData({ el: 'subject', data: e.target.value })
+	}
 	return (
 		<Fragment>
-			<div className="box">
-				<Pagination currentPage={1}></Pagination>
+			<div>
 				<div className="container">
 					<div className="text">
 						<div className="title">Coursename</div>
-						<input name="name" className="textfield" placeholder="Course Title" type="text"></input>
+						<input
+							name="name"
+							className="textfield"
+							placeholder="Course Title"
+							type="text"
+							value={props.data.name}
+							onChange={(e) => props.handleData({ el: 'name', data: e.target.value })}
+						></input>
 					</div>
 
 					<div className="text">
 						<div className="title">Choose Picture</div>
-						<ImageUpload index={0}></ImageUpload>
+						<ImageUpload data={props.data} index={0} handleData={props.handleData}></ImageUpload>
 					</div>
 
-					<div className="text">
+					<div style={{ marginTop: '10px' }}>
 						<div className="title">Sample Video</div>
-						<VideoUpload></VideoUpload>
+						<VideoUpload data={props.data} index={1} handleData={props.handleData}></VideoUpload>
 					</div>
 
 					<div className="text">
 						<div className="title">Subject</div>
-						<input className="textfield" placeholder="Introduction to Programming" type="text"></input>
+						<select name="subject" onChange={subjectChange} value={props.data.subject}>
+							<option disabled value="" style={{ color: '#3d467f', opacity: '0.75' }}>
+								Subject
+							</option>
+							{props.subjects.map((subject, idx) => {
+								return (
+									<option value={subject.cataid} key={idx}>
+										{subject.cataname}
+									</option>
+								)
+							})}
+						</select>
+					</div>
+
+					<div className="text">
+						<div className="title">Price</div>
+						<input
+							name="price"
+							className="textfield"
+							placeholder="Course Price"
+							type="number"
+							value={props.data.price}
+							onChange={(e) => props.handleData({ el: 'price', data: parseFloat(e.target.value) })}
+						></input>
 					</div>
 				</div>
 			</div>
 			<style jsx>{`
-				.box {
-					background: rgba(255, 255, 255, 0.9);
-					box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 2px 15px rgba(0, 0, 0, 0.2);
+				select {
+					-webkit-appearance: none;
+					-moz-appearance: none;
+					background: #eff0f6;
+					background-image: url('/images/instructor/select-arrow.svg');
+					background-repeat: no-repeat;
+					background-position-x: 95.5%;
+					background-position-y: center;
 					border-radius: 10px;
-					padding: 50px;
-					width: 65%;
-					margin-bottom: 100px;
+					width: 400px;
+					border: none;
+					font-size: 1.1em;
+					color: #3d467f;
+					padding: 14px;
 				}
 				.container {
 					display: flex;

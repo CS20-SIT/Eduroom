@@ -1,26 +1,37 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import NavForum from '../../../components/forum/searchForum'
+import React, { Fragment, useEffect, useState, useContext } from 'react'
 import style from '../../../styles/forum/showForum'
 import GeneralNoNav from '../../../components/template/generalnonav'
-import RoomTab from '../../../components/forum/RoomTab'
-import ForumInRoom from '../../../components/forum/ForumInRoom'
-import ForumBlock from '../../../components/forum/forumBlock'
+import ForumBox from '../../../components/forum/layout/forumBox'
 import api from '../../../api'
 import { useRouter } from 'next/router'
 import { makeStyles } from '@material-ui/core/styles'
-import BackButton from '../../../components/forum/BackButton'
-
+import BackForRoom from '../../../components/forum/BackForRoom'
+import ForumNav from '../../../components/forum/layout/forumNav'
+import UserContext from '../../../contexts/user/userContext'
 const roomID = (props) => {
 	const [data, setData] = useState([])
+	const userContext = useContext(UserContext)
+	const {user} = userContext
+	const GetData = async () => {
+		const result = await api.get(`/api/forum/room/${props.room}`)
+		setData(result.data.data)
+		console.log(result)
+	}
 	useEffect(() => {
-		console.log(props.room)
-		const GetData = async () => {
-			const result = await api.get(`/api/forum/room/${props.room}`)
-			setData(result.data.data)
-			console.log(result)
-		}
 		GetData()
 	}, [])
+	const handleLike = (id,callback) => {
+		if(user){
+			api.post(`/api/forum/like/${id}`).then(res=>{
+				getData()
+				callback()
+			}).catch(err=>{
+				console.log(err)
+			})
+		} else {
+			alert("Please Login Before Like na ja")
+		}
+	}
 	const router = useRouter()
 	const useStyles = makeStyles((theme) => ({
 		root: {
@@ -46,18 +57,22 @@ const roomID = (props) => {
 						flex: '1 1 auto',
 						justifyContent: 'space-between',
 						background: '#EFF0F6',
+						minHeight: '100vh',
 					}}
 				>
 					<div id="nav">
-						<NavForum />
-						<div className="backtoforum">
-							<BackButton />
+						<ForumNav />
+						<div className="backforroom">
+							<BackForRoom row={data} />
 						</div>
-						{/* <div className="roomtab">
-							<RoomTab />
-						</div> */}
 						<div className="forumblock">
-							<ForumInRoom row={data} />
+							{data.map((el, index) => {
+								return (
+									<Fragment key={index}>
+										<ForumBox data={el} onLike={handleLike} />
+									</Fragment>
+								)
+							})}
 						</div>
 					</div>
 					<style jsx>{style}</style>
@@ -71,6 +86,7 @@ const roomID = (props) => {
 								position: absolute;
 								bottom: 0;
 								width: 100%;
+								height: 100%;
 							}
 						`}
 					</style>

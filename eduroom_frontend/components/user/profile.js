@@ -2,13 +2,14 @@ import React, { Fragment, useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
+import TextField from '@material-ui/core/TextField';
+import { useRouter } from 'next/router'
 
 const Profile = () => {
 	const userContext = useContext(UserContext)
 	const user = userContext.user
 	const [birth, setBirth] = useState(null)
 	const [joined, setJoined] = useState(null)
-	console.log(user)
 	useEffect(() => {
 		if (user) {
 			const d = new Date(user.birthdate)
@@ -44,12 +45,16 @@ const Profile = () => {
 							{user.firstname} {user.lastname}
 						</h1>
 						<div style={{ marginTop: '20px' }}>
+							<Link href="/user/edit">
 							<div className="edit">
-								<h2 className="editText" style={{ margin: '0' }}>
-									Edit
-								</h2>
+								<Link href="/user/edit">
+									<h2 className="editText" style={{ margin: '0' }}>
+										Edit
+									</h2>
+								</Link>
 								<i className="fas fa-edit edit-icon" style={{ marginTop: '7px' }}></i>
 							</div>
+							</Link>
 						</div>
 					</div>
 
@@ -72,7 +77,16 @@ const Profile = () => {
 
 					<div className="topic">
 						<p className="header">Bio</p>
-						<span>{user.bio ? user.bio : '-'}</span>
+						<TextField
+							multiline
+							rows={4}
+							defaultValue={user.bio ? user.bio : '-'}
+							inputProps={{ readOnly: true }}
+						/>
+						{/* <textarea rows="4" cols="50" readonly>
+							{user.bio ? user.bio : '-'}
+						</textarea> */}
+						{/* <span>{user.bio ? user.bio : '-'}</span> */}
 					</div>
 					{renderRegister()}
 				</div>

@@ -1,20 +1,44 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../../styles/tutor/utils'
 
-import CSSTransition from 'react-transition-group/CSSTransition'
+import api from '../../../../api'
 
-import GeneralNoNav from '../../../../components/template/generalnonav'
+import GeneralNoNav from '../../../../components/template/general'
 
 import AppointmentList from '../../../../components/tutor/instructor-appointment/appointment-list'
 import AppointmentInfo from '../../../../components/tutor/instructor-appointment/appointment-info'
 import RequestMode from '../../../../components/tutor/instructor-appointment/request-mode'
 import TableHeader from '../../../../components/tutor/instructor-appointment/table-header'
 
-const Appointment = ({ appointments }) => {
+const Appointment = () => {
 	//   console.log(appointments[0]);
 
+	const [appointments, setAppointments] = useState(null)
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await api.get('/api/tutor/instructor/appointments')
+
+			const { appointment } = res.data
+			const approved = appointment.filter((e) => {
+				return e.status == 'Approved'
+			})
+			const rejected = appointment.filter((e) => {
+				return e.status == 'Rejected'
+			})
+			const pending = appointment.filter((e) => {
+				return e.status == 'Pending'
+			})
+
+			const tmp = [appointment, pending, approved, rejected]
+			console.log(tmp)
+
+			setAppointments(tmp)
+		}
+		fetchData()
+	}, [])
+
 	const renderIcon = () => {
-		return <i class="fa fa-chevron-left"></i>
+		return <i className="fa fa-chevron-left"></i>
 	}
 
 	const [requestMode, setRequestMode] = useState(0)
@@ -40,15 +64,18 @@ const Appointment = ({ appointments }) => {
 					<div className="container">
 						<RequestMode requestMode={requestMode} setRequestMode={setRequestMode} />
 						<TableHeader />
-						<AppointmentList
-							appointments={appointments}
-							requestMode={requestMode}
-							setAppointment={setAppointment}
-							setAID={setAID}
-							renderIcon={renderIcon}
-						/>
+						{appointments && (
+							<AppointmentList
+								appointments={appointments}
+								requestMode={requestMode}
+								setAppointment={setAppointment}
+								setAID={setAID}
+								renderIcon={renderIcon}
+							/>
+						)}
 					</div>
 				</div>
+
 				<style jsx>{utils}</style>
 				<style jsx>{``}</style>
 			</GeneralNoNav>
@@ -56,86 +83,4 @@ const Appointment = ({ appointments }) => {
 	)
 }
 
-export async function getServerSideProps(ctx) {
-	// GET /api/tutor/instructor/appointments
-	const appointment = [
-		{
-			appointmentID: 1,
-			id: 1,
-			members: [
-				{ id: 2, name: 'John Doe' },
-				{ id: 3, name: 'Mama Bear' },
-				{ id: 4, name: 'Barry Allen' },
-			],
-			startTime: 9,
-			endTime: 11,
-			date: [15, 10, 2020],
-			status: 'Pending',
-		},
-		{
-			appointmentID: 2,
-			id: 2,
-			name: 'John Doe',
-			members: [{ id: 1, name: 'King Shark' }],
-			startTime: 15,
-			endTime: 16,
-			date: [18, 10, 2020],
-			status: 'Pending',
-		},
-		{
-			appointmentID: 3,
-			id: 3,
-			name: 'Thanawat Benjachatriroj',
-			members: [
-				{ id: 2, name: 'John Doe' },
-				{ id: 3, name: 'Mama Bear' },
-			],
-			startTime: 11,
-			endTime: 12,
-			date: [16, 10, 2020],
-			status: 'Pending',
-		},
-		{
-			appointmentID: 4,
-			id: 3,
-			name: 'Thanawat Benjachatriroj',
-			members: [],
-			startTime: 11,
-			endTime: 12,
-			date: [16, 10, 2020],
-			status: 'Approved',
-		},
-		{
-			appointmentID: 5,
-			id: 1,
-			name: 'Thanawat Benjachatriroj',
-			members: [
-				{ id: 2, name: 'John Doe' },
-				{ id: 3, name: 'Mama Bear' },
-				{ id: 4, name: 'Barry Allen' },
-			],
-			startTime: 9,
-			endTime: 11,
-			date: [17, 10, 2020],
-			status: 'Rejected',
-		},
-	]
-	const approved = appointment.filter((e) => {
-		return e.status == 'Approved'
-	})
-	const rejected = appointment.filter((e) => {
-		return e.status == 'Rejected'
-	})
-	const pending = appointment.filter((e) => {
-		return e.status == 'Pending'
-	})
-
-	const appointments = [appointment, pending, approved, rejected]
-
-	return {
-		props: {
-			appointments,
-		},
-	}
-}
 export default Appointment

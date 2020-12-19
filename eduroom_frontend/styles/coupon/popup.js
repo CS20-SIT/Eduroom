@@ -12,6 +12,7 @@ export default css`
     margin-top:-20px;
     border-radius: 25px;
     font-size:20px;
+    cursor:pointer;
 }
 .text{
     position:relative;
@@ -24,6 +25,7 @@ export default css`
     font-size:40px;
     font-weight:bold;
     color:grey;
+    cursor:pointer;
 }
 .con{
     position:relative;

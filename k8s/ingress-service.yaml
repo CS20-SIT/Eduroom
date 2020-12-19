@@ -32,10 +32,6 @@ spec:
             backend:
               serviceName: eduroom-socket-kahoot-clusterip
               servicePort: 8000
-          - path: /grader/
-            backend:
-              serviceName: eduroom-grading-server-clusterip
-              servicePort: 3050
           - path: /api/
             backend:
               serviceName: eduroom-backend-clusterip

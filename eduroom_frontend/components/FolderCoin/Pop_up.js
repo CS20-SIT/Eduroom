@@ -1,29 +1,35 @@
 import { Container } from '@material-ui/core';
 import Styles from '../../styles/CoinStyles/Pop-up.module.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Dialog, DialogContent } from '@material-ui/core';
 import EnsurePay from '../FolderCoin/ensurePayment';
 import Card from '@material-ui/core/Card';
+import api from '../../api';
 const temp = (props) => {
     const [state, setState] = useState(false);
+    const [data, setData] = useState([]);
+    const [coins,setCoin] = useState();
+    const [name,setName] = useState();
     const PopPurchase = () => {
         setState(true)
     };
-    const listPicture = [
-        { src: '../../images/Coin-image/Icon_Avocado.svg' },
-        { src: '../../images/Coin-image/Icon_Coconut_2.svg' },
-        { src: '../../images/Coin-image/Icon_Garnet.svg' },
-        { src: '../../images/Coin-image/Icon_Peach.svg' },
-        { src: '../../images/Coin-image/Icon_Lemon.svg' },
-        { src: '../../images/Coin-image/Icon_Orange.svg' },
-        { src: '../../images/Coin-image/Icon_Pear.svg' },
-        { src: '../../images/Coin-image/Icon_Red Apple.svg' }
-    ]
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            console.log(props.id);
+            const res = await api.get(`/api/coin/stickers/${props.id}`);
+            setData(res.data.stickers);
+            setCoin(res.data.mycoins)
+            console.log();
+        };
+        fetchData();
+        
+    },[]);
+  
     return (
         <Container>
             <div className={Styles.setPayment}>
                 <div className={Styles.setPhotoMoney}>
-                    <img className={Styles.showPhoto} src='../../images/Coin-image/Icon_Peach.svg' />
+                    <img className={Styles.showPhoto} src={props.img} />
                     <div className={Styles.setMoney}>
                         <img className={Styles.coinPhoto} src='../../images/Coin-image/icon_coin_back.svg' />
                         <h3 className={Styles.priceView}>{props.price} $</h3>
@@ -38,7 +44,7 @@ const temp = (props) => {
                 quia dolor sit amet, consectetur, adipisci</p>
                     <h3>No expiration Date</h3>
 
-                    <h3>My coins: 99 $</h3>
+                    <h3>My coins:{coins}  $</h3>
                     <div>
                         <button className={Styles.btn} onClick={PopPurchase}>Purchase</button>
 
@@ -50,8 +56,8 @@ const temp = (props) => {
             </div>
             <div className={Styles.line}></div>
             <div className={Styles.listSticker}>
-                {listPicture.map(picture => (
-                    <img className={Styles.picture} src={picture.src} />
+                {data.map(picture => (
+                    <img className={Styles.picture} src={picture.stickerimg} />
                 ))}
             </div>
         </Container>
