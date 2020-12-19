@@ -69,10 +69,10 @@ exports.createSubmission = async (req, res) => {
 		const batchSubmissionResponse = await grader.post('/submissions/batch?base64_encoded=true', submissionRequestBody)
 
 		// Send API of get batch submission to judge0
-		// let submissionTokensParams = ""
-		// batchSubmissionResponse.data.forEach(ele => {
-		// 	submissionTokensParams += `${ele.token},`
-		// })
+		let submissionTokensParams = ""
+		batchSubmissionResponse.data.forEach(ele => {
+			submissionTokensParams += `${ele.token},`
+		})
 		// const getSubmissionsResponse = await grader.get('/submissions/batch', {
 		// 	params: {
 		// 		base64_encoded: false,
@@ -80,10 +80,26 @@ exports.createSubmission = async (req, res) => {
 		// 	}
 		// })
 
-		res.status(201).send(batchSubmissionResponse.data)
+		res.status(201).send({ tokens: stringToBase64(submissionTokensParams) })
 	} catch (error) {
         errorHandler(error, req, res)
     }
+}
+
+exports.getSubmission = async (req, res) => {
+	try {
+		const userId = '9c2822a0-cf80-487c-9189-a4682916d2b5'
+		const tokens = base64ToString(req.query.tokens)
+		const getSubmissionsResponse = await grader.get('/submissions/batch', {
+			params: {
+				base64_encoded: false,
+				tokens
+			}
+		})
+		res.send(getSubmissionsResponse.data)
+	} catch (error) {
+		errorHandler(error, req, res)
+	}
 }
 
 const getLanguage_id = (lang) => {
