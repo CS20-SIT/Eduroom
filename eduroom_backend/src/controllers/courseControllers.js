@@ -3,9 +3,9 @@ const pool = require('../database/db')
 
 exports.getAllCourse = async (req, res) => {
     try {
-        const { rows } = await pool.query(`select * from course
-        join instructor i on course.ownerid = i.instructorid
-        join user_profile up on i.userid = up.userid`)
+        const { rows } = await pool.query(`select * from course,instructor i,user_profile up, categories, course_categories cocat
+        where course.ownerid = i.instructorid and i.userid = up.userid and
+              course.courseid = cocat.courseid and cocat.cataid = categories.cataid;`)
         if(!rows)
             res.status(404).send({msg: 'Not Found'})
         res.status(200).send(rows)
@@ -67,13 +67,12 @@ exports.getCategory = async(req,res,next) =>{
 }
 
 exports.searchCategory = async (req, res, next) => {
-	const cataname = req.body.cataname;
-	const user = req.user
+	const cataname = req.params.cataname;
     if(cataname){
         const data = await pool.query(
-            `select course.courseid as courseid, coursename, categories.cataid as cataid, cataname
-			from categories, course_categories cocat, course
-			where course.courseid = cocat.courseid and cocat.cataid = categories.cataid; WHERE UPPER(cataname) LIKE $1'`,
+            `select * from course,instructor i,user_profile up, categories, course_categories cocat
+            where course.ownerid = i.instructorid and i.userid = up.userid and
+                  course.courseid = cocat.courseid and cocat.cataid = categories.cataid and cataname = $1`,
             [cataname]
       )
     const course = data.rows
@@ -111,20 +110,3 @@ exports.getCourse = async (req, res, next) => {
 };
 
 
-
-exports.searchCategory = async (req, res, next) => {
-	const cataname = req.body.cataname;
-	const user = req.user
-    if(cataname){
-        const data = await pool.query(
-            `select course.courseid as courseid, coursename, categories.cataid as cataid, cataname
-			from categories, course_categories cocat, course
-			where course.courseid = cocat.courseid and cocat.cataid = categories.cataid; WHERE UPPER(cataname) LIKE $1'`,
-            [cataname]
-      )
-    const course = data.rows
-      res.status(200).json({ success: true, data: course })
-    } else {
-      return next(new ErrorResponse("Not Found",404))
-    }
-}
