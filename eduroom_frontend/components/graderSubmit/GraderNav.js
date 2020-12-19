@@ -10,7 +10,7 @@ const GraderNav = (props) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			let result = await api.get('api/auth/profile')
+			let result = await api.get('/api/auth/profile')
 			setData(result.data)
 		}
 		GetData()

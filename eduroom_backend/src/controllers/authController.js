@@ -78,6 +78,9 @@ exports.regisController = async (req, res) => {
         VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
 		await pool.query(userProfileCreationQuery, [''])
 
+		// Insert new user to coin_owner
+		await pool.query(`INSERT INTO coin_owner (userid, amountofcoin) VALUES ('${userId}', 0);`)
+
 		// Create local_auth
 		const localAuthCreationQuery = `INSERT INTO local_auth (userid, email, password) 
                                         VALUES ('${userId}', '${user.email}', '${user.password}')`
@@ -247,10 +250,10 @@ exports.adminRegisController = async (req, res) => {
 	VALUES ('${adminId}', '${username}', '${hashedPassword}', $1, $1, $1, $1, $1)`
 	await pool.query(insertAdminQuery, [''])
 
-	res.status(201).send({ success: true })
+	const token = generateCookieAdminJWT(adminId)
+	res.cookie('jwt', token)
 
-	// const token = generateCookieAdminJWT(adminId)
-	// res.cookie('jwt', token)
+	res.status(201).send({ success: true })
 	// res.redirect(process.env.ENTRYPOINT_URL)
 }
 
