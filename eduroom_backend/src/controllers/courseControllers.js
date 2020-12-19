@@ -2,7 +2,7 @@ const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
 const errorHandler = require('../middleware/error');
 
-const getAllCourse = async (req, res) => {
+exports.getAllCourse = async (req, res) => {
     try {
         const { rows } = await pool.query(`select * from course
         join instructor i on course.ownerid = i.instructorid
@@ -18,7 +18,7 @@ const getAllCourse = async (req, res) => {
     }
 }
 
-const getCourseFromID = async (req, res) => {
+exports.getCourseFromID = async (req, res) => {
     try {
         const { rows } = await pool.query(`SELECT * FROM course
         join instructor i on course.ownerid = i.instructorid
@@ -36,7 +36,7 @@ const getCourseFromID = async (req, res) => {
     }
 }
 
-const getCourseSectionPart = async (req, res) => {
+exports.getCourseSectionPart = async (req, res) => {
     console.log(req.body.courseID, 'rty');
     try {
         const {rows} = await pool.query(`SELECT * FROM course
@@ -49,7 +49,6 @@ const getCourseSectionPart = async (req, res) => {
         if(!rows)
             res.status(404).send({msg: 'Not Found'})
 
-
             console.log( rows );
 
         res.status(200).send(rows)
@@ -59,7 +58,7 @@ const getCourseSectionPart = async (req, res) => {
     }
 }
 
-const searchCourse = async (req, res, next) => {
+exports.searchCourse = async (req, res, next) => {
     const search = req.body.search;
     const user = req.user
     if(search){
@@ -108,4 +107,7 @@ module.exports = {
     getCourseSectionPart,
     searchCourse,
     getCourse
+exports.getCategory = async(req,res,next) =>{
+    const data = await pool.query ('SELECT cataname from categories');
+    res.status(200).json({success: true , category:data.rows})
 }

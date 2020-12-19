@@ -3,12 +3,16 @@ import utils from '../../styles/course/utils';
 import GeneralNoNav from '../../components/template/generalnonav';
 import Link from 'next/link';
 import SearchBar from '../../components/course/searchBar'
+import CategoryBar from '../../components/course/categoryBar'
+import {useRouter} from 'next/router'
 import Name from '../../components/course/courseRender'
 
 import api from '../../api'
 
 // const Course = ({ courseDes }) => {
 const Course = () => {
+  const [courseDes, setCourseDes] = useState([])
+  const [category,setCategory] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,38 +21,47 @@ const Course = () => {
       setCourseDes(res.data);
     }
     fetchData()
+
   }, [])
 
-  const [courseDes, setCourseDes] = useState([])
+  useEffect(() => {
+    getCategory()
+  }, [])
+    const getCategory = () =>{
+        api
+            .get('/api/course/category')
+            .then((res) => {
+          setCategory(res.data.category)
+      })
+      .catch((err) => [console.log(err)])
+    }
+
+  
 
   return (
     <Fragment>
       <GeneralNoNav>
-        <div className='bg-little-grey'>
-          <div className='container'>
+        <div className='bg'>
+          <div className='container-1'>
 
             {/* Search bar and Categories select */}
             <div className='text-center flex my-6'>
               <SearchBar />
-              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox' placeholder="category">
-                <option>Category</option>
-                <option>Development</option>
-                <option>Finance</option>
-                <option>Music</option>
+              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'>
+              <option>
+                    Category
+              </option>
+                  {category.map((el, idx) => {
+                    return (
+                      <option>
+                        {el.cataname}
+                      </option>
+                    )
+                  })}
               </select>
             </div>
 
-            {/* Categories Name */}
-            <div className='text-center categoryTab'>
-              <Link href={`/course`}>
-                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>GENERAL</span></Link>
-                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MATH</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT & SOFTWARE</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>DESIGN</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MARKETING</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>BUSINESS</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>OTHER</span>
-            </div>
+            <CategoryBar/>
 
             {/* Box of each course */}
             <div className='text-center my-10'>
@@ -71,8 +84,14 @@ const Course = () => {
         <style jsx>{utils}</style>
         <style jsx>
           {`
-					.cateBox { 
-						border: none;
+          .container-1{
+            max-width: 87vw;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 4rem 1rem;
+          }
+          .cateBox { 
+            border: none;
             outlined: none;
             padding-left: 15px;
             font-size: 0.8rem;
@@ -81,11 +100,10 @@ const Course = () => {
           .categoryTab{
             margin-top: 3rem;
           }
-          // .bg{
-          //   background: #A27CEF;
-          //   opacity: 0.06;
-          // }
-				`}
+          .bg{
+            background: #F9F7FE;
+          }
+        `}
         </style>
       </GeneralNoNav>
     </Fragment>
@@ -146,7 +164,6 @@ const Course = () => {
 // }
 
 
-
 export default Course;
 // import React, { Fragment, useState, useEffect } from 'react'
 // import ProductCourse from '../../components/course/courseStore'
@@ -155,23 +172,23 @@ export default Course;
 // import General from '../../components/template/general'
 
 // const packages = () => {
-// 	const [show, setShow] = useState(false)
-// 	return (
-// 		<Fragment>
-// 			<General>
-// 				<div>
-// 					<h1>Test</h1>
-// 				</div>
-// 				<div>
-// 					<div style={{ margin: '10' }}>
-// 						<ProductCourse></ProductCourse>
-// 					</div>
-// 					<div>
-// 						<ProductPackage></ProductPackage>
-// 					</div>
-// 				</div>
-// 			</General>
-// 			<style jsx>{Styles}</style>
-// 		</Fragment>
-// 	)
+//  const [show, setShow] = useState(false)
+//  return (
+//    <Fragment>
+//      <General>
+//        <div>
+//          <h1>Test</h1>
+//        </div>
+//        <div>
+//          <div style={{ margin: '10' }}>
+//            <ProductCourse></ProductCourse>
+//          </div>
+//          <div>
+//            <ProductPackage></ProductPackage>
+//          </div>
+//        </div>
+//      </General>
+//      <style jsx>{Styles}</style>
+//    </Fragment>
+//  )
 // }
