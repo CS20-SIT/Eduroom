@@ -203,10 +203,28 @@ exports.getAdminEvent = async (req, res, next) => {
 }
 exports.eAdminEvent = async (req, res, next) => {
   const id = req.query.id;
-  console.log(id);
-  await pool.query(`update global_event 
-  set title='toie k',startdate='2020-12-20',enddate='2020-12-20',endtime='12:19:00',starttime='12:19:00',detail='tktktktktktktktktk',place='tktktktk'
-   where eventid  = ${id}`);
+  const title = req.body.title;
+  const startdate = req.body.startDate;
+  const enddate = req.body.endDate;
+  const endtime = req.body.endTime;
+  const starttime = req.body.startTime;
+  const detail = req.body.description;
+  const place = req.body.place;
+  console.log(req.body);
+  await pool.query("update global_event \
+                    set (title,startdate,enddate,endtime,starttime,detail,place)=($1,$2,$3,$4,$5,$6,$7) \
+                    where eventid = $8",
+  [
+    title,
+    startdate,
+    enddate,
+    endtime,
+    starttime,
+    detail,
+    place,
+    id
+  ]
+  );
   res.send({ success: true });
 
 }
