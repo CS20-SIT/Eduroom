@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import Studentnav from "../studentsidenav";
 
-const GetStart = () => {
+const Index = () => {
   const theme = createMuiTheme({
     typography: {
       fontFamily: "Quicksand",
@@ -24,11 +24,11 @@ const GetStart = () => {
   return (
     <Fragment>
       <Link href='/support'><label>Eduroom Support
-                    </label></Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><label>Getting Started</label>
+                    </label></Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><label>Account / Profile</label>
       <Grid container style={{ marginTop: theme.spacing(2) }}>
         <Grid item xs={12}>
           <Typography style={{marginBottom:theme.spacing(5)}}>
-            <h1>GETTING STARTED</h1>
+            <h1>Account / Profile</h1>
           </Typography>
         </Grid>
         <Grid container>
@@ -49,12 +49,12 @@ const GetStart = () => {
               }}
             >
               <Typography>
-                <h2>Getting Started - General</h2>
+                <h2>Account / Profile - General</h2>
               </Typography>
               <hr style={{ marginRight: theme.spacing(5), marginBottom: theme.spacing(3) }}></hr>
               <p>
-                <Link href="/support/getstart/Course-Instructors-and-Teaching-Assistants">
-                  Course Instructors and Teaching Assistants
+                <Link href="/support/getstart/Merging-Account">
+                  Merging Account
                 </Link>
               </p>
               
@@ -77,4 +77,4 @@ const GetStart = () => {
     </Fragment>
   );
 };
-export default GetStart;
+export default Index;
