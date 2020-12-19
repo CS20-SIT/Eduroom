@@ -9,11 +9,12 @@ const edit = (props) => {
     const router = useRouter();
     const setOpenEvent = props.setOpenEvent
     const [EditOpen, setEditOpen] = useState(false);
+    const [courseList, setCourseList] = useState([])
     const handleClickOpen = () => {
         setEditOpen(true);
     };
     const [data, setData] = useState([])
-
+    const [eventInfo, setEventInfo] = useState(null)
     useEffect(() => {
         const GetData = async () => {
             const result1 = await api.get("/api/event/getEvent",
@@ -22,29 +23,34 @@ const edit = (props) => {
                         id: props.id
                     }
                 });
+            console.log('data is ', result1.data[0])
             setData(result1.data[0]);
+            setEventInfo(result1.data[0]);
 
         };
         GetData();
 
     }, []);
-    // console.log(data)
+    console.log(data)
 
+    // ---------------------Edit---------------------------
 
-    // ---------------------createEvent---------------------------
-    const [eventInfo, setEventInfo] = useState({
-        title: data?.title,
-        description: data?.detail,
-        startDate: data?.startdate,
-        endDate: data?.enddate,
-        startTime: data?.starttime,
-        endTime: data?.endtime,
-        place: data?.place,
-    })
+    useEffect(() => {
+
+        api.get('/api/event/getMyCourse').then(
+            (res) => {
+                setCourseList(res.data.data);
+                // setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
+            }
+        ).catch(err => { });
+    }, [])
+
+    console.log(eventInfo);
     const handleCreate = (e) => {
-
+        console.log('info is')
+        console.log(eventInfo);
         // if (validator()) {
-        api.post("/api/event/eEvent", eventInfo).then(
+        api.post("/api/event/eEvent", { ...eventInfo, id: props.id }).then(
             (res) => {
                 alert("success");
                 window.location.reload();
@@ -52,26 +58,26 @@ const edit = (props) => {
         ).catch(err => {
             console.log(err);
         })
-           
-        
+
+
     };
     const eventType = ['Course', 'Global']
 
     return (
         <Fragment>
-            <div style={{marginBottom:"20px"}}>
-            <button
-                style={{
-                    padding: 0,
-                    border: "none",
-                    background: "none",
-                    cursor: "pointer",
-                }}
-                onClick={handleClickOpen}
-            >
-                {" "}
-                <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
-            </button>
+            <div style={{ marginBottom: "20px" }}>
+                <button
+                    style={{
+                        padding: 0,
+                        border: "none",
+                        background: "none",
+                        cursor: "pointer",
+                    }}
+                    onClick={handleClickOpen}
+                >
+                    {" "}
+                    <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
+                </button>
             </div>
 
             <CSSTransition
@@ -93,7 +99,7 @@ const edit = (props) => {
                             className="event-title"
                             onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
                             placeholder="Event Title"
-                            style={{ height: '50px' ,fontSize:'18px'}}
+                            style={{ height: '50px', fontSize: '18px' }}
                         ></input>
                             : null
 
@@ -102,14 +108,11 @@ const edit = (props) => {
 
                     {/* ---------------------- ---------eventType------------------------------- */}
                     <div>
-                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, type: e.target.value })}>
-                            <option value="default" disabled>
-                                Event Type
-							</option>
-                            {eventType.map((type) => {
+                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+                            {courseList.map((course) => {
                                 return (
-                                    <option value={type} key={type}>
-                                        {type}
+                                    <option value={course.courseid} key={course.courseid}>
+                                        {course.coursename}
                                     </option>
                                 )
                             })}
@@ -121,9 +124,9 @@ const edit = (props) => {
                         <input
                             defaultValue={data?.detail}
                             className="event-detail"
-                            onChange={(e) => setEventInfo({ ...eventInfo, description: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, detail: e.target.value })}
                             placeholder="Description"
-                            style={{ height: '50px' ,fontSize:'18px'}}
+                            style={{ height: '50px', fontSize: '18px' }}
                         ></input>
                     </div>
                     {/* ---------------------- ---------time------------------------------- */}
@@ -134,10 +137,10 @@ const edit = (props) => {
                         <input
                             defaultValue={data?.startdate}
                             className="event-startDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, startdate: e.target.value })}
                             placeholder="Start date"
                             type="date"
-                            style={{fontSize:'14px'}}
+                            style={{ fontSize: '14px' }}
                         ></input>
                     </div>
 
@@ -146,10 +149,10 @@ const edit = (props) => {
                         <input
                             defaultValue={data?.starttime}
                             className="event-startTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startTime: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, starttime: e.target.value })}
                             placeholder="Start Time"
                             type="Time"
-                            style={{fontSize:'14px'}}
+                            style={{ fontSize: '14px' }}
                         ></input>
                     </div>
 
@@ -158,10 +161,10 @@ const edit = (props) => {
                         <input
                             defaultValue={data?.enddate}
                             className="event-endDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endDate: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, enddate: e.target.value })}
                             placeholder="end date"
                             type="date"
-                            style={{fontSize:'14px'}}
+                            style={{ fontSize: '14px' }}
 
                         ></input>
                     </div>
@@ -171,10 +174,10 @@ const edit = (props) => {
                         <input
                             defaultValue={data?.endtime}
                             className="event-endTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endTime: e.target.value })}
+                            onChange={(e) => setEventInfo({ ...eventInfo, endtime: e.target.value })}
                             placeholder="end Time"
                             type="time"
-                            style={{fontSize:'14px'}}
+                            style={{ fontSize: '14px' }}
 
                         ></input>
                     </div>
@@ -186,7 +189,7 @@ const edit = (props) => {
                             className="event-place"
                             onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
                             placeholder="Event Place"
-                            style={{ height: '50px' ,fontSize:'18px'}}
+                            style={{ height: '50px', fontSize: '18px' }}
                         ></input>
                     </div>
 

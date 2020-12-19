@@ -115,15 +115,19 @@ exports.dEvent = async (req, res, next) => {
 exports.getEvent = async (req, res, next) => {
   const id = req.query.id
   const result = await pool.query(`select * from course_event where eventid = ${id}`);
+  console.log('data is ',result.rows[0])
+  result.rows[0].startdate = result.rows[0].startdate.toISOString().slice(0,10)
+  result.rows[0].enddate = result.rows[0].enddate.toISOString().slice(0,10)
+
   res.send(result.rows);
 
 }
 exports.eEvent = async (req, res, next) => {
-  const id = req.query.id;
+  const id = req.body.id;
   const title = req.body.title;
-  const startdate = req.body.startDate;
-  const enddate = req.body.endDate;
-  const endtime = req.body.endTime;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const endtime = req.body.endtime;
   const starttime = req.body.starttime;
   const detail = req.body.detail;
   const place = req.body.place;
@@ -146,7 +150,7 @@ exports.eEvent = async (req, res, next) => {
 
 }
 
-//-----------------for admin-----------------------------
+//-----------------for admin--------------------------------------------------------------------------------------------------------------
 
 
 exports.createAdminEvent = async (req, res, next) => {
