@@ -13,14 +13,8 @@ import {
 	Paper,
 	MenuItem,
 } from '@material-ui/core'
-import GeneralNoNav from '../../components/template/generalnonav'
 import TextField from '@material-ui/core/TextField'
 import api from '../../api'
-import UserContext from '../../contexts/user/userContext'
-import AuthDialog from '../../components/landing/authDialog'
-import ShowComment from './showComment'
-import StudentFeedback from './studentFeedback'
-import PostedReviewBox from './postedReviewBox'
 const commentForPost = (props) => {
 	const [reviewInfo, setReviewInfo] = useState({
 		rate: 5,
