@@ -21,37 +21,55 @@ const Page1 = ({
   const room = { name: "room1", PIN: router.query.id };
 
   const [diff, setDiff] = useState(null);
+  const [countPlayer, setCountPlayer] = useState([]);
+  // console.log('countPlayer',countPlayer)
+
+  const setCountP = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = [];
+    socket.emit("room", (router.query.id));
+    socket.on("get-countAnswer", (pin, questionNo,playerAnswer) => {
+      temp.push([playerAnswer]);
+      console.log('getCount',playerAnswer)
+      countPlayer.push(temp);
+      console.log(temp,"temp")
+    });
+  };
+
+
+
+
   const [endTime, setEndTime] = useState(null);
   var intervalID = null;
 
   const responseTime = () => {
-    console.log('testTIme')
     socket.emit('room',router.query.id)
     socket.on("sent-end-time", (pin, time) => {
       if(pin==id.id){
-      console.log('sent-end-time',pin,time)
+      // console.log('sent-end-time',pin,time)
       setEndTime(time);
       }
     });
   };
+  useEffect(() => {
+   
+    
+  }, [countPlayer]);
 
   useEffect(() => {
+    if(data[questionNumber]){
     socket.emit("start-game", id.id, data[questionNumber].time);
+    setCountP();
     responseTime();
-    ///////////////
-   
-   
-  
-   
-  
- 
-    //////////////
-  }, []);
+    }
+  }, [data]);
   useEffect(() => {
     responseTime();
     if (diff != null) {
       socket.emit("set-diff", diff, id.id);
-      console.log(diff);
+      // console.log(diff);
     }
   }, [diff]);
 
@@ -83,12 +101,16 @@ const Page1 = ({
   function setSkip() {
     clearInterval(intervalID);
     socket.emit("set-skip", true,id.id);
+    if(questionNumber==data.length){
+      goto(5);
+    }
     goto(2);
   }
-
-  return (
-    <Fragment>
-      <div className="landing">
+  
+  return  (
+    
+      (data[questionNumber]?
+        <Fragment><div className="landing">
         <Grid container style={{ marginTop: "4vh" }}>
           <Grid item xs={10}>
             <div className="text-title">
@@ -132,7 +154,7 @@ const Page1 = ({
             <Grid item xs={4}>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <img
-                  src="/images/questionPic.jpg "
+                  src={data[questionNumber].image}
                   alt="my image"
                   style={{
                     width: "90%",
@@ -147,7 +169,7 @@ const Page1 = ({
             <Grid item xs={4}>
               <div className="text-time">ANSWER</div>
               <div className="text-timeNum" style={{ color: "#FB9CCB" }}>
-                0
+                {countPlayer.length}
               </div>
             </Grid>
           </Grid>
@@ -221,6 +243,7 @@ const Page1 = ({
           </Grid>
         </div>
       </div>
+      
       <style jsx>
         {`
           .buttonAnswer {
@@ -323,6 +346,7 @@ const Page1 = ({
         `}
       </style>
     </Fragment>
+      :null)
   );
 };
 export default Page1;

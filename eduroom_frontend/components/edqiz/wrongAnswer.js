@@ -1,8 +1,13 @@
 import React, { Fragment, useEffect } from "react";
 
 import Grid from "@material-ui/core/Grid";
-const Page4 = ({ data,responseNextQuestion, questionNumber,id }) => {
+const Page4 = ({ data,responseNextQuestion, questionNumber,id ,goto}) => {
   useEffect(() => {
+   console.log(data.length,questionNumber)
+  //  if((data.length-1)==questionNumber){
+  //    console.log('ha')
+  //    goto(5)
+  //  }
     responseNextQuestion();
   }, []);
   return (
@@ -25,8 +30,6 @@ const Page4 = ({ data,responseNextQuestion, questionNumber,id }) => {
           style={{ color: "white", fontSize: "10vw" }}
         ></i>
         <span className="correct">Wrong!!</span>
-        <div className="font">-1000000 points for you</div>
-        <div className="font">You are now in 3 th position</div>
       </div>
       <Grid
         container

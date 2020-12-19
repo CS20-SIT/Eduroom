@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const { getStickers,getDailyRewardStatus,setCoinTransaction, ShowCoinOwner,showStickerOwner } = require('../controllers/Coin/coin');
-
+const { getStickers,getDailyRewardStatus,showCoinOwner,showStickerOwner, buySticker, getCoinFromEdqiz, packStickerStore,insertDailyReward} = require('../controllers/Coin/coin');
+// router.get('/packsticker',getStickerInPackage);
 router.get('/stickers', getStickers);
 router.get('/dailyReward',getDailyRewardStatus);
-router.post('/coinTransaction',setCoinTransaction);
-router.get('/coinOwner',ShowCoinOwner);
+router.get('/stickers/:id', packStickerStore)
+// router.post('/coinTransaction',setCoinTransaction);
+router.get('/coinOwner',showCoinOwner);
 router.get('/stickerOwner',showStickerOwner);
+// router.post('/coinTransaction',addReduceTransOwner);
+router.post('/buySticker',buySticker)
+router.post('/getCoinFromEdqiz',getCoinFromEdqiz)
+router.post('/dailyReward',insertDailyReward)
 module.exports = router;

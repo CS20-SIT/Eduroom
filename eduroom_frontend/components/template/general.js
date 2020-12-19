@@ -7,17 +7,10 @@ const General = (props) => {
 	return (
 		<Fragment>
 			<Header />
-			<div
-				style={{
-					display: 'flex',
-					flex: '1 1 auto',
-					justifyContent: 'space-between',
-					background: '#F4F5F7',
-				}}
-			>
+			<div>
 				<SideNav />
 				<div id="content">
-					<Navbar />
+					<Navbar isProtected={props.isProtected ?? false}/>
 					<div style={{ paddingLeft: '5%' }}>
 						<main>{props.children}</main>
 					</div>
@@ -31,9 +24,10 @@ const General = (props) => {
 						top: 0;
 						z-index: 20;
 						min-height: 100vh;
+						background: none;
 					}
 					.background-img {
-						position: absolute;
+						position: fixed;
 						bottom: 0;
 						width: 100vw;
 						z-index: 5;

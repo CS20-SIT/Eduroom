@@ -13,11 +13,13 @@ const Content = () => {
             <span style={{ fontSize: '1.3em' }}>EDUROOM</span>
           </div>
           <div className="landing-description">
-            Neque porro quisquam est qui dolorem <br />
-            ipsum quia dolor sit amet, consectetur, adipisci
+            Online Learning platform let you learn<br/>
+            new things and Coding grader for <br/>
+            practicing coding skills !
           </div>
           <button
             className="landing-button"
+            id="get-start-btn"
             onClick={() => router.push('/login')}
           >
             <a className="landing-button-text">GET STARTED</a>

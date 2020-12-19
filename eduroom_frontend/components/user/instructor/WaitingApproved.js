@@ -8,7 +8,7 @@ const WaitingApproved = () => {
         <div style={{ textAlign: 'center' }}>
           <h1>Waiting for approved ...</h1>
           <h1>You already submit your instructor registration</h1>
-          <Link href="/user/instructor">
+          <Link href="/user">
             <button className="back">Back</button>
           </Link>
         </div>

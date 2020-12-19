@@ -6,12 +6,6 @@ const GeneralNonav = (props) => {
     <Fragment>
       <Header />
       <div
-        style={{
-          display: "flex",
-          flex: "1 1 auto",
-          justifyContent: "space-between",
-          background: "#F4F5F7",
-        }}
       >
         <SideNav />
         <div id="content">
@@ -20,7 +14,7 @@ const GeneralNonav = (props) => {
         {props.img ? (
           <img
             alt="background-img"
-            src={props.img}
+            s-rc={props.img}
             className="background-img"
           />
         ) : null}
@@ -35,9 +29,10 @@ const GeneralNonav = (props) => {
             height: 100vh;
             overflow-y: auto;
             position: fixed;
+            background: #F4F5F7,
           }
           .background-img {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             width: 100vw;
             z-index: 5;

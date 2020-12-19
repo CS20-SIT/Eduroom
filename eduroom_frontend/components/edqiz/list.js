@@ -36,7 +36,7 @@ const Page1 = ({ data, goto, handleQuestionNumber,questionNumber }) => {
   return (
     <Fragment>
       <div className="landing">
-        <div style={{ marginTop: "5vh", width: "100vw" }}>
+        <div style={{ marginTop: "5vh"}}>
           <EdqizText type="list" />
         </div>
         <div className="title">
@@ -70,17 +70,16 @@ const Page1 = ({ data, goto, handleQuestionNumber,questionNumber }) => {
           display: flex;
           align-items: center;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-          justify-content: center;
+
           background: white;
           padding: 0px;
           transition: 0.3s;
-          width: 95vw;
+          width: 90vw;
           border-radius: 5vh;
-          padding: 20px;
         }
         .landing {
           justify-content: center;
-          width: 100vw;
+          width: 95vw;
           height: 100vh;
           background-image: url("/images/edqiz/create-bg.svg");
           background-repeat: no-repeat;

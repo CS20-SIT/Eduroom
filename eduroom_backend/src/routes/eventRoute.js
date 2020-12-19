@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const {getEvent, createEvent} = require('../controllers/event')
-
-router.get('/getEvent', getEvent);
-router.post('/createEvent',createEvent);
-
+const {getGlobalEvent,getCourseEvent, createEvent, getEventInMonthYear,dEvent,getEvent} = require('../controllers/event');
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate');
+router.get('/getGlobalEvent', getGlobalEvent);
+router.get('/getCourseEvent',getCourseEvent);
+router.post('/createEvent',jwtAuthenicate,createEvent);
+router.get('/getEventInMonthYear',jwtAuthenicate,getEventInMonthYear);
+router.delete('/dEvent',jwtAuthenicate,dEvent);
+router.get('/getEvent',getEvent)
 module.exports = router
