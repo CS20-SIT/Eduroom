@@ -32,8 +32,13 @@ const removeFromCart = (type, id) => {
 	const store = localStorage.getItem(type)
 	const items = store.split(',')
 	const idx = items.indexOf(id)
-	const newItems = items.splice(idx, 1)
-	localStorage.setItem(type, newItems)
+	items.splice(idx, 1)
+	localStorage.setItem(type, items)
 }
 
-module.exports = { getItems, isInCart, addToCart, removeFromCart }
+const clearCart = () =>{
+	localStorage.removeItem('course')
+	localStorage.removeItem('package')
+}
+
+module.exports = { getItems, isInCart, addToCart, removeFromCart,clearCart }

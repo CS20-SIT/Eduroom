@@ -3,9 +3,10 @@ import utils from '../../../styles/course/utils'
 import GeneralNoNav from '../../../components/template/generalnonav'
 import Link from 'next/link'
 import api from '../../../api'
-import cart from '../../../utils/cart'
+import { getItems, isInCart, addToCart, removeFromCart } from '../../../utils/cart'
 
 const CourseID = ({ id }) => {
+	const [cart, setCart] = useState([])
 	const [course, setCourse] = useState(null)
 	const fetchCourse = async () => {
 		const res = await api.get('/api/course/getCourseFromID', { params: { courseID: id } })
@@ -13,12 +14,15 @@ const CourseID = ({ id }) => {
 	}
 	useEffect(() => {
 		fetchCourse()
-  }, [])
-  const isInCart = () =>{
-    
-  }
-	const addToCart = () => {
-		cart.addToCart('course', course.courseid)
+		setCart(getItems('course'))
+	}, [])
+	const clickAddToCart = () => {
+		addToCart('course', course.courseid)
+		setCart(getItems('course'))
+	}
+	const clickRemoveFromCart = () => {
+		removeFromCart('course', course.courseid)
+		setCart(getItems('course'))
 	}
 	const renderButtons = () => {
 		if (course.isOwn) {
@@ -38,12 +42,22 @@ const CourseID = ({ id }) => {
 			return (
 				<Fragment>
 					<span>
-						<button
-							onClick={addToCart}
-							className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer"
-						>
-							Add to cart
-						</button>
+						{isInCart('course', course.courseid) ? (
+							<button
+								onClick={clickRemoveFromCart}
+								className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer"
+								style={{ width: '150px' }}
+							>
+								Remove from cart
+							</button>
+						) : (
+							<button
+								onClick={clickAddToCart}
+								className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer"
+							>
+								Add to cart
+							</button>
+						)}
 					</span>
 					<span>
 						<button className="text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer">
