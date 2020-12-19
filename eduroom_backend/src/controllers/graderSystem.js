@@ -105,13 +105,13 @@ exports.getSubmission = async (req, res) => {
 		})
 		const testcaseNumber = getSubmissionsResponse.data.submissions.length
 		const scorePerTestcase = 10
-		console.log(`SELECT ruletype, timelimit, memorylimit FROM questions INNER JOIN question_attempt qa on questions.id = qa.questionid WHERE qa.attemptid = ${attemptId}`);
 		const questionTypeQuery = await pool.query(`SELECT ruletype, timelimit, memorylimit FROM questions INNER JOIN question_attempt qa on questions.id = qa.questionid WHERE qa.attemptid = ${attemptId}`)
-		console.log(questionTypeQuery.rows[0]);
 		const { ruletype, timelimit, memorylimit } = questionTypeQuery.rows[0]
 
 		// Check submission result
+		const updateAttempPromise = []
 		let totalScore = 0
+		let overallTime = 0, overallMemory = 0
 		const submissionResults = {
 			correctAnswer: 0,
 			wrongAnswer: 0,
@@ -121,70 +121,69 @@ exports.getSubmission = async (req, res) => {
 			runtimeError: 0
 		}
 		let isAllAccepted = true
-		const results = getSubmissionsResponse.data.submissions.map(submission => {
+		for(let i=0; i<testcaseNumber; i+=1){
+			const submission = getSubmissionsResponse.data.submissions[i]
+	
 			// Check submission status
+			const memory = submission.memory / 1024 
+			const time = parseFloat(submission.time) * 1000
+			let status = 'Error', score = 0
+
+			overallTime += time
+			overallMemory += memory
+
 			if(submission.status.id !== 3){
 				if(submission.status.id === 4) submissionResults.wrongAnswer += 1
 				else if(submission.status.id === 6) submissionResults.compileError += 1
 				else submissionResults.runtimeError += 1
-				isAllAccepted = false
-				return {
-					status: getSubmissionStatus(submission.status.id),
-					memory: submission.memory,
-					time: submission.time,
-					// compile_output: submission.compile_output,
-					// stderr: submission.stderr,
-					score: 0
-				}
-			}
-			if(parseFloat(submission.time) > timelimit){
-				submissionResults.timeExceed += 1
-				isAllAccepted = false
-				return {
-					status: getSubmissionStatus(5),
-					memory: submission.memory,
-					time: submission.time,
-					score: 0
-				}
-			}
-			if(submission.memory/1024 > memorylimit){
-				submissionResults.memoryExceed += 1
-				isAllAccepted = false
-				return {
-					status: getSubmissionStatus(99),
-					memory: submission.memory,
-					time: submission.time,
-					score: 0
-				}
-			}
-			totalScore += scorePerTestcase
-			submissionResults.correctAnswer += 1
-			return {
-				status: getSubmissionStatus(3),
-				memory: submission.memory,
-				time: submission.time,
-				score: scorePerTestcase
-			}
-		})
 
-		let overallResult = 'Wrong Answer'
-		if(submissionResults.correctAnswer === testcaseNumber) overallResult = 'Accepted'
-		else if(submissionResults.correctAnswer !== 0) overallResult = 'Partial Accepted'
-		else if(submissionResults.compileError === testcaseNumber) overallResult = 'Compilation Error'
-		else if(submissionResults.memoryExceed === testcaseNumber) overallResult = 'Memory Limit Exceeded'
-		else if(submissionResults.timeExceed === testcaseNumber) overallResult = 'Time Limit Exceeded'
-		else if(submissionResults.runtimeError === testcaseNumber) overallResult = 'Runtime Error'
+				isAllAccepted = false
+				status = getSubmissionStatus(submission.status.id)
+			}
+			else if(time > timelimit){
+				submissionResults.timeExceed += 1
+
+				isAllAccepted = false
+				status = getSubmissionStatus(5)
+			}
+			else if(memory/1024 > memorylimit){
+				submissionResults.memoryExceed += 1
+
+				isAllAccepted = false
+				status = getSubmissionStatus(99)
+			} 
+			else {
+				submissionResults.correctAnswer += 1
+				score = scorePerTestcase
+				totalScore += scorePerTestcase
+				status = getSubmissionStatus(3)
+			}
+			updateAttempPromise.push(pool.query(`UPDATE question_attempt_testcase SET time = ${time}, memory = ${memory}, score = ${score}, status = '${status}' WHERE attemptid = ${attemptId} AND testcaseno = ${i+1};`))
+		}
+
+		let overallStatus = 'Wrong Answer'
+		if(submissionResults.correctAnswer === testcaseNumber) overallStatus = 'Accepted'
+		else if(submissionResults.correctAnswer !== 0) overallStatus = 'Partial Accepted'
+		else if(submissionResults.compileError === testcaseNumber) overallStatus = 'Compilation Error'
+		else if(submissionResults.memoryExceed === testcaseNumber) overallStatus = 'Memory Limit Exceeded'
+		else if(submissionResults.timeExceed === testcaseNumber) overallStatus = 'Time Limit Exceeded'
+		else if(submissionResults.runtimeError === testcaseNumber) overallStatus = 'Runtime Error'
 
 		if(ruletype === 'acm' && isAllAccepted === false){
 			totalScore = 0
 		}
+		overallMemory = Math.round(overallMemory / testcaseNumber)
+		overallTime = Math.round(overallTime / testcaseNumber)
 
-		// Update question_attempt_testcase table
-		// await pool.query(`UPDATE question_attempt_testcase SET time = '', memory = '', score = '', status = '' WHERE attemptid = '' AND testcaseno = '';`)
+		// Update question_attempt_testcase and question_attempt table 
+		updateAttempPromise.push(pool.query(`UPDATE question_attempt SET score = ${totalScore}, status = '${overallStatus}', time = ${overallTime}, memory = ${overallMemory} WHERE attemptid = ${attemptId} AND userid = '${userId}';`))
+		await Promise.all(updateAttempPromise)
 
 		res.send({ 
 			score: totalScore, 
-			results: overallResult
+			status: overallStatus,
+			time: overallTime,
+			memory: overallMemory
 		})
 	} catch (error) {
 		errorHandler(error, req, res)
