@@ -22,6 +22,13 @@ const getAdsType = async (req, res, next) => {
     const typeList = data.rows;
     res.send(typeList);
 };
+
+const getAdsTags = async (req, res, next) => {
+    const data = await pool.query("select tagname from ad_all_tag");
+    const tagList = data.rows;
+    res.send(tagList);
+};
+
 const getAdstoPay = async(req, res, next) => {
     const ownerid = req.user.id;
     const data = await pool.query("select * from ad where ownerid = $1 and adid = (select max(adid) from ad where ownerid = $1) and adid NOT IN (select adid from ad_payment) ",
@@ -32,22 +39,37 @@ const getAdstoPay = async(req, res, next) => {
 const addAds = async (req, res, next) => {
 
     
-    const type = 2;
+    let type = req.body.adtype;
+    if(type == 'Vertical Image'){ type = 2;}
+    else if(type == 'Horizontal Image'){ type = 3;}
+    else{
+        type = 1;
+    }
     const adtag = req.body.adtag;
     let adstarttime = req.body.adstartdate ;
     let adexpiretime = req.body.adexpiredate;
     const contactemail = req.body.contactemail;
-    const filelocation = "/testFileLocation/";
+    const imglocation = req.body.adimg;
     const status = "Waiting";
     const ownerid = req.user.id;
 
 
     await pool.query(
         "insert into ad(adid, type, adstarttime, adexpiretime, contactemail, filelocation, status, ownerid) values ((select count(*) from ad)+1,$1,$2,$3,$4,$5,$6,$7)",
-        [type,adstarttime,adexpiretime,contactemail,filelocation,status,ownerid]
+        [type,adstarttime,adexpiretime,contactemail,imglocation,status,ownerid]
     )
-    
+    await pool.query(
+        "insert into ad_tag(adid, tagid) VALUES ((select count(*) from ad),(select tagid from ad_all_tag where tagname = $1))",[adtag]
+    )
 
     res.send({ success: true })
 }
-module.exports = { getAllAds, addAds, getMyAds,getAdsType,getAdstoPay} 
+
+const Upload = async (req, res, next) => {
+	const files = req.files
+	const results = files.map((file) => {
+		return { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	})
+	res.send(results)
+}
+module.exports = { getAdsTags ,getAllAds, addAds, getMyAds,getAdsType,getAdstoPay,Upload} 
