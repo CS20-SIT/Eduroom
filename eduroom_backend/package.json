@@ -28,7 +28,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "extract-zip": "^2.0.1",
     "helmet": "^4.1.1",
     "jest": "^26.6.2",
     "jsonwebtoken": "^8.5.1",
