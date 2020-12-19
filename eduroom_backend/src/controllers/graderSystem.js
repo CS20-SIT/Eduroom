@@ -69,19 +69,18 @@ exports.createSubmission = async (req, res) => {
 		const batchSubmissionResponse = await grader.post('/submissions/batch?base64_encoded=true', submissionRequestBody)
 
 		// Send API of get batch submission to judge0
-		let submissionTokensParams = ""
-		batchSubmissionResponse.data.forEach(ele => {
-			submissionTokensParams += `${ele.token},`
-		})
-		const getSubmissionsResponse = await grader.get('/submissions/batch', {
-			params: {
-				base64_encoded: false,
-				tokens: submissionTokensParams
-			}
-		})
+		// let submissionTokensParams = ""
+		// batchSubmissionResponse.data.forEach(ele => {
+		// 	submissionTokensParams += `${ele.token},`
+		// })
+		// const getSubmissionsResponse = await grader.get('/submissions/batch', {
+		// 	params: {
+		// 		base64_encoded: false,
+		// 		tokens: submissionTokensParams
+		// 	}
+		// })
 
-
-		res.send(getSubmissionsResponse.data)
+		res.status(201).send(batchSubmissionResponse.data)
 	} catch (error) {
         errorHandler(error, req, res)
     }
