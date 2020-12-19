@@ -1,11 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import Post from '../course/postedReviewBox'
-import style from '../../styles/course/review'
 import CommentForPost from './commentForPost'
-import ShowComment from './showComment'
 import StudentFeedback from './studentFeedback'
 import PostedReviewBox from './postedReviewBox'
-import { Grid } from '@material-ui/core'
 import api from '../../api'
 const review = (props) => {
 	const [reviewList, setReviewList] = useState([])
