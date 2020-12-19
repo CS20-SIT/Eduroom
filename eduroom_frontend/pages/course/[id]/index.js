@@ -3,6 +3,7 @@ import utils from '../../../styles/course/utils'
 import GeneralNoNav from '../../../components/template/generalnonav'
 import Link from 'next/link'
 import api from '../../../api'
+import cart from '../../../utils/cart'
 
 const CourseID = ({ id }) => {
 	const [course, setCourse] = useState(null)
@@ -13,9 +14,12 @@ const CourseID = ({ id }) => {
 	useEffect(() => {
 		fetchCourse()
   }, [])
-  const addToCart = () => {
+  const isInCart = () =>{
     
   }
+	const addToCart = () => {
+		cart.addToCart('course', course.courseid)
+	}
 	const renderButtons = () => {
 		if (course.iwOwn) {
 			return (
@@ -34,7 +38,10 @@ const CourseID = ({ id }) => {
 			return (
 				<Fragment>
 					<span>
-            <button onClick={addToCart} className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer">
+						<button
+							onClick={addToCart}
+							className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer"
+						>
 							Add to cart
 						</button>
 					</span>
@@ -53,8 +60,8 @@ const CourseID = ({ id }) => {
 		return (
 			<Fragment>
 				<div className="my-2">
-          <span className="text-xl text-navy font-quicksand">{course.coursename}</span>
-          {renderButtons()}
+					<span className="text-xl text-navy font-quicksand">{course.coursename}</span>
+					{renderButtons()}
 					<span className="share-icon pointer">
 						<img
 							alt="shareIcon"
@@ -109,9 +116,7 @@ const CourseID = ({ id }) => {
 							<i className="fas fa-chevron-left backIcon"></i>
 						</Link>
 					</div>
-					<div className="container">
-						{renderCourse()}
-					</div>
+					<div className="container">{renderCourse()}</div>
 				</div>
 				<style jsx>{utils}</style>
 			</GeneralNoNav>
