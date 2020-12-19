@@ -111,7 +111,8 @@ exports.getSubmission = async (req, res) => {
 		// Check submission result
 		const updateAttempPromise = []
 		let totalScore = 0
-		let overallTime = 0, overallMemory = 0
+		let overallTime = 0 
+		let overallMemory = 0
 		const submissionResults = {
 			correctAnswer: 0,
 			wrongAnswer: 0,
@@ -125,9 +126,10 @@ exports.getSubmission = async (req, res) => {
 			const submission = getSubmissionsResponse.data.submissions[i]
 	
 			// Check submission status
-			const memory = submission.memory / 1024 
-			const time = parseFloat(submission.time) * 1000
-			let status = 'Error', score = 0
+			const memory = submission.memory === null ? 0 : submission.memory / 1024 
+			const time = submission.time === null ? 0 : parseFloat(submission.time) * 1000
+			let status = 'Error'
+			let score = 0
 
 			overallTime += time
 			overallMemory += memory
