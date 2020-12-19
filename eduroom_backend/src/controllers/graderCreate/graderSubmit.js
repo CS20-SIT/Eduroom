@@ -230,11 +230,10 @@ const gQuestionTestCase = async (req, res, next) => {
 	try {
 		const id = req.query.id
 		const data = await pool.query(`
-		select filepath
-		from questiontestcases
-		where questionid = ${id}
-		order by fileno desc
-		limit 1;`)
+		SELECT * 
+		FROM questionsample 
+		WHERE questionid = ${id}
+		order by sampleno;`)
 		const ann = data.rows
 		res.send(ann)
 	} catch (err) {

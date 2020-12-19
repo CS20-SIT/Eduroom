@@ -77,8 +77,7 @@ export default css`
 	.sub-box {
 		margin-bottom: 1rem;
 	}
-
-	::-webkit-scrollbar {
+	. ::-webkit-scrollbar {
 		width: 8px; /* width of the entire scrollbar */
 	}
 	::-webkit-scrollbar-track {
