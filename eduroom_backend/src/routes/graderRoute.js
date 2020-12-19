@@ -67,6 +67,8 @@ const {
 	gCountQuestionByTag,
 } = require('../controllers/graderCreate/graderSubmit')
 
+const { testGrader } = require('../controllers/graderSystem')
+
 const multer = require('multer')
 
 const storage = multer.diskStorage({
@@ -155,5 +157,7 @@ router.get('/getQuestionTestCase', gQuestionTestCase)
 router.get('/getQuestionDetail', gQuestionDetail)
 router.get('/getQuestionSubmission', gQuestionSubmission)
 router.get('/getCountQuestionByTag', gCountQuestionByTag)
+
+router.get('/test', testGrader)
 
 module.exports = router
