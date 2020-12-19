@@ -98,7 +98,7 @@ const Course = () => {
             width: 250px;
           }
           .categoryTab{
-            margin-top: 3rem;
+			margin-top: 3rem;
           }
           .bg{
             background: #F9F7FE;

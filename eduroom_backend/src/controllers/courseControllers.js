@@ -1,6 +1,5 @@
 const ErrorResponse = require('../utils/errorResponse')
 const pool = require('../database/db')
-const errorHandler = require('../middleware/error');
 
 exports.getAllCourse = async (req, res) => {
     try {
@@ -72,42 +71,24 @@ exports.searchCourse = async (req, res, next) => {
       return next(new ErrorResponse("Not Found",404))
     }
 }
-
-//course shop page
-const getCourse = async (req, res, next) => {
-	try {
-        const data = await pool.query
-        (`select u.firstname,u.lastname, c.coursename, c.coursepicture,c.price
-        from course c , instructor i, user_profile u 
-        where i.userid = u.userid and c.status = 'Approved' 
-        and i.instructorid = c.ownerid `)
-        const courseInfo = data.rows;
-		const temp = courseInfo.map(course => {
-			return {
-				id: course.courseid,
-				title: course.coursename,
-				owner: course.ownerid,
-				image: course.coursepicture,
-				infname: course.firstname,
-				inlname: course.lastname,
-				price: parseFloat(course.price).toFixed(2)
-			};
-		});
-		res.status(200).json(temp);
-	} catch(err) {
-        console.log(err.message);
-        res.status(400).send(err.message)
-    }
-};
-
-
-module.exports = {
-    getAllCourse,
-    getCourseFromID,
-    getCourseSectionPart,
-    searchCourse,
-    getCourse
 exports.getCategory = async(req,res,next) =>{
     const data = await pool.query ('SELECT cataname from categories');
     res.status(200).json({success: true , category:data.rows})
+}
+
+exports.searchCategory = async (req, res, next) => {
+	const cataname = req.body.cataname;
+	const user = req.user
+    if(cataname){
+        const data = await pool.query(
+            `select course.courseid as courseid, coursename, categories.cataid as cataid, cataname
+			from categories, course_categories cocat, course
+			where course.courseid = cocat.courseid and cocat.cataid = categories.cataid; WHERE UPPER(cataname) LIKE $1'`,
+            [cataname]
+      )
+    const course = data.rows
+      res.status(200).json({ success: true, data: course })
+    } else {
+      return next(new ErrorResponse("Not Found",404))
+    }
 }
