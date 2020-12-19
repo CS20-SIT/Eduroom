@@ -78,7 +78,7 @@ const Content = (props) => {
 
                                         <div className="d-block">
                                             {
-                                                isInstructor ? (
+                                                isInstructor && row.event_type == 'course' ? (
                                                     <div className="edit">
                                                         <Edit id={row.eventid} ></Edit>
                                                         <Delete id={row.eventid}></Delete>
