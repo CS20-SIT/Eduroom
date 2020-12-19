@@ -21,7 +21,7 @@ const CourseID = ({ id }) => {
 		cart.addToCart('course', course.courseid)
 	}
 	const renderButtons = () => {
-		if (course.iwOwn) {
+		if (course.isOwn) {
 			return (
 				<Fragment>
 					<span>
