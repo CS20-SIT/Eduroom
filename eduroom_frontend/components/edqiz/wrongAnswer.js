@@ -3,11 +3,6 @@ import React, { Fragment, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 const Page4 = ({ data,responseNextQuestion, questionNumber,id ,goto}) => {
   useEffect(() => {
-   console.log(data.length,questionNumber)
-  //  if((data.length-1)==questionNumber){
-  //    console.log('ha')
-  //    goto(5)
-  //  }
     responseNextQuestion();
   }, []);
   return (

@@ -1,69 +1,48 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useContext } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import style from '../../styles/calendar/calendar'
-import api from '../../api'
+import style from '../../../styles/calendar/calendar'
+import api from '../../../api'
 import { useRouter } from "next/router";
-import Course from '../admin/layout/icons/course';
+
+
 
 const Content = (props) => {
     const router = useRouter();
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
-    const [courseList, setCourseList] = useState([])
-    const date = props.date;
-    const year = props.year;
-    const monthNo = props.monthNo;
-
-    const [stDate, setSTDate] = useState(year + "-" + monthNo + "-" + date)
-
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
         title: '',
         description: '',
-        startDate: props.year + '-' + props.monthNo + '-' + props.date,
+        startDate: '',
         endDate: '',
         startTime: '',
         endTime: '',
         place: '',
-        courseid: '',
     })
-
-    useEffect(() => {
-
-        api.get('/api/event/getMyCourse').then(
-            (res) => {
-                setCourseList(res.data.data);
-                // setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
-            }
-        ).catch(err => { });
-    }, [])
-
-
-
-
-    console.log();
-    useEffect(() => {
-        console.log(date);
-        setSTDate(year + "-" + monthNo + "-" + date);
-        setEventInfo({ ...eventInfo, startDate: stDate })
-    }, [date, stDate])
-
     const handleCreate = (e) => {
 
         console.log(eventInfo);
         // if (validator()) {
-        api.post("/api/event/createEvent", eventInfo).then(
+        api.post("/api/event/createAdminEvent", eventInfo).then(
             (res) => {
                 alert("success");
                 window.location.reload();
-
+                
             }
         ).catch(err => {
             console.log(err);
-        })
+        })/*  {
+            title: eventInfo.title,
+            description: eventInfo.description,
+            startDate: eventInfo.startDate,
+            endDate: eventInfo.endDate,
+            startTime: eventInfo.startTime,
+            endTime: eventInfo.endTime,
+            place: eventInfo.place,
+          });  */
+        // }
     };
-
-
     return (
         <Fragment>
             <CSSTransition
@@ -77,7 +56,7 @@ const Content = (props) => {
                     <div style={{ height: '10%' }}></div>
                     <div className="text-create">Create Event</div>
 
-                    {/* ---------------------- ---------eventtitle------------------------------- */}
+                    {/* -------------------------------eventtitle------------------------------- */}
                     <div>
                         <input
                             className="event-title"
@@ -87,18 +66,8 @@ const Content = (props) => {
                         ></input>
                     </div>
 
-                    {/* ---------------------- ---------eventType------------------------------- */}
-                    <div>
-                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
-                            {courseList.map((course) => {
-                                return (
-                                    <option value={course.courseid} key={course.courseid}>
-                                        {course.coursename}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </div>
+
+
 
                     {/* ---------------------- ---------eventdescript------------------------------- */}
                     <div>
@@ -111,11 +80,11 @@ const Content = (props) => {
                     </div>
                     {/* ---------------------- ---------time------------------------------- */}
 
-                    <div className="startdate" >
+                    <div className="startdate">
                         <div>startDate</div>
 
                         <input
-                            value={stDate}
+                            value={props.year + "-" + props.monthNo + "-" + props.date}
                             className="event-startDate"
                             onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
                             placeholder="Start date"

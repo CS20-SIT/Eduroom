@@ -58,7 +58,7 @@ const Content = () => {
             <div className="row">
             
                 <button className="landing-button" type="submit"
-                 onClick={()=>checkPinIsValid}
+                 onClick={()=>checkPinIsValid()}
                  >
                 
                   <span className="landing-button-text">ENTER</span>
