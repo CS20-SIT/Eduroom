@@ -77,7 +77,8 @@ exports.createEvent = async (req, res, next) => {
     const courseid = req.body.courseid;
     const temp = await pool.query("select instructorid from instructor where userid = $1 and isverified = true", [userid]);
     const instructorid = temp.rows[0].instructorid;
-
+    console.log(req.body)
+    console.log(req.user.id)
     const data = await pool.query(
       "insert into course_event(title,courseid, startdate, enddate, starttime, endtime, detail, place, instructorid) values ($1,$2,$3,$4,$5,$6,$7,$8,$9)",
       [title, courseid, startdate, enddate, starttime, endtime, detail, place, instructorid]
@@ -100,7 +101,7 @@ exports.createEvent = async (req, res, next) => {
     });
     return
   } catch (err) {
-    return next(new ErrorResponse("Cannot create event", 400));
+    return next(new ErrorResponse(err, 400));
   }
 }
 
@@ -119,8 +120,91 @@ exports.getEvent = async (req, res, next) => {
 }
 exports.eEvent = async (req, res, next) => {
   const id = req.query.id;
+  const title = req.body.title;
+  const startdate = req.body.startDate;
+  const enddate = req.body.endDate;
+  const endtime = req.body.endTime;
+  const starttime = req.body.starttime;
+  const detail = req.body.detail;
+  const place = req.body.place;
   console.log(id);
-  await pool.query(`update course_event 
+  await pool.query("update course_event \
+                    set (title,startdate,enddate,endtime,starttime,detail,place)=($1,$2,$3,$4,$5,$6,$7) \
+                    where eventid = ($8)",
+  [
+    title,
+    startdate,
+    enddate,
+    endtime,
+    starttime,
+    detail,
+    place,
+    id
+  ]
+  );
+  res.send({ success: true });
+
+}
+
+//-----------------for admin-----------------------------
+
+
+exports.createAdminEvent = async (req, res, next) => {
+  try {
+    const title = req.body.title;
+    const startdate = req.body.startDate;
+    const enddate = req.body.endDate;
+    const starttime = req.body.startTime;
+    const endtime = req.body.endTime;
+    const detail = req.body.description;
+    const place = req.body.place;
+    const adminid = req.user.id;
+    console.log(req.body)
+    console.log(req.user.id)
+    const data = await pool.query(
+      "insert into global_event(title, startdate, enddate, starttime, endtime, detail, place, adminid)  values ($1,$2,$3,$4,$5,$6,$7,$8)",
+      [title, startdate, enddate, starttime, endtime, detail, place, adminid]
+    );
+
+    //--------------------sendMail------------------------------
+    //getEmail
+    /* const tempMail = await pool.query("select distinct universityemail from user_student_verification as v,user_mycourse as mc where courseid = $1 and v.userid = mc.userid ;", [courseid])
+
+    tempMail.rows.forEach((t) => {
+      console.log(t)
+      sendEmail({ email: t.universityemail, subject: title, message: detail, })
+    }); */
+
+    //----------------------------------------------------------
+
+    const event = data.rows[0];
+    res.status(200).json({
+      success: true, data: event
+    });
+    return
+  } catch (err) {
+    return next(new ErrorResponse(console.log(err), 400));
+  }
+}
+
+
+exports.dAdminEvent = async (req, res, next) => {
+  const id = req.query.id;
+  console.log(id);
+  await pool.query(`DELETE FROM global_event WHERE eventid = '${id}'`);
+  res.send({ success: true });
+
+}
+exports.getAdminEvent = async (req, res, next) => {
+  const id = req.query.id
+  const result = await pool.query(`select * from global_event where eventid = ${id}`);
+  res.send(result.rows);
+
+}
+exports.eAdminEvent = async (req, res, next) => {
+  const id = req.query.id;
+  console.log(id);
+  await pool.query(`update global_event 
   set title='toie k',startdate='2020-12-20',enddate='2020-12-20',endtime='12:19:00',starttime='12:19:00',detail='tktktktktktktktktk',place='tktktktk'
    where eventid  = ${id}`);
   res.send({ success: true });

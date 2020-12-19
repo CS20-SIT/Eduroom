@@ -16,7 +16,7 @@ const edit = (props) => {
 
     useEffect(() => {
         const GetData = async () => {
-            const result1 = await api.get("/api/event/getEvent",
+            const result1 = await api.get("/api/event/getAdminEvent",
                 {
                     params: {
                         id: props.id
@@ -44,7 +44,7 @@ const edit = (props) => {
 
         console.log(eventInfo);
         // if (validator()) {
-        api.post("/api/event/eEvent", eventInfo).then(
+        api.post("/api/event/eAdminEvent", eventInfo).then(
             (res) => {
                 alert("success");
                 router.push("/calendar")

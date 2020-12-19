@@ -28,7 +28,7 @@ const edit = (props) => {
         GetData();
 
     }, []);
-    console.log(data)
+
 
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
@@ -42,7 +42,6 @@ const edit = (props) => {
     })
     const handleCreate = (e) => {
 
-        console.log(eventInfo);
         // if (validator()) {
         api.post("/api/event/eEvent", eventInfo).then(
             (res) => {
