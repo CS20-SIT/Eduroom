@@ -28,7 +28,7 @@ const CategoryBar = () => {
             {
                 data.map((el,index)=>{
                     return (
-                        <div className="categoryText" key={index} onClick={()=>{router.push('/course/' + el.cataname)}}>
+                        <div className="categoryText" key={index} onClick={()=>{router.push('/course/category/' + el.cataname)}}>
                             <CategoryItem content={el.cataname} />
                         </div>
                     )
@@ -44,7 +44,7 @@ const CategoryBar = () => {
                     .categoryTab {
                         display:flex;
                         justify-content: center;
-                        padding: 2rem;
+                        padding: 2rem 0;
                     }
                     .general{
                         cursor: pointer;
