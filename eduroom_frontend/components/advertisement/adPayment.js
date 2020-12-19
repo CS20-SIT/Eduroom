@@ -74,7 +74,7 @@ const Content = () => {
                         <center>EDUROOM CART</center>
                        <Box ></Box>
                        <Total></Total>
-                       <div style={{backgroundImage: "url('/images/ads/shopping.svg')",backgroundSize: 'auto',height:'1200px',width:'1200px',backgroundRepeat:'no-repeat',marginLeft:'40%'}}></div>
+                       <div style={{backgroundImage: "url('/images/ads/shopping.svg')",backgroundSize: 'auto',height:'1200px',width:'800px',backgroundRepeat:'no-repeat',marginLeft:'40%'}}></div>
                     </div>
                   
                 
