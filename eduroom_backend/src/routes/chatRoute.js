@@ -8,7 +8,7 @@ router.get('/getGroupPicture', getGroupPicture)
 router.get('/inviteCreate', inviteCreate)
 
 //Mockup
-router.get('/getUserProfile',(req,res)=>{
+router.get('/getUserProfileMockup',(req,res)=>{
   res.send(mockup.getUserProfileMockup(23432));
 })
 router.get('/getChatListMockup',(req,res)=>{
@@ -23,7 +23,10 @@ router.get('/getChatRoomProfilePictureMockup2',(req,res)=>{
 router.get('/getSearchResultMockup',(req,res)=>{
   res.send(mockup.getSearchResultMockup("jimmy"));
 })
-router.get('/createGroupChatMockup',(req,res)=>{
+router.get('/selectSearchResultMockup',(req,res)=>{
+  res.send(mockup.selectSearchResultMockup(2343));
+})
+router.post('/createGroupChatMockup',(req,res)=>{
   res.send(mockup.createGroupChatMockup("testPic","RoomName",["tom","jim","nun"]));
 })
 router.get('/getInvitationListMockup',(req,res)=>{

@@ -29,9 +29,11 @@ export default css`
 		position:relative;
 		top:-45px;
 		left:120px;
+		cursor:pointer;
 	}
 	.tag{
 		position:relative;
 		top:4px;
+		cursor:pointer;
 	}
 `

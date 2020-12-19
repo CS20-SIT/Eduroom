@@ -9,7 +9,7 @@ const Page2 = (props) => {
 			name: '',
 			videos: [{ name: '', data: '', path: '' }],
 			materials: [],
-			questions: [{ q: '', choices: ['', '', '', ''], correct: '' }],
+			questions: [],
 		})
 		props.changeSections(temp)
 	}

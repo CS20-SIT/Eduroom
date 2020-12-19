@@ -1,13 +1,11 @@
-import React, { Fragment, useState,useEffect } from "react";
+import React, { Fragment, useState,useEffect ,useContext} from "react";
 import { useRouter } from "next/router";
 import EdqizText from "./edqizText";
 import style from "../../styles/edqiz/landing";
 import api from '../../api';
 const Content = () => {
-  
   const [room, setPinRoom] = useState("");
   const router = useRouter();
-
   const [data,setData]=useState(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +15,7 @@ const Content = () => {
     fetchData();
   }, []);
 
-  const checkPinIsValid = () => {
+  const  checkPinIsValid  = () => {
     let temp = 0;
     for (let i = 0; i < data.length; i++) {
       temp++;
@@ -60,8 +58,9 @@ const Content = () => {
             <div className="row">
             
                 <button className="landing-button" type="submit"
-                 onClick={checkPinIsValid}
+                 onClick={()=>checkPinIsValid}
                  >
+                
                   <span className="landing-button-text">ENTER</span>
                 </button>
           

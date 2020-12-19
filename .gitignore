@@ -159,3 +159,4 @@ k8s/**.key
 
 .idea
 k8s/**.json
+k8s/eduroom-grader-secret.yaml

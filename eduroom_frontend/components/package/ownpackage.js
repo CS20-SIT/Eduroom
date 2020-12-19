@@ -43,7 +43,7 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 			<Fragment>
 				<button
 					onClick={(e) => {
-						router.push(`/user/instructor/course/package/${ownPackage.packageid}/editpackage`)
+						router.push(`/user/instructor/package/editpackage/${ownPackage.packageid}`)
 						e.stopPropagation()
 					}}
 					className="active pebutton"
@@ -77,7 +77,7 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 				<div
 					className="center pdt-20"
 					onClick={() => {
-						router.push(`/course/${ownPackage.packageid}/packagePage`)
+						router.push(`/user/instructor/package/${ownPackage.packageid}`)
 					}}
 				>
 					<div className="package">
@@ -98,7 +98,7 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 									฿<span>{getPrice()}</span>
 								</div>
 								<div>
-									<div className="pri-cat">Category: {ownPackage.cataname}</div>
+									<div className="pri-cat">Category: {ownPackage.cate_name}</div>
 									<div className="right">
 										{renderPublish()}
 										{renderEdit()}

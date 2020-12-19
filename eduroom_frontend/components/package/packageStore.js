@@ -1,23 +1,25 @@
+import { useEffect, useState } from 'react';
 import ListOfPackage from './listOfPackage';
+import api from '../../api';
+import Styles from '../../styles/package/pShop'
 
 const packages = () => {
-    const data = [
-        { title: 'Starter Package1',instructor: 'Mr.X', price: 30, id: 1 },
-        { title: 'Basic Package1',instructor: 'Mr.X', price: 30, id: 2 },
-        { title: 'Business Package1',instructor: 'Mr.X', price: 30, id: 3 },
-        { title: 'Starter Package2',instructor: 'Mr.X', price: 30, id: 4 },
-        { title: 'Basic Package2',instructor: 'Mr.X', price: 30, id: 5 },
-        { title: 'Business Package2',instructor: 'Mr.X', price: 30, id: 6 },
-        { title: 'Starter Package3',instructor: 'Mr.X', price: 30, id: 7 },
-        { title: 'Basic Package3',instructor: 'Mr.X', price: 30, id: 8 },
-        { title: 'Business Package3',instructor: 'Mr.X', price: 30, id: 9 },
-        { title: 'Starter Package4',instructor: 'Mr.X', price: 30, id: 10 },
-        { title: 'Basic Package4',instructor: 'Mr.X', price: 30, id: 11 },
-        { title: 'Business Package4',instructor: 'Mr.X', price: 30, id: 12 }
-    ];
+    
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await api.get('/api/package/getAllPackage');
+            console.log(res.data);
+            setData(res.data);
+        };
+        fetchData();
+    }, []);
+
     return (
-        <div>
+        <div className="package">
+            <div className="packageLanding" >Package in Eduroom</div>
             <ListOfPackage item={data}></ListOfPackage>
+            <style jsx>{Styles}</style>
         </div>
     );
 };
