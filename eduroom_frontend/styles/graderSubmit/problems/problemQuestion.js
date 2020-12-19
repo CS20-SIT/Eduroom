@@ -73,11 +73,24 @@ export default css`
 	}
 	.des-data {
 		padding-left: 1rem;
+		overflow-wrap: break-word;
 	}
 	.sub-box {
 		margin-bottom: 1rem;
 	}
-	. ::-webkit-scrollbar {
+	.input-box,
+	.output-box {
+		padding: 1rem;
+		border: 1px solid rgba(130, 130, 130, 0.2);
+		border-radius: 5px;
+	}
+	.input-data,
+	.output-data {
+		font-family: monospace;
+		padding-bottom: 0.5rem;
+	}
+
+	::-webkit-scrollbar {
 		width: 8px; /* width of the entire scrollbar */
 	}
 	::-webkit-scrollbar-track {

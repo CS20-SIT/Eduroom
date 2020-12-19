@@ -34,7 +34,7 @@ const ProblemQuestion = (props) => {
 				<Fragment>
 					<div className="box">
 						<div className="title" style={{ flex: '1' }}>
-							<div>{`${data.conquestionno != null ? data.conquestionno`.` : ''} ${data.title}`}</div>
+							<div>{`${data.conquestionno != null ? data.conquestionno + `.` : ''} ${data.title}`}</div>
 							<div className="admin-name">by {data.displayname}</div>
 						</div>
 						<div className="tag" style={{ flex: '0.5' }}>
@@ -102,7 +102,7 @@ const ProblemQuestion = (props) => {
 									<div className="output-box">
 										{testCaseData.map((element, key) => {
 											return (
-												<div className="output-data" key={key}>
+												<div className="output-data" style={{ whiteSpace: 'pre' }} key={key}>
 													{element.output}
 												</div>
 											)
