@@ -10,19 +10,22 @@ const Content = (props) => {
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
     const [courseList, setCourseList] = useState([])
-
-
+    const year = props.year;
+    const month = props.monthNo;
+    const date = props.date;
+console.log(props.year)
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
         title: '',
         description: '',
-        startDate: '',
+        startDate:props.year+'-'+props.monthNo+'-'+props.date,
         endDate: '',
         startTime: '',
         endTime: '',
         place: '',
         courseid: '',
     })
+   
     useEffect(() => {
 
         api.get('/api/event/getMyCourse').then(
@@ -30,6 +33,8 @@ const Content = (props) => {
                 setCourseList(res.data.data);
             }
         ).catch(err =>{});
+            
+            // setEventInfo(...eventInfo,startDate:)
     },[])
     const handleCreate = (e) => {
 
@@ -38,8 +43,8 @@ const Content = (props) => {
         api.post("/api/event/createEvent", eventInfo).then(
             (res) => {
                 alert("success");
-
-                router.push("/calendar")
+                window.location.reload();
+                
             }
         ).catch(err => {
             console.log(err);
@@ -106,11 +111,12 @@ const Content = (props) => {
                     </div>
                     {/* ---------------------- ---------time------------------------------- */}
 
-                    <div className="startdate">
+                    <div className="startdate" >
                         <div>startDate</div>
-
+                            
                         <input
-                            value={props.year + "-" + props.monthNo + "-" + props.date}
+                           
+                            value={props.year+'-'+props.monthNo+'-'+props.date}
                             className="event-startDate"
                             onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
                             placeholder="Start date"

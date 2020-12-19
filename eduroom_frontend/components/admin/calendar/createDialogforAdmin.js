@@ -24,11 +24,11 @@ const Content = (props) => {
 
         console.log(eventInfo);
         // if (validator()) {
-        api.post("/api/event/createEvent", eventInfo).then(
+        api.post("/api/event/createAdminEvent", eventInfo).then(
             (res) => {
                 alert("success");
-
-                router.push("/calendar")
+                window.location.reload();
+                
             }
         ).catch(err => {
             console.log(err);
@@ -43,8 +43,6 @@ const Content = (props) => {
           });  */
         // }
     };
-    const eventType = ['Course', 'Global']
-
     return (
         <Fragment>
             <CSSTransition
@@ -58,7 +56,7 @@ const Content = (props) => {
                     <div style={{ height: '10%' }}></div>
                     <div className="text-create">Create Event</div>
 
-                    {/* ---------------------- ---------eventtitle------------------------------- */}
+                    {/* -------------------------------eventtitle------------------------------- */}
                     <div>
                         <input
                             className="event-title"

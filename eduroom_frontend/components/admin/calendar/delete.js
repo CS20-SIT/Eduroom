@@ -35,7 +35,7 @@ const DeleteButton = (props) => {
   const handleSubmit = () => {
   
       axios
-        .delete("/api/event/dEvent", {
+        .delete("/api/event/dAdminEvent", {
           params: {
             id: props.id, 
           },
@@ -43,6 +43,7 @@ const DeleteButton = (props) => {
         .then(function (response) {
           setOpen(false);
           setTimeout(() => {
+            window.location.reload();
             setSubmitStatus({ ...submitStatus, success: true });
           }, 450);
         })
