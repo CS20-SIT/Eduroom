@@ -5,7 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import axios from "../../api";
+import axios from "../../../api";
 import Image from "next/image";
 
 
@@ -21,7 +21,6 @@ const DeleteButton = (props) => {
       success: false,
       failed: false,
     });
-    window.location.reload();
   };
 
   const handleClickOpen = () => {
@@ -36,7 +35,7 @@ const DeleteButton = (props) => {
   const handleSubmit = () => {
   
       axios
-        .delete("/api/event/dEvent", {
+        .delete("/api/event/dAdminEvent", {
           params: {
             id: props.id, 
           },
@@ -44,6 +43,7 @@ const DeleteButton = (props) => {
         .then(function (response) {
           setOpen(false);
           setTimeout(() => {
+            window.location.reload();
             setSubmitStatus({ ...submitStatus, success: true });
           }, 450);
         })
