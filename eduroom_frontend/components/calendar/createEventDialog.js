@@ -14,36 +14,39 @@ const Content = (props) => {
     const year = props.year;
     const monthNo = props.monthNo;
 
-    const [stDate, setSTDate] = useState(year+ "-" + monthNo + "-" + date)
+    const [stDate, setSTDate] = useState(year + "-" + monthNo + "-" + date)
 
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
         title: '',
         description: '',
-        startDate:props.year+'-'+props.monthNo+'-'+props.date,
+        startDate: props.year + '-' + props.monthNo + '-' + props.date,
         endDate: '',
         startTime: '',
         endTime: '',
         place: '',
         courseid: '',
     })
-   
+
     useEffect(() => {
 
         api.get('/api/event/getMyCourse').then(
-            (res) =>{
+            (res) => {
                 setCourseList(res.data.data);
-                setEventInfo({...eventInfo, courseid: courseList[0].courseid})
+                // setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
             }
-        ).catch(err =>{});
-    },[courseList])
+        ).catch(err => { });
+    }, [])
+
+
+
 
     console.log();
-    useEffect(()=>{
+    useEffect(() => {
         console.log(date);
-        setSTDate(year+ "-" + monthNo + "-" + date);
-        setEventInfo({...eventInfo, startDate: stDate})
-    },[date,stDate])
+        setSTDate(year + "-" + monthNo + "-" + date);
+        setEventInfo({ ...eventInfo, startDate: stDate })
+    }, [date, stDate])
 
     const handleCreate = (e) => {
 
@@ -53,7 +56,7 @@ const Content = (props) => {
             (res) => {
                 alert("success");
                 window.location.reload();
-                
+
             }
         ).catch(err => {
             console.log(err);
@@ -110,7 +113,7 @@ const Content = (props) => {
 
                     <div className="startdate" >
                         <div>startDate</div>
-                            
+
                         <input
                             value={stDate}
                             className="event-startDate"
