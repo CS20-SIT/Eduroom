@@ -9,23 +9,6 @@ import Pagination from '../../../../components/user/instructor/createCourse/Pagi
 import styles from '../../../../styles/user/instructor/createCourse/create'
 
 const create = () => {
-	
-	useEffect(() => {
-		const GetData = async () => {
-			const result = await axios('http://localhost/api/event/getCourseEvent')
-			console.log(result.data)
-			setData(result.data)
-		}
-		const GetEventInfo = async () => {
-			const result = await axios('http://localhost/api/event/getEventInfo')
-			console.log(result.data)
-			setEvent(result.data)
-		}
-		GetData()
-		GetEventInfo()
-		console.log(data)
-	}, [])
-
 	const [page, setPage] = useState(1)
 	const [data, setData] = useState({
 		name: '',
@@ -34,6 +17,7 @@ const create = () => {
 		video: '',
 		videoPath: '',
 		subject: '',
+		price: '',
 		sections: [],
 	})
 	const [subjects, setSubjects] = useState([])
@@ -53,10 +37,6 @@ const create = () => {
 		}
 		fetchData()
 	}, [])
-	useEffect(() => {
-		// console.log('data is')
-		// console.log(data)
-	}, [data])
 	const renderPage = () => {
 		switch (page) {
 			case 1:
@@ -68,7 +48,6 @@ const create = () => {
 		}
 	}
 	const getInfosPath = async (el, data) => {
-		console.log(el)
 		let sections = data.sections
 		for (let i = 0; i < sections.length; i++) {
 			let section = sections[i]
@@ -85,16 +64,7 @@ const create = () => {
 		data.sections = sections
 		return data
 	}
-	const getBody = () => {
-		let body = { ...data }
-		delete body.picture
-		delete body.video
-		let newSections = body.sections.map((section, idx) => {
-			let newVideos = section.videos.map((video) => {
-				return { path: video.path, name: video.name }
-			})
-		})
-	}
+	
 	const handleNext = async () => {
 		if (page === 3) {
 			//upload file to server
@@ -109,8 +79,6 @@ const create = () => {
 			let videoLink = await api.post('/api/instructor/upload/sampleVideo', sampleVideoFormData)
 			newData.videoPath = videoLink.data[0].linkUrl
 
-			// console.log('newData is')
-			// console.log(newData)
 			newData = await getInfosPath('videos', newData)
 			newData = await getInfosPath('materials', newData)
 			console.log('after get path new data is')
