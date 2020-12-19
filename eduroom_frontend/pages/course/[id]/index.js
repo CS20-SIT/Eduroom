@@ -17,7 +17,7 @@ const CourseID = ({ id }) => {
     
   }
 	const renderButtons = () => {
-		if (course.iwOwn) {
+		if (course.isOwn) {
 			return (
 				<Fragment>
 					<span>
