@@ -14,7 +14,7 @@ exports.getAllCourse = async (req, res) => {
 		res.status(400).send(err.message)
 	}
 }
-exports.getCourseFromID = async (req, res) => {
+exports.getCourseFromID = async (req, res, next) => {
 	try {
 		const { rows } = await pool.query(`SELECT * FROM course
         join instructor i on course.ownerid = i.instructorid

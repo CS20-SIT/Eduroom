@@ -18,6 +18,7 @@ const CategoryBar = () => {
             })
             .catch((err) => [console.log(err)])
     }
+    
     return (
         <Fragment>
             <div className="categoryTab">
@@ -40,6 +41,9 @@ const CategoryBar = () => {
                     .categoryText{
                         display: flex;
                         
+                    }
+                    .active.categoryText:hover{
+                        color: pink;
                     }
                     .categoryTab {
                         display:flex;

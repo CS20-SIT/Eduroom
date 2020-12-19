@@ -10,12 +10,13 @@ import Name from '../../../components/course/courseRender'
 import api from '../../../api'
 
 const CourseCategory = (props) => {
+    const router = useRouter();
     const [data, setData] = useState([])
     const [category, setCategory] = useState([])
 
     useEffect(() => {
         GetData()
-    }, [])
+    }, [props.category])
     const GetData = async () => {
         const result = await api.get(`/api/course/categorySearch/${props.category}`)
         setData(result.data.data)
@@ -24,7 +25,7 @@ const CourseCategory = (props) => {
 
     useEffect(() => {
         getCategory()
-    }, [])
+    }, [props.category])
     const getCategory = async () => {
         const result = await api.get('/api/course/category')
         setCategory(result.data.category)
@@ -40,13 +41,14 @@ const CourseCategory = (props) => {
                         {/* Search bar and Categories select */}
                         <div className='text-center flex my-6 mx-search'>
                             <SearchBar />
-                            <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'>
+                            <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'
+                                onChange={ e => router.push('/course/category/' + e.target.value)}>
                                 <option>
                                     Category
-              </option>
+                                </option>
                                 {category.map((el, idx) => {
                                     return (
-                                        <option>
+                                        <option value={el.value}>
                                             {el.cataname}
                                         </option>
                                     )
