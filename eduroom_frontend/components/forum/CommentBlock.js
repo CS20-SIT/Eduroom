@@ -42,7 +42,7 @@ const CommentBlock = ({ data, handleDelete }) => {
                     </div>
                       <p>{row.answer}</p>
                       <div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
-                      <p>{row.author}  post in {moment(row.posttime).fromNow()}</p>
+                      <p>{row.author}  post in {moment(row.anstime).fromNow()}</p>
                       </div>
                     </div>
                     
