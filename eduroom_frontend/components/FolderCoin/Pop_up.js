@@ -19,7 +19,6 @@ const temp = (props) => {
             const res = await api.get(`/api/coin/stickers/${props.id}`);
             setData(res.data.stickers);
             setCoin(res.data.mycoins)
-            console.log();
         };
         fetchData();
         
