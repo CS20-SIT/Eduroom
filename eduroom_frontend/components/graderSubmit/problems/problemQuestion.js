@@ -23,23 +23,18 @@ const ProblemQuestion = (props) => {
 			const testCaseResult = await api.get('/api/grader/getQuestionTestCase', {
 				params: { id: props.questionId },
 			})
-
-			setTestCaseData(testCaseResult.data[0])
+			setTestCaseData(testCaseResult.data)
 		}
 		GetData()
 	}, [])
-
-	console.log(data)
-	console.log(props.questionId)
-	console.log(props.contestID)
-
+	console.log(testCaseData)
 	return (
 		<Fragment>
 			{data ? (
 				<Fragment>
 					<div className="box">
 						<div className="title" style={{ flex: '1' }}>
-							<div>{`${data.conquestionno != null ? data.conquestionno`.` : ''} ${data.title}`}</div>
+							<div>{`${data.conquestionno != null ? data.conquestionno + `.` : ''} ${data.title}`}</div>
 							<div className="admin-name">by {data.displayname}</div>
 						</div>
 						<div className="tag" style={{ flex: '0.5' }}>
@@ -90,7 +85,30 @@ const ProblemQuestion = (props) => {
 							</div>
 							<div className="sub-box testcases">
 								<div className="des-title">Test cases</div>
-								<div className="des-data">Some test cases</div>
+								<div className="input-wrap">
+									<div className="input-title">Input:</div>
+									<div className="input-box">
+										{testCaseData.map((element, key) => {
+											return (
+												<div className="input-data" key={key}>
+													{element.intput}
+												</div>
+											)
+										})}
+									</div>
+								</div>
+								<div className="output-wrap">
+									<div className="output-title">Output:</div>
+									<div className="output-box">
+										{testCaseData.map((element, key) => {
+											return (
+												<div className="output-data" style={{ whiteSpace: 'pre' }} key={key}>
+													{element.output}
+												</div>
+											)
+										})}
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
