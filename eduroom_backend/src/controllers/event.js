@@ -26,13 +26,13 @@ exports.getEventInMonthYear = async (req, res, next) => {
     WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
       AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2", [m, y])
     events.push(...data.rows);
-    if (user.role == 'instructor') {
-      const instructorData = await pool.query("SELECT startdate, enddate \
-      FROM course_event\
-      WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
-      AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2", [m, y])
-      events.push(...instructorData.rows);
-    }
+    // if (user.role == 'instructor') {
+    //   const instructorData = await pool.query("SELECT startdate, enddate \
+    //   FROM course_event\
+    //   WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
+    //   AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2", [m, y])
+    //   events.push(...instructorData.rows);
+    // }
     res.status(200).json({ success: true, data: events })
     return;
   } else {

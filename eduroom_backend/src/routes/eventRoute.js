@@ -15,12 +15,12 @@ const {
 const { jwtAuthenicate,jwtAdminAuthenticate } = require('../middleware/jwtAuthenticate');
 
 
-router.get('/getGlobalEvent', getGlobalEvent);
-router.get('/getCourseEvent', getCourseEvent);
+router.get('/getGlobalEvent', jwtAuthenicate,getGlobalEvent);
+router.get('/getCourseEvent', jwtAuthenicate,getCourseEvent);
 router.post('/createEvent', jwtAuthenicate, createEvent);
 router.get('/getEventInMonthYear', jwtAuthenicate, getEventInMonthYear);
 router.delete('/dEvent', jwtAuthenicate, dEvent);
-router.get('/getEvent', getEvent)
+router.get('/getEvent', jwtAuthenicate,getEvent)
 router.get('/getMyCourse', jwtAuthenicate, getMyCourse)
 router.post('/eEvent', jwtAuthenicate, eEvent);
 router.post('/eAdminEvent', jwtAdminAuthenticate, eAdminEvent)

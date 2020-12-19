@@ -22,20 +22,6 @@ const Content = (props) => {
     
     const [data, setData] = useState([])
 
-    useEffect(() => {
-        const GetData = async () => {
-            const result1 = await api.get("/api/event/getCourseEvent");
-            const result2 = await api.get("/api/event/getGlobalEvent");
-            const allResult = (result1.data).concat(result2.data)
-            setData(allResult);
-        };
-        GetData();
-    }, []);
-    const formatTime = (time) => {
-        return (time < 10 ? '0' : '') + time
-    }
-
-
     const [openEvent, setOpenEvent] = useState(false);
     const [isInstructor, setInstructor] = useState(false);
     useEffect(() => {
@@ -48,6 +34,26 @@ const Content = (props) => {
 
         })
     }, [])
+    
+    useEffect(() => {
+        const GetData = async () => {
+            const result2 = await api.get("/api/event/getGlobalEvent");
+            const allResult = (result2.data)
+
+            if(isInstructor){
+                const result1 = await api.get("/api/event/getCourseEvent");
+                allResult = allResult.concat(result1)
+            }
+            setData(allResult);
+        };
+        GetData();
+    }, []);
+    const formatTime = (time) => {
+        return (time < 10 ? '0' : '') + time
+    }
+
+
+    
 
 
 

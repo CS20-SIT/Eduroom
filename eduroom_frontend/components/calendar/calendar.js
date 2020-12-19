@@ -86,6 +86,7 @@ const Content = () => {
 		return firstDay
 	}
 
+	console.log(eventDays);
 
 
 	const [showDate, setShowDate] = useState(-1)
