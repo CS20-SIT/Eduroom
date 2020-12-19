@@ -111,3 +111,20 @@ exports.getCourse = async (req, res, next) => {
 };
 
 
+
+exports.searchCategory = async (req, res, next) => {
+	const cataname = req.body.cataname;
+	const user = req.user
+    if(cataname){
+        const data = await pool.query(
+            `select course.courseid as courseid, coursename, categories.cataid as cataid, cataname
+			from categories, course_categories cocat, course
+			where course.courseid = cocat.courseid and cocat.cataid = categories.cataid; WHERE UPPER(cataname) LIKE $1'`,
+            [cataname]
+      )
+    const course = data.rows
+      res.status(200).json({ success: true, data: course })
+    } else {
+      return next(new ErrorResponse("Not Found",404))
+    }
+}
