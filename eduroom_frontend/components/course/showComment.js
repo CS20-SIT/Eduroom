@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import moment from 'moment'
 import UserContext from '../../contexts/user/userContext'
 
-const showComment = ({ data, handleDelete }) => {
+const showComment = ({ data }) => {
   const userContext = useContext(UserContext);
   const {user} = userContext
   const useStyles = makeStyles((theme) => ({
@@ -32,14 +32,7 @@ const showComment = ({ data, handleDelete }) => {
               {data.map((row, index) => {
                 return (
                   <Paper className={classes.paper}>
-                    <div>
-                      {/* <div className="delete" style={{justifyContent: "space-between"}}>
-                      <b>comment {index + 1}</b>
-                      {user && row.userid == user.userid ? (
-                        <i className="fas fa-times" onClick={()=>{handleDelete(row.forumid,row.answerno)}}></i>
-                      ):null}
-                    </div> */}
-                    
+                    <div>                    
                       <p>{row.answer}</p>
                       <p>{row.author}{moment(row.posttime).fromNow()}</p>
                       <div style={{ marginTop: '25px', fontSize: '13px', color: '#000000' }}>
@@ -50,7 +43,7 @@ const showComment = ({ data, handleDelete }) => {
                   </Paper>
                 );
               })}
-              {/* {boy.map((ee) => {
+              {/* {data.map(() => {
                 return <h1>ee</h1>;
               })} */}
             </div>
