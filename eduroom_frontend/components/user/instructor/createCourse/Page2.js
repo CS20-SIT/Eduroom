@@ -3,13 +3,14 @@ import AddSection from './AddSection'
 import Sections from './Sections'
 
 const Page2 = (props) => {
+	//{ q: '', choices: ['', '', '', ''], correct: '' }
 	const addSection = () => {
 		const temp = props.sections.slice()
 		temp.push({
-			name:`Section ${temp.length+1}`,
-			videos: [{ name: 'Video Name', data: '',path:'' }],
-			material: {data:'',path:''},
-			questions: [{ q: '', choices: ['', '', '', ''], correct: '' }],
+			name: '',
+			videos: [{ name: '', data: '', path: '' }],
+			materials: [],
+			questions: [],
 		})
 		props.changeSections(temp)
 	}

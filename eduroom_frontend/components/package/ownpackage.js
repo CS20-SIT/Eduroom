@@ -1,14 +1,14 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/package/ownpackage'
 import Dialog from '@material-ui/core/Dialog'
 import { useRouter } from 'next/router'
 import api from '../../api'
 
 const Ownpackage = ({ ownPackage, fetchPackages }) => {
+	const [loading, setLoading] = useState(false)
 	const [open, setOpen] = useState(false)
 	const router = useRouter()
 	const [type] = useState('created')
-	console.log(ownPackage)
 	const handleOpenDialog = (e) => {
 		e.preventDefault()
 		e.stopPropagation()
@@ -16,7 +16,6 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 		handleSubmit()
 	}
 	const handleCloseDialog = (e) => {
-		e.preventDefault()
 		e.stopPropagation()
 		setOpen(false)
 	}
@@ -25,8 +24,11 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 	}
 
 	const handleDelete = async (e) => {
-		e.stopPropagation()
-		// router.push('/user/instructor/course')
+		setLoading(true)
+		await api.post('/api/package/delete/package', { packageid: ownPackage.packageid })
+		await fetchPackages()
+		setLoading(false)
+		setOpen(false)
 	}
 
 	const handlePublish = async (e) => {
@@ -65,7 +67,9 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 			</Fragment>
 		)
 	}
-
+	const getPrice = () => {
+		return ownPackage.price ? parseFloat(ownPackage.price).toFixed(2) : null
+	}
 	const renderOwnPackage = () => {
 		if (!ownPackage) return null
 		return (
@@ -79,10 +83,10 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 					<div className="package">
 						<div style={{ display: 'flex' }}>
 							<div>
-								<img src={ownPackage.image} className="picture"></img>
+								<img src={ownPackage.image} className="picture" width="140px" height="120px"></img>
 							</div>
 							<div className="block2">
-								<div style={{ display: 'flex' }}>
+								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 									<div className="name">{ownPackage.packagename}</div>
 									<div style={{ paddingLeft: '10%' }}>
 										<button className="Xbutton" onClick={handleOpenDialog}>
@@ -91,10 +95,10 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 									</div>
 								</div>
 								<div className="pri-cat">
-									฿<span>{ownPackage.price}</span>
+									฿<span>{getPrice()}</span>
 								</div>
 								<div>
-									<div className="pri-cat">Category: {ownPackage.cataname}</div>
+									<div className="pri-cat">Category: {ownPackage.cate_name}</div>
 									<div className="right">
 										{renderPublish()}
 										{renderEdit()}
@@ -112,7 +116,11 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 								<img src="/images/package/remove.svg" style={{ width: 200, height: 180 }} />
 							</div>
 							<div>
-								<button className="ycbutton" onClick={handleDelete}>
+								<button
+									className={`ycbutton ${loading ? 'btnDisabled' : ''}`}
+									disabled={loading}
+									onClick={handleDelete}
+								>
 									Yes
 								</button>
 								<button className="ycbutton" style={{ backgroundColor: '#5b5b5b' }} onClick={handleCloseDialog}>

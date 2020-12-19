@@ -121,22 +121,8 @@ input[type=checkbox] {
     border: 3px solid rgba(255,255,255,0.1);
     margin-bottom: 3%;
     width: 101.5%;
-    text-align: center;
     overflow: auto;
     height: 300px;
-}
-::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1); 
-}
-::-webkit-scrollbar {
-    width: 10px;
-} 
-::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.1);
-}
-  
-::-webkit-scrollbar-thumb:hover {
-    background: #d3d4da;
 }
 .list {
     border: 1px solid #EFF0F6;
@@ -170,6 +156,14 @@ input[type=checkbox] {
     opacity: 0.9;
     box-shadow: 0 0px 6px 2px rgba(0,0,0,0.1);
     transition: 0.25s;
+}
+.disabled{
+    opacity: 0.75;
+}
+.disabled:hover{
+    cursor: default;
+    opacity: 0.75;
+    box-shadow: none;
 }
 .cfbutton {
     display: grid;
@@ -244,6 +238,7 @@ input[type=checkbox] {
     font-weight: 500;
     padding-bottom: 20px;
     color: #5b5b5b;
+    display: flex;
 }
 .category {
     font-size: 16px;
@@ -273,6 +268,24 @@ input[type=checkbox] {
 .old-price {
     padding-left: 15px;
     text-decoration: line-through;
+}
+
+.confirm-course{
+    background: #EFF0F6;
+    border-radius: 10px;
+    display: flex;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.confirm-text{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-detail{
+    display: flex;
+    margin-left: 25px;
 }
 
 `

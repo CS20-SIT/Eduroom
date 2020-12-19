@@ -37,7 +37,7 @@ export default css`
     display: flex;
     flex-flow: column;
     padding-top: 1%;
-    z-index:1000;
+    z-index:10;
     position: fixed;
     top:0;
     left:0;

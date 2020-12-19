@@ -1,6 +1,8 @@
 const pool = require('../../database/db')
 const app = require('../../server')
 
+const ErrorResponse = require('../../utils/errorResponse')
+
 // INSTRUCTOR
 // 1: 9e6cfde7-af2c-4f56-b76e-2c68d97e847f
 // 2: 14bbc17c-e4cd-4e16-851f-29298171381d
@@ -11,7 +13,7 @@ const app = require('../../server')
 // 3: 08e9d239-b3f2-4db8-b29a-da99a314df92
 
 // GET
-const getInstructorAvailabilities = async (req, res) => {
+const getInstructorAvailabilities = async (req, res, next) => {
 	try {
 		/*
          {
@@ -21,18 +23,32 @@ const getInstructorAvailabilities = async (req, res) => {
          */
 
 		// ID from cookies
-		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
 
-		let result = await pool.query(
-			`select day,time from instructor_availabilities where instructorid = '${id}' order by day, time`
+		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
+		const { instructorid } = result.rows[0]
+
+		result = await pool.query(
+			`select day,time from instructor_availabilities where instructorid = '${instructorid}' order by day, time`
 		)
 		const availabilities = [[], [], [], [], []]
-		result.rows.forEach((r) => {
-			availabilities[r.day].push(r.time - 9)
-		})
-		result = await pool.query(`select price from instructor_availabilities_price where instructorid = '${id}'`)
-		const { price } = result.rows[0]
+		if (result.rows.length > 0) {
+			result.rows.forEach((r) => {
+				availabilities[r.day].push(r.time - 9)
+			})
+		}
+		result = await pool.query(
+			`select price from instructor_availabilities_price where instructorid = '${instructorid}'`
+		)
+		let price = 0
+		if (result.rows.length > 0) {
+			price = result.rows[0].price
+		}
 		res.status(200).send({ availabilities, price })
 	} catch (e) {
 		res.status(404).send(e)
@@ -54,19 +70,27 @@ const getInstructorList = async (req, res) => {
         }   
          */
 
-		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
+		// WHY INSTRUCTOR EXPERT IS NOT INSERTED ??
+		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname 
+			from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
             where p.instructorid = i.instructorid and i.userid = u.userid and e.instructorid = p.instructorid;
         `)
-		instructorInfo = result.rows
+		const instructorInfoTmp = result.rows
+		const instructorInfo = []
+		instructorInfoTmp.forEach((e) => {
+			if (instructorInfo.findIndex((x) => x.instructorid == e.instructorid) == -1) {
+				instructorInfo.push(e)
+			} else {
+				instructorInfo[
+					instructorInfo.findIndex((x) => x.instructorid == e.instructorid)
+				].subjectname += `, ${e.subjectname}`
+			}
+		})
+
 		result = await pool.query(
 			`select i.instructorid, m.score from instructor_appointment_members m,instructor_appointments i where i.appointmentid = m.appointmentid AND m.score is not null;`
 		)
 		instructorRating = result.rows
-
-		result = await pool.query(
-			`select COUNT(*),i.instructorid from instructor_appointment_members m,instructor_appointments i where i.appointmentid = m.appointmentid AND m.score is not null group by i.instructorid;`
-		)
-		instructorRatingCount = result.rows
 
 		instructorInfo.forEach((i) => {
 			i.name = i.firstname + ' ' + i.lastname
@@ -78,10 +102,11 @@ const getInstructorList = async (req, res) => {
 					c++
 				}
 			})
-			i.rating = (sum / c).toFixed(1)
-			instructorRatingCount.forEach((c) => {
-				if (i.instructorid == c.instructorid) i.ratingCount = c.count
-			})
+			console.log(i.instructorid, sum, c)
+
+			i.rating = c == 0 ? 0 : (sum / c).toFixed(1)
+			i.ratingCount = c
+
 			delete i.firstname
 			delete i.lastname
 		})
@@ -113,7 +138,8 @@ const getInstructorInfo = async (req, res) => {
 		// ID : hardcode
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 
-		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname, i.biography,p.price from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
+		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname, i.biography,p.price 
+		from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
         where i.instructorid = '${id}' and p.instructorid = i.instructorid and i.userid = u.userid and e.instructorid = p.instructorid;
         `)
 		instructorInfo = result.rows[0]
@@ -131,21 +157,13 @@ const getInstructorInfo = async (req, res) => {
 			c++
 		})
 
-		result = await pool.query(`select COUNT(*) from instructor_appointment_members m,instructor_appointments i
-		where instructorid = '${id}'
-		  and i.appointmentid = m.appointmentid
-		  AND m.score is not null
-		group by i.instructorid;
-		`)
-		instructorRatingCount = result.rows[0]
-
 		let instructor = {
 			id: instructorInfo.instructorid,
 			name: instructorInfo.firstname + ' ' + instructorInfo.lastname,
 			info: instructorInfo.subjectname,
 			text: instructorInfo.biography,
-			rating: (sum / c).toFixed(1),
-			ratingCount: instructorRatingCount.count,
+			rating: c == 0 ? 0 : (sum / c).toFixed(1),
+			ratingCount: c,
 			price: instructorInfo.price,
 		}
 
@@ -219,9 +237,10 @@ const getInstructorAvailability = async (req, res) => {
         where day = '${day}'
           and instructorid = '${id}';`)
 		const times = []
-		result.rows.forEach((r) => {
-			times.push(r.time)
-		})
+		if (result.rows.length > 0)
+			result.rows.forEach((r) => {
+				times.push(r.time)
+			})
 
 		sameDay.forEach((d) => {
 			const removal = parseInt(d.endtime) - parseInt(d.starttime)
@@ -234,16 +253,22 @@ const getInstructorAvailability = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const getInstructorAppointments = async (req, res) => {
+const getInstructorAppointments = async (req, res, next) => {
 	try {
 		// ID from cookies
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
-		const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
+		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
+		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
+		const { instructorid } = result.rows[0]
 
-		let result = await pool.query(`
+		result = await pool.query(`
 		select a.appointmentid, a.headerid as id, u.firstname as firstname, u.lastname as lastname, date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, a.status,to_char( a.starttime, 'DD-MM-YYYY') as date, m.userid as mid, me.firstname as mfn, me.lastname as mln
         from instructor_appointments a,user_profile u, instructor_appointment_members m, (select userid, firstname, lastname from user_profile) me
-        where a.instructorid = '${id}'
+        where a.instructorid = '${instructorid}'
 		  and a.headerid = u.userid
 		  and m.appointmentid = a.appointmentid
           and me.userid = m.userid
@@ -309,10 +334,16 @@ const getInstructorAppointments = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const getStudentAppointments = async (req, res) => {
+const getStudentAppointments = async (req, res, next) => {
 	try {
 		// ID from cookies
-		const id = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+
+		// const id = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+		// console.log(id)
 
 		let result = await pool.query(`
 		select a.appointmentid,u.firstname , u.lastname ,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, 
@@ -371,24 +402,39 @@ const getStudentAppointments = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const getUserInfo = async (req, res) => {
+const getUserInfo = async (req, res, next) => {
 	try {
 		// name : name key
-		const { name } = req.query
+		const { name, iid } = req.query
 		console.log(name)
+
+		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+
+		let result = await pool.query(`select userid from instructor where instructorid = '${iid}'`)
+		let insID = ''
+		if (result.rows[0]) insID = result.rows[0].userid
 
 		// name : hardcode
 		// const name = 'ka'
-		let result = await pool.query(`
+		result = await pool.query(`
         select userid, firstname, lastname from user_profile where  CONCAT(lower(firstname),' ',lower(lastname)) like '%${name}%'  limit 5
         `)
 		const students = []
+
 		result.rows.forEach((s) => {
-			let tmp = {
-				id: s.userid,
-				name: s.firstname + ' ' + s.lastname,
+			console.log(s.firstname)
+			console.log(s.userid, id)
+
+			if (s.userid != id && s.userid != insID) {
+				let tmp = {
+					id: s.userid,
+					name: s.firstname + ' ' + s.lastname,
+				}
+				students.push(tmp)
 			}
-			students.push(tmp)
 		})
 		res.status(200).send({ students })
 	} catch (e) {
@@ -397,7 +443,7 @@ const getUserInfo = async (req, res) => {
 }
 
 // POST
-const updateInstructorAvailabilities = async (req, res) => {
+const updateInstructorAvailabilities = async (req, res, next) => {
 	try {
 		/*
 		body
@@ -410,25 +456,41 @@ const updateInstructorAvailabilities = async (req, res) => {
 		// ID from cookies
 		const { availabilities, price } = req.body
 		// const id = 'bef966c3-c352-4044-a6b7-cdab918611b8'
-		const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
+		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 		// const id = '14bbc17c-e4cd-4e16-851f-29298171381d'
-		for (let i = 0; i < 5; i++) {
-			await pool.query(`delete from instructor_availabilities where instructorid = '${id}' and day = ${i}`)
+
+		const id = req.user.id
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
 		}
+		let result = await pool.query(`select instructorid from instructor where userid = '${id}'`)
+		const { instructorid } = result.rows[0]
+		await pool.query(`delete from instructor_availabilities where instructorid = '${instructorid}'`)
 		for (let i = 0; i < availabilities.length; i++) {
 			for (let j = 0; j < availabilities[i].length; j++) {
 				await pool.query(
-					`insert into instructor_availabilities values ('${id}',${i},${availabilities[i][j] + 9})`
+					`insert into instructor_availabilities values ('${instructorid}',${i},${availabilities[i][j] + 9})`
 				)
 			}
 		}
-		await pool.query(`update instructor_availabilities_price set price = ${price} where instructorid = '${id}';`)
+		result = await pool.query(
+			`select instructorid from instructor_availabilities_price where instructorid = '${instructorid}'`
+		)
+
+		if (result.rows.length == 0) {
+			console.log('IF')
+			await pool.query(`insert into instructor_availabilities_price values ('${instructorid}',${price});`)
+		} else {
+			console.log('ELSE')
+			await pool.query(`
+			update instructor_availabilities_price set price = ${price} where instructorid = '${instructorid}'`)
+		}
 		res.status(200).send({ test: 'Successs' })
 	} catch (e) {
 		res.status(404).send(e)
 	}
 }
-const insertStudentAppointment = async (req, res) => {
+const insertStudentAppointment = async (req, res, next) => {
 	try {
 		/*
 		body
@@ -442,7 +504,12 @@ const insertStudentAppointment = async (req, res) => {
          */
 
 		// ID from cookies
-		const headerId = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+		// const headerId = '44f8e863-226c-4bed-9556-aa6e1600d3bc'
+		const headerId = req.user.id
+
+		if (!headerId) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
 		const { id, startTime, endTime, price, members } = req.body
 		// 	console.log(headerId)
 		// 	console.log(id, startTime, endTime, price, members)
@@ -502,7 +569,7 @@ const updateInstructorAppointment = async (req, res) => {
 		res.status(404).send(e)
 	}
 }
-const updateAppointmentReview = async (req, res) => {
+const updateAppointmentReview = async (req, res, next) => {
 	try {
 		/*
 		body
@@ -515,7 +582,12 @@ const updateAppointmentReview = async (req, res) => {
          */
 
 		// Cookie
-		const userId = '123e4567-e89b-12d3-a456-426614174000'
+		const userId = req.user.id
+
+		if (!userId) {
+			return next(new ErrorResponse('Unauthorize', 401))
+		}
+		// const userId = '123e4567-e89b-12d3-a456-426614174000'
 		const { id, score, desc } = req.body
 
 		await pool.query(`

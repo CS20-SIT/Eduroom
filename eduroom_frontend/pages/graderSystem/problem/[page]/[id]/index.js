@@ -5,20 +5,16 @@ import style from '../../../../../styles/graderSubmit/problems/problemSolvePage'
 import ProblemLayout from '../../../../../components/graderSubmit/problems/ProblemLayout'
 import { useRouter } from 'next/router'
 
-const ProblemID = () => {
-	const [id, setId] = useState(null)
-	const router = useRouter()
-	useEffect(() => {
-		const ID = router.query.id
-		setId(ID)
-	}, [])
+const ProblemID = ({ id, page }) => {
+	console.log(id)
+
 	return (
 		<Fragment>
 			<Layout page="problem">
 				<div className="main">
 					<div className="size">
 						<Box>
-							<ProblemLayout page="description" id={id} />
+							<ProblemLayout page="description" pageId={page} id={id} />
 						</Box>
 					</div>
 				</div>
@@ -27,4 +23,15 @@ const ProblemID = () => {
 		</Fragment>
 	)
 }
+
+export async function getServerSideProps(ctx) {
+	try {
+		const id = ctx.query.id
+		const page = ctx.query.page
+		return { props: { id, page } }
+	} catch (err) {
+		return { props: { id: '', page: '' } }
+	}
+}
+
 export default ProblemID

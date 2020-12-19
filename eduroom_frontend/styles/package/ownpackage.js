@@ -28,14 +28,12 @@ export default css`
     height: 90px;
     margin: 5px;
     display: flex;
-    background-color: red;
 }
 .block2 {
     width: 95%;
     padding: 4px 5px;
 }
 .name {
-    width: 90%;
     font-size: 20px;
     font-weight: 550;
 }
@@ -50,6 +48,16 @@ export default css`
     cursor: pointer;
     color: #3D467F;
     font-weight: 600;
+}
+.block4{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10%;
+    cursor: pointer;
+}
+.block3{
+    display: flex;
 }
 .right {
     display: flex;
@@ -75,16 +83,11 @@ export default css`
     opacity: 0.9;
     box-shadow: 0 0px 6px 2px rgba(0,0,0,0.2);
     transition: 0.25s;
-  }
+}
 .disabled{
     cursor: default;
     opacity: 0.6;
 }
-// .disabled:hover{
-//     cursor: default;
-//     opacity: 0.6;
-//     box-shadow: 0;
-// }
 .ycbutton {
     background-color: #FB9CCB;
     cursor: pointer;
@@ -98,7 +101,15 @@ export default css`
 .ycbutton:hover {
     cursor: pointer;
     opacity: 0.9;
-  }
+}
+.btnDisabled{
+    cursor: default;
+    opacity: 0.9;
+}
+.btnDisabled:hover{
+    cursor: default;
+    opacity: 0.9;
+}
 
 .fa-pen {
     padding-right: 8px;

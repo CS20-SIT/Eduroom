@@ -5,20 +5,23 @@ import Box from '../../../../components/graderSubmit/Box'
 import style from '../../../../styles/graderSubmit/problems/problems'
 import Tag from '../../../../components/graderSubmit/problems/ProblemTag'
 import ProblemList from '../../../../components/graderSubmit/problems/ProblemList'
-import PageSelectionButton from '../../../../components/graderSubmit/PageSelectionButton'
+import Paginations from '../../../../components/package/paginations'
 import api from '../../../../api'
+import { useRouter } from 'next/router'
 
 const Problems = ({ page }) => {
 	const [questionsData, setQuestionsData] = useState([])
 	const [tagsData, setTagsData] = useState([])
 	const [countData, setCountData] = useState([])
 	const [tag, setTag] = useState(null)
+	const [startPage, setStartPage] = useState(1)
+	const router = useRouter()
 
 	useEffect(() => {
 		const GetData = async () => {
-			const questionsQuery = await api.get('api/grader/getPreviewQuestion', { params: { offset: page - 1 } })
-			const countQuery = await api.get('api/grader/CountAllQuestion')
-			const tagsQuery = await api.get('api/grader/getQuestionTag')
+			const questionsQuery = await api.get('/api/grader/getPreviewQuestion', { params: { offset: page - 1 } })
+			const countQuery = await api.get('/api/grader/CountAllQuestion')
+			const tagsQuery = await api.get('/api/grader/getQuestionTag')
 			setQuestionsData(questionsQuery.data)
 			setCountData(countQuery.data.count)
 			setTagsData(tagsQuery.data)
@@ -26,41 +29,27 @@ const Problems = ({ page }) => {
 		GetData()
 	}, [page])
 
-	const renderButton = (page) => {
-		const arr = []
-		let overflow = parseInt(0)
-		const pages = Math.ceil(countData)
-
-		// if (pages >= 4) {
-		// 	if (page % 5 != 0) {
-		// 		for (let i = 1; i <= 5; i++) {
-		// 			if (i == 5) {
-		// 				arr.push(<PageSelectionButton page={overflow * 4 + i} current={page} last={'Next'} />)
-		// 				overflow++
-		// 			} else {
-		// 				arr.push(<PageSelectionButton page={overflow * 4 + i} current={page} />)
-		// 			}
-		// 		}
-		// 	} else {
-		// 		for (let i = 1; i <= 4; i++) {
-		// 			arr.push(<PageSelectionButton page={overflow * 4 + i} current={page} />)
-		// 		}
-		// 	}
-		// } else {
-		// 	for (let i = 1; i <= pages; i++) {
-		// 		arr.push(<PageSelectionButton page={i} current={page} />)
-		// 	}
-		// }
-
-		console.log(overflow)
-		return <Fragment>{arr}</Fragment>
-	}
-
 	useEffect(() => {
-		api.get(`api/grader/getQuestionByTag?tag=${tag}`).then((res) => {
-			console.log(res.data)
-			setQuestionsData(res.data)
-		})
+		const GetTag = async () => {
+			if (tag) {
+				const tagQuery = await api.get(`api/grader/getQuestionByTag`, { params: { tag: tag } })
+				setQuestionsData(tagQuery.data)
+			} else {
+				const questionsQuery = await api.get('/api/grader/getPreviewQuestion', { params: { offset: page - 1 } })
+				setQuestionsData(questionsQuery.data)
+			}
+		}
+		const GetCount = async () => {
+			if (tag) {
+				const questionTagQuery = await api.get(`api/grader/getCountQuestionByTag`, { params: { tag: tag } })
+				setCountData(questionTagQuery.data)
+			} else {
+				const countQuery = await api.get('/api/grader/CountAllQuestion')
+				setCountData(countQuery.data)
+			}
+		}
+		GetTag()
+		GetCount()
 	}, [tag])
 
 	let content = (
@@ -81,6 +70,7 @@ const Problems = ({ page }) => {
 												return (
 													<Fragment>
 														<ProblemList
+															pageID={page}
 															id={element.id}
 															title={element.title}
 															description={element.description}
@@ -94,7 +84,19 @@ const Problems = ({ page }) => {
 								</div>
 							</Box>
 							<div className="list-of-pages">
-								<div className="button-container">{renderButton(page)}</div>
+								<Paginations
+									startPage={startPage}
+									numData={countData}
+									page={page}
+									setPage={(newPage) => {
+										router.push(`/graderSystem/problem/${newPage}`)
+									}}
+									mxDataPerPage={1}
+									numPagination={4}
+									setStartPage={(newPage) => {
+										setStartPage(newPage)
+									}}
+								/>
 							</div>
 						</div>
 					</div>
@@ -111,6 +113,7 @@ const Problems = ({ page }) => {
 												key={key}
 												changeTag={(tag) => setTag(tag)}
 												currentTag={tag}
+												key={key}
 											/>
 										)
 									})}
