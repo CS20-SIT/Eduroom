@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import Cart from '../../components/payment/cart'
 import General from '../../components/template/general'
+import { getItems } from '../../utils/cart'
 import api from '../../api'
 import style from '../../styles/course/cartStyle'
 
@@ -15,6 +16,11 @@ const CartPage = () => {
 		console.log(res.data)
 	}
 	useEffect(() => {
+		const courses = getItems('course')
+		const packages = getItems('package')
+		console.log('course is ', courses)
+		setCartCourses(courses)
+		setCartPackages(packages)
 		fetchCourse()
 	}, [])
 	return (
