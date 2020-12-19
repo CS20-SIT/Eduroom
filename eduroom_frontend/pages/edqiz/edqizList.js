@@ -4,10 +4,11 @@ import GeneralNoNav from '../../components/template/generalnonav'
 const CreatePage = () => {
   return (
     <Fragment>
-      <GeneralNoNav />
-      <List />
-    
+      <GeneralNoNav>
+          <List />
+      </GeneralNoNav>
     </Fragment>
+   
   )
 }
 export default CreatePage
