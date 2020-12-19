@@ -67,7 +67,7 @@ const {
 	gCountQuestionByTag,
 } = require('../controllers/graderCreate/graderSubmit')
 
-const { pingGrader } = require('../controllers/graderSystem')
+const { pingGrader, createSubmission } = require('../controllers/graderSystem')
 
 const multer = require('multer')
 
@@ -159,5 +159,6 @@ router.get('/getQuestionSubmission', gQuestionSubmission)
 router.get('/getCountQuestionByTag', gCountQuestionByTag)
 
 router.get('/ping', pingGrader)
+router.post('/submission', createSubmission)
 
 module.exports = router
