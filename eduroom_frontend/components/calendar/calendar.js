@@ -13,7 +13,6 @@ import { Grid, Container } from '@material-ui/core'
 import { useRouter } from 'next/router'
 
 const Content = () => {
-	//create Eventpage
 	const router = useRouter()
 
 	//Array of short names of the day.
@@ -28,46 +27,47 @@ const Content = () => {
 	const [currentMonth, setCurrentMonth] = useState('January')
 	const [currentMonthNo, setCurrentMonthNo] = useState(1)
 	const [currentYear, setCurrentYear] = useState(1970)
+
 	const Today = new Date()
 	const TodayDate = Today.getDate()
 	const TodayMonth = Today.getMonth() + 1
 	const TodayYear = Today.getFullYear()
 
-  const [eventDays, setEvent] = useState([])
-  const [daysInMonth,setDayInMonth] = useState([])
-  const [blank,setBlank] = useState([])
-  const [blankEnd,setBlankEnd] = useState([])
+	const [eventDays, setEvent] = useState([])
+	const [daysInMonth, setDayInMonth] = useState([])
+	const [blank, setBlank] = useState([])
+	const [blankEnd, setBlankEnd] = useState([])
+
 	useEffect(() => {
 		setCurrentDate(parseInt(day.dateObject.format('D')))
 		setCurrentMonth(day.dateObject.format('MMMM'))
 		setCurrentMonthNo(parseInt(day.dateObject.format('M')))
-    setCurrentYear(parseInt(day.dateObject.format('YYYY')))
-    let tempDay = []
-    let tempBlankend = []
-    let tempBlank = []
-    let count = 0
-    for (let i = 0; i < firstDayOfMonth(); i++) {
-      tempBlank.push('x')
-      count++
-    }
-    for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
-      tempDay.push(d)
-      count++
-    }
-    while (count < 42) {
-      tempBlankend.push('x')
-      count++
-    }
-    setDayInMonth(tempDay)
-    setBlank(tempBlank)
-	setBlankEnd(tempBlankend)
-	console.log(day)
+		setCurrentYear(parseInt(day.dateObject.format('YYYY')))
+		let tempDay = []
+		let tempBlankend = []
+		let tempBlank = []
+		let count = 0
+		for (let i = 0; i < firstDayOfMonth(); i++) {
+			tempBlank.push('x')
+			count++
+		}
+		for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
+			tempDay.push(d)
+			count++
+		}
+		while (count < 42) {
+			tempBlankend.push('x')
+			count++
+		}
+		setDayInMonth(tempDay)
+		setBlank(tempBlank)
+		setBlankEnd(tempBlankend)
 		api
 			.get(`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(day.dateObject.format('YYYY'))}`)
 			.then((res) => {
 				setEvent(res.data.data)
 			})
-			.catch((err) => {})
+			.catch((err) => { })
 	}, [day])
 	//state chage 1 month per click
 	const addMonth = () => {
@@ -92,7 +92,7 @@ const Content = () => {
 	const [open, setOpen] = useState(false)
 
 	const [isInstructor, setInstructor] = useState(false)
-	
+
 	useEffect(() => {
 		api
 			.get('/api/auth/profile')
@@ -101,7 +101,7 @@ const Content = () => {
 					setInstructor(true)
 				}
 			})
-			.catch((err) => {})
+			.catch((err) => { })
 	}, [])
 
 	// ------------------code below----------------------//

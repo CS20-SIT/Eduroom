@@ -28,6 +28,7 @@ const edit = (props) => {
         GetData();
 
     }, []);
+    // console.log(data)
 
 
     // ---------------------createEvent---------------------------
