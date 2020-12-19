@@ -52,7 +52,7 @@ exports.createSubmission = async (req, res) => {
 			}
 		})
 		
-		// Send API of batch submission to judge0
+		// Construct and request body, Send API of batch submission to judge0
 		const languageId = getLanguage_id(language)
 		const submissionRequestBody = {
 			submissions: []
@@ -66,7 +66,22 @@ exports.createSubmission = async (req, res) => {
 			}
 			submissionRequestBody.submissions.push(submission)
 		}
-		res.send(submissionRequestBody)
+		const batchSubmissionResponse = await grader.post('/submissions/batch?base64_encoded=true', submissionRequestBody)
+
+		// Send API of get batch submission to judge0
+		let submissionTokensParams = ""
+		batchSubmissionResponse.data.forEach(ele => {
+			submissionTokensParams += `${ele.token},`
+		})
+		const getSubmissionsResponse = await grader.get('/submissions/batch', {
+			params: {
+				base64_encoded: false,
+				tokens: submissionTokensParams
+			}
+		})
+
+
+		res.send(getSubmissionsResponse.data)
 	} catch (error) {
         errorHandler(error, req, res)
     }
