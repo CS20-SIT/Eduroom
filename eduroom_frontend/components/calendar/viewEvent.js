@@ -117,7 +117,7 @@ const Content = (props) => {
                 </div>
             </CSSTransition>
 
-            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} date={showDate} monthNo={currentMonthNo} year={currentYear} />
+            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} date={showDate} monthNo={currentMonthNo} year={props.currentYear} />
 
             <style jsx>
                 {style}

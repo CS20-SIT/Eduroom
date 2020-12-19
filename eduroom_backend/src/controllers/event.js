@@ -198,17 +198,21 @@ exports.dAdminEvent = async (req, res, next) => {
 exports.getAdminEvent = async (req, res, next) => {
   const id = req.query.id
   const result = await pool.query(`select * from global_event where eventid = ${id}`);
+  console.log('data is ',result.rows[0])
+  result.rows[0].startdate = result.rows[0].startdate.toISOString().slice(0,10)
+  result.rows[0].enddate = result.rows[0].enddate.toISOString().slice(0,10)
+
   res.send(result.rows);
 
 }
 exports.eAdminEvent = async (req, res, next) => {
-  const id = req.query.id;
+  const id = req.body.id;
   const title = req.body.title;
-  const startdate = req.body.startDate;
-  const enddate = req.body.endDate;
-  const endtime = req.body.endTime;
-  const starttime = req.body.startTime;
-  const detail = req.body.description;
+  const startdate = req.body.startdate;
+  const enddate = req.body.enddate;
+  const endtime = req.body.endtime;
+  const starttime = req.body.starttime;
+  const detail = req.body.detail;
   const place = req.body.place;
   console.log(req.body);
   await pool.query("update global_event \
