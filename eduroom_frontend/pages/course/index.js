@@ -1,11 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import utils from '../../styles/course/utils';
 import GeneralNoNav from '../../components/template/generalnonav';
+import General from '../../components/template/general'
 import Link from 'next/link';
 import SearchBar from '../../components/course/searchBar'
 import CategoryBar from '../../components/course/categoryBar'
 import { useRouter } from 'next/router'
 import Name from '../../components/course/courseRender'
+import Carousel from '../../components/course/carousel'
 
 import api from '../../api'
 
@@ -37,7 +39,8 @@ const Course = () => {
 
   return (
     <Fragment>
-      <GeneralNoNav>
+      <General>
+          <Carousel/>
         <div className='bg'>
           <div className='container-1'>
 
@@ -76,6 +79,7 @@ const Course = () => {
                 </Link>
               ))}
             </div>
+            
 
           </div>
         </div>
@@ -108,7 +112,7 @@ const Course = () => {
           }
         `}
         </style>
-      </GeneralNoNav>
+      </General>
     </Fragment>
   );
 };

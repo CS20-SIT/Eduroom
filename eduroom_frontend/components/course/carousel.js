@@ -7,7 +7,7 @@ const carousel= () => {
           <figure>
             <img src="/images/package/pic1.svg"></img>
             <img src="/images/package/pic2.svg"></img>
-            <img src="/images/package/pic3.svg"></img>
+            {/* <img src="/images/package/pic3.svg"></img> */}
           </figure>
       </div>
 
