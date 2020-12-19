@@ -19,7 +19,9 @@ const CategoryItem = ({ content }) => {
                     .bottomLine{
                         border-bottom: 2px solid #535353;
                     }
-                    
+                    bottomLine:hover {
+                        color: pink;
+                    }
                 `}
             </style>
         </Fragment>

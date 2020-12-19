@@ -6,11 +6,14 @@ import GeneralNonav from '../../components/template/generalnonav'
 import ForumBox from '../../components/forum/layout/forumBox'
 import Link from 'next/link';
 import SearchBar from '../../components/course/searchBar'
+import CategoryBar from '../../components/course/categoryBar'
 
 const Search = () => {
-  const router = useRouter()
   const [data, setData] = useState([])
+  const [category, setCategory] = useState([])
+  const router = useRouter()
   const search = router.query.q
+
   useEffect(() => {
     getData(search)
   }, [search])
@@ -23,37 +26,43 @@ const Search = () => {
       .catch((err) => { })
   }
 
+  useEffect(() => {
+    getCategory()
+  }, [])
+  const getCategory = async () => {
+    const result = await api.get('/api/course/category')
+    setCategory(result.data.category)
+    console.log(result)
+  }
+
+
   return (
     <Fragment>
       <GeneralNonav>
-      <div className='bg'>
-          <div className='container'>
+        <div className='bg'>
+          <div className='container-1'>
 
             {/* Search bar and Categories select */}
-            <div className='text-center flex my-6'>
+            <div className='text-center flex my-6 mx-search'>
               <SearchBar />
-              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox' placeholder="category">
-                <option>Category</option>
-                <option>Development</option>
-                <option>Finance</option>
-                <option>Music</option>
+              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'>
+                <option>
+                  Category
+              </option>
+                {category.map((el, idx) => {
+                  return (
+                    <option>
+                      {el.cataname}
+                    </option>
+                  )
+                })}
               </select>
             </div>
 
-            {/* Categories Name */}
-            <div className='text-center categoryTab'>
-              <Link href={`/course`}>
-                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>GENERAL</span></Link>
-                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MATH</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT & SOFTWARE</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>DESIGN</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MARKETING</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>BUSINESS</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>OTHER</span>
-            </div>
+            <CategoryBar />
 
             {/* Box of each course */}
-            <div className='text-center my-10'>
+            <div className='text-center my-8'>
               {data.map((e, index) => (
                 <Link href={`/course/${e.courseid}`}>
                   <div className='mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer'>
@@ -74,6 +83,12 @@ const Search = () => {
       <style jsx>{utils}</style>
       <style jsx>
         {`
+          .container-1{
+            max-width: 87vw;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 4rem 1rem;
+          }
           .cateBox { 
             border: none;
             outlined: none;
@@ -82,10 +97,15 @@ const Search = () => {
             width: 250px;
           }
           .categoryTab{
-            margin-top: 3rem;
+			      margin-top: 3rem;
           }
           .bg{
             background: #F9F7FE;
+          }
+          .mx-search{
+            margin-left: 5rem;
+            margin-right: 5rem;
+      
           }
         `}
       </style>

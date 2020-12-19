@@ -4,7 +4,7 @@ import GeneralNoNav from '../../components/template/generalnonav';
 import Link from 'next/link';
 import SearchBar from '../../components/course/searchBar'
 import CategoryBar from '../../components/course/categoryBar'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import Name from '../../components/course/courseRender'
 
 import api from '../../api'
@@ -12,7 +12,8 @@ import api from '../../api'
 // const Course = ({ courseDes }) => {
 const Course = () => {
   const [courseDes, setCourseDes] = useState([])
-  const [category,setCategory] = useState([])
+  const [category, setCategory] = useState([])
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,16 +28,12 @@ const Course = () => {
   useEffect(() => {
     getCategory()
   }, [])
-    const getCategory = () =>{
-        api
-            .get('/api/course/category')
-            .then((res) => {
-          setCategory(res.data.category)
-      })
-      .catch((err) => [console.log(err)])
-    }
+  const getCategory = async () => {
+    const result = await api.get('/api/course/category')
+    setCategory(result.data.category)
+    console.log(result)
+  }
 
-  
 
   return (
     <Fragment>
@@ -45,26 +42,27 @@ const Course = () => {
           <div className='container-1'>
 
             {/* Search bar and Categories select */}
-            <div className='text-center flex my-6'>
+            <div className='text-center flex my-6 mx-search'>
               <SearchBar />
-              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'>
-              <option>
-                    Category
+              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox' 
+                      onChange={ e => router.push('/course/category/'+ e.target.value)}>
+                <option>
+                  Category
               </option>
-                  {category.map((el, idx) => {
-                    return (
-                      <option>
-                        {el.cataname}
-                      </option>
-                    )
-                  })}
+                {category.map((el, idx) => {
+                  return (
+                    <option value={el.value}>
+                      {el.cataname}
+                    </option>
+                  )
+                })}
               </select>
             </div>
 
-            <CategoryBar/>
+            <CategoryBar />
 
             {/* Box of each course */}
-            <div className='text-center my-10'>
+            <div className='text-center my-8'>
               {courseDes.map((e, index) => (
                 <Link href={`/course/${e.courseid}`}>
                   <div className='mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer'>
@@ -98,10 +96,15 @@ const Course = () => {
             width: 250px;
           }
           .categoryTab{
-			margin-top: 3rem;
+			      margin-top: 3rem;
           }
           .bg{
             background: #F9F7FE;
+          }
+          .mx-search{
+            margin-left: 5rem;
+            margin-right: 5rem;
+      
           }
         `}
         </style>
