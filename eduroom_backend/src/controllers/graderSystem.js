@@ -73,17 +73,17 @@ exports.createSubmission = async (req, res) => {
 		})
 
 		await pool.query(`INSERT INTO question_attempt (userid, questionid, score, status, time, memory, language, code, whentime) VALUES ('${userId}',${problemId},0,'Pending',0,0,'${language}','${sourceCode}',CURRENT_TIMESTAMP);`)
-		const attempId = await pool.query(`SELECT attempno FROM question_attempt WHERE code = '${sourceCode}' AND userid = '${userId}' AND status = 'Pending' ORDER BY whentime DESC LIMIT 1;`)
+		const attemptId = await pool.query(`SELECT attempno FROM question_attempt WHERE code = '${sourceCode}' AND userid = '${userId}' AND status = 'Pending' ORDER BY whentime DESC LIMIT 1;`)
 
 		const insertQuestionAttempTestcase = []
 		for(let i=0; i<testcaseNumber; i++){
-			const queryPromise = pool.query(`INSERT INTO question_attempt_testcase (attemptid, testcaseno, status, memory, time, score) VALUES (${attempId.rows[0].attempno},${i+1},'Pending',0,0,0);`) 
+			const queryPromise = pool.query(`INSERT INTO question_attempt_testcase (attemptid, testcaseno, status, memory, time, score) VALUES (${attemptId.rows[0].attempno},${i+1},'Pending',0,0,0);`) 
 			insertQuestionAttempTestcase.push(queryPromise)
 		}
 		await Promise.all(insertQuestionAttempTestcase)
 
 		res.status(201).send({ 
-			attempId: attempId.rows[0].attempno,
+			attemptId: attemptId.rows[0].attempno,
 			tokens: stringToBase64(submissionTokensParams) 
 		})
 	} catch (error) {
@@ -94,21 +94,125 @@ exports.createSubmission = async (req, res) => {
 exports.getSubmission = async (req, res) => {
 	try {
 		const userId = '9c2822a0-cf80-487c-9189-a4682916d2b5'
-		const { attempId } = req.query
+		const { attemptId } = req.query
 		const tokens = base64ToString(req.query.tokens)
 		// Send API of get batch submission to judge0
 		const getSubmissionsResponse = await grader.get('/submissions/batch', {
 			params: {
-				base64_encoded: false,
+				base64_encoded: true,
 				tokens
 			}
 		})
+		const testcaseNumber = getSubmissionsResponse.data.submissions.length
+		const scorePerTestcase = 10
+		console.log(`SELECT ruletype, timelimit, memorylimit FROM questions INNER JOIN question_attempt qa on questions.id = qa.questionid WHERE qa.attemptid = ${attemptId}`);
+		const questionTypeQuery = await pool.query(`SELECT ruletype, timelimit, memorylimit FROM questions INNER JOIN question_attempt qa on questions.id = qa.questionid WHERE qa.attemptid = ${attemptId}`)
+		console.log(questionTypeQuery.rows[0]);
+		const { ruletype, timelimit, memorylimit } = questionTypeQuery.rows[0]
+
 		// Check submission result
+		let totalScore = 0
+		const submissionResults = {
+			correctAnswer: 0,
+			wrongAnswer: 0,
+			compileError: 0,
+			timeExceed: 0,
+			memoryExceed: 0,
+			runtimeError: 0
+		}
+		let isAllAccepted = true
+		const results = getSubmissionsResponse.data.submissions.map(submission => {
+			// Check submission status
+			if(submission.status.id !== 3){
+				if(submission.status.id === 4) submissionResults.wrongAnswer += 1
+				else if(submission.status.id === 6) submissionResults.compileError += 1
+				else submissionResults.runtimeError += 1
+				isAllAccepted = false
+				return {
+					status: getSubmissionStatus(submission.status.id),
+					memory: submission.memory,
+					time: submission.time,
+					// compile_output: submission.compile_output,
+					// stderr: submission.stderr,
+					score: 0
+				}
+			}
+			if(parseFloat(submission.time) > timelimit){
+				submissionResults.timeExceed += 1
+				isAllAccepted = false
+				return {
+					status: getSubmissionStatus(5),
+					memory: submission.memory,
+					time: submission.time,
+					score: 0
+				}
+			}
+			if(submission.memory/1024 > memorylimit){
+				submissionResults.memoryExceed += 1
+				isAllAccepted = false
+				return {
+					status: getSubmissionStatus(99),
+					memory: submission.memory,
+					time: submission.time,
+					score: 0
+				}
+			}
+			totalScore += scorePerTestcase
+			submissionResults.correctAnswer += 1
+			return {
+				status: getSubmissionStatus(3),
+				memory: submission.memory,
+				time: submission.time,
+				score: scorePerTestcase
+			}
+		})
 
+		let overallResult = 'Wrong Answer'
+		if(submissionResults.correctAnswer === testcaseNumber) overallResult = 'Accepted'
+		else if(submissionResults.correctAnswer !== 0) overallResult = 'Partial Accepted'
+		else if(submissionResults.compileError === testcaseNumber) overallResult = 'Compilation Error'
+		else if(submissionResults.memoryExceed === testcaseNumber) overallResult = 'Memory Limit Exceeded'
+		else if(submissionResults.timeExceed === testcaseNumber) overallResult = 'Time Limit Exceeded'
+		else if(submissionResults.runtimeError === testcaseNumber) overallResult = 'Runtime Error'
 
-		res.send(getSubmissionsResponse.data)
+		if(ruletype === 'acm' && isAllAccepted === false){
+			totalScore = 0
+		}
+
+		// Update question_attempt_testcase table
+		// await pool.query(`UPDATE question_attempt_testcase SET time = '', memory = '', score = '', status = '' WHERE attemptid = '' AND testcaseno = '';`)
+
+		res.send({ 
+			score: totalScore, 
+			results: overallResult
+		})
 	} catch (error) {
 		errorHandler(error, req, res)
+	}
+}
+
+
+
+const getSubmissionStatus = (id) => {
+	switch (id) {
+		case 1:
+			return 'Pending'
+		case 2:
+			return 'Pending'
+		case 3:
+			return 'Accepted'
+		case 4:
+			return 'Wrong Answer'
+		case 5:
+			return 'Time Limit Exceeded'
+		case 6:
+			return 'Compilation Error'
+		case 13:
+			return 'Internal Error'
+		case 99:
+			return 'Memory Limit Exceeded'
+		default:
+			return 'Runtime Error'
 	}
 }
 
