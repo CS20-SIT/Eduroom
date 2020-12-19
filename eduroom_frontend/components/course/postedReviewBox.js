@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import style from '../../styles/course/review'
-const post = () => {
+import moment from 'moment'
+const post = (props) => {
+	console.log(props.data)
 	return (
 		<Fragment>
 			<div
@@ -9,20 +11,17 @@ const post = () => {
 					boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0)',
 					background: '#F2ECFE',
 					borderRadius: '20px',
-					position: 'absolute',
 					width: '1015px',
 					height: '194px',
-					marginTop: '40%',
-					marginLeft: '7.5%',
-					marginRight: 'auto',
 					display: 'flex',
+					marginTop: '2%',
 					justifyContent: 'start',
 					paddingTop: '37px',
 					fontSize: 24,
 				}}
 			>
 				<img
-					src="https://pbs.twimg.com/profile_images/1186321683184943104/QA-oZKAI_400x400.jpg"
+					src = {props.data.avatar}
 					className="myimgInPost"
 					style={{ marginLeft: '4%', marginRight: '20px' }}
 				></img>
@@ -34,24 +33,27 @@ const post = () => {
 						fontSize: 24,
 					}}
 				>
-					<b>Hidetoshi Dekisugi </b>
+					<b>{props.data.displayname}</b>
 					<div
 						style={{
 							fontSize: 14,
 							color: '#9593A0',
+							display: 'flex'
 						}}
-					><div className='starForPost' >
-						<span className="fa fa-star" style={{color: '#FB9CCB'}}></span>
-<span className="fa fa-star" style={{color: '#FB9CCB'}}></span>
-<span className="fa fa-star" style={{color: '#FB9CCB'}}></span>
-<span className="fa fa-star" style={{color: '#FB9CCB'}}></span>
-<span className="fa fa-star" style={{color: '#FB9CCB'}}></span>
-</div>
+					>
+						<div className="starForPost">
+							<span className="fa fa-star" style={{ color: props.data.reviewrate>=1?'#FB9CCB':'#ccc' }}></span>
+							<span className="fa fa-star" style={{ color: props.data.reviewrate>=2?'#FB9CCB':'#ccc' }}></span>
+							<span className="fa fa-star" style={{ color: props.data.reviewrate>=3?'#FB9CCB':'#ccc' }}></span>
+							<span className="fa fa-star" style={{ color: props.data.reviewrate>=4?'#FB9CCB':'#ccc' }}></span>
+							<span className="fa fa-star" style={{ color: props.data.reviewrate>=5?'#FB9CCB':'#ccc' }}></span>
+						</div>
+						<div style={{paddingLeft: '0.5rem'}}>
+							{moment(props.data.date).fromNow()}
+						</div>
 					</div>
 					<div style={{ fontSize: 18 }}>
-						Use this random sentence generator to create random sentences that can help you brainstorm, come up with new
-						story ideas, or song lyrics. The tool chooses nouns, verbs and adjectives from a hand-picked list of
-						thousands of the most evocative words and generates a random sentence to help inspire you.
+						{props.data.comment}
 					</div>
 				</div>
 			</div>

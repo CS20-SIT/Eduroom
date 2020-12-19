@@ -4,6 +4,11 @@ import Course from './course'
 import Grader from './grader'
 import Instructor from './instructor'
 import Support from './support'
+import Advertisement from './advertisement'
+import Coupon from './coupon'
+import Event from './event'
+import Exit from './exit'
+import Setting from './setting'
 const Icon = ({ type, isHover }) => {
 	const hoverMainColor = '#A880F7'
 	const hoverSubColor = '#D5C1FC'
@@ -21,26 +26,55 @@ const Icon = ({ type, isHover }) => {
 				mainColor={isHover ? hoverMainColor : defaultMainColor}
 				subColor={isHover ? hoverSubColor : defaultSubColor}
 			/>
-        ),
-        grader: (
+		),
+		grader: (
 			<Grader
 				mainColor={isHover ? hoverMainColor : defaultMainColor}
 				subColor={isHover ? hoverSubColor : defaultSubColor}
 			/>
-        ),
+		),
 		instructor: (
 			<Instructor
 				mainColor={isHover ? hoverMainColor : defaultMainColor}
 				subColor={isHover ? hoverSubColor : defaultSubColor}
 			/>
-        ),
+		),
 		support: (
 			<Support
 				mainColor={isHover ? hoverMainColor : defaultMainColor}
 				subColor={isHover ? hoverSubColor : defaultSubColor}
 			/>
-        ),
-        
+		),
+		advertisement: (
+			<Advertisement
+				mainColor={isHover ? hoverMainColor : defaultMainColor}
+				subColor={isHover ? hoverSubColor : defaultSubColor}
+			/>
+		),
+		coupon: (
+			<Coupon
+				mainColor={isHover ? hoverMainColor : defaultMainColor}
+				subColor={isHover ? hoverSubColor : defaultSubColor}
+			/>
+		),
+		event: (
+			<Event
+				mainColor={isHover ? hoverMainColor : defaultMainColor}
+				subColor={isHover ? hoverSubColor : defaultSubColor}
+			/>
+		),
+		exit: (
+			<Exit
+				mainColor={isHover ? hoverMainColor : defaultMainColor}
+				subColor={isHover ? hoverSubColor : defaultSubColor}
+			/>
+		),
+		setting: (
+			<Setting
+				mainColor={isHover ? hoverMainColor : defaultMainColor}
+				subColor={isHover ? hoverSubColor : defaultSubColor}
+			/>
+		),
 	}
 	return <Fragment>{icon[type]}</Fragment>
 }

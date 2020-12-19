@@ -108,7 +108,7 @@ const ConfirmPackage = ({ myPackage, changePage }) => {
 				<div className="dialog">
 					<div className="indialog">
 						<div className="dialog-buttonX">
-							<button id="close-btn" className="buttonX" onClick={() => router.push('/user/instructor/course/package')}>
+							<button id="close-btn" className="buttonX" onClick={() => router.push('/user/instructor/package')}>
 								X
 							</button>
 						</div>

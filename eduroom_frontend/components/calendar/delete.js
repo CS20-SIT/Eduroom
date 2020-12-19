@@ -21,6 +21,7 @@ const DeleteButton = (props) => {
       success: false,
       failed: false,
     });
+    window.location.reload();
   };
 
   const handleClickOpen = () => {
@@ -83,9 +84,7 @@ const DeleteButton = (props) => {
         <DialogContent>
           <DialogContentText>
             <span>
-              The Question No. {props.id} will be REMOVED from the system. Your
-              action will be recorded in the Admin Log, EVERYONE WILL ACKNOWLEGE
-              YOUR ACTION.
+              Are you sure to delete this Event
             </span>
           </DialogContentText>
         </DialogContent>
@@ -105,7 +104,7 @@ const DeleteButton = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <span > The Question have been deleted.</span>
+            <span > The Event have been deleted.</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
