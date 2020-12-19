@@ -58,6 +58,8 @@ const RowCard = ({title, subtitle, buttonText, img, url}) => {
                         color: #ffffff;
                         cursor: pointer;
                         width: 80%;
+                        outline: none;
+                        border: none;
                         font-size: 1.2em;
                         font-weight:bold;
                         padding: .3rem 1rem;
