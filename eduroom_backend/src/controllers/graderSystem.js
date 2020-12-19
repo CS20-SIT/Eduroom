@@ -4,6 +4,7 @@ const pool = require('../database/db')
 const errorHandler = require('../middleware/error')
 const { grader } = require('../utils/graderAPI')
 const { base64ToString, stringToBase64 } = require('../utils/base64')
+const { getLanguageId, getSubmissionStatus } = require('../utils/grader')
 
 exports.pingGrader = async (req, res) => {
 	const response = await grader.get('/about')
@@ -35,7 +36,6 @@ exports.createSubmission = async (req, res) => {
 			responseType: 'arraybuffer',
 		})
 		const testcaseZipBuffer = Buffer.from(testCaseFileResponse.data, 'binary')
-		// fileWriter.on('close', () => res.send('done 2'))
 		const testcaseZip = new AdmZip(testcaseZipBuffer)
 		const testcaseEntries = testcaseZip.getEntries()
 		const testcaseNumber = testcaseEntries.length / 2
@@ -52,12 +52,12 @@ exports.createSubmission = async (req, res) => {
 			}
 		})
 		
-		// Construct and request body, Send API of batch submission to judge0
-		const languageId = getLanguage_id(language)
+		// Construct and request body
+		const languageId = getLanguageId(language)
 		const submissionRequestBody = {
 			submissions: []
 		}
-		for(let i=0; i<testcaseNumber; i++){
+		for(let i=0; i<testcaseNumber; i+=1){
 			const submission = {
 				source_code: sourceCode,
 				language_id: languageId,
@@ -66,28 +66,31 @@ exports.createSubmission = async (req, res) => {
 			}
 			submissionRequestBody.submissions.push(submission)
 		}
+
+		// Send API of batch submission to judge0
 		const batchSubmissionResponse = await grader.post('/submissions/batch?base64_encoded=true', submissionRequestBody)
 		let submissionTokensParams = ""
 		batchSubmissionResponse.data.forEach(ele => {
 			submissionTokensParams += `${ele.token},`
 		})
 
+		// Insert question_attempt and question_attempt_testcase
 		await pool.query(`INSERT INTO question_attempt (userid, questionid, score, status, time, memory, language, code, whentime) VALUES ('${userId}',${problemId},0,'Pending',0,0,'${language}','${sourceCode}',CURRENT_TIMESTAMP);`)
 		const attemptId = await pool.query(`SELECT attempno FROM question_attempt WHERE code = '${sourceCode}' AND userid = '${userId}' AND status = 'Pending' ORDER BY whentime DESC LIMIT 1;`)
 
 		const insertQuestionAttempTestcase = []
-		for(let i=0; i<testcaseNumber; i++){
+		for(let i=0; i<testcaseNumber; i+=1){
 			const queryPromise = pool.query(`INSERT INTO question_attempt_testcase (attemptid, testcaseno, status, memory, time, score) VALUES (${attemptId.rows[0].attempno},${i+1},'Pending',0,0,0);`) 
 			insertQuestionAttempTestcase.push(queryPromise)
 		}
 		await Promise.all(insertQuestionAttempTestcase)
 
-		res.status(201).send({ 
+		return res.status(201).send({ 
 			attemptId: attemptId.rows[0].attempno,
 			tokens: stringToBase64(submissionTokensParams) 
 		})
 	} catch (error) {
-        errorHandler(error, req, res)
+        return errorHandler(error, req, res)
     }
 }
 
@@ -96,6 +99,7 @@ exports.getSubmission = async (req, res) => {
 		const userId = '9c2822a0-cf80-487c-9189-a4682916d2b5'
 		const { attemptId } = req.query
 		const tokens = base64ToString(req.query.tokens)
+
 		// Send API of get batch submission to judge0
 		const getSubmissionsResponse = await grader.get('/submissions/batch', {
 			params: {
@@ -194,42 +198,5 @@ exports.getSubmission = async (req, res) => {
 
 
 
-const getSubmissionStatus = (id) => {
-	switch (id) {
-		case 1:
-			return 'Pending'
-		case 2:
-			return 'Pending'
-		case 3:
-			return 'Accepted'
-		case 4:
-			return 'Wrong Answer'
-		case 5:
-			return 'Time Limit Exceeded'
-		case 6:
-			return 'Compilation Error'
-		case 13:
-			return 'Internal Error'
-		case 99:
-			return 'Memory Limit Exceeded'
-		default:
-			return 'Runtime Error'
-	}
-}
 
-const getLanguage_id = (lang) => {
-	switch (lang) {
-		case 'Java':
-			return 62
-		case 'C':
-			return 50
-		case 'C++':
-			return 54
-		case 'Python 3':
-			return 71
-		case 'Python 2':
-			return 70
-		default:
-			return 62
-	}
-}
+
