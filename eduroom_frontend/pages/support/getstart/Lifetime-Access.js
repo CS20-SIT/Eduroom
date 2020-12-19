@@ -4,7 +4,7 @@ import { Link } from '@material-ui/core'
 
 import style from '../../../styles/forum/showForum'
 import General from '../../../components/template/general'
-import Lifetime from '../../../components/support/lifetimeaccess'
+import Lifetime from '../../../components/support/gettingstarted/lifetimeaccess'
 const lifetimeaccess = () => {
 	return (
 		<Fragment>
