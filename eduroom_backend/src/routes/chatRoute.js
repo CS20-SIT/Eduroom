@@ -1,13 +1,31 @@
 const express = require('express')
 const router = express.Router()
 const mockup = require('../controllers/Chat/chatMockupData')
-const {getChatlist, getGroupPicture, inviteCreate, getUserProfile, getChatRoomDetail} = require('../controllers/chatController')
+const {getChatlist, 
+  getGroupPicture, 
+  inviteCreate, 
+  getUserProfile, 
+  getChatroomDetail, 
+  getSearchResult,
+  getInvitationList,
+  getChatRoomProfile,
+  sendmessage,
+  changeThemeColor,
+  changeChatRoomProfilePicture,
+  changeChatRoomName} = require('../controllers/chatController')
 
 router.get('/getChatlist', getChatlist)
 router.get('/getGroupPicture', getGroupPicture)
 router.get('/inviteCreate', inviteCreate)
 router.get('/getUserprofile',getUserProfile)
-router.get('/getChatDetail', getChatRoomDetail)
+router.get('/getChatroomDetail', getChatroomDetail)
+router.get('/getSearchResult', getSearchResult)
+router.get('/getInvitationList', getInvitationList)
+router.get('/getChatRoomProfile', getChatRoomProfile)
+router.get('/sendmessage', sendmessage)
+router.get('/changeThemeColor', changeThemeColor)
+router.get('/changeChatroomProfile', changeChatRoomProfilePicture)
+router.get('/changeChatRoomName', changeChatRoomName)
 
 
 //Mockup
