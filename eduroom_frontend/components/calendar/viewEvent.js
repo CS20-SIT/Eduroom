@@ -30,7 +30,6 @@ const Content = (props) => {
             setData(allResult);
         };
         GetData();
-
     }, []);
     const formatTime = (time) => {
         return (time < 10 ? '0' : '') + time

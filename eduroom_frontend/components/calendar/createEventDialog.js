@@ -10,10 +10,12 @@ const Content = (props) => {
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
     const [courseList, setCourseList] = useState([])
-    const year = props.year;
-    const month = props.monthNo;
     const date = props.date;
-console.log(props.year)
+    const year = props.year;
+    const monthNo = props.monthNo;
+
+    const [stDate, setSTDate] = useState(year+ "-" + monthNo + "-" + date)
+
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
         title: '',
@@ -31,11 +33,18 @@ console.log(props.year)
         api.get('/api/event/getMyCourse').then(
             (res) =>{
                 setCourseList(res.data.data);
+                setEventInfo({...eventInfo, courseid: courseList[0].courseid})
             }
         ).catch(err =>{});
-            
-            // setEventInfo(...eventInfo,startDate:)
-    },[])
+    },[courseList])
+
+    console.log();
+    useEffect(()=>{
+        console.log(date);
+        setSTDate(year+ "-" + monthNo + "-" + date);
+        setEventInfo({...eventInfo, startDate: stDate})
+    },[date,stDate])
+
     const handleCreate = (e) => {
 
         console.log(eventInfo);
@@ -48,18 +57,9 @@ console.log(props.year)
             }
         ).catch(err => {
             console.log(err);
-        })/*  {
-            title: eventInfo.title,
-            description: eventInfo.description,
-            startDate: eventInfo.startDate,
-            endDate: eventInfo.endDate,
-            startTime: eventInfo.startTime,
-            endTime: eventInfo.endTime,
-            place: eventInfo.place,
-          });  */
-        // }
+        })
     };
-    const eventType = ['Course', 'Global']
+
 
     return (
         <Fragment>
@@ -87,9 +87,6 @@ console.log(props.year)
                     {/* ---------------------- ---------eventType------------------------------- */}
                     <div>
                         <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
-                            <option value="default" disabled>
-                                CourseList
-							</option>
                             {courseList.map((course) => {
                                 return (
                                     <option value={course.courseid} key={course.courseid}>
@@ -115,8 +112,7 @@ console.log(props.year)
                         <div>startDate</div>
                             
                         <input
-                           
-                            value={props.year+'-'+props.monthNo+'-'+props.date}
+                            value={stDate}
                             className="event-startDate"
                             onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
                             placeholder="Start date"
