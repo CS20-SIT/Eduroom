@@ -1,12 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import Cell from '../../components/calendar/calendarCell'
-import HeadCell from '../../components/calendar/calendarHeader'
-import BlankCell from '../../components/calendar/calendarBlankCell'
-import ViewEvent from '../../components/calendar/viewEvent'
+import Cell from '../../../components/calendar/calendarCell'
+import HeadCell from '../../../components/calendar/calendarHeader'
+import BlankCell from '../../../components/calendar/calendarBlankCell'
+import ViewEvent from '../../../components/admin/calendar/viewEvent'
 import Image from 'next/image'
-import api from '../../api'
+import api from '../../../api'
 // import { useRouter } from 'next/router';
-import style from '../../styles/calendar/calendar'
+import style from '../../../styles/calendar/calendar'
 import moment from 'moment'
 import Link from 'next/link'
 import { Grid, Container } from '@material-ui/core'
@@ -60,8 +60,7 @@ const Content = () => {
     }
     setDayInMonth(tempDay)
     setBlank(tempBlank)
-	setBlankEnd(tempBlankend)
-	console.log(day)
+    setBlankEnd(tempBlankend)
 		api
 			.get(`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(day.dateObject.format('YYYY'))}`)
 			.then((res) => {
@@ -91,8 +90,7 @@ const Content = () => {
 	const [showDate, setShowDate] = useState(-1)
 	const [open, setOpen] = useState(false)
 
-	const [isInstructor, setInstructor] = useState(false)
-	
+	/* const [isInstructor, setInstructor] = useState(false)
 	useEffect(() => {
 		api
 			.get('/api/auth/profile')
@@ -102,7 +100,7 @@ const Content = () => {
 				}
 			})
 			.catch((err) => {})
-	}, [])
+	}, []) */
 
 	// ------------------code below----------------------//
 	return (
@@ -118,7 +116,7 @@ const Content = () => {
 			/>
 
 			{/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
-			{isInstructor ? (
+			{/* {isInstructor ? ( */}
 				<div className="createEvent">
 					<button
 						className="bt-createEvent"
@@ -129,7 +127,7 @@ const Content = () => {
 						createEvent
 					</button>
 				</div>
-			) : null}
+			{/* ) : null} */}
 
 			{/* ------------------------------Calendar Header---------------------------------------- */}
 			<div className="month-color text-center">

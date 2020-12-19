@@ -3,25 +3,34 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 import style from '../../styles/calendar/calendar'
 import api from '../../api'
 import { useRouter } from "next/router";
+import Course from '../admin/layout/icons/course';
 
 const Content = (props) => {
     const router = useRouter();
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
+    const [courseList, setCourseList] = useState([])
 
 
-    
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
         title: '',
-        type: '',
         description: '',
         startDate: '',
         endDate: '',
         startTime: '',
         endTime: '',
         place: '',
+        courseid: '',
     })
+    useEffect(() => {
+
+        api.get('/api/event/getMyCourse').then(
+            (res) =>{
+                setCourseList(res.data.data);
+            }
+        ).catch(err =>{});
+    },[])
     const handleCreate = (e) => {
 
         console.log(eventInfo);
@@ -46,7 +55,7 @@ const Content = (props) => {
         // }
     };
     const eventType = ['Course', 'Global']
-    
+
     return (
         <Fragment>
             <CSSTransition
@@ -72,14 +81,14 @@ const Content = (props) => {
 
                     {/* ---------------------- ---------eventType------------------------------- */}
                     <div>
-                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, type: e.target.value })}>
+                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
                             <option value="default" disabled>
-                                Event Type
+                                CourseList
 							</option>
-                            {eventType.map((type) => {
+                            {courseList.map((course) => {
                                 return (
-                                    <option value={type} key={type}>
-                                        {type}
+                                    <option value={course.courseid} key={course.courseid}>
+                                        {course.coursename}
                                     </option>
                                 )
                             })}
@@ -99,9 +108,9 @@ const Content = (props) => {
 
                     <div className="startdate">
                         <div>startDate</div>
-                        
+
                         <input
-                            value={props.year+"-"+props.monthNo+"-"+props.date}
+                            value={props.year + "-" + props.monthNo + "-" + props.date}
                             className="event-startDate"
                             onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
                             placeholder="Start date"

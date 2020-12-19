@@ -1,17 +1,15 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
-import CreateEventDialog from "../../components/calendar/createEventDialog";
-import Edit from "../../components/calendar/edit"
+import React, { Fragment, useState, useEffect } from "react";
+import CreateEventDialog from "../../../components/admin/calendar/createDialogforAdmin";
+import Edit from "../../../components/admin/calendar/edit"
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Image from "next/image";
 import axios from 'axios';
-import style from "../../styles/calendar/calendar";
-import api from "../../api";
-import Delete from "../../components/calendar/delete"
-import UserConText from "../../contexts/user/userContext"
+import style from "../../../styles/calendar/calendar";
+import api from "../../../api";
+import Delete from "../../../components/admin/calendar/delete"
 
 const Content = (props) => {
-   const userContext = useContext(UserConText)
-   const {user} = userContext;
+    //   const router = useRouter();
 
     const showDate = props.showDate;
     const open = props.open;
@@ -19,26 +17,23 @@ const Content = (props) => {
     const currentMonth = props.currentMonth;
     const currentMonthNo = props.currentMonthNo;
     const currentYear = props.currentYear;
-    
+
     const [data, setData] = useState([])
 
     useEffect(() => {
         const GetData = async () => {
-            const result1 = await api.get("/api/event/getCourseEvent");
-            const result2 = await api.get("/api/event/getGlobalEvent");
-            const allResult = (result1.data).concat(result2.data)
-            setData(allResult);
+            const result = await api.get("/api/event/getGlobalEvent");
+            
+            setData(result.data);
         };
         GetData();
 
     }, []);
-    const formatTime = (time) => {
-        return (time < 10 ? '0' : '') + time
-    }
+
 
 
     const [openEvent, setOpenEvent] = useState(false);
-    const [isInstructor, setInstructor] = useState(false);
+    /* const [isInstructor, setInstructor] = useState(false);
     useEffect(() => {
         api.get('/api/auth/profile').then(res => {
             if (res.data.role == 'instructor') {
@@ -48,7 +43,7 @@ const Content = (props) => {
         ).catch(err => {
 
         })
-    }, [])
+    }, []) */
 
 
 
@@ -72,28 +67,29 @@ const Content = (props) => {
 
                         <div className="content">
                             <div>
-                                {user && data.map((row) => {
+
+                                {data.map((row) => {
 
                                     return (showDate == row.startday && currentMonthNo == row.nowmonth ?
 
                                         <div className="d-block">
-                                            {
-                                                isInstructor ? (
+                                           {/*  {
+                                                isInstructor ? ( */}
                                                     <div className="edit">
                                                         <Edit id={row.eventid} ></Edit>
                                                         <Delete id={row.eventid}></Delete>
                                                     </div>
 
 
-                                                ) : null
-                                            }
+                                          {/*       ) : null
+                                            } */}
 
-                                            <div className="title">{row.title} ({row.coursename}) </div>
+                                            <div className="title">{row.title}</div>
 
                                             {row.event_type == 'course' ? <div className="point" style={{ background: "#fdd4c1" }}></div>
                                                 :
                                                 <div className="point" style={{ background: "#A880F7" }}></div>}
-                                            <div className="detail">{formatTime(row.hstart)}:{formatTime(row.mstart)} - {formatTime(row.hend)}:{formatTime(row.mend)} | {row.place}</div>
+                                            <div className="detail">{row.hstart}:{row.mstart} - {row.hend}:{row.mend} | {row.place}</div>
                                         </div>
                                         : "")
                                 })}
@@ -102,7 +98,7 @@ const Content = (props) => {
                         </div>
 
 
-                        {isInstructor ? (
+                       {/*  {isInstructor ? ( */}
                             <div className="d-buttom">
                                 <div onClick={() => { setOpenEvent(true) }} >
                                     <button className="button">
@@ -110,7 +106,7 @@ const Content = (props) => {
                                 </button>
                                 </div>
                             </div>
-                        ) : null}
+                        {/* ) : null} */}
 
                     </div>
 
