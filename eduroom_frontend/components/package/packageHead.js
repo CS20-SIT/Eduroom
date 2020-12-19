@@ -13,6 +13,7 @@ const Package = () => {
                         <div className="col-6 incard">
                             <h1 className="title">Coding with Python</h1>
                             <div className="bestsell-tag">
+                                <BestSeller />
                                 <div className="text2">3 courses in this package</div>
                             </div>
                             <div className="instructor">

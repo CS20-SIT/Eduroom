@@ -20,7 +20,6 @@ const Submission = ({ id }) => {
 		}
 		GetData()
 	}, [userData])
-	console.log(data)
 	return (
 		<Fragment>
 			<Layout page="problem">
