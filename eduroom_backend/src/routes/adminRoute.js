@@ -1,6 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const { editProfile } = require('../controllers/adminController')
+const router = express.Router()
 
-router.use('/',async(req,res,next)=>{res.status(200).json({success:true})});
+router.post('/profile', editProfile)
 
-module.exports = router;
+module.exports = router
