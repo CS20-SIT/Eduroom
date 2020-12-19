@@ -19,9 +19,12 @@ const Name = props => {
                 <CardContent>
                     <div >
                         <div className={Styles.container}>
-                            <h1 className={Styles.text}>
+                            <h1 className={Styles.text2}>
                                 Name Sticker : {props.title}
                             </h1>
+                            <div >
+                                <img className={Styles.picture} src={props.img}/>
+                                </div>
                             <div>
                             <button
                                 className={Styles.btn} onClick={togglePop}
@@ -30,7 +33,7 @@ const Name = props => {
                             </button>
                             <Dialog open={state} onClose={()=>setState(false)}>
                                 <DialogContent style={{width:'500px',height:'500px',padding: '0px'}}>
-                                    <Pop title={props.title} price={props.price}  closePopup={()=>setState(false)}/>
+                                    <Pop id={props.id} img={props.img} title={props.title} price={props.price}  closePopup={()=>setState(false)}/>
                                 </DialogContent>
                             </Dialog>
                             </div>

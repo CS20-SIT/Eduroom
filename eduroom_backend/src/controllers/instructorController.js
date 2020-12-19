@@ -102,19 +102,22 @@ exports.Upload = async (req, res, next) => {
 	const results = files.map((file) => {
 		return { linkUrl: file.linkUrl, fieldname: file.fieldname }
 	})
-	console.log(results);
 	res.send(results)
 }
 
 exports.CreateCourse = async (req, res, next) => {
 	const instructorId = req.user.instructor
 	const courseId = uuidv4()
-	console.log(req.body)
-	// const {name,}
-	const result = await pool.query(
-		`INSERT INTO course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
-	values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
-		[courseId]
-	)
+	console.log('create course body is')
+	console.log('videos is ')
+	console.log(req.body.sections[0].videos)
+
+	console.log('question is')
+	console.log(req.body.sections[0].questions)
+	// const result = await pool.query(
+	// 	`INSERT INTO course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
+	// values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+	// 	[courseId]
+	// )
 	res.send({ courseId })
 }

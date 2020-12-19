@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Image from 'next/image'
 
 const WishlistForm = (props) => {
-  // console.log(props);
+  // console.log(props); props.user,
   return (
     <Fragment>
       <div className={Styles.cardContainer}>
@@ -17,13 +17,13 @@ const WishlistForm = (props) => {
         <div className={Styles.container}>
           <Link href={`../../course/${props.id}`}>
               <span>
-                  <Image src={props.picture} width="200" height="200"/>
+                  <img src={props.picture} width="200" height="200"></img>
                   <div>Title: {props.title}</div>
                   <div>Teach By: {props.ownerF} {props.ownerL}</div>
                   <div>price: {props.price}</div>
               </span>
           </Link>
-          <button className={Styles.btn} onClick={()=>{props.remove(props.user,props.id)}} >Delete</button>
+          <button className={Styles.btn} onClick={()=>{props.remove(props.id)}} >Delete</button>
         </div>
         </div>
         </CardContent>
