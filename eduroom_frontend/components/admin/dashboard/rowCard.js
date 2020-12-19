@@ -46,7 +46,7 @@ const RowCard = ({title, subtitle, buttonText, img, url}) => {
                         color: #A7ABC5;
                     }
                     .row-card-button {
-                        width: 20%;
+                        width: 25%;
                         padding-top: .5rem;
                         display:flex;
                         align-items:flex-start;
