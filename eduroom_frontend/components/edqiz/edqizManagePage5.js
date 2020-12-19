@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import style from '../../styles/edqiz/managePage'
+import Link from "next/link";
 const Page5 = ({ name }) => {
   return (
     <Fragment>
@@ -13,9 +14,13 @@ const Page5 = ({ name }) => {
             <div
               className="col-12 cflex"
             >
+            <Link href={`/edqiz/edqizList`}>
+
               <button className="edqiz-manage-button pink big-button">
+              
                 <span className="edqiz-manage-button-text">Play Now</span>
               </button>
+              </Link>
             </div>
             <div
               className="col-12 cflex"

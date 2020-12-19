@@ -14,7 +14,7 @@ const Video = ({ video, idx, handleVideos, sectionIndex, addVideo, removeVideo }
 			<Fragment>
 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
 					{idx === 0 ? <i key="add" onClick={addVideo} className="fas fa-plus icon"></i> : null}
-					<i onClick={() => removeVideo(idx)} className="fas fa-times icon"></i>
+					{idx === 0 ? null : <i onClick={() => removeVideo(idx)} className="fas fa-times icon"></i>}
 				</div>
 				<style jsx>{`
 					.icon {
@@ -50,7 +50,12 @@ const Video = ({ video, idx, handleVideos, sectionIndex, addVideo, removeVideo }
 						</div>
 						<div style={{ width: '50%' }}>
 							<div className="title">Video Upload</div>
-							<CourseVideoUpload index={idx} sectionIndex={sectionIndex} handleData={handleUpload}></CourseVideoUpload>
+							<CourseVideoUpload
+								video={video}
+								index={idx}
+								sectionIndex={sectionIndex}
+								handleData={handleUpload}
+							></CourseVideoUpload>
 						</div>
 					</div>
 				</div>

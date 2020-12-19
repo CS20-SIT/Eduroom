@@ -28,7 +28,7 @@ const Header = ({ appointments, requestMode, renderIcon, setAID, setAppointment 
 						{a.status}
 					</div>
 					<div
-						className="font-bold text-md text-secondary my-auto font-quicksand px-4 pointer"
+						className="appointment-info-btn font-bold text-md text-secondary my-auto font-quicksand px-4 pointer"
 						onClick={() => {
 							setAID(a.appointmentID)
 							const app = appointments[0].filter((x) => {

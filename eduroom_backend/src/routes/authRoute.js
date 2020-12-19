@@ -2,7 +2,7 @@ const express = require('express')
 const passport = require('passport')
 
 const router = express.Router()
-const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
+const { jwtAuthenicate, jwtAdminAuthenticate } = require('../middleware/jwtAuthenticate')
 const {
 	getProfile,
 	regisController,
@@ -10,6 +10,9 @@ const {
 	logoutController,
 	verifyEmailController,
 	googleCallbackController,
+	adminRegisController,
+	adminLoginController,
+	adminProfileController
 } = require('../controllers/authController')
 
 router.post('/login', loginController)
@@ -22,5 +25,10 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get('/google/callback', passport.authenticate('google', { session: false }), googleCallbackController)
 
 router.get('/profile', jwtAuthenicate, getProfile)
+
+router.post('/admin/register', adminRegisController)
+router.post('/admin/login', adminLoginController)
+router.get('/admin/profile', jwtAdminAuthenticate, adminProfileController)
+router.get('/admin/logout', jwtAdminAuthenticate, logoutController)
 
 module.exports = router

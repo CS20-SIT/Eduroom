@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react";
 export default function messageError(props) {
   const message = props.message;
   return (
-    <div>
+    <>
       <div style={{ textAlign: "right", width: "100%" }}>
         <div className='messageError'>
   <span style={{ fontSize: 18 }}>{message.text}</span>
         </div>
-        <RefreshIcon style={{ marginRight: 50 }} />
+        <RefreshIcon style={{ marginRight: 50, cursor:'pointer'}} onClick={(e)=>{props.resendMessage(message.text,message.index)}}/>
         <br />
         <span style={{ paddingRight: 75 }}>Message Can't Be Sent!</span>
       </div>
@@ -29,6 +29,6 @@ export default function messageError(props) {
           opacity: 0.5;
         }
       `}</style>
-    </div>
+    </>
   );
 }

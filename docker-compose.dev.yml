@@ -13,7 +13,7 @@ services:
         environment:
             - NEXT_PUBLIC_ENTRYPOINT_URL=http://localhost
             - NEXT_PUBLIC_BACKEND_API=http://localhost:5000
-            - NEXT_PUBLIC_GRADER_URL=http://localhost:3050
+            - NEXT_PUBLIC_GRADER_URL=http://34.87.165.200:30000
             - NEXT_PUBLIC_CHAT_SERVER=http://localhost:5050
             - NEXT_PUBLIC_KAHOOT_URL=http://localhost:8000
         ports:
@@ -23,7 +23,6 @@ services:
         depends_on:
             - eduroom_frontend
             - eduroom_backend
-            - eduroom_grading_server
             - eduroom_socket_chat
             - eduroom_socket_kahoot
         build:
@@ -47,6 +46,7 @@ services:
             - ENTRYPOINT_URL=http://localhost
             - CLIENT_URL=http://localhost:3000
             - BACKEND_API=http://localhost:5000
+            - GRADER_URL=http://34.87.165.200:30000
             - DB_USER=eduroom_user
             - DB_PASSWORD=dADKHgj86jQoRoff7xwC4TZ
             - DB_HOST=35.198.234.48
@@ -62,28 +62,50 @@ services:
             - SMTP_PORT=1025
             - SMTP_EMAIL=
             - SMTP_PASSWORD=
-            - FROM_EMAIL=admin@eduroom.com
-            - FROM_NAME=Eduroom Admin
+            - FROM_EMAIL=no-reply@eduroom.cscms.me
+            - FROM_NAME=Eduroom
             - NODE_TLS_REJECT_UNAUTHORIZED=0
             - GCS_SA_KEY_PATH=gcs-eduroom.json
             - GCS_BUCKET_NAME=eduroom-dev
             - GCS_PROJECT_ID=eduroom
         ports:
             - "5000:5000"
-    eduroom_grading_server:
-        build:
-            dockerfile: Dockerfile.dev
-            context: ./eduroom_grading_server
-        volumes:
-            - /usr/src/app/node_modules
-            - ./eduroom_grading_server:/usr/src/app
-        environment:
-            - NODE_ENV=development
-            - PORT=3050
-            - ENTRYPOINT_URL=http://localhost
-            - CLIENT_URL=http://localhost:3000
-        ports:
-            - "3050:3050"
+    # eduroom_grading_server:
+    #     image: judge0/judge0:latest
+    #     volumes:
+    #         - ./eduroom_grading_server/judge0.conf:/judge0.conf:ro
+    #     privileged: true
+    #     restart: always
+    #     depends_on:
+    #         - eduroom_grading_worker
+    #         - eduroom_grading_db
+    #         - eduroom_grading_redis
+    #     ports:
+    #         - "3050:3000"
+    # eduroom_grading_worker:
+    #     image: judge0/judge0:latest
+    #     command: ["./scripts/workers"]
+    #     volumes:
+    #         - ./eduroom_grading_server/judge0.conf:/judge0.conf:ro
+    #     privileged: true
+    #     restart: always
+    # eduroom_grading_db:
+    #     image: postgres:13.0
+    #     env_file: ./eduroom_grading_server/judge0.conf
+    #     volumes:
+    #         - postgres-data:/var/lib/postgresql/data/
+    #     restart: always
+    # eduroom_grading_redis:
+    #     image: redis:6.0
+    #     command: [
+    #         "bash", "-c",
+    #         'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"'
+    #     ]
+    #     env_file: ./eduroom_grading_server/judge0.conf
+    #     volumes:
+    #         - redis-data:/data
+    #     restart: always
+    
     eduroom_socket_chat:
         build:
             dockerfile: Dockerfile.dev
@@ -117,3 +139,6 @@ services:
         ports:
             - "1025:1025"
             - "1080:1080"
+# volumes:
+#     postgres-data:
+#     redis-data:

@@ -2,7 +2,7 @@ import css from 'styled-jsx/css'
 export default css`
 	@keyframes float {
 		0% {
-			transform: translateY(100vh);
+			transform: translateY(300vh);
 			opacity: 1;
 		}
 		100% {
@@ -16,26 +16,15 @@ export default css`
 		width: 105px;
 		border-radius: 75% 75% 70% 70%;
 		position: absolute;
-		background-color: #ffd9f7;
-		color: #d5c1fc;
-		box-shadow: inset -7px -3px 10px pink;
+		opacity:60%;
+		color:#d5c1fc;
 		margin: 50px 0 0 100px;
 		left: 950px;
 		top: 75vh;
-		animation: float infinite;
+		animation: float ;
 		animation-timing-function: ease-in;
 	}
-	.balloon:after {
-		content: '▲';
-		text-align: center;
-		display: block;
-		position: absolute;
-		color: inherit;
-		top: 120px;
-		left: 0;
-		right: 0;
-		margin: auto;
-	}
+
 	.balloon:before {
 		content: '';
 		height: 75px;
@@ -44,9 +33,13 @@ export default css`
 		background-color: #d5c1fc;
 		display: block;
 		position: absolute;
-		top: 135px;
+		top: 125px;
 		left: 0;
 		right: 0;
 		margin: auto;
+	}
+	.box{
+		position:relative;
+		top:-150vh;
 	}
 `
