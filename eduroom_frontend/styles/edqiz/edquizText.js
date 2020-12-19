@@ -13,7 +13,7 @@ export default css`
     color: #f39ac4;
   }
   .text-box {
-    width: 100vw;
+    width: 95vw;
     display: flex;
     justify-content: center;
     font-size: 4rem;
