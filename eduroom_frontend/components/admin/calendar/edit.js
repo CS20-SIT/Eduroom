@@ -47,7 +47,7 @@ const edit = (props) => {
         api.post("/api/event/eAdminEvent", eventInfo).then(
             (res) => {
                 alert("success");
-                router.push("/calendar")
+                window.location.reload();
             }
         ).catch(err => {
             console.log(err);
