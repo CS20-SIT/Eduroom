@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../styles/course/utils'
-import General from '../../../components/template/general'
+import GeneralNoNav from '../../../components/template/generalnonav'
 import Link from 'next/link'
 import api from '../../../api'
 
@@ -12,7 +12,10 @@ const CourseID = ({ id }) => {
 	}
 	useEffect(() => {
 		fetchCourse()
-	}, [])
+  }, [])
+  const addToCart = () => {
+    
+  }
 	const renderButtons = () => {
 		if (course.iwOwn) {
 			return (
@@ -31,7 +34,7 @@ const CourseID = ({ id }) => {
 			return (
 				<Fragment>
 					<span>
-						<button className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer">
+            <button onClick={addToCart} className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer">
 							Add to cart
 						</button>
 					</span>
@@ -99,19 +102,19 @@ const CourseID = ({ id }) => {
 
 	return (
 		<Fragment>
-			<General>
-				<div className="bg-little-grey ">
+			<GeneralNoNav>
+				<div className="bg-little-grey">
 					<div>
 						<Link href="/course">
 							<i className="fas fa-chevron-left backIcon"></i>
 						</Link>
 					</div>
-					<div className="container" style={{ padding: '0' }}>
+					<div className="container">
 						{renderCourse()}
 					</div>
 				</div>
 				<style jsx>{utils}</style>
-			</General>
+			</GeneralNoNav>
 		</Fragment>
 	)
 }
