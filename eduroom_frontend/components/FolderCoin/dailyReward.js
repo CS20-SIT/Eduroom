@@ -77,7 +77,7 @@ const temp = (props) => {
 			transform: `rotate(${deg[randDeg]}deg)`,
 			transition: 'all 6s cubic-bezier(0, 0.99, 0.44, 0.99)',
 		})
-		const res = await api.post('/api/coin/dailyReward/', { params: { getNum } })
+		const res = await api.post('/api/coin/dailyReward/',{coin:getNum} )
 		console.log(res.data)
 	}
 	const renderText = () => {
