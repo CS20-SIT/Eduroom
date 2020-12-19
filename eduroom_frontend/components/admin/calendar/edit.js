@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import style from '../../styles/calendar/calendar'
+import style from '../../../styles/calendar/calendar'
 import Image from "next/image";
-import api from '../../api'
+import api from '../../../api'
 import { useRouter } from "next/router";
 
 const edit = (props) => {
@@ -47,7 +47,7 @@ const edit = (props) => {
         api.post("/api/event/eEvent", eventInfo).then(
             (res) => {
                 alert("success");
-                window.location.reload();
+                router.push("/calendar")
             }
         ).catch(err => {
             console.log(err);
@@ -101,20 +101,7 @@ const edit = (props) => {
                     </div>
 
                     {/* ---------------------- ---------eventType------------------------------- */}
-                    <div>
-                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, type: e.target.value })}>
-                            <option value="default" disabled>
-                                Event Type
-							</option>
-                            {eventType.map((type) => {
-                                return (
-                                    <option value={type} key={type}>
-                                        {type}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </div>
+                 
 
                     {/* ---------------------- ---------eventdescript------------------------------- */}
                     <div>
