@@ -1,12 +1,28 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext, useState, useEffect } from 'react'
 import LandingPage from '../../components/edqiz/edqizLanding'
-import GeneralNoSide from "../../components/template/generalnoside";
+import GeneralTemplate from '../../components/template/general'
+import UserContext from '../../contexts/user/userContext';
+import AuthDialog from '../../components/landing/authDialog';
 const Content = () => {
+  const userContext = useContext(UserContext)
+  const {user} = userContext;
+  const [dialog,setDialog] = useState(false);
+  useEffect(() => {
+    if(!user){
+      setDialog(!dialog)
+    }
+  }, [])
   return (
     <Fragment>
-      <GeneralNoSide>
-      <LandingPage />
-      </GeneralNoSide>
+      <GeneralTemplate>
+        {
+          dialog ? (
+            <AuthDialog handleClick={()=>{setDialog(false)}}/>
+          ):null
+        }
+        
+        <LandingPage />
+      </GeneralTemplate>
     </Fragment>
   )
 }

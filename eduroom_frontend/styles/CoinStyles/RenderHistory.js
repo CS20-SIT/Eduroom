@@ -50,7 +50,9 @@ export default css`
     width:50vw;
     overflow: auto;
   }
-
+  .Pop-up_right {
+    overflow: scroll;
+  }
   ::-webkit-scrollbar {
     width: 10px; /* width of the entire scrollbar */
   }

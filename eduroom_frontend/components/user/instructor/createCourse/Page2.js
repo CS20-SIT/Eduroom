@@ -3,7 +3,6 @@ import AddSection from './AddSection'
 import Sections from './Sections'
 
 const Page2 = (props) => {
-	//{ q: '', choices: ['', '', '', ''], correct: '' }
 	const addSection = () => {
 		const temp = props.sections.slice()
 		temp.push({
