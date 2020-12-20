@@ -10,7 +10,7 @@ const gPreviewQuestions = async (req, res, next) => {
 		from questions
 		where visibility = true
 		order by id
-		offset ${offset} limit  1`
+		offset ${offset} limit  10`
 		)
 		const ann = data.rows
 		res.send(ann)
@@ -123,7 +123,7 @@ const gContestSubmissions = async (req, res, next) => {
 	try {
 		const contestId = req.query.contestId
 		const data = await pool.query(`
-		select qa.whentime ,u.displayname, qa.status , qc.conquestionno, qa.language
+		select qa.whentime ,u.displayname, qa.status , qc.conquestionno, qa.language, time, memory, score
 		from user_profile u, question_attempt qa, contest_question qc, contest c
 		where qa.userid = u.userid
 		and qa.questionid = qc.questionid
@@ -300,10 +300,12 @@ const gQuestionSubmission = async (req, res, next) => {
 		const questionId = req.query.questionId
 		const userId = req.query.userId
 		const data = await pool.query(`
-		select *
-		from question_attempt
-		where questionid = ${questionId}
-			and userid='${userId}'`)
+		select score, status, time, memory, whentime, displayname
+   		from question_attempt qa, user_profile up
+		where qa.userid = up.userid
+      		and questionid = ${questionId}
+			  and qa.userid='${userId}'
+		limit 100`)
 		const ann = data.rows
 		res.send(ann)
 	} catch (err) {
