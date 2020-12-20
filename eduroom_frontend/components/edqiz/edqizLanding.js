@@ -29,11 +29,12 @@ const Content = () => {
       if (data[i].pin == room && data[i].isavailable == true) {
         router.push(`/edqiz/playPinRoomID/${room}`);
         break;
-      } else if (temp == data.length && data[i].pin != room && data[i].isavailable == true) {
+      } else if (temp == data.length){
         console.log('not valid')
         alert("ROOM IS NOT VALID");
         router.push('/edqiz');
       }
+
     }
   };
   const pinEnter = (e) => {
@@ -42,6 +43,7 @@ const Content = () => {
         setDialog(!dialog)
       } else {
         checkPinIsValid()
+        
       }
     }
 
@@ -51,6 +53,7 @@ const Content = () => {
       setDialog(!dialog)
     } else {
       checkPinIsValid()
+      console.log('checkvalid')
     }
   }
   return (
@@ -81,8 +84,7 @@ const Content = () => {
             <div className="row">
 
               <button className="landing-button" type="submit"
-                onClick={() => handleLike()}
-              >
+                onClick={() => handleLike()}>
 
                 <span className="landing-button-text">ENTER</span>
               </button>
