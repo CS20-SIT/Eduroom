@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react'
 import userReducer from './userReducer'
 import UserContext from './userContext'
+import { clearCart } from '../../utils/cart'
 import api from '../../api'
 import {
 	REGISTER_USER_SUCCESS,
@@ -30,6 +31,7 @@ const userState = (props) => {
 		try {
 			const login = await api.post('/api/auth/login', body)
 			const user = await api.get('/api/auth/profile')
+			clearCart()
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: user.data })
 			router.push('/')
 		} catch (err) {
@@ -47,21 +49,21 @@ const userState = (props) => {
 			const error = err.response.data.error
 			if (typeof error === 'string' || error instanceof String) {
 				dispatch({ type: LOGOUT_USER_FAIL, payload: error })
-      } else {
-        dispatch({ type: LOGOUT_USER_FAIL, payload: 'Server is error' })
+			} else {
+				dispatch({ type: LOGOUT_USER_FAIL, payload: 'Server is error' })
 			}
 		}
 	}
 
-	const getUser = async (router,isProtected = false) => {
+	const getUser = async (router, isProtected = false) => {
 		try {
 			const res = await api.get('/api/auth/profile')
-			if(isProtected && !res.data.verify){
+			if (isProtected && !res.data.verify) {
 				router.push('/verify')
 			}
 			dispatch({ type: GET_USER_SUCCESS, payload: res.data })
 		} catch (err) {
-			if(isProtected){
+			if (isProtected) {
 				router.push('/login')
 			}
 			dispatch({ type: GET_USER_FAIL, payload: err })
