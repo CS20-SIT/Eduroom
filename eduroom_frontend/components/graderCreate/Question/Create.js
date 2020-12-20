@@ -842,7 +842,7 @@ export default function Create(props) {
                       {" "}
                       {props.id == undefined
                         ? "Your Question has been created."
-                        : "Question has been Edited"}
+                        : "Question has been edited"}
                     </span>
                   </DialogContentText>
                 </DialogContent>
