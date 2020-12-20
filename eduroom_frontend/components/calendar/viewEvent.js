@@ -8,7 +8,6 @@ import style from '../../styles/calendar/calendar'
 import api from '../../api'
 import Delete from '../../components/calendar/delete'
 import UserConText from '../../contexts/user/userContext'
-import { json } from 'body-parser'
 
 const Content = (props) => {
     const userContext = useContext(UserConText)
