@@ -10,10 +10,8 @@ import ChatRoomBottomBar from './chatRoomBottomBar'
 import api from '../../api'
 import socketIOClient from "socket.io-client";
 
+let socket;
 export default function chatRoom(props) {
-	const socket = socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
-		path: "/socket-chat",
-	  });
 	const [messageDivStyle, setMessageDivStyle] = useState({ marginTop: 60, marginBottom: 100, visibility: 'hidden' })
 	const chatRoom = props.chatRoom
 	const [scrollBarStyle, setScrollBarStyle] = useState('nochat')
@@ -89,7 +87,7 @@ export default function chatRoom(props) {
 		if (message != '' && message != null) {
 			const res = await api.get(`/api/chat/sendMessage`,{params:{message:message,chatroomid:chatRoom.chatroomid}})
 			if (res.data.success == true) {
-				socket.emit('sendMessage',chatRoom.chatroomid)
+				props.socket.emit('sendMessage',chatRoom.chatroomid)
 				props.getChatRoomDetail()
 			} else {
 				props.chatRoomDetail.message.push({
@@ -111,14 +109,15 @@ export default function chatRoom(props) {
 		}
 	}
 	useEffect(() => {
-		socket.emit('joinRoom',chatRoom.chatroomid)
+		props.socket.emit('joinRoom',chatRoom.chatroomid)
+		props.socket.on('recieveMessage',()=>{
+		console.log('have got a new message')
+		props.getChatRoomDetail()	
+	})
 		scrollDown()
 		console.log('check')
 		console.log( props.userProfile)
-		socket.on('recieveMessage',()=>{
-			console.log('have got a new message')
-			props.getChatRoomDetail()
-		})
+	
 	}, [])
 	useEffect(() => {
 		setScrollDownStyle({

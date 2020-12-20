@@ -16,10 +16,10 @@ export default function chatContact(props) {
 	const [style, setStyle] = useState({})
 
 	const joinSocketRoom = () =>{
-		const socket = socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
-			path: "/socket-chat",
-		  });
-		socket.emit('joinRoom',contact.chatRoomID)
+		// const socket = socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
+		// 	path: "/socket-chat",
+		//   });
+		// socket.emit('joinRoom',contact.chatRoomID)
 	}
 
 	const getChatRoomProfilePicture = async () => {

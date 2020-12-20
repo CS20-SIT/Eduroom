@@ -6,8 +6,10 @@ import EditChat from '../../components/chat/editChat'
 import Nav from '../../components/template/generalnonav'
 import EmptyChatIcon from '../../components/chat/icons/EmptyChatIcon'
 import api from '../../api'
+import socketIOClient from "socket.io-client";
 
 export default function Chat() {
+	const [socket,setSocket] = useState(null)
 	const [messageLeftColor, setMessageLeftColor] = useState('#5B5B5B')
 	const [messageRightColor, setMessageRightColor] = useState('#EB7DB1')
 	const [selectChat, setSelectChat] = useState(null)
@@ -40,6 +42,9 @@ export default function Chat() {
 		})
 	}
 	useEffect(() => {
+		setSocket(socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
+			path: "/socket-chat",
+		  }))
 		getUserProfileInfo()
 	}, [])
 	useEffect(() => {
@@ -82,6 +87,7 @@ export default function Chat() {
 										chatRoomDetail={chatRoomDetail}
 										userProfile={userProfile}
 										getChatRoomDetail={getChatRoomDetail}
+										socket={socket}
 									/>
 								)
 							} else {
