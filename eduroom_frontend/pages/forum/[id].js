@@ -1,20 +1,17 @@
-import React, { Fragment,useEffect, useState } from "react";
-import IdBlock from "../../components/forum/IdBlock";
-import style from "../../styles/forum/showForum";
-import GeneralNoNav from "../../components/template/generalnonav";
-import ForumNav from '../../components/forum/layout/forumNav';
-import CommentBlock from "../../components/forum/CommentBlock";
-import CreateComment from "../../components/forum/CreateComment";
-import BackButton from "../../components/forum/BackButton";
-import api from '../../api';
+import React, { Fragment, useEffect, useState } from 'react'
+import IdBlock from '../../components/forum/IdBlock'
+import style from '../../styles/forum/showForum'
+import GeneralNoNav from '../../components/template/generalnonav'
+import ForumNav from '../../components/forum/layout/forumNav'
+import CommentBlock from '../../components/forum/CommentBlock'
+import CreateComment from '../../components/forum/CreateComment'
+import BackButton from '../../components/forum/BackButton'
+import api from '../../api'
 const ForumID = (props) => {
-	console.log(props)
 	const [data, setData] = useState([])
 	const GetData = async () => {
 		const result = await api.get(`/api/forum/${props.id}`)
-		console.log(result.data.data.comment)
 		setData(result.data.data.comment)
-		console.log(props.id)
 	}
 	useEffect(() => {
 		GetData()
@@ -23,11 +20,9 @@ const ForumID = (props) => {
 		api
 			.post(`/api/forum/comment/${forumid}`, { answerno })
 			.then((res) => {
-        GetData()
-      })
-			.catch((err) => {
-				console.log('Lop mai dai')
+				GetData()
 			})
+			.catch((err) => {})
 	}
 	return (
 		<Fragment>
@@ -37,8 +32,8 @@ const ForumID = (props) => {
 						display: 'flex',
 						flex: '1 1 auto',
 						justifyContent: 'space-between',
-            background: '#EFF0F6',
-            minHeight: '100vh',
+						background: '#EFF0F6',
+						minHeight: '100vh',
 					}}
 				>
 					<div id="nav">
@@ -68,13 +63,12 @@ const ForumID = (props) => {
 }
 
 export async function getServerSideProps(ctx) {
-  try {
-    const id = ctx.query.id;
-    return { props: { id } };
-  } catch (err) {
-    return { props: { id: "" } };
-  }
+	try {
+		const id = ctx.query.id
+		return { props: { id } }
+	} catch (err) {
+		return { props: { id: '' } }
+	}
 }
 
-export default ForumID;
-
+export default ForumID

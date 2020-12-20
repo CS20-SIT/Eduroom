@@ -3,84 +3,108 @@ const pool = require('../../database/db')
 
 //Toei
 const gPreviewQuestions = async (req, res, next) => {
-	const offset = req.query.offset
-	const data = await pool.query(
-		`select id, title, description, difficulty
+	try {
+		const offset = req.query.offset
+		const data = await pool.query(
+			`select id, title, description, difficulty
 		from questions
 		where visibility = true
 		order by id
-		offset ${offset} limit  1`
-	)
-	const ann = data.rows
-	res.send(ann)
+		offset ${offset} limit  10`
+		)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gCountAllQuestions = async (req, res, next) => {
-	const data = await pool.query(`
+	try {
+		const data = await pool.query(`
 	select count(*)
 	from questions
 	where visibility = true
 	`)
-	const ann = data.rows[0]
-	ann.count = parseInt(ann.count)
-	console.log(ann)
-	res.send(ann)
+		const ann = data.rows[0]
+		ann.count = parseInt(ann.count)
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gAnnouncements = async (req, res, next) => {
-	const data = await pool.query(
-		`select a.id , a.title, a.time, al.displayname
-		from announcements a, admin_login al
-		where a.adminid = al.adminid
-			and isvisible = true
-		order by time desc;`
-	)
-	const ann = data.rows
-	res.send(ann)
+	try {
+		const data = await pool.query(
+			`select a.id , a.title, a.time, al.displayname
+			from announcements a, admin_login al
+			where a.adminid = al.adminid
+				and isvisible = true
+			order by time desc;`
+		)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gPreviewContests = async (req, res, next) => {
-	const data = await pool.query(
-		`select conno, title, conruletype,starttime, endtime, status
-    from contest
-    where status = true
-    order by endtime desc`
-	)
-	const ann = data.rows
-	res.send(ann)
+	try {
+		const data = await pool.query(
+			`select conno, title, conruletype,starttime, endtime, status
+		from contest
+		where status = true
+		order by endtime desc`
+		)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gContestDetails = async (req, res, next) => {
-	const contestId = req.query.contestId
-	const data = await pool.query(
-		`select conno, title, description, conruletype,starttime, endtime, status, displayname
+	try {
+		const contestId = req.query.contestId
+		const data = await pool.query(
+			`select conno, title, description, conruletype,starttime, endtime, status, displayname
     from contest c, admin_login a
     where c.adminid = a.adminid
         and status = true
         and conno = '${contestId}';`
-	)
-	const ann = data.rows
-	res.send(ann)
+		)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gContestAnnouncements = async (req, res, next) => {
-	const contestId = req.query.contestId
-	const data = await pool.query(
-		`select cn.coannno, cn.title, cn.description, a.displayname, cn.time
+	try {
+		const contestId = req.query.contestId
+		const data = await pool.query(
+			`select cn.coannno, cn.title, cn.description, a.displayname, cn.time
     from contest c, admin_login a, contest_announcements cn
     where cn.adminid = c.adminid
         and c.adminid = a.adminid
         and isvisible = true
         and conno = '${contestId}'
     order by time;`
-	)
-	const ann = data.rows
-	res.send(ann)
+		)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gContestProblems = async (req, res, next) => {
-	const contestId = req.query.contestId
-	const data = await pool.query(`
+	try {
+		const contestId = req.query.contestId
+		const data = await pool.query(`
 	select q.id, q.title, cq.conquestionno, q.difficulty, q.description
 	from contest c, contest_question cq, questions q
 	where cq.questionid = q.id
@@ -88,42 +112,57 @@ const gContestProblems = async (req, res, next) => {
 		and visibility = true
 		and conno = '${contestId}'
 	order by conquestionno;`)
-	const ann = data.rows
-	res.send(ann)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gContestSubmissions = async (req, res, next) => {
-	const contestId = req.query.contestId
-	const data = await pool.query(`
-	select qa.whentime ,u.displayname, qa.status , qc.conquestionno, qa.language
-	from user_profile u, question_attempt qa, contest_question qc, contest c
-	where qa.userid = u.userid
+	try {
+		const contestId = req.query.contestId
+		const data = await pool.query(`
+		select qa.whentime ,u.displayname, qa.status , qc.conquestionno, qa.language, time, memory, score
+		from user_profile u, question_attempt qa, contest_question qc, contest c
+		where qa.userid = u.userid
 		and qa.questionid = qc.questionid
 		and conno = '${contestId}'
-	order by whentime desc;`)
-	const ann = data.rows
-	res.send(ann)
+		order by whentime desc;`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gQuestionTags = async (req, res, next) => {
-	const data = await pool.query(`
-	select tagid, tagname
-	from tags`)
-	const ann = data.rows
-	res.send(ann)
+	try {
+		const data = await pool.query(`
+		select tagid, tagname
+		from tags`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('Error', 400)
+	}
 }
 
 const gQuestionByTag = async (req, res, next) => {
-	const tag = req.query.tag
-	const data = await pool.query(`
+	try {
+		const tag = req.query.tag
+		const data = await pool.query(`
 	select  t.tagid, q.title, q.description, q.difficulty
 	from tags t, questiontag qt, questions q
 	where t.tagid = qt.tagid
     	and q.id = qt.questionid
     	and t.tagname = '${tag}';
 	`)
-	const ann = data.rows
-	res.send(ann)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
 }
 
 const gHomePreviewContests = async (req, res, next) => {
@@ -230,11 +269,10 @@ const gQuestionTestCase = async (req, res, next) => {
 	try {
 		const id = req.query.id
 		const data = await pool.query(`
-		select filepath
-		from questiontestcases
-		where questionid = ${id}
-		order by fileno desc
-		limit 1;`)
+		SELECT * 
+		FROM questionsample 
+		WHERE questionid = ${id}
+		order by sampleno;`)
 		const ann = data.rows
 		res.send(ann)
 	} catch (err) {
@@ -262,10 +300,12 @@ const gQuestionSubmission = async (req, res, next) => {
 		const questionId = req.query.questionId
 		const userId = req.query.userId
 		const data = await pool.query(`
-		select *
-		from question_attempt
-		where questionid = ${questionId}
-			and userid='${userId}'`)
+		select score, status, time, memory, whentime, displayname
+   		from question_attempt qa, user_profile up
+		where qa.userid = up.userid
+      		and questionid = ${questionId}
+			  and qa.userid='${userId}'
+		limit 100`)
 		const ann = data.rows
 		res.send(ann)
 	} catch (err) {

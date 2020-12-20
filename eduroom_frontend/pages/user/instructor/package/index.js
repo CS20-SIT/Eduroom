@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import GeneralTemplate from '../../../../../components/template/generalnonav'
-import style from '../../../../../styles/package/content'
+import GeneralTemplate from '../../../../components/template/general'
+import style from '../../../../styles/package/content'
 import Link from 'next/link'
-import OwnPackages from '../../../../../components/package/ownPackages'
-import api from '../../../../../api'
+import OwnPackages from '../../../../components/package/ownPackages'
+import api from '../../../../api'
 
 const Index = () => {
 	const [packages, setPackages] = useState(null)
@@ -31,7 +31,7 @@ const Index = () => {
 					<div className="container">
 						{renderPackages()}
 						<div>
-							<Link href="/user/instructor/course/package/createpackage">
+							<Link href="/user/instructor/package/createpackage">
 								<button className="addpackbutton">
 									<div>
 										<i className="fas fa-plus-circle"></i>

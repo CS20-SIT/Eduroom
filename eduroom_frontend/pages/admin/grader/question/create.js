@@ -3,16 +3,16 @@ import GeneralNoNav from "../../../../components/graderCreate/GraderCreateLayout
 import GNav from "../../../../components/graderCreate/GraderCreateLayout/Nav";
 import GBack from "../../../../components/graderCreate/GraderCreateLayout/Background";
 import Create from "../../../../components/graderCreate/Question/Create";
-
+import ProtectedAdminRoute from "../../../../components/admin/protectedAdminRoute";
 const ConCreate = () => {
   return (
-    <Fragment>
+    <ProtectedAdminRoute>
       <GeneralNoNav>
         <GNav></GNav>
         <GBack></GBack>
         <Create />
       </GeneralNoNav>
-    </Fragment>
+    </ProtectedAdminRoute>
   );
 };
 export default ConCreate;

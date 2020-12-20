@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import GeneralTemplate from '../../../../../components/template/generalnonav'
-import style from '../../../../../styles/package/createpackage'
-import CreatePackage from '../../../../../components/package/createPackage'
-import ConfirmPackage from '../../../../../components/package/confirmPackage'
-import api from '../../../../../api'
+import GeneralTemplate from '../../../../components/template/generalnonav'
+import style from '../../../../styles/package/createpackage'
+import CreatePackage from '../../../../components/package/createPackage'
+import ConfirmPackage from '../../../../components/package/confirmPackage'
+import api from '../../../../api'
 
 const CreatePackagePage = () => {
 	const [page, setPage] = useState(1)

@@ -1,28 +1,13 @@
 exports.verifyTemplate = (verifyToken) => {
-	return `<link
+    return `
+    <html>
+    <head>
+    <link
     href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   ></link>
-  <div class="verify-box">
-    <img src="https://storage.googleapis.com/eduroom/verifyemail/eduroom_logo_long.png" alt="eduroom_logo" />
-    <div class="verify-image">
-        <img src="https://storage.googleapis.com/eduroom/verifyemail/verify_sent.png" alt="verify-image" />
-    </div>
-    <div class="verify-head">Verify your email address</div>
-    <div class="verify-text">Welcome to <a href="https://eduroom.cscms.me" style="color:#FB9CCB">eduroom.cscms.me</a></div>
-    <div class="verify-text">Please click the button below to comfirm </div>
-    <div class="verify-text">your email address and activate your account.</div>
-    <a href="https://eduroom.cscms.me/verify/${verifyToken}">
-    <div class="ver-btn">
-        <div class="ver-text">Verify</div>
-    </div>
-    </a>
-    <div class="verify-text sm">
-        You’re receiving this email because you recently created a new Eduroom account.
-    </div>
-    <div class="verify-text sm">if this wasn’t you, please ignore this email</div>
-</div>
-<style>
+  </head>
+  <style>
         .verify-box {
             font-family: "Quicksand", sans-serif;
             display: flex;
@@ -68,5 +53,28 @@ exports.verifyTemplate = (verifyToken) => {
             font-weight: bold;
             font-size: 1.2em;
         }
-</style>`
+</style>
+  <body>
+  <div class="verify-box">
+    <img src="https://storage.googleapis.com/eduroom/verifyemail/eduroom_logo_long.png" alt="eduroom_logo" />
+    <div class="verify-image">
+        <img src="https://storage.googleapis.com/eduroom/verifyemail/verify_sent.png" alt="verify-image" />
+    </div>
+    <div class="verify-head">Verify your email address</div>
+    <div class="verify-text">Welcome to <a href="https://eduroom.cscms.me" style="color:#FB9CCB">eduroom.cscms.me</a></div>
+    <div class="verify-text">Please click the button below to comfirm </div>
+    <div class="verify-text">your email address and activate your account.</div>
+    <a href="https://eduroom.cscms.me/verify/${verifyToken}">
+    <div class="ver-btn">
+        <div class="ver-text">Verify</div>
+    </div>
+    </a>
+    <div class="verify-text sm">
+        You’re receiving this email because you recently created a new Eduroom account.
+    </div>
+    <div class="verify-text sm">if this wasn’t you, please ignore this email</div>
+</div>
+</body>
+</html>
+`
 }

@@ -5,7 +5,7 @@ const Item = ({ data, isExpand, expand }) => {
 	const [isHover, setHover] = useState(false)
 	return (
 		<Fragment>
-			<Link href={data.link}>
+			<Link href={data.link ?? ''}>
 				<div
 					className={`item`}
 					onMouseEnter={() => {
