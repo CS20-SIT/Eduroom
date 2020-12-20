@@ -115,7 +115,14 @@ exports.getQuizByNodeId = async (req, res, next) => {
 		}
 
 		let nodeDetail = await pool.query(`select * from path_node where nodeid = $1`, [nodeID])
-		let result = { nodeDetail: nodeDetail.rows[0], question: answer }
+		let pathDetail = await pool.query(
+			`select p.pathid,p.path_name from path p, path_node pn where pn.pathid = p.pathid and pn.nodeid = $1`,
+			[nodeID]
+		)
+		pathDetail = pathDetail.rows[0]
+		nodeDetail = nodeDetail.rows[0]
+		nodeDetail = { ...nodeDetail, path_name: pathDetail.path_name }
+		let result = { nodeDetail, questions: answer }
 		res.send(result)
 	} catch (err) {
 		return next(new ErrorResponse(err, 500))

@@ -16,7 +16,7 @@ const {
 	createQuiz,
 	fetchQuiz,
 	fetchScoreRankForPlayer,
-	checkRoomClose,
+	checkRoomClose,fetchExactlyRoomAfterStart,checkQuizClose
 } = require('../controllers/edqiz/roomController')
 const { isInstructor } = require('../middleware/isInstructor')
 const { uploadToGCSHandler } = require('../middleware/multer')
@@ -31,10 +31,13 @@ router.post('/roomHistoryplayerFirstTime', jwtAuthenicate, historyPlayerFirstTim
 router.post('/createQuiz', jwtAuthenicate, isInstructor, createQuiz)
 router.post('/player', jwtAuthenicate, player)
 router.get('/sessionid/:pin', fetchExactlyRoom)
+router.get('/sessionidAfterStart/:pin', fetchExactlyRoomAfterStart)
 router.get('/getRankScore/:sessionid', fetchScoreRank)
 router.get('/getRankScorePlayer/:sessionid', fetchScoreRankForPlayer)
 router.post('/upload/picture', jwtAuthenicate, isInstructor, uploadToGCSHandler('edqiz/question'), Upload)
 router.post('/createHistoryPlayerAnswer', jwtAuthenicate, createHistoryPlayerAnswer)
-router.post('/closeRoom', checkRoomClose)
+router.post('/closeRoom/:sessionid', checkRoomClose)
+router.post('/checkQuizClose/:sessionid', checkQuizClose)
+
 
 module.exports = router

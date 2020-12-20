@@ -41,17 +41,14 @@ const Search = () => {
       <GeneralNonav>
         <div className='bg'>
           <div className='container-1'>
-
-            {/* Search bar and Categories select */}
             <div className='text-center flex my-6 mx-search'>
               <SearchBar />
-              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'>
-                <option>
-                  Category
-              </option>
+              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'
+                onChange={e => router.push('/course/category/' + e.target.value)}>
+                <option>Category</option>
                 {category.map((el, idx) => {
                   return (
-                    <option>
+                    <option value={el.value}>
                       {el.cataname}
                     </option>
                   )

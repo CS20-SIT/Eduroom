@@ -17,9 +17,9 @@ exports.getEventbyDate = async (req, res, next) => {
 		const user = req.user
 		const events = []
 		const data1 = await pool.query(
-			'select title,startdate,enddate from course_event join user_mycourse  \
-   on course_event.courseid = user_mycourse.courseid and user_mycourse.userid = $2 where course_event.startdate <= $1\
-  and course_event.enddate >= $1\
+			'select coursename,title,startdate,enddate from course_event join user_mycourse  \
+   on course_event.courseid = user_mycourse.courseid and user_mycourse.userid = $2 join course on course_event.courseid = course.courseid where course_event.startdate <= $1\
+  and course_event.enddate >= $1 \
   ',
 			[data.date, user.id]
 		)
@@ -27,18 +27,20 @@ exports.getEventbyDate = async (req, res, next) => {
 
 		const data2 = await pool.query(
 			'select * from course_event join instructor   \
-     on course_event.instructorid = instructor.instructorid and instructor.userid = $2 where course_event.startdate <= $1\
-     and course_event.enddate >= $1\
+     on course_event.instructorid = instructor.instructorid and instructor.userid = $2 join course on course_event.courseid = course.courseid where course_event.startdate <= $1\
+     and course_event.enddate >= $1 \
      ',
 			[data.date, user.id]
 		)
+		console.log(data2.rows);
 
 		const data3 = await pool.query(
-			'select title,startdate,enddate from global_event where global_event.startdate <= $1 \
+			'select title,startdate,enddate,starttime,endtime,place from global_event where global_event.startdate <= $1 \
   and global_event.enddate >= $1',
 			[data.date]
 		)
 
+	
 		res.status(200).json({ success: true, data: events, own: data2.rows, global: data3.rows })
 		return
 	} catch (err) {
@@ -229,10 +231,10 @@ exports.createAdminEvent = async (req, res, next) => {
 		//getEmail
 		/* const tempMail = await pool.query("select distinct universityemail from user_student_verification as v,user_mycourse as mc where courseid = $1 and v.userid = mc.userid ;", [courseid])
 
-    tempMail.rows.forEach((t) => {
-      console.log(t)
-      sendEmail({ email: t.universityemail, subject: title, message: detail, })
-    }); */
+	tempMail.rows.forEach((t) => {
+	  console.log(t)
+	  sendEmail({ email: t.universityemail, subject: title, message: detail, })
+	}); */
 
 		//----------------------------------------------------------
 
