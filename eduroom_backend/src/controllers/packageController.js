@@ -76,7 +76,7 @@ exports.getAllPackage = async (req, res, next) => {
 		})
 		res.send(temp)
 	} catch (error) {
-		return next(new ErrorResponse(err, 500))
+		return next(new ErrorResponse(error, 500))
 	}
 }
 
