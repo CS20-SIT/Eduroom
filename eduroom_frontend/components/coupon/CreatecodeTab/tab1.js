@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import style from '../../../styles/advertisement/ads'
 import { useRouter } from 'next/router';
 import { Link, Typography, InputBase, Paper, Grid, List } from '@material-ui/core'
-
+import api from "../../../api";
 
 
 
@@ -17,6 +17,7 @@ const Content = () => {
     coinprice: 0,
     uselimit: 0,
     img: null,
+    codetype:'',
 
   });
 
@@ -29,8 +30,8 @@ const Content = () => {
     try {
       const myForm = new FormData()
       myForm.append('coupon-img', couponInfo.img)
-      console.log(myForm)
-      // const res = await api.post('/api/coupon/upload/picture', myForm)
+      const res = await api.post('/api/coupon/upload/picture', myForm)
+      console.log(res)
       const body = {
         codename: couponInfo.codename,
         description: couponInfo.description,
@@ -39,7 +40,8 @@ const Content = () => {
         minprice: couponInfo.minprice,
         coinprice: couponInfo.coinprice,
         uselimit: couponInfo.uselimit,
-        img: couponInfo.img
+        img: res.data[0].linkUrl,
+        codetype: couponInfo.codetype,
       }
 
       console.log(body);
@@ -49,7 +51,7 @@ const Content = () => {
   }
   const handleSubmit = async (body) => {
     try {
-      // const response = await api.post('/api/coupon/createCouponForSell', body)
+      const response = await api.post('/api/coupon/CreateCodeForSale', body)
       console.log('success')
       props.complete()
     } catch (err) { }

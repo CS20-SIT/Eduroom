@@ -76,8 +76,8 @@ export default function FullWidthTabs() {
   
   return (
     <Fragment>
-      <div style={{backgroundColor:'#FFFFFF'}}>
-      <Paper style = {{margin:"0% 5% 5% 5%", padding:"1.5%", backgroundRepeat: 'no-repeat',
+      {/* <div style={{backgroundColor:'#FFFFFF'}}> */}
+      <Paper style = {{margin:"0% 5% 0% 0%", padding:"1.5%", backgroundRepeat: 'no-repeat',
  backgroundSize:'cover'}}>
      <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',marginLeft:'2%',position:'absolute', width:'78%', opacity:'50%'}}></div>
         <Tabs
@@ -106,7 +106,7 @@ export default function FullWidthTabs() {
         </Paper>
         
         
-        </div>
+        {/* </div> */}
         <style jsx>{style}</style>
     </Fragment>
   );

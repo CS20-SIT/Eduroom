@@ -1,12 +1,19 @@
-import React, { Fragment } from 'react'
-import GeneralTemplate from '../../../components/template/general'
+import React, { Fragment, useContext } from 'react'
+import ProtectedAdminRoute from '../../../components/admin/protectedAdminRoute'
+import AdminTemplate from '../../../components/admin/template/default'
+import AdminContext from '../../../contexts/admin/adminContext'
 import CreateMain from '../../../components/coupon/createMain'
 const createcouponPage = () => {
+  const adminContext = useContext(AdminContext)
+  const { logoutAdmin } = adminContext
   return (
     <Fragment>
-      <GeneralTemplate>
+      <ProtectedAdminRoute>
+        <AdminTemplate>
+          Hello Admin <button onClick={logoutAdmin}>logout</button>
           <CreateMain />
-      </GeneralTemplate>
+        </AdminTemplate>
+      </ProtectedAdminRoute>
     </Fragment>
   )
 }
