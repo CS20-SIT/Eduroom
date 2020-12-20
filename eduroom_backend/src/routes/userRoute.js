@@ -9,7 +9,8 @@ const {
 	editProfile,
 	checkPassword,
 	newPassword,
-	getCertificate
+	getCertificate,
+	downloadCertificate
 } = require('../controllers/user/user')
 
 router.get('/getWishlist', jwtAuthenicate, getWishlist)
@@ -21,4 +22,5 @@ router.patch('/postEditProfile', jwtAuthenicate, editProfile)
 router.post('/getCheckPassword', jwtAuthenicate, checkPassword)
 router.patch('/postNewPassword', jwtAuthenicate, newPassword)
 router.get('/certificate', jwtAuthenicate, getCertificate)
+router.post('/certificate', jwtAuthenicate, downloadCertificate)
 module.exports = router
