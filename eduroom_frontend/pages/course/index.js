@@ -62,7 +62,7 @@ const Course = () => {
               </select>
             </div>
 
-            <CategoryBar />
+            <CategoryBar current= 'General'/>
 
             {/* Box of each course */}
             <div className='text-center my-8'>
