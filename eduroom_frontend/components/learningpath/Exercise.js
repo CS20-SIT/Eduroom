@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import api from '../../api'
 import style from '../../styles/learningPathStyles/exercise'
 
-const Exercise = ({ id, nodeID, type }) => {
+const Exercise = ({ id, nodeID}) => {
 	const [learningPath, setLearningPath] = useState(null)
 	const [correct, setCorrect] = useState(null)
 	const [text, setText] = useState('')
