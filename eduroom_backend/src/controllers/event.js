@@ -32,13 +32,15 @@ exports.getEventbyDate = async (req, res, next) => {
      ',
 			[data.date, user.id]
 		)
+		console.log(data2.rows);
 
 		const data3 = await pool.query(
-			'select title,startdate,enddate from global_event where global_event.startdate <= $1 \
+			'select title,startdate,enddate,starttime,endtime,place from global_event where global_event.startdate <= $1 \
   and global_event.enddate >= $1',
 			[data.date]
 		)
 
+	
 		res.status(200).json({ success: true, data: events, own: data2.rows, global: data3.rows })
 		return
 	} catch (err) {
@@ -229,10 +231,10 @@ exports.createAdminEvent = async (req, res, next) => {
 		//getEmail
 		/* const tempMail = await pool.query("select distinct universityemail from user_student_verification as v,user_mycourse as mc where courseid = $1 and v.userid = mc.userid ;", [courseid])
 
-    tempMail.rows.forEach((t) => {
-      console.log(t)
-      sendEmail({ email: t.universityemail, subject: title, message: detail, })
-    }); */
+	tempMail.rows.forEach((t) => {
+	  console.log(t)
+	  sendEmail({ email: t.universityemail, subject: title, message: detail, })
+	}); */
 
 		//----------------------------------------------------------
 
