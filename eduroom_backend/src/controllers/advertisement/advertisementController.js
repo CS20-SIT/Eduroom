@@ -10,15 +10,20 @@ const getAllAds = async (req, res, next) => {
 
 const getMyAds = async (req, res, next) => {
     const userid = req.body.userid;
-    const data = await pool.query("select * from ad where ownerid = $1",[userid]);
+    const data = await pool.query("select * from ad where ownerid = $1", [userid]);
     const adList = data.rows;
     res.send(adList);
 };
-
+const deleteAds= async (req, res, next) => {
+    const adid = req.body.adid;
+    await pool.query("delete from ad_tag where adid = $1", [adid]);
+    await pool.query("delete from ad where adid = $1", [adid]);
+    res.send({ success: true })
+};
 const getAdsType = async (req, res, next) => {
-    const data = await pool.query("select case when typename='vertipic' then 'Vertical Image'"+
-    "when typename='horipic' then 'Horizontal Image'"+
-    "when typename='video' then 'Video' end typename from ad_type ");
+    const data = await pool.query("select case when typename='vertipic' then 'Vertical Image'" +
+        "when typename='horipic' then 'Horizontal Image'" +
+        "when typename='video' then 'Video' end typename from ad_type ");
     const typeList = data.rows;
     res.send(typeList);
 };
@@ -29,24 +34,40 @@ const getAdsTags = async (req, res, next) => {
     res.send(tagList);
 };
 
-const getAdstoPay = async(req, res, next) => {
+const getAdstoPay = async (req, res, next) => {
     const ownerid = req.user.id;
-    const data = await pool.query("select * from ad where ownerid = $1 and adid = (select max(adid) from ad where ownerid = $1) and adid NOT IN (select adid from ad_payment) ",
-    [ownerid])
-    const lastedAds = data.rows;
-    res.send(lastedAds);
+    const data = await pool.query("select firstname,lastname,adid,type,adstarttime,adexpiretime," +
+        "case when extract(day from adexpiretime - adstarttime) > 0 and extract(day from adexpiretime - adstarttime)  <= 20 then extract(day from adexpiretime - adstarttime)  * 50" +
+        "when extract(day from adexpiretime - adstarttime) > 20 and extract(day from adexpiretime - adstarttime)  <= 60 then extract(day from adexpiretime - adstarttime)  * 45" +
+        "when extract(day from adexpiretime - adstarttime) > 60 and extract(day from adexpiretime - adstarttime)  <= 120 then extract(day from adexpiretime - adstarttime)  * 40" +
+        "when extract(day from adexpiretime - adstarttime) > 120 and extract(day from adexpiretime - adstarttime)  <= 365 then extract(day from adexpiretime - adstarttime)  * 30 end price" +
+        ",contactemail,filelocation from ad,user_profile where ownerid = $1 and adid NOT IN (select adid from ad_payment) and ad.ownerid=user_profile.userid ",
+        [ownerid])
+    const lastestAds = data.rows;
+    res.send(lastestAds);
+};
+
+const getTotalAdsPrice = async (req, res, next) => {
+    const ownerid = req.user.id;
+    const data = await pool.query("select sum(price) as totalprice , count(*) from (select case when extract(day from adexpiretime - adstarttime) > 0 and extract(day from adexpiretime - adstarttime)  <= 20 then extract(day from adexpiretime - adstarttime)  * 50"+
+    "when extract(day from adexpiretime - adstarttime) > 20 and extract(day from adexpiretime - adstarttime)  <= 60 then extract(day from adexpiretime - adstarttime)  * 45"+
+    "when extract(day from adexpiretime - adstarttime) > 60 and extract(day from adexpiretime - adstarttime)  <= 120 then extract(day from adexpiretime - adstarttime)  * 40"+
+    "when extract(day from adexpiretime - adstarttime) > 120 and extract(day from adexpiretime - adstarttime)  <= 365 then extract(day from adexpiretime - adstarttime)  * 30 end price from ad where ownerid = $1 and  adid NOT IN (select adid from ad_payment) ) as price",
+        [ownerid])
+    const lastestAds = data.rows;
+    res.send(lastestAds);
 };
 const addAds = async (req, res, next) => {
 
-    
+
     let type = req.body.adtype;
-    if(type == 'Vertical Image'){ type = 2;}
-    else if(type == 'Horizontal Image'){ type = 3;}
-    else{
+    if (type == 'Vertical Image') { type = 2; }
+    else if (type == 'Horizontal Image') { type = 3; }
+    else {
         type = 1;
     }
     const adtag = req.body.adtag;
-    let adstarttime = req.body.adstartdate ;
+    let adstarttime = req.body.adstartdate;
     let adexpiretime = req.body.adexpiredate;
     const contactemail = req.body.contactemail;
     const imglocation = req.body.adimg;
@@ -55,21 +76,21 @@ const addAds = async (req, res, next) => {
 
 
     await pool.query(
-        "insert into ad(adid, type, adstarttime, adexpiretime, contactemail, filelocation, status, ownerid) values ((select count(*) from ad)+1,$1,$2,$3,$4,$5,$6,$7)",
-        [type,adstarttime,adexpiretime,contactemail,imglocation,status,ownerid]
+        "insert into ad(adid, type, adstarttime, adexpiretime, contactemail, filelocation, status, ownerid) values ((select max(adid)+1 from ad)+1,$1,$2,$3,$4,$5,$6,$7)",
+        [type, adstarttime, adexpiretime, contactemail, imglocation, status, ownerid]
     )
     await pool.query(
-        "insert into ad_tag(adid, tagid) VALUES ((select count(*) from ad),(select tagid from ad_all_tag where tagname = $1))",[adtag]
+        "insert into ad_tag(adid, tagid) VALUES ((select max(adid) from ad),(select tagid from ad_all_tag where tagname = $1))", [adtag]
     )
 
     res.send({ success: true })
 }
 
 const Upload = async (req, res, next) => {
-	const files = req.files
-	const results = files.map((file) => {
-		return { linkUrl: file.linkUrl, fieldname: file.fieldname }
-	})
-	res.send(results)
+    const files = req.files
+    const results = files.map((file) => {
+        return { linkUrl: file.linkUrl, fieldname: file.fieldname }
+    })
+    res.send(results)
 }
-module.exports = { getAdsTags ,getAllAds, addAds, getMyAds,getAdsType,getAdstoPay,Upload} 
+module.exports = { getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds } 
