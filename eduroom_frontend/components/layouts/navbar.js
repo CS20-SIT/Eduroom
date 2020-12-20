@@ -15,7 +15,7 @@ const Navbar = ({ children, isProtected = false }) => {
 	const router = useRouter()
 
 	useEffect(() => {
-		getUser(router,isProtected)
+		getUser(router, isProtected)
 	}, [])
 
 	const getOp = () => {
@@ -31,17 +31,17 @@ const Navbar = ({ children, isProtected = false }) => {
 
 	return (
 		<Fragment>
-			<AppBar position="sticky" style={{ background: `rgba(245, 245, 245, ${getOp()})` }} elevation={0}>
+			<AppBar position="sticky" style={{ background: `rgba(245, 245, 245, ${getOp()})`, zIndex: 1 }} elevation={0}>
 				<Toolbar>
 					<div className="navStyle">
-						<div style={{width:'50%'}}>{children}</div>
+						<div style={{ width: '50%' }}>{children}</div>
 						<div className="navDefault">
 							{user ? (
-								<div className="navItem" id="fav-btn">
+								<div className="navItem" id="fav-btn" onClick={() => router.push('/user/wishlist')}>
 									<i className="fas fa-heart"></i>
 								</div>
 							) : null}
-							<div className="navItem" id="cart-btn">
+							<div className="navItem" id="cart-btn" onClick={() => router.push('/user/cart')}>
 								<i className="fas fa-shopping-cart" />
 							</div>
 							{user ? (

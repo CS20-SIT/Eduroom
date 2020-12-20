@@ -47,7 +47,7 @@ const Page1 = ({
   useEffect(() => {
     const fetchData = async () => {
 
-      console.log(pin, 'pin')
+     
       const res = await api.get(`/api/kahoot/sessionid/${pin}`);
       setSesstionID(res.data.sessionid)
     };
@@ -78,14 +78,12 @@ const Page1 = ({
     socket.on("get-skip", (isSkip) => {
       console.log('getskip from page 1')
       if ((isSkip || answer == data[questionNumber].correct) && answer == 99) {
-
         console.log(answer == data[questionNumber].correct, 'skip');
         goto(4);
 
       }
     });
     setAnswer('99');
-    console.log('answer99', answer)
   }
 
   useEffect(() => {
@@ -95,7 +93,7 @@ const Page1 = ({
 
     }, []);
     sentMessage();
-    getSkip();
+    // getSkip();
     response();
   }, [answer]);
 

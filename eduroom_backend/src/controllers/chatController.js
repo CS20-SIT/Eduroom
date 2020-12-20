@@ -59,33 +59,10 @@ const getUserProfile = async (req, res, next) => {
                                         from user_profile 
                                         where userid = '${userid}'`)
 
-    const usp = userProfile.rows
-    res.send(usp)
+	const usp = userProfile.rows
+	res.send(usp)
 }
 
-const acceptInvitation = async (req, res, next) =>{
-  const userid = req.user.id
-  const chatroomid = req.chat.chatroomid
-  const result = await pool.query(`insert into chat_roommember(chatroomid, userid, nickname, sender_color, receiver_color, hide)
-values ($1,$2,null,'#A27CEF','#5B5B5B',false);
-delete from invite_invitees
-where invitationid = 3 and inviteeid = $2`,[chatroomid], [userid])
-res.status(200).json({ success: True})
-}
-
-
-const deleteMessage = async (req, res, next) =>{
-  const mesid = req.chat.messageID
-  const del = await pool.query(`delete from chat_message where messageid = $1 ` [mesid])
-		res.send({ success: true })
-}
-
-const hideMessage = async (req, res, next) =>{
-  const userid = req.user.id
-  const chatroomid = req.chat.chatroomid
-  const result = await pool.query(`update chat_roommember set hide = 'True' where userid = $1 and chatroomid = $2`, [userid], [chatroomid])
-res.status(200).json({ success: true })
-}
 
 // const getColorChatRoom = async (req, res, next) => {
 // 	const color = await pool.query(`select color
@@ -94,18 +71,171 @@ res.status(200).json({ success: true })
 // 	res.send(color)
 // }
 
-const getChatRoomDetail = async (req, res, next) =>{
-  const messageQuery = await pool.query 
-  (`select * from (select cm.chatroomid, sendtime as sendTime,cm.userid as senderID, concat(up.firstname,concat(' ', up.lastname)) as senderName, up.avatar as senderProfilePic ,
+const getChatroomDetail = async (req, res, next) => {
+	let result = {}
+	const chatroomid = 3
+	const userid = '6df15ee6-fa2f-4190-9cf5-a7f593374e68'
+	const detail = await pool.query(
+		`select chat.chatroomid, roomname as chatRoomName
+    from chat, chat_roommember crm
+    where chat.chatroomid = crm.chatroomid and chat.chatroomid = ${chatroomid};`
+	)
+
+	const det = detail.rows[0]
+  result = det
+  
+  const chatRoomProfilePic = await pool.query
+  (`select case when exists(select picture
+    from chat
+    where chatroomid = ${chatroomid} and picture is not null) then c1.picture else avatar end as chatRoomProfilePicture
+    from chat c1, user_profile up
+    where c1.chatroomid = ${chatroomid} and up.userid = '${userid}'`)
+
+const chatRoomProfile = await chatRoomProfilePic.rows[0]
+result = {...result, chatRoomProfile}
+
+	const color = await pool.query(
+		`select sender_color as sendColor, receiver_color as recieveColor
+  from chat_roommember crm
+  where crm.chatroomid = ${chatroomid} and userid = '${userid}';`
+	)
+
+	const themeColor = await color.rows[0]
+	result = { ...result, themeColor }
+
+	const member = await pool.query(
+		`select userid
+  from chat_roommember
+  where chatroomid = ${chatroomid};`
+	)
+
+
+  const members = await member.rows
+  let membersID = []
+  for(i = 0; i < members.length; i++){
+    membersID[i] = members[i].userid 
+  }
+	result = { ...result, membersID }
+
+	const messageQuery = await pool.query(
+		`select * from (select cm.chatroomid, sendtime as sendTime,cm.userid as senderID, concat(up.firstname,concat(' ', up.lastname)) as senderName, up.avatar as senderProfilePic ,
   Array(select concat( (case when crm.nickname is not null then crm.nickname else concat(firstname,concat(' ', lastname)) end) ,concat(',',cms.readtime::text))
 from chat_message_readtime cms , user_profile as up, chat_roommember crm where cms.messageid = cm.messageid and cms.userid = up.userid and cms.userid = crm.userid and cm.chatroomid = crm.chatroomid) as reader, message, issticker as sticker, false as system
 from chat_message cm, user_profile up where cm.userid = up.userid
 union select chatroomid, sendtime,null,null,null,null,null message, false, true from chat_systemmessage) as chat
-where chatroomid = '3'
-order by sendtime asc ;`)
-  const crd = messageQuery.rows
-  const message = {message: crd}
-  res.send(message);
+where chatroomid = ${chatroomid}
+order by sendtime asc ;`
+	)
+
+	const message = await messageQuery.rows
+	result = { ...result, message }
+
+	res.send(result)
+}
+
+const getSearchResult = async (req, res, next) => {
+	const keyword = 'S'
+	const result = await pool.query(`select up.userid, firstname as userFirstname, lastname as userLastname, universityemail as email,avatar as userProfile
+  from user_profile up, user_student_verification uv
+  where up.userid = uv.userid and (lower(firstname) like lower('${keyword}%') or lower(lastname) like lower('${keyword}%') or lower(universityemail) like lower('${keyword}%'))
+  limit 50;`)
+
+	const gsr = result.rows
+	const users = { users: gsr }
+	res.send(users)
+}
+
+const getInvitationList = async (req, res, next) => {
+	const userid = '95ee6df6-681a-4eee-bc25-626cac3f63f3'
+	const inviteList = await pool.query(`select ci.invitationid as invitationID, chat.chatroomid as chatRoomID, roomname as chatRoomName, up.firstname as invitor,
+  avatar as profilePicture
+from chat_invitation ci, chat, user_profile up, invite_invitees inv
+where ci.invitationid = inv.invitationid and chat.chatroomid = ci.chatroomid and up.userid = ci.invitor_id and
+ inv.inviteeid = '${userid}'`)
+
+	const gil = inviteList.rows
+	const invitations = { invitations: gil }
+	res.send(invitations)
+}
+
+const getChatRoomProfile = async (req, res, next) =>{
+  const chatroomid = 3
+	const userid = '6df15ee6-fa2f-4190-9cf5-a7f593374e68'
+  let result = {chatroomid:chatroomid}
+  const chatRoomProfilePic = await pool.query
+  (`select case when exists(select picture
+    from chat
+    where chatroomid = ${chatroomid} and picture is not null) then c1.picture else avatar end as chatRoomProfilePicture
+    from chat c1, user_profile up
+    where c1.chatroomid = ${chatroomid} and up.userid = '${userid}'`)
+
+const chatRoomProfile = await chatRoomProfilePic.rows[0]
+result = {...result, chatRoomProfile}
+res.send(result)
+}
+
+const sendmessage = async (req, res, next) =>{
+	const message = 'Keyword'
+	const chatroomid = 3
+	const userid = 'd8bd910c-16fa-4bcf-acbf-a12b1a8322fb'
+	const sendmes = await pool.query(
+		`insert into chat_message(message, sendtime, chatroomid, userid, issticker)
+		values ('${message}',current_timestamp,${chatroomid},'${userid}', false)`
+	)
+	res.status(200).json({ success: true })
+}
+
+const  changeThemeColor = async (req, res, next) => {
+	const chatroomid = 3;
+	const userid = '236ce084-b742-4435-93c7-2e0d1eff1204'
+	const senderColor = '#EB7DB1'
+	const recieveColor = '#5B5B5B'
+
+	const themecolor = await pool.query(
+		`update chat_roommember
+			set sender_color = '${senderColor}',
+			receiver_color = '${recieveColor}'
+		where chatroomid = ${chatroomid} and userid = '${userid}'`
+	)
+	res.status(200).json({ success: true })
+}
+
+const changeChatRoomProfilePicture = async (req, res, next) =>{
+	const pic = '/.updates.png'
+	const chatroomid = 4
+
+	const update = await pool.query(
+		`update chat
+		set picture = '${pic}'
+		where chatroomid = ${chatroomid}`
+	)
+	const systemmessage = await pool.query(
+		`insert into chat_systemmessage (chatroomid,sendtime,message)
+		values(${chatroomid},current_timestamp,'Chat room profile has been change')`
+	)
+		res.status(200).json({ success: true })
+}
+
+const changeChatRoomName = async (req, res, next) => {
+	const roomname = 'TestLast'
+	const chatroomid = 4;
+
+	if(roomname == null || roomname == ""){
+		res.status(200).json({ success : false})
+	} else {
+
+	const update = await pool.query(
+	`update chat
+	set roomname = '${roomname}'
+	where chatroomid = ${chatroomid};`
+	)
+
+	const systemmessage = await pool.query(
+		`insert into chat_systemmessage (chatroomid,sendtime,message)
+		values(${chatroomid},current_timestamp,'Chat room name has been change to ${roomname}')`
+	)
+	res.status(200).json({ success: true })
+	}
 }
 
 module.exports = { getChatlist, 

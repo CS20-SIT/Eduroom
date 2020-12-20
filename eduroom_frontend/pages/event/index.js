@@ -1,17 +1,17 @@
 import React, { Fragment } from 'react'
-import GeneralNoNav from '../../components/template/general';
+import General from '../../components/template/general';
 import EventComp from '../../components/event/createEvent'
 import style from '../../styles/event/event'
 
 const Event = () => {
   return (
     <Fragment>
-      <GeneralNoNav>
+      <General>
       <div className='BG'>
         <EventComp/>
         </div>
         <style jsx>{style}</style>
-      </GeneralNoNav>
+      </General>
     </Fragment>
   )
 };

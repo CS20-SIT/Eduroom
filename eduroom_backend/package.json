@@ -5,7 +5,7 @@
   "scripts": {
     "start": "NODE_ENV=production node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "jest": {
     "testMatch": [
@@ -16,6 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^5.3.0",
+    "adm-zip": "^0.5.1",
+    "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^2.9.3",
     "connect": "^3.7.0",

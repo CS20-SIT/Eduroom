@@ -23,7 +23,7 @@ const content = () => {
     // if (validator()) {
     api.post("/api/event/createEvent", eventInfo).then(
       (res) => {
-        alert("success");
+        
       }
     ).catch(err => {
       console.log(err);

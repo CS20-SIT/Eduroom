@@ -1,35 +1,59 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import CreateEventDialog from "../../components/calendar/createEventDialog";
+import Edit from "../../components/calendar/edit"
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Image from "next/image";
 import axios from 'axios';
 import style from "../../styles/calendar/calendar";
-
+import api from "../../api";
+import Delete from "../../components/calendar/delete"
+import UserConText from "../../contexts/user/userContext"
 
 const Content = (props) => {
-    //   const router = useRouter();
-    
+   const userContext = useContext(UserConText)
+   const {user} = userContext;
+
     const showDate = props.showDate;
     const open = props.open;
     const setOpen = props.setOpen;
     const currentMonth = props.currentMonth;
     const currentMonthNo = props.currentMonthNo;
     const currentYear = props.currentYear;
-
+    
     const [data, setData] = useState([])
 
+    const [openEvent, setOpenEvent] = useState(false);
+    const [isInstructor, setInstructor] = useState(false);
+    useEffect(() => {
+        api.get('/api/auth/profile').then(res => {
+            if (res.data.role == 'instructor') {
+                setInstructor(true);
+            }
+        }
+        ).catch(err => {
+
+        })
+    }, [])
+    
     useEffect(() => {
         const GetData = async () => {
-            const result = await axios("http://localhost/api/event/getCourseEvent");
-            setData(result.data);
+            const result2 = await api.get("/api/event/getGlobalEvent");
+            const allResult = (result2.data)
+
+            if(isInstructor){
+                const result1 = await api.get("/api/event/getCourseEvent");
+                allResult = allResult.concat(result1)
+            }
+            setData(allResult);
         };
         GetData();
-        console.log(data);
     }, []);
+    const formatTime = (time) => {
+        return (time < 10 ? '0' : '') + time
+    }
 
 
     
-    const [openEvent, setOpenEvent] = useState(false);
 
 
 
@@ -44,7 +68,7 @@ const Content = (props) => {
             >
                 <div className='bg-overlay'>
                     <div className='d-calendar'>
-                        <div onClick={() =>setOpen(false)} className="d-close">
+                        <div onClick={() => setOpen(false)} className="d-close">
                             X
             </div>
                         <div className="d-top">
@@ -53,37 +77,54 @@ const Content = (props) => {
 
                         <div className="content">
                             <div>
-
-                                {data.map((row) => {
+                                {user && data.map((row) => {
 
                                     return (showDate == row.startday && currentMonthNo == row.nowmonth ?
+
                                         <div className="d-block">
-                                            <div className="edit">
-                                                {/* <Edit></Edit> */}
-                                            </div>
-                                            <div className="title">{row.title}</div>
-                                            <div className="point" style={{ background: "#fdd4c1" }}></div>
-                                            <div className="detail">{row.hstart}.{row.mstart} - {row.hend}.{row.mend} | {row.place}</div>
+                                            {
+                                                isInstructor && row.event_type == 'course' ? (
+                                                    <div className="edit">
+                                                        <Edit id={row.eventid} ></Edit>
+                                                        <Delete id={row.eventid}></Delete>
+                                                    </div>
+
+
+                                                ) : null
+                                            }
+
+                                            <div className="title">{row.title} ({row.coursename}) </div>
+
+                                            {row.event_type == 'course' ? <div className="point" style={{ background: "#fdd4c1" }}></div>
+                                                :
+                                                <div className="point" style={{ background: "#A880F7" }}></div>}
+                                            <div className="detail">{formatTime(row.hstart)}:{formatTime(row.mstart)} - {formatTime(row.hend)}:{formatTime(row.mend)} | {row.place}</div>
                                         </div>
                                         : "")
                                 })}
 
                             </div>
                         </div>
-                        <div className="d-buttom">
-                            <div onClick={() => {setOpenEvent(true)}} >
-                                <button className="button">
-                                    Add New Event
-                </button>
+
+
+                        {isInstructor ? (
+                            <div className="d-buttom">
+                                <div onClick={() => { setOpenEvent(true) }} >
+                                    <button className="button">
+                                        Add New Event
+                                </button>
+                                </div>
                             </div>
-                        </div>
+                        ) : null}
+
                     </div>
 
 
                 </div>
             </CSSTransition>
 
-            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} />
+            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} date={showDate} monthNo={currentMonthNo} year={props.currentYear} />
+
             <style jsx>
                 {style}
             </style>

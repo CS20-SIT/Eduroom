@@ -98,7 +98,7 @@ const EditPackage = (props, { index }) => {
 									onChange={nameChange}
 									value={props.myPackage.name}
 								></input>
-								<div>{data.name}</div>
+								<div>{props.myPackage.name}</div>
 							</div>
 
 							<div>
@@ -114,7 +114,7 @@ const EditPackage = (props, { index }) => {
 										)
 									})}
 								</select>
-								<div>{data.discount}</div>
+								<div>{props.myPackage.discount}</div>
 							</div>
 
 							<div>
@@ -143,7 +143,7 @@ const EditPackage = (props, { index }) => {
 									onChange={detailChange}
 									value={props.myPackage.detail}
 								></textarea>
-								<div>{data.detail}</div>
+								<div>{props.myPackage.detail}</div>
 							</div>
 						</div>
 					</div>
