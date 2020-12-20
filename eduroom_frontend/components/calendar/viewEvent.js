@@ -10,8 +10,8 @@ import Delete from "../../components/calendar/delete"
 import UserConText from "../../contexts/user/userContext"
 
 const Content = (props) => {
-   const userContext = useContext(UserConText)
-   const {user} = userContext;
+    const userContext = useContext(UserConText)
+    const { user } = userContext;
 
     const showDate = props.showDate;
     const open = props.open;
@@ -19,7 +19,7 @@ const Content = (props) => {
     const currentMonth = props.currentMonth;
     const currentMonthNo = props.currentMonthNo;
     const currentYear = props.currentYear;
-    
+
     const [data, setData] = useState([])
 
     const [openEvent, setOpenEvent] = useState(false);
@@ -34,13 +34,13 @@ const Content = (props) => {
 
         })
     }, [])
-    
+
     useEffect(() => {
         const GetData = async () => {
             const result2 = await api.get("/api/event/getGlobalEvent");
             const allResult = (result2.data)
 
-            if(isInstructor){
+            if (isInstructor) {
                 const result1 = await api.get("/api/event/getCourseEvent");
                 allResult = allResult.concat(result1)
             }
@@ -53,7 +53,7 @@ const Content = (props) => {
     }
 
 
-    
+
 
 
 
@@ -79,7 +79,7 @@ const Content = (props) => {
                             <div>
                                 {user && data.map((row) => {
 
-                                    return (showDate == row.startday && currentMonthNo == row.nowmonth ?
+                                    return (showDate >= row.startday && showDate <= row.enddate && currentMonthNo == row.nowmonth ?
 
                                         <div className="d-block">
                                             {
@@ -93,12 +93,15 @@ const Content = (props) => {
                                                 ) : null
                                             }
 
-                                            <div className="title">{row.title} ({row.coursename}) </div>
+                                            <div className="title">{row.title}</div>
 
                                             {row.event_type == 'course' ? <div className="point" style={{ background: "#fdd4c1" }}></div>
                                                 :
                                                 <div className="point" style={{ background: "#A880F7" }}></div>}
-                                            <div className="detail">{formatTime(row.hstart)}:{formatTime(row.mstart)} - {formatTime(row.hend)}:{formatTime(row.mend)} | {row.place}</div>
+
+                                            {showDate == row.enddate || showDate == row.startday ? <div className="detail">{row.hstart}:{row.mstart} on {showDate} {currentMonth} - {row.hend}:{row.mend} on {row.enddate} {currentMonth}</div>
+                                                : <div className="detail">Allday</div>}
+                                            <div className="title" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
                                         </div>
                                         : "")
                                 })}

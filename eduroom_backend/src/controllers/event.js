@@ -61,7 +61,7 @@ exports.getAdminEventInMonthYear = async (req, res, next) => {
 exports.getCourseEvent = async (req, res, next) => {
 
   const data = await pool.query(
-    `select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) 
+    `select *,EXTRACT(DAY FROM startdate) as startday,EXTRACT(DAY FROM enddate) as enddate,EXTRACT(MONTH FROM startdate) as nowMonth,EXTRACT(HOUR FROM starttime) 
       as Hstart, EXTRACT(MINUTE FROM starttime) as Mstart,EXTRACT(HOUR FROM endtime) 
       as Hend, EXTRACT(MINUTE FROM endtime) as Mend, eventid,'course' as event_type,coursename from course_event join course on course.courseid = course_event.courseid`
   )
