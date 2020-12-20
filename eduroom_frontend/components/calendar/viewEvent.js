@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import CreateEventDialog from "../../components/calendar/createEventDialog";
 import Edit from "../../components/calendar/edit"
 import CSSTransition from 'react-transition-group/CSSTransition';
@@ -7,9 +7,11 @@ import axios from 'axios';
 import style from "../../styles/calendar/calendar";
 import api from "../../api";
 import Delete from "../../components/calendar/delete"
+import UserConText from "../../contexts/user/userContext"
 
 const Content = (props) => {
-    //   const router = useRouter();
+   const userContext = useContext(UserConText)
+   const {user} = userContext;
 
     const showDate = props.showDate;
     const open = props.open;
@@ -17,21 +19,8 @@ const Content = (props) => {
     const currentMonth = props.currentMonth;
     const currentMonthNo = props.currentMonthNo;
     const currentYear = props.currentYear;
-
+    
     const [data, setData] = useState([])
-
-    useEffect(() => {
-        const GetData = async () => {
-            const result1 = await axios("http://localhost/api/event/getCourseEvent");
-            const result2 = await axios("http://localhost/api/event/getGlobalEvent");
-            const allResult = (result1.data).concat(result2.data)
-            setData(allResult);
-        };
-        GetData();
-
-    }, []);
-
-
 
     const [openEvent, setOpenEvent] = useState(false);
     const [isInstructor, setInstructor] = useState(false);
@@ -45,6 +34,26 @@ const Content = (props) => {
 
         })
     }, [])
+    
+    useEffect(() => {
+        const GetData = async () => {
+            const result2 = await api.get("/api/event/getGlobalEvent");
+            const allResult = (result2.data)
+
+            if(isInstructor){
+                const result1 = await api.get("/api/event/getCourseEvent");
+                allResult = allResult.concat(result1)
+            }
+            setData(allResult);
+        };
+        GetData();
+    }, []);
+    const formatTime = (time) => {
+        return (time < 10 ? '0' : '') + time
+    }
+
+
+    
 
 
 
@@ -68,14 +77,13 @@ const Content = (props) => {
 
                         <div className="content">
                             <div>
-
-                                {data.map((row) => {
+                                {user && data.map((row) => {
 
                                     return (showDate == row.startday && currentMonthNo == row.nowmonth ?
 
                                         <div className="d-block">
                                             {
-                                                isInstructor ? (
+                                                isInstructor && row.event_type == 'course' ? (
                                                     <div className="edit">
                                                         <Edit id={row.eventid} ></Edit>
                                                         <Delete id={row.eventid}></Delete>
@@ -85,12 +93,12 @@ const Content = (props) => {
                                                 ) : null
                                             }
 
-                                            <div className="title">{row.title}</div>
+                                            <div className="title">{row.title} ({row.coursename}) </div>
 
                                             {row.event_type == 'course' ? <div className="point" style={{ background: "#fdd4c1" }}></div>
                                                 :
                                                 <div className="point" style={{ background: "#A880F7" }}></div>}
-                                            <div className="detail">{row.hstart}:{row.mstart} - {row.hend}:{row.mend} | {row.place}</div>
+                                            <div className="detail">{formatTime(row.hstart)}:{formatTime(row.mstart)} - {formatTime(row.hend)}:{formatTime(row.mend)} | {row.place}</div>
                                         </div>
                                         : "")
                                 })}
@@ -115,7 +123,7 @@ const Content = (props) => {
                 </div>
             </CSSTransition>
 
-            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} date={showDate} monthNo={currentMonthNo} year={currentYear} />
+            <CreateEventDialog openEvent={openEvent} setOpenEvent={setOpenEvent} date={showDate} monthNo={currentMonthNo} year={props.currentYear} />
 
             <style jsx>
                 {style}

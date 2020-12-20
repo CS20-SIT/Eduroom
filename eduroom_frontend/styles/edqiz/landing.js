@@ -13,26 +13,16 @@ export default css`
     font-weight: bold;
     cursor: pointer;
   }
-  .bg-img {
-    width: 100vw;
-    display: flex;
-    justify-content: flex-end;
-    position: absolute;
-    pointer-events: none;
-    cursor: default;
-  }
-  .landing-img {
-    width: 25%;
-    margin-left: 44vw;
-    margin-top: 35vh;
-    position: absolute;
-  }
+
   .landing {
     width: 95vw;
     height: 100vh;
     background-image: url('/images/edqiz/landing-bg.svg');
     background-repeat: no-repeat;
     background-size: cover;
+    position: absolute;
+    top: 0;
+
   }
   .landing-title {
     display: flex;
