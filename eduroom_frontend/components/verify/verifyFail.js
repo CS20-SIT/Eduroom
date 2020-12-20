@@ -1,6 +1,10 @@
 import React, { Fragment } from 'react'
 import Image from 'next/image'
+import api from '../../api'
 const VerifyAccount = () => {
+	const handleResend = () => {
+		api.post('/api/auth/verify/resend')
+	}
 	return (
 		<Fragment>
 			<div className="verify-box">
@@ -10,7 +14,7 @@ const VerifyAccount = () => {
 				</div>
 				<div className="verify-head">Fail to Verify!</div>
 				<div className="verify-text">You have some mistaked while you verify the account</div>
-				<div className="re-btn">
+				<div className="re-btn" onClick={handleResend}>
 					<div className="re-text">Resend Email</div>
 				</div>
 			</div>

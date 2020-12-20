@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 const VerifyAccount = () => {
 	return (
 		<Fragment>
@@ -10,11 +11,11 @@ const VerifyAccount = () => {
 				</div>
 				<div className="verify-head">Verify !</div>
 				<div className="verify-text">You have successfully verified the account</div>
-				<a href="/">
+				<Link href="/">
                 <div className="re-btn">
 					<div className="re-text">Get Started</div>
 				</div>
-                </a>
+                </Link>
 			</div>
 			<style jsx>
 				{`
