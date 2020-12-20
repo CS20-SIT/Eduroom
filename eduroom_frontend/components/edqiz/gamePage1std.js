@@ -73,8 +73,6 @@ const Page1 = ({
   }, [countPlayer]);
 
   const getSkip = () => {
-
-    console.log('answer', answer)
     socket.on("get-skip", (isSkip) => {
       console.log('getskip from page 1')
       if ((isSkip || answer == data[questionNumber].correct) && answer == 99) {
