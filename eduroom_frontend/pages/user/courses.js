@@ -3,24 +3,29 @@ import MyCourses from '../../components/user/myCourses';
 import General from '../../components/template/general'
 import axios from 'axios';
 import api from '../../api';
+import { useRouter } from 'next/router'
 const UserCourse = () => {
     // const user="08e9d239-b3f2-4db8-b29a-da99a314df92";
     useEffect(()=>{
         const fetchData=async()=>{
             // const res=await axios.get('https://jsonplaceholder.typicode.com/todos');
-
-            const res=await api.get('api/user/getMycourse', {
-                // userid:user,
-                params:{
-                    finish:false,
-                    condition:'',
-                    orderby: 'addtime desc'
-                }
-            });
-            setTotalList(res.data);
+            try{
+                const res=await api.get('api/user/getMycourse', {
+                    // userid:user,
+                    params:{
+                        finish:false,
+                        condition:'',
+                        orderby: 'addtime desc'
+                    }
+                });
+                setTotalList(res.data);
+			} catch (err) {
+				router.push('/login')
+			}
         }
         fetchData();
     },[]);
+    const router = useRouter()
     const[totalList,setTotalList]=useState([]);
     const[completion,setCompletion]=useState(false);
 
