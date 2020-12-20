@@ -6,9 +6,9 @@ const Node = ({ node, isLeft }) => {
 			<div
 				className="nodes-path"
 				style={{ display: 'flex', width: '100%', justifyContent: 'center', position: 'relative' }}
+				onClick={()=>console.log(node)}
 			>
 				<div
-					o
 					className="content left"
 					onMouseEnter={() => {
 						if (isLeft) {
