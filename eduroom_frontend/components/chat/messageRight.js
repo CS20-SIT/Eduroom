@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import ReadIcon from './icons/ReadIcon'
 import DotDotIcon from './icons/DotDotIcon'
+import api from '../../api'
 
 export default function messageRight(props) {
 	const [dropReadDownStyle, setReadDropDownStyle] = useState({ visibility: 'hidden' })
 	const [dropDownStyle, setDropDownStyle] = useState({ visibility: 'hidden' })
 	const [dotDotStyle, setDotDotStyle] = useState({ visibility: 'hidden' })
 	const message = props.message
+	const unsend = async () =>{
+		const res = await api.get(`/api/chat/unsendMessage`,{params:{messageid:message.messageid}})
+		props.getChatRoomDetail()
+	}
 	return (
 		<div>
 			<div
@@ -30,13 +35,7 @@ export default function messageRight(props) {
 					<DotDotIcon style={dotDotStyle} />
 					<div className="dropdown2" style={dropDownStyle}>
 						<span className="row">
-							<span className="sm" style={{ marginRight: 18 }}>
-								Delete
-							</span>
-						</span>
-						<br />
-						<span className="row">
-							<span className="sm" style={{ marginRight: 18 }}>
+							<span className="sm" style={{ marginRight: 5 }} onClick={unsend}>
 								Unsend
 							</span>
 						</span>
@@ -55,94 +54,30 @@ export default function messageRight(props) {
 						setReadDropDownStyle({ visibility: 'hidden' })
 					}}
 				>
-					<ReadIcon style={{ paddingTop: 5, marginRight: 10 }} />
-					<div className="dropdown scroll" style={dropReadDownStyle}>
-						<span
-							style={{
-								fontSize: 12,
-								whiteSpace: 'nowrap',
-							}}
-						>
-							Krishadawut Olde Monnikhof
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-							}}
-						>
-							15:35
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-								whiteSpace: 'nowrap',
-							}}
-						>
-							Krishadawut Olde Monnikhof
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-							}}
-						>
-							15:35
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-								whiteSpace: 'nowrap',
-							}}
-						>
-							Krishadawut Olde Monnikhof
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-							}}
-						>
-							15:35
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-								whiteSpace: 'nowrap',
-							}}
-						>
-							Krishadawut Olde Monnikhof
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-							}}
-						>
-							15:35
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-								whiteSpace: 'nowrap',
-							}}
-						>
-							Krishadawut Olde Monnikhof
-						</span>
-						<br />
-						<span
-							style={{
-								fontSize: 12,
-							}}
-						>
-							15:35
-						</span>
-						<br />
-					</div>
+					{(() => {
+						if (message.reader && message.reader.length>0) {
+							return (
+								<>
+									<ReadIcon style={{ paddingTop: 5, marginRight: 10 }} />
+									<div className="dropdown scroll" style={dropReadDownStyle}>
+										{message.reader.map((el) => {
+											return(
+											<span
+												style={{
+													fontSize: 12,
+													whiteSpace: 'nowrap',
+												}}
+											>
+												{el}
+												<br />
+											</span>
+											)
+										})}
+									</div>
+								</>
+							)
+						}
+					})()}
 				</div>
 				<span style={{ marginRight: 50 }}>{message.sentTime}</span>
 			</div>
