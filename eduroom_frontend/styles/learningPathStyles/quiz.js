@@ -46,10 +46,7 @@ export default css`
 		opacity: 0.5;
 	}
 	.disable:hover {
-		cursor: default;
-	}
-
-	.error {
+		cursor: default !important;
 	}
 
 	.check {
@@ -108,6 +105,10 @@ export default css`
 	.submitBtn {
 		background: #3d467f;
 		border-radius: 20px;
-		padding: 10px;
+		padding: 10px 20px;
+		color: white;
+	}
+	.submitBtn:hover {
+		cursor: pointer;
 	}
 `
