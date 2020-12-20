@@ -9,6 +9,8 @@ const Content = (props) => {
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
 
+
+    
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
         title: '',
@@ -44,7 +46,7 @@ const Content = (props) => {
         // }
     };
     const eventType = ['Course', 'Global']
-
+    
     return (
         <Fragment>
             <CSSTransition
@@ -97,7 +99,9 @@ const Content = (props) => {
 
                     <div className="startdate">
                         <div>startDate</div>
+                        
                         <input
+                            value={props.year+"-"+props.monthNo+"-"+props.date}
                             className="event-startDate"
                             onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
                             placeholder="Start date"

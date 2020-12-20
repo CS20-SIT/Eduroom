@@ -3,6 +3,7 @@ const path = require('path')
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 const router = express.Router()
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 const {
 	test,
@@ -68,6 +69,7 @@ const {
 	gQuestionSubmission,
 	gCountQuestionByTag,
 } = require('../controllers/graderCreate/graderSubmit')
+
 
 const { pingGrader, createSubmission, getSubmission } = require('../controllers/graderSystem')
 
@@ -140,28 +142,30 @@ router.delete('/dcontestquestion', dConQuestion)
 
 // Toei
 router.get('/getPreviewQuestion', gPreviewQuestions)
+router.get('/CountAllQuestion', gCountAllQuestions)
+router.get('/getAnnouncement', gAnnouncements)
 router.get('/getPreviewContest', gPreviewContests)
 router.get('/getContestDetail', gContestDetails)
 router.get('/getContestAnnouncement', gContestAnnouncements)
 router.get('/getContestProblem', gContestProblems)
-router.get('/getContestSubmission', gContestSubmissions)
-router.get('/getAnnouncement', gAnnouncements)
+router.get('/getContestSubmission', jwtAuthenicate, gContestSubmissions)
 router.get('/getQuestionTag', gQuestionTags)
 router.get('/getQuestionByTag', gQuestionByTag)
 router.get('/getHomePreviewContest', gHomePreviewContests)
 router.get('/getAnnouncementById', gAnnouncementById)
-router.get('/CountAllQuestion', gCountAllQuestions)
 router.get('/getOIRankingTopSix', gOIRankingTopSix)
 router.get('/getACMRankingTopSix', gACMRankingTopSix)
 router.get('/getContestAnnouncementDetail', gContestAnnouncementDetail)
 router.get('/getContestQuestionDetail', gContestQuestionDetail)
 router.get('/getQuestionTestCase', gQuestionTestCase)
 router.get('/getQuestionDetail', gQuestionDetail)
-router.get('/getQuestionSubmission', gQuestionSubmission)
+router.get('/getQuestionSubmission', jwtAuthenicate, gQuestionSubmission)
 router.get('/getCountQuestionByTag', gCountQuestionByTag)
+
 
 router.get('/ping', pingGrader)
 router.post('/submission', jwtAuthenicate, createSubmission)
 router.get('/submission', jwtAuthenicate, getSubmission)
+
 
 module.exports = router

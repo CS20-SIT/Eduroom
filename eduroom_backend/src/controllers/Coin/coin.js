@@ -89,6 +89,29 @@ exports.getDailyRewardStatus = async (req, res, next) => {
     }
     //amountOfcoin, cointransaction 
 }
+exports.insertDailyReward = async (req, res) => {
+    try {
+        const coin = req.body.coin
+        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const today = dayjs.utc().utcOffset(7).format('YYYY-MM-DD')
+        const getDate = await pool.query(`SELECT * FROM dailyreward_history WHERE userid='${userId}' AND date = '${today}';`)
+        console.log(getDate.rowCount);
+        if (getDate.rowCount === 0) {
+            await pool.query(`INSERT INTO dailyreward_history(userid, date, coindaily) VALUES ('${userId}','${today}',${coin});`)
+            const getCoinOwner = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}'`)
+            let amountCoin = getCoinOwner.rows[0].amountofcoin;
+            amountCoin += coin
+            await pool.query(`UPDATE coin_owner SET amountofcoin=${amountCoin} WHERE userid='${userId}';`)
+            await pool.query(`INSERT INTO coin_transaction(userid, date, amountofcointransaction) VALUES ('${userId}',current_timestamp, ${coin})`)
+            res.status(201).send({ mycoins: amountCoin })
+        } else {
+            res.status(400).send({ success: false })
+        }
+
+    } catch(error) {
+            errorHandler(error, req, res)
+    }
+}
 exports.showCoinOwner = async (req, res) => {
     try {
         const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'

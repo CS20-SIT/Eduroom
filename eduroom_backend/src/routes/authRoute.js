@@ -26,8 +26,9 @@ router.get('/google/callback', passport.authenticate('google', { session: false 
 
 router.get('/profile', jwtAuthenicate, getProfile)
 
-router.post('/admin/regis', adminRegisController)
+router.post('/admin/register', adminRegisController)
 router.post('/admin/login', adminLoginController)
 router.get('/admin/profile', jwtAdminAuthenticate, adminProfileController)
+router.get('/admin/logout', jwtAdminAuthenticate, logoutController)
 
 module.exports = router

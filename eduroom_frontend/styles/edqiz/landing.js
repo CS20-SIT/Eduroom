@@ -28,7 +28,7 @@ export default css`
     position: absolute;
   }
   .landing {
-    width: 100vw;
+    width: 95vw;
     height: 100vh;
     background-image: url('/images/edqiz/landing-bg.svg');
     background-repeat: no-repeat;
@@ -38,14 +38,14 @@ export default css`
     display: flex;
     justify-content: center;
     align-content: center;
-    width: 100vw;
+    width: 90vw;
     font-size: 4em;
     padding-bottom: 1%;
     font-weight: bold;
     cursor: default;
   }
   .landing-content {
-    width: 100vw;
+    width: 90vw;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -59,7 +59,7 @@ export default css`
   .landing-button {
     background: #3d467f;
     border-radius: 25px;
-    width: 20%;
+    width: 20vw;
     padding: 1%;
     border: none;
     outline: none;
