@@ -82,7 +82,7 @@ exports.getDailyRewardStatus = async (req, res, next) => {
         if (getDate.rowCount === 0) {
             res.send({ canGet: true })
         } else {
-            res.send({ canGet: false })
+            res.send({ canGet: false})
         }
     } catch (error) {
         errorHandler(error, req, res);
