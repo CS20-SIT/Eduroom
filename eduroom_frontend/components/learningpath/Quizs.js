@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import Quiz from './Quiz'
 import api from '../../api'
 import style from '../../styles/learningPathStyles/quiz'
-import { setLazyProp } from 'next/dist/next-server/server/api-utils'
 
 const Quizs = ({ id, nodeID }) => {
 	const [detail, setDetail] = useState(null)
