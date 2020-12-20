@@ -22,4 +22,7 @@ router.get('/getRankScorePlayer/:sessionid', fetchScoreRankForPlayer);
 router.post('/upload/picture', jwtAuthenicate, isInstructor, uploadToGCSHandler('edqiz/question'), Upload)
 router.post('/createHistoryPlayerAnswer',jwtAuthenicate,createHistoryPlayerAnswer);
 
+
+
+
 module.exports = router;
