@@ -19,8 +19,6 @@ exports.getEventbyDate = async (req, res, next) => {
     const data = req.query;
     const user = req.user;
     const events = [];
-    console.log(data);
-    console.log(user);
     const data1 = await pool.query("select title,startdate,enddate from course_event join user_mycourse  \
    on course_event.courseid = user_mycourse.courseid and user_mycourse.userid = $2 where course_event.startdate <= $1\
   and course_event.enddate >= $1\
@@ -28,7 +26,7 @@ exports.getEventbyDate = async (req, res, next) => {
     events.push(...data1.rows);
     
 
-    const data2 = await pool.query("select title,startdate,enddate from course_event join instructor   \
+    const data2 = await pool.query("select * from course_event join instructor   \
      on course_event.instructorid = instructor.instructorid and instructor.userid = $2 where course_event.startdate <= $1\
      and course_event.enddate >= $1\
      ", [data.date, user.id])
@@ -36,9 +34,6 @@ exports.getEventbyDate = async (req, res, next) => {
    
     const data3 = await pool.query("select title,startdate,enddate from global_event where global_event.startdate <= $1 \
   and global_event.enddate >= $1", [data.date])
-    console.log(data1.rows);
-    console.log(data2.rows);
-    console.log(data3.rows);
 
     res.status(200).json({ success: true, data: events, own: data2.rows, global: data3.rows })
     return;
