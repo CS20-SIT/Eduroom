@@ -6,6 +6,7 @@ import SearchBar from '../../../components/course/searchBar'
 import CategoryBar from '../../../components/course/categoryBar'
 import { useRouter } from 'next/router'
 import Name from '../../../components/course/courseRender'
+import Carousel from '../../../components/course/carousel'
 
 import api from '../../../api'
 
@@ -37,7 +38,7 @@ const CourseCategory = (props) => {
             <GeneralNoNav>
                 <div className='bg'>
                     <div className='container-1'>
-
+                        <Carousel/>
                         {/* Search bar and Categories select */}
                         <div className='text-center flex my-6 mx-search'>
                             <SearchBar />

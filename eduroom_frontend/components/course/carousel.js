@@ -10,7 +10,6 @@ const carousel= () => {
             {/* <img src="/images/package/pic3.svg"></img> */}
           </figure>
       </div>
-
       <style jsx>{style}</style>
     </Fragment>
   )

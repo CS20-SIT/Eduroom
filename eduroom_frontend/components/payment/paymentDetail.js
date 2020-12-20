@@ -246,13 +246,13 @@ const Checkout = () => {
 								</Grid>
 							</Grid>
 
-							<div style={{ display: 'flex', flexDirection: 'row' }}>
+							{/* <div style={{ display: 'flex', flexDirection: 'row' }}>
 								<div className="col-6" style={{ marginTop: 50, width: 550 }}>
 									<OrderDetail />
 								</div>
 
 								<div className="col-6" style={{}}></div>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				</div>
