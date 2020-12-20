@@ -8,7 +8,7 @@ exports.certificateTemplate = ()=>`<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div class="certificate">
+    <div id="certificate">
       <div class="head">
         <div class="date">{{finishdate}}</div>
       </div>
@@ -20,21 +20,26 @@ exports.certificateTemplate = ()=>`<!DOCTYPE html>
           has successfully complete from <b>"{{coursename}}"</b> course
         </div>
       </div>
+      <img class="background" src="https://eduroom.cscms.me/images/certificate_background.png"></div>
     </div>
     <style>
-      .certificate {
-        background-image: url('https://eduroom.cscms.me/images/certificate_background.png');
+      #certificate {
         width: 707px;
         height: 500px;
-        background-size: auto;
-        background-repeat: no-repeat;
         font-family: 'Quicksand';
-        background-position-y: bottom;
         display: flex;
         flex-flow: column;
         cursor: default;
         border: 1px solid black;
         background: #F4F5F7;
+        position:relative;
+      }
+      .background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
       .head {
         padding-top: 24px;
@@ -87,19 +92,27 @@ exports.certificateTemplate = ()=>`<!DOCTYPE html>
 </html>
 `
 
-exports.certificateStyle = `.certificate {
-  background-image: url('https://eduroom.cscms.me/images/certificate_background.png');
+exports.certificateStyle = `#certificate {
   width: 707px;
   height: 500px;
-  background-size: auto;
-  background-repeat: no-repeat;
+  position:relative;
   font-family: 'Quicksand';
-  background-position-y: bottom;
   display: flex;
   flex-flow: column;
   cursor: default;
   border: 1px solid black;
   background: #F4F5F7;
+  }
+  .background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://eduroom.cscms.me/images/certificate_background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
   }
   .head {
   padding-top: 24px;
