@@ -8,7 +8,11 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-
+import {
+	Dialog,
+	DialogTitle,
+	InputBase 
+  } from '@material-ui/core';
 import { useRouter } from 'next/router'
 import styles from '../../styles/user/profile'
 import api from '../../api';
@@ -22,73 +26,88 @@ import Textarea from './utils/textarea'
 const EditForm = () => {
 	const [firstnameError,setFirstnameError] = useState(null)
 	const [lastnameError,setLastnameError] = useState(null)
+	const [passwordError,setPasswordError] = useState(null)
+
+	const [newPassword,setNewPassword] = useState(null)
+	const [oldPassword,setOldPassword] = useState(null)
 
 	const [firstname,setFirstname] = useState(null)
 	const [lastname,setLastname] = useState(null)
 	const [birth, setBirth] = useState(null)
 	const [bio, setBio] = useState(null)
 	const [avatar, setAvatar] = useState(null)
+	const [password,setPassword] = useState(null)
 
 	const [email,setEmail] = useState(null)
-	// const [firstname,setFirstname] = useState(null)
+	const [open,setOpen] = useState(false)
 	const router = useRouter()
 
 	useEffect(() => {
         const fetchData=async()=>{
-            const res=await api.get('api/user/getProfile');
-			// setUser(res.data);
-			setFirstname(res.data.firstname);
-			setLastname(res.data.lastname);
-			setBio(res.data.bio);
-			setAvatar(res.data.avatar);
-			setEmail(res.data.email);
+			try{
+				const res=await api.get('api/user/getProfile');
+				
+				setFirstname(res.data.firstname);
+				setLastname(res.data.lastname);
+				setBio(res.data.bio);
+				setAvatar(res.data.avatar);
+				setEmail(res.data.email);
 
-			const d = new Date(res.data.birthdate)
-			setBirth(getDate(d.getDate(),d.getMonth()+1,d.getFullYear()));
+				const d = new Date(res.data.birthdate)
+				setBirth(getDate(d.getDate(),d.getMonth()+1,d.getFullYear()));
+			} catch (err) {
+				router.push('/login')
+			}
+			// console.log("1"+res.data);
+			// setUser(res.data);
         }
         fetchData();
 	}, [])
 
-//////////////////////
 	const getDate=(d,m,y)=>{
         if((''+m).length<2) m='0'+m;
 		if((''+d).length<2) d='0'+d;
 		return ""+y+"-"+m+"-"+d;
 	}
 	
-	const Apply=()=>{
-		if(firstname!=""&&lastname!=""){
-			api.patch('api/user/postEditProfile', {
-				avatar: avatar,
-				firstname: firstname,
-				lastname: lastname,
-				birthdate: birth,
-				bio: bio
-			}).then(()=>{
-				router.push('/user');
-			});
-		}else{
-			if(firstname==""){
-				setFirstnameError("*require Firstname");
-			}else{
-				setFirstnameError("");
-			}
-			if(lastname==""){
-				setLastnameError("*require Lastname");
-			}else{
-				setLastnameError("");
-			}
-		}
-    };
-	const Cancel=()=>{
-		router.push('/user');
-    };
-//////////////////////
+	// const handleClick = async (e) => {
+	// 	setLoading(true)
+	// 	try {
+	// 		let formData = { degree: data.degree.value, expert: data.expert.value, bio: data.bio.value }
+	// 		const myForm = new FormData()
+	// 		myForm.append('evidence-degree-1', data.degreePicture)
+	// 		myForm.append('evidence-expert-1', data.expertPicture)
+	// 		const res = await api.post('/api/instructor/upload/evidence', myForm)
+	// 		const degreepath = res.data[0].linkUrl
+	// 		const expertpath = res.data[1].linkUrl
+	// 		formData.degreepath = degreepath
+	// 		formData.expertpath = expertpath
+	// 		handleSubmit(formData)
+	// 	} catch (err) {}
+	// }
 
-	
+	const handleClick = async (e) => {
+		try {
+			console.log("1");
+			const myForm=new FormData();
+			console.log("1.1");
+			myForm.append('avatar',avatar);
+			console.log("1.2");
+			const res=await api.post('/api/user/upload/picture',myForm);
+			console.log("1.3");
+			// setAvatar(res.data[0].linkUrl);
+			console.log(res.data);
+			// handleSave();
+			console.log("1.4");
+		} catch (err) {}
+	}
 
 	const handleSave = () => {
 		if(firstname!=""&&lastname!=""){
+			console.log("2");
+			//const myForm=new FormData();
+			//myForm.append('avatar',avatar);
+			//const res=await api.post('/api/user/upload/picture',myForm);
 			api.patch('api/user/postEditProfile', {
 				avatar: avatar,
 				firstname: firstname,
@@ -114,113 +133,74 @@ const EditForm = () => {
 	const handleCancel = () => {
 		router.push('/user')
 	}
+	const handleOpen = () => {
+		setOpen(!open);
+	}
+
+	const savePassword=async() => {
+		const res=await api.post('api/user/getCheckPassword', {
+			password: oldPassword
+		})
+		if(res.data.match){
+			setPasswordError(null);
+			const res=await api.patch('api/user/postNewPassword', {
+				password: newPassword
+			}).then((e)=>{
+				handleOpen();
+			});
+		}else{
+			setPasswordError('The current password are mismatch');
+		}
+	}
+
+	const savePic=(e) => {
+		console.log("save pic");
+		console.log(e.target.target);
+		setAvatar(e.target.target);
+		console.log(avatar);
+	}
+
 	return (
 		<Fragment>
 			<div className="container">
 				<div className="box">
 					<div className="editImage">
 						<div className="uploadImage">
-							<i className="fas fa-camera"></i>
+							<img src={avatar} className="avatar" width="200px" height="200px"></img>
+							
+							{/* <i className="fas fa-camera"></i> */}
 						</div>
+						<InputBase
+								accept="image/*"
+								name="imgLocation"
+								fullwidth
+								autofocus
+								type={"file"}
+								placeholder={"attrach your avatar"}
+								inputProps={{'aria-label':'naked'}}
+								onChange={(e) => {
+									console.log(e.target.value);
+									setAvatar(e.target.value);
+								}}
+							/>
 					</div>
 					<div className="editInfo">
 						<div className="w-100 form-title">General Information</div>
-
-						{/* a */}
-						{/* <p className="header">Firstname</p>
-						<input
-							id="fn"
-							required
-							placeholder="Firstname"
-							type="text"
-							value={firstname}
-							onChange={(e) => {
-								setFirstname(e.target.value);
-							}}
-						></input> */}
-					{/* <span style={{color:'red'}}>{firstnameError}</span> */}
-						{/* <p className="header">Lastname</p>
-						<input
-							id="ln"
-							required
-							placeholder="Lastname"
-							type="text"
-							value={lastname}
-							onChange={(e) => {
-								setLastname(e.target.value);
-							}}
-						></input>
-					<span style={{color:'red'}}>{lastnameError}</span> */}
-					
-					{/* <div className="topic">
-						<p className="header">Birthday</p>
-						<MuiPickersUtilsProvider utils={DateFnsUtils}>
-								<KeyboardDatePicker
-								disableToolbar
-								variant="inline"
-								format="dd/MM/yyyy"
-								margin="normal"
-								value={birth}
-								onChange={(e) => {
-									const d = new Date(e);
-									setBirth(getDate(d.getDate(),d.getMonth()+1,d.getFullYear()));
-								}}
-								KeyboardButtonProps={{
-									'aria-label': 'change date',
-								}}
-								/>
-						</MuiPickersUtilsProvider>
-					</div> */}
-					
-					{/* <div className="topic">
-						<p className="header">Bio</p>
-						<TextField
-							multiline
-							rows={4}
-							defaultValue={bio}
-							variant="outlined"
-							onChange={(e) => {
-								setBio(e.target.value);
-							}}
-						/>
-					</div> */}
-							{/* <button className="btn" onClick={()=>{Apply()}}>Confirm</button>
-							<button className="btn" onClick={()=>{Cancel()}}>Cancel</button> */}
-
-
-
-						{/* a */}
-
 						<div className="w-50 pr-1 textfield">
 							<TextField style={{ padding: '18px' }}  className="w-50 pr-1 textfield"
 							placeholder="Firstname"
 							value={firstname}
 							defaultValue={firstname}
-							// variant="outlined"
 							onChange={(e) => {
 								setFirstname(e.target.value);
 							}}
 							/>
 						</div>
-						{/* <input className="w-50 pl-1"
-							required
-							placeholder="Firstname"
-							type="text"
-							value={firstname}
-							onChange={(e) => {
-								setFirstname(e.target.value);
-							}}
-						></input> */}
-						
-						{/* <div className="w-50 pl-1">
-							<TextField style={{ padding: '18px' }} placeholder="Lastname" />
-						</div> */}
 						<div className="w-50 pr-1 textfield">
 							<TextField style={{ padding: '18px' }}  className="w-50 pr-1 textfield"
 							placeholder="Lastname"
 							value={lastname}
 							defaultValue={lastname}
-							// variant="outlined"
 							onChange={(e) => {
 								console.log('sdsd');
 								setLastname(e.target.value);
@@ -228,35 +208,7 @@ const EditForm = () => {
 							/>
 						</div>
 						<span style={{color:'red'}} className="w-50 pr-1">{firstnameError}</span>
-						{/* <div className="w-50 pl-1">
-							<TextField style={{ padding: '18px' }}
-							placeholder="Firstname"
-							value={firstname}
-							onChange={(e) => {
-								setFirstname(e.target.value);
-							}}
-							/>
-						</div> */}
-						{/* <input className="w-50 pl-1"
-							id="ln"
-							required
-							placeholder="Lastname"
-							type="text"
-							value={lastname}
-							onChange={(e) => {
-								setLastname(e.target.value);
-							}}
-						></input> */}
 						<span style={{color:'red'}} className="w-50 pr-1">{lastnameError}</span>
-
-						{/* <div className="w-100">
-							<TextField type="date" style={{ padding: '18px' }} placeholder="Date Of Birthdate" value={birth}
-							onChange={(e) => {
-								// console.log(e);
-								const d = new Date(e);
-								setBirth(getDate(d.getDate(),d.getMonth()+1,d.getFullYear()));
-							}}/>
-						</div> */}
 
 						<div style={{width:'100%'}} className="textfield">
 						<MuiPickersUtilsProvider utils={DateFnsUtils} >
@@ -291,7 +243,6 @@ const EditForm = () => {
 						</div> */}
 						
 						<div className="w-100 textfield">
-						{/* <p className="header">Bio</p> */}
 						<TextField
 							style={{width:'100%'}}
 							placeholder="Bio"
@@ -313,16 +264,17 @@ const EditForm = () => {
 								placeholder="Email"
 								value={email}
 								defaultValue={email}
-								// variant="outlined"
-								onChange={(e) => {
-									console.log('sdsd');
-									email(e.target.value);
-								}}
 								inputProps={{ readOnly: true }}
 								/>
 						</div>
 						<div className="w-100 textfield">
-							<TextField style={{ padding: '18px' }} type="password" placeholder="Password" />
+							<TextField style={{ padding: '18px' }}
+								type="password"
+								placeholder="Password"
+								inputProps={{ readOnly: true }}
+								defaultValue={''}
+								onClick={handleOpen}
+								/>
 						</div>
 						{/* <div className="w-100">
 							<TextField style={{ padding: '18px' }} placeholder="Phone number" />
@@ -339,7 +291,7 @@ const EditForm = () => {
 						</div> */}
 						<div className="w-100" style={{display:'flex',justifyContent:'center'}}>
 							<span className="pr-1">
-								<button className="user-edit-button" onClick={handleSave}>
+								<button className="user-edit-button" onClick={handleClick}>
 									<a className="user-edit-button-text">Confirm</a>
 								</button>
 							</span>
@@ -348,6 +300,43 @@ const EditForm = () => {
 									<a className="user-cancel-button-text">Cancel</a>
 								</button>
 							</span>
+							<Dialog open={open}>
+								<DialogTitle>
+									Current Password
+									<div className="w-100 textfield">
+										<TextField style={{ padding: '18px' }}
+											type="password"
+											placeholder="Current Password"
+											defaultValue={oldPassword}
+											onChange={(e) => {
+												setOldPassword(e.target.value);
+											}}
+											/>
+									</div>
+									New Password
+									<div className="w-100 textfield">
+										<TextField style={{ padding: '18px' }}
+											type="password"
+											placeholder="New Password"
+											defaultValue={newPassword}
+											onChange={(e) => {
+												setNewPassword(e.target.value);
+											}}
+											/>
+									</div>
+									<span className="pr-1">
+										<button className="user-edit-button" onClick={savePassword}>
+											<a className="user-edit-button-text">Confirm</a>
+										</button>
+									</span>
+									<span className="pl-1">
+										<button className="user-cancel-button" onClick={handleOpen}>
+											<a className="user-cancel-button-text">Cancel</a>
+										</button>
+									</span>
+									<div style={{color:'red'}}>{passwordError}</div>
+								</DialogTitle>
+							</Dialog>
 						</div>
 					</div>
 				</div>
