@@ -12,7 +12,7 @@ const ProblemLayout = (props) => {
 				<div className="question">
 					<ProblemQuestion questionId={props.id} contestID={props.contestID} />
 				</div>
-				<div className="code">
+				<div className="code-box">
 					<ProblemCode />
 				</div>
 			</div>
