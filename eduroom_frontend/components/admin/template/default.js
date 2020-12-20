@@ -19,7 +19,6 @@ const AdminTemplate = (props) => {
 						left: 5%;
 						height: 100vh;
                         width: 95vw;
-                        padding-left: 3%;
 					}
 				`}
 			</style>

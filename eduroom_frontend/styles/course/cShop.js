@@ -2,9 +2,10 @@ import css from "styled-jsx/css"
 
 export default css`
 img{
-  width:20.13vw;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  width:100%;
+    height:60%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 .page{
   margin-bottom: 50px;
@@ -47,5 +48,19 @@ img{
   .BS{
     margin-top: 10px;
     display:position;
+  }
+  .courseLanding{
+    margin-left:100px;
+    font-weight: 700;
+    font-size: 30px;
+    color:#3D467F;
+    margin-bottom:10px;
+  }
+  .course{
+   margin-left: 60px;
+  }
+  .BG{
+    background: #F9F7FE;
+    padding-bottom:20px;
   }
 `;
