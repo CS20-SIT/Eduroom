@@ -82,7 +82,7 @@ exports.getDailyRewardStatus = async (req, res, next) => {
         if (getDate.rowCount === 0) {
             res.send({ canGet: true })
         } else {
-            res.send({ canGet: false})
+            res.send({ canGet: false })
         }
     } catch (error) {
         errorHandler(error, req, res);
@@ -174,6 +174,21 @@ exports.addReduceTransOwner = async (req, res) => {
         res.status(201).send({ success: true })
     } catch (error) {
         errorHandler(error, req, res);
+    }
+}
+exports.checkStickerOwner =async (req,res) => {
+    try{
+        const userId='db29433b-e05d-41ab-854b-b6f8023464f6'
+        const stickerId= req.body.stickerid
+        const getStickerOwner= await pool.query(`SELECT * FROM sticker_owner WHERE 
+        userid='${userId}' AND stickerid=${stickerId};`)
+        if(getStickerOwner.rowCount === 0 ){
+            res.send({sticker : 'not avaliable' })
+        }else{
+            res.send({sticker : 'avaliable'})
+        }
+    }catch(error){
+        errorHandler(error,req,res)
     }
 }
 exports.buySticker = async (req, res) => {
