@@ -24,7 +24,7 @@ const General = (props) => {
 						top: 0;
 						z-index: 20;
 						min-height: 100vh;
-						background: none;
+						background: #F4F5F7;
 					}
 					.background-img {
 						position: fixed;

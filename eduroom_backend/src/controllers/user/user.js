@@ -167,6 +167,12 @@ const newPassword = async (req, res) => {
 		return errorHandler(err, req, res)
 	}
 }
+
+const getCertificate = async (req,res,next) => {
+	const user = req.user
+	const data = await pool.query("SELECT firstname as firstName,lastname as lastName,coursename as courseName,finishtime as finishDate FROM user_mycourse JOIN user_profile ON user_mycourse.userid = user_profile.userid JOIN course c on user_mycourse.courseid = c.courseid WHERE isfinished = true AND user_mycourse.userid = $1",[user.id])
+	res.status(200).json({success:true,data:data.rows})
+}
 module.exports = {
 	test,
 	getWishlist,
@@ -176,4 +182,5 @@ module.exports = {
 	editProfile,
 	checkPassword,
 	newPassword,
+	getCertificate
 }
