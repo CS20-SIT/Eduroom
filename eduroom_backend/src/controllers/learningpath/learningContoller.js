@@ -49,22 +49,47 @@ exports.getExerciseByNodeId = async (req, res, next) => {
 	try {
 		const userID = req.user.id
 		const nodeID = req.query.nodeID
+		//check whether this nodeid is a quiz
+		const result = await pool.query(`SELECT nodeid from node_question where nodeid = $1`, [nodeID])
+		if (result.rowCount > 0) {
+			return res.send()
+		}
+
 		const question = await pool.query(
 			`select p.nodeid, e.answer,p.node_name,e.question,p.pathid,pp.path_name from node_exercise e, path_node p, path pp
 	where p.nodeid = e.nodeid and e.nodeid = $1 and p.pathid = pp.pathid`,
 			[nodeID]
 		)
+		//get isComplete
 		let complete = false
-		const temp = await pool.query(`SELECT count(*) as count from user_progress where nodeid = $1 and userid = $2`, [
-			nodeID,
-			userID,
-		])
-		if (temp.rows[0].count > 0) {
+		const isComplete = await pool.query(
+			`SELECT count(*) as count from user_progress where nodeid = $1 and userid = $2`,
+			[nodeID, userID]
+		)
+		if (isComplete.rows[0].count > 0) {
 			complete = true
 		}
 		let answer = question.rows[0]
 		answer.complete = complete
+
+		//get next node
+		const nextNode = await pool.query(`select nodeid from path_node where parent_node_id = $1`, [nodeID])
+		answer.nextNode = nextNode.rows[0].nodeid
 		res.send(answer)
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
+
+exports.getNodeType = async (req, res, next) => {
+	try {
+		const nodeID = req.query.nodeID
+		let type = 'exercise'
+		const result = await pool.query(`SELECT nodeid from node_question where nodeid = $1`, [nodeID])
+		if (result.rowCount > 0) {
+			type = 'quiz'
+		}
+		res.send({ type })
 	} catch (err) {
 		return next(new ErrorResponse(err, 500))
 	}
