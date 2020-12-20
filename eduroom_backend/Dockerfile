@@ -13,6 +13,8 @@ RUN chmod +x /wait
 
 COPY . /usr/src/app/
 
+RUN npm install -g phantomjs --unsafe-perm
+
 EXPOSE 5000
 
 CMD npm run start
