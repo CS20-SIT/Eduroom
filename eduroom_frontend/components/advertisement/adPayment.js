@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/advertisement/ads';
-import { Button, Slide, DialogTitle, DialogContentText, DialogContent, DialogActions, Paper, Grid, Dialog,Link } from '@material-ui/core'
+import { Button, Slide, DialogTitle, DialogContentText, DialogContent, DialogActions, Paper, Grid, Dialog, Link } from '@material-ui/core'
 import General from '../template/general'
 import { makeStyles } from '@material-ui/core/styles'
 import { useRouter } from 'next/router';
@@ -40,7 +40,7 @@ const Total = props => {
     )
 }
 const Box = props => {
-   
+
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -57,14 +57,12 @@ const Box = props => {
         console.log(response)
         handleClose()
         window.location.reload(false);
-        window.scrollTo(0,0);
-        
+        window.scrollTo(0, 0);
+
     }
     return (
         <div>
-            <Link href="../advertisement/adinform"><Paper style={{marginLeft:"75%",padding:" 0.5% 0% 0.5% 1.5%",
-    borderRadius: "10px",
-    width: "15%"}}>create new ADs</Paper></Link>
+
             <Paper style={{ margin: '2% 5% 3% 10%', height: '150px', width: '80%', padding: '17px', paddingTop: '15px', borderRadius: '10px' }}>
                 <Grid container spacing={'2'}>
                     <Grid item>
@@ -150,6 +148,11 @@ const Content = () => {
                 <div style={{ backgroundImage: `url('/images/big-bg.svg')`, backgroundSize: 'cover', paddingTop: '3%', height: '100%' }} >
                     <div className="ad-ad-header" style={{ paddingTop: '50px', paddingBottom: '40%' }}>
                         <center style={{ paddingBottom: '5%' }}>EDUROOM CART</center>
+                        <Link href="../advertisement/adinform"><Paper style={{
+                            marginLeft: "40%", padding: " 0.5% 0% 0.5% 1.5%",
+                            borderRadius: "10px",
+                            width: "17%"
+                        }}>create new ADs</Paper></Link>
                         {arr}
                         <Total totalPrice={total}
                             numberOfads={count}></Total>
