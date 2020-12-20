@@ -53,20 +53,20 @@ const Index = () => {
               </Typography>
               <hr style={{ marginRight: theme.spacing(5), marginBottom: theme.spacing(3) }}></hr>
               <p>
-                <Link href="/support/getstart/Merging-Account">
-                  Merging Account
+                <Link href="/support/Account&Profile/Merging-Accounts">
+                  Merging Accounts
                 </Link>
               </p>
               
-                <Link href="/support/getstart/How-Does-Eduroom-Work">
+                <Link href="/support/Account&Profile/Keeping-Your-Account-Secure">
                 <p>
-                  How Does Eduroom Work? FAQ
+                  Keeping Your Account Secure
                   </p>
                 </Link>
               
-                <Link href="/support/getstart/Add-a-Course-to-Your-Wishlist"><p>Add a Course to Your Wishlist</p></Link>
-                <Link href="/support/getstart/System-Requirements"><p>System Requirement</p></Link>
-              <Link href="/support/getstart/Lifetime-Access"><p>Lifetime Access</p></Link>
+                <Link href="/support/Account&Profile/Unsubscribe-From-Eduroom-or-Instructor-Notifications"><p>Unsubscribe From Eduroom or Instructor Notifications</p></Link>
+                <Link href="/support/Account&Profile/Closing-Your-Account"><p>Closing Your Account</p></Link>
+              <Link href="/support/Account&Profile/How-to-Change-or-Reset-Your-Password"><p>How to Change or Reset Your Password</p></Link>
               <Grid container justify='flex-end'>
               <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
               </Grid>

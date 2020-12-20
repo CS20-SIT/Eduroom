@@ -40,7 +40,7 @@ const KeepingYourAccountSecure = () => {
                                 {" "}
                                 <p>Udemy has security protocols in place to help keep your account secure, but there are several things you can also do to protect your account, and dramatically reduce the likelihood of it being compromised.</p>
 <h3>Create a Strong Password</h3>
-<p>Choosing a strong and unique password is an extremely effective way to protect your account and prevent unauthorized access. While selecting a password for your account, we strongly recommend you consider the following:
+<p>Choosing a strong and unique password is an extremely effective way to protect your account and prevent unauthorized access. While selecting a password for your account, we strongly recommend you consider the following:</p>
 <ul> <li>Passwords must be at least 6 characters long. Remember that longer passwords are always better since they are harder to crack.</li>
 <li>The best passwords are longer and contain a mix of letters, numbers, symbols (e.g. #, !, &), uppercase and lowercase letters.</li>
 <li>Passwords should be unique to you and should not contain:</li></ul>
@@ -51,7 +51,7 @@ const KeepingYourAccountSecure = () => {
 <li>Your own name or email address, or words you might use on your social media accounts like your location or favorite team</li>
 <li>Don’t use obvious numbers (for example, don’t use numbers that are in your birthday or phone number) </li></ul>
 <li>Create a unique password for each account and service you have, rather than using the same password for each site, especially if there have been security breaches with those passwords. This way if one of your accounts is compromised, then that password cannot be used to gain access into your other accounts.</li>
-<li>Rather than creating your own complex password, use a browser plug-in, system keychain, or third-party password manager to create and store complex passwords.</ul> </li>
+<li>Rather than creating your own complex password, use a browser plug-in, system keychain, or third-party password manager to create and store complex passwords.</li>
 <h3>Change Your Password Periodically</h3>
 <p>We also recommend changing your password periodically, as this is another great way to keep your account secure. When you do change your password, we recommend creating a new one, rather than using a password you’ve already used.
 For steps on how to change your account’s password, please click here.</p>
@@ -63,7 +63,7 @@ For steps on how to change your account’s password, please click here.</p>
 <li>Do not share your Udemy account or account credentials with others. </li>
 <li>If a computer or mobile device you used to access your Udemy account is lost or stolen, use another device to initiate a password reset email. For steps on how to do this, please </li> </ul> </p>
                                     <p style={{ marginLeft: "630px", marginTop: "50px" }}>
-                                        <Link href="/support/Instructor-Payment">Instuctor Payment
+                                        <Link href="/support/Account&Profile">Account / Profile
                   </Link>
                                     </p>
               </Typography>

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import api from '../../../api'
 import RequestFormBox from './requestformbox'
+import AdminSideNav from '../../admin/layout/sidenav'
 const ForumHome = () => {
 	const [requestform, setRequestForms] = useState([])
 	useEffect(() => {
@@ -13,7 +14,7 @@ const ForumHome = () => {
 			.catch((err) => [console.log(err)])
 	}, [])
 	return (
-		<Fragment>
+		<Fragment><AdminSideNav>
 			<div className="forumHome">
 			<div className="forum-home">
 				{requestform.map((el, index) => {
@@ -39,6 +40,7 @@ const ForumHome = () => {
 					
 				`}
 			</style>
+			</AdminSideNav>
 		</Fragment>
 	)
 }

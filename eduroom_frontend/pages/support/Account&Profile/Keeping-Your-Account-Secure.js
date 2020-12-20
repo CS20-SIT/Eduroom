@@ -10,7 +10,7 @@ import KeepingYourAccountSecure from "../../../components/support/accountandprof
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General img='/images/supforumbg.svg'>
+      <General >
         
             <div
                 style={{
@@ -22,12 +22,12 @@ const courseinstandteaching = () => {
             <div id="nav">
                     <div className="top">
                     <Link href='/support'>Eduroom Support
-                    </Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><Link href='/support/Account&Profile'>Keeping Your Account Secure</Link>
+                    </Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><Link href='/support/Account&Profile'>Account / Profile</Link>
                     <label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label>Keeping Your Account Secure
                     
                     <KeepingYourAccountSecure/>
                     </div>
-                    
+                        
                 </div>
                 <style jsx>{style}</style>
                 <style jsx>
