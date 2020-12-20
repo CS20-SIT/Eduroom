@@ -12,9 +12,12 @@ export default css`
 		width: 50%;
 		overflow: hidden;
 	}
-	.question,
-	.code-box {
+	.question {
 		border-right: 2px solid rgba(91, 91, 91, 0.1);
 		border-bottom: 2px solid rgba(91, 91, 91, 0.1);
+	}
+
+	.code-box {
+		height: 108%;
 	}
 `
