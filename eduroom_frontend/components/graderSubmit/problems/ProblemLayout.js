@@ -12,8 +12,8 @@ const ProblemLayout = (props) => {
 				<div className="question">
 					<ProblemQuestion questionId={props.id} contestID={props.contestID} />
 				</div>
-				<div className="code">
-					<ProblemCode />
+				<div className="code-box">
+					<ProblemCode id={props.id} />
 				</div>
 			</div>
 			<style jsx>{style}</style>
