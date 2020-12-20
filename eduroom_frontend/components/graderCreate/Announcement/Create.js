@@ -212,7 +212,7 @@ const AnnEdit = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <span style={sText}> Your announcement have been created.</span>
+            <span style={sText}> Your announcement has been created.</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
