@@ -94,3 +94,30 @@ exports.getNodeType = async (req, res, next) => {
 		return next(new ErrorResponse(err, 500))
 	}
 }
+
+exports.getQuizByNodeId = async (req, res, next) => {
+	const nodeID = req.query.nodeID
+	try {
+		let questions = await pool.query(`SELECT * FROM node_question WHERE nodeid = $1 order by questionno`, [nodeID])
+		questions = questions.rows
+		let answer = questions
+		for (let i = 0; i < questions.length; i++) {
+			const question = questions[i]
+			let choices = await pool.query(
+				`select choiceno,answer,iscorrect
+			from node_question_choice
+			where nodeid = $1 and questionno = $2
+			order by choiceno`,
+				[nodeID, question.questionno]
+			)
+			choices = choices.rows
+			answer[i] = { ...answer[i], choices: choices }
+		}
+
+		let nodeDetail = await pool.query(`select * from path_node where nodeid = $1`, [nodeID])
+		let result = { nodeDetail: nodeDetail.rows[0], question: answer }
+		res.send(result)
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
