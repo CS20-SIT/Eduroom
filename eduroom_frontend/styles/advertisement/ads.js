@@ -168,7 +168,7 @@ export default css`
   .ad-description {
     padding: 5% 0% 10% 0%;
     font-size: 0.6em;
-    margin-left:20px;
+    margin-left:10px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 600;
     color: #5b5b5b;
@@ -254,6 +254,33 @@ export default css`
     background-color:purple;
     height:50px;
     width:60%
+  }
+  .ad-dialog-topic {
+    padding: 5% 0% 10% 0%;
+    font-size: 1.6em;
+    margin-left:10px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    color: #5b5b5b;
+    opacity
+  }
+  .ad-delete-confirm-button {
+    background: #FB9CCB;
+    border-radius: 5px;
+    padding: 0.4rem 1.5rem;
+    border: none;
+    outline: none;
+    transition: 0.25s;
+    right: 40px;
+  }
+  .ad-cancle-button{
+    background: #8E8E8E;
+    border-radius: 5px;
+    padding: 0.4rem 1.5rem;
+    border: none;
+    outline: none;
+    transition: 0.25s;
+    right: 40px;
   }
 `;
 5
