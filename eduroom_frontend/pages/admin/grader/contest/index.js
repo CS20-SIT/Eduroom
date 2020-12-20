@@ -2,15 +2,15 @@ import React, { Fragment } from "react";
 import GeneralNoNav from "../../../../components/graderCreate/GraderCreateLayout/Sidebar";
 import GNav from "../../../../components/graderCreate/GraderCreateLayout/Nav";
 import ConBig from "../../../../components/graderCreate/Contest/List/Contests";
-
+import ProtectedAdminRoute from "../../../../components/admin/protectedAdminRoute";
 const Contest = () => {
   return (
-    <Fragment>
+    <ProtectedAdminRoute>
       <GeneralNoNav>
         <GNav></GNav>
         <ConBig />
       </GeneralNoNav>
-    </Fragment>
+    </ProtectedAdminRoute>
   );
 };
 export default Contest;

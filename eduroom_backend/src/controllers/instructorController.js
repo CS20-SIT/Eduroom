@@ -108,12 +108,74 @@ exports.Upload = async (req, res, next) => {
 exports.CreateCourse = async (req, res, next) => {
 	const instructorId = req.user.instructor
 	const courseId = uuidv4()
-	console.log('create course body is')
-	console.log('videos is ')
-	console.log(req.body.sections[0].videos)
+	console.log(req.body)
+	const data = req.body
+	await pool.query(
+		`INSERT INTO course(courseid, coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
+	values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+		[courseId, data.name,'No Description', data.picturePath, data.videoPath, data.price, 'English', true, instructorId, 'Approved','/certpath']
+	)
+	await pool.query(
+		'INSERT INTO course_categories(courseid, cataid) values ($1, $2)', [courseId, data.subject]
+	)
 
-	console.log('question is')
-	console.log(req.body.sections[0].questions)
+	for(i = 0; i< data.sections.length; i++ ){
+		await pool.query(
+			'INSERT INTO course_section(courseid,sectionno,sectionname) values ($1, $2, $3)',
+			[courseId, i+1, data.sections[i].name]
+		)
+
+		for(j=0; j<data.sections[i].videos.length; j++){
+			await pool.query(
+				'INSERT INTO section_part(courseid, sectionno, partno, partname, partdescription, partrole) values ($1, $2, $3, $4, $5, $6)',
+				[courseId, i+1, j+1, data.sections[i].videos[j].name, 'Mock Description', 'Video']
+			)
+			await pool.query(
+				'INSERT INTO course_section_part_video(courseid, videopath, sectionno, partno) values ($1, $2, $3, $4)',
+				[courseId, data.sections[i].videos[j].path, i+1, j+1]
+			)
+		}
+		for(j=0; j<data.sections[i].materials.length;j++){
+			await pool.query(
+				'INSERT INTO section_part(courseid, sectionno, partno, partname, partdescription, partrole)  values ($1, $2, $3, $4, $5, $6)',
+				[courseId, i+1, j+data.sections[i].videos.length+1, 'No', 'Mock', 'Material']
+			)
+			await pool.query(
+				'INSERT INTO course_section_part_material(courseid, materialpath, sectionno, partno) values ($1, $2, $3, $4)',
+				[courseId, data.sections[i].videos[j].path, i+1, j+data.sections[i].videos.length+1]
+			)
+		}
+		for(j=0; j<data.sections[i].questions.length;j++){
+			const quizId = uuidv4()
+			await pool.query(
+				'INSERT INTO section_part(courseid, sectionno, partno, partname, partdescription, partrole) values ($1, $2, $3, $4, $5, $6)',
+				[courseId, i+1, j+data.sections[i].videos.length+data.sections[i].materials.length+1, 'No', 'Mock', 'Quiz']
+			)
+			await pool.query(
+				'INSERT INTO course_quiz(courseid, quizid, sectionno, partno) values ($1, $2, $3, $4)',
+				[courseId, quizId, i+1,j+data.sections[i].videos.length+data.sections[i].materials.length+1]
+			)
+			await pool.query(
+				'INSERT INTO quiz_question(quizid, questionno, questionname, score) values ($1, $2, $3, $4)',
+				[quizId,j+1, data.sections[i].questions[j].q, 1 ]
+			)
+			for(k=0; k< data.sections[i].questions[j].choices.length;k++){
+				if(k==data.sections[i].questions[j].correct){
+					await pool.query(
+						'INSERT INTO quiz_question_choice(quizid, questionno, choiceno, choicename, iscorrect) values ($1, $2, $3, $4, $5)',
+						[quizId,j+1, k+1, data.sections[i].questions[j].choices[k], true ]
+					)
+				}else{
+					await pool.query(
+						'INSERT INTO quiz_question_choice(quizid, questionno, choiceno, choicename, iscorrect) values ($1, $2, $3, $4, $5)',
+						[quizId,j+1, k+1, data.sections[i].questions[j].choices[k], false ]
+					)
+				}
+			}
+		}
+	}
+	
+	// const {name,}
 	// const result = await pool.query(
 	// 	`INSERT INTO course(courseid,coursename, coursedescription, coursepicture, samplevideo, price, language, havecert, ownerid, status, certpath)
 	// values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,

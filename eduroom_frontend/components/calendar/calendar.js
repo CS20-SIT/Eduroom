@@ -13,7 +13,6 @@ import { Grid, Container } from '@material-ui/core'
 import { useRouter } from 'next/router'
 
 const Content = () => {
-	//create Eventpage
 	const router = useRouter()
 
 	//Array of short names of the day.
@@ -28,43 +27,50 @@ const Content = () => {
 	const [currentMonth, setCurrentMonth] = useState('January')
 	const [currentMonthNo, setCurrentMonthNo] = useState(1)
 	const [currentYear, setCurrentYear] = useState(1970)
+
 	const Today = new Date()
 	const TodayDate = Today.getDate()
 	const TodayMonth = Today.getMonth() + 1
 	const TodayYear = Today.getFullYear()
 
-  const [eventDays, setEvent] = useState([])
-  const [daysInMonth,setDayInMonth] = useState([])
-  const [blank,setBlank] = useState([])
-  const [blankEnd,setBlankEnd] = useState([])
+	const [eventDays, setEvent] = useState([])
+	const [daysInMonth, setDayInMonth] = useState([])
+	const [blank, setBlank] = useState([])
+	const [blankEnd, setBlankEnd] = useState([])
+
 	useEffect(() => {
 		setCurrentDate(parseInt(day.dateObject.format('D')))
 		setCurrentMonth(day.dateObject.format('MMMM'))
 		setCurrentMonthNo(parseInt(day.dateObject.format('M')))
-    setCurrentYear(parseInt(day.dateObject.format('YYYY')))
-    let tempDay = []
-    let tempBlankend = []
-    let tempBlank = []
-    let count = 0
-    for (let i = 0; i < firstDayOfMonth(); i++) {
-      tempBlank.push('x')
-      count++
-    }
-    for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
-      tempDay.push(d)
-      count++
-    }
-    while (count < 42) {
-      tempBlankend.push('x')
-      count++
-    }
-    setDayInMonth(tempDay)
-    setBlank(tempBlank)
-    setBlankEnd(tempBlankend)
+		setCurrentYear(parseInt(day.dateObject.format('YYYY')))
+		let tempDay = []
+		let tempBlankend = []
+		let tempBlank = []
+		let count = 0
+		for (let i = 0; i < firstDayOfMonth(); i++) {
+			tempBlank.push('x')
+			count++
+		}
+		for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
+			tempDay.push(d)
+			count++
+		}
+		while (count < 42) {
+			tempBlankend.push('x')
+			count++
+		}
+		setDayInMonth(tempDay)
+		setBlank(tempBlank)
+		setBlankEnd(tempBlankend)
 		api
-			.get(`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(day.dateObject.format('YYYY'))}`)
+			.get(
+				`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(
+					day.dateObject.format('YYYY')
+				)}`
+			)
 			.then((res) => {
 				setEvent(res.data.data)
+				console.log(res.data.data)
 			})
 			.catch((err) => {})
 	}, [day])
@@ -85,12 +91,13 @@ const Content = () => {
 		return firstDay
 	}
 
-
+	console.log(eventDays)
 
 	const [showDate, setShowDate] = useState(-1)
 	const [open, setOpen] = useState(false)
 
 	const [isInstructor, setInstructor] = useState(false)
+
 	useEffect(() => {
 		api
 			.get('/api/auth/profile')
@@ -105,10 +112,6 @@ const Content = () => {
 	// ------------------code below----------------------//
 	return (
 		<Fragment>
-			<div className="bg-calendar">
-				<Image alt="image" src="/images/createEvent/calendar.svg" width="331" height="300" />
-			</div>
-
 			<ViewEvent
 				open={open}
 				setOpen={setOpen}
@@ -119,7 +122,7 @@ const Content = () => {
 			/>
 
 			{/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
-			{isInstructor ? (
+			{/* {isInstructor ? (
 				<div className="createEvent">
 					<button
 						className="bt-createEvent"
@@ -130,7 +133,7 @@ const Content = () => {
 						createEvent
 					</button>
 				</div>
-			) : null}
+			) : null} */}
 
 			{/* ------------------------------Calendar Header---------------------------------------- */}
 			<div className="month-color text-center">
@@ -180,7 +183,9 @@ const Content = () => {
 					})}
 				</div>
 			</div>
-
+			<div className="bg-calendar">
+				<Image alt="image" src="/images/createEvent/calendar.svg" width="700" height="600" />
+			</div>
 			<style jsx>{style}</style>
 		</Fragment>
 	)

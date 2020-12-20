@@ -7,6 +7,8 @@ const {
 	getCategories,
 	getPackage,
 	getAllPackage,
+	getCourseFromIds,
+	getPackagesFromIds,
 	createPackage,
 	getInstructorPackage,
 	publishPackage,
@@ -25,6 +27,8 @@ router.get('/getAllPackage',getAllPackage)
 router.get('/getCoursesOfCreatingPackage', getCoursesOfCreatingPackage)
 router.post('/uploadPackagePic', uploadToGCSHandler('package/picture/'), upload)
 router.get('/courses', getCourses)
+router.get('/coursesFromIds', getCourseFromIds)
+router.get('/packagesFromIds', getPackagesFromIds)
 router.get('/getInstructorPackage', jwtAuthenicate, isInstructor, getInstructorPackage)
 router.get('/numCourses', getNumCourses)
 router.post('/publishPackage', jwtAuthenicate, isInstructor, publishPackage)
