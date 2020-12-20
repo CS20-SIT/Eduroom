@@ -134,7 +134,7 @@ export default css`
   padding: 0.5rem;
   cursor: pointer; 
   font-weight: 800;
-  font-size : 28px;
+  font-size : 20px;
   color : #999999;
   z-index : 2;
 }
@@ -219,6 +219,34 @@ export default css`
   width : 8px;
   height: 8px;
 
+}
+.Cpoint{
+  border-radius : 50%;
+  width : 8px;
+  height: 8px;
+  position : absolute;
+  top:6rem;
+  left : 3rem;
+}
+.dot-course{
+  position : absolute;
+  top:5.55rem;
+  color : #3d467f;
+  left : 4rem;
+}
+.Gpoint{
+  border-radius : 50%;
+  width : 8px;
+  height: 8px;
+  position : absolute;
+  top:6rem;
+  left :8rem;
+}
+.dot-global{
+  position : absolute;
+  top:5.55rem;
+  left :9rem;
+  color : #3d467f;
 }
 
 

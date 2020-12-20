@@ -22,7 +22,6 @@ const Content = ({ id }) => {
       goto(3)
     }
     setquestionNumber(val);
-    // console.log('handle', questionNumber, data.length)
   };
 
   const [sessionid, setSesstionID] = useState(null);
@@ -30,8 +29,7 @@ const Content = ({ id }) => {
   useEffect(() => {
     const fetchSession = async () => {
       let pin = router.query.id
-      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
-      console.log('resdata', res.data)
+      const res = await api.get(`/api/kahoot/sessionidAfterStart/${pin}`);
       setSesstionID(res.data.sessionid)
     };
     fetchSession();
@@ -41,19 +39,14 @@ const Content = ({ id }) => {
     const fetchQuestion = async () => {
       const question = await api.get(`/api/kahoot/question/${sessionid}`);
       setData(question.data.question.rows)
-
-      console.log('answerAll', question.data.answerAll)
       answerAll.push(question.data.answerAll)
-      console.log('correct', question.data.correct[1])
       correct.push(question.data.correct)
-      console.log('correctQuestion', correct[0][0])
     };
     if (sessionid != null)
       fetchQuestion();
 
   }, [sessionid]);
   useEffect(() => {
-    console.log('datalenght', data1.length)
     if (answerAll[0]) {
       for (let i = 0; i <data1.length; i++) {
         let questionTemplate = {
@@ -65,7 +58,6 @@ const Content = ({ id }) => {
           image: null,
         }
         questionTemplate.question = data1[i].text;
-        console.log('question',data1[i].text)
         questionTemplate.time = data1[i].time;
         questionTemplate.point = data1[i].point
         questionTemplate.ans[0] = answerAll[0][i][0].text
@@ -74,7 +66,6 @@ const Content = ({ id }) => {
         questionTemplate.ans[3] = answerAll[0][i][3].text
         questionTemplate.correct = correct[0][i]
         questionTemplate.image = data1[i].picturepath
-        console.log('data1',data1[i].picturepath)
         questionList.push(questionTemplate);
       }
       setQuestionList([...questionList])
@@ -122,10 +113,8 @@ const Content = ({ id }) => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: '/kahoot',
     });
-    console.log('go to the next question');
     socket.emit('start-game', id.id);
     socket.on('sent-end-time', (time) => {
-      console.log('time is ', time);
       setEndTime(time);
     });
   };

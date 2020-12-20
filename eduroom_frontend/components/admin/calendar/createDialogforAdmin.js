@@ -84,7 +84,7 @@ const Content = (props) => {
                         <div>startDate</div>
 
                         <input
-                            value={props.year + "-" + props.monthNo + "-" + props.date}
+                            defaultValue={props.year + "-" + props.monthNo + "-" + props.date}
                             className="event-startDate"
                             onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
                             placeholder="Start date"

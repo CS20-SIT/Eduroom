@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import Certificate from './certificate'
 import api from '../../api'
 const CourseCert = (props) => {
@@ -8,7 +8,10 @@ const CourseCert = (props) => {
     }
     const handleDownload = (courseid) => {
         api.post('/api/user/certificate',{courseid}).then(res=>{
-            console.log(res)
+            let link = document.createElement('a');
+            link.href = res.data;
+            link.download = `${props.data.coursename}-certificate.png`;
+            link.click();
         })
     }
 	return (
