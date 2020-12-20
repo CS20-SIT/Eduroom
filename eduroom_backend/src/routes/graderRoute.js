@@ -3,7 +3,6 @@ const path = require('path')
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 const router = express.Router()
-const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 const {
 	test,
