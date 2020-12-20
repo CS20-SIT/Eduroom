@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/advertisement/ads';
-import { Button, Slide, DialogTitle, DialogContentText, DialogContent, DialogActions, Paper, Grid, Dialog } from '@material-ui/core'
+import { Button, Slide, DialogTitle, DialogContentText, DialogContent, DialogActions, Paper, Grid, Dialog,Link } from '@material-ui/core'
 import General from '../template/general'
 import { makeStyles } from '@material-ui/core/styles'
 import { useRouter } from 'next/router';
@@ -62,7 +62,10 @@ const Box = props => {
     }
     return (
         <div>
-            <Paper style={{ margin: '0% 5% 3% 10%', height: '150px', width: '80%', padding: '17px', paddingTop: '15px', borderRadius: '10px' }}>
+            <Link href="../advertisement/adinform"><Paper style={{marginLeft:"75%",padding:" 0.5% 0% 0.5% 1.5%",
+    borderRadius: "10px",
+    width: "15%"}}>create new ADs</Paper></Link>
+            <Paper style={{ margin: '2% 5% 3% 10%', height: '150px', width: '80%', padding: '17px', paddingTop: '15px', borderRadius: '10px' }}>
                 <Grid container spacing={'2'}>
                     <Grid item>
                         <div style={{ height: '120px', width: '120px', marginLeft: '2%' }}>
