@@ -1,11 +1,26 @@
 const express = require('express')
 const router = express.Router()
 const mockup = require('../controllers/Chat/chatMockupData')
-const {getChatlist, getGroupPicture, inviteCreate} = require('../controllers/Chat/chatController')
+const chat = require('../controllers/Chat/chatController')
+const {jwtAuthenicate} = require('../middleware/jwtAuthenticate')
 
-router.get('/getChatlist', getChatlist)
-router.get('/getGroupPicture', getGroupPicture)
-router.get('/inviteCreate', inviteCreate)
+router.get('/getChatlist', jwtAuthenicate,chat.getChatlist) //check
+router.get('/getInvitationList',jwtAuthenicate, chat.getInvitationList) //check
+router.get('/getSearchResult',jwtAuthenicate, chat.getSearchResult) //check
+router.get('/acceptInvitation',jwtAuthenicate, chat.acceptInvitation)  //check
+router.get('/declineInvitation',jwtAuthenicate,chat.declineInvitation) //check
+router.get('/getChatroomDetail',jwtAuthenicate,chat.getChatroomDetail) //check
+router.get('/getChatRoomProfile',jwtAuthenicate,chat.getChatRoomProfile) //check
+router.get('/selectSearchResult',jwtAuthenicate,chat.selectSearchResult) //check
+router.get('/getUserProfile',jwtAuthenicate,chat.getUserProfile) //check
+router.get('/hideChatroom',jwtAuthenicate,chat.hideChatroom)  //check
+router.get('/leaveChatRoom',jwtAuthenicate,chat.leaveChatRoom) //check
+router.get('/deleteChatRoom',jwtAuthenicate,chat.deleteChatRoom) //check
+router.get('/sendMessage',jwtAuthenicate,chat.sendMessage) //check
+router.get('/unsendMessage',jwtAuthenicate,chat.unsendMessage) //check
+router.get('/changeThemeColor',jwtAuthenicate,chat.changeThemeColor) //check
+router.get('/changeChatRoomName',jwtAuthenicate,chat.changeChatRoomName) //check
+
 
 //Mockup
 router.get('/getUserProfileMockup',(req,res)=>{
@@ -32,7 +47,7 @@ router.post('/createGroupChatMockup',(req,res)=>{
 router.get('/getInvitationListMockup',(req,res)=>{
   res.send(mockup.getInvitationListMockup(35332));
 })
-router.get('/acceptInvitationMockup',(req,res)=>{
+router.get('/acceptInvitationMockup2',(req,res)=>{
   res.send(mockup.getInvitationListMockup(2));
 })
 router.get('/declineInvitationMockup',(req,res)=>{

@@ -168,8 +168,8 @@ export default function Create() {
             <span style={sText}>
               {" "}
               {id == undefined
-                ? "Your Contest have been created."
-                : "Contest have been Edited"}
+                ? "Your Contest has been created."
+                : "Contest has been edited"}
             </span>
           </DialogContentText>
         </DialogContent>

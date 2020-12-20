@@ -70,8 +70,8 @@ const ContestEach = (p) => {
             color="textSecondary"
             component="p"
           >
-            Let manage elements in Contest No.{p.id} by click the button below!
-            {/* {p.description} */}
+            {/* Let manage elements in Contest No.{p.id} by click the button below! */}
+            {p.description}
           </Typography>
         </CardContent>
       </CardActionArea>
