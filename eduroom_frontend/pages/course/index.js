@@ -8,6 +8,7 @@ import CategoryBar from '../../components/course/categoryBar'
 import { useRouter } from 'next/router'
 import Name from '../../components/course/courseRender'
 import Carousel from '../../components/course/carousel'
+import CourseCard from '../../components/course/courseStore'
 
 import api from '../../api'
 
@@ -43,7 +44,6 @@ const Course = () => {
           <Carousel/>
         <div className='bg'>
           <div className='container-1'>
-
             {/* Search bar and Categories select */}
             <div className='text-center flex my-6 mx-search'>
               <SearchBar />
@@ -64,7 +64,8 @@ const Course = () => {
 
             <CategoryBar current= 'General'/>
 
-            {/* Box of each course */}
+            {/* <CourseCard/> */}
+           <div className="coursecard">Course on Eduroom</div>
             <div className='text-center my-8'>
               {courseDes.map((e, index) => (
                 <Link href={`/course/${e.courseid}`}>
@@ -109,6 +110,12 @@ const Course = () => {
             margin-left: 5rem;
             margin-right: 5rem;
       
+          }
+          .coursecard{
+            font-weight: 700;
+            font-size: 26px;
+            color:#3D467F;
+            margin: 30px 30px 30px 40px
           }
         `}
         </style>
