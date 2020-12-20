@@ -169,7 +169,7 @@ export default function Create() {
               {" "}
               {id == undefined
                 ? "Your Contest has been created."
-                : "Contest has been Edited"}
+                : "Contest has been edited"}
             </span>
           </DialogContentText>
         </DialogContent>
