@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import LearningPath from '../../components/learningpath/LearningPath'
 import GeneralTemplate from '../../components/template/general'
 const LearningPathPage = () => {
