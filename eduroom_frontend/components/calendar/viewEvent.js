@@ -8,10 +8,11 @@ import style from "../../styles/calendar/calendar";
 import api from "../../api";
 import Delete from "../../components/calendar/delete"
 import UserConText from "../../contexts/user/userContext"
+import { json } from "body-parser";
 
 const Content = (props) => {
-   const userContext = useContext(UserConText)
-   const {user} = userContext;
+    const userContext = useContext(UserConText)
+    const { user } = userContext;
 
     const showDate = props.showDate;
     const open = props.open;
@@ -19,9 +20,10 @@ const Content = (props) => {
     const currentMonth = props.currentMonth;
     const currentMonthNo = props.currentMonthNo;
     const currentYear = props.currentYear;
-    
-    const [data, setData] = useState([])
 
+    const [data, setData] = useState([]);
+    const [global, setGlobal] = useState([]);
+    const [own, setOwn] = useState([]);
     const [openEvent, setOpenEvent] = useState(false);
     const [isInstructor, setInstructor] = useState(false);
     useEffect(() => {
@@ -34,26 +36,26 @@ const Content = (props) => {
 
         })
     }, [])
-    
-    useEffect(() => {
-        const GetData = async () => {
-            const result2 = await api.get("/api/event/getGlobalEvent");
-            const allResult = (result2.data)
 
-            if(isInstructor){
-                const result1 = await api.get("/api/event/getCourseEvent");
-                allResult = allResult.concat(result1)
-            }
-            setData(allResult);
+    useEffect(() => {
+        const GetData = async (date) => {
+            const result2 = await api.get(`/api/event/getEventbyDate?date=${date}`);
+            console.log(result2);
+
+            setData(result2.data.data);
+            setGlobal(result2.data.global);
+            setOwn(result2.data.own);
+
         };
-        GetData();
-    }, []);
+
+        GetData(props.currentYear + "-" + props.currentMonthNo + "-" + props.showDate);
+    }, [props.showDate]);
     const formatTime = (time) => {
         return (time < 10 ? '0' : '') + time
     }
 
 
-    
+
 
 
 
@@ -77,32 +79,68 @@ const Content = (props) => {
 
                         <div className="content">
                             <div>
-                                {user && data.map((row) => {
 
-                                    return (showDate == row.startday && currentMonthNo == row.nowmonth ?
+                                {own.map((row) => {
+
+                                    return (
 
                                         <div className="d-block">
-                                            {
-                                                isInstructor && row.event_type == 'course' ? (
+                                           
                                                     <div className="edit">
                                                         <Edit id={row.eventid} ></Edit>
                                                         <Delete id={row.eventid}></Delete>
                                                     </div>
 
 
-                                                ) : null
-                                            }
+                                    
 
-                                            <div className="title">{row.title} ({row.coursename}) </div>
+                                            <div className="title">{row.title}</div>
 
-                                            {row.event_type == 'course' ? <div className="point" style={{ background: "#fdd4c1" }}></div>
-                                                :
-                                                <div className="point" style={{ background: "#A880F7" }}></div>}
-                                            <div className="detail">{formatTime(row.hstart)}:{formatTime(row.mstart)} - {formatTime(row.hend)}:{formatTime(row.mend)} | {row.place}</div>
+                                            <div className="point" style={{ background: "#fdd4c1" }}></div>
+                                            {showDate == row.enddate || showDate == row.startday ? <div className="detail">{row.hstart}:{row.mstart} on {showDate} {currentMonth} - {row.hend}:{row.mend} on {row.enddate} {currentMonth}</div>
+                                                : <div className="detail">Allday</div>}
+                                            <div className="title" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
                                         </div>
-                                        : "")
+                                    )
                                 })}
 
+
+                                {data.map((row) => {
+
+                                    return (
+
+                                        <div className="d-block">
+                                           
+                            
+                                            <div className="title">{row.title}</div>
+
+                                            <div className="point" style={{ background: "#fdd4c1" }}></div>
+                                            {showDate == row.enddate || showDate == row.startday ? <div className="detail">{row.hstart}:{row.mstart} on {showDate} {currentMonth} - {row.hend}:{row.mend} on {row.enddate} {currentMonth}</div>
+                                                : <div className="detail">Allday</div>}
+                                            <div className="title" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
+                                        </div>
+                                    )
+                                })}
+
+
+                                {global.map((row) => {
+
+                                    return (
+
+                                        <div className="d-block">
+
+                                            <div className="title">{row.title}</div>
+
+                                            <div className="point" style={{ background: "#A880F7" }}></div>
+
+
+
+                                            {showDate == row.enddate || showDate == row.startday ? <div className="detail">{row.hstart}:{row.mstart} on {showDate} {currentMonth} - {row.hend}:{row.mend} on {row.enddate} {currentMonth}</div>
+                                                : <div className="detail">Allday</div>}
+                                            <div className="title" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
 
