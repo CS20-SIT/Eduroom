@@ -2,18 +2,24 @@ import { Fragment } from 'react'
 import Choice from './Choice'
 import style from '../../../../styles/user/instructor/createCourse/create'
 
-const Choices = ({ question, qChange }) => {
-	const choicesChange = (idx, choice) => {}
-	const correctChange = (idx) => {}
+const Choices = ({ question, questionChange }) => {
+	const changeCorrect = (idx) => {
+		question.correct = idx
+		questionChange(question)
+	}
+	const changeChoice = (idx, newText) => {
+		question.choices[idx] = newText
+		questionChange(question)
+	}
 	const renderChoices = () => {
 		const arr = question.choices.map((choice, idx) => {
 			return (
 				<Choice
 					choice={choice}
+					changeChoice={changeChoice}
 					key={idx}
 					idx={idx}
-					choiceChange={choicesChange}
-					correctChange={correctChange}
+					changeCorrect={changeCorrect}
 					correct={question.correct}
 				></Choice>
 			)
