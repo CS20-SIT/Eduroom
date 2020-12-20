@@ -1,16 +1,16 @@
 import React, { Fragment } from "react";
 import GeneralNoNav from "../../../components/graderCreate/GraderCreateLayout/Sidebar";
 import GNav from "../../../components/graderCreate/GraderCreateLayout/Nav";
-
+import ProtectedAdminRoute from "../../../components/admin/protectedAdminRoute";
 import Ann from "../../../components/graderCreate/Announcement/Announcement";
 const Announcement = () => {
   return (
-    <Fragment>
+    <ProtectedAdminRoute>
       <GeneralNoNav>
         <GNav></GNav>
         <Ann />
       </GeneralNoNav>
-    </Fragment>
+    </ProtectedAdminRoute>
   );
 };
 export default Announcement;
