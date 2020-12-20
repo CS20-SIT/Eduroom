@@ -34,31 +34,46 @@ const contestSubmission = ({ contestId }) => {
 										<div className="flex-item" style={{ flexBasis: '20%' }}>
 											Time
 										</div>
-										<div className="flex-item" style={{ flexBasis: '20%' }}>
+										<div className="flex-item" style={{ flexBasis: '25%' }}>
 											Author
 										</div>
 										<div className="flex-item" style={{ flexBasis: '20%' }}>
 											Status
 										</div>
-										<div className="flex-item" style={{ flexBasis: '20%' }}>
+										<div className="flex-item" style={{ flexBasis: '10%' }}>
+											Score
+										</div>
+										<div className="flex-item" style={{ flexBasis: '10%' }}>
+											Time
+										</div>
+										<div className="flex-item" style={{ flexBasis: '10%' }}>
+											Memory
+										</div>
+										<div className="flex-item" style={{ flexBasis: '10%' }}>
 											Problem
 										</div>
-										<div className="flex-item" style={{ flexBasis: '20%' }}>
-											Language
-										</div>
 									</div>
-									{data.map((element, key) => {
-										return data ? (
-											<ContestSubmissionList
-												time={element.whentime}
-												author={element.displayname}
-												status={element.status}
-												problem={element.conquestionno}
-												language={element.language}
-												key={key}
-											/>
-										) : null
-									})}
+									<div className="submission-list-box">
+										{data ? (
+											data.map((element, key) => {
+												return (
+													<ContestSubmissionList
+														submitTime={element.whentime}
+														time={element.time}
+														author={element.displayname}
+														memory={element.memory}
+														score={element.score}
+														status={element.status}
+														problem={element.conquestionno}
+														language={element.language}
+														key={key}
+													/>
+												)
+											})
+										) : (
+											<div className="none">None</div>
+										)}
+									</div>
 								</div>
 							</ContestLayout>
 						</Box>

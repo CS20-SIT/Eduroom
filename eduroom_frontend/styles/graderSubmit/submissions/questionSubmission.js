@@ -37,4 +37,8 @@ export default css`
       text-align: center;
 
   }
+  .submission-list-box {
+    height: 50vh;
+    overflow: auto;
+  }
 `
