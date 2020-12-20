@@ -21,7 +21,8 @@ const TutorRoute = require('./tutorRoute')
 const AdvertisementRoute = require('./advertisementRoute')
 const LearningRoute = require('./learningPathRoute')
 const ChatRoute = require('./chatRoute')
-// const ReviewRoute = require('./reviewRoute')
+const ReviewRoute = require('./reviewRoute')
+const AdminRoute = require('./adminRoute')
 
 router.use('/test', TestRoute)
 router.use('/auth', AuthRoute)
@@ -44,6 +45,6 @@ router.use('/coin', CoinRoute)
 router.use('/user', UserRoute)
 router.use('/tutor', TutorRoute)
 router.use('/chat',ChatRoute)
-// router.use('/review',ReviewRoute)
-
+router.use('/review',ReviewRoute)
+router.use('/admin', AdminRoute)
 module.exports = router

@@ -3,25 +3,51 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 import style from '../../styles/calendar/calendar'
 import api from '../../api'
 import { useRouter } from "next/router";
+import Course from '../admin/layout/icons/course';
 
 const Content = (props) => {
     const router = useRouter();
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
+    const [courseList, setCourseList] = useState([])
+    const date = props.date;
+    const year = props.year;
+    const monthNo = props.monthNo;
 
+    const [stDate, setSTDate] = useState(year + "-" + monthNo + "-" + date)
 
-    
     // ---------------------createEvent---------------------------
     const [eventInfo, setEventInfo] = useState({
         title: '',
-        type: '',
         description: '',
-        startDate: '',
+        startDate: props.year + '-' + props.monthNo + '-' + props.date,
         endDate: '',
         startTime: '',
         endTime: '',
         place: '',
+        courseid: '',
     })
+
+    useEffect(() => {
+
+        api.get('/api/event/getMyCourse').then(
+            (res) => {
+                setCourseList(res.data.data);
+                // setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
+            }
+        ).catch(err => { });
+    }, [])
+
+
+
+
+    console.log();
+    useEffect(() => {
+        console.log(date);
+        setSTDate(year + "-" + monthNo + "-" + date);
+        setEventInfo({ ...eventInfo, startDate: stDate })
+    }, [date, stDate])
+
     const handleCreate = (e) => {
 
         console.log(eventInfo);
@@ -29,24 +55,15 @@ const Content = (props) => {
         api.post("/api/event/createEvent", eventInfo).then(
             (res) => {
                 alert("success");
+                window.location.reload();
 
-                router.push("/calendar")
             }
         ).catch(err => {
             console.log(err);
-        })/*  {
-            title: eventInfo.title,
-            description: eventInfo.description,
-            startDate: eventInfo.startDate,
-            endDate: eventInfo.endDate,
-            startTime: eventInfo.startTime,
-            endTime: eventInfo.endTime,
-            place: eventInfo.place,
-          });  */
-        // }
+        })
     };
-    const eventType = ['Course', 'Global']
-    
+
+
     return (
         <Fragment>
             <CSSTransition
@@ -72,14 +89,11 @@ const Content = (props) => {
 
                     {/* ---------------------- ---------eventType------------------------------- */}
                     <div>
-                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, type: e.target.value })}>
-                            <option value="default" disabled>
-                                Event Type
-							</option>
-                            {eventType.map((type) => {
+                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+                            {courseList.map((course) => {
                                 return (
-                                    <option value={type} key={type}>
-                                        {type}
+                                    <option value={course.courseid} key={course.courseid}>
+                                        {course.coursename}
                                     </option>
                                 )
                             })}
@@ -97,11 +111,11 @@ const Content = (props) => {
                     </div>
                     {/* ---------------------- ---------time------------------------------- */}
 
-                    <div className="startdate">
+                    <div className="startdate" >
                         <div>startDate</div>
-                        
+
                         <input
-                            value={props.year+"-"+props.monthNo+"-"+props.date}
+                            value={stDate}
                             className="event-startDate"
                             onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
                             placeholder="Start date"
