@@ -63,6 +63,13 @@ margin-left: 20%;
   width:400px;
   border-top: 1px solid rgb(197, 197, 197);
 }
+.line1{
+  position: relative;
+  left: 50px;
+  top: 80px;
+  width:400px;
+  border-top: 1px solid rgb(197, 197, 197);
+}
 .listSticker{
   display: flex;
   flex-wrap: wrap;
@@ -86,10 +93,12 @@ margin-left: 20%;
   background-color: white;
   border-radius: 5%;
   position: relative;
+  overflow: scroll;
 }
 .box{
   position: relative;
-  top: -15%;
+  top: -5%;
+ 
 }
 
 

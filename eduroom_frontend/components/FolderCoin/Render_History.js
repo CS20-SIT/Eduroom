@@ -6,7 +6,7 @@ const RenderHistory = props => {
                 <div key={item.id}>
                     <DetailHistory
                         title={item.stickername}
-                        price={item.stickerprice}
+                        stickerimg ={item.stickerimg}
                         index={index}
                         id={item.id}
                         choose={props.choose}
