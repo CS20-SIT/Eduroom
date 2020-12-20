@@ -119,7 +119,7 @@ const Content = () => {
 			/>
 
 			{/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
-			{isInstructor ? (
+			{/* {isInstructor ? (
 				<div className="createEvent">
 					<button
 						className="bt-createEvent"
@@ -130,7 +130,7 @@ const Content = () => {
 						createEvent
 					</button>
 				</div>
-			) : null}
+			) : null} */}
 
 			{/* ------------------------------Calendar Header---------------------------------------- */}
 			<div className="month-color text-center">
