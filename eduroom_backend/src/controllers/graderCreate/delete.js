@@ -68,8 +68,6 @@ const editAnn = async (req, res, next) => {
   res.send({ success: true, title, description, adminid });
 };
 
-const path = require("path");
-
 const pTestcase = (req, res, next) => {
   const questionId =
     typeof req.body.questionid == "string"
@@ -85,7 +83,7 @@ const pTestcase = (req, res, next) => {
     testCases.forEach((t) => {
       pool.query(
         "INSERT INTO QuestionTestcases(questionId,fileNo,filePath) VALUES ($1 , $2, $3)",
-        [questionId, fileNo, t.path]
+        [questionId, fileNo, t.linkUrl]
       );
       fileNo++;
     });

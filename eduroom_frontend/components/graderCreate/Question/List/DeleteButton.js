@@ -124,7 +124,7 @@ const DeleteButton = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <span style={sText}> The Question have been deleted.</span>
+            <span style={sText}> The Question has been deleted.</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
