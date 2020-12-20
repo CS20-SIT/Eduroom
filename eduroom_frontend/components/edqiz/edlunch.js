@@ -60,32 +60,6 @@ const Content = () => {
         </div>
       </div>
       <style jsx>{`
-        .content {
-          width: 100vw;
-          padding: 3% 5%;
-          height: 90vh;
-        }
-        .landing {
-          justify-content: center;
-          width: 100vw;
-          height: 100vh;
-          background-image: url("/images/edqiz/create-bg.svg");
-          background-repeat: no-repeat;
-          background-size: cover;
-          overflow: auto;
-        }
-        .card {
-          background: white;
-          border-radius: 2vh;
-          transition: 0.3s;
-          width: 100%;
-          height: 100vh;
-          text-align: center;
-          display: flex;
-          flex-wrap: wrap;
-          flex-flow: column;
-          justify-content: space-around;
-        }
       `}</style>
     </Fragment>
   );

@@ -2,170 +2,183 @@ import React, { Fragment, useState, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import style from '../../styles/calendar/calendar'
 import api from '../../api'
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
+import Course from '../admin/layout/icons/course'
 
 const Content = (props) => {
-    const router = useRouter();
-    const openEvent = props.openEvent
-    const setOpenEvent = props.setOpenEvent
+	const router = useRouter()
+	const openEvent = props.openEvent
+	const setOpenEvent = props.setOpenEvent
+	const [courseList, setCourseList] = useState([])
+	const date = props.date
+	const year = props.year
+	const monthNo = props.monthNo
 
-    // ---------------------createEvent---------------------------
-    const [eventInfo, setEventInfo] = useState({
-        title: '',
-        type: '',
-        description: '',
-        startDate: '',
-        endDate: '',
-        startTime: '',
-        endTime: '',
-        place: '',
-    })
-    const handleCreate = (e) => {
+	const [stDate, setSTDate] = useState(year + '-' + monthNo + '-' + date)
 
-        console.log(eventInfo);
-        // if (validator()) {
-        api.post("/api/event/createEvent", eventInfo).then(
-            (res) => {
-                alert("success");
+	// ---------------------createEvent---------------------------
+	const [eventInfo, setEventInfo] = useState({
+		title: '',
+		description: '',
+		startDate: props.year + '-' + props.monthNo + '-' + props.date,
+		endDate: '',
+		startTime: '',
+		endTime: '',
+		place: '',
+		courseid: '',
+	})
 
-                router.push("/calendar")
-            }
-        ).catch(err => {
-            console.log(err);
-        })/*  {
-            title: eventInfo.title,
-            description: eventInfo.description,
-            startDate: eventInfo.startDate,
-            endDate: eventInfo.endDate,
-            startTime: eventInfo.startTime,
-            endTime: eventInfo.endTime,
-            place: eventInfo.place,
-          });  */
-        // }
-    };
-    const eventType = ['Course', 'Global']
+	useEffect(() => {
+		api
+			.get('/api/event/getMyCourse')
+			.then((res) => {
+				setCourseList(res.data.data)
+				// setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
+			})
+			.catch((err) => {})
+	}, [])
 
-    return (
-        <Fragment>
-            <CSSTransition
-                mountOnEnter
-                unmountOnExit
-                in={openEvent}
-                timeout={{ enter: 700, exit: 100 }}
-                classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
-            >
-                <div className="D-create">
-                    <div style={{ height: '10%' }}></div>
-                    <div className="text-create">Create Event</div>
+	console.log()
+	useEffect(() => {
+		console.log(date)
+		setSTDate(year + '-' + monthNo + '-' + date)
+		setEventInfo({ ...eventInfo, startDate: stDate })
+	}, [date, stDate])
 
-                    {/* ---------------------- ---------eventtitle------------------------------- */}
-                    <div>
-                        <input
-                            className="event-title"
-                            onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
-                            placeholder="Event Title"
-                            style={{ height: '50px' }}
-                        ></input>
-                    </div>
+	const handleCreate = (e) => {
+		console.log(eventInfo)
+		// if (validator()) {
+		api
+			.post('/api/event/createEvent', eventInfo)
+			.then((res) => {
+				alert('success')
+				window.location.reload()
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}
 
-                    {/* ---------------------- ---------eventType------------------------------- */}
-                    <div>
-                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, type: e.target.value })}>
-                            <option value="default" disabled>
-                                Event Type
-							</option>
-                            {eventType.map((type) => {
-                                return (
-                                    <option value={type} key={type}>
-                                        {type}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </div>
+	return (
+		<Fragment>
+			<CSSTransition
+				mountOnEnter
+				unmountOnExit
+				in={openEvent}
+				timeout={{ enter: 700, exit: 100 }}
+				classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
+			>
+				<div className="D-create">
+					<div style={{ height: '10%' }}></div>
+					<div className="text-create">Create Event</div>
 
-                    {/* ---------------------- ---------eventdescript------------------------------- */}
-                    <div>
-                        <input
-                            className="event-detail"
-                            onChange={(e) => setEventInfo({ ...eventInfo, description: e.target.value })}
-                            placeholder="Description"
-                            style={{ height: '50px' }}
-                        ></input>
-                    </div>
-                    {/* ---------------------- ---------time------------------------------- */}
+					{/* ---------------------- ---------eventtitle------------------------------- */}
+					<div>
+						<input
+							className="event-title"
+							onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
+							placeholder="Event Title"
+							style={{ height: '50px' }}
+						></input>
+					</div>
 
-                    <div className="startdate">
-                        <div>startDate</div>
-                        <input
-                            className="event-startDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
-                            placeholder="Start date"
-                            type="date"
-                        ></input>
-                    </div>
+					{/* ---------------------- ---------eventType------------------------------- */}
+					<div>
+						<select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+							{courseList.map((course) => {
+								return (
+									<option value={course.courseid} key={course.courseid}>
+										{course.coursename}
+									</option>
+								)
+							})}
+						</select>
+					</div>
 
-                    <div className="startTime">
-                        <div>startTime</div>
-                        <input
-                            className="event-startTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startTime: e.target.value })}
-                            placeholder="Start Time"
-                            type="Time"
-                        ></input>
-                    </div>
+					{/* ---------------------- ---------eventdescript------------------------------- */}
+					<div>
+						<input
+							className="event-detail"
+							onChange={(e) => setEventInfo({ ...eventInfo, description: e.target.value })}
+							placeholder="Description"
+							style={{ height: '50px' }}
+						></input>
+					</div>
+					{/* ---------------------- ---------time------------------------------- */}
 
-                    <div className="enddate">
-                        <div>endDate</div>
-                        <input
-                            className="event-startDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endDate: e.target.value })}
-                            placeholder="end date"
-                            type="date"
-                        ></input>
-                    </div>
+					<div className="startdate">
+						<div>startDate</div>
 
-                    <div className="endtime">
-                        <div>endTime</div>
-                        <input
-                            className="event-endTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endTime: e.target.value })}
-                            placeholder="end Time"
-                            type="time"
-                        ></input>
-                    </div>
+						<input
+							value={stDate}
+							className="event-startDate"
+							onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
+							placeholder="Start date"
+							type="date"
+						></input>
+					</div>
 
-                    {/* -------------------------------place------------------------------- */}
-                    <div>
-                        <input
-                            className="event-place"
-                            onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
-                            placeholder="Event Place"
-                            style={{ height: '50px' }}
-                        ></input>
-                    </div>
+					<div className="startTime">
+						<div>startTime</div>
+						<input
+							className="event-startTime"
+							onChange={(e) => setEventInfo({ ...eventInfo, startTime: e.target.value })}
+							placeholder="Start Time"
+							type="Time"
+						></input>
+					</div>
 
-                    <div className="confirmBT">
-                        <button className="event-confirm" onClick={handleCreate} >
-                            <a className="event-confirmText">CONFIRM</a>
-                        </button>
-                    </div>
-                    <div
-                        className="cancelBT"
-                        onClick={() => {
-                            setOpenEvent(false)
-                        }}
-                    >
-                        <button className="event-cancel">
-                            <a className="event-cancelText">CANCEL</a>
-                        </button>
-                    </div>
-                </div>
-            </CSSTransition>
+					<div className="enddate">
+						<div>endDate</div>
+						<input
+							className="event-startDate"
+							onChange={(e) => setEventInfo({ ...eventInfo, endDate: e.target.value })}
+							placeholder="end date"
+							type="date"
+						></input>
+					</div>
 
-            <style jsx>{style}</style>
-            <style jsx>
-                {`
+					<div className="endtime">
+						<div>endTime</div>
+						<input
+							className="event-endTime"
+							onChange={(e) => setEventInfo({ ...eventInfo, endTime: e.target.value })}
+							placeholder="end Time"
+							type="time"
+						></input>
+					</div>
+
+					{/* -------------------------------place------------------------------- */}
+					<div>
+						<input
+							className="event-place"
+							onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
+							placeholder="Event Place"
+							style={{ height: '50px' }}
+						></input>
+					</div>
+
+					<div className="confirmBT">
+						<button className="event-confirm" onClick={handleCreate}>
+							<a className="event-confirmText">CONFIRM</a>
+						</button>
+					</div>
+					<div
+						className="cancelBT"
+						onClick={() => {
+							setOpenEvent(false)
+						}}
+					>
+						<button className="event-cancel">
+							<a className="event-cancelText">CANCEL</a>
+						</button>
+					</div>
+				</div>
+			</CSSTransition>
+
+			<style jsx>{style}</style>
+			<style jsx>
+				{`
 					.fade-in {
 						animation: fade-in 0.3s forwards;
 					}
@@ -189,8 +202,8 @@ const Content = (props) => {
 						}
 					}
 				`}
-            </style>
-        </Fragment>
-    )
+			</style>
+		</Fragment>
+	)
 }
 export default Content
