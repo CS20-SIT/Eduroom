@@ -270,6 +270,17 @@ exports.fetchQuiz = async (req, res, next) => {
   } catch (error) {
     errorHandler(error, req, res);
   }
- 
+  // exports.closeRoom = async (req, res, next) => {
+  //   try {
+  //     const { sessionid } = req.params;
+  //     update = await pool.query(
+  //       `UPDATE kahoot_roomhistory SET isavailable = 'fasle' where sessionid = $2 RETURNING *`,
+  //       [ sessionid]
+  //     );
+
+  //   } catch (error) {
+  //     errorHandler(error, req, res);
+  //   }
+  // };
 
 };

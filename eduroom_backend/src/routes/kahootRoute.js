@@ -7,6 +7,9 @@ const { fetchRoom, createRoom,fetchRoomHistory,createKahootHistory,
 const { isInstructor } = require('../middleware/isInstructor')
 const { uploadToGCSHandler } = require('../middleware/multer')
 
+// const {closeRoom} = require('../controllers/edqiz/roomController');
+// router.post('/closeRoom',closeRoom);
+
 router.get('/rooms',jwtAuthenicate, isInstructor, fetchRoom);
 router.get('/question/:sessionid', fetchQuiz);
 router.post('/room', createRoom);
