@@ -10,7 +10,7 @@ export default css`
 	}
 	.card {
 		background: #ffffff;
-		padding: 25px;
+		padding: 25px 0 5px 25px;
 		box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 		border-radius: 10px;
 	}
@@ -31,7 +31,7 @@ export default css`
 		align-items: center;
 	}
 	.back {
-		font-size: 20px;
+		// font-size: 20px;
 	}
 	.back:hover {
 		cursor: pointer;
@@ -61,5 +61,53 @@ export default css`
 	}
 	.check:hover {
 		cursor: pointer;
+	}
+
+	.choices {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.choice {
+		width: 40%;
+		padding: 15px;
+		box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		border-radius: 10px;
+		margin-bottom: 15px;
+		opacity: 1;
+		transition: 0.25s;
+	}
+
+	.choice:hover {
+		cursor: pointer;
+		opacity: 0.75;
+		transition: 0.25s;
+	}
+
+	.cardActive {
+		background-color: #3d467f;
+		color: white;
+	}
+	.cardActive:hover {
+		opacity: 1;
+	}
+
+	.action {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 20px;
+	}
+	.goQuestion {
+		display: flex;
+		align-items: center;
+	}
+	.goQuestion:hover {
+		cursor: pointer;
+	}
+
+	.submitBtn {
+		background: #3d467f;
+		border-radius: 20px;
+		padding: 10px;
 	}
 `
