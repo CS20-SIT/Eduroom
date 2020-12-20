@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext, useEffect } from 'react'
 import GeneralTemplate from '../components/template/general'
 import RegisterContent from '../components/landing/register'
 import UserContext from '../contexts/user/userContext'
