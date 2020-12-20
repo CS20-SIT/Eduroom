@@ -13,83 +13,107 @@ const splitTest = function (str) {
 };
 
 // for Style Annoucement
-const logTableStyles = makeStyles({
-  root: {
-    width: "100%",
-  },
-  container: {
-    maxHeight: 440,
-  },
-  tableHID: {
-    paddingLeft: 50,
-    paddingRight: 25,
-    paddingTop: 50,
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableHEdit: {
-    paddingLeft: 25,
-    paddingRight: 50,
-    paddingTop: 50,
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableHeader: {
-    paddingRight: 25,
-    paddingTop: 50,
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableRow: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-  },
-  tableCell: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "0.9em",
-    color: "#5b5b5b",
-    paddingRight: 45,
-  },
-  tableId: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#5b5b5b",
+const logTableStyles = makeStyles(
+  {
+    root: {
+      width: "100%",
+    },
+    container: {
+      maxHeight: 440,
+    },
+    tableHID: {
+      paddingLeft: 50,
+      paddingRight: 25,
+      paddingTop: 50,
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableHEdit: {
+      paddingLeft: 25,
+      paddingRight: 50,
+      paddingTop: 50,
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableHeader: {
+      paddingRight: 25,
+      paddingTop: 50,
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableRow: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+    },
+    tableCell: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "0.9em",
+      color: "#5b5b5b",
+      paddingRight: 45,
+    },
+    tableId: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#5b5b5b",
 
-    paddingLeft: 50,
-    paddingRight: 25,
-  },
-  tableEdit: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#5b5b5b",
-    paddingRight: 50,
-    paddingLeft: 25,
-  },
-  caption: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  toolbar: {
-    "& > p:nth-of-type(2)": {
+      paddingLeft: 50,
+      paddingRight: 25,
+    },
+    tableEdit: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#5b5b5b",
+      paddingRight: 50,
+      paddingLeft: 25,
+    },
+    caption: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+      marginTop: 10,
+      marginBottom: 30,
+    },
+    toolbar: {
+      "& > p:nth-of-type(2)": {
+        fontFamily: "Quicksand , sans-serif",
+        color: "#5b5b5b",
+        fontSize: "0.775rem",
+        fontWeight: "bold",
+        marginTop: 10,
+        marginBottom: 30,
+      },
+    },
+    select: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+      marginTop: 10,
+      marginBottom: 30,
+    },
+    menuItem: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+    },
+    actions: {
       fontFamily: "Quicksand , sans-serif",
       color: "#5b5b5b",
       fontSize: "0.775rem",
@@ -98,107 +122,110 @@ const logTableStyles = makeStyles({
       marginBottom: 30,
     },
   },
-  select: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  menuItem: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-  },
-  actions: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-});
+  { index: 1 }
+);
 
-const announcementTableStyles = makeStyles({
-  root: {
-    width: "100%",
-  },
-  container: {
-    maxHeight: 440,
-  },
-  tableHID: {
-    paddingLeft: 50,
-    paddingRight: 25,
-    paddingTop: 50,
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableHEdit: {
-    paddingLeft: 25,
-    paddingRight: 50,
-    paddingTop: 50,
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableHeader: {
-    paddingRight: 25,
-    paddingTop: 50,
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableRow: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-  },
-  tableCell: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "0.9em",
-    color: "#5b5b5b",
-    paddingRight: 45,
-  },
-  tableId: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#5b5b5b",
+const announcementTableStyles = makeStyles(
+  {
+    root: {
+      width: "100%",
+    },
+    container: {
+      maxHeight: 440,
+    },
+    tableHID: {
+      paddingLeft: 50,
+      paddingRight: 25,
+      paddingTop: 50,
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableHEdit: {
+      paddingLeft: 25,
+      paddingRight: 50,
+      paddingTop: 50,
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableHeader: {
+      paddingRight: 25,
+      paddingTop: 50,
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableRow: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+    },
+    tableCell: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "0.9em",
+      color: "#5b5b5b",
+      paddingRight: 45,
+    },
+    tableId: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#5b5b5b",
 
-    paddingLeft: 50,
-    paddingRight: 25,
-  },
-  tableEdit: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#5b5b5b",
-    paddingRight: 50,
-    paddingLeft: 25,
-  },
-  caption: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  toolbar: {
-    "& > p:nth-of-type(2)": {
+      paddingLeft: 50,
+      paddingRight: 25,
+    },
+    tableEdit: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#5b5b5b",
+      paddingRight: 50,
+      paddingLeft: 25,
+    },
+    caption: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+      marginTop: 10,
+      marginBottom: 30,
+    },
+    toolbar: {
+      "& > p:nth-of-type(2)": {
+        fontFamily: "Quicksand , sans-serif",
+        color: "#5b5b5b",
+        fontSize: "0.775rem",
+        fontWeight: "bold",
+        marginTop: 10,
+        marginBottom: 30,
+      },
+    },
+    select: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+      marginTop: 10,
+      marginBottom: 30,
+    },
+    menuItem: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+    },
+    actions: {
       fontFamily: "Quicksand , sans-serif",
       color: "#5b5b5b",
       fontSize: "0.775rem",
@@ -207,29 +234,8 @@ const announcementTableStyles = makeStyles({
       marginBottom: 30,
     },
   },
-  select: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  menuItem: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-  },
-  actions: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-});
+  { index: 1 }
+);
 
 const sBig = { marginLeft: "7.5%", marginRight: "7.5%", marginTop: "2.5%" };
 
@@ -311,55 +317,58 @@ const contestformTheme = createMuiTheme({
   },
 });
 
-const contestformStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    width: "52.5%",
-    marginLeft: "22.5%",
-    marginRight: "15%",
-    marginTop: "2.5%",
-    paddingBottom: "10%",
-  },
-  paper: {
-    paddingTop: theme.spacing(1),
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
-    paddingBottom: theme.spacing(3),
-    // padding: theme.spacing(3),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-  paper2: {
-    paddingTop: theme.spacing(4),
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+const contestformStyles = makeStyles(
+  (theme) => ({
+    root: {
+      flexGrow: 1,
+      width: "52.5%",
+      marginLeft: "22.5%",
+      marginRight: "15%",
+      marginTop: "2.5%",
+      paddingBottom: "10%",
+    },
+    paper: {
+      paddingTop: theme.spacing(1),
+      paddingRight: theme.spacing(4),
+      paddingLeft: theme.spacing(4),
+      paddingBottom: theme.spacing(3),
+      // padding: theme.spacing(3),
+      textAlign: "center",
+      color: theme.palette.text.secondary,
+    },
+    paper2: {
+      paddingTop: theme.spacing(4),
+      paddingRight: theme.spacing(4),
+      paddingLeft: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
 
-    color: theme.palette.text.secondary,
-  },
-  menuitem: {
-    "&.Mui-selected": {
-      fontFamily: "Quicksand , sans-serif",
-      color: "#3d467f",
-      fontSize: "1.2em",
-      fontWeight: "bold",
+      color: theme.palette.text.secondary,
     },
-  },
-  select: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      fontFamily: "Quicksand , sans-serif",
-      color: "#3d467f",
-      fontSize: "1.2em",
-      fontWeight: "bold",
+    menuitem: {
+      "&.Mui-selected": {
+        fontFamily: "Quicksand , sans-serif",
+        color: "#3d467f",
+        fontSize: "1.2em",
+        fontWeight: "bold",
+      },
     },
-    error1: {
-      fontFamily: "Quicksand , sans-serif",
-      color: "#5b5b5b",
-      fontSize: "1.2em",
+    select: {
+      "& .MuiTextField-root": {
+        margin: theme.spacing(1),
+        fontFamily: "Quicksand , sans-serif",
+        color: "#3d467f",
+        fontSize: "1.2em",
+        fontWeight: "bold",
+      },
+      error1: {
+        fontFamily: "Quicksand , sans-serif",
+        color: "#5b5b5b",
+        fontSize: "1.2em",
+      },
     },
-  },
-}));
+  }),
+  { index: 1 }
+);
 const sContests = {
   marginLeft: "15.5%",
   marginRight: "10.5%",
@@ -379,209 +388,239 @@ const contestListStyles = makeStyles(() => ({
   },
 }));
 
-const contestEachStyles = makeStyles({
-  root: {
-    marginLeft: "2",
-    marginBottom: "2.5%",
-    maxWidth: "90%",
-  },
-  card: {
-    borderRadius: "15px",
-    marginLeft: "2",
-    marginBottom: "2.5%",
-    maxWidth: "90%",
-    transition: "0.3s",
-    // boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-    "&:hover": {
-      // boxShadow: "0 16px 30px -12.125px rgba(0,0,0,0.3)",
-      border: "2.5px solid #3d467f",
+const contestEachStyles = makeStyles(
+  {
+    root: {
+      marginLeft: "2",
+      marginBottom: "2.5%",
+      maxWidth: "90%",
     },
-  },
-  title: {
-    marginLeft: 20,
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "2.25em",
-    color: "#3d467f",
-    fontWeight: "bold",
-  },
-  body: {
-    marginLeft: 20,
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "1.25em",
-    color: "#3d467f",
-    fontWeight: "600",
-  },
-  content: {
-    textAlign: "left",
-    // padding: theme.spacing(3),
-  },
-
-  heading: {
-    fontWeight: "bold",
-  },
-  subheading: {
-    lineHeight: 1.8,
-  },
-  action: {
-    marginLeft: 20,
-    marginBottom: 5,
-  },
-  Button: {
-    "&:hover": {
-      background: "rgba(243, 154, 196, 0.3)",
+    card: {
+      borderRadius: "15px",
+      marginLeft: "2",
+      marginBottom: "2.5%",
+      maxWidth: "90%",
+      transition: "0.3s",
+      // boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+      "&:hover": {
+        // boxShadow: "0 16px 30px -12.125px rgba(0,0,0,0.3)",
+        border: "2.5px solid #3d467f",
+      },
     },
-    borderRadius: "5em",
-  },
-  buttonText: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#3d467f",
-    fontWeight: "bold",
-    fontSize: "1.2em",
-    "&:hover": {
-      color: "rgba(243, 154, 196)",
-    },
-    paddingLeft: 4,
-    paddingRight: 4,
-  },
-});
-
-const AddQuestionAutocomplete = withStyles({
-  listbox: {},
-  option: {
-    color: "#3d467f",
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "1.2em",
-    fontWeight: "600",
-  },
-  clearIndicator: {
-    color: "#3d467f",
-    height: 22.5,
-    width: 22.5,
-    opacity: 1,
-  },
-  input: {
-    marginTop: 10,
-
-    color: "#5b5b5b",
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "1.2em",
-  },
-  tag: {
-    marginLeft: 5,
-    marginTop: 5,
-    marginBottom: 7,
-    backgroundColor: "white",
-    height: 30,
-    position: "relative",
-    zIndex: 0,
-    border: "2.5px solid #a880f7",
-    "& .MuiChip-label": {
-      color: "#3d467f",
+    title: {
+      marginLeft: 20,
       fontFamily: "Quicksand , sans-serif",
-      width: 500,
-
-      fontSize: "1.2em",
+      fontSize: "2.25em",
+      color: "#3d467f",
       fontWeight: "bold",
     },
-    "& .MuiChip-deleteIcon": {
-      color: "#FC8FC3",
+    body: {
+      marginLeft: 20,
+      fontFamily: "Quicksand , sans-serif",
+      fontSize: "1.25em",
+      color: "#3d467f",
+      fontWeight: "600",
+    },
+    content: {
+      textAlign: "left",
+      // padding: theme.spacing(3),
+    },
+
+    heading: {
+      fontWeight: "bold",
+    },
+    subheading: {
+      lineHeight: 1.8,
+    },
+    action: {
+      marginLeft: 20,
+      marginBottom: 5,
+    },
+    Button: {
+      "&:hover": {
+        background: "rgba(243, 154, 196, 0.3)",
+      },
+      borderRadius: "5em",
+    },
+    buttonText: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#3d467f",
+      fontWeight: "bold",
+      fontSize: "1.2em",
+      "&:hover": {
+        color: "rgba(243, 154, 196)",
+      },
+      paddingLeft: 4,
+      paddingRight: 4,
+    },
+  },
+  { index: 1 }
+);
+
+const AddQuestionAutocomplete = withStyles(
+  {
+    listbox: {},
+    option: {
+      color: "#3d467f",
+      fontFamily: "Quicksand , sans-serif",
+      fontSize: "1.2em",
+      fontWeight: "600",
+    },
+    clearIndicator: {
+      color: "#3d467f",
       height: 22.5,
       width: 22.5,
-      opacity: 0.8,
-      marginRight: 20,
+      opacity: 1,
     },
+    input: {
+      marginTop: 10,
 
-    //
-    "&:after": {
-      content: '""',
-      right: 10,
-      top: 6,
-      height: 6,
-      width: 6,
-      position: "absolute",
-      backgroundColor: "rgba(0, 0, 0, 0.0)",
-      zIndex: -1,
+      color: "#5b5b5b",
+      fontFamily: "Quicksand , sans-serif",
+      fontSize: "1.2em",
+    },
+    tag: {
+      marginLeft: 5,
+      marginTop: 5,
+      marginBottom: 7,
+      backgroundColor: "white",
+      height: 30,
+      position: "relative",
+      zIndex: 0,
+      border: "2.5px solid #a880f7",
+      "& .MuiChip-label": {
+        color: "#3d467f",
+        fontFamily: "Quicksand , sans-serif",
+        width: 500,
+
+        fontSize: "1.2em",
+        fontWeight: "bold",
+      },
+      "& .MuiChip-deleteIcon": {
+        color: "#FC8FC3",
+        height: 22.5,
+        width: 22.5,
+        opacity: 0.8,
+        marginRight: 20,
+      },
+
+      //
+      "&:after": {
+        content: '""',
+        right: 10,
+        top: 6,
+        height: 6,
+        width: 6,
+        position: "absolute",
+        backgroundColor: "rgba(0, 0, 0, 0.0)",
+        zIndex: -1,
+      },
     },
   },
-})(Autocomplete);
-const questionTableStyles = makeStyles({
-  root: {
-    width: "100%",
-  },
-  container: {
-    maxHeight: 440,
-  },
-  tableHID: {
-    paddingLeft: 50,
-    paddingRight: 25,
-    paddingTop: 50,
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableHEdit: {
-    paddingLeft: 25,
-    paddingRight: 70,
-    paddingTop: 50,
-    textAlign: "center",
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableHeader: {
-    paddingRight: 25,
-    paddingTop: 50,
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#3d467f",
-    fontWeight: "bold",
-    backgroundColor: "white",
-  },
-  tableRow: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-  },
-  tableCell: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "0.9em",
-    color: "#5b5b5b",
-    paddingRight: 45,
-  },
-  tableId: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#5b5b5b",
+  { index: 1 }
+)(Autocomplete);
+const questionTableStyles = makeStyles(
+  {
+    root: {
+      width: "100%",
+    },
+    container: {
+      maxHeight: 440,
+    },
+    tableHID: {
+      paddingLeft: 50,
+      paddingRight: 25,
+      paddingTop: 50,
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableHEdit: {
+      paddingLeft: 25,
+      paddingRight: 70,
+      paddingTop: 50,
+      textAlign: "center",
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableHeader: {
+      paddingRight: 25,
+      paddingTop: 50,
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#3d467f",
+      fontWeight: "bold",
+      backgroundColor: "white",
+    },
+    tableRow: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+    },
+    tableCell: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "0.9em",
+      color: "#5b5b5b",
+      paddingRight: 45,
+    },
+    tableId: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#5b5b5b",
 
-    paddingLeft: 50,
-    paddingRight: 25,
-  },
-  tableEdit: {
-    fontFamily: "Quicksand , sans-serif",
-    borderBottom: "none",
-    fontSize: "1em",
-    color: "#5b5b5b",
-    paddingRight: 50,
-    paddingLeft: 25,
-  },
-  caption: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  toolbar: {
-    "& > p:nth-of-type(2)": {
+      paddingLeft: 50,
+      paddingRight: 25,
+    },
+    tableEdit: {
+      fontFamily: "Quicksand , sans-serif",
+      borderBottom: "none",
+      fontSize: "1em",
+      color: "#5b5b5b",
+      paddingRight: 50,
+      paddingLeft: 25,
+    },
+    caption: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+      marginTop: 10,
+      marginBottom: 30,
+    },
+    toolbar: {
+      "& > p:nth-of-type(2)": {
+        fontFamily: "Quicksand , sans-serif",
+        color: "#5b5b5b",
+        fontSize: "0.775rem",
+        fontWeight: "bold",
+        marginTop: 10,
+        marginBottom: 30,
+      },
+    },
+    select: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+      marginTop: 10,
+      marginBottom: 30,
+    },
+    menuItem: {
+      fontFamily: "Quicksand , sans-serif",
+      color: "#5b5b5b",
+      fontSize: "0.775rem",
+      fontWeight: "bold",
+    },
+    actions: {
       fontFamily: "Quicksand , sans-serif",
       color: "#5b5b5b",
       fontSize: "0.775rem",
@@ -590,71 +629,53 @@ const questionTableStyles = makeStyles({
       marginBottom: 30,
     },
   },
-  select: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-  menuItem: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-  },
-  actions: {
-    fontFamily: "Quicksand , sans-serif",
-    color: "#5b5b5b",
-    fontSize: "0.775rem",
-    fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 30,
-  },
-});
-const QuestionTagAutocomplete = withStyles({
-  input: {
-    marginTop: 7,
-    color: "#5b5b5b",
-    fontFamily: "Quicksand , sans-serif",
-    fontSize: "1.2em",
-  },
-  tag: {
-    marginTop: 15,
-    marginBottom: 10,
-    backgroundColor: "white",
-    height: 25,
-    position: "relative",
-    zIndex: 0,
-    border: "2px solid #a880f7",
-    "& .MuiChip-label": {
-      color: "#3d467f",
+  { index: 1 }
+);
+const QuestionTagAutocomplete = withStyles(
+  {
+    input: {
+      marginTop: 7,
+      color: "#5b5b5b",
       fontFamily: "Quicksand , sans-serif",
-
       fontSize: "1.2em",
-      fontWeight: "bold",
     },
-    "& .MuiChip-deleteIcon": {
-      color: "#FC8FC3",
-      height: 12,
-      width: 12,
-      opacity: 0.8,
-    },
+    tag: {
+      marginTop: 15,
+      marginBottom: 10,
+      backgroundColor: "white",
+      height: 25,
+      position: "relative",
+      zIndex: 0,
+      border: "2px solid #a880f7",
+      "& .MuiChip-label": {
+        color: "#3d467f",
+        fontFamily: "Quicksand , sans-serif",
 
-    //
-    "&:after": {
-      content: '""',
-      right: 10,
-      top: 6,
-      height: 6,
-      width: 6,
-      position: "absolute",
-      backgroundColor: "rgba(0, 0, 0, 0.0)",
-      zIndex: -1,
+        fontSize: "1.2em",
+        fontWeight: "bold",
+      },
+      "& .MuiChip-deleteIcon": {
+        color: "#FC8FC3",
+        height: 12,
+        width: 12,
+        opacity: 0.8,
+      },
+
+      //
+      "&:after": {
+        content: '""',
+        right: 10,
+        top: 6,
+        height: 6,
+        width: 6,
+        position: "absolute",
+        backgroundColor: "rgba(0, 0, 0, 0.0)",
+        zIndex: -1,
+      },
     },
   },
-})(Autocomplete);
+  { index: 1 }
+)(Autocomplete);
 
 const sSampleInput = {
   fontFamily: "Quicksand , sans-serif",
@@ -675,51 +696,54 @@ const sSampleInputfieldDesc = {
   fontSize: "1em",
   // paddingTop: 12,
 };
-const sampleEachStyles = makeStyles((theme) => ({
-  root: {
-    // flexGrow: 1,
-    // width: "65%",
-    // marginLeft: "17%",
-    // marginRight: "15%",
-    // marginTop: "2.5%",
-    // marginBottom: "10%",
-  },
-  paper: {
-    marginBottom: 25,
-
-    height: "600",
-
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
-    // paddingBottom: theme.spacing(1),
-    // padding: theme.spacing(3),
-    // textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-
-  menuitem: {
-    "&.Mui-selected": {
-      fontFamily: "Quicksand , sans-serif",
-      color: "#3d467f",
-      fontSize: "1.2em",
-      fontWeight: "bold",
+const sampleEachStyles = makeStyles(
+  (theme) => ({
+    root: {
+      // flexGrow: 1,
+      // width: "65%",
+      // marginLeft: "17%",
+      // marginRight: "15%",
+      // marginTop: "2.5%",
+      // marginBottom: "10%",
     },
-  },
-  select: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      fontFamily: "Quicksand , sans-serif",
-      color: "#3d467f",
-      fontSize: "1.2em",
-      fontWeight: "bold",
+    paper: {
+      marginBottom: 25,
+
+      height: "600",
+
+      paddingRight: theme.spacing(4),
+      paddingLeft: theme.spacing(4),
+      // paddingBottom: theme.spacing(1),
+      // padding: theme.spacing(3),
+      // textAlign: "center",
+      color: theme.palette.text.secondary,
     },
-    error1: {
-      fontFamily: "Quicksand , sans-serif",
-      color: "#5b5b5b",
-      fontSize: "1.2em",
+
+    menuitem: {
+      "&.Mui-selected": {
+        fontFamily: "Quicksand , sans-serif",
+        color: "#3d467f",
+        fontSize: "1.2em",
+        fontWeight: "bold",
+      },
     },
-  },
-}));
+    select: {
+      "& .MuiTextField-root": {
+        margin: theme.spacing(1),
+        fontFamily: "Quicksand , sans-serif",
+        color: "#3d467f",
+        fontSize: "1.2em",
+        fontWeight: "bold",
+      },
+      error1: {
+        fontFamily: "Quicksand , sans-serif",
+        color: "#5b5b5b",
+        fontSize: "1.2em",
+      },
+    },
+  }),
+  { index: 1 }
+);
 module.exports = {
   sBig,
   sBigTitle,

@@ -11,7 +11,7 @@ import moment from 'moment'
 import UserContext from '../../contexts/user/userContext'
 import InputText from '../utils/InputText'
 const IdBlock = () => {
-	const [dialog,setDialog] = useState(false)
+	const [dialog, setDialog] = useState(false)
 	const [data, setData] = useState([])
 	const [edit, setEdit] = useState(false)
 	const userContext = useContext(UserContext)
@@ -30,7 +30,6 @@ const IdBlock = () => {
 	}
 	useEffect(() => {
 		GetData()
-		console.log(data)
 	}, [param])
 	const useStyles = makeStyles((theme) => ({
 		root: {
@@ -41,7 +40,6 @@ const IdBlock = () => {
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'flexStart',
-			// textAlign: 'center',
 			color: theme.palette.text.secondary,
 		},
 	}))
@@ -54,16 +52,18 @@ const IdBlock = () => {
 		setEditData({ titlethread: '', content: '' })
 	}
 	const saveEdit = () => {
-		api.put(`/api/forum/${data.forumid}`,{old:{content:data.content},new:{...editData}}).then(res=>{
-			setData({...editData})
-			setEdit(false)
-			setEditData({ titlethread: '', content: '' })
-		}).catch(err=>{
-			console.log(err)
-		})
+		api
+			.put(`/api/forum/${data.forumid}`, { old: { content: data.content }, new: { ...editData } })
+			.then((res) => {
+				setData({ ...editData })
+				setEdit(false)
+				setEditData({ titlethread: '', content: '' })
+			})
+			.catch((err) => {
+			})
 	}
 	const handleChangeEdit = (e) => {
-		setEditData({...editData,[e.target.name]: e.target.value})
+		setEditData({ ...editData, [e.target.name]: e.target.value })
 	}
 	const handleLike = (id, callback) => {
 		if (user) {
@@ -74,28 +74,31 @@ const IdBlock = () => {
 					callback()
 				})
 				.catch((err) => {
-					console.log(err)
 				})
 		} else {
 			setDialog(!dialog)
 		}
 	}
-	const handleDelete = ()=> {
-		api.delete(`/api/forum/${data.forumid}`).then(res=>{
-			router.push('/forum')
-		}).catch(err=>{
-			console.log("Lop mai dai")
-		})
+	const handleDelete = () => {
+		api
+			.delete(`/api/forum/${data.forumid}`)
+			.then((res) => {
+				router.push('/forum')
+			})
+			.catch((err) => {
+			})
 	}
 	const classes = useStyles()
 
 	return (
 		<Fragment>
-			{
-				dialog ? (
-					<AuthDialog handleClick={()=>{setDialog(false)}}/>
-				) :null
-			}
+			{dialog ? (
+				<AuthDialog
+					handleClick={() => {
+						setDialog(false)
+					}}
+				/>
+			) : null}
 			<div className={classes.root}>
 				<Grid container spacing={3} variant="outlined">
 					<Grid item xs={12} borderColor="#a27cef">
@@ -112,7 +115,7 @@ const IdBlock = () => {
 								>
 									{edit ? (
 										<div className="edit-title">
-											<input type="text" value={editData.titlethread} onChange={handleChangeEdit} name="titlethread"/>
+											<input type="text" value={editData.titlethread} onChange={handleChangeEdit} name="titlethread" />
 										</div>
 									) : (
 										<div>
@@ -161,11 +164,17 @@ const IdBlock = () => {
 											}}
 											isPointer={true}
 										/>
-										<div style={{cursor:'default !important'}}>{data.likes}</div>
+										<div style={{ cursor: 'default !important' }}>{data.likes}</div>
 									</div>
-									<div style={{ paddingRight: '30px', display: 'flex', alignItems: 'center',cursor:'default !important' }}>
-										<Icon type="comment" changeHover={false} 
-											isPointer={false}/>
+									<div
+										style={{
+											paddingRight: '30px',
+											display: 'flex',
+											alignItems: 'center',
+											cursor: 'default !important',
+										}}
+									>
+										<Icon type="comment" changeHover={false} isPointer={false} />
 										<div>{data.comments}</div>
 									</div>
 								</div>

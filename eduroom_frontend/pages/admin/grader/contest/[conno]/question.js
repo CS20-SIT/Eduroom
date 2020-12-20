@@ -3,15 +3,15 @@ import GeneralNoNav from "../../../../../components/graderCreate/GraderCreateLay
 import GNav from "../../../../../components/graderCreate/GraderCreateLayout/Nav";
 
 import ConQuestionEdit from "../../../../../components/graderCreate/Question/List/List";
-
+import ProtectedAdminRoute from "../../../../../components/admin/protectedAdminRoute";
 const Info = () => {
   return (
-    <Fragment>
+    <ProtectedAdminRoute>
       <GeneralNoNav>
         <GNav> </GNav>
         <ConQuestionEdit />
       </GeneralNoNav>
-    </Fragment>
+    </ProtectedAdminRoute>
   );
 };
 

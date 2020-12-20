@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import GeneralTemplate from '../../../../../../components/template/generalnonav';
-import style from '../../../../../../styles/package/createpackage';
-import EditPackage from '../../../../../../components/package/editPackage';
-import EditConfirm from '../../../../../../components/package/editConfirm';
+import GeneralTemplate from '../../../../../components/template/generalnonav';
+import style from '../../../../../styles/package/createpackage';
+import EditPackage from '../../../../../components/package/editPackage';
+import EditConfirm from '../../../../../components/package/editConfirm';
 const EditPackagePage = ({id}) => {
   const [page, setPage] = useState(1);
   const [myPackage, setMyPackage] = useState({

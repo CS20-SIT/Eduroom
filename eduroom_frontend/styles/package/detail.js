@@ -28,15 +28,27 @@ export default css`
     background: white;
     border-radius: 10px;
     width: 80vw;
-    height: 41vh;
+    height: 38vh;
     background: rgba(255,255,255,0.7);
 
 }
 .incard{
     width: 50vw;
-    margin-left: 65px;
+    margin-left: 10%;
 }
-
+.courseBox {
+    color: black;
+    text-align: left;
+    font-size: 18px;
+    width: 85%;
+    padding: 0.5% 2%;
+    background-color: #e1eefb;
+    border: 1px solid #e1eefb;
+    margin-bottom: 1%;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
 .bigCard{
     display: flex;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
@@ -46,7 +58,7 @@ export default css`
     flex-direction: column;
     background: rgba(255,255,255,0.7);
     margin-bottom: 5%;
-    padding: 0 10%;
+    padding: 0 10% 3%;
 }
 .bigDiv{
     display: flex;
@@ -54,7 +66,7 @@ export default css`
     align-items: center;
     background-color: white;
     width: 60vw;
-    height: 20vh;
+    margin-bottom: 30px;
 
 }
 .bestsell-tag{
@@ -64,8 +76,12 @@ export default css`
 }
 .text2{
     font-weight: 500;
-    margin-left: 10px;
     color: #3D467F;
+}
+.instname{
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
 }
 .instructor{
     display: flex;
@@ -78,6 +94,23 @@ export default css`
     display: flex;
     align-items: flex-start;
     flex-direction: row;
+}
+.coursename{
+    font-family: Lato;
+font-style: normal;
+font-weight: 700;
+font-size: 22px;
+color: #3D467F;
+margin-top: 5px;
+
+}
+.instructor2{
+    font-family: Quicksand;
+font-style: normal;
+font-weight: bold;
+font-size: 15px;
+padding-top: 30px;
+color: #5B5B5B;
 }
 .update-icon{
     width: 20px;

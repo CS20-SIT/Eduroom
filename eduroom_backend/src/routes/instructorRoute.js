@@ -9,6 +9,7 @@ const {
 	Upload,
   GetCategories,
   CreateCourse,
+  DeleteCourse,
 } = require('../controllers/instructorController')
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 const { isInstructor } = require('../middleware/isInstructor')
@@ -25,8 +26,9 @@ router.post('/upload/picture', jwtAuthenicate, isInstructor, uploadToGCSHandler(
 router.post('/upload/sampleVideo', jwtAuthenicate, isInstructor, uploadToGCSHandler('course/sampleVideo'), Upload)
 router.post('/upload/videos', jwtAuthenicate, isInstructor, uploadToGCSHandler('course/video'), Upload)
 router.post('/upload/materials', jwtAuthenicate, isInstructor, uploadToGCSHandler('course/material'), Upload)
-router.post('/Editprofle',jwtAuthenicate, isInstructor,UpdateProfile)
+router.post('/Editprofile',jwtAuthenicate, isInstructor,UpdateProfile)
 router.post('/course', jwtAuthenicate, isInstructor, CreateCourse);
+router.post('/deletecourse', jwtAuthenicate, isInstructor, DeleteCourse);
 
 //,uploadToGCSHandler('course/')
 

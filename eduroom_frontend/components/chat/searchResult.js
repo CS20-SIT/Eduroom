@@ -38,8 +38,8 @@ export default function searchResult(props) {
 							}} >
 								<Avatar
 									style={{ width: 30, height: 30, marginLeft: 7, marginRight: -7 }}
-									alt={el.userFirstName+" "+el.userLastName}
-									src={el.userProfile}
+									alt={el.userfirstname+" "+el.userlastname}
+									src={el.userprofile}
 								/>
 								<div className="searchResult">
 									<p
@@ -53,7 +53,7 @@ export default function searchResult(props) {
 											whiteSpace: 'nowrap',
 										}}
 									>
-										{el.userFirstName+" "+el.userLastName}
+										{el.userfirstname+" "+el.userlastname}
 									</p>
 									<p
 										style={{

@@ -3,12 +3,12 @@ import style from '../../../styles/graderSubmit/problems/problemNav'
 import Link from 'next/link'
 
 const ProblemNav = (props) => {
-	const [language, setLanguage] = useState('Java')
-	const handleChangeSelect = (e) => {
-		let newValue = e.target.value
-		setLanguage(newValue)
-		console.log(newValue)
-	}
+	// const [language, setLanguage] = useState('Java')
+	// const handleChangeSelect = (e) => {
+	// 	let newValue = e.target.value
+	// 	setLanguage(newValue)
+	// 	console.log(newValue)
+	// }
 
 	const menus = [
 		{
@@ -41,7 +41,7 @@ const ProblemNav = (props) => {
 						</div>
 					)
 				})}
-				<select className="box language" onChange={handleChangeSelect}>
+				{/* <select className="box language" onChange={handleChangeSelect}>
 					<option className="language" value="java">
 						Java
 					</option>
@@ -49,7 +49,7 @@ const ProblemNav = (props) => {
 					<option value="c++">C++</option>
 					<option value="python3">Python 3</option>
 					<option value="python2">Python 2</option>
-				</select>
+				</select> */}
 				<div className="link box empty"></div>
 			</div>
 			<style jsx>{style}</style>
