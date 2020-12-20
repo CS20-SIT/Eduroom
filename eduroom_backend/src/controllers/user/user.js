@@ -6,6 +6,7 @@ const fs = require('fs')
 const path = require('path')
 const puppeteer = require('puppeteer')
 const handlebars = require('handlebars')
+const dayjs = require('dayjs')
 const { certificateTemplate } = require('../../utils/certTemplate')
 
 const test = async (req, res) => {
@@ -182,10 +183,8 @@ const getCertificate = async (req, res, next) => {
 	res.status(200).json({ success: true, data: data.rows })
 	return
 }
-const formatDate = (date) => {
-	const d = new Date(date)
-	return d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate()
-}
+
+
 const downloadCertificate = async (req, res, next) => {
 	const user = req.user
 	const courseid = req.body.courseid
@@ -197,15 +196,16 @@ const downloadCertificate = async (req, res, next) => {
 		const cerData = data.rows[0]
 		const templateHTML = certificateTemplate()
 		const template = handlebars.compile(templateHTML)
-		var html = template({ ...cerData, finishdate: formatDate(cerData) })
+		const finishedDate = dayjs(cerData.finishdate).format('D MMMM YYYY')
+		const html = template({ ...cerData, finishdate: finishedDate })
 		const browser = await puppeteer.launch({
 			executablePath: process.env.PUPPETEER_EXEC_PATH, 
 			args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
 			headless: true,
 		})
-		var page = await browser.newPage()
+		const page = await browser.newPage()
 		await page.goto(`data:text/html;charset=UTF-8,${html}`, { waitUntil: 'networkidle0' })
-		const component = await page.$eval('.certificates', (element) => {
+		const component = await page.$eval('.certificate', (element) => {
 			return element.innerHTML
 		})
 		await page.setContent(component)
