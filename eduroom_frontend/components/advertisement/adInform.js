@@ -116,6 +116,7 @@ const Content = () => {
         contactemail: adInfo.contactemail,
         // adimg: adInfo.adimg,
         adimg: res.data[0].linkUrl,
+        
       }
 
       console.log(body);
