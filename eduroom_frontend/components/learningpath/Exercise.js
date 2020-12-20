@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import api from '../../api'
 import style from '../../styles/learningPathStyles/exercise'
 
-const Exercise = ({ id, nodeID}) => {
+const Exercise = ({ id, nodeID }) => {
 	const [learningPath, setLearningPath] = useState(null)
 	const [correct, setCorrect] = useState(null)
 	const [text, setText] = useState('')
@@ -43,10 +43,10 @@ const Exercise = ({ id, nodeID}) => {
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					<div className="container">
 						<div className="card">
-							<div className="back" onClick={() => router.push('/learningpath')}>
+							<span className="back" onClick={() => router.push('/learningpath')}>
 								<i className="fas fa-chevron-left"></i>
 								{'  Back'}
-							</div>
+							</span>
 							<div style={{ margin: '30px' }}>
 								<h1 className="blue" style={{ margin: '0' }}>
 									{learningPath.path_name} Path
