@@ -57,7 +57,7 @@ exports.selectForum = async (req, res, next) => {
 		[id, user?.id ?? null]
 	)
 	const data2 = await pool.query(
-		'select f.forumid, answerno, f.userid, displayname as author, anstime, isdelete, answer from forum_answer_form f join user_profile u on f.userid = u.userid where isdelete = false and f.forumid= $1  ',
+		'select f.forumid, answerno, f.userid, displayname as author, anstime, isdelete, answer from forum_answer_form f join user_profile u on f.userid = u.userid where isdelete = false and f.forumid= $1 order by anstime asc  ',
 		[id]
 	)
 	const forum = data.rows[0]
