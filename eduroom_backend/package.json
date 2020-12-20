@@ -5,7 +5,7 @@
   "scripts": {
     "start": "NODE_ENV=production node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "jest": {
     "testMatch": [
