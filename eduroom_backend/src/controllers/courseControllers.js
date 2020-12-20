@@ -80,7 +80,7 @@ exports.searchCategory = async (req, res, next) => {
 //course shop page
 exports.getCourse = async (req, res, next) => {
 	try {
-		const data = await pool.query(`select u.firstname,u.lastname, c.coursename, c.coursepicture,c.price
+		const data = await pool.query(`select u.firstname,u.lastname, c.coursename, c.coursepicture,c.price,c.courseid
         from course c , instructor i, user_profile u 
         where i.userid = u.userid and c.status = 'Approved' 
         and i.instructorid = c.ownerid `)
@@ -102,3 +102,4 @@ exports.getCourse = async (req, res, next) => {
 		res.status(400).send(err.message)
 	}
 }
+

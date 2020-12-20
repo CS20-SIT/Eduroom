@@ -30,5 +30,9 @@ export default css`
     }
       
 }
+img{
+    height: 50%;
+    width: 50%;
+}
 
 `

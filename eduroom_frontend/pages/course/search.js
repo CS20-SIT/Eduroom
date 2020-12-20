@@ -41,7 +41,6 @@ const Search = () => {
       <GeneralNonav>
         <div className='bg'>
           <div className='container-1'>
-
             <div className='text-center flex my-6 mx-search'>
               <SearchBar />
               <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'

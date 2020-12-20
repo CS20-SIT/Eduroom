@@ -75,7 +75,10 @@ exports.getPackage = async (req, res, next) => {
 exports.getAllPackage = async (req, res, next) => {
 	try {
 		const data = await pool.query(
-			'select * from instructor join user_profile up on instructor.userid = up.userid join package p on instructor.instructorid = p.instructorid where ispublic = true'
+			` select sum(price) * ((100 - p.discount) / 100) as price,p.packageid,packagename,p.discount,p.ispublic,p.detail,p.cateid,p.image,ca.cate_name,u.firstname,u.lastname
+			from package p,package_courses pc,course c,package_category ca,user_profile u,instructor i
+			where p.packageid = pc.packageid and c.courseid = pc.courseid and p.cateid = ca.cateid and p.instructorid = i.instructorid and i.userid = u.userid and ispublic = true
+			group by p.packageid, ca.cate_name,u.firstname,u.lastname`
 		)
 		const packageInfo = data.rows
 		const temp = packageInfo.map((pack) => {
@@ -90,6 +93,7 @@ exports.getAllPackage = async (req, res, next) => {
 				cateid: pack.cateid,
 				infname: pack.firstname,
 				inlname: pack.lastname,
+				price: parseFloat(pack.price).toFixed(2)
 			}
 		})
 		res.send(temp)
