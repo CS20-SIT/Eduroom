@@ -1,6 +1,9 @@
 const express = require("express");
 const path = require("path");
-const { jwtAuthenicate } = require("../middleware/jwtAuthenticate");
+const {
+  jwtAuthenicate,
+  jwtAdminAuthenticate,
+} = require("../middleware/jwtAuthenticate");
 
 const router = express.Router();
 
@@ -78,57 +81,53 @@ const {
   getSubmission,
 } = require("../controllers/graderSystem");
 
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(process.cwd() + "/src/uploadedTestCase"));
-  },
-  filename: (req, file, cb) => {
-    // console.log(file);
-    cb(null, Date.now() + file.originalname);
-  },
-});
-router.post("/ptc", uploadToGCSHandler("question_testcase/"), pTestcase);
+router.post(
+  "/ptc",
+  uploadToGCSHandler("question_testcase/"),
+  jwtAdminAuthenticate,
+  pTestcase
+);
 router.get("/", test);
-router.get("/ann", getAnn);
-router.post("/cann", postAnn);
-router.put("/eann", editAnn);
-router.post("/ccontest", pContest);
-router.post("/ccontestann", pContestAnn);
-router.post("/ccontestquestion", pContestQuestion);
+router.get("/ann", jwtAdminAuthenticate, getAnn);
+router.post("/cann", jwtAdminAuthenticate, postAnn);
+router.put("/eann", jwtAdminAuthenticate, editAnn);
+router.post("/ccontest", jwtAdminAuthenticate, pContest);
+router.post("/ccontestann", jwtAdminAuthenticate, pContestAnn);
+router.post("/ccontestquestion", jwtAdminAuthenticate, pContestQuestion);
 
-router.put("/econtest", eContest);
-router.put("/econtestann", eContestAnn);
-router.get("/allcontest", gAllContest);
-router.get("/contest", gContest);
-router.get("/contestann", gContestAnn);
-router.get("/contestquestion", gContestQuestion);
+router.put("/econtest", jwtAdminAuthenticate, eContest);
+router.put("/econtestann", jwtAdminAuthenticate, eContestAnn);
+router.get("/allcontest", jwtAdminAuthenticate, gAllContest);
+router.get("/contest", jwtAdminAuthenticate, gContest);
+router.get("/contestann", jwtAdminAuthenticate, gContestAnn);
+router.get("/contestquestion", jwtAdminAuthenticate, gContestQuestion);
 
-router.post("/cquestion", pQuestion);
-router.post("/cquestiontag", pQuestionTag);
-router.post("/ccontestexistquestion", pContestExistingQuestion);
-router.post("/ctags", pTag);
-router.post("/cquestionsample", pQuestionSample);
-router.post("/cquestiontestcase", pQuestionTestcase);
+router.post("/cquestion", jwtAdminAuthenticate, pQuestion);
+router.post(
+  "/ccontestexistquestion",
+  jwtAdminAuthenticate,
+  pContestExistingQuestion
+);
+router.post("/cquestionsample", jwtAdminAuthenticate, pQuestionSample);
+router.post("/cquestiontestcase", jwtAdminAuthenticate, pQuestionTestcase);
 
-router.put("/equestion", eQuestion);
-router.put("/equestionsample", eQuestionSample);
-router.put("/equestiontestcase", eQuestionTestcase);
+router.put("/equestion", jwtAdminAuthenticate, eQuestion);
+router.put("/equestionsample", jwtAdminAuthenticate, eQuestionSample);
+router.put("/equestiontestcase", jwtAdminAuthenticate, eQuestionTestcase);
 
-router.get("/alladminlog", gAllAdminLog);
-router.get("/allquestion", gAllQuestions);
-router.get("/alltag", gAllTag);
-router.get("/addexistingquestion", gNonExistQuestion);
-router.get("/question", gQuestion);
-router.get("/questionsample", gQuestionSample);
-router.get("/questiontag", gQuestionTag);
-router.get("/questiontestcase", gQuestionTestcase);
+router.get("/alladminlog", jwtAdminAuthenticate, gAllAdminLog);
+router.get("/allquestion", jwtAdminAuthenticate, gAllQuestions);
+router.get("/alltag", jwtAdminAuthenticate, gAllTag);
+router.get("/addexistingquestion", jwtAdminAuthenticate, gNonExistQuestion);
+router.get("/question", jwtAdminAuthenticate, gQuestion);
+router.get("/questionsample", jwtAdminAuthenticate, gQuestionSample);
+router.get("/questiontag", jwtAdminAuthenticate, gQuestionTag);
+router.get("/questiontestcase", jwtAdminAuthenticate, gQuestionTestcase);
 
-router.delete("/dquestiontestcase", dTestcase);
-router.delete("/dquestionsample", dSample);
-router.delete("/dquestion", dQuestion);
-router.delete("/dcontestquestion", dConQuestion);
+router.delete("/dquestiontestcase", jwtAdminAuthenticate, dTestcase);
+router.delete("/dquestionsample", jwtAdminAuthenticate, dSample);
+router.delete("/dquestion", jwtAdminAuthenticate, dQuestion);
+router.delete("/dcontestquestion", jwtAdminAuthenticate, dConQuestion);
 
 // Toei
 router.get("/getPreviewQuestion", gPreviewQuestions);
