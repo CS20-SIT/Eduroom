@@ -31,6 +31,8 @@ export default css`
 	.list-of-pages {
 		display: flex;
 		justify-content: center;
+		width: 50vw;
+		margin-top: 20px;
 	}
 
 	.button-container {
