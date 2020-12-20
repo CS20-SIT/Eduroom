@@ -134,7 +134,7 @@ export default css`
   padding: 0.5rem;
   cursor: pointer; 
   font-weight: 800;
-  font-size : 28px;
+  font-size : 20px;
   color : #999999;
   z-index : 2;
 }
