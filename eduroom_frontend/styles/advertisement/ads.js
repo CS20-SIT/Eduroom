@@ -282,5 +282,11 @@ export default css`
     transition: 0.25s;
     right: 40px;
   }
+  .create-new-ad{
+    padding: 0.5% 0% 0.5% 1.5%;
+    background: white;
+    border-radius: 10px;
+    width: 15%;
+  }
 `;
 5

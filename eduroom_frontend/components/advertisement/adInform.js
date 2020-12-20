@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/advertisement/ads';
-import { withStyles, InputBase, Link, MenuItem, Select, Paper, Grid, FormControl, Typography } from '@material-ui/core'
+import { withStyles, InputBase, Link, MenuItem, Select, Paper, Grid, FormControl, Typography,image } from '@material-ui/core'
 import General from '../template/general'
 import { makeStyles } from '@material-ui/core/styles'
 import { useRouter } from 'next/router';
@@ -140,9 +140,15 @@ const Content = () => {
         <div style={{ backgroundImage: `url('/images/big-bg.svg')`, backgroundSize: 'cover', paddingTop: '13%' }} >
           <Paper style={{ margin: '0% 5% 5% 5%' }}>
             <div style={{ marginLeft: '50px' }}>
-              <div className="ad-ad-header" style={{ paddingTop: '50px', paddingBottom: '50px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={6}><div className="ad-ad-header" style={{ paddingTop: '50px', paddingBottom: '50px' }}>
                 Information
-            </div>
+            </div></Grid>
+            <Grid item xs={6}><div className="ad-ad-header" style={{ paddingTop: '50px', paddingBottom: '50px', marginLeft:"60%" }}>
+              <Link href="../advertisement/adpayment">Go to cart
+              <img src="https://www.flaticon.com/svg/static/icons/svg/879/879815.svg" style={{width:"50px"}}></img>
+              </Link></div></Grid>
+              </Grid>
               <div >
                 <Grid container spacing={3}>
                   <Grid item xs={4}>
