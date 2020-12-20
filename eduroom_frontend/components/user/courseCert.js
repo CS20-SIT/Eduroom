@@ -1,25 +1,18 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import Certificate from './certificate'
-// import html2canvas from 'html2canvas'
+import api from '../../api'
 const CourseCert = (props) => {
     const formatDate = (date) => {
         const d = new Date(date)
         return d.getFullYear() +'/'+(d.getMonth() +1)+'/' + d.getDate()
     }
-    const handleDownload = (index) => {
-        // if(html2canvas){
-        // html2canvas(document.getElementsByClassName("cert")[0].children[0]).then(canvas=>{
-        //     // const canvasWidth= '1754px';
-        //     // const canvasHeight = '1240px';
-        //     // canvas2Image.saveAsPNG(canvas,canvasWidth,canvasHeight)
-        //     const image = canvas.toDataURL("image/png")
-        //     const downloadLink = document.createElement('a')
-        //     downloadLink.href = image;
-        //     downloadLink.download = 'certificate.png'
-        //     document.body.appendChild(downloadLink)
-        //     downloadLink.click()
-        //     document.body.removeChild(downloadLink)
-        // })}
+    const handleDownload = (courseid) => {
+        api.post('/api/user/certificate',{courseid}).then(res=>{
+            let link = document.createElement('a');
+            link.href = res.data;
+            link.download = `${props.data.coursename}-certificate.png`;
+            link.click();
+        })
     }
 	return (
 		<Fragment>
@@ -27,7 +20,7 @@ const CourseCert = (props) => {
 				<div className="course-content">
 					<div style={{paddingBottom:'1rem'}}><b>Course Name:</b> {props.data.coursename}</div>
 					<div style={{paddingBottom:'1rem'}}><b>Receive Date:</b> {formatDate(props.data.finishdate)}</div>
-                    <div className="download" onClick={()=>handleDownload(props.index)}>Download</div>
+                    <div className="download" onClick={()=>handleDownload(props.data.courseid)}>Download</div>
 				</div>
 				<div className="cert">
 					<Certificate data={props.data} />

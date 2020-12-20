@@ -146,7 +146,7 @@ const AddExistingQuestionButton = (props) => {
           <DialogContentText>
             <span style={sText}>
               {" "}
-              The Questions have been added to the contest.
+              The Questions has been added to the contest.
             </span>
           </DialogContentText>
         </DialogContent>

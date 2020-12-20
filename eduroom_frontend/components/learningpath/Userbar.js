@@ -4,13 +4,15 @@ const UserBar = ({user}) => {
         <Fragment>
             <div className="user-bar">
                 <div className="row">
-                    <div>LV : {user.level}</div>
-                    <div>&#127942; : {user.trophy}/10</div>
+                    <div style={{padding:'.1rem 1rem', fontWeight:'900', marginTop:'2px', fontSize:'20px'}}>LV : {user.level}</div>
+                    <div style={{fontSize:'20px' ,background:'#A27CEF',color:'white',padding:'.1rem 1rem',borderRadius:'1rem',marginRight:'5px', fontWeight:'900'}}>
+                    {user.exp}/9999</div>
+                    <div style={{padding:'.1rem 1rem',fontWeight:'900',fontSize:'20px'}}> &#127942; : {user.trophy}/10</div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                     <div style={{background:'#A27CEF',color:'white',padding:'.1rem 1rem',borderRadius:'1rem'}}>
                     {user.exp}/9999</div>
-                </div>
+                </div> */}
             </div>
             <style jsx>
                 {`

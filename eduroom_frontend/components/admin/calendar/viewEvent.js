@@ -23,7 +23,7 @@ const Content = (props) => {
     useEffect(() => {
         const GetData = async () => {
             const result = await api.get("/api/event/getGlobalEvent");
-            
+
             setData(result.data);
         };
         GetData();
@@ -64,24 +64,30 @@ const Content = (props) => {
                         <div className="d-top">
                             <div className="d-day">{showDate} {currentMonth} {currentYear}</div>
                         </div>
+                        <div className="Cpoint" style={{ background: "#fdd4c1"}}></div>
+                        <div className="dot-course">Course</div>
+                        <div className="Gpoint" style={{ background: "#A880F7"}}></div>
+                        <div className="dot-global">Global</div>
 
                         <div className="content">
                             <div>
 
                                 {data.map((row) => {
+                                    console.log("Start day is " + row.startday);
+                                    console.log("showdate is " + showDate);
 
-                                    return (showDate == row.startday && currentMonthNo == row.nowmonth ?
+                                    return (showDate >= row.startday && showDate <= row.enddate && currentMonthNo == row.nowmonth ?
 
                                         <div className="d-block">
-                                           {/*  {
+                                            {/*  {
                                                 isInstructor ? ( */}
-                                                    <div className="edit">
-                                                        <Edit id={row.eventid} ></Edit>
-                                                        <Delete id={row.eventid}></Delete>
-                                                    </div>
+                                            <div className="edit">
+                                                <Edit id={row.eventid} ></Edit>
+                                                <Delete id={row.eventid}></Delete>
+                                            </div>
 
 
-                                          {/*       ) : null
+                                            {/*       ) : null
                                             } */}
 
                                             <div className="title">{row.title}</div>
@@ -89,8 +95,10 @@ const Content = (props) => {
                                             {row.event_type == 'course' ? <div className="point" style={{ background: "#fdd4c1" }}></div>
                                                 :
                                                 <div className="point" style={{ background: "#A880F7" }}></div>}
-                                            <div className="detail">{row.hstart}:{row.mstart} - {row.hend}:{row.mend} | {row.place}</div>
-                                        </div>
+                                                
+                                           <div className="detail">{row.hstart}:{row.mstart} - {row.hend}:{row.mend}</div>
+                                           <div className="detail" style={{marginTop:".5rem"}}>{showDate} {currentMonth} - {row.enddate} {currentMonth}</div>
+</div>
                                         : "")
                                 })}
 
@@ -98,14 +106,14 @@ const Content = (props) => {
                         </div>
 
 
-                       {/*  {isInstructor ? ( */}
-                            <div className="d-buttom">
-                                <div onClick={() => { setOpenEvent(true) }} >
-                                    <button className="button">
-                                        Add New Event
+                        {/*  {isInstructor ? ( */}
+                        <div className="d-buttom">
+                            <div onClick={() => { setOpenEvent(true) }} >
+                                <button className="button">
+                                    Add New Event
                                 </button>
-                                </div>
                             </div>
+                        </div>
                         {/* ) : null} */}
 
                     </div>

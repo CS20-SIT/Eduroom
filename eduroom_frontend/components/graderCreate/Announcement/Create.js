@@ -20,12 +20,16 @@ import {
   sInput,
   sButtionandVisbile,
 } from "../materialUIStyle";
+import { useContext } from "react";
+import AdminContext from "../../../contexts/admin/adminContext";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const AnnEdit = (props) => {
+  const adminContext = useContext(AdminContext);
+  const { admin } = adminContext;
   const [erorvalid, seterorValid] = React.useState(false);
   const [open, setOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
@@ -51,7 +55,6 @@ const AnnEdit = (props) => {
   const [ann, setAnn] = useState({
     title: "",
     description: "",
-    adminid: "12345678-1234-1234-1234-123456789123", //TODO
   });
   const setDesc = (event) => {
     setAnn({ ...ann, description: event.target.value });
@@ -80,7 +83,6 @@ const AnnEdit = (props) => {
       const data = {
         title: ann.title,
         description: ann.description,
-        adminid: ann.adminid,
         isvisible: visible,
       };
       if (props.conid != undefined) {
@@ -212,7 +214,7 @@ const AnnEdit = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <span style={sText}> Your announcement have been created.</span>
+            <span style={sText}> Your announcement has been created.</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

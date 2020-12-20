@@ -235,55 +235,79 @@ exports.googleCallbackController = async (req, res) => {
 }
 
 exports.adminRegisController = async (req, res) => {
-	const { username, password } = req.body
-	const existingAdmin = await pool.query(`SELECT adminid FROM admin_login WHERE username = '${username}';`)
-	if(existingAdmin.rowCount !== 0){
+	try {
+		const { username, password } = req.body
+		const existingAdmin = await pool.query(`SELECT adminid FROM admin_login WHERE username = '${username}';`)
+		if(existingAdmin.rowCount !== 0){
+			const err = {
+				statusCode: 400,
+				message: 'Username is used',
+			}
+			return errorHandler(err, req, res)
+		}
+		const adminId = uuidv4()
+		const hashedPassword = await bcrypt.hash(password, 10)
+		const insertAdminQuery = `INSERT INTO admin_login(adminid, username, password, firstname, lastname, displayname, avatar, role) 
+		VALUES ('${adminId}', '${username}', '${hashedPassword}', $1, $1, $1, $1, $1)`
+		await pool.query(insertAdminQuery, [''])
+
+		// const token = generateCookieAdminJWT(adminId)
+		// res.cookie('jwt', token)
+
+		res.status(201).send({ success: true })
+		// res.redirect(process.env.ENTRYPOINT_URL)
+	} catch (error) {
 		const err = {
-			statusCode: 400,
-			message: 'Username is used',
+			statusCode: 500,
+			message: error,
 		}
 		return errorHandler(err, req, res)
 	}
-	const adminId = uuidv4()
-	const hashedPassword = await bcrypt.hash(password, 10)
-	const insertAdminQuery = `INSERT INTO admin_login(adminid, username, password, firstname, lastname, displayname, avatar, role) 
-	VALUES ('${adminId}', '${username}', '${hashedPassword}', $1, $1, $1, $1, $1)`
-	await pool.query(insertAdminQuery, [''])
-
-	const token = generateCookieAdminJWT(adminId)
-	res.cookie('jwt', token)
-
-	res.status(201).send({ success: true })
-	// res.redirect(process.env.ENTRYPOINT_URL)
 }
 
 exports.adminLoginController = async (req, res) => {
-	const { username, password } = req.body
-	const existingAdmin = await pool.query(`SELECT adminid, password FROM admin_login WHERE username = '${username}';`)
-	if(existingAdmin.rowCount === 0) {
+	try {
+		const { username, password } = req.body
+		const existingAdmin = await pool.query(`SELECT adminid, password FROM admin_login WHERE username = '${username}';`)
+		if(existingAdmin.rowCount === 0) {
+			const err = {
+				statusCode: 400,
+				message: 'User does not exist',
+			}
+			return errorHandler(err, req, res)
+		}
+
+		const matchedPassword = await bcrypt.compare(password, existingAdmin.rows[0].password)
+		if(!matchedPassword){
+			const err = {
+				statusCode: 400,
+				message: 'Password is not correct',
+			}
+			return errorHandler(err, req, res)
+		}
+
+		const token = generateCookieAdminJWT(existingAdmin.rows[0].adminid)
+		res.cookie('jwt', token)
+		res.send({ success: true })
+	} catch (error) {
 		const err = {
-			statusCode: 400,
-			message: 'User does not exist',
+			statusCode: 500,
+			message: error,
 		}
 		return errorHandler(err, req, res)
 	}
-
-	const matchedPassword = await bcrypt.compare(password, existingAdmin.rows[0].password)
-	if(!matchedPassword){
-		const err = {
-			statusCode: 400,
-			message: 'Password is not correct',
-		}
-		return errorHandler(err, req, res)
-	}
-
-	const token = generateCookieAdminJWT(existingAdmin.rows[0].adminid)
-	res.cookie('jwt', token)
-	res.send({ success: true })
 }
 
 exports.adminProfileController = async (req, res) => {
-	const adminId = req.user.id
-	const admin = await pool.query(`SELECT displayname, firstname, lastname, avatar, role FROM admin_login WHERE adminid = '${adminId}';`)
-	res.send(admin.rows[0])
+	try {
+		const adminId = req.user.id
+		const admin = await pool.query(`SELECT displayname, firstname, lastname, avatar, role FROM admin_login WHERE adminid = '${adminId}';`)
+		res.send(admin.rows[0])	
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
 }
