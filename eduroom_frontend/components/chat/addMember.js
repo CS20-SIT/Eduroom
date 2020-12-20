@@ -10,7 +10,6 @@ export default function addMember(props) {
           value={props.input}
           onChange={e => {
             props.setInput(e.target.value)
-            props.getSearchResult()
           }}
           style={{ paddingRight: 30, width: "100%" }}
           placeholder="Add Member"

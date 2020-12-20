@@ -150,19 +150,19 @@ exports.fetchScoreRank = async (req, res, next) => {
     console.log('sessionScoreRank', sessionid)
     const result = await pool.query('SELECT * from kahoot_roomhistoryplayer where sessionid=$1 order by rank desc ', [sessionid]);
     const useridWHOGetCoin = await pool.query('SELECT userid from kahoot_roomhistoryplayer where sessionid=$1 order by rank desc fetch first 3 rows only;', [sessionid]);
-    // console.log('userid will get a score', useridWHOGetCoin.rows.length)
-    // console.log('userid', useridWHOGetCoin.rows[0].userid)
-    // const coins = [15, 10, 5]
-    // for (let index = 0; index < useridWHOGetCoin.rows.length; index++) {
-    //   const userId = useridWHOGetCoin.rows[index].userid;
-    //   const getCoinOwner = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}';`)
-    //   let amountOfCoin = getCoinOwner.rows[0].amountofcoin;
-    //   amountOfCoin += coins[index];
-    //   await pool.query(`INSERT INTO coin_transaction(userid, date, amountofcointransaction)
-    //                VALUES ('${userId}',current_timestamp,${coins[index]});`)
-    //   console.log('query', userId, coins[index])
-    //   await pool.query(`UPDATE coin_owner SET amountofcoin=${amountOfCoin} WHERE userid='${userId}';`)
-    // }
+    console.log('userid will get a score', useridWHOGetCoin.rows.length)
+    console.log('userid', useridWHOGetCoin.rows[0].userid)
+    const coins = [15, 10, 5]
+    for (let index = 0; index < useridWHOGetCoin.rows.length; index++) {
+      const userId = useridWHOGetCoin.rows[index].userid;
+      const getCoinOwner = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}';`)
+      let amountOfCoin = getCoinOwner.rows[0].amountofcoin;
+      amountOfCoin += coins[index];
+      await pool.query(`INSERT INTO coin_transaction(userid, date, amountofcointransaction)
+                   VALUES ('${userId}',current_timestamp,${coins[index]});`)
+      console.log('query', userId, coins[index])
+      await pool.query(`UPDATE coin_owner SET amountofcoin=${amountOfCoin} WHERE userid='${userId}';`)
+    }
     let rank = [];
     let score = [];
     for (let i = 0; i < result.rows.length; i++) {
