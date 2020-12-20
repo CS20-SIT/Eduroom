@@ -9,7 +9,8 @@ const Quizs = ({ id, nodeID }) => {
 	const [questions, setQuestions] = useState(null)
 	const [current, setCurrent] = useState(0)
 	const [num, setNum] = useState(null)
-	const [selected, setSelected] = useState()
+	const [selected, setSelected] = useState([])
+	const [submit, setSubmit] = useState(false)
 	const router = useRouter()
 	const fetchData = async () => {
 		try {
@@ -32,7 +33,11 @@ const Quizs = ({ id, nodeID }) => {
 		setSelected([...newSelected])
 	}
 	const renderQuestion = () => {
-		return <Quiz id={current} data={questions[current]} selected={selected} changeSelected={changeSelected}></Quiz>
+		return (
+			<div style={{ minHeight: '240px' }}>
+				<Quiz id={current} data={questions[current]} selected={selected} changeSelected={changeSelected}></Quiz>
+			</div>
+		)
 	}
 	const handleLeft = () => {
 		if (current !== 0) {
@@ -40,7 +45,7 @@ const Quizs = ({ id, nodeID }) => {
 		}
 	}
 	const renderButton = () => {
-		const rightButton = (
+		let rightButton = (
 			<Fragment>
 				<div onClick={() => setCurrent(current + 1)} className="goQuestion">
 					<div style={{ marginRight: '5px' }}>Next Question</div>
@@ -52,7 +57,9 @@ const Quizs = ({ id, nodeID }) => {
 		if (current === num - 1) {
 			rightButton = (
 				<Fragment>
-					<div className="submitBtn">Submit</div>
+					<div className="submitBtn" onClick={() => setSubmit(true)}>
+						Submit
+					</div>
 					<style jsx>{style}</style>
 				</Fragment>
 			)
@@ -60,7 +67,7 @@ const Quizs = ({ id, nodeID }) => {
 		return (
 			<Fragment>
 				<div className="action">
-					<div className={`goQuestion`} onClick={handleLeft}>
+					<div className={`goQuestion ${current === 0 ? 'disable' : ''}`} onClick={handleLeft}>
 						<i className={`fas fa-chevron-left `}></i>
 						<div style={{ marginLeft: '5px' }}>Previous Question</div>
 					</div>
@@ -69,6 +76,38 @@ const Quizs = ({ id, nodeID }) => {
 				<style jsx>{style}</style>
 			</Fragment>
 		)
+	}
+	const getScore = () => {
+		console.log(questions, selected)
+		let sum = 0
+		for (let i = 0; i < questions.length; i++) {
+			for (let j = 0; j < questions[i].choices.length; j++) {
+				const c = questions[i].choices[j]
+				if (c.iscorrect && selected[i] === j) {
+					sum++
+					break
+				}
+			}
+		}
+		return sum
+	}
+	const renderContent = () => {
+		if (submit) {
+			return (
+				<Fragment>
+					<h4 style={{ textAlign: 'center' }}>
+						Your score: {getScore()}/{num}
+					</h4>
+				</Fragment>
+			)
+		} else {
+			return (
+				<Fragment>
+					{renderQuestion()}
+					{renderButton()}
+				</Fragment>
+			)
+		}
 	}
 	const renderPage = () => {
 		if (!questions || !detail) return null
@@ -86,8 +125,7 @@ const Quizs = ({ id, nodeID }) => {
 									{detail.path_name} Path
 								</h1>
 								<h3 style={{ margin: '0' }}>{detail.node_name}</h3>
-								{renderQuestion()}
-								{renderButton()}
+								{renderContent()}
 							</div>
 						</div>
 					</div>
