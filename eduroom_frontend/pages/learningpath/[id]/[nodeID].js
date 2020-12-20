@@ -1,26 +1,32 @@
-import { Fragment } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import General from '../../../components/template/general'
 import api from '../../../api'
-const NodeExercise = ({ id, nodeID }) => {
-	const [learningPath,setLearningPath] = useState(null)
-	const fetchLearningPath = async () =>{
-		try{
-			const res = await api.get('/api/test');
-		}catch(err){
-
+import Exercise from '../../../components/learningpath/Exercise'
+import Quiz from '../../../components/learningpath/Quiz'
+const NodeQuestion = ({ id, nodeID }) => {
+	const [type, setType] = useState(null)
+	const fetchType = async () => {
+		try {
+			const res = await api.get('/api/learningpath/nodeType', { params: { nodeID: nodeID } })
+			setType(res.data.type)
+		} catch (err) {
+			console.log(err)
 		}
 	}
-	const renderPage = () =>{
-		if(!learningPath) return null
+	useEffect(() => {
+		fetchType()
+	}, [nodeID])
+	const renderPage = () => {
+		if (type === 'exercise') {
+			return <Exercise type="exercise" id={id} nodeID={nodeID}></Exercise>
+		} else if (type === 'quiz') {
+			return <Quiz type="exercise" id={id} nodeID={nodeID}></Quiz>
+		}
 	}
 	return (
 		<Fragment>
 			<General>
-				<div>
-					<h1>
-						This is exercise {id} {nodeID}
-					</h1>
-				</div>
+				<div>{renderPage()}</div>
 			</General>
 		</Fragment>
 	)
@@ -35,4 +41,4 @@ export async function getServerSideProps(ctx) {
 		return { props: { id: '', nodeID: '' } }
 	}
 }
-export default NodeExercise
+export default NodeQuestion

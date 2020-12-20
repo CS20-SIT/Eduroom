@@ -4,6 +4,7 @@ import ChatRoom from '../../components/chat/chatRoom'
 import ChatContact from '../../components/chat/chatContact'
 import EditChat from '../../components/chat/editChat'
 import Nav from '../../components/template/generalnonav'
+import EmptyChatIcon from '../../components/chat/icons/EmptyChatIcon'
 import api from '../../api'
 
 export default function Chat() {
@@ -12,6 +13,12 @@ export default function Chat() {
 	const [selectChat, setSelectChat] = useState(null)
 	const [chatRoomDetail, setChatRoomDetail] = useState(null)
 	const [userProfile, setUserProfile] = useState(null)
+	const [chatList, setChatList] = useState(null)
+	const getChatList = async () => {
+		const res = await api.get(`/api/chat/getChatlist`)
+		console.log(res.data)
+		setChatList(res.data)
+	}
 	const [expand, setExpand] = useState({
 		width: 'calc(75% - 14px)',
 		position: 'relative',
@@ -21,18 +28,27 @@ export default function Chat() {
 		display: 'none',
 	})
 	const getChatRoomDetail = () => {
-		api.get(`/api/chat/chatRoomDetailMockup`).then((res) => {
+		api.get(`/api/chat/getChatroomDetail`, { params: { chatroomid: selectChat.chatroomid } }).then((res) => {
+			setChatRoomDetail(null)
 			setChatRoomDetail(res.data)
+			console.log(res.data)
 		})
 	}
 	const getUserProfileInfo = async () => {
-		api.get(`/api/chat/getUserProfileMockup`).then((res) => {
+		api.get(`/api/chat/getUserProfile`).then((res) => {
 			setUserProfile(res.data)
 		})
 	}
 	useEffect(() => {
 		getUserProfileInfo()
 	}, [])
+	useEffect(() => {
+		getChatList()
+		if (chatRoomDetail != null) {
+			setMessageLeftColor(chatRoomDetail.themeColor.recievecolor)
+			setMessageRightColor(chatRoomDetail.themeColor.sendcolor)
+		}
+	}, [chatRoomDetail])
 	useEffect(() => {
 		if (selectChat) {
 			getChatRoomDetail()
@@ -46,7 +62,7 @@ export default function Chat() {
 					<div style={{ width: '25%', backgroundColor: '#f4f5f7' }}>
 						{(() => {
 							if (userProfile) {
-								return <ChatContact setSelectChat={setSelectChat} selectChat={selectChat} userProfile={userProfile} />
+								return <ChatContact setSelectChat={setSelectChat} selectChat={selectChat} userProfile={userProfile} chatList={chatList} getChatList={getChatList} setChatRoomDetail={setChatRoomDetail}/>
 							}
 						})()}
 					</div>
@@ -61,13 +77,19 @@ export default function Chat() {
 											setExpandEdit: setExpand2,
 											messageLeftColor: messageLeftColor,
 											messageRightColor: messageRightColor,
+											chatroomid:selectChat.chatroomid
 										}}
 										chatRoomDetail={chatRoomDetail}
 										userProfile={userProfile}
 										getChatRoomDetail={getChatRoomDetail}
 									/>
 								)
-							}
+							} else {
+								return (
+									<div style={{width:'100%',height:'100%'}}>
+								<EmptyChatIcon style={{ display: 'block', marginLeft: 'auto',marginTop:'auto',marginBottom:'auto', marginRight: 'auto' }} />
+								</div>
+								)}
 						})()}
 					</div>
 					<div item style={expand2}>
@@ -83,6 +105,8 @@ export default function Chat() {
 										}}
 										chatRoomDetail={chatRoomDetail}
 										getChatRoomDetail={getChatRoomDetail}
+										getChatList={getChatList}
+										setChatList={setChatList}
 									/>
 								)
 							}
