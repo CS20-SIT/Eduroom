@@ -58,22 +58,43 @@ const Content = () => {
 
     <div>
       <div className="ad-ad-header" style={{ marginLeft: "43%" }}><h3>create code</h3></div>
-      <div className="ad-ad-description" style={{ margin: "-2% 0% 1% 20%" }}>Code Name
-          <Paper style={{ padding: 10, backgroundColor: '#EFF0F6', width: "35%", margin: "1% 0% 1% 0%" }}>
-          <form>
-            <InputBase
-              onChange={(e) =>
-                setcouponInfo({ ...couponInfo, codename: e.target.value })
-              }
-              name="codename"
-              fullWidth
-              autoFocus
-              type={"text"}
-              placeholder={"Code name"}
-              inputProps={{ 'aria-label': 'naked' }}
-            />
-          </form>
-        </Paper>
+      <div className="ad-ad-description" style={{ margin: "-2% 0% 1% 20%" }}>
+      <Grid container spacing={3} style={{ marginTop: "20px" }}>
+          <Grid item xs={6} >Codename
+            <Paper style={{ padding: 10, backgroundColor: '#EFF0F6', width: "60%", marginTop: "1%" }}>
+              <form>
+                <InputBase
+                  onChange={(e) =>
+                    setcouponInfo({ ...couponInfo, codename: e.target.value })
+                  }
+                  name="codename"
+                  fullWidth
+                  autoFocus
+                  type={"text"}
+                  placeholder={"codename"}
+                  inputProps={{ 'aria-label': 'naked' }}
+                />
+              </form>
+            </Paper>
+            </Grid>
+            <Grid item xs={6} style={{marginLeft:"-10%"}}>Discount
+            <Paper style={{ padding: 10, backgroundColor: '#EFF0F6', width: "60%", marginTop: "1%" }}>
+              <form>
+                <InputBase
+                  onChange={(e) =>
+                    setcouponInfo({ ...couponInfo, discount: e.target.value })
+                  }
+                  name="discount"
+                  fullWidth
+                  autoFocus
+                  type={"Number"}
+                  placeholder={"Discount %"}
+                  inputProps={{ 'aria-label': 'naked' }}
+                />
+              </form>
+            </Paper>
+            </Grid>
+            </Grid>
         Description
                       <Paper style={{ padding: 10, backgroundColor: '#EFF0F6', width: "70%", marginTop: "1%" }}>
           <form>
@@ -91,18 +112,18 @@ const Content = () => {
           </form>
         </Paper>
         <Grid container spacing={3} style={{ marginTop: "20px" }}>
-          <Grid item xs={6} >Discount
+          <Grid item xs={6} >Use limit
             <Paper style={{ padding: 10, backgroundColor: '#EFF0F6', width: "60%", marginTop: "1%" }}>
               <form>
                 <InputBase
                   onChange={(e) =>
-                    setcouponInfo({ ...couponInfo, discount: e.target.value })
+                    setcouponInfo({ ...couponInfo, uselimit: e.target.value })
                   }
-                  name="Discount"
+                  name="uselimit"
                   fullWidth
                   autoFocus
                   type={"number"}
-                  placeholder={"Discount %"}
+                  placeholder={"use limit"}
                   inputProps={{ 'aria-label': 'naked' }}
                 />
               </form>
