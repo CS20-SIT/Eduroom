@@ -15,7 +15,7 @@ export default css`
   }
 
   .landing {
-    width: 95vw;
+    width: 100vw;
     height: 100vh;
     background-image: url('/images/edqiz/landing-bg.svg');
     background-repeat: no-repeat;
@@ -28,14 +28,14 @@ export default css`
     display: flex;
     justify-content: center;
     align-content: center;
-    width: 90vw;
+    width: 100vw;
     font-size: 4em;
     padding-bottom: 1%;
     font-weight: bold;
     cursor: default;
   }
   .landing-content {
-    width: 90vw;
+    width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
