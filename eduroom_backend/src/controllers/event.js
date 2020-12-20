@@ -12,6 +12,43 @@ exports.getGlobalEvent = async (req, res, next) => {
   res.send(data.rows)
   return
 }
+exports.getEventbyDate = async (req, res, next) => {
+  try {
+
+
+    const data = req.query;
+    const user = req.user;
+    const events = [];
+    console.log(data);
+    console.log(user);
+    const data1 = await pool.query("select title,startdate,enddate from course_event join user_mycourse  \
+   on course_event.courseid = user_mycourse.courseid and user_mycourse.userid = $2 where course_event.startdate <= $1\
+  and course_event.enddate >= $1\
+  ", [data.date, user.id])
+    events.push(...data1.rows);
+    
+
+    const data2 = await pool.query("select title,startdate,enddate from course_event join instructor   \
+     on course_event.instructorid = instructor.instructorid and instructor.userid = $2 where course_event.startdate <= $1\
+     and course_event.enddate >= $1\
+     ", [data.date, user.id])
+
+   
+    const data3 = await pool.query("select title,startdate,enddate from global_event where global_event.startdate <= $1 \
+  and global_event.enddate >= $1", [data.date])
+    console.log(data1.rows);
+    console.log(data2.rows);
+    console.log(data3.rows);
+
+    res.status(200).json({ success: true, data: events, own: data2.rows, global: data3.rows })
+    return;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
+
 exports.getEventInMonthYear = async (req, res, next) => {
   const user = req.user;
   const { m, y } = req.query;
@@ -25,12 +62,14 @@ exports.getEventInMonthYear = async (req, res, next) => {
     WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
       AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2", [m, y])
     events.push(...data.rows);
-    if (user.role == 'instructor') {
+    const userid = await pool.query("select instructorid from instructor where userid = $1 and isverified = true", [user.id])
+    if (userid.rowCount > 0) {
       const instructorData = await pool.query("SELECT startdate, enddate \
        FROM course_event\
        WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
-       AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2", [m, y])
+       AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2 and instructorid = $3", [m, y, userid.rows[0].instructorid])
       events.push(...instructorData.rows);
+
     }
     res.status(200).json({ success: true, data: events })
     return;
@@ -44,16 +83,16 @@ exports.getAdminEventInMonthYear = async (req, res, next) => {
   const user = req.user;
   const { m, y } = req.query;
 
-  if(user){
+  if (user) {
     // need to have more check that user has this event 
     const data = await pool.query("SELECT startdate, enddate \
     FROM global_event\
     WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
-      AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2",[m,y])
-    res.status(200).json({success:true,data:data.rows})
+      AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2", [m, y])
+    res.status(200).json({ success: true, data: data.rows })
     return;
   } else {
-    return next(new ErrorResponse("Unauthorize",401))
+    return next(new ErrorResponse("Unauthorize", 401))
   }
 
 }

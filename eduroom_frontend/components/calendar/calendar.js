@@ -66,6 +66,7 @@ const Content = () => {
 			.get(`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(day.dateObject.format('YYYY'))}`)
 			.then((res) => {
 				setEvent(res.data.data)
+				console.log(res.data.data);
 			})
 			.catch((err) => { })
 	}, [day])
