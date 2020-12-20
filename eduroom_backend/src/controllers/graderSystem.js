@@ -13,7 +13,7 @@ exports.pingGrader = async (req, res) => {
 
 exports.createSubmission = async (req, res) => {
 	try {
-		const userId = '9c2822a0-cf80-487c-9189-a4682916d2b5'
+		const userId = req.user.id
 		const { source_code: sourceCode, problem_id: problemId, language } = req.body
 
 		// Get URL to the zipped testcase
@@ -96,9 +96,20 @@ exports.createSubmission = async (req, res) => {
 
 exports.getSubmission = async (req, res) => {
 	try {
-		const userId = '9c2822a0-cf80-487c-9189-a4682916d2b5'
+		const userId = req.user.id
 		const { attemptId } = req.query
 		const tokens = base64ToString(req.query.tokens)
+
+		const scorePerTestcase = 10
+		const questionTypeQuery = await pool.query(`SELECT ruletype, timelimit, memorylimit FROM questions INNER JOIN question_attempt qa on questions.id = qa.questionid WHERE qa.attemptid = ${attemptId} AND qa.userid = '${userId}' AND qa.status = 'Pending'`)
+		if(questionTypeQuery.rowCount === 0) {
+			const err = {
+				statusCode: 400,
+				message: 'Question attempt is already checked',
+			}
+			return errorHandler(err, req, res)
+		}
+		const { ruletype, timelimit, memorylimit } = questionTypeQuery.rows[0]
 
 		// Send API of get batch submission to judge0
 		const getSubmissionsResponse = await grader.get('/submissions/batch', {
@@ -107,12 +118,9 @@ exports.getSubmission = async (req, res) => {
 				tokens
 			}
 		})
-		const testcaseNumber = getSubmissionsResponse.data.submissions.length
-		const scorePerTestcase = 10
-		const questionTypeQuery = await pool.query(`SELECT ruletype, timelimit, memorylimit FROM questions INNER JOIN question_attempt qa on questions.id = qa.questionid WHERE qa.attemptid = ${attemptId}`)
-		const { ruletype, timelimit, memorylimit } = questionTypeQuery.rows[0]
 
 		// Check submission result
+		const testcaseNumber = getSubmissionsResponse.data.submissions.length
 		const updateAttempPromise = []
 		let totalScore = 0
 		let overallTime = 0 

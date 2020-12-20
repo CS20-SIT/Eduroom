@@ -1,5 +1,7 @@
 const express = require('express')
 const path = require('path')
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
+
 const router = express.Router()
 
 const {
@@ -159,7 +161,7 @@ router.get('/getQuestionSubmission', gQuestionSubmission)
 router.get('/getCountQuestionByTag', gCountQuestionByTag)
 
 router.get('/ping', pingGrader)
-router.post('/submission', createSubmission)
-router.get('/submission', getSubmission)
+router.post('/submission', jwtAuthenicate, createSubmission)
+router.get('/submission', jwtAuthenicate, getSubmission)
 
 module.exports = router
