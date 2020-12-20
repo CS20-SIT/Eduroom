@@ -6,25 +6,27 @@ import SearchBar from '../../../components/course/searchBar'
 import CategoryBar from '../../../components/course/categoryBar'
 import { useRouter } from 'next/router'
 import Name from '../../../components/course/courseRender'
+import Carousel from '../../../components/course/carousel'
 
 import api from '../../../api'
 
 const CourseCategory = (props) => {
+    const router = useRouter();
     const [data, setData] = useState([])
     const [category, setCategory] = useState([])
+    const [curCat, setCurCat] = useState('')
 
     useEffect(() => {
         GetData()
-    }, [])
+        getCategory()
+        setCurCat(props.category)
+    }, [props.category])
     const GetData = async () => {
         const result = await api.get(`/api/course/categorySearch/${props.category}`)
         setData(result.data.data)
         console.log(result)
     }
 
-    useEffect(() => {
-        getCategory()
-    }, [])
     const getCategory = async () => {
         const result = await api.get('/api/course/category')
         setCategory(result.data.category)
@@ -36,17 +38,18 @@ const CourseCategory = (props) => {
             <GeneralNoNav>
                 <div className='bg'>
                     <div className='container-1'>
-
+                        <Carousel/>
                         {/* Search bar and Categories select */}
                         <div className='text-center flex my-6 mx-search'>
                             <SearchBar />
-                            <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'>
+                            <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'
+                                onChange={ e => router.push('/course/category/' + e.target.value)}>
                                 <option>
                                     Category
-              </option>
+                                </option>
                                 {category.map((el, idx) => {
                                     return (
-                                        <option>
+                                        <option value={el.value}>
                                             {el.cataname}
                                         </option>
                                     )
@@ -54,7 +57,7 @@ const CourseCategory = (props) => {
                             </select>
                         </div>
 
-                        <CategoryBar />
+                        <CategoryBar current={curCat}/>
 
 
                         {/* Box of each course */}
