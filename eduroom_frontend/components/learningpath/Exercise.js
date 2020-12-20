@@ -12,6 +12,7 @@ const Exercise = ({ id, nodeID }) => {
 		try {
 			const res = await api.get('/api/learningpath/exercise', { params: { nodeID } })
 			setLearningPath(res.data)
+			console.log(res.data)
 		} catch (err) {
 			console.log(err)
 		}
