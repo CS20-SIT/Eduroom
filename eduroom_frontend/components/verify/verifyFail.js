@@ -7,7 +7,7 @@ const VerifyAccount = () => {
 	}
 	return (
 		<Fragment>
-			<div className="verify-box">
+			<div className="verify-box" style={{backgroundImage:'url(/images/verify/verify-bg.svg)',width:'100vw',height:'100vh',position:'absolute',top:'0',left:'0',backgroundPosition:'center',backgroundSize:'auto',backgroundRepeat:'no-repeat'}}>
 				<div className="verify-text">Try again</div>
 				<div className="verify-image">
 					<Image src="/images/verify/verify_fail.svg" width="390" height="360" alt="verify-image" />
