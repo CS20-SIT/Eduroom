@@ -76,7 +76,7 @@ exports.getAllPackage = async (req, res, next) => {
 		})
 		res.send(temp)
 	} catch (error) {
-		return next(new ErrorResponse(err, 500))
+		return next(new ErrorResponse(error, 500))
 	}
 }
 
@@ -172,12 +172,34 @@ exports.getCourseFromIds = async (req, res, next) => {
 	const courseIds = req.query.ids
 	try {
 		const results = await pool.query(
-			`select c.courseid,c.coursename,c.price, u.firstname,u.lastname from course c, instructor i, user_profile u
+			`select c.courseid as id,c.coursename as name,c.price as price, c.coursepicture as picture, u.firstname,u.lastname from course c, instructor i, user_profile u
 			where i.instructorid = c.ownerid and i.userid = u.userid and c.courseid = any ($1)
 			`,
 			[courseIds]
 		)
-		res.send(results.rows)
+		const answer = results.rows.map((el) => {
+			return { ...el, price: parseFloat(el.price) }
+		})
+		res.send(answer)
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
+
+exports.getPackagesFromIds = async (req, res, next) => {
+	const packageIds = req.query.ids
+	try {
+		const results = await pool.query(
+			`select p.packageid as id ,p.packagename as name,u.firstname as firstname, u.lastname as lastname, sum(c.price)*((100-p.discount)/100) as price, p.image as picture
+		from package p, package_courses pc, course c, instructor i, user_profile u
+		where p.instructorid = i.instructorid and i.userid = u.userid and c.courseid = pc.courseid and pc.packageid = p.packageid and p.packageid = ANY ($1)
+		group by p.packageid,p.packagename,u.firstname, u.lastname`,
+			[packageIds]
+		)
+		const answer = results.rows.map((el) => {
+			return { ...el, price: parseFloat(el.price) }
+		})
+		res.send(answer)
 	} catch (err) {
 		return next(new ErrorResponse(err, 500))
 	}
