@@ -1,14 +1,16 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
+import { useRouter } from 'next/router'
 const Node = ({ node, isLeft }) => {
 	const [show, setShow] = useState(false)
+	const router = useRouter()
 	return (
 		<Fragment>
 			<div
 				className="nodes-path"
 				style={{ display: 'flex', width: '100%', justifyContent: 'center', position: 'relative' }}
+				onClick={() => router.push(`/learningpath/${node.pathid}/${node.nodeid}`)}
 			>
 				<div
-					o
 					className="content left"
 					onMouseEnter={() => {
 						if (isLeft) {
