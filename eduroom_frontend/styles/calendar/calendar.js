@@ -109,7 +109,7 @@ export default css`
 .month{
   position : absolute;
   padding-left : 24rem;
-  z-index : 10;
+  z-index : 0;
 }
 
 .d-calendar {
