@@ -212,6 +212,21 @@ exports.buySticker = async (req, res) => {
         errorHandler(error, req, res);
     }
 }
+exports.checkCodeOwner = async (req,res) => {
+    try{
+        const userId='db29433b-e05d-41ab-854b-b6f8023464f6'
+        const pcode = req.body.pcode
+        const getCodeFronOwner = await pool.query(`SELECT * FROM code_owner WHERE userid='${userId}' 
+        AND pcode='${pcode}';`)
+        if(getCodeFronOwner.rowCount === 0){
+            res.send({ canGet: true })
+        }else{
+            res.send({ canGet: false})
+        }
+    }catch(error){
+        errorHandler(error,req,res)
+    }
+}
 exports.buyCoupon = async (req, res) => {
     try {
         const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
