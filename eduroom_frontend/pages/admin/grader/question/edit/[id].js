@@ -3,16 +3,16 @@ import GeneralNoNav from "../../../../../components/graderCreate/GraderCreateLay
 import GNav from "../../../../../components/graderCreate/GraderCreateLayout/Nav";
 import GBack from "../../../../../components/graderCreate/GraderCreateLayout/Background";
 import QEdit from "../../../../../components/graderCreate/Question/Edit";
-
+import ProtectedAdminRoute from "../../../../../components/admin/protectedAdminRoute";
 const EditQuestion = () => {
   return (
-    <Fragment>
+    <ProtectedAdminRoute>
       <GeneralNoNav>
         <GNav></GNav>
         <QEdit />
         <GBack></GBack>
       </GeneralNoNav>
-    </Fragment>
+    </ProtectedAdminRoute>
   );
 };
 export default EditQuestion;

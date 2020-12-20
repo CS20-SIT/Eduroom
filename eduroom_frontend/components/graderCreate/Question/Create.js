@@ -59,7 +59,7 @@ export default function Create(props) {
   const [samples, setSample] = useState([]);
   const [existTags, setExistTags] = useState([]);
   const [oldTestcase, setoldTestcase] = useState("");
-
+  const [oldTestcaseURL, setoldTestcaseURL] = useState("");
   useEffect(() => {
     const GetData = async () => {
       const result = await axios("/api/grader/alltag");
@@ -91,6 +91,7 @@ export default function Create(props) {
             ? "FILE NOT FOUND"
             : splitTest(testcase.data[0].filepath);
         setoldTestcase(testcaseName);
+        setoldTestcaseURL(testcase.data[0].filepath);
         setFile(-1);
 
         const tag = await axios.get("/api/grader/questiontag", {
@@ -785,20 +786,21 @@ export default function Create(props) {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <span
+                    <a
                       style={{
                         width: 300,
                         marginTop: 25,
                         marginLeft: 8,
                         fontWeight: "bold",
                       }}
+                      href={oldTestcaseURL}
                     >
                       {selectedFile != null && selectedFile != -1
                         ? "File recieved :  " + selectedFile[0].name
                         : props.id == undefined
                         ? "Testcase file up to 10 MB in size are available for upload."
                         : oldTestcase}
-                    </span>
+                    </a>
                   </Grid>
                   <Grid item xs={12}>
                     <div style={{ height: 12 }}></div>
@@ -839,8 +841,8 @@ export default function Create(props) {
                     <span style={sText}>
                       {" "}
                       {props.id == undefined
-                        ? "Your Question have been created."
-                        : "Question have been Edited"}
+                        ? "Your Question has been created."
+                        : "Question has been Edited"}
                     </span>
                   </DialogContentText>
                 </DialogContent>
