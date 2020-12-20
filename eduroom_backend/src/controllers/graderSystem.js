@@ -203,8 +203,3 @@ exports.getSubmission = async (req, res) => {
 		errorHandler(error, req, res)
 	}
 }
-
-
-
-
-

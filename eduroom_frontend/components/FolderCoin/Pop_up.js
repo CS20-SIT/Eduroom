@@ -8,29 +8,23 @@ import api from '../../api';
 const temp = (props) => {
     const [state, setState] = useState(false);
     const [data, setData] = useState([]);
+    const [coins,setCoin] = useState();
+    const [name,setName] = useState();
     const PopPurchase = () => {
         setState(true)
     };
     useEffect(()=>{
         const fetchData = async ()=>{
             console.log(props.id);
-            const res = await api.get('api/coin/packsticker',{params:{stickerid:props.id}});
-            setData(res.data);
+            const res = await api.get(`/api/coin/stickers/${props.id}`);
+            setData(res.data.stickers);
+            setCoin(res.data.mycoins)
+            console.log();
         };
         fetchData();
         
     },[]);
-    
-    const listPicture = [
-        { src: '../../images/Coin-image/Icon_Avocado.svg' },
-        { src: '../../images/Coin-image/Icon_Coconut_2.svg' },
-        { src: '../../images/Coin-image/Icon_Garnet.svg' },
-        { src: '../../images/Coin-image/Icon_Peach.svg' },
-        { src: '../../images/Coin-image/Icon_Lemon.svg' },
-        { src: '../../images/Coin-image/Icon_Orange.svg' },
-        { src: '../../images/Coin-image/Icon_Pear.svg' },
-        { src: '../../images/Coin-image/Icon_Red Apple.svg' }
-    ]
+  
     return (
         <Container>
             <div className={Styles.setPayment}>
@@ -50,7 +44,7 @@ const temp = (props) => {
                 quia dolor sit amet, consectetur, adipisci</p>
                     <h3>No expiration Date</h3>
 
-                    <h3>My coins: 99 $</h3>
+                    <h3>My coins:{coins}  $</h3>
                     <div>
                         <button className={Styles.btn} onClick={PopPurchase}>Purchase</button>
 

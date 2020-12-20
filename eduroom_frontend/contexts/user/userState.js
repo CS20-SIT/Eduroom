@@ -53,14 +53,17 @@ const userState = (props) => {
 		}
 	}
 
-	const getUser = async (router,needVerify = false) => {
+	const getUser = async (router,isProtected = false) => {
 		try {
 			const res = await api.get('/api/auth/profile')
-			if(needVerify && !res.data.verify){
+			if(isProtected && !res.data.verify){
 				router.push('/verify')
 			}
 			dispatch({ type: GET_USER_SUCCESS, payload: res.data })
 		} catch (err) {
+			if(isProtected){
+				router.push('/login')
+			}
 			dispatch({ type: GET_USER_FAIL, payload: err })
 		}
 	}
