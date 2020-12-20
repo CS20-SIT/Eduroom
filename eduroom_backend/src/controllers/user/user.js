@@ -7,7 +7,7 @@ const path = require('path')
 const puppeteer = require('puppeteer')
 const handlebars = require('handlebars')
 const dayjs = require('dayjs')
-const { certificateTemplate } = require('../../utils/certTemplate')
+const { certificateTemplate, certificateStyle } = require('../../utils/certTemplate')
 
 const test = async (req, res) => {
 	const time = await pool.query('SELECT NOW()')
@@ -205,13 +205,22 @@ const downloadCertificate = async (req, res, next) => {
 		})
 		const page = await browser.newPage()
 		await page.goto(`data:text/html;charset=UTF-8,${html}`, { waitUntil: 'networkidle0' })
-		const component = await page.$eval('.certificate', (element) => {
-			return element.innerHTML
+		await page.addStyleTag({ content: certificateStyle })
+		// const component = await page.$eval('.certificate', (element) => {
+		// 	return element.innerHTML
+		// })
+		// await page.setContent(component)
+		await page.waitFor(2000)
+		const pdf = await page.pdf({ 
+			format: 'A4',
+			// landscape: true
 		})
-		await page.setContent(component)
-		const pdf = await page.pdf({ format: 'A4' })
+		// const ss = await page.screenshot({
+		// 	type: 'jpeg',
+		// 	quality: 100
+		// })
 		await browser.close()
-		res.set({ 'Content-Type': 'application/pdf' })
+		res.set({ 'Content-Type': 'image/jpg' })
 		res.send(pdf)
 	} else {
 		return next(new ErrorResponse('Certificate not found', 404))
