@@ -77,7 +77,7 @@ const Profile = () => {
 
 					<div className="topic">
 						<p className="header">Bio</p>
-						<TextField
+						<TextField style={{ width: '100%' }}
 							multiline
 							rows={4}
 							defaultValue={user.bio ? user.bio : '-'}

@@ -141,6 +141,14 @@ const editProfile = async (req, res) => {
 	}
 }
 
+const Upload = async (req, res, next) => {
+	const files = req.files;
+	const results = files.map((file) => {
+		return { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	})
+	res.send(results)
+}
+
 const checkPassword = async (req, res) => {
 	try {
 		const { password } = req.body
@@ -227,6 +235,7 @@ module.exports = {
 	editProfile,
 	checkPassword,
 	newPassword,
+	Upload,
 	getCertificate,
 	downloadCertificate,
 }
