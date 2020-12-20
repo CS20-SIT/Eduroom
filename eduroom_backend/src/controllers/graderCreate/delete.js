@@ -13,6 +13,9 @@ const setTime = (text) => {
   return text.substr(4, 11) + " At " + text.substr(16, 5);
 };
 const getAnn = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const data = await pool.query(
     "select  a.id, a.title , a.description , b.displayName ,a.time ,a.isvisible,a.adminid from announcements a, admin_login b  where a.adminid = b.adminid order by 1 DESC "
   );
@@ -27,9 +30,12 @@ const getAnn = async (req, res, next) => {
 const postAnn = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
-  const adminid = req.body.adminid;
   const visible = req.body.isvisible;
 
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+  const adminid = req.user.id;
   pool.query(
     'INSERT INTO announcements(title,description,"adminid",isvisible) VALUES ($1 , $2, $3,$4) returning id',
     [title, description, adminid, visible],
@@ -49,9 +55,12 @@ const postAnn = async (req, res, next) => {
 };
 
 const editAnn = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+  const adminid = req.user.id;
   const title = req.body.title;
   const description = req.body.description;
-  const adminid = req.body.adminid;
   const visible = req.body.isvisible;
   const id = req.body.id;
 
@@ -69,6 +78,9 @@ const editAnn = async (req, res, next) => {
 };
 
 const pTestcase = (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const questionId =
     typeof req.body.questionid == "string"
       ? req.body.questionid
@@ -93,6 +105,10 @@ const pTestcase = (req, res, next) => {
 };
 
 const dTestcase = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+
   const id = req.query.id;
 
   await pool.query(`DELETE FROM QuestionTestcases WHERE questionId = '${id}'`);
@@ -100,6 +116,10 @@ const dTestcase = async (req, res, next) => {
 };
 
 const dSample = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+
   const id = req.query.id;
 
   await pool.query(`DELETE FROM questionSample WHERE questionId = '${id}'`);
@@ -107,9 +127,12 @@ const dSample = async (req, res, next) => {
 };
 
 const dQuestion = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+  const adminid = req.user.id;
   const id = req.query.id;
   const title = req.query.title;
-  const adminid = req.query.adminid;
 
   await pool.query(`DELETE FROM QuestionTestcases WHERE questionId = '${id}'`);
   await pool.query(`DELETE FROM Questiontag WHERE questionId = '${id}'`);
@@ -127,10 +150,13 @@ const dQuestion = async (req, res, next) => {
 };
 
 const dConQuestion = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+  const adminid = req.user.id;
   const questionid = req.query.id;
   const conid = req.query.conno;
   const title = req.query.title;
-  const adminid = req.query.adminid;
 
   await pool.query(
     `DELETE FROM contest_question WHERE questionId = '${questionid}' and conid = '${conid}'`
@@ -145,6 +171,10 @@ const dConQuestion = async (req, res, next) => {
   res.send({ success: true });
 };
 const eQuestion = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+  const adminid = req.user.id;
   const title = req.body.title;
   const description = req.body.description;
   const hint = req.body.hint;
@@ -155,7 +185,7 @@ const eQuestion = async (req, res, next) => {
   const difficulty = req.body.difficulty;
   const visibility = req.body.visibility;
   const ruleType = req.body.ruleType;
-  const adminid = req.body.adminid;
+
   const newTags = req.body.newTags;
   const existTags = req.body.existTags;
   const id = req.body.id;
