@@ -25,13 +25,14 @@ export default css`
 		box-shadow: 0px 4px 6px rgba(189, 189, 189, 0.7);
 	}
 	.profile {
-		margin-top: 3rem;
+		margin-top: 2rem;
 		border-radius: 50%;
 		object-fit: cover;
 		object-position: 50% 50%;
 	}
 	.name {
 		margin-top: 1rem;
+		margin-bottom: 0.5rem;
 		display: flex;
 		font-size: 1.5rem;
 		font-weight: bold;
