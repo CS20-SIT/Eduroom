@@ -124,7 +124,7 @@ const Content = (props) => {
 
 
 
-                                            <div className="title">{row.title}</div>
+                                            <div className="title">{row.title} ({row.coursename})</div>
 
                                             <div className="point" style={{ background: "#fdd4c1" }}></div>
                                             <div className="detail">{row.starttime.substring(0, 5)} : {row.endtime.substring(0, 5)}</div>
@@ -142,7 +142,7 @@ const Content = (props) => {
                                         <div className="d-block">
 
 
-                                            <div className="title">{row.title}</div>
+                                            <div className="title">{row.title} ({row.coursename})</div>
 
                                             <div className="point" style={{ background: "#fdd4c1" }}></div>
                                             <div className="detail">{row.starttime.substring(0, 5)} : {row.endtime.substring(0, 5)}</div>
