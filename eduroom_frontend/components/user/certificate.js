@@ -1,18 +1,21 @@
 import React, {Fragment} from 'react'
 import Header from '../layouts/header'
 const Certificate = ({data}) => {
-    console.log(data)
+    const formatDate = (date) => {
+        const d = new Date(date)
+        return d.getFullYear() +'/'+(d.getMonth() +1)+'/' + d.getDate()
+    }
     return (
         <Fragment>
             <Header/>
             <div className="certificate">
                 <div className="head">
-                    <div className="date">{data.finishDate}</div></div>
+                    <div className="date">{formatDate(data.finishdate)}</div></div>
                 <div className="info">
                     <div className="title">CERTIFICATE</div>
                     <div className="subTitle">this certificate is present to</div>
-                    <div className="name">{data.firstName} {data.lastName}</div>
-                    <div className="text">has successfully complete from <b>"{data.courseName}"</b> course</div>
+                    <div className="name">{data.firstname} {data.lastname}</div>
+                    <div className="text">has successfully complete from <b>"{data.coursename}"</b> course</div>
                 </div>
             </div>
         <style jsx>
@@ -20,8 +23,8 @@ const Certificate = ({data}) => {
                 `
                 .certificate{
                     background-image: url('/images/certificate_background.png');
-                    width: 100%;
-                    height:100%;
+                    width: 80%;
+                    height: 90%;
                     background-size: auto;
                     background-repeat: no-repeat;
                     font-family: Quicksand;
@@ -29,6 +32,7 @@ const Certificate = ({data}) => {
                     display:flex;
                     flex-flow:column;
                     cursor:default;
+                    border: 1px solid black;
                 }
                 .head{
                     padding: 24px 24px;
