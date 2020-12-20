@@ -1,5 +1,7 @@
 const express = require('express')
 const path = require('path')
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
+
 const router = express.Router()
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
@@ -68,7 +70,8 @@ const {
 	gCountQuestionByTag,
 } = require('../controllers/graderCreate/graderSubmit')
 
-const { testGrader } = require('../controllers/graderSystem')
+
+const { pingGrader, createSubmission, getSubmission } = require('../controllers/graderSystem')
 
 const multer = require('multer')
 
@@ -159,6 +162,10 @@ router.get('/getQuestionDetail', gQuestionDetail)
 router.get('/getQuestionSubmission', jwtAuthenicate, gQuestionSubmission)
 router.get('/getCountQuestionByTag', gCountQuestionByTag)
 
-router.get('/test', testGrader)
+
+router.get('/ping', pingGrader)
+router.post('/submission', jwtAuthenicate, createSubmission)
+router.get('/submission', jwtAuthenicate, getSubmission)
+
 
 module.exports = router
