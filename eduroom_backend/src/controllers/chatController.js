@@ -48,7 +48,7 @@ const deleteChatRoom = async (req, res, next) => {
 }
 
 const getUserProfile = async (req, res, next) => {
-  const userid = req.user.id
+  const userid = 'd8bd910c-16fa-4bcf-acbf-a12b1a8322fb';
   const userProfile = await pool.query(`select firstname, lastname, displayname, avatar 
                                         from user_profile 
                                         where userid = $1`, [userid]);
@@ -91,4 +91,5 @@ res.status(200).json({ success: true })
 module.exports = { getChatlist, 
   getGroupPicture, 
   inviteCreate, 
-  deleteChatRoom}
+  deleteChatRoom,
+  getUserProfile}

@@ -23,7 +23,8 @@ export default function createChatRoom(props) {
 		setSearchResult(null)
 	}
 	const getSearchResult = async () => {
-		const res = await api.get(`/api/chat/getSearchResultMockup`)
+		setSearchResult(null)
+		const res = await api.get(`/api/chat/getSearchResult`,{params:{keyword:searchInput}})
 		setSearchResult(res.data)
 	}
 	const sendCreateRoomForm = async () => {
@@ -38,6 +39,10 @@ export default function createChatRoom(props) {
 	const uploadPic = (e) => {
 		setCreateGroupForm({ ...createGroupForm, profilePic: e.target.files[0] })
 	}
+	useEffect(()=>{
+		setSearchResult(null)
+		getSearchResult()
+	},[searchInput])
 
 	return (
 		<>

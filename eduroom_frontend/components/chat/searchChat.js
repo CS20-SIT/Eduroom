@@ -19,7 +19,6 @@ export default function seacrhChat(props) {
           value={props.input}
           onChange={e => {
             props.setInput(e.target.value)
-            props.getSearchResult()
           }}
           className='search'
           style={{ paddingLeft: 35, width: "100%" }}
