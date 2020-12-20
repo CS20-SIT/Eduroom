@@ -9,22 +9,7 @@ import { useState, useEffect } from 'react'
 import moment from 'moment'
 
 const ForumInRoom = ({ row }) => {
-	// const [data, setData] = useState([])
-	// useEffect(() => {
-	// 	const GetData = async () => {
-	// 		const result = await api.get('/api/forum/room/:roomname')
-	// 		console.log(result.data)
-	// 		setData(result.data.data)
-	// 	}
-	// 	GetData()
-	// 	console.log(data)
-	// }, [])
-	// console.log(row);
 	const router = useRouter()
-	const handleClick = (e) => {
-		e.preventDefault()
-		// router.push(`/forum/${}`)
-	}
 	const useStyles = makeStyles((theme) => ({
 		root: {
 			flexGrow: 1,
@@ -50,9 +35,6 @@ const ForumInRoom = ({ row }) => {
 							{row?.map((el) => {
 								return (
 									<Paper className={classes.paper} style={{ paddingLeft: '35px', cursor: 'pointer' }}>
-										{/* <div  onClick={handleClick} className="button">
-                  {props.createForm}
-                  </div> */}
 										<div
 											onClick={() => {
 												router.push(`/forum/${el.forumid}`)
@@ -60,16 +42,36 @@ const ForumInRoom = ({ row }) => {
 										>
 											<div style={{ fontWeight: '500', fontSize: '1.5em', color: '#5b5b5b' }}>{el.titlethread}</div>
 											<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-												<div style={{ marginTop: '15px',marginRight: '8px',padding:'3px', fontSize: '11px', color: '#5b5b5b', borderRadius:'10px', border: "1px solid #a880f7" }}>
-													 {el.typename}{' '}
+												<div
+													style={{
+														marginTop: '15px',
+														marginRight: '8px',
+														padding: '3px',
+														fontSize: '11px',
+														color: '#5b5b5b',
+														borderRadius: '10px',
+														border: '1px solid #a880f7',
+													}}
+												>
+													{el.typename}{' '}
 												</div>
-                        <div style={{ marginTop: '15px',marginRight: '8px',padding:'3px', fontSize: '11px', color: '#5b5b5b', borderRadius:'10px', border: "1px solid #a880f7" }}>
-													 {el.subtypename}{' '}
+												<div
+													style={{
+														marginTop: '15px',
+														marginRight: '8px',
+														padding: '3px',
+														fontSize: '11px',
+														color: '#5b5b5b',
+														borderRadius: '10px',
+														border: '1px solid #a880f7',
+													}}
+												>
+													{el.subtypename}{' '}
 												</div>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+											</div>
+											<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
 												<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
-												{el.author}  post  {moment(el.posttime).fromNow()}
+													{el.author} post {moment(el.posttime).fromNow()}
 												</div>
 											</div>
 										</div>
