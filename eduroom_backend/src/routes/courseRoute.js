@@ -8,7 +8,7 @@ const {
     searchCourse,
     getCourse,
 	getCategory,
-	searchCategory
+    searchCategory
 } = require('../controllers/courseControllers')
 
 Router.get('/getAllCourse', getAllCourse)
