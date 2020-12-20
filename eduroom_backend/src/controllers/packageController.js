@@ -46,13 +46,31 @@ exports.deletePackage = async (req, res, next) => {
 exports.getPackage = async (req, res, next) => {
 	try {
 		const id = req.query.packageid
-		const data = await pool.query('select * from package where packageid = $1', [id])
-		const packageInfo = data.rows
-		res.send({ data: packageInfo })
+		const data1 = await pool.query(`select p.packageid, packagename, i.instructorid,firstname,lastname ,p.discount,p.detail,p.image,sum(price)*((100-p.discount)/100) as price
+		, sum(price) as oldprice
+		from package p, instructor i,package_courses pc, course c, user_profile up
+		where p.instructorid=i.instructorid and p.packageid = pc.packageid and pc.courseid=c.courseid
+		  and i.userid = up.userid and p.packageid = $1
+		group by p.packageid,i.instructorid,firstname,lastname`, [id])
+
+		const data3 = await pool.query(`select pc.courseid, coursename, firstname, lastname,c.coursepicture, up.avatar
+		from package_courses pc, course c,user_profile up, instructor i
+		where pc.packageid = $1 and pc.courseid = c.courseid
+		  and c.ownerid = i.instructorid and i.userid = up.userid`, [id])
+		
+		  const data4 = await pool.query(`SELECT firstname,lastname, up.avatar as avatar, count(coursename)
+		from course c join instructor i on c.ownerid = i.instructorid join user_profile up on up.userid = i.userid
+		where c.ownerid in (select ownerid from package_courses join course c2 on package_courses.courseid = c2.courseid
+		where packageid = $1) group by firstname, lastname, up.avatar`, [id])
+
+		res.send({ packages: data1.rows[0],courseCount: data3.rowCount, instructorList: data4.rows, courseList: data3.rows })
 	} catch (err) {
+		console.log(err)
 		return next(new ErrorResponse(err, 500))
 	}
 }
+
+
 
 exports.getAllPackage = async (req, res, next) => {
 	try {

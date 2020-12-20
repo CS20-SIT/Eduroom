@@ -13,9 +13,12 @@ const CourseCategory = (props) => {
     const router = useRouter();
     const [data, setData] = useState([])
     const [category, setCategory] = useState([])
+    const [curCat, setCurCat] = useState('')
 
     useEffect(() => {
         GetData()
+        getCategory()
+        setCurCat(props.category)
     }, [props.category])
     const GetData = async () => {
         const result = await api.get(`/api/course/categorySearch/${props.category}`)
@@ -23,9 +26,6 @@ const CourseCategory = (props) => {
         console.log(result)
     }
 
-    useEffect(() => {
-        getCategory()
-    }, [props.category])
     const getCategory = async () => {
         const result = await api.get('/api/course/category')
         setCategory(result.data.category)
@@ -56,7 +56,7 @@ const CourseCategory = (props) => {
                             </select>
                         </div>
 
-                        <CategoryBar />
+                        <CategoryBar current={curCat}/>
 
 
                         {/* Box of each course */}
