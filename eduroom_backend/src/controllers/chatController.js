@@ -239,11 +239,13 @@ const changeChatRoomName = async (req, res, next) => {
 }
 
 const unsendMessage = async(req, res, next) =>{
-	const messageID = 18
-	const chatRoomID = 3
+	const messageID = 14
 
 	const deleteMessage = await pool.query(
-		`delete from chat_message where messageid = ${messageID} and chatroomid = ${chatRoomID}`
+		`delete from chat_message where messageid = ${messageID}`
+	)
+	const deleteReader = await pool.query(
+		`delete from chat_message_readtime where messaid = ${messageID}`
 	)
 	res.status(200).json({ success: true })
 }
