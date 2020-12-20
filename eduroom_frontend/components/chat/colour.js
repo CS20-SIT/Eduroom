@@ -4,7 +4,7 @@ export default function colour(props) {
   const [color, setColor] = useState(props.color);
   const [className, setClassName] = useState();
   React.useEffect(() => {
-    if(color.active==true){
+    if(props.active==true){
       setClassName('bgActive')
     }else{
       setClassName('bg')

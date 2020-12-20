@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import Cell from '../../../components/calendar/calendarCell'
+import Cell from '../../../components/admin/calendar/calendarCell'
 import HeadCell from '../../../components/calendar/calendarHeader'
 import BlankCell from '../../../components/calendar/calendarBlankCell'
 import ViewEvent from '../../../components/admin/calendar/viewEvent'
@@ -62,7 +62,7 @@ const Content = () => {
     setBlank(tempBlank)
     setBlankEnd(tempBlankend)
 		api
-			.get(`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(day.dateObject.format('YYYY'))}`)
+			.get(`/api/event/getAdminEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(day.dateObject.format('YYYY'))}`)
 			.then((res) => {
 				setEvent(res.data.data)
 			})
@@ -117,7 +117,7 @@ const Content = () => {
 
 			{/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
 			{/* {isInstructor ? ( */}
-				<div className="createEvent">
+				{/* <div className="createEvent">
 					<button
 						className="bt-createEvent"
 						onClick={() => {
@@ -126,7 +126,7 @@ const Content = () => {
 					>
 						createEvent
 					</button>
-				</div>
+				</div> */}
 			{/* ) : null} */}
 
 			{/* ------------------------------Calendar Header---------------------------------------- */}

@@ -14,27 +14,28 @@ import BlueInput from './blueInput'
 import AcceptIcon from './icons/AcceptIcon'
 import SearchResult from '../chat/searchResult'
 import api from '../../api'
+import { DeviceSignalCellularNull } from 'material-ui/svg-icons'
 
 export default function editChat(props) {
 	const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
 	const [changeImage, setChangeImage] = useState(null)
-  const [changeChatRoomName, setChangeChatRoomName] = useState(false)
-  const [roomName,setRoomName] = useState(null)
-  const [searchInput, setSearchInput] = useState(null)
+	const [changeChatRoomName, setChangeChatRoomName] = useState(false)
+	const [roomName, setRoomName] = useState(null)
+	const [searchInput, setSearchInput] = useState(null)
 	const [searchResult, setSearchResult] = useState(null)
 	const [isFocus, setIsFocus] = useState(false)
 	const [isSelect, setIsSelect] = useState(false)
-  const [ignoreBlur,setIgnoreBlur] = useState(false)
-  const getSearchResult = async () => {
-		const res = await api.get(`/api/chat/getSearchResultMockup`)
+	const [ignoreBlur, setIgnoreBlur] = useState(false)
+	const getSearchResult = async () => {
+		setSearchResult(null)
+		const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
 		setSearchResult(res.data)
 	}
 	const edit = props.edit
 
-	const changeColor = (l, r) => {
-		edit.setMessageLeftColor(l)
-		edit.setMessageRightColor(r)
-		console.log(edit.messageRightColor)
+	const changeColor = async (l, r) => {
+		const res = await api.get(`/api/chat/changeThemeColor`, { params: { chatroomid: props.chatRoomDetail.chatroomid,sendcolor:r,recievecolor:l } })
+		props.getChatRoomDetail()
 	}
 	const uploadPic = async (e) => {
 		setChangeImage(e.target.files[0])
@@ -45,29 +46,36 @@ export default function editChat(props) {
 		props.getChatRoomDetail()
 	}
 	const editChatRoomName = async () => {
-    const res = await api.get(`/api/chat/changeChatRoomNameMockup`,{name:roomName})
-    props.getChatRoomDetail()
-    setChangeChatRoomName(false)
-  }
-  const handleSelect = async (el) =>{
-		const res = await api.get(`/api/chat/addChatRoomMemberMockup`,{member:el.userID})
-    props.getChatRoomDetail()
-    setSearchResult(null)
+		const res = await api.get(`/api/chat/changeChatRoomName`, { params:{roomname: roomName,chatroomid:props.chatRoomDetail.chatroomid}})
+		props.getChatRoomDetail()
+	}
+	const handleSelect = async (el) => {
+		const res = await api.get(`/api/chat/addChatRoomMemberMockup`, { member: el.userID })
+		props.getChatRoomDetail()
+		setSearchResult(null)
 	}
 	useEffect(() => {
 		console.log(changeImage)
-  }, [changeImage])
-  useEffect(() => {
+	}, [changeImage])
+	useEffect(() => {
 		setChangeImage(null)
-	  setChangeChatRoomName(false)
+		setChangeChatRoomName(false)
 	}, [props.chatRoomDetail.chatRoomID])
+	useEffect(() => {
+		setSearchResult(null)
+		getSearchResult()
+	}, [searchInput])
+	useEffect(()=>{
+		console.log(roomName)
+	},[roomName])
+
 	return (
 		<>
 			<div
 				style={{
 					borderLeft: '1px solid #dddddd',
 					overflowY: 'scroll',
-          overflowX: 'hidden',
+					overflowX: 'hidden',
 				}}
 				className={scrollBarStyle}
 				onMouseOver={() => {
@@ -83,7 +91,7 @@ export default function editChat(props) {
 						alignItems: 'center',
 						paddingTop: 20,
 						flexDirection: 'column',
-            height: '100%',
+						height: '100%',
 					}}
 				>
 					<div>
@@ -98,7 +106,7 @@ export default function editChat(props) {
 							</div>
 							<Avatar
 								style={{ width: 60, height: 60 }}
-								alt={props.chatRoomDetail.chatRoomName}
+								alt={props.chatRoomDetail.chatroomname}
 								src={(() => {
 									if (changeImage) {
 										return URL.createObjectURL(changeImage)
@@ -115,7 +123,7 @@ export default function editChat(props) {
 							return (
 								<div style={{ display: 'flex', alignItems: 'center' }}>
 									<h4 style={{ textAlign: 'center', display: 'inline-block', marginTop: 14, marginBottom: 14 }}>
-										{props.chatRoomDetail.chatRoomName}
+										{props.chatRoomDetail.chatroomname}
 									</h4>
 									<CreateIcon
 										style={{ marginLeft: 7, cursor: 'pointer' }}
@@ -129,10 +137,12 @@ export default function editChat(props) {
 							return (
 								<div style={{ display: 'flex', alignItems: 'center' }}>
 									<Input
-										placeholder={"Chat Name"}
-                    style={{ width: 150, marginBottom: 10, marginRight: 7, marginTop: 6, textAlign: 'center' }}
-                    value={roomName}
-                    onChange={(e)=>{setRoomName(e.value)}}
+										placeholder={'Chat Name'}
+										style={{ width: 150, marginBottom: 10, marginRight: 7, marginTop: 6, textAlign: 'center' }}
+										value={roomName}
+										onChange={(e) => {
+											setRoomName(e.target.value)
+										}}
 									/>
 									<AcceptIcon
 										onClick={() => {
@@ -157,23 +167,68 @@ export default function editChat(props) {
 						}}
 					>
 						<div onClick={() => changeColor('#5B5B5B', '#EB7DB1')}>
-							<Colour color={{ color1: '#5B5B5B', color2: '#EB7DB1', active: true }} />
+							<Colour
+								color={{ color1: '#5B5B5B', color2: '#EB7DB1' }}
+								active={(() => {
+									if (
+										props.chatRoomDetail.themeColor.sendcolor == '#EB7DB1' &&
+										props.chatRoomDetail.themeColor.recievecolor == '#5B5B5B'
+									) {
+										return true
+									} else {
+										return false
+									}
+								})()}
+							/>
 						</div>
 						<div onClick={() => changeColor('#5B5B5B', '#A27CEF')}>
-							<Colour color={{ color1: '#5B5B5B', color2: '#A27CEF' }} />
+							<Colour color={{ color1: '#5B5B5B', color2: '#A27CEF' }} 
+							active={(() => {
+								if (
+									props.chatRoomDetail.themeColor.sendcolor == '#A27CEF' &&
+									props.chatRoomDetail.themeColor.recievecolor == '#5B5B5B'
+								) {
+									return true
+								} else {
+									return false
+								}
+							})()}
+							/>
 						</div>
 						<div onClick={() => changeColor('#5B5B5B', '#F3B496')}>
-							<Colour color={{ color1: '#5B5B5B', color2: '#F3B496' }} />
+							<Colour color={{ color1: '#5B5B5B', color2: '#F3B496' }} 
+							active={(() => {
+								if (
+									props.chatRoomDetail.themeColor.sendcolor == '#F3B496' &&
+									props.chatRoomDetail.themeColor.recievecolor == '#5B5B5B'
+								) {
+									return true
+								} else {
+									return false
+								}
+							})()}
+							/>
 						</div>
 						<div onClick={() => changeColor('#3D467F', '#8CC0EA')}>
-							<Colour color={{ color1: '#3D467F', color2: '#8CC0EA' }} />
+							<Colour color={{ color1: '#3D467F', color2: '#8CC0EA' }}
+							active={(() => {
+								if (
+									props.chatRoomDetail.themeColor.sendcolor == '#8CC0EA' &&
+									props.chatRoomDetail.themeColor.recievecolor == '#3D467F'
+								) {
+									return true
+								} else {
+									return false
+								}
+							})()}
+							/>
 						</div>
 					</div>
-          <div
-					id='addMember'
+					<div
+						id="addMember"
 						style={{
 							display: 'inline-block',
-							position:'relative',
+							position: 'relative',
 							width: '90%',
 							marginTop: 10,
 							marginBottom: 10,
@@ -181,19 +236,19 @@ export default function editChat(props) {
 						}}
 						onFocus={() => {
 							setIsFocus(true)
-              getSearchResult()
-              setIgnoreBlur(false)
+							getSearchResult()
+							setIgnoreBlur(false)
 						}}
 						onBlur={() => {
-							if(!ignoreBlur){
-							setIsFocus(false)
-							setSearchResult(null)
+							if (!ignoreBlur) {
+								setIsFocus(false)
+								setSearchResult(null)
 							}
 						}}
 					>
-					  <AddMember input={searchInput} setInput={setSearchInput} getSearchResult={getSearchResult}/>
-            {(() => {
-							if (!searchInput == null  || !searchInput == '' ) {
+						<AddMember input={searchInput} setInput={setSearchInput} getSearchResult={getSearchResult} />
+						{(() => {
+							if (!searchInput == null || !searchInput == '') {
 								return (
 									<SearchResult
 										searchResult={searchResult}
@@ -204,7 +259,7 @@ export default function editChat(props) {
 								)
 							}
 						})()}
-          </div>
+					</div>
 					<div className="memberDiv">
 						<Avatar style={{ width: 35, height: 35 }} alt="Krishadawut Olde Monnikhof" src="" />
 						<p className="memberName" style={{ color: '#7279A3' }}>
