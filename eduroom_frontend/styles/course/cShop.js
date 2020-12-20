@@ -54,13 +54,18 @@ img{
     font-weight: 700;
     font-size: 30px;
     color:#3D467F;
-    margin-bottom:10px;
+    margin-bottom:40px;
   }
   .course{
-   margin-left: 60px;
+    margin-left:60px;
+    margin-bottom:30px;
   }
   .BG{
     background: #F9F7FE;
     padding-bottom:20px;
+  }
+  .text2{
+    color:#4E4B66;
+    font-size: 15px;
   }
 `;
