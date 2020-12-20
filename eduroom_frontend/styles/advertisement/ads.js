@@ -288,5 +288,20 @@ export default css`
     border-radius: 10px;
     width: 15%;
   }
+  .Approve-button {
+    background: green;
+    border-radius: 20px;
+    padding: 0.6rem 4rem;
+    border: none;
+    outline: none;
+    transition: 0.25s;
+  }
+  .Disapprove-button {
+    background: red;
+    border-radius: 20px;
+    padding: 0.6rem 4rem;
+    border: none;
+    outline: none;
+    transition: 0.25s;
 `;
 5
