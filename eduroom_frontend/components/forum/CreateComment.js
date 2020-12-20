@@ -29,9 +29,6 @@ const CreateComment = (props) => {
 	const [alert, setAlert] = useState({
 		comment: false,
 	})
-	useEffect(() => {
-		console.log('render')
-	}, [])
 	const handleChange = (e) => {
 		e.preventDefault()
 		setForm({ ...createForm, [e.target.name]: e.target.value })
@@ -39,10 +36,8 @@ const CreateComment = (props) => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		if (validator()) {
-			console.log(createForm)
 			if (user) {
 				api.post('/api/forum/comment', createForm).then((res) => {
-					console.log(res)
 					setForm({ ...createForm, comment: '' })
 					props.GetData()
 					//router.push("/forum");
@@ -50,9 +45,7 @@ const CreateComment = (props) => {
 			} else {
 				setDialog(!dialog)
 			}
-		} else {
-			console.log('Please write your comment')
-		}
+		} 
 	}
 	const validator = () => {
 		let keys = Object.keys(createForm)
@@ -62,7 +55,6 @@ const CreateComment = (props) => {
 			if (createForm[key] == '') {
 				temp[key] = true
 				check = false
-				console.log(key)
 			} else {
 				temp[key] = false
 			}
