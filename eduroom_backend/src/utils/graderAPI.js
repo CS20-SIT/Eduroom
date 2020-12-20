@@ -1,9 +1,9 @@
-const axios = require('axios')
+const { default: Axios } = require('axios')
 
-const axiosGraderOptions = {
-	baseURL: process.env.GRADER_URL,
+const grader = Axios.create({
+    baseURL: process.env.GRADER_URL
+})
+
+module.exports = {
+    grader
 }
-
-const grader = axios.create(axiosGraderOptions)
-
-module.exports = { grader }
