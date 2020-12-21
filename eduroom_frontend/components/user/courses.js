@@ -85,15 +85,16 @@ useEffect(()=>{
     
   return (
     <Fragment>
-      <General>
-        <div className='bg'>
+        {/* <div className='bg'> */}
           <div className='container-1'>
+          <div className="coursecard">
+            MyCourse
+            <span className='course' style={{margin:'30px'}}>
+              <span className='course edit editText' onClick={()=>{coursetype(false)}}>Incompleted Course</span>
+              <span className='course edit editText' onClick={()=>{coursetype(true)}}>Completed Course</span>
+            </span>
+          </div>
 
-            <center>
-                 <h1>MyCourse</h1>
-                 <button onClick={()=>{coursetype(false)}}>Incompleted Course</button>
-                 <button onClick={()=>{coursetype(true)}}>Completed Course</button>
-             </center>
 
             <div className='text-center flex my-6 mx-search'>
 
@@ -115,7 +116,7 @@ useEffect(()=>{
                 })}
               </select>
             </div>
-
+            
             <div className='text-center my-8'>
               {courseDes.map((e, index) => (
                 <Link href={`/course/${e.courseid}`}>
@@ -145,10 +146,36 @@ useEffect(()=>{
 
 
           </div>
-        </div>
+        {/* </div> */}
         <style jsx>{utils}</style>
         <style jsx>
           {`
+            // .edit{
+            //   display: flex;
+            // }
+            .course{
+              width: 300px;
+              border: none;
+              outlined: none;
+              width: 600px;
+              margin-left: 10px;
+              margin-right: 10px;
+
+              display: flex;
+              justifyContent: start;
+              border-radius: 5px;
+            }
+            .edit:active{
+              color: red;
+            }
+            .edit:hover{
+              cursor: pointer;
+            }
+            .editText{
+              margin-bottom: 0;
+              color: #F39AC4;
+              text-decoration: underline;
+            }
           .container-1{
             max-width: 87vw;
             min-height: 100vh;
@@ -204,7 +231,6 @@ useEffect(()=>{
 
         `}
         </style>
-      </General>
     </Fragment>
   );
 };
