@@ -19,7 +19,7 @@ const addToCart = (type, id) => {
 	if (!store) {
 		localStorage.setItem(type, [id])
 	} else {
-		const items = localStorage.getItem('course').split(',')
+		const items = localStorage.getItem(type).split(',')
 		const newItems = [...items, id]
 		localStorage.setItem(type, newItems)
 	}
