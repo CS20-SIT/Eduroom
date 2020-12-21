@@ -28,9 +28,7 @@ const EditPackagePage = (props) => {
       return (
         <EditPackage
           packages={packages}
-          setPackages={setPackages}
           courseList={courseList}
-          setCourseList={setCourseList}
           changePage={(page) => setPage(page)}
         />
       );

@@ -1,8 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import Courses from './courses'
-import style from '../../styles/package/createpackage'
-import { useRouter } from 'next/router'
-import api from '../../api'
+// import React, { Fragment, useState, useEffect } from 'react'
+// import Courses from './courses'
+// import style from '../../styles/package/createpackage'
+// import { useRouter } from 'next/router'
+// import api from '../../api'
 
 const EditPackage = (props, { index }) => {
 	const [image, setImage] = useState(null)
