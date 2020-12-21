@@ -114,10 +114,7 @@ const edit = (props) => {
 					{/* ---------------------- ---------Course------------------------------- */}
 					<div>
 
-						<select defaultValue={data.courseid} className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
-							<option Value={data.courseid} key={data.courseid}>
-								{data.coursename}
-							</option>
+					<select defaultValue={eventInfo?.courseid} className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
 							{courseList.map((course) => {
 								return (
 									<option Value={course.courseid} key={course.courseid}>
