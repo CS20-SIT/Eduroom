@@ -94,3 +94,69 @@ exports.getNodeType = async (req, res, next) => {
 		return next(new ErrorResponse(err, 500))
 	}
 }
+
+exports.getQuizByNodeId = async (req, res, next) => {
+	const nodeID = req.query.nodeID
+	try {
+		let questions = await pool.query(`SELECT * FROM node_question WHERE nodeid = $1 order by questionno`, [nodeID])
+		questions = questions.rows
+		let answer = questions
+		for (let i = 0; i < questions.length; i++) {
+			const question = questions[i]
+			let choices = await pool.query(
+				`select choiceno,answer,iscorrect
+			from node_question_choice
+			where nodeid = $1 and questionno = $2
+			order by choiceno`,
+				[nodeID, question.questionno]
+			)
+			choices = choices.rows
+			answer[i] = { ...answer[i], choices: choices }
+		}
+
+		let nodeDetail = await pool.query(`select * from path_node where nodeid = $1`, [nodeID])
+		let pathDetail = await pool.query(
+			`select p.pathid,p.path_name from path p, path_node pn where pn.pathid = p.pathid and pn.nodeid = $1`,
+			[nodeID]
+		)
+		pathDetail = pathDetail.rows[0]
+		nodeDetail = nodeDetail.rows[0]
+		nodeDetail = { ...nodeDetail, path_name: pathDetail.path_name }
+		let result = { nodeDetail, questions: answer }
+		res.send(result)
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
+
+exports.completeNode = async (req, res, next) => {
+	try {
+		const userid = req.user.id
+		const { nodeid, score } = req.body
+		console.log(nodeid, score)
+		//check wheter this user already play this node
+		const old = await pool.query(`SELECT nodeid from user_progress where nodeid = $1 and userid = $2`, [
+			nodeid,
+			userid,
+		])
+		if (old.rowCount > 0) {
+			//update score of that node
+			await pool.query(`UPDATE user_progress SET score = $1 where nodeid = $2 and userid = $3`, [
+				score,
+				nodeid,
+				userid,
+			])
+		} else {
+			//insert progress
+			await pool.query(`INSERT INTO user_progress (userid,nodeid,progression,score) VALUES($1,$2,$3,$4)`, [
+				userid,
+				nodeid,
+				true,
+				score,
+			])
+		}
+		res.send({ success: true })
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}

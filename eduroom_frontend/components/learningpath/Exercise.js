@@ -2,8 +2,9 @@ import { Fragment, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import api from '../../api'
 import style from '../../styles/learningPathStyles/exercise'
+import { createChainedFunction } from '@material-ui/core'
 
-const Exercise = ({ id, nodeID, type }) => {
+const Exercise = ({ id, nodeID }) => {
 	const [learningPath, setLearningPath] = useState(null)
 	const [correct, setCorrect] = useState(null)
 	const [text, setText] = useState('')
@@ -35,6 +36,15 @@ const Exercise = ({ id, nodeID, type }) => {
 		e.preventDefault()
 		setCorrect(text.toLowerCase() === learningPath.answer.toLowerCase())
 	}
+	const handleNext = async () => {
+		try {
+			const body = { nodeid: nodeID, score: 1 }
+			await api.post('/api/learningpath/completeNode', body)
+			router.push(`/learningpath/${id}/${learningPath.nextNode}`)
+		} catch (err) {
+			console.log(err)
+		}
+	}
 	const renderPage = () => {
 		if (!learningPath) return null
 		return (
@@ -42,10 +52,10 @@ const Exercise = ({ id, nodeID, type }) => {
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					<div className="container">
 						<div className="card">
-							<div className="back" onClick={() => router.push('/learningpath')}>
+							<span className="back" onClick={() => router.push('/learningpath')}>
 								<i className="fas fa-chevron-left"></i>
 								{'  Back'}
-							</div>
+							</span>
 							<div style={{ margin: '30px' }}>
 								<h1 className="blue" style={{ margin: '0' }}>
 									{learningPath.path_name} Path
@@ -67,7 +77,7 @@ const Exercise = ({ id, nodeID, type }) => {
 											Check answer
 										</div>
 									</div>
-									<div onClick={() => router.push(`/learningpath/${id}/${learningPath.nextNode}`)}>
+									<div onClick={handleNext}>
 										<div style={{ fontSize: '20px' }} className={`${getNextClass()}`}>
 											Next <i className={`fas fa-chevron-right `} style={{ fontSize: '20px' }}></i>
 										</div>

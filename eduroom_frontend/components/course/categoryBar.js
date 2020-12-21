@@ -3,7 +3,7 @@ import CategoryItem from './categoryItem'
 import {useRouter} from 'next/router'
 import api from  '../../api'
 
-const CategoryBar = () => {
+const CategoryBar = ({current}) => {
 
     const router = useRouter();
     const [data,setData] = useState([])
@@ -18,18 +18,22 @@ const CategoryBar = () => {
             })
             .catch((err) => [console.log(err)])
     }
+    
     return (
-        <Fragment>
+        <Fragment> 
             <div className="categoryTab">
-                <div className="bottomLine">
-                <div className="categoryText general" onClick={()=>{router.push('/course/')}}>General</div>
+                <div style={{borderBottom: current == 'General' ? '2px solid rgb(251,156,203)' : '2px solid #A7ABC5'}}>
+                <div className="categoryText general" style={{color: current == 'General'? 'rgb(251,156,203)': '#A7ABC5', 
+                fontWeight: current == 'General'? 'bold': '500'}}
+                 onClick={()=>{router.push('/course/')}}>General</div>
                 </div>
-                
+               
             {
                 data.map((el,index)=>{
                     return (
-                        <div className="categoryText" key={index} onClick={()=>{router.push('/course/category/' + el.cataname)}}>
-                            <CategoryItem content={el.cataname} />
+                        <div className="categoryText" style={{color: current == el.cataname ? 'rgb(251,156,203)': '#A7ABC5',
+                        fontWeight: current == el.cataname? 'bold': '500'}} key={index} onClick={()=>{router.push('/course/category/' + el.cataname)}}>
+                            <CategoryItem content={el.cataname} current={current} />
                         </div>
                     )
                 })
@@ -39,8 +43,11 @@ const CategoryBar = () => {
                     `
                     .categoryText{
                         display: flex;
-                        
                     }
+                    .categoryText:hover{
+                        color: pink;
+                    }
+                    
                     .categoryTab {
                         display:flex;
                         justify-content: center;
@@ -48,12 +55,15 @@ const CategoryBar = () => {
                     }
                     .general{
                         cursor: pointer;
-                        color: #535353;
                         margin: 0 1rem;
+                    }
+                    .general:hover{
+                        color: pink;
                     }
                     .bottomLine{
                         border-bottom: 2px solid #535353;
                     }
+                    
                     
                     `
                 }

@@ -1,14 +1,13 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
-import CreateEventDialog from "../../components/calendar/createEventDialog";
-import Edit from "../../components/calendar/edit"
-import CSSTransition from 'react-transition-group/CSSTransition';
-import Image from "next/image";
-import axios from 'axios';
-import style from "../../styles/calendar/calendar";
-import api from "../../api";
-import Delete from "../../components/calendar/delete"
-import UserConText from "../../contexts/user/userContext"
-import { json } from "body-parser";
+import React, { Fragment, useState, useEffect, useContext } from 'react'
+import CreateEventDialog from '../../components/calendar/createEventDialog'
+import Edit from '../../components/calendar/edit'
+import CSSTransition from 'react-transition-group/CSSTransition'
+import Image from 'next/image'
+import axios from 'axios'
+import style from '../../styles/calendar/calendar'
+import api from '../../api'
+import Delete from '../../components/calendar/delete'
+import UserConText from '../../contexts/user/userContext'
 
 const Content = (props) => {
     const userContext = useContext(UserConText)
@@ -40,7 +39,6 @@ const Content = (props) => {
     useEffect(() => {
         const GetData = async (date) => {
             const result2 = await api.get(`/api/event/getEventbyDate?date=${date}`);
-            console.log(result2);
 
             setData(result2.data.data);
             setGlobal(result2.data.global);
@@ -50,6 +48,8 @@ const Content = (props) => {
 
         GetData(props.currentYear + "-" + props.currentMonthNo + "-" + props.showDate);
     }, [props.showDate]);
+
+
     const formatTime = (time) => {
         return (time < 10 ? '0' : '') + time
     }
@@ -76,30 +76,54 @@ const Content = (props) => {
                         <div className="d-top">
                             <div className="d-day">{showDate} {currentMonth} {currentYear}</div>
                         </div>
-
+                        <div className="Cpoint" style={{ background: "#fdd4c1" }}></div>
+                        <div className="dot-course">Course</div>
+                        <div className="Gpoint" style={{ background: "#A880F7" }}></div>
+                        <div className="dot-global">Global</div>
                         <div className="content">
                             <div>
+
+
+                                {global.map((row) => {
+
+                                    return (
+
+                                        <div className="d-block">
+
+                                            <div className="title">{row.title}</div>
+                                            <div className="point" style={{ background: "#A880F7" }}></div>
+                                            <div className="detail">{row.starttime.substring(0, 5)} : {row.endtime.substring(0, 5)}</div>
+                                            <div className="detail" style={{ marginTop: ".5rem", fontWeight: "bold" }}>{showDate} {currentMonth} - {row.enddate.substring(8, 10)} {currentMonth}</div>
+                                            <div className="detail" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
+                                        </div>
+                                    )
+                                })}
+
+
+
+
+
 
                                 {own.map((row) => {
 
                                     return (
 
                                         <div className="d-block">
-                                           
-                                                    <div className="edit">
-                                                        <Edit id={row.eventid} ></Edit>
-                                                        <Delete id={row.eventid}></Delete>
-                                                    </div>
+
+                                            <div className="edit">
+                                                <Edit id={row.eventid} ></Edit>
+                                                <Delete id={row.eventid}></Delete>
+                                            </div>
 
 
-                                    
 
-                                            <div className="title">{row.title}</div>
+
+                                            <div className="title">{row.title} ({row.coursename})</div>
 
                                             <div className="point" style={{ background: "#fdd4c1" }}></div>
-                                            {showDate == row.enddate || showDate == row.startday ? <div className="detail">{row.hstart}:{row.mstart} on {showDate} {currentMonth} - {row.hend}:{row.mend} on {row.enddate} {currentMonth}</div>
-                                                : <div className="detail">Allday</div>}
-                                            <div className="title" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
+                                            <div className="detail">{row.starttime.substring(0, 5)} : {row.endtime.substring(0, 5)}</div>
+                                            <div className="detail" style={{ marginTop: ".5rem", fontWeight: "bold" }}>{showDate} {currentMonth} - {row.enddate.substring(8, 10)} {currentMonth}</div>
+                                            <div className="detail" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
                                         </div>
                                     )
                                 })}
@@ -110,37 +134,20 @@ const Content = (props) => {
                                     return (
 
                                         <div className="d-block">
-                                           
-                            
-                                            <div className="title">{row.title}</div>
+
+
+                                            <div className="title">{row.title} ({row.coursename})</div>
 
                                             <div className="point" style={{ background: "#fdd4c1" }}></div>
-                                            {showDate == row.enddate || showDate == row.startday ? <div className="detail">{row.hstart}:{row.mstart} on {showDate} {currentMonth} - {row.hend}:{row.mend} on {row.enddate} {currentMonth}</div>
-                                                : <div className="detail">Allday</div>}
-                                            <div className="title" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
+                                            <div className="detail">{row.starttime.substring(0, 5)} : {row.endtime.substring(0, 5)}</div>
+                                            <div className="detail" style={{ marginTop: ".5rem", fontWeight: "bold" }}>{showDate} {currentMonth} - {row.enddate.substring(8, 10)} {currentMonth}</div>
+                                            <div className="detail" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
                                         </div>
                                     )
                                 })}
 
 
-                                {global.map((row) => {
 
-                                    return (
-
-                                        <div className="d-block">
-
-                                            <div className="title">{row.title}</div>
-
-                                            <div className="point" style={{ background: "#A880F7" }}></div>
-
-
-
-                                            {showDate == row.enddate || showDate == row.startday ? <div className="detail">{row.hstart}:{row.mstart} on {showDate} {currentMonth} - {row.hend}:{row.mend} on {row.enddate} {currentMonth}</div>
-                                                : <div className="detail">Allday</div>}
-                                            <div className="title" style={{ marginTop: "0.5rem", fontWeight: "bold", fontSize: "16px" }}>{row.place}</div>
-                                        </div>
-                                    )
-                                })}
                             </div>
                         </div>
 

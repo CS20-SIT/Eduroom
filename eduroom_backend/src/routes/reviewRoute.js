@@ -7,5 +7,5 @@ const {
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 router.post('/create',jwtAuthenicate,createReview)
-router.get('/',jwtAuthenicate,getReview)
+router.get('/',getReview)
 module.exports = router

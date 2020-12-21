@@ -63,12 +63,16 @@ const Content = () => {
 		setBlank(tempBlank)
 		setBlankEnd(tempBlankend)
 		api
-			.get(`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(day.dateObject.format('YYYY'))}`)
+			.get(
+				`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(
+					day.dateObject.format('YYYY')
+				)}`
+			)
 			.then((res) => {
 				setEvent(res.data.data)
-				console.log(res.data.data);
+				console.log(res.data.data)
 			})
-			.catch((err) => { })
+			.catch((err) => {})
 	}, [day])
 	//state chage 1 month per click
 	const addMonth = () => {
@@ -87,8 +91,7 @@ const Content = () => {
 		return firstDay
 	}
 
-	console.log(eventDays);
-
+	console.log(eventDays)
 
 	const [showDate, setShowDate] = useState(-1)
 	const [open, setOpen] = useState(false)
@@ -103,13 +106,12 @@ const Content = () => {
 					setInstructor(true)
 				}
 			})
-			.catch((err) => { })
+			.catch((err) => {})
 	}, [])
 
 	// ------------------code below----------------------//
 	return (
 		<Fragment>
-
 			<ViewEvent
 				open={open}
 				setOpen={setOpen}

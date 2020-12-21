@@ -2,6 +2,10 @@ const ErrorResponse = require("../../utils/errorResponse");
 const pool = require("../../database/db");
 
 const pQuestion = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+  const adminid = req.user.id;
   const title = req.body.title;
   const description = req.body.description;
   const hint = req.body.hint;
@@ -12,7 +16,7 @@ const pQuestion = async (req, res, next) => {
   const difficulty = req.body.difficulty;
   const visibility = req.body.visibility;
   const ruleType = req.body.ruleType;
-  const adminid = req.body.adminid;
+
   const newTags = req.body.newTags;
   const existTags = req.body.existTags;
 
@@ -65,27 +69,10 @@ const pQuestion = async (req, res, next) => {
   );
 };
 
-const pQuestionTag = async (req, res, next) => {
-  const questionId = 2;
-  const tagId = 2;
-
-  await pool.query(
-    "INSERT INTO questiontag(questionId,tagId) VALUES ($1 , $2)",
-    [questionId, tagId]
-  );
-  res.send({ success: true });
-};
-const pTag = async (req, res, next) => {
-  const tagId = 2;
-  const tagName = "testName";
-
-  await pool.query("INSERT INTO tags(tagId,tagName) VALUES ($1 , $2)", [
-    tagId,
-    tagName,
-  ]);
-  res.send({ success: true });
-};
 const pQuestionSample = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const questionId = req.body.questionId;
   const samples = req.body.samples;
   try {
@@ -102,6 +89,10 @@ const pQuestionSample = async (req, res, next) => {
   res.send({ success: true });
 };
 const pQuestionTestcase = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+
   const questionId = req.body.intput;
   const fileNo = req.body.fileNo;
   const filePath = req.body.filePath;
@@ -114,6 +105,10 @@ const pQuestionTestcase = async (req, res, next) => {
 };
 //edit by id
 const eQuestion = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
+  const adminid = req.user.id;
   const title = req.body.title;
   const description = req.body.description;
   const hint = req.body.hint;
@@ -124,7 +119,6 @@ const eQuestion = async (req, res, next) => {
   const difficulty = req.body.difficulty;
   const visibility = req.body.visibility;
   const ruleType = req.body.ruleType;
-  const adminid = req.body.adminid;
   const id = req.body.id;
 
   await pool.query(
@@ -154,6 +148,9 @@ const eQuestion = async (req, res, next) => {
   res.send({ success: true });
 };
 const eQuestionSample = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const questionId = req.body.questionId;
   const sampleNo = req.body.sampleNo;
   const intput = req.body.intput;
@@ -166,6 +163,9 @@ const eQuestionSample = async (req, res, next) => {
   res.send({ success: true });
 };
 const eQuestionTestcase = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const questionId = req.body.questionId;
   const fileNo = req.body.fileNo;
   const filePath = req.body.filePath;
@@ -179,6 +179,9 @@ const eQuestionTestcase = async (req, res, next) => {
 
 //get all
 const gAllAdminLog = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const setTime = (text) => {
     text = "" + text;
     return text.substr(4, 11) + " At " + text.substr(16, 5);
@@ -195,6 +198,9 @@ const gAllAdminLog = async (req, res, next) => {
   res.send(ann);
 };
 const gAllQuestions = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const query =
     "select a.id, a.title , a.difficulty , a.visibility, b.displayName , a.adminid from Questions a, admin_login b  where a.adminid = b.adminid order by 1 DESC ";
   const data = await pool.query(query);
@@ -209,12 +215,18 @@ const gAllTag = async (req, res, next) => {
 
 //get by id `````````````````````````````````
 const gQuestion = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const id = req.query.id;
   const data = await pool.query(`select * from Questions  where id = '${id}' `);
   const conann = data.rows;
   res.send(conann);
 };
 const gQuestionTag = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const id = req.query.id;
   const data = await pool.query(
     `select  q.tagid as tagid , tagname from questiontag q , tags t  where q.questionid = '${id}'and t.tagid = q.tagid  `
@@ -224,6 +236,9 @@ const gQuestionTag = async (req, res, next) => {
   res.send(conann);
 };
 const gQuestionSample = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const id = req.query.id;
   const data = await pool.query(
     `select intput as inputSample, output as outputSample , sampleno as index from questionSample  where questionId = '${id}' `
@@ -232,6 +247,9 @@ const gQuestionSample = async (req, res, next) => {
   res.send(conann);
 };
 const gQuestionTestcase = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const id = req.query.id;
   const data = await pool.query(
     `select * from questionTestcases  where questionId = '${id}' `
@@ -240,6 +258,9 @@ const gQuestionTestcase = async (req, res, next) => {
   res.send(conann);
 };
 const gNonExistQuestion = async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorize", 401));
+  }
   const id = req.query.conno;
   const data = await pool.query(
     `select id, title from Questions  where id not in ( select questionid from contest_question where conid = '${id}' )  `
@@ -251,8 +272,7 @@ const gNonExistQuestion = async (req, res, next) => {
 module.exports = {
   pQuestion,
   gNonExistQuestion,
-  pQuestionTag,
-  pTag,
+
   pQuestionSample,
   pQuestionTestcase,
   eQuestion,

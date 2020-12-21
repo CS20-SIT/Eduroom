@@ -183,3 +183,60 @@ exports.CreateCourse = async (req, res, next) => {
 	// )
 	res.send({ courseId })
 }
+
+exports.DeleteCourse = async (req, res, next) => {
+	const courseId = req.user.instructor.course
+	const sections = await pool.query('SELECT sectionno from course_section where courseid = $1', [courseId])
+	const courseQuiz = await pool.query('SELECT quizid from course_quiz where courseid = $1', [courseId])
+
+	for(i=0;i<courseQuiz.rows.length;i++){
+
+		const questionNo = await pool.query('SELECT questionno from quiz_question where quizid = $1', [courseQuiz.rows[i]])
+
+		for(k=0; k<questionNo.rows.length;k++){
+			const choiceNo = await pool.query('SELECT choiceno from quiz_question_choice where quizid = $1 and questionno = $2', 
+			[courseQuiz.rows[i], questionNo.rows[k]])
+
+			for(j=0;j<choiceNo.rows.length;j++){
+				await pool.query('DELETE from quiz_question_choice where quizid = $1 and questionno = $2 and choiceno = $3', 
+				[courseQuiz.rows[i], questionNo.rows[k], choiceNo.rows[j]])
+			}
+
+			await pool.query('DELETE from quiz_question where quizid = $1 and questionno = $2', [courseQuiz.rows[i], questionNo.rows[k]])
+		}
+
+		await pool.query('DELETE from course_quiz where quizid = $1 and courseid = $2', [courseQuiz.rows[i], courseId])
+
+	}
+
+
+	for(i=0; i<sections.rows.length;i++){
+		const courseVideo = await pool.query('SELECT partno from course_section_part_video where courseid = $1 and sectionno = $2', 
+		[courseId, sections.rows[i]])
+		const courseMaterial = await pool.query('SELECT partno from course_section_part_material where courseid = $1 and sectionno = $2', 
+		[courseId, sections.rows[i]])
+		const sectionPart = await pool.query('SELECT partno from section_part where courseid = $1 and sectionno = $2', 
+		[courseId, sections.rows[i]])
+
+		for(k=0;k<courseVideo.rows.length;k++){
+			await pool.query('DELETE from course_section_part_video where sectionno = $1 and courseid = $2 and partno = $3', 
+			[sections.rows[i], courseId, courseVideo.rows[k]])
+		}
+		for(k=0;k<courseMaterial.rows.length;k++){
+			await pool.query('DELETE from course_section_part_material where sectionno = $1 and courseid = $2 and partno = $3', 
+			[sections.rows[i], courseId, courseVideo.rows[k]])
+		}
+		for(k=0;k<sectionPart.rows.length;k++){
+			await pool.query('DELETE from section_part where sectionno = $1 and courseid = $2 and partno = $3', 
+			[sections.rows[i], courseId, courseVideo.rows[k]])
+		}
+
+		await pool.query('DELETE from course_section where sectionno = $1 and courseid = $2', [sections.rows[i], courseId])
+
+	}
+
+	await pool.query('DELETE from course where courseid = $1', [courseId])
+
+	res.send({success : true })
+
+}

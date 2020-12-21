@@ -1,16 +1,28 @@
 const express = require('express');
 const router = express.Router();
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
-const { getStickers,getDailyRewardStatus,showCoinOwner,showStickerOwner, buySticker, getCoinFromEdqiz, packStickerStore,insertDailyReward} = require('../controllers/Coin/coin');
+const { getStickers, getDailyRewardStatus, showCoinOwner, showStickerOwner,
+    buySticker, getCoinFromEdqiz, packStickerStore, insertDailyReward, buyCoupon, checkCodeOwner, checkStickerOwner,getCodeListOfCoin,getCodeListOfLPublic,getCodeListOfPublic } = require('../controllers/Coin/coin');
 // router.get('/packsticker',getStickerInPackage);
-router.get('/stickers', getStickers);
-router.get('/dailyReward',getDailyRewardStatus);
-router.get('/stickers/:id', packStickerStore)
-// router.post('/coinTransaction',setCoinTransaction);
-router.get('/coinOwner',showCoinOwner);
-router.get('/stickerOwner',showStickerOwner);
-// router.post('/coinTransaction',addReduceTransOwner);
-router.post('/buySticker',buySticker)
-router.post('/getCoinFromEdqiz',getCoinFromEdqiz)
-router.post('/dailyReward',insertDailyReward)
+router.get('/stickers', getStickers);   // ดัน
+router.get('/dailyReward', jwtAuthenicate, getDailyRewardStatus); //ดัน
+router.get('/stickers/:id', jwtAuthenicate, packStickerStore)   // ดัน
+router.get('/coinOwner', jwtAuthenicate, showCoinOwner);  // ดัน
+router.get('/stickerOwner', jwtAuthenicate, showStickerOwner);  // ดัน
+router.get('/checkCodeOwner', checkCodeOwner)
+router.get('/checkStickerOwner', jwtAuthenicate, checkStickerOwner)
+router.post('/buySticker',jwtAuthenicate, buySticker)   // ดัน
+
+router.post('/getCoinFromEdqiz', getCoinFromEdqiz) // ดัน
+router.post('/dailyReward', jwtAuthenicate, insertDailyReward)  // ดัน
+
+
+
+//Coupon
+router.get('/codesOfCoin',getCodeListOfCoin);
+router.get('/codesOfLPublic',getCodeListOfLPublic);
+router.get('/codesOfPublic',getCodeListOfPublic);
+
+router.post('/buyCoupon',jwtAuthenicate, buyCoupon)    // ดัน
 module.exports = router;
