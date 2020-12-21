@@ -46,19 +46,14 @@ exports.editAdminProfilePic = async (req, res, next) => {
     try {
         const adminId = req.user.id
         const filePath = req.files[0].path
-        const optimizedFileName = `${uuidv4()}`
-        // console.log(filePath);
-        // sharp(filePath).resize({
-        //     height: 400,
-        //     width: 400
-        // }).jpeg().toFile(`/upload/${optimizedFileName}`)
-        // console.log(`/upload/${optimizedFileName}`);
-        // console.log('DONE WITH SHARP');
-        const avatarURL = await uploadFile(filePath, `profile_pic/${optimizedFileName}.jpeg`)
-        // console.log(avatarURL);
-        res.status(201).send({avatarURL})
-        
+        const optimizedFileName = `${uuidv4()}.png`
+        await sharp(filePath).resize({
+            height: 400,
+            width: 400
+        }).png().toFile(`${optimizedFileName}`)
+        const avatarURL = await uploadFile(optimizedFileName, `profile_pic/${optimizedFileName}`)
         await pool.query(`UPDATE admin_login SET avatar = '${avatarURL}' WHERE adminid = '${adminId}';`)
+        res.status(201).send({avatarURL})
     } catch (error) {
         return next(new ErrorResponse(error,500))
     }
