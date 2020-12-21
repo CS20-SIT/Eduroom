@@ -11,9 +11,11 @@ const CourseID = ({ id }) => {
 	const [course, setCourse] = useState(null)
 	const fetchCourse = async () => {
 		const res = await api.get('/api/course/getCourseFromID', { params: { courseID: id } })
+		console.log(res.data)
 		setCourse(res.data)
 	}
 	useEffect(() => {
+		window.scrollTo(0, 0)
 		fetchCourse()
 		setCart(getItems('course'))
 	}, [])
@@ -132,7 +134,7 @@ const CourseID = ({ id }) => {
 						</Link>
 					</div>
 					<div className="container">{renderCourse()}</div>
-					<Review type = "course" id={id} />
+					<Review type="course" id={id} />
 				</div>
 				<style jsx>{utils}</style>
 			</GeneralNoNav>
