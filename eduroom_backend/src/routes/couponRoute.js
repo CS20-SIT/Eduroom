@@ -4,8 +4,23 @@ const router = express.Router();
 const { jwtAuthenicate, jwtAdminAuthenticate  } = require('../middleware/jwtAuthenticate');
 const { uploadToGCSHandler } = require('../middleware/multer')
 
-const {Upload,CreateCodeForSale,GetCodeType,UseCode,GetDiscountFromCoupon } = require("../controllers/coupon/couponController");
-const {Upload,CreateCodeForSale,GetCodeType, GetDataforTable, GetCoupon, GetCouponById, updateStatus} = require("../controllers/coupon/couponController");
+const {
+  Upload,
+  CreateCodeForSale,
+  GetCodeType, 
+  GetDataforTable,
+  GetCoupon, 
+  GetCouponById, 
+  updateStatus,
+  UseCode,
+  GetDiscountFromCoupon, 
+  gCodeById,
+  gCodeList,
+  gUsedCodeList,
+  gExpiredCodeList
+
+} 
+= require("../controllers/coupon/couponController");
 
   router.post('/upload/picture', jwtAdminAuthenticate ,uploadToGCSHandler('coupon/picture'), Upload)
   router.post('/createCodeForSale', jwtAdminAuthenticate,CreateCodeForSale)
@@ -16,5 +31,9 @@ const {Upload,CreateCodeForSale,GetCodeType, GetDataforTable, GetCoupon, GetCoup
   router.get('/getCouponDetail',  GetCoupon);
   router.get('/getCouponById', GetCouponById);
   router.get('/updateStatus',  updateStatus);
+  router.get('/getCodeById',  gCodeById);
+  router.get('/getCodeList',  gCodeList);
+  router.get('/getUsedCodeList',  gUsedCodeList);
+  router.get('/getExpiredCodeList',  gExpiredCodeList);
 
   module.exports = router;

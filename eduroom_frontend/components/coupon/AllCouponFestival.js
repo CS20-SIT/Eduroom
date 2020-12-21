@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 const temp = (props) => {
 	const [page, setPage] = useState(1)
 	const [max, setMax] = useState(1)
-
 	useEffect(() => {
         if(props.item.length>0){
 		const mx = Math.ceil(props.item.length / 3)
@@ -32,13 +31,15 @@ const temp = (props) => {
 			return (
 				<div>
 				<RenderCouponFes
-					title={item.title}
-					price={item.price}
+					title={item.description}
+					price={item.coinUse}
 					index={index}
 					id={item.id}
-					owner={item.owner}
+					owner={item.name}
 					description={item.description}
 					key={item.id}
+					picture={item.picture}
+					free={true}
 				></RenderCouponFes>
 				</div>
 			)
