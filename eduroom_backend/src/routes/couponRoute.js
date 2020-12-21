@@ -4,8 +4,7 @@ const router = express.Router();
 const { jwtAuthenicate, jwtAdminAuthenticate  } = require('../middleware/jwtAuthenticate');
 const { uploadToGCSHandler } = require('../middleware/multer')
 
-const {Upload,CreateCodeForSale,GetCodeType,UseCode,GetDiscountFromCoupon } = require("../controllers/coupon/couponController");
-const {Upload,CreateCodeForSale,GetCodeType, GetDataforTable, GetCoupon, GetCouponById, updateStatus} = require("../controllers/coupon/couponController");
+const {Upload,CreateCodeForSale,GetCodeType, GetDataforTable, GetCoupon, GetCouponById, updateStatus,UseCode,GetDiscountFromCoupon } = require("../controllers/coupon/couponController");
 
   router.post('/upload/picture', jwtAdminAuthenticate ,uploadToGCSHandler('coupon/picture'), Upload)
   router.post('/createCodeForSale', jwtAdminAuthenticate,CreateCodeForSale)
