@@ -172,7 +172,7 @@ const CourseID = ({ id }) => {
 						<div className="text-secondary font-lato text-md my-1">Certificate : Get by completing entire course</div>
 						{/* Certificate : Get by completing entire course {courseDes[0].certpath} */}
 						<div className="font-lato text-xl text-navy des-head">Description</div>
-						<div className="font-quicksand text-md my-1">{course.coursedescription}</div>
+						<div className="font-quicksand text-md my-2">{course.coursedescription}</div>
 					</div>
 				</div>
 				<style jsx>{utils}</style>

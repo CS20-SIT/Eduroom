@@ -13,31 +13,28 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { ContentFlag } from 'material-ui/svg-icons';
 
-// const CourseIDLesson = ({ courseDes, id }) => {
 const CourseIDLesson = ({ id }) => {
+
     useEffect(() => {
-        console.log(id)
         const fetchData = async () => {
-        let res = await api.post('/api/course/getCourseFromID', { courseID: id })
-        console.log(res.data)
-        setCourseDes(res.data);
+            try{
+                let res = await api.get('/api/course/getCourseSectionPart', { params: { courseID: id } })
+                setCourseDes(res.data);
+
+            } catch(err){
+                console.log(err.message);
+            }
         }
         fetchData()
     }, [])
-
+    const [courseDes, setCourseDes] = useState(null)
     const [sec,setSec] = useState(0); 
     const [secBG, setSecBG] = useState(0);
     const [part,setPart] = useState(0);
-    var secNow = 0, partNow = 0;
-    const [srcc,setSrc] = useState(courseDes[0].section[secBG].part[part].src);
-    // Set srcc from secBG part
+    var secNow = 0;
+    const [srcc,setSrc] = useState('');
     const [partType,setPartType] = useState(1);
-    const [questionNow,setQuestionNow] = useState(0);
-    const [choiceNow,setChoiceNow] = useState([]);
-    const [ansChoice,setAnsChoice] = useState([]);
     const [submitValid,setSubmitValid] = useState(0);
-    let [styleOfChoice,setStyleOfChoice] = useState({});
-    let [submitYet,setSubmitYet] = useState(0);
 
     
     // Green text-grey my-4 py-8 pointer rounded-sm bg-white shadow text-center choice-size border-green
@@ -57,52 +54,38 @@ const CourseIDLesson = ({ id }) => {
 
 
     const changeChoiceAndCheckSubmit = (qNum) => {
-        if(submitYet == 1) return
-        const arr = [...choiceNow];
-        arr[questionNow] = qNum;
-        setChoiceNow(arr);
+        if(courseDes.section[secBG].submitYet == 1) return
+        const courseDesTemp = courseDes;
+        courseDesTemp.section[secBG].choiceNow[courseDesTemp.section[secBG].questionNow] = qNum; 
+
         var count = 0;
-        for(var i = 0; i < arr.length; i++){
-            // console.log("arr[] "+arr[i]);
-            if(arr[i] != -1){
+        for(var i = 0; i < courseDes.section[secBG].choiceNow.length; i++){
+            if(courseDes.section[secBG].choiceNow[i] != -1){
                 count++;
             }
         }
-        if(count == arr.length){
-            setSubmitValid(1);
+        if(count == courseDes.section[secBG].choiceNow.length){
+            courseDesTemp.section[secBG].submitValid = 1;
         }
-        // console.log(count +" "+arr.length);
-    }
-
-    const setAnsChoiceFunc = (qN) => {
-        const arr=[];
-        for(var i = 0; i < qN.length; i++){
-            arr.push(qN[i].answer);
+        setCourseDes(courseDesTemp);
+        if(submitValid == 0){
+            setSubmitValid(-1);
         }
-        // console.log(arr);
-        setAnsChoice(arr);
+        else{
+            setSubmitValid(0);
+        }
     }
 
     const showAnswer = () =>{
-        // for(var i = 0; i < courseDes[id-1].section[secBG].part[part].questionNum.length; i++){
-        //     console.log(choiceNow[i]);
-        //     if(choiceNow[i] == i){
-        //         setStyleOfChoice({
-        //             pointerEvents: 'none',
-        //             border: '2px solid #ee5959',
-        //             // backgroundColor: 'green',
-        //         })
-                
-        //         // console.log(styleOfChoice);
-        //     }
-        //     else if(ansChoice[i] == i){
-        //         setStyleOfChoice({
-        //             pointerEvents: 'none',
-        //             border: '2px solid #008000'
-        //         })
-        //     }
-        // }
-        setSubmitYet(1);
+        const courseDesTemp = courseDes;
+        courseDesTemp.section[secBG].submitYet = 1;
+        setCourseDes(courseDesTemp);
+        if(submitValid == 0){
+            setSubmitValid(-1);
+        }
+        else{
+            setSubmitValid(0);
+        }
     }
 
 
@@ -117,46 +100,23 @@ const CourseIDLesson = ({ id }) => {
             return "https://cdn0.iconfinder.com/data/icons/math-business-icon-set/93/1_9-512.png";
         }
     }
-    const testLog = (x) => {
-        console.log(x)
-    }
-    const downloadItem = async (video) =>  {
-
-          console.log('loading file..')
-          const a = document.createElement('a')
-          a.href = toDataURL(video)
-          a.download = 'documents.pdf'
-          document.body.appendChild(a)
-          a.click()
-          document.body.removeChild(a)
 
 
-
-      }
-
-      const toDataURL= async (url) => {
-        return fetch(url)
-          .then(response => {
-            return response.blob()
-          })
-          .then(blob => {
-            return URL.createObjectURL(blob)
-          })
-      }
+    let content = null
+    if (courseDes) {
+        console.log(courseDes);
+        content = (
     
-    
-    return (
-        <Fragment>
             <GeneralNoNav>
             <div className='bg-little-grey '>
-                <Link href={`/course/${id}`}><span className='text-primary text-lg py-8 px-8 pointer'>Back</span></Link>
+                <div className="pt-4"><div className="mt-4 mx-8"><Link href={`/course/${id}`}><span className='font-quicksand text-ll text-navy border-navy px-3 py-1 text-lg pointer rounded-md'>Back</span></Link></div></div>
                 <div className='container-2'>
 
                     {/* Title */}
                     <div className='my-2'>
-                        <span className='text-xl text-navy font-quicksand'>{courseDes[id-1].name}</span>
+                        <span className='text-xl text-navy font-quicksand'>{courseDes.courseName}</span>
                         <span className="share-icon pointer"><img alt="shareIcon" src="https://cdn3.iconfinder.com/data/icons/black-easy/512/538636-share_512x512.png" width="20px" height="20px" ></img></span>
-                        <div className='text-secondary font-quicksand mb-10 my-2'>{"Section "+`${courseDes[id-1].section[secBG].id}`+" : " + `${courseDes[id-1].section[secNow].name}` + "  |  Part " + `${courseDes[id-1].section[secBG].part[part].id}` + " : " + `${courseDes[id-1].section[secBG].part[part].name}`}</div>
+                        <div className='text-secondary font-quicksand mb-10 my-2'>{"Section "+`${courseDes.section[secBG].id}`+" : " + `${courseDes.section[secNow].sectionName}` + "  |  Part " + `${courseDes.section[secBG].part[part].id}` + " : " + `${courseDes.section[secBG].part[part].partName}`}</div>
                     </div>
                     {/* Title */}
 
@@ -165,34 +125,44 @@ const CourseIDLesson = ({ id }) => {
 
                         {/* Videos / Materials / Quiz */}
                         <div className={`${partType == 1 ? "inline-block":"hidden"}`}>
-                            <iframe className="" width="700" height="450" src={srcc}></iframe>
+                            {/* <iframe className="" width="700" height="450" src={srcc}></iframe> */}
+                            <video width="700" height="450" controls>
+                                <source src={courseDes.section[secBG].part[part].src} type="video/mp4"></source>
+                            </video>
+
+                            <div className="my-8 font-quicksand text-secondary mx-2 text-lg">{courseDes.section[secBG].part[part].partDescript}</div>
                         </div>
                         <div className={`${partType == 2 ? "inline-block":"hidden"}`}>
-                            {/* <div onClick={() => {
-                                downloadItem('http://rathcenter.com/Sheet/Logic.pdf');
-                            }}>Download</div> */}
+                            <div className="">
+                                <div className="ml-20">
+                                    <div className="my-4 mt-4 px-8 py-4 bg-white border-navy rounded-sm">
+                                        <div className="font-quicksand text-secondary inline-block">{`${courseDes.courseName} Material.pdf`}</div>
+                                        <div className="ml-20 inline-block">
+                                            <a href={courseDes.section[secBG].part[part].src} download={`${courseDes.courseName} Material.pdf`}>
+                                                <div className="mt-1"><img alt="downloadIcon" src="https://cdn0.iconfinder.com/data/icons/essentials-9/128/__Download-512.png" width="18px" height="18px" ></img></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className={`${partType == 3 ? "section-part flex flex-col items-center":"hidden"}`}>
-                            <div className={`${submitValid == 0 ? "ml-auto inline-block text-secondary rounded-lg border-grey-2 px-6 py-2 text-sm disabled font-bold" : ( submitYet == 0 ? "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-hover" : "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-anti-hover" )}`} 
+                            <div className={`${courseDes.section[secBG].submitValid == 0 ? "ml-auto inline-block text-secondary rounded-lg border-grey-2 px-6 py-2 text-sm disabled font-bold" : ( courseDes.section[secBG].submitYet == 0 ? "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-hover" : "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-anti-hover" )}`} 
                             onClick={() => {
-                                if(submitValid == 0) return
+                                if(courseDes.section[secBG].submitValid == 0) return
                                 showAnswer();
-                                // console.log(ansChoice);
                             }}
                             
                             >SUBMIT</div>
-                            {courseDes[id-1].section[secBG].part[part].questionNum.map((q, qNum) => (
-                                <div key={qNum} className={`${questionNow == qNum ? '':"hidden"}`}>
+                            {courseDes.section[secBG].part[part].questionNum.map((q, qNum) => (
+                                <div key={qNum} className={`${courseDes.section[secBG].questionNow == qNum ? '':"hidden"}`}>
                                     <div className="font-quicksand text-center text-xxl text-navy font-bold">{q.question}</div>
                                     <div className="my-4 mt-10">
                                         {q.choice.map((c, cNum)=>(
-                                            // <div key={cNum} className={`${choiceNow[questionNow] == cNum ? "text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-anti-navy text-center choice-size":"text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-navy text-center choice-size"}`} style={ cNum === ansChoice[questionNow] && choiceNow[questionNow] === cNum ? styleOfChoice : null} onClick={()=>{
-                                            // <div key={cNum} className={`${submitYet == 0 ? (choiceNow[questionNow] == cNum ? : ) : choiceNow[questionNow] == cNum ? : }`}>
-                                            <div key={cNum} className={`${submitYet == 1 ? (ansChoice[questionNow] == cNum ? (greenBox) : ( choiceNow[questionNow] == cNum ? (redBox) : (whiteAntiBorderBox) ) ) : ( choiceNow[questionNow] == cNum ? (blueBox) : (whiteBox) )}`} onClick={()=>{
+                                            <div key={cNum} className={`${courseDes.section[secBG].submitYet == 1 ? (courseDes.section[secBG].ansChoice[courseDes.section[secBG].questionNow] == cNum ? (greenBox) : ( courseDes.section[secBG].choiceNow[courseDes.section[secBG].questionNow] == cNum ? (redBox) : (whiteAntiBorderBox) ) ) : ( courseDes.section[secBG].choiceNow[courseDes.section[secBG].questionNow] == cNum ? (blueBox) : (whiteBox) )}`} onClick={()=>{
                                                 changeChoiceAndCheckSubmit(cNum);
                                             }}>
-                                                {/* choiceNow[questionNow] == cNum  ? (submitYet == 1 ? (choiceNow[questionNow] == ansChoice[questionNow] ? ({greenBox}) : ({redBox}) ) : ({whiteBox}) ) : ({whiteBox})  */}
-                                                {c}
+                                               {c}
                                             </div>
                                             
                                         ))}
@@ -200,9 +170,9 @@ const CourseIDLesson = ({ id }) => {
                                 </div>
                             ))}
                             <div className="mt-10" width="500px" >
-                                {courseDes[id-1].section[secBG].part[part].questionNum.map((q, qNum) => (
-                                    <div key={qNum} className={`${questionNow == qNum ? ( submitYet == 0 ? "inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-white bg-navy" : ( ansChoice[qNum] == choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-green bg-white" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-red bg-white"  ) ) : submitYet == 0 ? ("inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-navy") : ( ansChoice[qNum] == choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-white bg-green" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-white bg-red"  ) }`} onClick={()=>{
-                                        setQuestionNow(qNum);
+                                {courseDes.section[secBG].part[part].questionNum.map((q, qNum) => (
+                                    <div key={qNum} className={`${courseDes.section[secBG].questionNow == qNum ? ( courseDes.section[secBG].submitYet == 0 ? "inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-white bg-navy" : ( courseDes.section[secBG].ansChoice[qNum] == courseDes.section[secBG].choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-green bg-white" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-red bg-white"  ) ) : courseDes.section[secBG].submitYet == 0 ? ("inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-navy") : ( courseDes.section[secBG].ansChoice[qNum] == courseDes.section[secBG].choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-white bg-green" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-white bg-red"  ) }`} onClick={()=>{
+                                        courseDes.section[secBG].questionNow = qNum;
                                     }}>
                                         {qNum+1}
                                     </div>
@@ -217,7 +187,7 @@ const CourseIDLesson = ({ id }) => {
                             
                             {/* Map Section */}
                             <div>
-                            {courseDes[id-1].section.map((e, index) => (
+                            {courseDes.section.map((e, index) => (
                                 <div key={index}>
                                     <div className="section-box py-2 px-6 pointer text-lg font-quicksand" onClick={()=>{
                                         if(sec == index){
@@ -225,11 +195,9 @@ const CourseIDLesson = ({ id }) => {
                                         }
                                         else{
                                             setSec(index);
-                                            // secNow = index;
-                                            // console.log(secNow+" "+part);
                                         }
                                     }}>
-                                        <div className="font-normal my-1">{"Section "+`${e.id}`+" : " + `${e.name}`}</div>
+                                        <div className="font-normal my-1">{"Section "+`${e.id}`+" : " + `${e.sectionName}`}</div>
                                         <div className="font-light text-ll text-grey">{`${e.time}`+" mins."}</div>
                                         
                                     </div>
@@ -241,15 +209,12 @@ const CourseIDLesson = ({ id }) => {
                                                     <img width="24px" src={checkIcon(ee.type)}/>
                                                 </div>
                                                 <div className="font-quicksand px-2 text-ll pointer font-normal-bold inline-block part-word" onClick={()=>{
-                                                    // console.log(indexx)
                                                     setSrc(ee.src);
                                                     setSecBG(index);
                                                     setPart(indexx);
                                                     setPartType(ee.type);
-                                                    setChoiceNow(Array(ee.questionNum.length).fill(-1));
-                                                    setAnsChoiceFunc(ee.questionNum);
 
-                                                }}>{"Part " + `${ee.id}` + ": " + `${ee.name}`}</div>
+                                                }}>{"Part " + `${ee.id}` + ": " + `${ee.partName}`}</div>
                                             </div>
                                         ))}
                                         
@@ -272,225 +237,24 @@ const CourseIDLesson = ({ id }) => {
             </div>
             <style jsx>{utils}</style>
           </GeneralNoNav>
+        )
+      }
+      return (
+        <Fragment>
+            {content}
         </Fragment>
         );
-
-
-
-
-        
-
-
 }
 
 export async function getServerSideProps(contex) {
     
     const id = contex.query.id;
-    
-    // GET /course/id/lesson
-    const courseDes = [
-    {
-        id: 1,
-        name: 'Learn To Code With Python',
-        section: [
-            {
-                id: 1,
-                name: 'Before start',
-                time: 3,
-                part: [
-                    {
-                        id: 1,
-                        name: 'Preview of course',
-                        type: 1,
-                        src: 'https://www.youtube.com/embed/6S58yvva978',
-                        questionNum: [],
-                    },
-                    {
-                        id: 2,
-                        name: 'Material',
-                        type: 2,
-                        src: 'resource.pdf',
-                        questionNum: [],
-                    },
-                    {
-                        id: 3,
-                        name: 'Pretest',
-                        type: 3,
-                        src: '',
-                        questionNum: [
-                            {
-                                question: "What is Python?",
-                                choice: ["Snake", "Computer Language", "Bamboo", "Thonpy"],
-                                answer: 1,
-                            },
-                            {
-                                question: "Who Kill Rama VIII?",
-                                choice: ["IX", "Prede", "Prayut", "Prawit"],
-                                answer: 0,
-                            },
-                            {
-                                question: "Do you here the people sing?",
-                                choice: ["Yes", "No", "O", "K"],
-                                answer: 2,
-                            },
-                        ]
-                    }
-                ]
-            },
-            {
-                id: 2,
-                name: 'Basic of python',
-                time: 12,
-                part: [
-                    {
-                        id: 1,
-                        name: 'Basic',
-                        type: 1,
-                        src: 'https://www.youtube.com/embed/5Y-MghiDmQ4',
-                        questionNum: [],
-                    },
-                    {
-                        id: 2,
-                        name: 'Very basic',
-                        type: 1,
-                        src: 'https://www.youtube.com/embed/hQzbePDFO9I',
-                        questionNum: [],
-                    },
-                    {
-                        id: 3,
-                        name: 'Fucking basic',
-                        type: 1,
-                        src: 'https://www.youtube.com/embed/CWXQ031jDe8',
-                        questionNum: [],
-                    },
-                ]
-            },
-            {
-                id: 3,
-                name: 'Datatype of value',
-                time: 10,
-                part: [
-                    {
-                        id: 1,
-                        name: 'Datatype',
-                        type: 1,
-                        src: 'https://www.youtube.com/embed/QHM3RTMctJU',
-                        questionNum: [],
-                    },
-                ]
-            },
-            {
-                id: 4,
-                name: 'Syntax & Error',
-                time: 18,
-                part: [
-                    {
-                        id: 1,
-                        name: 'Syntax',
-                        type: 1,
-                        src: 'https://www.youtube.com/embed/AGnECmJFA9U',
-                        questionNum: [],
-                    },
-                ]
-            },
-        ]
-    },
-      {
-        id: 2,
-        name: 'Learn To Code With C',
-        time: 34,
-        section: [
-            {
-                id: 1,
-                name: 'Let`s start',
-                part: [
-                    {
-                        id: 1,
-                        name: 'Preview of course',
-                        src: 'https://www.youtube.com/embed/6S58yvva978',
-                    },
-                ]
-            },
-            {
-                id: 2,
-                name: 'Basic of python',
-                part: [
-                    {
-                        id: 1,
-                        name: 'Basic',
-                        src: 'https://www.youtube.com/embed/5Y-MghiDmQ4',
-                    },
-                ]
-            },
-            {
-                id: 3,
-                name: 'Datatype of value',
-                part: [
-                    {
-                        id: 1,
-                        name: 'Datatype',
-                        src: 'https://www.youtube.com/embed/KrToaEvDzdk"',
-                    },
-                ]
-            },
-            {
-                id: 4,
-                name: 'Syntax & Error',
-                part: [
-                    {
-                        id: 1,
-                        name: 'Syntax',
-                        src: 'https://www.youtube.com/embed/AGnECmJFA9U',
-                    },
-                ]
-            },
-        ],
-    },
-    //   {
-    //     id: 3,
-    //     name: 'Learn To Code With Java',
-    //     instructor: 'Bill Gates',
-    //     price: 30,
-    //     src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
-    //   },
-    //   {
-    //     id: 4,
-    //     name: 'Basic for Python',
-    //     instructor: 'Bill Gates',
-    //     price: 30,
-    //     src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
-    //   },
-    //   {
-    //     id: 5,
-    //     name: 'Basic for C',
-    //     instructor: 'Bill Gates',
-    //     price: 30,
-    //     src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png'
-    //   },
-    //   {
-    //     id: 6,
-    //     name: 'Basic for Java',
-    //     instructor: 'Bill Gates',
-    //     price: 30,
-    //     src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
-    //   },
-    
-    ];
-    
+    // GET /course/id/lesson  
     return {
       props: {
-        // courseDes,
         id,
       },
     };
 }
-
-
-
-
-
-
-  
-
 
 export default CourseIDLesson

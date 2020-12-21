@@ -17,7 +17,7 @@ const ensurePay = (props) => {
     return (
         <div className={Styles.cardPay}>
             <h2 className={Styles.topic}>
-                Are you ensure to pay sticker?
+                Are you sure to pay this sticker?
             </h2>
             <div className={Styles.select}>
                 <div>
