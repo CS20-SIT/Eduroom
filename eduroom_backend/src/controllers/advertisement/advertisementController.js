@@ -93,4 +93,38 @@ const Upload = async (req, res, next) => {
     })
     res.send(results)
 }
-module.exports = { getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds } 
+
+const AddNewAdsBills = async (req, res, next) => {
+    const adlist = req.body.adlist;
+    for(i = 0 ; i<adlist.length;i++){
+        await pool.query(
+            "insert into ad_payment(adid, receipt, datetime, amount, paymentstatus) values ($1,'',CURRENT_TIMESTAMP,$2,false);",
+            [adlist[i].adid,adlist[i].price]
+        )
+    }
+    
+    res.send({ success: true })
+}
+const AddAdsTransaction = async (req, res, next) => {
+    const adlist = req.body.adlist;
+    
+    for(i = 0 ; i<adlist.length;i++){
+        let description = 'Ads payment of ad id#'+adlist.rows[i].adid;
+        let transactionid = await pool.query("select uuid_generate_v4()");
+        await pool.query(
+            "insert into financial_transaction(transactionid, amount, description) values ($1,800,'Ads of userid : test')",
+            [transactionid,adlist[i].price,description ]
+        )
+        await pool.query(
+            "insert into transaction_ad(transactionid, adid) values ($1,$2)",
+            [transactionid,adlist[i].adid ]
+        )
+        await pool.query(
+            "update ad_payment set receipt = '/receiptimgpath' , datetime=CURRENT_TIMESTAMP , paymentstatus = true where adid = $1",
+            [adlist[i].adid]
+        )
+    }
+    
+    res.send({ success: true })
+}
+module.exports = { AddNewAdsBills,AddAdsTransaction,getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds } 
