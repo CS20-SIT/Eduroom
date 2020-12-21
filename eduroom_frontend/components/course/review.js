@@ -13,7 +13,6 @@ const review = (props) => {
 	useEffect(() => {
 		api.get(`/api/review?type=${props.type}&id=${props.id}`).then((res) => {
 			setReviewList(res.data.data)
-			console.log(res.data.rates)
 			setFeedback({ average: res.data.average, count: res.data.count, rates: res.data.rates })
 		})
 	}, [])
@@ -34,8 +33,8 @@ const review = (props) => {
 							backgroundColor: '#7B89DD',
 						}}
 					/>
-					{reviewList.map((el) => {
-						return <PostedReviewBox data={el} />
+					{reviewList.map((el, idx) => {
+						return <PostedReviewBox data={el} key={idx} />
 					})}
 				</div>
 			</div>
