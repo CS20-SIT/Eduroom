@@ -69,7 +69,7 @@ input[type='radio']:after {
             background: rgba(255,255,255,0.7);
             border-radius: 2vh;
             width: 70vw;
-            height: 90vh;
+            height: 70vh;
             padding-top: 2%;
 }
 

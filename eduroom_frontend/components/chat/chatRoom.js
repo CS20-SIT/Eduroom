@@ -8,8 +8,12 @@ import style from '../../styles/chat/chat'
 import ChatRoomTopBar from './chatRoomTopBar'
 import ChatRoomBottomBar from './chatRoomBottomBar'
 import api from '../../api'
+import socketIOClient from "socket.io-client";
 
 export default function chatRoom(props) {
+	const socket = socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
+		path: "/socket-chat",
+	  });
 	const [messageDivStyle, setMessageDivStyle] = useState({ marginTop: 60, marginBottom: 100, visibility: 'hidden' })
 	const chatRoom = props.chatRoom
 	const [scrollBarStyle, setScrollBarStyle] = useState('nochat')
@@ -56,49 +60,49 @@ export default function chatRoom(props) {
 		var obj = document.getElementById('scroll')
 		obj.scrollTop = obj.scrollHeight
 		setMessageDivStyle({ marginTop: 60, marginBottom: 100 })
-		setSmoothScroll({ overflowY: 'scroll', scrollBehavior: 'smooth' })
 	}
 	const resendMessage = async (mess, index) => {
 		if (mess != '' && mess != null) {
-			const res = await api.get(`/api/chat/sendMessageMockup`)
+			const res = await api.get(`/api/chat/sendMessage`,{params:{message:mess,chatroomid:chatRoom.chatroomid}})
 			if (res.data.success == true) {
 				props.getChatRoomDetail()
 			} else {
-				props.chatRoomDetail.messages.push({
+				props.chatRoomDetail.message.push({
 					system: false,
 					sticker: false,
 					error: true,
-					index: props.chatRoomDetail.messages.length,
-					messageID: null,
-					senderID: props.userProfile.userID,
+					index: props.chatRoomDetail.message.length,
+					messageid: null,
+					senderid: props.userProfile.userid,
 					message: mess,
-					senderName: props.userProfile.userFirstName,
-					senderProfilePic: props.userProfile.profilePicture,
-					sendTime: null,
+					sendername: props.userProfile.userfirstname,
+					senderprofilepicture: props.userProfile.avatar,
+					sendtime: null,
 					reader: [],
 				})
 			}
-			props.chatRoomDetail.messages[index] = null
+			props.chatRoomDetail.message[index] = null
 			scrollDown()
 		}
 	}
 	const sendMessage = async () => {
 		if (message != '' && message != null) {
-			const res = await api.get(`/api/chat/sendMessageMockup`)
+			const res = await api.get(`/api/chat/sendMessage`,{params:{message:message,chatroomid:chatRoom.chatroomid}})
 			if (res.data.success == true) {
+				socket.emit('sendMessage',chatRoom.chatroomid)
 				props.getChatRoomDetail()
 			} else {
-				props.chatRoomDetail.messages.push({
+				props.chatRoomDetail.message.push({
 					system: false,
 					sticker: false,
 					error: true,
-					messageID: null,
-					index: props.chatRoomDetail.messages.length,
-					senderID: props.userProfile.userID,
+					messageid: null,
+					index: props.chatRoomDetail.message.length,
+					senderid: props.userProfile.userid,
 					message: message,
-					senderName: props.userProfile.userFirstName,
-					senderProfilePic: props.userProfile.profilePicture,
-					sendTime: null,
+					sendername: props.userProfile.firstname,
+					senderprofilepic: props.userProfile.avatar,
+					sendtime: null,
 					reader: [],
 				})
 			}
@@ -107,7 +111,14 @@ export default function chatRoom(props) {
 		}
 	}
 	useEffect(() => {
+		socket.emit('joinRoom',chatRoom.chatroomid)
 		scrollDown()
+		console.log('check')
+		console.log( props.userProfile)
+		socket.on('recieveMessage',()=>{
+			console.log('have got a new message')
+			props.getChatRoomDetail()
+		})
 	}, [])
 	useEffect(() => {
 		setScrollDownStyle({
@@ -115,6 +126,7 @@ export default function chatRoom(props) {
 			display: 'none',
 			cursor: 'pointer',
 		})
+		scrollDown()
 	}, [props.chatRoomDetail])
 
 	return (
@@ -135,21 +147,21 @@ export default function chatRoom(props) {
 			>
 				<ChatRoomTopBar
 					chatRoom={{
-						name: props.chatRoomDetail.chatRoomName,
+						name: props.chatRoomDetail.chatroomname,
 						profilePic: props.chatRoomDetail.chatRoomProfile,
 						handleExpand: handleExpand,
 					}}
 				/>
 				<div style={messageDivStyle}>
-					{props.chatRoomDetail.messages.map((el) => {
+					{props.chatRoomDetail.message.map((el) => {
 						if (el) {
 							if (el.system) {
 								return <MessageSystem message={el.message} />
-							} else if (el.senderID == props.userProfile.userID) {
+							} else if (el.senderid == props.userProfile.userid) {
 								if (el.error == true) {
 									return (
 										<MessageError
-											message={{ text: el.message, color: props.chatRoomDetail.themeColor.sendColor, index: el.index }}
+											message={{ text: el.message, color: props.chatRoomDetail.themeColor.sendcolor, index: el.index,reader:el.reader}}
 											resendMessage={resendMessage}
 										/>
 									)
@@ -158,9 +170,12 @@ export default function chatRoom(props) {
 										<MessageRight
 											message={{
 												text: el.message,
-												sentTime: el.sendTime,
-												color: props.chatRoomDetail.themeColor.sendColor,
+												sentTime: el.sendtime,
+												color: props.chatRoomDetail.themeColor.sendcolor,
+												reader:el.reader,
+												messageid:el.messageid
 											}}
+											getChatRoomDetail={props.getChatRoomDetail}
 										/>
 									)
 								}
@@ -169,10 +184,11 @@ export default function chatRoom(props) {
 									<MessageLeft
 										message={{
 											text: el.message,
-											sentTime: el.sendTime,
-											color: props.chatRoomDetail.themeColor.recieveColor,
+											sentTime: el.sendtime,
+											color: props.chatRoomDetail.themeColor.recievecolor,
 											name: el.senderName,
-											profilePic: el.senderProfilePic,
+											profilePic: el.senderprofilepic,
+											reader:el.reader
 										}}
 									/>
 								)
