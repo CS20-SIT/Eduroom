@@ -13,7 +13,7 @@ router.get('/stickerOwner', jwtAuthenicate, showStickerOwner);  // ดัน
 router.get('/checkCodeOwner', checkCodeOwner)
 router.get('/checkStickerOwner', jwtAuthenicate, checkStickerOwner)
 router.post('/buySticker',jwtAuthenicate, buySticker)   // ดัน
-router.post('/buyCoupon',jwtAuthenicate, buyCoupon)    // ดัน
+
 router.post('/getCoinFromEdqiz', getCoinFromEdqiz) // ดัน
 router.post('/dailyReward', jwtAuthenicate, insertDailyReward)  // ดัน
 
@@ -23,4 +23,6 @@ router.post('/dailyReward', jwtAuthenicate, insertDailyReward)  // ดัน
 router.get('/codesOfCoin',getCodeListOfCoin);
 router.get('/codesOfLPublic',getCodeListOfLPublic);
 router.get('/codesOfPublic',getCodeListOfPublic);
+
+router.post('/buyCoupon',jwtAuthenicate, buyCoupon)    // ดัน
 module.exports = router;
