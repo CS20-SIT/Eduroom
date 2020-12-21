@@ -7,16 +7,17 @@ const Courses = () => {
 	const fetchCourses = async () => {
 		try {
 			const res = await api.get('/api/instructor/courses')
-			console.log(res.data)
 			setCourses(res.data)
-		} catch (err) {}
+		} catch (err) {
+			console.log(err)
+		}
 	}
 	useEffect(() => {
 		fetchCourses()
 	}, [])
 	const renderCourses = () => {
 		return courses.map((course, index) => {
-			return <Course key={index} course={course}></Course>
+			return <Course key={index} course={course} fetchCourses={fetchCourses}></Course>
 		})
 	}
 	return <Fragment>{renderCourses()}</Fragment>
