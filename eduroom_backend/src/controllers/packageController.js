@@ -46,31 +46,43 @@ exports.deletePackage = async (req, res, next) => {
 exports.getPackage = async (req, res, next) => {
 	try {
 		const id = req.query.packageid
-		const data1 = await pool.query(`select p.packageid, packagename, i.instructorid,firstname,lastname ,p.discount,p.detail,p.image,sum(price)*((100-p.discount)/100) as price
-		, sum(price) as oldprice
+		const data1 = await pool.query(
+			`select p.packageid, packagename, i.instructorid,firstname,lastname ,p.discount,p.detail,p.image,sum(price)*((100-p.discount)/100) as price
+		, sum(price) as oldprice,cateid
 		from package p, instructor i,package_courses pc, course c, user_profile up
 		where p.instructorid=i.instructorid and p.packageid = pc.packageid and pc.courseid=c.courseid
 		  and i.userid = up.userid and p.packageid = $1
-		group by p.packageid,i.instructorid,firstname,lastname`, [id])
+		group by p.packageid,i.instructorid,firstname,lastname`,
+			[id]
+		)
 
-		const data3 = await pool.query(`select pc.courseid, coursename, firstname, lastname,c.coursepicture, up.avatar
+		const data3 = await pool.query(
+			`select pc.courseid, coursename, firstname, lastname,c.coursepicture, up.avatar
 		from package_courses pc, course c,user_profile up, instructor i
 		where pc.packageid = $1 and pc.courseid = c.courseid
-		  and c.ownerid = i.instructorid and i.userid = up.userid`, [id])
-		
-		  const data4 = await pool.query(`SELECT firstname,lastname, up.avatar as avatar, count(coursename)
+		  and c.ownerid = i.instructorid and i.userid = up.userid`,
+			[id]
+		)
+
+		const data4 = await pool.query(
+			`SELECT firstname,lastname, up.avatar as avatar, count(coursename)
 		from course c join instructor i on c.ownerid = i.instructorid join user_profile up on up.userid = i.userid
 		where c.ownerid in (select ownerid from package_courses join course c2 on package_courses.courseid = c2.courseid
-		where packageid = $1) group by firstname, lastname, up.avatar`, [id])
+		where packageid = $1) group by firstname, lastname, up.avatar`,
+			[id]
+		)
 
-		res.send({ packages: data1.rows[0],courseCount: data3.rowCount, instructorList: data4.rows, courseList: data3.rows })
+		res.send({
+			packages: data1.rows[0],
+			courseCount: data3.rowCount,
+			instructorList: data4.rows,
+			courseList: data3.rows,
+		})
 	} catch (err) {
 		console.log(err)
 		return next(new ErrorResponse(err, 500))
 	}
 }
-
-
 
 exports.getAllPackage = async (req, res, next) => {
 	try {
@@ -93,7 +105,7 @@ exports.getAllPackage = async (req, res, next) => {
 				cateid: pack.cateid,
 				infname: pack.firstname,
 				inlname: pack.lastname,
-				price: parseFloat(pack.price).toFixed(2)
+				price: parseFloat(pack.price).toFixed(2),
 			}
 		})
 		res.send(temp)
@@ -224,5 +236,21 @@ exports.getPackagesFromIds = async (req, res, next) => {
 		res.send(answer)
 	} catch (err) {
 		return next(new ErrorResponse(err, 500))
+	}
+}
+
+exports.editPackage = async (req, res, next) => {
+	const temp = req.body
+	const packageid = req.params.id
+	const user = req.user
+	if (user) {
+		await pool.query(
+			`update package set packagename = $1, discount= $2, detail=$3,
+		image = $4, cateid = $5 where packageid = $6`,
+			[temp.new.packagename, temp.new.discount, temp.new.detail, temp.new.image, temp.new.cateid, packageid]
+		)
+		res.status(200).json({ success: true })
+	} else {
+		return next(new ErrorResponse('Unauthorize', 401))
 	}
 }

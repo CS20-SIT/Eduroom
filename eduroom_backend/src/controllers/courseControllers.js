@@ -16,12 +16,32 @@ exports.getAllCourse = async (req, res) => {
 }
 exports.getCourseFromID = async (req, res, next) => {
 	try {
-		const { rows } = await pool.query(`SELECT * FROM course
+		const userid = req.user.id
+		const courseid = req.query.courseID
+		const result = await pool.query(`SELECT * FROM course
         join instructor i on course.ownerid = i.instructorid
         join user_profile up on i.userid = up.userid
-        WHERE course.courseid = '${req.query.courseID}'`)
-		if (!rows) res.status(400).send({ msg: 'Not Found' })
-		res.send(rows[0])
+        WHERE course.courseid = '${courseid}'`)
+		if (result.rowCount === 0) return res.status(400).send({ msg: 'Not Found' })
+		const answer = result.rows[0]
+		answer.isOwn = false
+		answer.isWishlist = false
+		const isOwnResult = await pool.query(`SELECT userid from user_mycourse where userid = $1 and courseid = $2`, [
+			userid,
+			courseid,
+		])
+		if (isOwnResult.rowCount > 0) {
+			answer.isOwn = true
+		}
+		//check that this course is a wishlist of user or not
+		const isWishlistResult = await pool.query(
+			`SELECT userid from user_wishlist WHERE userid = $1 and courseid = $2`,
+			[userid, courseid]
+		)
+		if (isWishlistResult.rowCount > 0) {
+			answer.isWishlist = true
+		}
+		res.send(answer)
 	} catch (err) {
 		return next(new ErrorResponse(err, 500))
 	}
@@ -103,3 +123,37 @@ exports.getCourse = async (req, res, next) => {
 	}
 }
 
+exports.addCourseToWishlist = async (req, res, next) => {
+	try {
+		const userid = req.user.id
+		const courseid = req.body.courseid
+		const nowTime = new Date()
+		//check whether already add this course to wishlist or not
+		const check = await pool.query(`SELECT userid from user_wishlist where userid = $1 and courseid = $2`, [
+			userid,
+			courseid,
+		])
+		if (check.rowCount > 0) {
+			return res.status(400).send({ success: false })
+		}
+		await pool.query(`INSERT INTO user_wishlist(userid,courseid,addtime) VALUES($1,$2,$3)`, [
+			userid,
+			courseid,
+			nowTime,
+		])
+		res.status(201).send({ success: true })
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
+
+exports.removeCourseFromWishlist = async (req, res, next) => {
+	try {
+		const userid = req.user.id
+		const courseid = req.body.courseid
+		await pool.query(`DELETE FROM user_wishlist where userid = $1 and courseid = $2`, [userid, courseid])
+		res.status(201).send({ success: true })
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
