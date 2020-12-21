@@ -40,6 +40,7 @@ const HomeContent = () => {
 					handleClick={() => {
 						setDialog(false)
 					}}
+					path={'/forum'}
 				/>
 			) : null}
 			<div className="forum-home">
