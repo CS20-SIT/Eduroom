@@ -76,7 +76,7 @@ const getInstructorList = async (req, res) => {
 		}
 
 		// WHY INSTRUCTOR EXPERT IS NOT INSERTED ??
-		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname 
+		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,u.avatar,e.subjectname 
 			from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
             where p.instructorid = i.instructorid and i.userid = u.userid and e.instructorid = p.instructorid;
         `)
@@ -148,7 +148,7 @@ const getInstructorInfo = async (req, res) => {
 		// ID : hardcode
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 
-		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,e.subjectname, i.biography,p.price 
+		let result = await pool.query(`select i.instructorid,u.firstname,u.lastname,u.avatar,e.subjectname, i.biography,p.price 
 		from instructor_availabilities_price p, instructor i, user_profile u, instructor_expert e
         where i.instructorid = '${id}' and p.instructorid = i.instructorid and i.userid = u.userid and e.instructorid = p.instructorid;
         `)
@@ -170,6 +170,7 @@ const getInstructorInfo = async (req, res) => {
 		let instructor = {
 			id: instructorInfo.instructorid,
 			name: instructorInfo.firstname + ' ' + instructorInfo.lastname,
+			avatar: instructorInfo.avatar,
 			info: instructorInfo.subjectname,
 			text: instructorInfo.biography,
 			rating: c == 0 ? 0 : (sum / c).toFixed(1),
@@ -197,7 +198,7 @@ const getInstructorReview = async (req, res) => {
 		// const id = '9e6cfde7-af2c-4f56-b76e-2c68d97e847f'
 
 		let result = await pool.query(`
-        select m.score, m.description, u.firstname, u.lastname,to_char( starttime, 'YYYYMMDD') as date
+        select m.score, m.description, u.firstname, u.lastname,u.avatar,to_char( starttime, 'YYYYMMDD') as date
         from instructor_appointments a, instructor_appointment_members m, user_profile u
         where a.appointmentid = m.appointmentid
           and a.instructorid = '${id}'
@@ -209,6 +210,7 @@ const getInstructorReview = async (req, res) => {
 		rates.forEach((r) => {
 			let tmp = {
 				score: r.score,
+				avatar: r.avatar,
 				desc: r.description,
 				name: r.firstname + ' ' + r.lastname,
 				date: r.date,
@@ -284,8 +286,8 @@ const getInstructorAppointments = async (req, res, next) => {
 		const { instructorid } = result.rows[0]
 
 		result = await pool.query(`
-		select a.appointmentid, a.headerid as id, u.firstname as firstname, u.lastname as lastname, date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, a.status,to_char( a.starttime, 'DD-MM-YYYY') as date, m.userid as mid, me.firstname as mfn, me.lastname as mln
-        from instructor_appointments a,user_profile u, instructor_appointment_members m, (select userid, firstname, lastname from user_profile) me
+		select a.appointmentid, a.headerid as id, u.firstname as firstname, u.lastname as lastname,u.avatar, date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, a.status,to_char( a.starttime, 'DD-MM-YYYY') as date, m.userid as mid, me.firstname as mfn, me.lastname as mln, me.avatar as mavatar
+        from instructor_appointments a,user_profile u, instructor_appointment_members m, (select userid, firstname, lastname, avatar from user_profile) me
         where a.instructorid = '${instructorid}'
 		  and a.headerid = u.userid
 		  and m.appointmentid = a.appointmentid
@@ -307,6 +309,7 @@ const getInstructorAppointments = async (req, res, next) => {
 				let tmp = {
 					appointmentID: a.appointmentid,
 					id: a.id,
+					avatar: a.avatar,
 					name: a.firstname + ' ' + a.lastname,
 					date: a.date.split('-'),
 					starttime: a.starttime,
@@ -318,8 +321,10 @@ const getInstructorAppointments = async (req, res, next) => {
 					tmp.members.push({
 						id: a.mid,
 						name: a.mfn + ' ' + a.mln,
+						avatar: a.mavatar,
 					})
 				tmps.push(tmp)
+				// console.log(tmp)
 			} else {
 				if (a.mid != a.id) {
 					let index = -1
@@ -333,6 +338,7 @@ const getInstructorAppointments = async (req, res, next) => {
 					tmps[index].members.push({
 						id: a.mid,
 						name: a.mfn + ' ' + a.mln,
+						avatar: a.mavatar,
 					})
 				}
 			}
@@ -364,7 +370,7 @@ const getStudentAppointments = async (req, res, next) => {
 		// console.log(id)
 
 		let result = await pool.query(`
-		select a.appointmentid,u.firstname , u.lastname ,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, 
+		select a.appointmentid,u.firstname , u.lastname ,u.avatar,e.subjectname,date_part('hour', a.starttime) as starttime,date_part('hour', a.endtime) as endtime, 
 		to_char( starttime, 'DD MON YYYY') as date, a.status, to_char( starttime, 'YYYYMMDD') as sorted, m.score
             from  instructor i, user_profile u, instructor_expert e, instructor_appointments a,instructor_appointment_members m
             where i.instructorid = a.instructorid
@@ -387,6 +393,7 @@ const getStudentAppointments = async (req, res, next) => {
 			let tmp = {
 				id: a.appointmentid,
 				name: a.firstname + ' ' + a.lastname,
+				avatar: a.avatar,
 				info: a.subjectname,
 				date: a.date,
 				starttime,
