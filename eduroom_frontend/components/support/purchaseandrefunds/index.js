@@ -69,7 +69,7 @@ const Index = () => {
                 <Link href="/support/Purchase-Refunds/Shopping-Cart-FAQ"><p>Shopping Cart FAQ</p></Link>
               
               <Grid container justify='flex-end'>
-              <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
+              <img src='/images/purchaseandrefunds.svg' style={{marginRight:theme.spacing(8), width:'45%'}}></img>
               </Grid>
             </Paper>
           </Grid>

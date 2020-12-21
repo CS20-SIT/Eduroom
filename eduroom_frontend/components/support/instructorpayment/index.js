@@ -64,12 +64,12 @@ const Index = () => {
                   </p>
                 </Link>
               
-                <Link href="/support/Instructor-Payment/How-do-Instructors-Earn-From-Resellers?"><p>How do Instructors Earn From Resellers?</p></Link>
+                <Link href="/support/Instructor-Payment/How-do-Instructors-Earn-From-Resellers"><p>How do Instructors Earn From Resellers?</p></Link>
                 <Link href="/support/Instructor-Payment/Missing-Instructor-Payments"><p>Missing Instructor Payments</p></Link>
                 <Link href="/support/Instructor-Payment/Instructor-Payment-Overview"><p>Instructor Payment Overview</p></Link>
               
               <Grid container justify='flex-end'>
-              <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
+              <img src='/images/instructorpayments.svg' style={{marginRight:theme.spacing(8), width:'45%'}}></img>
               </Grid>
             </Paper>
           </Grid>

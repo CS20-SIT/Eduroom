@@ -68,7 +68,7 @@ const Index = () => {
                 <Link href="/support/Troubleshooting/How-to-Solve-Payment-Issues"><p>How to Solve Payment Issues</p></Link>
               
               <Grid container justify='flex-end'>
-              <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
+              <img src='/images/troubleshooting.svg' style={{marginRight:theme.spacing(8), width:'45%'}}></img>
               </Grid>
             </Paper>
           </Grid>

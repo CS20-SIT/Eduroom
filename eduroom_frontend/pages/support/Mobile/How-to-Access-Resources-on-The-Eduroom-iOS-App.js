@@ -8,7 +8,7 @@ import {
 
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-import HowtoAccessResourcesonTheEduroomiOSApp from "../../../components/support/Mobile/HowtoAccessResourcesonTheEduroomiOSApp";
+import HowtoAccessResourcesonTheEduroomiOSApp from "../../../components/support/mobile/HowtoAccessResourcesonTheEduroomiOSApp";
 const courseinstandteaching = () => {
   return <Fragment>
     

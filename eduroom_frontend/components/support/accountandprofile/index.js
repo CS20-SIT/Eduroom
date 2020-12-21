@@ -68,7 +68,7 @@ const Index = () => {
                 <Link href="/support/Account&Profile/Closing-Your-Account"><p>Closing Your Account</p></Link>
               <Link href="/support/Account&Profile/How-to-Change-or-Reset-Your-Password"><p>How to Change or Reset Your Password</p></Link>
               <Grid container justify='flex-end'>
-              <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
+              <img src='/images/accountandprofile.svg' style={{marginRight:theme.spacing(8), width:'45%'}}></img>
               </Grid>
             </Paper>
           </Grid>

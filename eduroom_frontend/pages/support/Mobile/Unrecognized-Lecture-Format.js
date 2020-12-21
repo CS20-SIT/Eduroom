@@ -8,7 +8,7 @@ import {
 
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-import UnrecognizedLectureFormat from "../../../components/support/Mobile/UnrecognizedLectureFormat";
+import UnrecognizedLectureFormat from "../../../components/support/mobile/UnrecognizedLectureFormat";
 const courseinstandteaching = () => {
   return <Fragment>
     

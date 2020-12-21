@@ -8,7 +8,7 @@ import {
 
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-import ManuallyMarkaLectureasCompleteoniOSDevices from "../../../components/support/Mobile/ManuallyMarkaLectureasCompleteoniOSDevices";
+import ManuallyMarkaLectureasCompleteoniOSDevices from "../../../components/support/mobile/ManuallyMarkaLectureasCompleteoniOSDevices";
 const courseinstandteaching = () => {
   return <Fragment>
     

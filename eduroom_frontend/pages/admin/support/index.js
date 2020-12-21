@@ -1,12 +1,17 @@
 import React, { Fragment } from 'react'
 import General from '../../../components/template/general'
 import ForumHome from '../../../components/support/adminsupport/requestformHome'
+import ProtectedAdminRoute from '../../../components/admin/protectedAdminRoute'
+import AdminTemplate from '../../../components/admin/template/default'
 const RequestForm = () => {
 	return (
 		<Fragment>
-			<General>
+			<ProtectedAdminRoute>
+				<AdminTemplate>
 				<ForumHome/>
-			</General>
+				</AdminTemplate>
+				</ProtectedAdminRoute>
+				
 		</Fragment>
 	)
 }
