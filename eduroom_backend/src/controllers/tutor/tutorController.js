@@ -237,7 +237,6 @@ const getInstructorAvailability = async (req, res) => {
 
 		const date = dates.split('-')
 		const start = `${date[0]}-${date[1]}-${date[2]}`
-		const end = `${date[0]}-${date[1]}-${parseInt(date[2]) + 1}`
 		const d = new Date(date[0], date[1] - 1, date[2])
 		const day = d.getDay() - 1
 
@@ -245,7 +244,7 @@ const getInstructorAvailability = async (req, res) => {
         select date_part('hour', starttime) as starttime, date_part('hour', endtime) as endtime
         from instructor_appointments
         where starttime >= timestamp '${start} 00:00:00'
-          and starttime < timestamp '${end} 00:00:00'
+          and starttime < timestamp '${start} 23:59:59'
 		  and instructorid = '${id}'
 			and status = 'true'
 		  ;`)
