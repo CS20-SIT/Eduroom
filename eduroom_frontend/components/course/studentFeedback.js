@@ -8,8 +8,8 @@ const studentFeedback = (props) => {
 			<Grid container spacing={3} variant="outlined" style={{}}>
 				<Grid item xs={4}>
 					<Grid item xs={6}>
-						<b style={{ fontSize: '64px', color: '#FB9CCB', display: 'block', marginLeft: '35%' }}>
-							{props.data.average}
+						<b style={{ fontSize: '64px', color: '#FB9CCB', display: 'block', marginLeft: '33%' }}>
+							{parseFloat(props.data.average).toFixed(1)}
 						</b>
 					</Grid>
 					<Grid item xs={6}>
@@ -50,7 +50,7 @@ const studentFeedback = (props) => {
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star checked"></span>
-						{(props.data.rates[5] * 100) / props.data.count}%
+						{parseInt((props.data.rates[5] * 100) / props.data.count)}%
 					</div>
 					<div className="rateSet" style={{ marginBottom: '14px' }}>
 						<span class="fa fa-star checked"></span>
@@ -58,7 +58,7 @@ const studentFeedback = (props) => {
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star unchecked"></span>
-						{(props.data.rates[4] * 100) / props.data.count}%
+						{parseInt((props.data.rates[4] * 100) / props.data.count)}%
 					</div>
 					<div className="rateSet" style={{ marginBottom: '14px' }}>
 						<span class="fa fa-star checked"></span>
@@ -66,7 +66,7 @@ const studentFeedback = (props) => {
 						<span class="fa fa-star checked"></span>
 						<span class="fa fa-star unchecked"></span>
 						<span class="fa fa-star unchecked"></span>
-						{(props.data.rates[3] * 100) / props.data.count}%
+						{parseInt((props.data.rates[3] * 100) / props.data.count)}%
 					</div>
 					<div className="rateSet" style={{ marginBottom: '14px' }}>
 						<span class="fa fa-star checked"></span>
@@ -74,7 +74,7 @@ const studentFeedback = (props) => {
 						<span class="fa fa-star unchecked"></span>
 						<span class="fa fa-star unchecked"></span>
 						<span class="fa fa-star unchecked"></span>
-						{(props.data.rates[2] * 100) / props.data.count}%
+						{parseInt((props.data.rates[2] * 100) / props.data.count)}%
 					</div>
 					<div className="rateSet">
 						<span class="fa fa-star checked"></span>
@@ -82,7 +82,7 @@ const studentFeedback = (props) => {
 						<span class="fa fa-star unchecked"></span>
 						<span class="fa fa-star unchecked"></span>
 						<span class="fa fa-star unchecked"></span>
-						{(props.data.rates[1] * 100) / props.data.count}%
+						{parseInt((props.data.rates[1] * 100) / props.data.count)}%
 					</div>
 				</Grid>
 			</Grid>

@@ -5,13 +5,13 @@ const chat = require('../controllers/Chat/chatController')
 const {jwtAuthenicate} = require('../middleware/jwtAuthenticate')
 const {uploadToGCSHandler} = require('../middleware/multer')
 
-router.get('/getChatlist', jwtAuthenicate,chat.getChatlist) //check
-router.get('/getInvitationList',jwtAuthenicate, chat.getInvitationList) //check
-router.get('/getSearchResult',jwtAuthenicate, chat.getSearchResult) //check
-router.get('/acceptInvitation',jwtAuthenicate, chat.acceptInvitation)  //check
-router.get('/declineInvitation',jwtAuthenicate,chat.declineInvitation) //check
-router.get('/getChatroomDetail',jwtAuthenicate,chat.getChatroomDetail) //check
-router.get('/getChatRoomProfile',jwtAuthenicate,chat.getChatRoomProfile) //check
+router.get('/getChatlist', jwtAuthenicate,chat.getChatlist) //check done
+router.get('/getInvitationList',jwtAuthenicate, chat.getInvitationList) //check done
+router.get('/getSearchResult',jwtAuthenicate, chat.getSearchResult) //check done
+router.get('/acceptInvitation',jwtAuthenicate, chat.acceptInvitation)  //check done
+router.get('/declineInvitation',jwtAuthenicate,chat.declineInvitation) //check done
+router.get('/getChatroomDetail',jwtAuthenicate,chat.getChatroomDetail) //check done
+router.get('/getChatRoomProfile',jwtAuthenicate,chat.getChatRoomProfile) //check done
 router.get('/selectSearchResult',jwtAuthenicate,chat.selectSearchResult) //check
 router.get('/getUserProfile',jwtAuthenicate,chat.getUserProfile) //check
 router.get('/hideChatroom',jwtAuthenicate,chat.hideChatroom)  //check

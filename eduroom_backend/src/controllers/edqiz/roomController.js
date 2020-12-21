@@ -150,6 +150,22 @@ exports.fetchExactlyRoom = async (req, res, next) => {
 	}
 }
 
+exports.fetchExactlyRoomAfterStart = async (req, res, next) => {
+	try {
+		const { pin } = req.params
+		console.log('fetchExactlyRoomAfterStartv', pin)
+		const result = await pool.query(
+			'SELECT sessionid from kahoot_roomhistory where pin=$1 and isstart = true',
+			[pin]
+		)
+		console.log('rowfetchExactlyRoomAfterStartv', result)
+		const exactlyRoom = result.rows[0]
+		res.status(200).json(exactlyRoom)
+	} catch (error) {
+		errorHandler(error, req, res)
+	}
+}
+
 exports.fetchScoreRank = async (req, res, next) => {
 	try {
 		const { sessionid } = req.params
@@ -162,8 +178,28 @@ exports.fetchScoreRank = async (req, res, next) => {
 			'SELECT userid from kahoot_roomhistoryplayer where sessionid=$1 order by rank desc fetch first 3 rows only;',
 			[sessionid]
 		)
+
+		const useridGetXP = await pool.query(
+			'SELECT userid from kahoot_roomhistoryplayer where sessionid=$1;',
+			[sessionid]
+		)
+		for (let index = 0; index < useridGetXP.rows.length; index++) {
+			const userId = useridGetXP.rows[index].userid
+			const getXP = await pool.query(`select totalxp,currentxp from user_xp where userid='${userId}';`)
+			let amountOfTotalXP = getXP.rows[0].totalxp
+			let amountOfcurrentxp = getXP.rows[0].currentxp
+			console.log('getXP',getXP)
+			console.log('getXPTotalXP', getXP.rows[0].totalxp)
+			console.log('getXPCurrentXP', getXP.rows[0].currentxp)
+
+			amountOfTotalXP += 100
+			amountOfcurrentxp+=100
+			await pool.query(`UPDATE user_xp SET totalxp=${amountOfTotalXP} ,currentxp=${amountOfcurrentxp} WHERE userid='${userId}';`)
+		
+		}
+
+
 		console.log('userid will get a score', useridWHOGetCoin.rows.length)
-		console.log('userid', useridWHOGetCoin.rows[0].userid)
 		const coins = [15, 10, 5]
 		for (let index = 0; index < useridWHOGetCoin.rows.length; index++) {
 			const userId = useridWHOGetCoin.rows[index].userid
@@ -298,17 +334,37 @@ exports.fetchQuiz = async (req, res, next) => {
 		res.status(200).json({ room, question, answerAll, correct })
 	} catch (error) {
 		errorHandler(error, req, res)
-  }
+	}
 }
 exports.checkRoomClose = async (req, res, next) => {
-		try {
-			const { sessionid } = req.params
-			update = await pool.query(
-				`UPDATE kahoot_roomhistory SET isavailable = 'fasle' where sessionid = $2 RETURNING *`,
-				[sessionid]
-			)
-		} catch (error) {
-			errorHandler(error, req, res)
-		}
+	try {
+		const { sessionid } = req.params
+		console.log('sessionid room Close', sessionid)
+		update = await pool.query(
+			`UPDATE kahoot_roomhistory SET isavailable = 'false' where sessionid = $1 RETURNING *`,
+			[sessionid]
+		)
+		updateIsStart = await pool.query(
+			`UPDATE kahoot_roomhistory SET isstart = 'true' where sessionid = $1 RETURNING *`,
+			[sessionid]
+		)
+
+		console.log('update', update)
+	} catch (error) {
+		errorHandler(error, req, res)
 	}
+}
+exports.checkQuizClose = async (req, res, next) => {
+	try {
+		const { sessionid } = req.params
+		console.log('sessionid room Close', sessionid)
+		update = await pool.query(
+			`UPDATE kahoot_roomhistory SET isstart = 'false' where sessionid = $1 RETURNING *`,
+			[sessionid]
+		)
+		console.log('update', update)
+	} catch (error) {
+		errorHandler(error, req, res)
+	}
+}
 

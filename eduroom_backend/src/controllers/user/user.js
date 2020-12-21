@@ -7,7 +7,7 @@ const path = require('path')
 const puppeteer = require('puppeteer')
 const handlebars = require('handlebars')
 const dayjs = require('dayjs')
-const { certificateTemplate } = require('../../utils/certTemplate')
+const { certificateTemplate, certificateStyle } = require('../../utils/certTemplate')
 
 const test = async (req, res) => {
 	const time = await pool.query('SELECT NOW()')
@@ -20,9 +20,7 @@ const getWishlist = async (req, res) => {
 	try {
 		const user = req.user.id
 		const condition = req.query.condition
-		// const condition='';
 		const orderby = req.query.orderby
-		// const orderby='addtime desc';
 		const data = await pool.query(
 			'select w.userid,w.courseid,addtime,coursename,coursepicture,price,p.firstname,p.lastname ' +
 				'from user_wishlist w ' +
@@ -47,17 +45,33 @@ const getWishlist = async (req, res) => {
 	}
 }
 
+const checkWishlist = async (req, res) => {
+	try {
+		const user = req.user.id
+		const course = req.body.courseid
+		const data = await pool.query(
+			'select exists( '+
+			'select * from user_wishlist '+
+			'where (userid,courseid)=($1,$2)) as checkwishlist',
+			[user,course]
+		)
+		const ann = data.rows[0].checkwishlist
+		res.send(ann)
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
+}
+
 const getMycourse = async (req, res) => {
 	try {
 		const user = req.user.id
 		const finish = req.query.finish
 		const condition = req.query.condition
 		const orderby = req.query.orderby
-
-		// const user = '08e9d239-b3f2-4db8-b29a-da99a314df92'
-		// const condition = ''
-		// const orderby = 'addtime desc'
-
 		const data = await pool.query(
 			'select m.userid,m.courseid,addtime,lastvisit,isfinished,coursename,coursepicture,p.firstname,p.lastname ' +
 				'from user_mycourse m ' +
@@ -87,6 +101,24 @@ const deleteWishlist = async (req, res) => {
 		const course = req.body.courseid
 		const user = req.user.id
 		await pool.query('delete from user_wishlist where (userid,courseid)=($1,$2);', [user, course])
+		res.send({ success: true })
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
+}
+
+const postMycourse = async (req, res) => {
+	try {
+		const course = req.body.courseid
+		const user = req.user.id
+		await pool.query(
+		'insert into user_mycourse '+
+		'values '+
+		'($1,current_timestamp,current_timestamp,false,$2,current_timestamp);', [user, course])
 		res.send({ success: true })
 	} catch (error) {
 		const err = {
@@ -139,6 +171,14 @@ const editProfile = async (req, res) => {
 		}
 		return errorHandler(err, req, res)
 	}
+}
+
+const Upload = async (req, res, next) => {
+	const files = req.files;
+	const results = files.map((file) => {
+		return { linkUrl: file.linkUrl, fieldname: file.fieldname }
+	})
+	res.send(results)
 }
 
 const checkPassword = async (req, res) => {
@@ -205,14 +245,13 @@ const downloadCertificate = async (req, res, next) => {
 		})
 		const page = await browser.newPage()
 		await page.goto(`data:text/html;charset=UTF-8,${html}`, { waitUntil: 'networkidle0' })
-		const component = await page.$eval('.certificate', (element) => {
-			return element.innerHTML
-		})
-		await page.setContent(component)
-		const pdf = await page.pdf({ format: 'A4' })
+		await page.addStyleTag({ content: certificateStyle })
+		const element = await page.$('#certificate');
+		const image  = await element.screenshot({type:'png'});
 		await browser.close()
-		res.set({ 'Content-Type': 'application/pdf' })
-		res.send(pdf)
+		var uri = 'data:image/png;base64,'+image.toString('base64')
+		res.set({ 'Content-Type': 'image/png' })
+		res.send(uri)
 	} else {
 		return next(new ErrorResponse('Certificate not found', 404))
 	}
@@ -227,6 +266,9 @@ module.exports = {
 	editProfile,
 	checkPassword,
 	newPassword,
+	Upload,
 	getCertificate,
 	downloadCertificate,
+	postMycourse,
+	checkWishlist
 }

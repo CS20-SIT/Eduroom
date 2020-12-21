@@ -30,7 +30,9 @@ const Content = (props) => {
 
     }, []);
 
-
+    const formatTime = (time) => {
+        return (time < 10 ? '0' : '') + time
+    }
 
     const [openEvent, setOpenEvent] = useState(false);
     /* const [isInstructor, setInstructor] = useState(false);
@@ -64,6 +66,10 @@ const Content = (props) => {
                         <div className="d-top">
                             <div className="d-day">{showDate} {currentMonth} {currentYear}</div>
                         </div>
+                        <div className="Cpoint" style={{ background: "#fdd4c1"}}></div>
+                        <div className="dot-course">Course</div>
+                        <div className="Gpoint" style={{ background: "#A880F7"}}></div>
+                        <div className="dot-global">Global</div>
 
                         <div className="content">
                             <div>
@@ -92,10 +98,9 @@ const Content = (props) => {
                                                 :
                                                 <div className="point" style={{ background: "#A880F7" }}></div>}
                                                 
-                                            {showDate == row.enddate || showDate == row.startday ? <div className="detail">{row.hstart}:{row.mstart} on {showDate} {currentMonth} - {row.hend}:{row.mend} on {row.enddate} {currentMonth}</div>
-                                                : <div className="detail">Allday</div>}
-                                                <div className="title" style={{marginTop:"0.5rem",fontWeight:"bold",fontSize:"16px"}}>{row.place}</div>
-                                        </div>
+                                           <div className="detail">{formatTime(row.hstart)}:{formatTime(row.mstart)} - {formatTime(row.hend)}:{formatTime(row.mend)}</div>
+                                           <div className="detail" style={{marginTop:".5rem"}}>{showDate} {currentMonth} - {row.enddate} {currentMonth}</div>
+</div>
                                         : "")
                                 })}
 

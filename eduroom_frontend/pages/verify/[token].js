@@ -26,7 +26,6 @@ const Token = ({ token }) => {
 					<VerificationFail />
 				)}
 			</GeneralTemplate>
-			<div style={{backgroundImage:'url(/images/verify/verify-bg.svg)',width:'100vw',height:'100vh',position:'absolute',top:'0',left:'0',backgroundPosition:'center',backgroundSize:'auto',backgroundRepeat:'no-repeat'}}/>
 		</Fragment>
 	)
 }

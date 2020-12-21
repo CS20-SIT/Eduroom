@@ -39,7 +39,16 @@ const Appointment = ({ AID, setAID, appointment }) => {
 				classNames={{ enterActive: 'slide-in', exitActive: 'slide-out' }}
 			>
 				<div className="modal-container" id="appointment-info" onClick={() => {}}>
-					<div className="profile--app  my-2"></div>
+					<div
+						className="rounded-full bg-yellow"
+						style={{
+							width: 4 + 'rem',
+							height: 4 + 'rem',
+							marginRight: '1rem',
+							backgroundImage: 'url(' + appointment.avatar + ')',
+							backgroundSize: 'cover',
+						}}
+					></div>
 					<div className="text-lg font-bold my-2">{appointment.name}</div>
 					<div className="flex flex-col my-2 w-full">
 						<div className="my-2 text-lg font-bold">Date</div>
@@ -57,7 +66,16 @@ const Appointment = ({ AID, setAID, appointment }) => {
 						<div className="my-2 text-lg font-bold">Members</div>
 						{appointment.members.map((m, i) => (
 							<div key={i} className="flex">
-								<div className="profile--inside my-2"></div>
+								<div
+									className="rounded-full bg-yellow"
+									style={{
+										width: 3.5 + 'rem',
+										height: 3.5 + 'rem',
+										marginRight: '1rem',
+										backgroundImage: 'url(' + m.avatar + ')',
+										backgroundSize: 'cover',
+									}}
+								></div>
 								<div className="mx-4 my-auto text-md font-bold text-secondary">{m.name}</div>
 							</div>
 						))}

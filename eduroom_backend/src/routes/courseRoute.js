@@ -2,18 +2,20 @@ const express = require('express')
 const Router = express.Router()
 
 const {
-    getAllCourse,
-    getCourseFromID,
-    getCourseSectionPart,
-    searchCourse,
-    getCourse,
+	getAllCourse,
+	getCourseFromID,
+	getCourseSectionPart,
+	searchCourse,
+	getCourse,
 	getCategory,
-	searchCategory
+	searchCategory,
 } = require('../controllers/courseControllers')
+
+const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 Router.get('/getAllCourse', getAllCourse)
 
-Router.get('/getCourseFromID', getCourseFromID)
+Router.get('/getCourseFromID', jwtAuthenicate, getCourseFromID)
 
 Router.get('/getCourseSectionPart', getCourseSectionPart)
 

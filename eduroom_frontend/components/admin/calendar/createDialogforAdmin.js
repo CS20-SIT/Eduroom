@@ -1,5 +1,11 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import style from '../../../styles/calendar/calendar'
 import api from '../../../api'
 import { useRouter } from "next/router";
@@ -11,6 +17,13 @@ const Content = (props) => {
     const openEvent = props.openEvent
     const setOpenEvent = props.setOpenEvent
     // ---------------------createEvent---------------------------
+
+
+    const [submit, setSubmit] = useState(false);
+    const statusClose = () => {
+        setSubmit(false)
+        window.location.reload();
+    }
     const [eventInfo, setEventInfo] = useState({
         title: '',
         description: '',
@@ -26,9 +39,8 @@ const Content = (props) => {
         // if (validator()) {
         api.post("/api/event/createAdminEvent", eventInfo).then(
             (res) => {
-                alert("success");
-                window.location.reload();
-                
+                setSubmit(true)
+
             }
         ).catch(err => {
             console.log(err);
@@ -84,7 +96,7 @@ const Content = (props) => {
                         <div>startDate</div>
 
                         <input
-                            value={props.year + "-" + props.monthNo + "-" + props.date}
+                            defaultValue={props.year + "-" + props.monthNo + "-" + props.date}
                             className="event-startDate"
                             onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
                             placeholder="Start date"
@@ -147,6 +159,22 @@ const Content = (props) => {
                             <a className="event-cancelText">CANCEL</a>
                         </button>
                     </div>
+
+                    <Dialog open={submit}>
+                        <DialogTitle>
+                            <span>Success!</span>
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                <span> The Event have been created.</span>
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={statusClose} color="primary" autoFocus>
+                                <span>Ok</span>
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </div>
             </CSSTransition>
 

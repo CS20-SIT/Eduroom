@@ -38,8 +38,6 @@ const ListPackage = props => {
                 <PackageRender
                     title={item.title}
                     price={item.price}
-                    instructor={item.instructor}
-                    index={index}
                     id={item.id}
                     image={item.image}
                     infname={item.infname}
@@ -48,6 +46,7 @@ const ListPackage = props => {
                 ></PackageRender>
             );
         });
+        
         return (
             <div
                 style={{

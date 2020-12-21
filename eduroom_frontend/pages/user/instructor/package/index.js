@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import GeneralTemplate from '../../../../components/template/generalnonav'
+import GeneralTemplate from '../../../../components/template/general'
 import style from '../../../../styles/package/content'
 import Link from 'next/link'
 import OwnPackages from '../../../../components/package/ownPackages'

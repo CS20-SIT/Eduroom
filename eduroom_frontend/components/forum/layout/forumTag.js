@@ -10,10 +10,10 @@ const ForumTag = ({ tag }) => {
 						border-radius: 10px;
 						color: #5b5b5b;
 						font-size: 0.9rem;
-                        text-align: center;
-                        margin-right: .5rem;
+						text-align: center;
+						margin-right: 0.5rem;
 						min-width: 50px;
-						padding: .25rem .5rem;
+						padding: 0.25rem 0.5rem;
 					}
 				`}
 			</style>
