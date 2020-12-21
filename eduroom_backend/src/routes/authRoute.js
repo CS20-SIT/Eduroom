@@ -12,12 +12,14 @@ const {
 	googleCallbackController,
 	adminRegisController,
 	adminLoginController,
-	adminProfileController
+	adminProfileController,
+	resendVerify
 } = require('../controllers/authController')
 
 router.post('/login', loginController)
 router.post('/register', regisController)
 router.get('/verify/:token', verifyEmailController)
+router.post('/verify/resend',jwtAuthenicate,resendVerify)
 router.get('/logout', jwtAuthenicate, logoutController)
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }))
