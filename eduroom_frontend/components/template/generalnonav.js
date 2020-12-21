@@ -11,6 +11,13 @@ const GeneralNonav = (props) => {
         <div id="content">
           <main>{props.children}</main>
         </div>
+        {props.img ? (
+          <img
+            alt="background-img"
+            s-rc={props.img}
+            className="background-img"
+          />
+        ) : null}
       </div>
       <style jsx>
         {`
@@ -23,6 +30,12 @@ const GeneralNonav = (props) => {
             overflow-y: auto;
             position: fixed;
             background: #F4F5F7,
+          }
+          .background-img {
+            position: fixed;
+            bottom: 0;
+            width: 100vw;
+            z-index: 5;
           }
         `}
       </style>
