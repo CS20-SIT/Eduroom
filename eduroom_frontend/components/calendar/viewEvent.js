@@ -39,15 +39,10 @@ const Content = (props) => {
     useEffect(() => {
         const GetData = async (date) => {
             const result2 = await api.get(`/api/event/getEventbyDate?date=${date}`);
-            console.log(result2);
 
             setData(result2.data.data);
             setGlobal(result2.data.global);
             setOwn(result2.data.own);
-            console.log("dateeeeeeeee is" + result2.data.data)
-            console.log("data is" + result2.data.data);
-            console.log("Global is" + result2.data.global);
-            console.log("Own is" + result2.data.own);
 
         };
 
