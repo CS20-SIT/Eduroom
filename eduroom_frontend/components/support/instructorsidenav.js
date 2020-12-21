@@ -55,12 +55,12 @@ const Instructornav = () => {
       <br></br>
       <Button href="/support/Course-Management">
 
-        Purchase/Refunds
+        Course Management
       </Button>
       <br></br>
-      <Button href="/support/Mobile">
+      <Button href="/support/Trust&Safety">
 
-        Mobile
+        Trust & Safety
       </Button>
       
       

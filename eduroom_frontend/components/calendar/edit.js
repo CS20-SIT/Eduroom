@@ -1,217 +1,211 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import style from '../../styles/calendar/calendar'
-import Image from "next/image";
+import Image from 'next/image'
 import api from '../../api'
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 
 const edit = (props) => {
-    const router = useRouter();
-    const setOpenEvent = props.setOpenEvent
-    const [EditOpen, setEditOpen] = useState(false);
-    const handleClickOpen = () => {
-        setEditOpen(true);
-    };
-    const [data, setData] = useState([])
+	const router = useRouter()
+	const setOpenEvent = props.setOpenEvent
+	const [EditOpen, setEditOpen] = useState(false)
+	const [courseList, setCourseList] = useState([])
+	const handleClickOpen = () => {
+		setEditOpen(true)
+	}
+	const [data, setData] = useState([])
+	const [eventInfo, setEventInfo] = useState(null)
+	useEffect(() => {
+		const GetData = async () => {
+			const result1 = await api.get('/api/event/getEvent', {
+				params: {
+					id: props.id,
+				},
+			})
+			console.log('data is ', result1.data[0])
+			setData(result1.data[0])
+			setEventInfo(result1.data[0])
+		}
+		GetData()
+	}, [])
+	console.log(data)
 
-    useEffect(() => {
-        const GetData = async () => {
-            const result1 = await api("http://localhost/api/event/getEvent",
-                {
-                    params: {
-                        id: props.id
-                    }
-                });
-            setData(result1.data[0]);
+	// ---------------------Edit---------------------------
 
-        };
-        GetData();
+	useEffect(() => {
+		api
+			.get('/api/event/getMyCourse')
+			.then((res) => {
+				setCourseList(res.data.data)
+				// setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
+			})
+			.catch((err) => {})
+	}, [])
 
-    }, []);
-    console.log(data)
+	console.log(eventInfo)
+	const handleCreate = (e) => {
+		console.log('info is')
+		console.log(eventInfo)
+		// if (validator()) {
+		api
+			.post('/api/event/eEvent', { ...eventInfo, id: props.id })
+			.then((res) => {
+				alert('success')
+				window.location.reload()
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}
+	const eventType = ['Course', 'Global']
 
-    // ---------------------createEvent---------------------------
-    const [eventInfo, setEventInfo] = useState({
-        title: data.title,
-        description: data.detail,
-        startDate: data.startdate,
-        endDate: data.enddate,
-        startTime: data.starttime,
-        endTime: data.endtime,
-        place: data.place,
-    })
-    const handleCreate = (e) => {
+	return (
+		<Fragment>
+			<div style={{ marginBottom: '20px' }}>
+				<button
+					style={{
+						padding: 0,
+						border: 'none',
+						background: 'none',
+						cursor: 'pointer',
+					}}
+					onClick={handleClickOpen}
+				>
+					{' '}
+					<Image src="/images/graderCreate/edit.svg" width="20" height="20" />
+				</button>
+			</div>
 
-        console.log(eventInfo);
-        // if (validator()) {
-        api.post("/api/event/createEvent", eventInfo).then(
-            (res) => {
-                alert("success");
+			<CSSTransition
+				mountOnEnter
+				unmountOnExit
+				in={EditOpen}
+				timeout={{ enter: 700, exit: 100 }}
+				classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
+			>
+				<div className="D-create">
+					<div style={{ height: '10%' }}></div>
+					<div className="text-create">Edit Event</div>
 
-                router.push("/calendar")
-            }
-        ).catch(err => {
-            console.log(err);
-        })
-           
-        
-    };
-    const eventType = ['Course', 'Global']
+					{/* ---------------------- ---------eventtitle------------------------------- */}
+					<div>
+						{data != null ? (
+							<input
+								defaultValue={data?.title}
+								className="event-title"
+								onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
+								placeholder="Event Title"
+								style={{ height: '50px', fontSize: '18px' }}
+							></input>
+						) : null}
+					</div>
 
-    return (
-        <Fragment>
-            <div style={{marginBottom:"20px"}}>
-            <button
-                style={{
-                    padding: 0,
-                    border: "none",
-                    background: "none",
-                    cursor: "pointer",
-                }}
-                onClick={handleClickOpen}
-            >
-                {" "}
-                <Image src="/images/graderCreate/edit.svg" width="20" height="20" />
-            </button>
-            </div>
+					{/* ---------------------- ---------eventType------------------------------- */}
+					<div>
+						<select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+							{courseList.map((course) => {
+								return (
+									<option value={course.courseid} key={course.courseid}>
+										{course.coursename}
+									</option>
+								)
+							})}
+						</select>
+					</div>
 
-            <CSSTransition
-                mountOnEnter
-                unmountOnExit
-                in={EditOpen}
-                timeout={{ enter: 700, exit: 100 }}
-                classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
-            >
-                <div className="D-create">
-                    <div style={{ height: '10%' }}></div>
-                    <div className="text-create">Edit Event</div>
+					{/* ---------------------- ---------eventdescript------------------------------- */}
+					<div>
+						<input
+							defaultValue={data?.detail}
+							className="event-detail"
+							onChange={(e) => setEventInfo({ ...eventInfo, detail: e.target.value })}
+							placeholder="Description"
+							style={{ height: '50px', fontSize: '18px' }}
+						></input>
+					</div>
+					{/* ---------------------- ---------time------------------------------- */}
 
-                    {/* ---------------------- ---------eventtitle------------------------------- */}
-                    <div>
-                        {data != null ? <input
+					<div className="startdate">
+						<div>startDate</div>
 
-                            defaultValue={data.title}
-                            className="event-title"
-                            onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
-                            placeholder="Event Title"
-                            style={{ height: '50px' ,fontSize:'18px'}}
-                        ></input>
-                            : null
+						<input
+							defaultValue={data?.startdate}
+							className="event-startDate"
+							onChange={(e) => setEventInfo({ ...eventInfo, startdate: e.target.value })}
+							placeholder="Start date"
+							type="date"
+							style={{ fontSize: '14px' }}
+						></input>
+					</div>
 
-                        }
-                    </div>
+					<div className="startTime">
+						<div>startTime</div>
+						<input
+							defaultValue={data?.starttime}
+							className="event-startTime"
+							onChange={(e) => setEventInfo({ ...eventInfo, starttime: e.target.value })}
+							placeholder="Start Time"
+							type="Time"
+							style={{ fontSize: '14px' }}
+						></input>
+					</div>
 
-                    {/* ---------------------- ---------eventType------------------------------- */}
-                    <div>
-                        <select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, type: e.target.value })}>
-                            <option value="default" disabled>
-                                Event Type
-							</option>
-                            {eventType.map((type) => {
-                                return (
-                                    <option value={type} key={type}>
-                                        {type}
-                                    </option>
-                                )
-                            })}
-                        </select>
-                    </div>
+					<div className="enddate">
+						<div>endDate</div>
+						<input
+							defaultValue={data?.enddate}
+							className="event-endDate"
+							onChange={(e) => setEventInfo({ ...eventInfo, enddate: e.target.value })}
+							placeholder="end date"
+							type="date"
+							style={{ fontSize: '14px' }}
+						></input>
+					</div>
 
-                    {/* ---------------------- ---------eventdescript------------------------------- */}
-                    <div>
-                        <input
-                            defaultValue={data.detail}
-                            className="event-detail"
-                            onChange={(e) => setEventInfo({ ...eventInfo, description: e.target.value })}
-                            placeholder="Description"
-                            style={{ height: '50px' ,fontSize:'18px'}}
-                        ></input>
-                    </div>
-                    {/* ---------------------- ---------time------------------------------- */}
+					<div className="endtime">
+						<div>endTime</div>
+						<input
+							defaultValue={data?.endtime}
+							className="event-endTime"
+							onChange={(e) => setEventInfo({ ...eventInfo, endtime: e.target.value })}
+							placeholder="end Time"
+							type="time"
+							style={{ fontSize: '14px' }}
+						></input>
+					</div>
 
-                    <div className="startdate">
-                        <div>startDate</div>
+					{/* -------------------------------place------------------------------- */}
+					<div>
+						<input
+							defaultValue={data?.place}
+							className="event-place"
+							onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
+							placeholder="Event Place"
+							style={{ height: '50px', fontSize: '18px' }}
+						></input>
+					</div>
 
-                        <input
-                            defaultValue={data.startdate}
-                            className="event-startDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
-                            placeholder="Start date"
-                            type="date"
-                            style={{fontSize:'14px'}}
-                        ></input>
-                    </div>
+					<div className="confirmBT">
+						<button className="event-confirm" onClick={handleCreate}>
+							<a className="event-confirmText">CONFIRM</a>
+						</button>
+					</div>
+					<div
+						className="cancelBT"
+						onClick={() => {
+							setEditOpen(false)
+						}}
+					>
+						<button className="event-cancel">
+							<a className="event-cancelText">CANCEL</a>
+						</button>
+					</div>
+				</div>
+			</CSSTransition>
 
-                    <div className="startTime">
-                        <div>startTime</div>
-                        <input
-                            defaultValue={data.starttime}
-                            className="event-startTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startTime: e.target.value })}
-                            placeholder="Start Time"
-                            type="Time"
-                            style={{fontSize:'14px'}}
-                        ></input>
-                    </div>
-
-                    <div className="enddate">
-                        <div>endDate</div>
-                        <input
-                            defaultValue={data.enddate}
-                            className="event-endDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endDate: e.target.value })}
-                            placeholder="end date"
-                            type="date"
-                            style={{fontSize:'14px'}}
-
-                        ></input>
-                    </div>
-
-                    <div className="endtime">
-                        <div>endTime</div>
-                        <input
-                            defaultValue={data.endtime}
-                            className="event-endTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endTime: e.target.value })}
-                            placeholder="end Time"
-                            type="time"
-                            style={{fontSize:'14px'}}
-
-                        ></input>
-                    </div>
-
-                    {/* -------------------------------place------------------------------- */}
-                    <div>
-                        <input
-                            defaultValue={data.place}
-                            className="event-place"
-                            onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
-                            placeholder="Event Place"
-                            style={{ height: '50px' ,fontSize:'18px'}}
-                        ></input>
-                    </div>
-
-                    <div className="confirmBT">
-                        <button className="event-confirm" onClick={handleCreate} >
-                            <a className="event-confirmText">CONFIRM</a>
-                        </button>
-                    </div>
-                    <div
-                        className="cancelBT"
-                        onClick={() => {
-                            setEditOpen(false)
-                        }}
-                    >
-                        <button className="event-cancel">
-                            <a className="event-cancelText">CANCEL</a>
-                        </button>
-                    </div>
-                </div>
-            </CSSTransition>
-
-            <style jsx>{style}</style>
-            <style jsx>
-                {`
+			<style jsx>{style}</style>
+			<style jsx>
+				{`
 					.fade-in {
 						animation: fade-in 0.3s forwards;
 					}
@@ -235,9 +229,8 @@ const edit = (props) => {
 						}
 					}
 				`}
-            </style>
-
-        </Fragment>
-    )
-};
-export default edit;
+			</style>
+		</Fragment>
+	)
+}
+export default edit

@@ -21,8 +21,8 @@ const sendEmail = require('../utils/sendMail')
     if (subcat.rowCount > 0) {
       const subcatID = subcat.rows[0].subproblemid;
       const data = await pool.query(
-        "insert into support_form ( userid, requesttime, title, prioritytype, description,subproblemid,email) values($1,current_timestamp,$2,$3,$4,$5,$6)",
-        [userId, temp.title,temp.priority,temp.content, subcatID, temp.email]
+        "insert into support_form (  requesttime, title, prioritytype, description,subproblemid,email,name) values(current_timestamp,$1,$2,$3,$4,$5,$6)",
+        [temp.title,temp.priority,temp.content, subcatID, temp.email,temp.name]
       );
       const supportform = data.rows;
       res.status(200).json({ success: true, data: supportform });

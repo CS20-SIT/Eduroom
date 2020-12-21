@@ -4,9 +4,9 @@ import ForumHome from '../../../components/support/adminsupport/requestformHome'
 const RequestForm = () => {
 	return (
 		<Fragment>
-
+			<General>
 				<ForumHome/>
-
+			</General>
 		</Fragment>
 	)
 }

@@ -1,10 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../styles/course/utils'
-import General from '../../../components/template/general'
+import GeneralNoNav from '../../../components/template/generalnonav'
 import Link from 'next/link'
 import api from '../../../api'
+import { getItems, isInCart, addToCart, removeFromCart } from '../../../utils/cart'
+import Review from '../../../components/course/review'
 
 const CourseID = ({ id }) => {
+	const [cart, setCart] = useState([])
 	const [course, setCourse] = useState(null)
 	const fetchCourse = async () => {
 		const res = await api.get('/api/course/getCourseFromID', { params: { courseID: id } })
@@ -12,9 +15,18 @@ const CourseID = ({ id }) => {
 	}
 	useEffect(() => {
 		fetchCourse()
+		setCart(getItems('course'))
 	}, [])
+	const clickAddToCart = () => {
+		addToCart('course', course.courseid)
+		setCart(getItems('course'))
+	}
+	const clickRemoveFromCart = () => {
+		removeFromCart('course', course.courseid)
+		setCart(getItems('course'))
+	}
 	const renderButtons = () => {
-		if (course.iwOwn) {
+		if (course.isOwn) {
 			return (
 				<Fragment>
 					<span>
@@ -31,9 +43,22 @@ const CourseID = ({ id }) => {
 			return (
 				<Fragment>
 					<span>
-						<button className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer">
-							Add to cart
-						</button>
+						{isInCart('course', course.courseid) ? (
+							<button
+								onClick={clickRemoveFromCart}
+								className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer"
+								style={{ width: '150px' }}
+							>
+								Remove from cart
+							</button>
+						) : (
+							<button
+								onClick={clickAddToCart}
+								className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer"
+							>
+								Add to cart
+							</button>
+						)}
 					</span>
 					<span>
 						<button className="text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer">
@@ -50,8 +75,8 @@ const CourseID = ({ id }) => {
 		return (
 			<Fragment>
 				<div className="my-2">
-          <span className="text-xl text-navy font-quicksand">{course.coursename}</span>
-          {renderButtons()}
+					<span className="text-xl text-navy font-quicksand">{course.coursename}</span>
+					{renderButtons()}
 					<span className="share-icon pointer">
 						<img
 							alt="shareIcon"
@@ -99,19 +124,18 @@ const CourseID = ({ id }) => {
 
 	return (
 		<Fragment>
-			<General>
-				<div className="bg-little-grey ">
+			<GeneralNoNav>
+				<div className="bg-little-grey">
 					<div>
 						<Link href="/course">
 							<i className="fas fa-chevron-left backIcon"></i>
 						</Link>
 					</div>
-					<div className="container" style={{ padding: '0' }}>
-						{renderCourse()}
-					</div>
+					<div className="container">{renderCourse()}</div>
+					<Review type = "course" id={id} />
 				</div>
 				<style jsx>{utils}</style>
-			</General>
+			</GeneralNoNav>
 		</Fragment>
 	)
 }

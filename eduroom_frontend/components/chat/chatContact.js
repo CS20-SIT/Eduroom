@@ -10,6 +10,7 @@ import NotificationIcon from './icons/NotificationIcon'
 import ChatInvitation from '../chat/chatInvitation'
 import SearchResult from '../chat/searchResult'
 import api from '../../api'
+import socketIOClient from "socket.io-client";
 
 export default function chatContact(props) {
 	const [contact, setContact] = useState(props.contact)
@@ -17,58 +18,61 @@ export default function chatContact(props) {
 	const [openNotification, setOpenNotification] = useState(false)
 	const [openCreateChat, setOpenCreateChat] = useState(false)
 	const [userProfile, setUserProfile] = useState(props.userProfile)
-	const [chatList, setChatList] = useState(null)
 	const [searchInput, setSearchInput] = useState('')
 	const [searchResult, setSearchResult] = useState(null)
 	const [ignoreBlur, setIgnoreBlur] = useState(false)
 	const [invitations, setInvitations] = useState(null)
 
-    const getInvitations = async () => {
-		const res = await api.get(`/api/chat/getInvitationListMockup`)
+	const getInvitations = async () => {
+		const res = await api.get(`/api/chat/getInvitationList`)
 		setInvitations(res.data)
-  }
-	const getChatList = async () => {
-		const res = await api.get(`/api/chat/getChatListMockup`)
-		setChatList(res.data)
 	}
 	const getSearchResult = async () => {
-		const res = await api.get(`/api/chat/getSearchResultMockup`)
+		setSearchResult(null)
+		const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
 		setSearchResult(res.data)
 	}
-
+	const clickSelectResult = async (el) => {
+		const res = await api.get(`/api/chat/selectSearchResult`, { params: { member: el.userid} })
+		props.getChatList()
+		if(res.data.chatroomid){
+			props.setSelectChat(res.data)
+		}else{
+			props.setSelectChat(props.chatList[0])
+		}
+	}
 	const handleClickOpenNotification = () => {
 		setOpenNotification(true)
 	}
 	const handleCloseNotification = () => {
 		setOpenNotification(false)
 	}
-	const handleClickOpenCreateChat = () => {
+	const handleOpenCreateChat = () => {
 		setOpenCreateChat(true)
 	}
 	const handleCloseCreateChat = () => {
 		setOpenCreateChat(false)
 	}
 	const handleSelect = (el) => {
-		if (true) {
-			console.log('check')
-		}
 		setSearchResult(null)
+		clickSelectResult(el)
 	}
 	useEffect(() => {
-		getChatList()
+		props.getChatList()
 		getInvitations()
 	}, [])
-	useEffect(()=>{
-		if(contact){
-			contact.sort((a,b)=>b.resentMessageDate - a.resentMessageDate)
-        setContact(contact)
-		}
-	},[contact])
 	useEffect(() => {
-		if(chatList){
-			props.setSelectChat(chatList[0])
+		if (contact) {
+			contact.sort((a, b) => b.resentMessageDate - a.resentMessageDate)
+			setContact(contact)
 		}
-	}, [chatList])
+	}, [contact])
+	useEffect(() => {
+		if (searchInput != '' || searchInput != null) {
+			setSearchResult(null)
+			getSearchResult()
+		}
+	}, [searchInput])
 
 	return (
 		<>
@@ -86,17 +90,19 @@ export default function chatContact(props) {
 					setPeopleTest('nopeople')
 				}}
 			>
-				{<NotificationIcon
-					style={{
-						position: 'absolute',
-						top: 20,
-						right: 10,
-						fontSize: 18,
-						cursor: 'pointer',
-					}}
-					onClick={handleClickOpenNotification}
-					dot={invitations&&invitations.invitations.length>0}
-				/>}
+				{
+					<NotificationIcon
+						style={{
+							position: 'absolute',
+							top: 20,
+							right: 10,
+							fontSize: 18,
+							cursor: 'pointer',
+						}}
+						onClick={handleClickOpenNotification}
+						dot={invitations && invitations.invitations.length > 0}
+					/>
+				}
 				<Dialog disableBackdropClick onClose={handleCloseNotification} open={openNotification}>
 					<ChatInvitation handleClose={handleCloseNotification} />
 				</Dialog>
@@ -112,11 +118,11 @@ export default function chatContact(props) {
 				>
 					<Avatar
 						style={{ width: 60, height: 60 }}
-						alt={userProfile && userProfile.userFirstName + ' ' + userProfile.userLastName}
-						src={userProfile && userProfile.profilePicture}
+						alt={userProfile && userProfile.firstname + ' ' + userProfile.lastname}
+						src={userProfile && userProfile.avatar}
 					/>
 					<h4 style={{ textAlign: 'center' }}>
-						{userProfile && userProfile.userFirstName + ' ' + userProfile.userLastName}
+						{userProfile && userProfile.firstname + ' ' + userProfile.lastname}
 					</h4>
 					<div
 						style={{
@@ -130,8 +136,8 @@ export default function chatContact(props) {
 						}}
 						onBlur={() => {
 							if (!ignoreBlur) {
-								setIgnoreBlur(false)
 								setSearchResult(null)
+								setIgnoreBlur(false)
 							}
 						}}
 					>
@@ -147,7 +153,6 @@ export default function chatContact(props) {
 									return (
 										<SearchResult
 											searchResult={searchResult}
-											setSearchResult={setSearchResult}
 											setIgnoreBlur={setIgnoreBlur}
 											handleSelect={handleSelect}
 										/>
@@ -157,12 +162,12 @@ export default function chatContact(props) {
 						</div>
 						<AddCircleIcon
 							style={{ marginLeft: 20, color: '#FB9CCB', cursor: 'pointer' }}
-							onClick={handleClickOpenCreateChat}
+							onClick={handleOpenCreateChat}
 						/>
-						<Dialog disableBackdropClick onClose={handleCloseCreateChat} open={openCreateChat}>
-							<CreateChatRoom handleClose={handleCloseCreateChat} />
-						</Dialog>
 					</div>
+					<Dialog disableBackdropClick onClose={handleCloseCreateChat} open={openCreateChat}>
+						<CreateChatRoom handleClose={handleCloseCreateChat} />
+					</Dialog>
 					<div
 						style={{
 							width: '100%',
@@ -174,8 +179,8 @@ export default function chatContact(props) {
 				</div>
 				<div style={{ marginLeft: 14 }}>
 					<h4 style={{ marginLeft: 14 }}>Chat</h4>
-					{chatList &&
-						chatList.map((el) => {
+					{props.chatList &&
+						props.chatList.map((el) => {
 							if (el.roomname == null) {
 								return (
 									<ContactPerson
@@ -186,8 +191,12 @@ export default function chatContact(props) {
 											resentMessage: el.firstname + ': ' + el.message,
 											resentMessageDate: new Date(el.sendtime).getTime(),
 										}}
-										onClick={()=>{props.setSelectChat(el)}}
+										onClick={() => {
+											props.setSelectChat(el)
+										}}
 										selectChat={props.selectChat}
+										getChatList={props.getChatList}
+										setChatRoomDetail={props.setChatRoomDetail}
 									/>
 								)
 							} else {
@@ -200,8 +209,13 @@ export default function chatContact(props) {
 											resentMessage: el.firstname + ': ' + el.message,
 											resentMessageDate: new Date(el.sendtime).getTime(),
 										}}
-										onClick={()=>{props.setSelectChat(el)}}
+										onClick={() => {
+											props.setSelectChat(el)
+										}}
 										selectChat={props.selectChat}
+										getChatList={props.getChatList}
+										setSelectChat={props.setSelectChat}
+										setChatRoomDetail={props.setChatRoomDetail}
 									/>
 								)
 							}
