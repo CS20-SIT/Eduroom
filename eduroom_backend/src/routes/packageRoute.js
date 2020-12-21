@@ -18,7 +18,6 @@ const {
 	upload,
 	deletePackage,
 	editPackage,
-	getIsWishlist,
 } = require('../controllers/packageController')
 
 router.get('/categories', getCategories)
