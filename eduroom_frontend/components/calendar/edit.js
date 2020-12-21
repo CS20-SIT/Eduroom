@@ -13,7 +13,6 @@ const edit = (props) => {
 	const handleClickOpen = () => {
 		setEditOpen(true)
 	}
-	const [data, setData] = useState([])
 	const [eventInfo, setEventInfo] = useState(null)
 	useEffect(() => {
 		const GetData = async () => {
@@ -22,13 +21,10 @@ const edit = (props) => {
 					id: props.id,
 				},
 			})
-			console.log('data is ', result1.data[0])
-			setData(result1.data[0])
 			setEventInfo(result1.data[0])
 		}
 		GetData()
 	}, [])
-	console.log(data)
 
 	// ---------------------Edit---------------------------
 
@@ -44,8 +40,6 @@ const edit = (props) => {
 
 	console.log(eventInfo)
 	const handleCreate = (e) => {
-		console.log('info is')
-		console.log(eventInfo)
 		// if (validator()) {
 		api
 			.post('/api/event/eEvent', { ...eventInfo, id: props.id })
@@ -88,9 +82,9 @@ const edit = (props) => {
 
 					{/* ---------------------- ---------eventtitle------------------------------- */}
 					<div>
-						{data != null ? (
+						{eventInfo != null ? (
 							<input
-								defaultValue={data?.title}
+								value={eventInfo?.title}
 								className="event-title"
 								onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
 								placeholder="Event Title"
@@ -102,10 +96,8 @@ const edit = (props) => {
 					{/* ---------------------- ---------Course------------------------------- */}
 					<div>
 						
-						<select defaultValue={data.courseid} className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
-						<option Value={data.courseid} key={data.courseid}>
-										{data.coursename}
-									</option>
+						<select defaultValue={eventInfo?.courseid} className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+						
 							{courseList.map((course) => {
 								return (
 									<option Value={course.courseid} key={course.courseid}>
@@ -119,7 +111,7 @@ const edit = (props) => {
 					{/* ---------------------- ---------eventdescript------------------------------- */}
 					<div>
 						<input
-							defaultValue={data?.detail}
+							value={eventInfo?.detail}
 							className="event-detail"
 							onChange={(e) => setEventInfo({ ...eventInfo, detail: e.target.value })}
 							placeholder="Description"
@@ -132,7 +124,7 @@ const edit = (props) => {
 						<div>startDate</div>
 
 						<input
-							defaultValue={data?.startdate}
+							value={eventInfo?.startdate}
 							className="event-startDate"
 							onChange={(e) => setEventInfo({ ...eventInfo, startdate: e.target.value })}
 							placeholder="Start date"
@@ -144,7 +136,7 @@ const edit = (props) => {
 					<div className="startTime">
 						<div>startTime</div>
 						<input
-							defaultValue={data?.starttime}
+							value={eventInfo?.starttime}
 							className="event-startTime"
 							onChange={(e) => setEventInfo({ ...eventInfo, starttime: e.target.value })}
 							placeholder="Start Time"
@@ -156,7 +148,7 @@ const edit = (props) => {
 					<div className="enddate">
 						<div>endDate</div>
 						<input
-							defaultValue={data?.enddate}
+							value={eventInfo?.enddate}
 							className="event-endDate"
 							onChange={(e) => setEventInfo({ ...eventInfo, enddate: e.target.value })}
 							placeholder="end date"
@@ -168,7 +160,7 @@ const edit = (props) => {
 					<div className="endtime">
 						<div>endTime</div>
 						<input
-							defaultValue={data?.endtime}
+							value={eventInfo?.endtime}
 							className="event-endTime"
 							onChange={(e) => setEventInfo({ ...eventInfo, endtime: e.target.value })}
 							placeholder="end Time"
@@ -180,7 +172,7 @@ const edit = (props) => {
 					{/* -------------------------------place------------------------------- */}
 					<div>
 						<input
-							defaultValue={data?.place}
+							value={eventInfo?.place}
 							className="event-place"
 							onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
 							placeholder="Event Place"

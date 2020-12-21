@@ -15,7 +15,6 @@ exports.getEventbyDate = async (req, res, next) => {
 	try {
 		const data = req.query
 		const user = req.user
-		const events = []
 		const data1 = await pool.query(
 			'select coursename,title,startdate,enddate,starttime,endtime from course_event join user_mycourse  \
    on course_event.courseid = user_mycourse.courseid and user_mycourse.userid = $2 join course on course_event.courseid = course.courseid where course_event.startdate <= $1\
@@ -23,7 +22,6 @@ exports.getEventbyDate = async (req, res, next) => {
   ',
 			[data.date, user.id]
 		)
-		events.push(...data1.rows)
 
 		const data2 = await pool.query(
 			'select * from course_event join instructor   \
@@ -39,7 +37,7 @@ exports.getEventbyDate = async (req, res, next) => {
 			[data.date]
 		)
 
-		res.status(200).json({ success: true, data: events, own: data2.rows, global: data3.rows })
+		res.status(200).json({ success: true, data: data1.rows, own: data2.rows, global: data3.rows })
 		return
 	} catch (err) {
 		console.log(err)
@@ -70,12 +68,10 @@ exports.getEventInMonthYear = async (req, res, next) => {
        FROM course_event join user_mycourse on course_event.courseid = user_mycourse.courseid\
        WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
 	   AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2\
-	   and userid = $3'
-			, [m, y,user.id]
+	   and userid = $3',
+			[m, y, user.id]
 		)
 		events.push(...userCourse.rows)
-
-
 
 		if (userid.rowCount > 0) {
 			const instructorData = await pool.query(
@@ -195,7 +191,7 @@ exports.getEvent = async (req, res, next) => {
 	res.send(result.rows)
 }
 exports.eEvent = async (req, res, next) => {
-	const id = req.body.id
+	const id = req.body.eventid
 	const title = req.body.title
 	const startdate = req.body.startdate
 	const enddate = req.body.enddate
@@ -203,11 +199,13 @@ exports.eEvent = async (req, res, next) => {
 	const starttime = req.body.starttime
 	const detail = req.body.detail
 	const place = req.body.place
+	const courseid = req.body.courseid
+	console.log(req.body)
 	await pool.query(
 		'update course_event \
-                    set (title,startdate,enddate,endtime,starttime,detail,place)=($1,$2,$3,$4,$5,$6,$7) \
-                    where eventid = ($8)',
-		[title, startdate, enddate, endtime, starttime, detail, place, id]
+                    set title =$1,startdate=$2,enddate=$3,endtime=$4,starttime=$5,detail=$6,place=$7,courseid=$8\
+                    where eventid = $9',
+		[title, startdate, enddate, endtime, starttime, detail, place,courseid, id]
 	)
 	res.send({ success: true })
 }
