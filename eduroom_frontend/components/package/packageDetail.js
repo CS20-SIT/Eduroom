@@ -69,7 +69,6 @@ const Package = (props) => {
 												</div>
 												<div>
 													<div className="instname">{`${il.firstname}` + '  ' + `${il.lastname}`}</div>
-													<div style={{ fontSize: 15, marginBottom: 15 }}>Massachusetts Institute of Technology</div>
 													<div style={{ display: 'flex', flexDirection: 'row' }}>
 														<div className="col-6">
 															<img
