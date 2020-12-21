@@ -9,7 +9,6 @@ exports.editAdminProfile = async (req,res,next) => {
     try {
         const adminId = req.user.id
         let { firstname, lastname, displayname } = req.body
-
         const existingProfile = await pool.query(`SELECT displayname, firstname, lastname FROM admin_login WHERE adminid = '${adminId}';`)
 
         if(firstname === '') firstname = existingProfile.rows[0].firstname
