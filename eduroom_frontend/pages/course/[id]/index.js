@@ -26,7 +26,7 @@ const CourseID = ({ id }) => {
     content = (
       <GeneralNoNav>
         <div className='bg-little-grey '>
-          <Link href={`/course`}><span className='text-primary text-lg font-quicksand py-8 px-8 pointer'>Back</span></Link>
+        <div className="pt-4"><div className="mt-4 mx-8"><Link href={`/course`}><span className='font-quicksand text-ll text-navy border-navy px-3 py-1 text-lg pointer rounded-md'>Back</span></Link></div></div>
           <div className='container'>
             <div className='my-2'>
               <span className='text-xl text-navy font-quicksand'>{courseDes[0].coursename}</span>
@@ -81,54 +81,54 @@ export async function getServerSideProps(contex) {
   const id = contex.query.id;
   // GET /course/id
   const courseDes = [
-    {
-      id: 1,
-      name: 'Learn To Code With Python',
-      instructor: 'Bill Gates',
-      price: 30,
-      src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
-      videoSrc: 'https://www.youtube.com/embed/zNHHBdyMm14',
-    },
-    {
-      id: 2,
-      name: 'Learn To Code With C',
-      instructor: 'Bill Joe',
-      price: 30,
-      src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png',
-      videoSrc: 'https://www.youtube.com/embed/3lQEunpmtRA',
-    },
-    {
-      id: 3,
-      name: 'Learn To Code With Java',
-      instructor: 'Billy Elish',
-      price: 30,
-      src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
-      videoSrc: 'https://www.youtube.com/embed/Zv8-hrGiGno',
-    },
-    {
-      id: 4,
-      name: 'Basic for Python',
-      instructor: 'Billie Armstrong',
-      price: 30,
-      src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
-      videoSrc: '',
-    },
-    {
-      id: 5,
-      name: 'Basic for C',
-      instructor: 'Bill Gates',
-      price: 30,
-      src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png',
-      videoSrc: '',
-    },
-    {
-      id: 6,
-      name: 'Basic for Java',
-      instructor: 'Bill Gates',
-      price: 30,
-      src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
-      videoSrc: '',
-    },
+    // {
+    //   id: 1,
+    //   name: 'Learn To Code With Python',
+    //   instructor: 'Bill Gates',
+    //   price: 30,
+    //   src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
+    //   videoSrc: 'https://www.youtube.com/embed/zNHHBdyMm14',
+    // },
+    // {
+    //   id: 2,
+    //   name: 'Learn To Code With C',
+    //   instructor: 'Bill Joe',
+    //   price: 30,
+    //   src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png',
+    //   videoSrc: 'https://www.youtube.com/embed/3lQEunpmtRA',
+    // },
+    // {
+    //   id: 3,
+    //   name: 'Learn To Code With Java',
+    //   instructor: 'Billy Elish',
+    //   price: 30,
+    //   src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
+    //   videoSrc: 'https://www.youtube.com/embed/Zv8-hrGiGno',
+    // },
+    // {
+    //   id: 4,
+    //   name: 'Basic for Python',
+    //   instructor: 'Billie Armstrong',
+    //   price: 30,
+    //   src: 'https://i2.wp.com/www.opensourceforu.com/wp-content/uploads/2019/08/PythonTools-Blockchain.jpg?fit=900%2C589&ssl=1',
+    //   videoSrc: '',
+    // },
+    // {
+    //   id: 5,
+    //   name: 'Basic for C',
+    //   instructor: 'Bill Gates',
+    //   price: 30,
+    //   src: 'https://bs-uploads.toptal.io/blackfish-uploads/blog/article/content/cover_image_file/cover_image/13650/cover-0828_AfterAllTheseYearstheWorldisStillPoweredbyCProgramming_Razvan_Newsletter-2b9ea38294bb08c5aea1f0c1cb06732f.png',
+    //   videoSrc: '',
+    // },
+    // {
+    //   id: 6,
+    //   name: 'Basic for Java',
+    //   instructor: 'Bill Gates',
+    //   price: 30,
+    //   src: 'https://blog.newrelic.com/wp-content/uploads/java-logo-2.jpg',
+    //   videoSrc: '',
+    // },
   ];
   return {
     props: {

@@ -15,29 +15,44 @@ import { ContentFlag } from 'material-ui/svg-icons';
 
 // const CourseIDLesson = ({ courseDes, id }) => {
 const CourseIDLesson = ({ id }) => {
+
     useEffect(() => {
         console.log(id)
         const fetchData = async () => {
-        let res = await api.post('/api/course/getCourseFromID', { courseID: id })
-        console.log(res.data)
-        setCourseDes(res.data);
+            try{
+                let res = await api.post('/api/course/getCourseSectionPart', { courseID: id })
+                console.log(res.data)
+                setCourseDes(res.data);
+
+            } catch(err){
+                console.log(err.message);
+            }
         }
         fetchData()
     }, [])
+    const [courseDes, setCourseDes] = useState(null)
+
+    
+
+    
 
     const [sec,setSec] = useState(0); 
     const [secBG, setSecBG] = useState(0);
     const [part,setPart] = useState(0);
     var secNow = 0, partNow = 0;
-    const [srcc,setSrc] = useState(courseDes[0].section[secBG].part[part].src);
+    console.log(courseDes);
+    const [srcc,setSrc] = useState('');
+    
+    // courseDes.section[secBG].part[part].src
     // Set srcc from secBG part
+
     const [partType,setPartType] = useState(1);
-    const [questionNow,setQuestionNow] = useState(0);
-    const [choiceNow,setChoiceNow] = useState([]);
-    const [ansChoice,setAnsChoice] = useState([]);
+    // const [questionNow,setQuestionNow] = useState(0);
+    // const [choiceNow,setChoiceNow] = useState([]);
+    // const [ansChoice,setAnsChoice] = useState([]);
     const [submitValid,setSubmitValid] = useState(0);
     let [styleOfChoice,setStyleOfChoice] = useState({});
-    let [submitYet,setSubmitYet] = useState(0);
+    // let [submitYet,setSubmitYet] = useState(0);
 
     
     // Green text-grey my-4 py-8 pointer rounded-sm bg-white shadow text-center choice-size border-green
@@ -57,21 +72,38 @@ const CourseIDLesson = ({ id }) => {
 
 
     const changeChoiceAndCheckSubmit = (qNum) => {
-        if(submitYet == 1) return
-        const arr = [...choiceNow];
-        arr[questionNow] = qNum;
-        setChoiceNow(arr);
+        if(courseDes.section[secBG].submitYet == 1) return
+        const courseDesTemp = courseDes;
+        
+        courseDesTemp.section[secBG].choiceNow[courseDesTemp.section[secBG].questionNow] = qNum; 
+        console.log(qNum+" "+courseDesTemp.section[secBG].choiceNow[courseDesTemp.section[secBG].questionNow])
+        // const arr = [...courseDes.section[secBG].choiceNow];
+        // arr[courseDes.section[secBG].questionNow] = qNum;
+        // courseDes.section[secBG].choiceNow = arr;
+        // setChoiceNow(arr);
+
         var count = 0;
-        for(var i = 0; i < arr.length; i++){
+        for(var i = 0; i < courseDes.section[secBG].choiceNow.length; i++){
             // console.log("arr[] "+arr[i]);
-            if(arr[i] != -1){
+            if(courseDes.section[secBG].choiceNow[i] != -1){
                 count++;
             }
         }
-        if(count == arr.length){
-            setSubmitValid(1);
+        if(count == courseDes.section[secBG].choiceNow.length){
+            courseDesTemp.section[secBG].submitValid = 1;
+            
+            // setSubmitValid(1);
         }
+        setCourseDes(courseDesTemp);
+        if(submitValid == 0){
+            setSubmitValid(-1);
+        }
+        else{
+            setSubmitValid(0);
+        }
+        
         // console.log(count +" "+arr.length);
+        console.log(courseDes);
     }
 
     const setAnsChoiceFunc = (qN) => {
@@ -80,29 +112,21 @@ const CourseIDLesson = ({ id }) => {
             arr.push(qN[i].answer);
         }
         // console.log(arr);
-        setAnsChoice(arr);
+        // setAnsChoice(arr);
+        courseDes.section[secBG].ansChoice = arr;
     }
 
     const showAnswer = () =>{
-        // for(var i = 0; i < courseDes[id-1].section[secBG].part[part].questionNum.length; i++){
-        //     console.log(choiceNow[i]);
-        //     if(choiceNow[i] == i){
-        //         setStyleOfChoice({
-        //             pointerEvents: 'none',
-        //             border: '2px solid #ee5959',
-        //             // backgroundColor: 'green',
-        //         })
-                
-        //         // console.log(styleOfChoice);
-        //     }
-        //     else if(ansChoice[i] == i){
-        //         setStyleOfChoice({
-        //             pointerEvents: 'none',
-        //             border: '2px solid #008000'
-        //         })
-        //     }
-        // }
-        setSubmitYet(1);
+        const courseDesTemp = courseDes;
+        courseDesTemp.section[secBG].submitYet = 1;
+        setCourseDes(courseDesTemp);
+        if(submitValid == 0){
+            setSubmitValid(-1);
+        }
+        else{
+            setSubmitValid(0);
+        }
+        // setSubmitYet(1);
     }
 
 
@@ -132,7 +156,7 @@ const CourseIDLesson = ({ id }) => {
 
 
 
-      }
+    }
 
       const toDataURL= async (url) => {
         return fetch(url)
@@ -144,19 +168,20 @@ const CourseIDLesson = ({ id }) => {
           })
       }
     
+    let content = null
+    if (courseDes) {
+        content = (
     
-    return (
-        <Fragment>
             <GeneralNoNav>
             <div className='bg-little-grey '>
-                <Link href={`/course/${id}`}><span className='text-primary text-lg py-8 px-8 pointer'>Back</span></Link>
+                <div className="pt-4"><div className="mt-4 mx-8"><Link href={`/course/${id}`}><span className='font-quicksand text-ll text-navy border-navy px-3 py-1 text-lg pointer rounded-md'>Back</span></Link></div></div>
                 <div className='container-2'>
 
                     {/* Title */}
                     <div className='my-2'>
-                        <span className='text-xl text-navy font-quicksand'>{courseDes[id-1].name}</span>
+                        <span className='text-xl text-navy font-quicksand'>{courseDes.courseName}</span>
                         <span className="share-icon pointer"><img alt="shareIcon" src="https://cdn3.iconfinder.com/data/icons/black-easy/512/538636-share_512x512.png" width="20px" height="20px" ></img></span>
-                        <div className='text-secondary font-quicksand mb-10 my-2'>{"Section "+`${courseDes[id-1].section[secBG].id}`+" : " + `${courseDes[id-1].section[secNow].name}` + "  |  Part " + `${courseDes[id-1].section[secBG].part[part].id}` + " : " + `${courseDes[id-1].section[secBG].part[part].name}`}</div>
+                        <div className='text-secondary font-quicksand mb-10 my-2'>{"Section "+`${courseDes.section[secBG].id}`+" : " + `${courseDes.section[secNow].sectionName}` + "  |  Part " + `${courseDes.section[secBG].part[part].id}` + " : " + `${courseDes.section[secBG].part[part].partName}`}</div>
                     </div>
                     {/* Title */}
 
@@ -165,30 +190,46 @@ const CourseIDLesson = ({ id }) => {
 
                         {/* Videos / Materials / Quiz */}
                         <div className={`${partType == 1 ? "inline-block":"hidden"}`}>
-                            <iframe className="" width="700" height="450" src={srcc}></iframe>
+                            {/* <iframe className="" width="700" height="450" src={srcc}></iframe> */}
+                            <video width="700" height="450" controls>
+                                <source src={courseDes.section[secBG].part[part].src} type="video/mp4"></source>
+                                {/* <source src={`${srcc}+".mp4"`} type="video/mp4"></source> */}
+                            </video>
+
+                            <div className="my-8 font-quicksand text-secondary mx-2 text-lg">{courseDes.section[secBG].part[part].partDescript}</div>
                         </div>
                         <div className={`${partType == 2 ? "inline-block":"hidden"}`}>
+                            <div className="">
+                                <div className="ml-20">
+                                    <div className="my-4 mt-4 px-8 py-4 bg-white border-navy rounded-sm">
+                                        <div className="font-quicksand text-secondary inline-block">{`${courseDes.courseName} Material.pdf`}</div>
+                                        <div className="ml-20 inline-block">
+                                            <a href={courseDes.section[secBG].part[part].src} download={`${courseDes.courseName} Material`}>
+                                                <div className="mt-1"><img alt="downloadIcon" src="https://cdn0.iconfinder.com/data/icons/essentials-9/128/__Download-512.png" width="18px" height="18px" ></img></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             {/* <div onClick={() => {
                                 downloadItem('http://rathcenter.com/Sheet/Logic.pdf');
                             }}>Download</div> */}
                         </div>
                         <div className={`${partType == 3 ? "section-part flex flex-col items-center":"hidden"}`}>
-                            <div className={`${submitValid == 0 ? "ml-auto inline-block text-secondary rounded-lg border-grey-2 px-6 py-2 text-sm disabled font-bold" : ( submitYet == 0 ? "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-hover" : "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-anti-hover" )}`} 
+                            <div className={`${courseDes.section[secBG].submitValid == 0 ? "ml-auto inline-block text-secondary rounded-lg border-grey-2 px-6 py-2 text-sm disabled font-bold" : ( courseDes.section[secBG].submitYet == 0 ? "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-hover" : "ml-auto inline-block text-navy rounded-lg border-navy-2 px-6 py-2 text-sm pointer font-bold submit-anti-hover" )}`} 
                             onClick={() => {
-                                if(submitValid == 0) return
+                                if(courseDes.section[secBG].submitValid == 0) return
                                 showAnswer();
                                 // console.log(ansChoice);
                             }}
                             
                             >SUBMIT</div>
-                            {courseDes[id-1].section[secBG].part[part].questionNum.map((q, qNum) => (
-                                <div key={qNum} className={`${questionNow == qNum ? '':"hidden"}`}>
+                            {courseDes.section[secBG].part[part].questionNum.map((q, qNum) => (
+                                <div key={qNum} className={`${courseDes.section[secBG].questionNow == qNum ? '':"hidden"}`}>
                                     <div className="font-quicksand text-center text-xxl text-navy font-bold">{q.question}</div>
                                     <div className="my-4 mt-10">
                                         {q.choice.map((c, cNum)=>(
-                                            // <div key={cNum} className={`${choiceNow[questionNow] == cNum ? "text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-anti-navy text-center choice-size":"text-grey my-4 py-8 pointer rounded-sm bg-white shadow hover-navy text-center choice-size"}`} style={ cNum === ansChoice[questionNow] && choiceNow[questionNow] === cNum ? styleOfChoice : null} onClick={()=>{
-                                            // <div key={cNum} className={`${submitYet == 0 ? (choiceNow[questionNow] == cNum ? : ) : choiceNow[questionNow] == cNum ? : }`}>
-                                            <div key={cNum} className={`${submitYet == 1 ? (ansChoice[questionNow] == cNum ? (greenBox) : ( choiceNow[questionNow] == cNum ? (redBox) : (whiteAntiBorderBox) ) ) : ( choiceNow[questionNow] == cNum ? (blueBox) : (whiteBox) )}`} onClick={()=>{
+                                            <div key={cNum} className={`${courseDes.section[secBG].submitYet == 1 ? (courseDes.section[secBG].ansChoice[courseDes.section[secBG].questionNow] == cNum ? (greenBox) : ( courseDes.section[secBG].choiceNow[courseDes.section[secBG].questionNow] == cNum ? (redBox) : (whiteAntiBorderBox) ) ) : ( courseDes.section[secBG].choiceNow[courseDes.section[secBG].questionNow] == cNum ? (blueBox) : (whiteBox) )}`} onClick={()=>{
                                                 changeChoiceAndCheckSubmit(cNum);
                                             }}>
                                                 {/* choiceNow[questionNow] == cNum  ? (submitYet == 1 ? (choiceNow[questionNow] == ansChoice[questionNow] ? ({greenBox}) : ({redBox}) ) : ({whiteBox}) ) : ({whiteBox})  */}
@@ -200,9 +241,10 @@ const CourseIDLesson = ({ id }) => {
                                 </div>
                             ))}
                             <div className="mt-10" width="500px" >
-                                {courseDes[id-1].section[secBG].part[part].questionNum.map((q, qNum) => (
-                                    <div key={qNum} className={`${questionNow == qNum ? ( submitYet == 0 ? "inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-white bg-navy" : ( ansChoice[qNum] == choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-green bg-white" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-red bg-white"  ) ) : submitYet == 0 ? ("inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-navy") : ( ansChoice[qNum] == choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-white bg-green" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-white bg-red"  ) }`} onClick={()=>{
-                                        setQuestionNow(qNum);
+                                {courseDes.section[secBG].part[part].questionNum.map((q, qNum) => (
+                                    <div key={qNum} className={`${courseDes.section[secBG].questionNow == qNum ? ( courseDes.section[secBG].submitYet == 0 ? "inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-white bg-navy" : ( courseDes.section[secBG].ansChoice[qNum] == courseDes.section[secBG].choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-green bg-white" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-red bg-white"  ) ) : courseDes.section[secBG].submitYet == 0 ? ("inline-block mx-2 py-2 px-3 rounded-full border-navy pointer text-navy") : ( courseDes.section[secBG].ansChoice[qNum] == courseDes.section[secBG].choiceNow[qNum] ? "inline-block mx-2 py-2 px-3 rounded-full border-green pointer text-white bg-green" : "inline-block mx-2 py-2 px-3 rounded-full border-red pointer text-white bg-red"  ) }`} onClick={()=>{
+                                        // setQuestionNow(qNum);
+                                        courseDes.section[secBG].questionNow = qNum;
                                     }}>
                                         {qNum+1}
                                     </div>
@@ -217,7 +259,7 @@ const CourseIDLesson = ({ id }) => {
                             
                             {/* Map Section */}
                             <div>
-                            {courseDes[id-1].section.map((e, index) => (
+                            {courseDes.section.map((e, index) => (
                                 <div key={index}>
                                     <div className="section-box py-2 px-6 pointer text-lg font-quicksand" onClick={()=>{
                                         if(sec == index){
@@ -229,7 +271,7 @@ const CourseIDLesson = ({ id }) => {
                                             // console.log(secNow+" "+part);
                                         }
                                     }}>
-                                        <div className="font-normal my-1">{"Section "+`${e.id}`+" : " + `${e.name}`}</div>
+                                        <div className="font-normal my-1">{"Section "+`${e.id}`+" : " + `${e.sectionName}`}</div>
                                         <div className="font-light text-ll text-grey">{`${e.time}`+" mins."}</div>
                                         
                                     </div>
@@ -246,10 +288,11 @@ const CourseIDLesson = ({ id }) => {
                                                     setSecBG(index);
                                                     setPart(indexx);
                                                     setPartType(ee.type);
-                                                    setChoiceNow(Array(ee.questionNum.length).fill(-1));
-                                                    setAnsChoiceFunc(ee.questionNum);
+                                                    // setChoiceNow(Array(ee.questionNum.length).fill(-1));
+                                                    // courseDes.section[secBG].part[part].choiceNow = Array(ee.questionNum.length).fill(-1);
+                                                    // setAnsChoiceFunc(ee.questionNum);
 
-                                                }}>{"Part " + `${ee.id}` + ": " + `${ee.name}`}</div>
+                                                }}>{"Part " + `${ee.id}` + ": " + `${ee.partName}`}</div>
                                             </div>
                                         ))}
                                         
@@ -272,6 +315,11 @@ const CourseIDLesson = ({ id }) => {
             </div>
             <style jsx>{utils}</style>
           </GeneralNoNav>
+        )
+      }
+      return (
+        <Fragment>
+            {content}
         </Fragment>
         );
 
