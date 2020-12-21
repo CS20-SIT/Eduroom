@@ -18,8 +18,8 @@ const page3 = ({pin}) => {
     }
   };
   const fetchDataRank = async () => {
-    if (pin != null) {
-      const res1 = await api.get(`/api/kahoot/getRankScore/${pin}`);
+    if (sessionid != null) {
+      const res1 = await api.get(`/api/kahoot/getRankScore/${sessionid}`);
       setData(res1.data)
     }
 
