@@ -13,12 +13,12 @@ export default function Chat() {
 	const [messageLeftColor, setMessageLeftColor] = useState('#5B5B5B')
 	const [messageRightColor, setMessageRightColor] = useState('#EB7DB1')
 	const [selectChat, setSelectChat] = useState(null)
+	const [oldChatRoom,setOldChatRoom] = useState([])
 	const [chatRoomDetail, setChatRoomDetail] = useState(null)
 	const [userProfile, setUserProfile] = useState(null)
 	const [chatList, setChatList] = useState(null)
 	const getChatList = async () => {
 		const res = await api.get(`/api/chat/getChatlist`)
-		console.log(res.data)
 		setChatList(res.data)
 	}
 	const [expand, setExpand] = useState({
@@ -29,12 +29,22 @@ export default function Chat() {
 	const [expand2, setExpand2] = useState({
 		display: 'none',
 	})
-	const getChatRoomDetail = () => {
-		api.get(`/api/chat/getChatroomDetail`, { params: { chatroomid: selectChat.chatroomid } }).then((res) => {
-			setChatRoomDetail(null)
-			setChatRoomDetail(res.data)
-			console.log(res.data)
-		})
+	const setReadMessage = (room) =>{
+		api.get(`/api/chat/readMessage`, { params: { chatroomid: room } })
+	}
+	const getChatRoomDetail = (room) => {
+		if(room){
+			api.get(`/api/chat/getChatroomDetail`, { params: { chatroomid: room } }).then((res) => {
+				setChatRoomDetail(res.data)
+			})
+		}
+		else{
+			api.get(`/api/chat/getChatroomDetail`, { params: { chatroomid: selectChat.chatroomid } }).then((res) => {
+				setChatRoomDetail(null)
+				setChatRoomDetail(res.data)
+			})
+		}
+		
 	}
 	const getUserProfileInfo = async () => {
 		api.get(`/api/chat/getUserProfile`).then((res) => {
@@ -42,23 +52,56 @@ export default function Chat() {
 		})
 	}
 	useEffect(() => {
+		getChatList()
 		setSocket(socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
 			path: "/socket-chat",
 		  }))
 		getUserProfileInfo()
 	}, [])
+	useEffect(()=>{
+		if(socket){
+			socket.on('recieveMessage',(room)=>{
+				setReadMessage(room)
+				getChatRoomDetail(room)	
+			})
+			socket.on('recieveUnsendMessage',(room)=>{
+				getChatRoomDetail(room)	
+			})
+			socket.on('recieveChangeChatRoomName',(room)=>{
+				getChatRoomDetail(room)
+			})
+			socket.on('recieveChangeProfilePic',(room)=>{
+				getChatRoomDetail(room)
+			})
+			socket.on('recieveReadMessage',(room)=>{
+				setTimeout(function() {
+					getChatRoomDetail(room)
+				}, 1000)
+			})
+		}
+	},[socket])
+	useEffect(()=>{
+		if(selectChat){
+			setReadMessage(selectChat.chatroomid)
+			getChatRoomDetail()
+			setOldChatRoom([...oldChatRoom,selectChat.chatroomid])
+			socket.emit('joinRoom',selectChat.chatroomid)
+			socket.emit('readMessage',selectChat.chatroomid)
+		}
+	},[selectChat])
+	useEffect(()=>{
+		if(oldChatRoom.length>=2){
+			socket.emit('leaveRoom',oldChatRoom[oldChatRoom.length-2])
+		}
+	},[oldChatRoom])
 	useEffect(() => {
-		getChatList()
 		if (chatRoomDetail != null) {
+			console.log(chatRoomDetail.chatroomid)
+			getChatList()
 			setMessageLeftColor(chatRoomDetail.themeColor.recievecolor)
 			setMessageRightColor(chatRoomDetail.themeColor.sendcolor)
 		}
 	}, [chatRoomDetail])
-	useEffect(() => {
-		if (selectChat) {
-			getChatRoomDetail()
-		}
-	}, [selectChat])
 
 	return (
 		<>
@@ -113,6 +156,7 @@ export default function Chat() {
 										getChatRoomDetail={getChatRoomDetail}
 										getChatList={getChatList}
 										setChatList={setChatList}
+										socket={socket}
 									/>
 								)
 							}

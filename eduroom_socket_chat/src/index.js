@@ -15,10 +15,24 @@ io.on('connection', (client) => {
 console.log('user connected');
 	client.on("joinRoom",(room)=>{
 		//read message
-		client.join(room) //join room
+		client.join(room)
+	})
+	client.on("leaveRoom",(room)=>{
+		client.leave(room)
 	})
 	client.on("sendMessage",(room)=>{
-		console.log(room)
-		io.in(room).emit('recieveMessage')
+		io.in(room).emit('recieveMessage',room)
+	})
+	client.on("unsendMessage",(room)=>{
+		io.in(room).emit('recieveUnsendMessage',room)
+	})
+	client.on("changeChatRoomName",(room)=>{
+		io.in(room).emit('recieveChangeChatRoomName',room)
+	})
+	client.on("readMessage",(room)=>{
+		io.in(room).emit('recieveReadMessage',room)
+	})
+	client.on("changeProfilePic",(room)=>{
+		io.in(room).emit('recieveChangeProfilePic',room)
 	})
 });

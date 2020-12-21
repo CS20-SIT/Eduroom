@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import ReadIcon from './icons/ReadIcon'
 import DotDotIcon from './icons/DotDotIcon'
+import moment from 'moment'
 
 export default function messageLeft(props) {
 	const [dropReadDownStyle, setReadDropDownStyle] = useState({ visibility: 'hidden' })
@@ -30,7 +31,7 @@ export default function messageLeft(props) {
 						<span style={{ fontSize: 18 }}>{message.text}</span>
 					</div>
 				</div>
-				<span>{message.sentTime}</span>
+				<span>{moment(message.sentTime).fromNow()}</span>
 				<div
 					style={{ position: 'relative', display: 'inline-block' }}
 					onMouseOver={() => {
