@@ -19,7 +19,7 @@ const review = (props) => {
 	}, [])
 	return (
 		<Fragment>
-			<div className="box" style={{ display: 'flex', flexFlow: 'column', background: 'rgba(255,255,255,.7)' }}>
+			<div className="box" style={{ display: 'flex', flexFlow: 'column', background: 'rgba(255,255,255,.7)' ,marginTop: '-5rem'}}>
 				<CommentForPost type={props.type} id={props.id} />
 				<div style={{ paddingLeft: '2%' }}>
 					<StudentFeedback data={feedback} />
@@ -39,6 +39,7 @@ const review = (props) => {
 					})}
 				</div>
 			</div>
+			<div style={{paddingTop: '3rem'}} />
 			{/* <ShowComment data={data} id={props.id}/> */}
 			{/* <ShowComment /> */}
 

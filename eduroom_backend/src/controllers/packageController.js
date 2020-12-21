@@ -47,7 +47,7 @@ exports.getPackage = async (req, res, next) => {
 	try {
 		const id = req.query.packageid
 		const data1 = await pool.query(`select p.packageid, packagename, i.instructorid,firstname,lastname ,p.discount,p.detail,p.image,sum(price)*((100-p.discount)/100) as price
-		, sum(price) as oldprice
+		, sum(price) as oldprice,cateid
 		from package p, instructor i,package_courses pc, course c, user_profile up
 		where p.instructorid=i.instructorid and p.packageid = pc.packageid and pc.courseid=c.courseid
 		  and i.userid = up.userid and p.packageid = $1
@@ -224,5 +224,26 @@ exports.getPackagesFromIds = async (req, res, next) => {
 		res.send(answer)
 	} catch (err) {
 		return next(new ErrorResponse(err, 500))
+	}
+}
+
+exports.editPackage = async (req, res, next) => {
+	const temp = req.body
+	const packageid = req.params.id
+	const user = req.user
+	if (user) {
+		await pool.query(`update package set packagename = $1, discount= $2, detail=$3,
+		image = $4, cateid = $5 where packageid = $6`, [
+			temp.new.packagename,
+			temp.new.discount,
+			temp.new.detail,
+			temp.new.image,
+			temp.new.cateid,
+			packageid
+		])
+		res.status(200).json({ success: true })
+		return
+	} else {
+		return next(new ErrorResponse('Unauthorize', 401))
 	}
 }
