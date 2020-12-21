@@ -12,9 +12,8 @@ export default css`
     font-weight: 500;
   }
   .flex-container:hover {
-    transform: translateY(-4px);
     cursor: pointer;
     border-radius: 5px;
-		box-shadow: 0px 4px 6px rgba(189, 189, 189, 0.7);
+		background-color: rgba(253,236,244, 0.1);
   
   }`

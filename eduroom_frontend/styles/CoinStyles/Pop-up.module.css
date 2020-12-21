@@ -56,6 +56,21 @@ margin-left: 20%;
     border-radius: 12px;
     outline: none;
 }
+.disbtn {
+  /* margin-top: 50px; */
+  position: relative;
+  top: 20px;
+  padding: 5px 30px;
+  background-color: grey;
+  border: none;
+  opacity: 30%;
+  color: #000;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 12px;
+  outline: none;
+}
 .line{
   position: relative;
   left: 20px;

@@ -41,4 +41,5 @@ export async function getServerSideProps(ctx) {
 		return { props: { id: '', nodeID: '' } }
 	}
 }
+
 export default NodeQuestion
