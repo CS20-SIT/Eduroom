@@ -46,9 +46,7 @@ const Page1 = ({
   const [sessionid, setSesstionID] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-
-     
-      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      const res = await api.get(`/api/kahoot/sessionidAfterStart/${pin}`);
       setSesstionID(res.data.sessionid)
     };
     fetchData();
@@ -59,6 +57,7 @@ const Page1 = ({
     const sessionTemp = sessionid;
     const point = data[questionNumber].point;
     const postUpdateScore = { sessionid: sessionid, point: point }
+    console.log('postUpdateScore',postUpdateScore)
     const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
   };
 
