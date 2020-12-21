@@ -1,92 +1,213 @@
 import React,{Fragment,useState,useEffect} from 'react';
-import MyCourses from '../../components/user/myCourses';
 import General from '../../components/template/general'
-import axios from 'axios';
 import api from '../../api';
 import { useRouter } from 'next/router'
+import utils from '../../styles/course/utils';
+import Link from 'next/link';
+
 const UserCourse = () => {
-    // const user="08e9d239-b3f2-4db8-b29a-da99a314df92";
-    useEffect(()=>{
-        const fetchData=async()=>{
-            // const res=await axios.get('https://jsonplaceholder.typicode.com/todos');
-            try{
-                const res=await api.get('api/user/getMycourse', {
-                    // userid:user,
-                    params:{
-                        finish:false,
-                        condition:'',
-                        orderby: 'addtime desc'
-                    }
-                });
-                setTotalList(res.data);
-			} catch (err) {
-				router.push('/login')
-			}
-        }
-        fetchData();
-    },[]);
+useEffect(()=>{
+    const fetchData=async()=>{
+        try{
+            const res=await api.get('api/user/getMycourse', {
+                params:{
+                    finish:false,
+                    condition:'',
+                    orderby: 'addtime desc'
+                }
+            });
+            setCourseDes(res.data);
+    	} catch (err) {
+    		router.push('/login')
+    	}
+    }
+    fetchData();
+},[]);
+
+    const [courseDes, setCourseDes] = useState([])
     const router = useRouter()
-    const[totalList,setTotalList]=useState([]);
     const[completion,setCompletion]=useState(false);
+    const [search, setSearch] = useState('')
+    const [category,setCategory]=useState(
+        [
+        {value:'coursename asc',
+        cataname:'Title'},
+
+        {value:'lastvisit desc',
+        cataname:'Recently Visit'}
+        ]
+    );
 
     const searchEngine=(finish,condition,orderby)=>{
         api.get('api/user/getMycourse', {
-            // userid:user,
             params:{
                 finish:finish,
                 condition: condition,
                 orderby: orderby
             }
         }).then((response)=>{
-            setTotalList(response.data);
+            setCourseDes(response.data);
         });
         setCompletion(finish);
     };
 
     const searching=()=>{
-        let searchvalue=document.getElementById('search').value;
-        let sortvalue=document.getElementById('sort').value;
-
-        let search='';
-        if(searchvalue!==''){
-            search='and upper(coursename) like upper(\'%'+searchvalue+'%\')'
+        let searchvalue='';
+        if(search!==''){
+            searchvalue='and upper(coursename) like upper(\'%'+search+'%\')'
         }
-        let sort;
-        switch(sortvalue){
-            case'title':sort='coursename asc';break;
-            case'add time':sort='addtime desc';break;
-            case'recently visit':sort='lastvisit desc';break;
-        }
-        searchEngine(completion,search,sort);
+        let sortvalue=document.getElementById('sorting').value;
+        if(sortvalue=='Sort Type') sortvalue='addtime desc';
+        searchEngine(completion,searchvalue,sortvalue);
     }
 
     const coursetype=(boolean)=>{
-        document.getElementById('search').value='';
-        document.getElementById('sort').selectedIndex=0;
+        setSearch('');
+        document.getElementById('sorting').selectedIndex=0;
         searchEngine(boolean,'','addtime desc');
     }
-    return (
+
+    const checkComplete=(boolean)=>{
+        if(boolean) return 'Completed';
+        else return 'Progressing';
+    }
+	const handleChangeSearch = (e)=>{
+		setSearch(e.target.value);
+	}
+	const handleEnter = (e)=>{
+		if(e.key == 'Enter'){
+			searching();
+		}
+	}
+    const selectSort = (e)=>{
+        searching();
+    }
+    
+  return (
     <Fragment>
-        <General>
+      <General>
+        <div className='bg'>
+          <div className='container-1'>
+
             <center>
-                <h1>MyCourse</h1>
-                <button onClick={()=>{coursetype(false)}}>Incompleted Course</button>
-                <button onClick={()=>{coursetype(true)}}>Completed Course</button>
-                <br></br>
-                <input type="text" id="search" placeholder='Search course'></input>
-                <br></br>
-                Sort by
-                <select id='sort' >
-                    <option>add time</option>
-                    <option>title</option>
-                    <option>recently visit</option>
-                </select>
-                <button onClick={()=>{searching()}}>Search</button>
-                <br></br>
-            </center>
-            <MyCourses item={totalList}></MyCourses>
-        </General>
+                 <h1>MyCourse</h1>
+                 <button onClick={()=>{coursetype(false)}}>Incompleted Course</button>
+                 <button onClick={()=>{coursetype(true)}}>Completed Course</button>
+             </center>
+
+            <div className='text-center flex my-6 mx-search'>
+
+            <div className="shadow searchCourse">
+			<i className="fas fa-search"></i>
+			<input className='font-quicksand input-tab rounded-sss font-normal-bold searchBox' type="text" placeholder="Search Course"  value={search} onChange={handleChangeSearch} onKeyUp={handleEnter}></input>
+			</div>
+              <select id='sorting' className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox' 
+                      onChange={selectSort}>
+                <option>
+                  Sort Type
+              </option>
+                {category.map((el, idx) => {
+                  return (
+                    <option value={el.value}>
+                      {el.cataname}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
+
+            <div className='text-center my-8'>
+              {courseDes.map((e, index) => (
+                <Link href={`/course/${e.courseid}`}>
+                  <div className='mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer'>
+                    <div className="w-full h-60"><img className="pic-1" alt="python" src={`${e.coursepicture}`} width="100%" height="100%"></img></div>
+                    <div className="w-full h-40 font-quicksand">
+                      <div className="text-navy text-lg box-left my-4 mx-4 h-20">{e.coursename}</div>
+                      <div className="text-secondary text-md box-left mx-4">{`${e.firstname}` + " " + `${e.lastname}`}</div>
+                      <div className="text-navy text-lg box-left my-1 mx-4">{checkComplete(e.isfinished)}</div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            
+            {/* id={item.courseid}
+                title={item.coursename}
+                key={item.courseid}
+                isCompleted={item.isfinished}
+                index={index}
+                ///
+                addtime={item.addtime}
+                picture={item.coursepicture}
+                ownerF={item.firstname}
+                ownerL={item.lastname}
+                lastvisit={item.lastvisit} */}
+
+
+          </div>
+        </div>
+        <style jsx>{utils}</style>
+        <style jsx>
+          {`
+          .container-1{
+            max-width: 87vw;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 4rem 1rem;
+          }
+          .cateBox { 
+            border: none;
+            outlined: none;
+            padding-left: 15px;
+            font-size: 0.8rem;
+            width: 250px;
+          }
+          .categoryTab{
+			      margin-top: 3rem;
+          }
+          .bg{
+            background: #F9F7FE;
+          }
+          .mx-search{
+            margin-left: 5rem;
+            margin-right: 5rem;
+      
+          }
+          .coursecard{
+            font-weight: 700;
+            font-size: 26px;
+            color:#3D467F;
+            margin: 30px 30px 30px 40px
+          }
+
+          .searchCourse {
+            background: white;
+            padding-left: 1rem;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            flex: 1;
+            width: 600px;
+            margin-right: 1.5rem;
+        }
+        .fa-search {
+            color: rgba(17, 17, 17, 0.48);
+            font-size: 0.8rem;
+        }
+        .searchBox {
+            background: none;
+            margin-left: 0.7rem; 
+            border: none;
+            outlined: none;
+            flex: 1;
+        }
+
+        `}
+        </style>
+      </General>
     </Fragment>
-    )
-}
+  );
+};
+
+///
 export default UserCourse
