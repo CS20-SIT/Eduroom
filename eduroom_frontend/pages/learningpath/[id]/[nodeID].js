@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from 'react'
 import General from '../../../components/template/general'
 import api from '../../../api'
 import Exercise from '../../../components/learningpath/Exercise'
-import Quiz from '../../../components/learningpath/Quiz'
+import Quizs from '../../../components/learningpath/Quizs'
 const NodeQuestion = ({ id, nodeID }) => {
 	const [type, setType] = useState(null)
 	const fetchType = async () => {
@@ -10,7 +10,7 @@ const NodeQuestion = ({ id, nodeID }) => {
 			const res = await api.get('/api/learningpath/nodeType', { params: { nodeID: nodeID } })
 			setType(res.data.type)
 		} catch (err) {
-			console.log(err)
+			console.log(err.data)
 		}
 	}
 	useEffect(() => {
@@ -18,9 +18,9 @@ const NodeQuestion = ({ id, nodeID }) => {
 	}, [nodeID])
 	const renderPage = () => {
 		if (type === 'exercise') {
-			return <Exercise type="exercise" id={id} nodeID={nodeID}></Exercise>
+			return <Exercise id={id} nodeID={nodeID}></Exercise>
 		} else if (type === 'quiz') {
-			return <Quiz type="exercise" id={id} nodeID={nodeID}></Quiz>
+			return <Quizs id={id} nodeID={nodeID}></Quizs>
 		}
 	}
 	return (
@@ -41,4 +41,5 @@ export async function getServerSideProps(ctx) {
 		return { props: { id: '', nodeID: '' } }
 	}
 }
+
 export default NodeQuestion

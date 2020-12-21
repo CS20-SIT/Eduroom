@@ -77,7 +77,8 @@ const Profile = () => {
 
 					<div className="topic">
 						<p className="header">Bio</p>
-						<TextField
+						<TextField style={{ width: '100%' }}
+							disabled
 							multiline
 							rows={4}
 							defaultValue={user.bio ? user.bio : '-'}
@@ -88,6 +89,9 @@ const Profile = () => {
 						</textarea> */}
 						{/* <span>{user.bio ? user.bio : '-'}</span> */}
 					</div>
+					<Link href="/user/courses">
+							<button className="btn">MyCourse</button>
+					</Link>
 					{renderRegister()}
 				</div>
 				<style jsx>{styles}</style>

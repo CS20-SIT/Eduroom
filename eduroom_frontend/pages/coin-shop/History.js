@@ -15,7 +15,7 @@ const temp = () => {
 		fetchData()
 	}, [])
 	const renderDetail = () => {
-		return data.length > 0 ? <RightHistory item={data[id]}></RightHistory> : null
+		return data.length > 0 ? <RightHistory item={data[id]}></RightHistory> : <h1>There has nothing in History</h1>
 	}
 	const handleChoose = (idx) => {
 		console.log(idx)
