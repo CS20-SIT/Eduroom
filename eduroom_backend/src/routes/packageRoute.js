@@ -6,6 +6,9 @@ const { uploadToGCSHandler } = require('../middleware/multer')
 const {
 	getCategories,
 	getPackage,
+	getCountCourseInPackage,
+	getCountCourseInstructor,
+	getCourseInPackage,
 	getAllPackage,
 	getCourseFromIds,
 	getPackagesFromIds,
