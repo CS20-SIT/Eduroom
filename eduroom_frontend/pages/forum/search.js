@@ -45,6 +45,7 @@ const Search = () => {
 						handleClick={() => {
 							setDialog(false)
 						}}
+						path={'/forum/search?q='+search}
 					/>
 				) : null}
 				<div style={{ background: '#F4F5F7' }}>

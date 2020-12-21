@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import api from '../../api'
 import style from '../../styles/learningPathStyles/exercise'
+import { createChainedFunction } from '@material-ui/core'
 
 const Exercise = ({ id, nodeID }) => {
 	const [learningPath, setLearningPath] = useState(null)
@@ -12,7 +13,6 @@ const Exercise = ({ id, nodeID }) => {
 		try {
 			const res = await api.get('/api/learningpath/exercise', { params: { nodeID } })
 			setLearningPath(res.data)
-			console.log(res.data)
 		} catch (err) {
 			console.log(err)
 		}
@@ -35,6 +35,15 @@ const Exercise = ({ id, nodeID }) => {
 	const checkAnswer = (e) => {
 		e.preventDefault()
 		setCorrect(text.toLowerCase() === learningPath.answer.toLowerCase())
+	}
+	const handleNext = async () => {
+		try {
+			const body = { nodeid: nodeID, score: 1 }
+			await api.post('/api/learningpath/completeNode', body)
+			router.push(`/learningpath/${id}/${learningPath.nextNode}`)
+		} catch (err) {
+			console.log(err)
+		}
 	}
 	const renderPage = () => {
 		if (!learningPath) return null
@@ -68,7 +77,7 @@ const Exercise = ({ id, nodeID }) => {
 											Check answer
 										</div>
 									</div>
-									<div onClick={() => router.push(`/learningpath/${id}/${learningPath.nextNode}`)}>
+									<div onClick={handleNext}>
 										<div style={{ fontSize: '20px' }} className={`${getNextClass()}`}>
 											Next <i className={`fas fa-chevron-right `} style={{ fontSize: '20px' }}></i>
 										</div>

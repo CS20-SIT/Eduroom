@@ -9,7 +9,7 @@ const page5 = ({pin}) => {
   const fetchData = async () => {
     // let pin = 9513;
     console.log('pin',pin)
-    const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+    const res = await api.get(`/api/kahoot/sessionidAfterStart/${pin}`);
     setSesstionID(res.data.sessionid)
   };
   const fetchDataRank = async () => {

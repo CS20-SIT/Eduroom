@@ -57,7 +57,7 @@ const Content = () => {
                   <Grid item xs={12} >
                     <Paper>
                       <ListItem button onClick={handleClick1}  >
-                        <ListItemText primary={<a className="ad-faq">topic1</a>} />
+                        <ListItemText primary={<a className="ad-faq">Advertisement Cost </a>} />
                         {open1 ? <img src={'https://www.flaticon.com/svg/static/icons/svg/566/566015.svg'} width="18" height="18" /> :
                           <img src={'https://www.flaticon.com/svg/static/icons/svg/566/566014.svg '} width="18" height="18" />}
                       </ListItem>
@@ -65,7 +65,10 @@ const Content = () => {
                     <Collapse in={open1} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         <ListItem className={classes.nested}>
-                          test1
+                          {'<'} 20 days = 50 Baht per day<br></br>
+                          20 {'<'} days {'>='}  60 = 45 Baht per day<br></br>
+                          60 {'<'} days {'>='}  120 = 40 Baht per day<br></br>
+                          120 {'<'} days {'>='}  365 = 30 Baht per day<br></br>
                       </ListItem>
                       </List>
                     </Collapse>
@@ -73,7 +76,7 @@ const Content = () => {
                   <Grid item xs={12} >
                     <Paper>
                       <ListItem button onClick={handleClick2}  >
-                        <ListItemText primary={<a className="ad-faq">topic2</a>} />
+                        <ListItemText primary={<a className="ad-faq">Where are we going to promote your ads ?</a>} />
                         {open2 ? <img src={'https://www.flaticon.com/svg/static/icons/svg/566/566015.svg'} width="18" height="18" /> :
                           <img src={'https://www.flaticon.com/svg/static/icons/svg/566/566014.svg '} width="18" height="18" />}
                       </ListItem>
@@ -81,7 +84,7 @@ const Content = () => {
                     <Collapse in={open2} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         <ListItem className={classes.nested}>
-                          test2
+                          Your ads will be promote everywhere in our website which the content is related to your ads tag.
                       </ListItem>
                       </List>
                     </Collapse>
@@ -89,7 +92,7 @@ const Content = () => {
                   <Grid item xs={12} >
                     <Paper>
                       <ListItem button onClick={handleClick3}  >
-                        <ListItemText primary={<a className="ad-faq">topic3</a>} />
+                        <ListItemText primary={<a className="ad-faq">How many traffics are in our website?</a>} />
                         {open3 ? <img src={'https://www.flaticon.com/svg/static/icons/svg/566/566015.svg'} width="18" height="18" /> :
                           <img src={'https://www.flaticon.com/svg/static/icons/svg/566/566014.svg '} width="18" height="18" />}
                       </ListItem>
@@ -97,14 +100,7 @@ const Content = () => {
                     <Collapse in={open3} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
                         <ListItem className={classes.nested}>
-                         if you would like to see the ad status <br></br>
-                         you need to pay for the ads first.<br></br>
-                         if you would like to see the ad status <br></br>
-                         you need to pay for the ads first.<br></br>
-                         if you would like to see the ad status <br></br>
-                         you need to pay for the ads first.<br></br>
-                         if you would like to see the ad statusif you would like to see the ad statusif you would like to see the ad statusif you would like to see the ad status <br></br>
-                         you need to pay for the ads first.<br></br>
+                       We have 10000 users using our website a day. Your investment will be profit for sure.
                       </ListItem>
                       </List>
                     </Collapse>

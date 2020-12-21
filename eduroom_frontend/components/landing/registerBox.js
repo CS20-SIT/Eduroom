@@ -4,7 +4,7 @@ import UserContext from '../../contexts/user/userContext'
 import InputText from '../utils/InputText'
 import { useRouter } from 'next/router'
 
-const RegisterBox = () => {
+const RegisterBox = ({path ='/',handleSuccess=()=>{}}) => {
 	const [loading, setLoading] = useState(false)
 	const userContext = useContext(UserContext)
 	const { registerUser } = userContext
@@ -84,7 +84,7 @@ const RegisterBox = () => {
 				formData[el] = temp[el].value
 			})
 			setLoading(true)
-			await registerUser(formData, router)
+			await registerUser(formData, router,path,()=>{handleSuccess()})
 			setLoading(false)
 		}
 		setData(temp)
