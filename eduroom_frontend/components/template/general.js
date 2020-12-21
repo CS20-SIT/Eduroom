@@ -26,12 +26,6 @@ const General = (props) => {
 						min-height: 100vh;
 						background: #F4F5F7;
 					}
-					.background-img {
-						position: fixed;
-						bottom: 0;
-						width: 100vw;
-						z-index: 5;
-					}
 				`}
 			</style>
 		</Fragment>
