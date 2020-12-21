@@ -6,10 +6,21 @@ import CreditBox from './creditBox'
 import PaypalBox from './paypalBox'
 import Button from '@material-ui/core/Button'
 import Country from '../../components/payment/country'
+import { getItems, isInCart, addToCart, removeFromCart } from '../../utils/cart'
 
 const Checkout = () => {
 	const [open, setOpen] = useState(false)
 	const [type, setType] = useState('credit')
+	const [courseCart, setCourseCart] = useState([])
+	const [packageCart, setPackageCart] = useState([])
+	useEffect(() => {
+		const courseInCart = getItems('course')
+		const packageInCart = getItems('package')
+		console.log('course', courseInCart)
+		console.log('package', packageInCart)
+		setCourseCart(courseInCart)
+		setPackageCart(packageInCart)
+	}, [])
 	const handleOpenDialog = (e) => {
 		e.preventDefault()
 		setOpen(true)
@@ -22,9 +33,6 @@ const Checkout = () => {
 	const handleSubmit = () => {
 		console.log(type)
 	}
-	useEffect(() => {
-		console.log(type)
-	}, [type])
 
 	return (
 		<Fragment>
