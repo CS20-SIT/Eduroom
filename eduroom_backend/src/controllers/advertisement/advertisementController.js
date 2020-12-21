@@ -99,7 +99,7 @@ const AddNewAdsBills = async (req, res, next) => {
     for(i = 0 ; i<adlist.length;i++){
         await pool.query(
             "insert into ad_payment(adid, receipt, datetime, amount, paymentstatus) values ($1,'',CURRENT_TIMESTAMP,$2,false);",
-            [adlist[i].adid,adlist[i].price]
+            [adlist[i].adid,adlist[i].amount]
         )
     }
     
@@ -107,17 +107,22 @@ const AddNewAdsBills = async (req, res, next) => {
 }
 const AddAdsTransaction = async (req, res, next) => {
     const adlist = req.body.adlist;
-    
+    let description = new Array(adlist.length);
+    let transactionid = new Array(adlist.length);
     for(i = 0 ; i<adlist.length;i++){
-        let description = 'Ads payment of ad id#'+adlist.rows[i].adid;
-        let transactionid = await pool.query("select uuid_generate_v4()");
+         description[i] = 'Ads payment of ad id#'+adlist[i].adid;
+         transactionid[i] = await pool.query("select uuid_generate_v4() as id");
+         transactionid[i]=transactionid[i].rows[0].id
+         console.log(description[i])
+         console.log(transactionid[i])
+         console.log(adlist[i].amount)
         await pool.query(
-            "insert into financial_transaction(transactionid, amount, description) values ($1,800,'Ads of userid : test')",
-            [transactionid,adlist[i].price,description ]
+            "insert into financial_transaction(transactionid, amount, description) values ($1,$2,$3)",
+            [transactionid[i],adlist[i].amount,description[i] ]
         )
         await pool.query(
             "insert into transaction_ad(transactionid, adid) values ($1,$2)",
-            [transactionid,adlist[i].adid ]
+            [transactionid[i],adlist[i].adid ]
         )
         await pool.query(
             "update ad_payment set receipt = '/receiptimgpath' , datetime=CURRENT_TIMESTAMP , paymentstatus = true where adid = $1",
@@ -137,7 +142,7 @@ const getAdsToBills = async (req, res, next) => {
 
 const getBillAdsTotal = async (req, res, next) => {
     const ownerid = req.user.id;
-    const data = await pool.query("select sum(amount) as totalprice from ad_payment,ad where ad_payment.adid = ad.adid and ownerid = $1 and paymentstatus = false",
+    const data = await pool.query("select TRUNC(sum(amount),2) as totalprice from ad_payment,ad where ad_payment.adid = ad.adid and ownerid = $1 and paymentstatus = false",
         [ownerid])
     const totalBill = data.rows;
     res.send(totalBill);

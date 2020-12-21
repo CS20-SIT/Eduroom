@@ -5,8 +5,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import { useRouter } from 'next/router'
-
-const creditBox = () => {
+import api from "../../../api";
+const creditBox = props => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
 	const [type, setType] = useState('credit')
@@ -34,7 +34,14 @@ const creditBox = () => {
 		e.preventDefault()
 		setOpen(false)
 	}
-	const handleSubmit = () => {
+	const handleSubmit = async  () => {
+		const body = {
+            adlist: props.data
+		}
+		console.log(body)
+        const response = await api.post('/api/ads/AddAdsTransaction', body)
+        console.log("Ho"+response)
+        router.push('/advertisement/adpayment/adconfirmpayment')
 		console.log(type)
 	}
 	useEffect(() => {
