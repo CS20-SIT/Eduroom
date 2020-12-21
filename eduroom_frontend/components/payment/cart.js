@@ -1,7 +1,6 @@
 import { Fragment } from 'react'
 import style from '../../styles/course/cartStyle'
-
-const Cart = ({ data }) => {
+const Cart = ({ data, type, handleRemove }) => {
 	return (
 		<Fragment>
 			<div className="box">
@@ -15,7 +14,9 @@ const Cart = ({ data }) => {
 					</div>
 				</div>
 				<div className="mid">
-					<div className="remove">Remove</div>
+					<div className="remove" onClick={() => handleRemove(type, data.id)}>
+						Remove
+					</div>
 				</div>
 				<div className="right">
 					<p className="price">
