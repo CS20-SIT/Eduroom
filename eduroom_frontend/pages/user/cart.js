@@ -1,17 +1,96 @@
-import React, { Fragment } from 'react'
-import Cart from '../../components/payment/cart'
-import GeneralNoNav from '../../components/template/generalnonav'
-import style from "../../styles/course/cartStyle"
-const checkout = () => {
-    return(
-    <Fragment>  
-        <GeneralNoNav>
-            <div className="bg" >
-                 <Cart />
-            </div>
-        </GeneralNoNav>  
-        <style jsx>{style}</style>   
-    </Fragment>
-    )
+import { Fragment, useEffect, useState } from 'react'
+import General from '../../components/template/general'
+import CartElement from '../../components/payment/cart'
+import { getItems, removeFromCart } from '../../utils/cart'
+import api from '../../api'
+import style from '../../styles/course/cartStyle'
+
+const CartPage = () => {
+	const [cartCourses, setCartCourses] = useState([])
+	const [cartPackages, setCartPackages] = useState([])
+	const [courses, setCourses] = useState([])
+	const [packages, setPackages] = useState([])
+	const fetchCourse = async () => {
+		const courses = getItems('course')
+		const res = await api.get('/api/package/coursesFromIds', {
+			params: { ids: courses },
+		})
+		setCourses(res.data)
+	}
+	const fetchPackages = async () => {
+		const packages = getItems('package')
+		const res = await api.get('/api/package/packagesFromIds', {
+			params: { ids: packages },
+		})
+		setPackages(res.data)
+	}
+	const updateCart = () => {
+		const courses = getItems('course')
+		const packages = getItems('package')
+		setCartCourses(courses)
+		setCartPackages(packages)
+	}
+	useEffect(() => {
+		updateCart()
+	}, [])
+
+	useEffect(() => {
+		fetchCourse()
+	}, [cartCourses])
+
+	useEffect(() => {
+		fetchPackages()
+	}, [cartPackages])
+
+	const removeElement = (type, id) => {
+		removeFromCart(type, id)
+		updateCart()
+	}
+
+	const renderCourses = () => {
+		const arr = courses.map((course, idx) => {
+			return <CartElement data={course} key={idx} type="course" handleRemove={removeElement}></CartElement>
+		})
+		return arr
+	}
+	const renderPackages = () => {
+		const arr = packages.map((myPackage, idx) => {
+			return <CartElement data={myPackage} key={idx} type="package" handleRemove={removeElement}></CartElement>
+		})
+		return arr
+	}
+	return (
+		<Fragment>
+			<General>
+				<div>
+					<h1 className="header">Eduroom Cart</h1>
+					<div className="container">
+						<div className="element">
+							<p className="blue">{courses.length} courses in cart</p>
+							{renderCourses()}
+							<p className="blue">{packages.length} packages in cart</p>
+							{renderPackages()}
+						</div>
+					</div>
+				</div>
+			</General>
+			<style jsx>{`
+				.header {
+					text-align: center;
+					color: #3d467f;
+				}
+				.blue {
+					color: #3d467f;
+				}
+				.container {
+					display: flex;
+					justify-content: center;
+				}
+				.element {
+					width: 80%;
+				}
+			`}</style>
+		</Fragment>
+	)
 }
-export default checkout
+export default CartPage

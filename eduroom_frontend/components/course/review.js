@@ -1,28 +1,56 @@
-import React, { Fragment } from 'react'
-import Post from '../course/postedReviewBox'
-import style from '../../styles/course/review'
+import React, { Fragment, useEffect, useState } from 'react'
 import CommentForPost from './commentForPost'
-import ShowComment from './showComment'
-import {
-	Grid
-  } from "@material-ui/core";
-const review = () => {
+import StudentFeedback from './studentFeedback'
+import PostedReviewBox from './postedReviewBox'
+import api from '../../api'
+const review = (props) => {
+	const [reviewList, setReviewList] = useState([])
+	const [feedback, setFeedback] = useState({
+		average: 5,
+		count: 1,
+		rates: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+	})
+	useEffect(() => {
+		api.get(`/api/review?type=${props.type}&id=${props.id}`).then((res) => {
+			setReviewList(res.data.data)
+			console.log(res.data.rates)
+			setFeedback({ average: res.data.average, count: res.data.count, rates: res.data.rates })
+		})
+	}, [])
 	return (
 		<Fragment>
-			 <div className="box" style={{ display: 'flex', background: 'rgba(255,255,255,.7)'}} >
-				<CommentForPost />
-				</div> 
-				<ShowComment data={[]}/>
+			<div className="box" style={{ display: 'flex', flexFlow: 'column', background: 'rgba(255,255,255,.7)' }}>
+				<CommentForPost type={props.type} id={props.id} />
+				<div style={{ paddingLeft: '2%' }}>
+					<StudentFeedback data={feedback} />
+				</div>
+				<div style={{ marginTop: '30px', marginLeft: '6.7%', marginRight: '5%', marginBottom: '30px' }}>
+					<div
+						style={{
+							width: '1016px',
+							height: '0px',
+							left: '243px',
+							border: '1px solid #7B89DD',
+							backgroundColor: '#7B89DD',
+						}}
+					/>
+					{reviewList.map((el) => {
+						return <PostedReviewBox data={el} />
+					})}
+				</div>
+			</div>
+			{/* <ShowComment data={data} id={props.id}/> */}
+			{/* <ShowComment /> */}
+
 			<style>{`
 			.box{
 				box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
 						background: white;
 						border-radius: 2vh;
 						width: 80vw;
-						height: auto;
+						height: auto;					
 						margin-left: auto;
 						margin-right: auto;
-					   
 						display: flex;
 						justify-content: start;
 						background-color: white;

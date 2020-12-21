@@ -1,9 +1,12 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import style from '../../styles/package/detail'
 import Instructors from '../../components/package/instructorCard'
+import { useRouter } from 'next/router'
+import api from '../../api'
 
-const Package = () => {
-	// const router = useRouter();
+const Package = (props) => {
+	const router = useRouter()
+
 	return (
 		<Fragment>
 			<div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -11,38 +14,81 @@ const Package = () => {
 					<div style={{ display: 'flex', marginLeft: 30, flexDirection: 'column' }}>
 						<h1 className="textHead">Package Detail</h1>
 
-						<div className="text">
-							There are various courses in this package. Learn about the computational language like Python. You can
-							learn from the ground up to the professional level to further your work or study. Of course, within this
-							package, not only theories that are easy to understand from the instructor But there are also practical
-							courses that can be applied in real life or work. You can learn from the ground up to the professional
-							level to further your work or study. Of course, within this package, not only theories that are easy to
-							understand from the instructor But there are also You can learn from the ground up to the professional
-							level to further your work or study. Of course, within this package, not only theories that are easy to
-							understand from the instructor But there are also
-						</div>
+						<div className="text">{props.packages?.detail}</div>
 						<div>
-							<hr style={{ width: 700, justifyContent: 'center', border: '1px solid #7B89DD' }}></hr>
+							<hr style={{ width: '100%', justifyContent: 'center', border: '0.5px solid #7B89DD' }}></hr>
 
 							<div>
-								<h1 className="textHead">Courses in Package</h1>
+								<h1 className="textHead">Course in Package</h1>
 								<div style={{ marginBottom: '30px' }}>
-									<div style={{ width: '60vw', marginLeft: 40 }}>
-										
-									</div>
+									{props.courseList?.map((c) => {
+										return (
+											<div
+												className="center pdt-20"
+												onClick={() => {
+													router.push(`/course/${c.courseid}`)
+												}}
+											>
+												<div className="courseBox">
+													<div style={{ display: 'flex' }}>
+														<div>
+															<img
+																src={c.coursepicture}
+																width="130px"
+																height="80px"
+																style={{ marginRight: 30, marginTop: 5 }}
+															></img>
+														</div>
+														<div>
+															<div className="coursename">{c.coursename}</div>
+															<div className="instructor2">{`${c.firstname}` + '  ' + `${c.lastname}`}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										)
+									})}
 								</div>
 							</div>
-							<hr style={{ width: 700, justifyContent: 'center', border: '1px solid #7B89DD' }}></hr>
+							<hr style={{ width: '100%', justifyContent: 'center', border: '0.5px solid #7B89DD' }}></hr>
 							<div>
-								<h1 className="textHead"> Instructors</h1>
+								<h1 className="textHead">Instructor</h1>
 							</div>
-							<div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
-								<Instructors />
-								<Instructors />
-								<Instructors />
-							</div>
+							{/* instroctorCard */}
+							{props.instructorList?.map((il) => {
+								return (
+									<div className="bigDiv">
+										<div style={{ fontSize: 10 }}>
+											<div style={{ display: 'flex', justifyContent: 'center' }}>
+												<div className="col-6">
+													<img
+														src={il.avatar}
+														className="google-logo"
+														style={{ width: 100, height: 100, marginRight: 40 }}
+													/>
+												</div>
+												<div>
+													<div className="instname">{`${il.firstname}` + '  ' + `${il.lastname}`}</div>
+													<div style={{ fontSize: 15, marginBottom: 15 }}>Massachusetts Institute of Technology</div>
+													<div style={{ display: 'flex', flexDirection: 'row' }}>
+														<div className="col-6">
+															<img
+																src="/images/package/book.svg"
+																className="google-logo"
+																style={{ width: 25, height: 30, margin: '0 10px 5px 0' }}
+															/>
+														</div>
+														<div className="col-6" style={{ display: 'flex', fontSize: 13, paddingTop: 7 }}>
+															{il.count} courses
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								)
+							})}
 						</div>
-						{/* </div> */}
 					</div>
 				</div>
 			</div>

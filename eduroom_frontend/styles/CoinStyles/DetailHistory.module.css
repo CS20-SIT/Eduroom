@@ -12,8 +12,8 @@
 }
 .title {
 	position: relative;
-	top: -40%;
-	margin-left: 50%;
+	top: -50%;
+	margin-left: 55%;
 	font-size: 40px;
 }
 .container {
@@ -28,8 +28,8 @@
 .btn {
 	/* margin-top: 50px; */
 	position: relative;
-	top: -40%;
-	left: 46%;
+	top: -45%;
+	left: 55%;
 	padding: 10px 70px;
 	background-color: #a880f7;
 	border: none;
@@ -43,8 +43,7 @@
 .pic {
 	position: relative;
 	top: 12%;
-	left: -3%;
+	left: 8%;
 	padding: 0%;
-	width: 60%;
 	height: 60%;
 }

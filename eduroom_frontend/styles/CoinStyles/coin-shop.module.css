@@ -13,12 +13,13 @@
 	background-color: #a880f7;
 	border: none;
 	color: white;
-	display: inline-block;
 	text-align: center;
-	font-size: 22px;
-	border-radius: 12px;
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	font-size: 15px;
+	border-radius: 50px;
 	cursor: pointer;
+	position: absolute;
+	left:18%;
+	top:45%;
 }
 .top {
 	padding-top: 100px;
@@ -27,7 +28,7 @@
 	position: absolute;
 	top: 72vh;
 	left: 70%;
-	z-index: 10000;
+	z-index: 1;
 }
 .animation2 {
 	animation-name: MoveIn;
@@ -96,7 +97,7 @@
 	position: absolute;
 	top: 62.8%;
 	left: 30%;
-	z-index: 100000;
+	z-index: 1;
 }
 .text {
 	position: absolute;
