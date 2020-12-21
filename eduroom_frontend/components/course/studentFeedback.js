@@ -26,62 +26,62 @@ const studentFeedback = (props) => {
 					</Grid>
 				</Grid>
 				<Grid item xs={6}>
-					<div class="bar-container">
-						<div class="bar-5"></div>
+					<div className="bar-container">
+						<div className="bar-5"></div>
 					</div>
 
-					<div class="bar-container">
-						<div class="bar-4"></div>
+					<div className="bar-container">
+						<div className="bar-4"></div>
 					</div>
-					<div class="bar-container">
-						<div class="bar-3"></div>
+					<div className="bar-container">
+						<div className="bar-3"></div>
 					</div>
-					<div class="bar-container">
-						<div class="bar-2"></div>
+					<div className="bar-container">
+						<div className="bar-2"></div>
 					</div>
-					<div class="bar-container">
-						<div class="bar-1"></div>
+					<div className="bar-container">
+						<div className="bar-1"></div>
 					</div>
 				</Grid>
 				<Grid item xs={2}>
 					<div className="rateSet" style={{ marginTop: '-3px', marginBottom: '14px' }}>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
 						{parseInt((props.data.rates[5] * 100) / props.data.count)}%
 					</div>
 					<div className="rateSet" style={{ marginBottom: '14px' }}>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star unchecked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star unchecked"></span>
 						{parseInt((props.data.rates[4] * 100) / props.data.count)}%
 					</div>
 					<div className="rateSet" style={{ marginBottom: '14px' }}>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star unchecked"></span>
-						<span class="fa fa-star unchecked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star unchecked"></span>
+						<span className="fa fa-star unchecked"></span>
 						{parseInt((props.data.rates[3] * 100) / props.data.count)}%
 					</div>
 					<div className="rateSet" style={{ marginBottom: '14px' }}>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star unchecked"></span>
-						<span class="fa fa-star unchecked"></span>
-						<span class="fa fa-star unchecked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star unchecked"></span>
+						<span className="fa fa-star unchecked"></span>
+						<span className="fa fa-star unchecked"></span>
 						{parseInt((props.data.rates[2] * 100) / props.data.count)}%
 					</div>
 					<div className="rateSet">
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star unchecked"></span>
-						<span class="fa fa-star unchecked"></span>
-						<span class="fa fa-star unchecked"></span>
-						<span class="fa fa-star unchecked"></span>
+						<span className="fa fa-star checked"></span>
+						<span className="fa fa-star unchecked"></span>
+						<span className="fa fa-star unchecked"></span>
+						<span className="fa fa-star unchecked"></span>
+						<span className="fa fa-star unchecked"></span>
 						{parseInt((props.data.rates[1] * 100) / props.data.count)}%
 					</div>
 				</Grid>
