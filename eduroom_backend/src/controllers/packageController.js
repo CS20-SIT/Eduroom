@@ -46,15 +46,12 @@ exports.deletePackage = async (req, res, next) => {
 exports.getPackage = async (req, res, next) => {
 	try {
 		const id = req.query.packageid
-		const data1 = await pool.query(
-			`select p.packageid, packagename, i.instructorid,firstname,lastname ,p.discount,p.detail,p.image,sum(price)*((100-p.discount)/100) as price
-		, sum(price) as oldprice,cateid
-		from package p, instructor i,package_courses pc, course c, user_profile up
+		const data1 = await pool.query(`select p.packageid, packagename, i.instructorid,firstname,lastname ,p.discount,p.detail,p.image,sum(price)*((100-p.discount)/100) as price
+		, sum(price) as oldprice, p.cateid, cate_name
+		from package p, instructor i,package_courses pc, course c, user_profile up, package_category pcat
 		where p.instructorid=i.instructorid and p.packageid = pc.packageid and pc.courseid=c.courseid
-		  and i.userid = up.userid and p.packageid = $1
-		group by p.packageid,i.instructorid,firstname,lastname`,
-			[id]
-		)
+		  and i.userid = up.userid and p.cateid = pcat.cateid and p.packageid = $1
+		group by p.packageid,i.instructorid,firstname,lastname, cate_name`, [id])
 
 		const data3 = await pool.query(
 			`select pc.courseid, coursename, firstname, lastname,c.coursepicture, up.avatar

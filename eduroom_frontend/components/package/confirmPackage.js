@@ -74,7 +74,7 @@ const ConfirmPackage = ({ myPackage, changePage }) => {
 							฿<span>{getTotalPrice(totalPrice)}</span>
 						</div>
 						<div style={{ marginLeft: '20px' }}>
-							(<span style={{ textDecoration: 'line-through' }}>฿{totalPrice}</span>)
+							(<span style={{ textDecoration: 'line-through' }}>${totalPrice}</span>)
 						</div>
 					</div>
 					<div className="category">{myPackage.categoryText}</div>
