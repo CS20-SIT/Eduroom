@@ -299,3 +299,14 @@ exports.DeleteCourse = async (req, res, next) => {
 		return next(new ErrorResponse(err, 500))
 	}
 }
+
+exports.UpdateBio = async (req, res) => {
+	try {
+		const { bio } = req.body
+		const instructorid = req.user.instructor
+		await pool.query('UPDATE instructor SET biography = $1 where instructorid = $2', [bio, instructorid])
+		res.status(201).send({ success: true })
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
