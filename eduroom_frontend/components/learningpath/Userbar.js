@@ -1,5 +1,4 @@
 import { Fragment, useState } from 'react'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 
 const UserBar = ({ user, numUser, achievement }) => {
