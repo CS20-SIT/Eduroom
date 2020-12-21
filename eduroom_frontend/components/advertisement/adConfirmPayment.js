@@ -1,12 +1,74 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/advertisement/ads';
-import { Button, Slide, DialogTitle, DialogContentText, DialogContent, DialogActions, Paper, Grid, Dialog, Link } from '@material-ui/core'
+import { Button, withStyles, InputBase, Slide, DialogTitle, DialogContentText, DialogContent, DialogActions, Paper, Grid, Dialog, Link } from '@material-ui/core'
 import General from '../template/general'
 import { makeStyles } from '@material-ui/core/styles'
 import { useRouter } from 'next/router';
+import { pink } from '@material-ui/core/colors';
+import Radio from '@material-ui/core/Radio';
+import Checkout from './adPaymentDetail'
+
+const PinkRadio = withStyles({
+    root: {
+        color: [pink][100],
+        '&$checked': {
+            color: pink[300],
+        },
+    },
+    checked: {},
+})((props) => <Radio color="default" {...props} />);
 
 
 import api from "../../api";
+const BootstrapInput = withStyles((theme) => ({
+    root: {
+        'label + &': {
+            marginTop: theme.spacing(3),
+        },
+    },
+    input: {
+        borderRadius: 0,
+        position: 'relative',
+        backgroundColor: theme.palette.background.paper,
+        border: '0px solid #ced4da',
+        fontSize: 16,
+        padding: '10px 26px 10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+        // Use the system font instead of the default Roboto font.
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+        '&:focus': {
+            borderRadius: 0,
+        },
+    },
+}))(InputBase)
+
+const useStyles = makeStyles({
+    root: {
+        minWidth: 275,
+    },
+    bullet: {
+        display: 'inline-block',
+        margin: '0 2px',
+        transform: 'scale(0.8)',
+    },
+    title: {
+        fontSize: 14,
+    },
+    pos: {
+        marginBottom: 12,
+    },
+})
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -15,18 +77,18 @@ const Total = props => {
     const router = useRouter();
     const handleSubmit = async () => {
         const body = {
-            adlist : props.listads
-            
+            adlist: props.listads
+
         }
         const response = await api.post('/api/ads/AddNewAdsBills', body)
         console.log(response)
         router.push('/advertisement/adpayment/adconfirmpayment')
-       
+
 
     }
     return (
         <div>
-            <Paper style={{ margin: '5% 5% 5% 25%', height: '150px', width: '45%', padding: '17px', paddingTop: '15px', position: 'absolute', background: 'rgba(255, 255, 255, 0.7)', borderRadius: '10px' }}>
+            <Paper style={{ margin: '5% 5% 5% 25%', height: '150px', width: '45%', padding: '17px', paddingTop: '15px', position: 'relative', background: 'rgba(255, 255, 255, 0.7)', borderRadius: '10px' }}>
                 <Grid container spacing={'2'}>
                     <Grid item xs={'1'}>
                         <a className="ad-owner">Total:</a>
@@ -122,60 +184,12 @@ const Box = props => {
     )
 }
 const Content = () => {
-
-    const [data, setData] = useState([]);
-    const [total, setTotal] = useState([]);
-    const [count, setCount] = useState([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await api.get('/api/ads/getAdstoPay');
-            console.log(res.data);
-            setData(res.data);
-            const res2 = await api.get('/api/ads/getTotalAdsPrice');
-            console.log(res2.data[0]);
-            setTotal(res2.data[0].totalprice);
-            setCount(res2.data[0].count);
-        };
-        fetchData();
-    }, []);
-    const arr = data.map((data, index) => {
-        return (
-            <div key={data.adid}>
-                <Box adid={data.adid}
-                    adtype={data.adtype}
-                    index={index}
-                    adstarttime={data.adstarttime}
-                    firstname={data.firstname}
-                    lastname={data.lastname}
-                    adexpiretime={data.adexpiretime}
-                    img={data.filelocation}
-                    price={data.price}
-                ></Box>
-            </div>
-        )
-    })
+    
     return (
         <Fragment>
             <General>
-                <div style={{ backgroundImage: `url('/images/big-bg.svg')`, backgroundSize: 'cover', paddingTop: '3%', height: '100%' }} >
-                    <div className="ad-ad-header" style={{ paddingTop: '50px', paddingBottom: '40%' }}>
-                        <center style={{ paddingBottom: '5%' }}>EDUROOM CART</center>
-                        <Link href="../advertisement/adinform"><Paper style={{
-                            marginLeft: "40%", padding: " 0.5% 0% 0.5% 1.5%",
-                            borderRadius: "10px",
-                            width: "17%"
-                        }}>create new ADs</Paper></Link>
-                        {arr}
-                        <Total totalPrice={total} listads={data}
-                            numberOfads={count}></Total>
-                        <div style={{ backgroundImage: "url('/images/ads/shopping.svg')", backgroundSize: 'auto', height: '1200px', width: '800px', backgroundRepeat: 'no-repeat', marginLeft: '40%' }}></div>
-                    </div>
-                </div>
-                <style jsx>
-                    {style}
-                </style>
+               <Checkout/>
             </General>
-
         </Fragment>
     )
 }

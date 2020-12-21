@@ -127,4 +127,20 @@ const AddAdsTransaction = async (req, res, next) => {
     
     res.send({ success: true })
 }
-module.exports = { AddNewAdsBills,AddAdsTransaction,getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds } 
+const getAdsToBills = async (req, res, next) => {
+    const ownerid = req.user.id;
+    const data = await pool.query("select ad_payment.adid,TRUNC(amount,2) as amount from ad_payment,ad where ad_payment.adid = ad.adid and ownerid = $1 and paymentstatus = false",
+        [ownerid])
+    const adsBill = data.rows;
+    res.send(adsBill);
+};
+
+const getBillAdsTotal = async (req, res, next) => {
+    const ownerid = req.user.id;
+    const data = await pool.query("select sum(amount) as totalprice from ad_payment,ad where ad_payment.adid = ad.adid and ownerid = $1 and paymentstatus = false",
+        [ownerid])
+    const totalBill = data.rows;
+    res.send(totalBill);
+};
+
+module.exports = { getBillAdsTotal,getAdsToBills,AddNewAdsBills,AddAdsTransaction,getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds } 
