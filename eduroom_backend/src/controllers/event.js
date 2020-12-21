@@ -32,7 +32,6 @@ exports.getEventbyDate = async (req, res, next) => {
      ',
 			[data.date, user.id]
 		)
-		console.log(data2.rows);
 
 		const data3 = await pool.query(
 			'select title,startdate,enddate,starttime,endtime,place from global_event where global_event.startdate <= $1 \
@@ -40,7 +39,6 @@ exports.getEventbyDate = async (req, res, next) => {
 			[data.date]
 		)
 
-	
 		res.status(200).json({ success: true, data: events, own: data2.rows, global: data3.rows })
 		return
 	} catch (err) {
@@ -53,7 +51,6 @@ exports.getEventInMonthYear = async (req, res, next) => {
 	const { m, y } = req.query
 
 	if (user) {
-		console.log(user)
 		// need to have more check that user has this event
 		const events = []
 		const data = await pool.query(
@@ -142,8 +139,6 @@ exports.createEvent = async (req, res, next) => {
 			userid,
 		])
 		const instructorid = temp.rows[0].instructorid
-		console.log(req.body)
-		console.log(req.user.id)
 		const data = await pool.query(
 			'insert into course_event(title,courseid, startdate, enddate, starttime, endtime, detail, place, instructorid) values ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
 			[title, courseid, startdate, enddate, starttime, endtime, detail, place, instructorid]
@@ -157,7 +152,6 @@ exports.createEvent = async (req, res, next) => {
 		)
 
 		tempMail.rows.forEach((t) => {
-			console.log(t)
 			sendEmail({ email: t.universityemail, subject: title, message: detail })
 		})
 
@@ -176,14 +170,12 @@ exports.createEvent = async (req, res, next) => {
 
 exports.dEvent = async (req, res, next) => {
 	const id = req.query.id
-	console.log(id)
 	await pool.query(`DELETE FROM course_event WHERE eventid = '${id}'`)
 	res.send({ success: true })
 }
 exports.getEvent = async (req, res, next) => {
 	const id = req.query.id
 	const result = await pool.query(`select * from course_event where eventid = ${id}`)
-	console.log('data is ', result.rows[0])
 	result.rows[0].startdate = result.rows[0].startdate.toISOString().slice(0, 10)
 	result.rows[0].enddate = result.rows[0].enddate.toISOString().slice(0, 10)
 
@@ -198,7 +190,6 @@ exports.eEvent = async (req, res, next) => {
 	const starttime = req.body.starttime
 	const detail = req.body.detail
 	const place = req.body.place
-	console.log(id)
 	await pool.query(
 		'update course_event \
                     set (title,startdate,enddate,endtime,starttime,detail,place)=($1,$2,$3,$4,$5,$6,$7) \
@@ -220,23 +211,10 @@ exports.createAdminEvent = async (req, res, next) => {
 		const detail = req.body.description
 		const place = req.body.place
 		const adminid = req.user.id
-		console.log(req.body)
-		console.log(req.user.id)
 		const data = await pool.query(
 			'insert into global_event(title, startdate, enddate, starttime, endtime, detail, place, adminid)  values ($1,$2,$3,$4,$5,$6,$7,$8)',
 			[title, startdate, enddate, starttime, endtime, detail, place, adminid]
 		)
-
-		//--------------------sendMail------------------------------
-		//getEmail
-		/* const tempMail = await pool.query("select distinct universityemail from user_student_verification as v,user_mycourse as mc where courseid = $1 and v.userid = mc.userid ;", [courseid])
-
-	tempMail.rows.forEach((t) => {
-	  console.log(t)
-	  sendEmail({ email: t.universityemail, subject: title, message: detail, })
-	}); */
-
-		//----------------------------------------------------------
 
 		const event = data.rows[0]
 		res.status(200).json({
@@ -251,14 +229,12 @@ exports.createAdminEvent = async (req, res, next) => {
 
 exports.dAdminEvent = async (req, res, next) => {
 	const id = req.query.id
-	console.log(id)
 	await pool.query(`DELETE FROM global_event WHERE eventid = '${id}'`)
 	res.send({ success: true })
 }
 exports.getAdminEvent = async (req, res, next) => {
 	const id = req.query.id
 	const result = await pool.query(`select * from global_event where eventid = ${id}`)
-	console.log('data is ', result.rows[0])
 	result.rows[0].startdate = result.rows[0].startdate.toISOString().slice(0, 10)
 	result.rows[0].enddate = result.rows[0].enddate.toISOString().slice(0, 10)
 
@@ -273,7 +249,6 @@ exports.eAdminEvent = async (req, res, next) => {
 	const starttime = req.body.starttime
 	const detail = req.body.detail
 	const place = req.body.place
-	console.log(req.body)
 	await pool.query(
 		'update global_event \
                     set (title,startdate,enddate,endtime,starttime,detail,place)=($1,$2,$3,$4,$5,$6,$7) \
