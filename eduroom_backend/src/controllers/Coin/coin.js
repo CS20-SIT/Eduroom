@@ -179,7 +179,7 @@ exports.addReduceTransOwner = async (req, res) => {
 exports.checkStickerOwner =async (req,res) => {
     try{
         const userId='db29433b-e05d-41ab-854b-b6f8023464f6'
-        const stickerId= req.body.stickerid
+        const stickerId= req.query.stickerid
         const getStickerOwner= await pool.query(`SELECT * FROM sticker_owner WHERE 
         userid='${userId}' AND stickerid=${stickerId};`)
         if(getStickerOwner.rowCount === 0 ){
@@ -195,6 +195,7 @@ exports.buySticker = async (req, res) => {
     try {
         const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
         const stickerId = req.body.stickerId
+        console.log(req.body)
         const getCoinSticker = await pool.query(`SELECT stickerprice FROM sticker_all WHERE stickerid=${stickerId};`)
         if (getCoinSticker.rowCount === 0) {
             const error = {
