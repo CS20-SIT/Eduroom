@@ -152,6 +152,7 @@ exports.resendVerify = async(req,res,next) => {
 	try {
 		const user = req.user;
 		if(user){
+			const userProfile = await pool.query("SELECT email FROM local_auth WHERE userid =$1",[user.id])
 			const verifyToken = crypto.randomBytes(20).toString('hex')
 			const checkVerify = await pool.query("SELECT token FROM user_verification WHERE userid=$1",[user.id])
 			if(checkVerify.rowCount > 0){
@@ -163,16 +164,19 @@ exports.resendVerify = async(req,res,next) => {
 			}
 			const htmlMessage = verifyTemplate(verifyToken)
 			const emailOptions = {
-				email: user.email,
+				email: userProfile.rows[0].email,
 				subject: 'Eduroom Email Verification',
 				htmlMessage,
 			}
 		
 			await sendEmail(emailOptions)
+			res.status(201).json({success:true})
+			return
 		} else {
 			return next(new ErrorResponse("Please login before resend verification",401))
 		}
 	} catch(err){
+		console.log(err)
 		return next(new ErrorResponse("Cannot Resend Verify Email",400))
 	}
 }
