@@ -3,6 +3,7 @@ const router = express.Router()
 const mockup = require('../controllers/Chat/chatMockupData')
 const chat = require('../controllers/Chat/chatController')
 const {jwtAuthenicate} = require('../middleware/jwtAuthenticate')
+const {uploadToGCSHandler} = require('../middleware/multer')
 
 router.get('/getChatlist', jwtAuthenicate,chat.getChatlist) //check
 router.get('/getInvitationList',jwtAuthenicate, chat.getInvitationList) //check
@@ -20,6 +21,14 @@ router.get('/sendMessage',jwtAuthenicate,chat.sendMessage) //check
 router.get('/unsendMessage',jwtAuthenicate,chat.unsendMessage) //check
 router.get('/changeThemeColor',jwtAuthenicate,chat.changeThemeColor) //check
 router.get('/changeChatRoomName',jwtAuthenicate,chat.changeChatRoomName) //check
+router.get('/getUserProfileFromID',jwtAuthenicate,chat.getUserProfileFromID) //check
+router.get('/createGroupChat',jwtAuthenicate,chat.createGroupChat) //check
+router.get('/readMessage',jwtAuthenicate,chat.readMessage) //check
+router.post('/uploadpic',uploadToGCSHandler('chat_profile/'), chat.uploadPic) //check
+router.get('/changeChatRoomProfilePicture',jwtAuthenicate,chat.changeChatRoomProfilePicture) //check
+router.get('/addChatRoomMember',jwtAuthenicate,chat.addChatRoomMember) //check
+router.get('/deleteMember',jwtAuthenicate,chat.deleteMember) //check
+
 
 
 //Mockup

@@ -17,7 +17,22 @@ console.log('user connected');
 		//read message
 		client.join(room)
 	})
+	client.on("leaveRoom",(room)=>{
+		client.leave(room)
+	})
 	client.on("sendMessage",(room)=>{
-		io.in(room).emit('recieveMessage')
+		io.in(room).emit('recieveMessage',room)
+	})
+	client.on("unsendMessage",(room)=>{
+		io.in(room).emit('recieveUnsendMessage',room)
+	})
+	client.on("changeChatRoomName",(room)=>{
+		io.in(room).emit('recieveChangeChatRoomName',room)
+	})
+	client.on("readMessage",(room)=>{
+		io.in(room).emit('recieveReadMessage',room)
+	})
+	client.on("changeProfilePic",(room)=>{
+		io.in(room).emit('recieveChangeProfilePic',room)
 	})
 });

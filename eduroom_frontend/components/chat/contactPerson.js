@@ -11,15 +11,16 @@ import socketIOClient from "socket.io-client";
 export default function chatContact(props) {
 	const [contact, setContact] = useState(props.contact)
 	const [chatRoomProfilePicture, setChatRoomProfilePicture] = useState(null)
+	const [disableClick,setDisableClick] = useState(false)
 	const [dotdotStyle, setDotdotStyle] = useState({ visibility: 'hidden' })
-	const [dropDownStyle, setDropDownStyle] = useState({ visibility: 'hidden' })
+	const [dropDownStyle, setDropDownStyle] = useState({ visibility: 'hidden'})
 	const [style, setStyle] = useState({})
 
 	const joinSocketRoom = () =>{
-		const socket = socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
-			path: "/socket-chat",
-		  });
-		socket.emit('joinRoom',contact.chatRoomID)
+		// const socket = socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
+		// 	path: "/socket-chat",
+		//   });
+		// socket.emit('joinRoom',contact.chatRoomID)
 	}
 
 	const getChatRoomProfilePicture = async () => {
@@ -62,8 +63,10 @@ export default function chatContact(props) {
 			<div
 				className="chatBox"
 				onClick={() => {
-					props.onClick()
-					joinSocketRoom()
+					if(!disableClick){
+						props.onClick()
+						joinSocketRoom()
+					}
 				}}
 				style={style}
 				onMouseOver={() => {
@@ -102,9 +105,11 @@ export default function chatContact(props) {
 						style={{ position: 'relative', display: 'inline-block' }}
 						onMouseOver={() => {
 							setDropDownStyle({})
+							setDisableClick(true)
 						}}
 						onMouseLeave={() => {
 							setDropDownStyle({ visibility: 'hidden' })
+							setDisableClick(false)
 						}}
 					>
 						<DotDotIcon style={dotdotStyle} />
