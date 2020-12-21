@@ -3,7 +3,7 @@ import Image from 'next/image'
 import api from '../../api'
 import UserContext from '../../contexts/user/userContext'
 import AuthDialog from '../../components/landing/authDialog'
-const VerifyAccount = () => {
+const VerifyAccount = ({id}) => {
 	const userContext = useContext(UserContext)
 	const {user} = userContext
 	const [dialog,setDialog] = useState(false)
@@ -17,7 +17,7 @@ const VerifyAccount = () => {
 	return (
 		<Fragment>
 			{
-				dialog ? (<AuthDialog handleClick={()=>setDialog(false)}/>):null
+				dialog ? (<AuthDialog handleClick={()=>setDialog(false)} path={'/verify/'+id}/>):null
 			}
 			<div className="verify-box" style={{backgroundImage:'url(/images/verify/verify-bg.svg)',width:'100vw',height:'100vh',position:'absolute',top:'0',left:'0',backgroundPosition:'center',backgroundSize:'auto',backgroundRepeat:'no-repeat'}}>
 				<div className="verify-text">Try again</div>

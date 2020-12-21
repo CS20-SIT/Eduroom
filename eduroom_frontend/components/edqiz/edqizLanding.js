@@ -60,7 +60,7 @@ const Content = () => {
     <Fragment>
       {
         dialog ? (
-          <AuthDialog handleClick={() => { setDialog(false) }} />
+          <AuthDialog handleClick={() => { setDialog(false) }} path={'/edqiz'} />
         ) : null
       }
       <div className="landing">

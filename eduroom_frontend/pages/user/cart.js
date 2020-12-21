@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import General from '../../components/template/general'
 import CartElement from '../../components/payment/cart'
-import { getItems } from '../../utils/cart'
+import { getItems, removeFromCart } from '../../utils/cart'
 import api from '../../api'
 import style from '../../styles/course/cartStyle'
 
@@ -22,29 +22,38 @@ const CartPage = () => {
 		})
 		setPackages(res.data)
 	}
-	useEffect(() => {
+	const updateCart = () => {
 		const courses = getItems('course')
 		const packages = getItems('package')
 		setCartCourses(courses)
 		setCartPackages(packages)
+	}
+	useEffect(() => {
+		updateCart()
 	}, [])
 
 	useEffect(() => {
 		fetchCourse()
-	}, [courses])
+	}, [cartCourses])
 
 	useEffect(() => {
 		fetchPackages()
-	}, [packages])
+	}, [cartPackages])
+
+	const removeElement = (type, id) => {
+		removeFromCart(type, id)
+		updateCart()
+	}
+
 	const renderCourses = () => {
 		const arr = courses.map((course, idx) => {
-			return <CartElement data={course} key={idx}></CartElement>
+			return <CartElement data={course} key={idx} type="course" handleRemove={removeElement}></CartElement>
 		})
 		return arr
 	}
 	const renderPackages = () => {
 		const arr = packages.map((myPackage, idx) => {
-			return <CartElement data={myPackage} key={idx}></CartElement>
+			return <CartElement data={myPackage} key={idx} type="package" handleRemove={removeElement}></CartElement>
 		})
 		return arr
 	}

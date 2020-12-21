@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import LoginBox from './loginBox'
 import RegisterBox from './registerBox'
 
-const AuthDialog = ({ handleClick }) => {
+const AuthDialog = ({ handleClick,path='/' }) => {
 	const [page, setPage] = useState('login')
 	const getStyle = (text) => {
 		if (page == text) {
@@ -46,12 +46,12 @@ const AuthDialog = ({ handleClick }) => {
 					</div>
 					<div className="auth-box">
 						{page == 'login' ? (
-							<LoginBox />
+							<LoginBox path={path} handleSuccess={handleClick} />
 						) : (
 							<Fragment>
 								<div style={{ display: 'flex', flexFlow: 'column', width: '95%' }}>
 									<div style={{ fontSize: '1.8em', fontWeight: 'bold', color: '#3D467F' }}>SIGN IN</div>
-									<RegisterBox />
+									<RegisterBox path={path} handleSuccess={handleClick}/>
 								</div>
 							</Fragment>
 						)}
