@@ -226,3 +226,24 @@ exports.getPackagesFromIds = async (req, res, next) => {
 		return next(new ErrorResponse(err, 500))
 	}
 }
+
+exports.editPackage = async (req, res, next) => {
+	const temp = req.body
+	const packageid = req.params.id
+	const user = req.user
+	if (user) {
+		await pool.query(`update package set packagename = $1, discount= $2, detail=$3,
+		image = $4, cateid = $5 where packageid = $6`, [
+			temp.new.packagename,
+			temp.new.discount,
+			temp.new.detail,
+			temp.new.image,
+			temp.new.cateid,
+			packageid
+		])
+		res.status(200).json({ success: true })
+		return
+	} else {
+		return next(new ErrorResponse('Unauthorize', 401))
+	}
+}
