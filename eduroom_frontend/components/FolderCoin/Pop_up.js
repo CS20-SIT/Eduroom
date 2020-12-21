@@ -12,7 +12,7 @@ const temp = (props) => {
 	const [status, setStatus] = useState()
 	const getClass = () => {
 		if (status === 'not avaliable') {
-            if(coins>20){
+            if(coins>=20){
                return Styles.btn 
             }else{
                 return Styles.disbtn
@@ -24,7 +24,7 @@ const temp = (props) => {
 	const text = () => {
         console.log(coins);
 			if (status === 'not avaliable') {
-                if(coins>20){
+                if(coins>=20){
                    return 'puchase' 
                 }else{
                     return 'Not Enough Coin'
@@ -52,7 +52,7 @@ const temp = (props) => {
 	}
 	const PopPurchase = () => {
 		if (status === 'not avaliable') {
-            if(coins>20){
+            if(coins>=20){
                setState(true) 
             }else{
                 setState(false)
