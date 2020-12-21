@@ -28,8 +28,8 @@ const Navbar = ({ children, isProtected = false }) => {
 	const gotoProfile = () => {
 		router.push('/user')
 	}
-	const gotoMyCourse = () => {
-		router.push('/user/courses')
+	const gotoCart = () => {
+		router.push('/user/cart')
 	}
 	const gotoWishlist = () => {
 		router.push('/user/wishlist')
@@ -47,11 +47,9 @@ const Navbar = ({ children, isProtected = false }) => {
 									<i className="fas fa-heart"></i>
 								</div>
 							) : null}
-							{user ? (
-								<div className="navItem" onClick={gotoMyCourse} id="cart-btn">
-									<i className="fas fa-shopping-cart" />
-								</div>
-							) : null}
+							<div className="navItem" onClick={gotoCart} id="cart-btn">
+								<i className="fas fa-shopping-cart" />
+							</div>
 							{user ? (
 								<Fragment>
 									<div className="navItem" onClick={gotoProfile}>
