@@ -8,6 +8,7 @@ const CurrentPath = ({ path, back }) => {
 		try {
 			const res = await api.get('/api/learningpath/path', { params: { pathid: path.pathid } })
 			setNodes(res.data.data)
+			console.log(res.data.data)
 		} catch (err) {
 			console.log(err)
 		}

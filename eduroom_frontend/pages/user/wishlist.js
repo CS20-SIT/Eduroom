@@ -3,6 +3,7 @@ import Wishlists from '../../components/user/wishlists';
 import General from '../../components/template/general'
 import axios from 'axios';
 import api from '../../api';
+import { useRouter } from 'next/router'
 // import UserContext from '../../contexts/user/userContext'
 
 
@@ -15,17 +16,21 @@ const Wishlist = () => {
     let order='addtime desc';
     useEffect(()=>{
         const fetchData=async()=>{
-            const res=await api.get('api/user/getWishlist', {
-                params:{
-                    // userid:user,
-                    condition:'',
-                    orderby: 'addtime desc'
-                }
-              });
-            setTotalList(res.data);
+            try{
+                const res=await api.get('api/user/getWishlist', {
+                    params:{
+                        condition:'',
+                        orderby: 'addtime desc'
+                    }
+                  });
+                setTotalList(res.data);
+			} catch (err) {
+				router.push('/login')
+			}
         }
         fetchData();
     },[]);
+    const router = useRouter()
     const[totalList,setTotalList]=useState([]);
     const del=(courseid)=>{
         api.post('api/user/deleteWishlist', {
