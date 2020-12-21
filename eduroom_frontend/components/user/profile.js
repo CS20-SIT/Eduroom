@@ -3,6 +3,7 @@ import Link from 'next/link'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
 import TextField from '@material-ui/core/TextField';
+import UserCourse from './courses'
 import { useRouter } from 'next/router'
 
 const Profile = () => {
@@ -89,10 +90,11 @@ const Profile = () => {
 						</textarea> */}
 						{/* <span>{user.bio ? user.bio : '-'}</span> */}
 					</div>
-					<Link href="/user/courses">
+					{/* <Link href="/user/courses">
 							<button className="btn">MyCourse</button>
-					</Link>
-					{renderRegister()}
+					</Link> */}
+					 {renderRegister()}
+					<UserCourse></UserCourse>
 				</div>
 				<style jsx>{styles}</style>
 			</div>
