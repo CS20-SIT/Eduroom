@@ -28,8 +28,8 @@ const EditForm = () => {
 	const [lastnameError,setLastnameError] = useState(null)
 	const [passwordError,setPasswordError] = useState(null)
 
-	const [newPassword,setNewPassword] = useState(null)
-	const [oldPassword,setOldPassword] = useState(null)
+	const [newPassword,setNewPassword] = useState('')
+	const [oldPassword,setOldPassword] = useState('')
 
 	const [firstname,setFirstname] = useState(null)
 	const [lastname,setLastname] = useState(null)
@@ -58,8 +58,6 @@ const EditForm = () => {
 			} catch (err) {
 				router.push('/login')
 			}
-			// console.log("1"+res.data);
-			// setUser(res.data);
         }
         fetchData();
 	}, [])
@@ -69,95 +67,76 @@ const EditForm = () => {
 		if((''+d).length<2) d='0'+d;
 		return ""+y+"-"+m+"-"+d;
 	}
-	
-	// const handleClick = async (e) => {
-	// 	setLoading(true)
-	// 	try {
-	// 		let formData = { degree: data.degree.value, expert: data.expert.value, bio: data.bio.value }
-	// 		const myForm = new FormData()
-	// 		myForm.append('evidence-degree-1', data.degreePicture)
-	// 		myForm.append('evidence-expert-1', data.expertPicture)
-	// 		const res = await api.post('/api/instructor/upload/evidence', myForm)
-	// 		const degreepath = res.data[0].linkUrl
-	// 		const expertpath = res.data[1].linkUrl
-	// 		formData.degreepath = degreepath
-	// 		formData.expertpath = expertpath
-	// 		handleSubmit(formData)
-	// 	} catch (err) {}
-	// }
 
-	const handleClick = async (e) => {
+	const handleSave = async (e) => {
 		try {
-			console.log("1");
-			const myForm=new FormData();
-			console.log("1.1");
-			myForm.append('avatar',avatar);
-			console.log("1.2");
-			const res=await api.post('/api/user/upload/picture',myForm);
-			console.log("1.3");
-			// setAvatar(res.data[0].linkUrl);
-			console.log(res.data);
-			// handleSave();
-			console.log("1.4");
+			if(firstname!=""&&lastname!=""){
+				const myForm = new FormData()
+				myForm.append('avatar',avatar);
+				const res=await api.post('/api/user/upload/picture',myForm);
+				const avatar= res.data[0].linkUrl
+
+				handleSaveApi();
+			}else{
+				if(firstname==""){
+					setFirstnameError("*require Firstname");
+				}else{
+					setFirstnameError("");
+				}
+				if(lastname==""){
+					setLastnameError("*require Lastname");
+				}else{
+					setLastnameError("");
+				}
+			}
 		} catch (err) {}
 	}
 
-	const handleSave = () => {
-		if(firstname!=""&&lastname!=""){
-			console.log("2");
-			//const myForm=new FormData();
-			//myForm.append('avatar',avatar);
-			//const res=await api.post('/api/user/upload/picture',myForm);
-			api.patch('api/user/postEditProfile', {
-				avatar: avatar,
-				firstname: firstname,
-				lastname: lastname,
-				birthdate: birth,
-				bio: bio
-			}).then(()=>{
-				router.push('/user');
-			});
-		}else{
-			if(firstname==""){
-				setFirstnameError("*require Firstname");
-			}else{
-				setFirstnameError("");
-			}
-			if(lastname==""){
-				setLastnameError("*require Lastname");
-			}else{
-				setLastnameError("");
-			}
-		}
+	const handleSaveApi = () => {
+		api.patch('api/user/postEditProfile', {
+			avatar: avatar,
+			firstname: firstname,
+			lastname: lastname,
+			birthdate: birth,
+			bio: bio
+		}).then(()=>{
+			router.push('/user');
+		});
 	}
+
 	const handleCancel = () => {
 		router.push('/user')
 	}
 	const handleOpen = () => {
 		setOpen(!open);
+		setPasswordError('');
 	}
 
 	const savePassword=async() => {
-		const res=await api.post('api/user/getCheckPassword', {
-			password: oldPassword
-		})
-		if(res.data.match){
-			setPasswordError(null);
-			const res=await api.patch('api/user/postNewPassword', {
-				password: newPassword
-			}).then((e)=>{
-				handleOpen();
-			});
+		// console.log(oldPassword);
+		// return;
+		if(oldPassword!=''){
+			const res=await api.post('api/user/getCheckPassword', {
+				password: oldPassword
+			})
+			if(res.data.match){
+				setPasswordError(null);
+				const res=await api.patch('api/user/postNewPassword', {
+					password: newPassword
+				}).then((e)=>{
+					handleOpen();
+				});
+			}else{
+				setPasswordError('The current password are mismatch');
+			}
 		}else{
-			setPasswordError('The current password are mismatch');
+			setPasswordError('Require current password');
 		}
 	}
 
-	const savePic=(e) => {
-		console.log("save pic");
-		console.log(e.target.target);
-		setAvatar(e.target.target);
-		console.log(avatar);
+	const changePic = (e) => {
+		let newValue = e.target.files[0];
+		setAvatar(newValue);
 	}
 
 	return (
@@ -171,18 +150,15 @@ const EditForm = () => {
 							{/* <i className="fas fa-camera"></i> */}
 						</div>
 						<InputBase
-								accept="image/*"
-								name="imgLocation"
-								fullwidth
-								autofocus
-								type={"file"}
-								placeholder={"attrach your avatar"}
-								inputProps={{'aria-label':'naked'}}
-								onChange={(e) => {
-									console.log(e.target.value);
-									setAvatar(e.target.value);
-								}}
-							/>
+							accept="image/*"
+							name="imgLocation"
+							fullwidth
+							autofocus
+							type={"file"}
+							placeholder={"attrach your avatar"}
+							inputProps={{'aria-label':'naked'}}
+							onChange={changePic}
+						/>
 					</div>
 					<div className="editInfo">
 						<div className="w-100 form-title">General Information</div>
@@ -229,19 +205,6 @@ const EditForm = () => {
 								/>
 						</MuiPickersUtilsProvider>
 						</div>
-
-						{/* <div className="w-100">
-							<Textarea style={{ padding: '18px' }}
-							placeholder="Bio"
-							row="5"
-							defaultValue={bio}
-							value={bio}
-							onChange={(e) => {
-								setBio(e.target.value);
-							}}
-							/>
-						</div> */}
-						
 						<div className="w-100 textfield">
 						<TextField
 							style={{width:'100%'}}
@@ -270,7 +233,7 @@ const EditForm = () => {
 						<div className="w-100 textfield">
 							<TextField style={{ padding: '18px' }}
 								type="password"
-								placeholder="Password"
+								placeholder="Change Password"
 								inputProps={{ readOnly: true }}
 								defaultValue={''}
 								onClick={handleOpen}
@@ -291,7 +254,7 @@ const EditForm = () => {
 						</div> */}
 						<div className="w-100" style={{display:'flex',justifyContent:'center'}}>
 							<span className="pr-1">
-								<button className="user-edit-button" onClick={handleClick}>
+								<button className="user-edit-button" onClick={handleSave}>
 									<a className="user-edit-button-text">Confirm</a>
 								</button>
 							</span>

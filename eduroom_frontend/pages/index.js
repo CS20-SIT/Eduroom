@@ -11,8 +11,8 @@ const Home = () => {
 				<LandingContent />
 			</GeneralTemplate>
 			<div className="BG">
-			<Course/>
-			<Package/>
+				<Course />
+				<Package />
 			</div>
 			<style jsx>{Styles}</style>
 		</Fragment>
