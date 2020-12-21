@@ -26,7 +26,7 @@ const Certificates = () => {
 				handleClick={() => {
 					setDialog(false)
 				}}
-				path={'/forum'}
+				path={'/user/certificates'}
 			/>
 		) : null}
 			<GeneralTemplate>
