@@ -12,7 +12,7 @@ Router.get('/getAllCourse', getAllCourse)
 
 Router.post('/getCourseFromID', getCourseFromID)
 
-Router.get('/getCourseSectionPart', getCourseSectionPart)
+Router.post('/getCourseSectionPart', getCourseSectionPart)
 
 Router.post('/search', searchCourse)
 

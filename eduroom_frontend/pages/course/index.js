@@ -43,7 +43,7 @@ const Course = () => {
               <Link href={`/course`}>
                 <span className='text-lg text-secondary mx-4 font-quicksand pointer'>GENERAL</span></Link>
                 <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MATH</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT & SOFTWARE</span>
+              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT &amp; SOFTWARE</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>DESIGN</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MARKETING</span>
               <span className='text-lg text-secondary mx-4 font-quicksand pointer'>BUSINESS</span>
@@ -54,12 +54,12 @@ const Course = () => {
             <div className='text-center my-10'>
               {courseDes.map((e, index) => (
                 <Link href={`/course/${e.courseid}`}>
-                  <div className='mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer'>
+                  <div className='mx-6 my-6 box-1 inline-block shadow rounded-little-lg pointer hover-grey-bg-white'>
                     <div className="w-full h-60"><img className="pic-1" alt="python" src={`${e.coursepicture}`} width="100%" height="100%"></img></div>
                     <div className="w-full h-40 font-quicksand">
-                      <div className="text-navy text-lg box-left my-4 mx-4 h-20">{e.coursename}</div>
-                      <div className="text-secondary text-md box-left mx-4">{`${e.firstname}` + " " + `${e.lastname}`}</div>
-                      <div className="text-navy text-lg box-left my-1 mx-4">$ {e.price}</div>
+                      <div className="text-navy font-quicksand text-lg box-left my-4 mx-4 h-20">{e.coursename}</div>
+                      <div className="text-secondary font-quicksand text-md box-left mx-4">{`${e.firstname}` + " " + `${e.lastname}`}</div>
+                      <div className="text-navy font-quicksand text-lg box-left my-1 mx-4">$ {e.price}</div>
                     </div>
                   </div>
                 </Link>
