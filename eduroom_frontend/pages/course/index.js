@@ -1,14 +1,22 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import utils from '../../styles/course/utils';
 import GeneralNoNav from '../../components/template/generalnonav';
+import General from '../../components/template/general'
 import Link from 'next/link';
 import SearchBar from '../../components/course/searchBar'
+import CategoryBar from '../../components/course/categoryBar'
+import { useRouter } from 'next/router'
 import Name from '../../components/course/courseRender'
+import Carousel from '../../components/course/carousel'
+import CourseCard from '../../components/course/courseStore'
 
 import api from '../../api'
 
 // const Course = ({ courseDes }) => {
 const Course = () => {
+  const [courseDes, setCourseDes] = useState([])
+  const [category, setCategory] = useState([])
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,41 +25,48 @@ const Course = () => {
       setCourseDes(res.data);
     }
     fetchData()
+
   }, [])
 
-  const [courseDes, setCourseDes] = useState([])
+  useEffect(() => {
+    getCategory()
+  }, [])
+  const getCategory = async () => {
+    const result = await api.get('/api/course/category')
+    setCategory(result.data.category)
+    console.log(result)
+  }
+
 
   return (
     <Fragment>
-      <GeneralNoNav>
-        <div className='bg-little-grey'>
-          <div className='container'>
-
+      <General>
+          <Carousel/>
+        <div className='bg'>
+          <div className='container-1'>
             {/* Search bar and Categories select */}
-            <div className='text-center flex my-6'>
+            <div className='text-center flex my-6 mx-search'>
               <SearchBar />
-              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox' placeholder="category">
-                <option>Category</option>
-                <option>Development</option>
-                <option>Finance</option>
-                <option>Music</option>
+              <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox' 
+                      onChange={ e => router.push('/course/category/'+ e.target.value)}>
+                <option>
+                  Category
+              </option>
+                {category.map((el, idx) => {
+                  return (
+                    <option value={el.value}>
+                      {el.cataname}
+                    </option>
+                  )
+                })}
               </select>
             </div>
 
-            {/* Categories Name */}
-            <div className='text-center categoryTab'>
-              <Link href={`/course`}>
-                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>GENERAL</span></Link>
-                <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MATH</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>IT & SOFTWARE</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>DESIGN</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>MARKETING</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>BUSINESS</span>
-              <span className='text-lg text-secondary mx-4 font-quicksand pointer'>OTHER</span>
-            </div>
+            <CategoryBar current= 'General'/>
 
-            {/* Box of each course */}
-            <div className='text-center my-10'>
+            {/* <CourseCard/> */}
+           <div className="coursecard">Course on Eduroom</div>
+            <div className='text-center my-8'>
               {courseDes.map((e, index) => (
                 <Link href={`/course/${e.courseid}`}>
                   <div className='mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer'>
@@ -65,29 +80,46 @@ const Course = () => {
                 </Link>
               ))}
             </div>
+            
 
           </div>
         </div>
         <style jsx>{utils}</style>
         <style jsx>
           {`
-					.cateBox { 
-						border: none;
+          .container-1{
+            max-width: 87vw;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 4rem 1rem;
+          }
+          .cateBox { 
+            border: none;
             outlined: none;
             padding-left: 15px;
             font-size: 0.8rem;
             width: 250px;
           }
           .categoryTab{
-            margin-top: 3rem;
+			      margin-top: 3rem;
           }
-          // .bg{
-          //   background: #A27CEF;
-          //   opacity: 0.06;
-          // }
-				`}
+          .bg{
+            background: #F9F7FE;
+          }
+          .mx-search{
+            margin-left: 5rem;
+            margin-right: 5rem;
+      
+          }
+          .coursecard{
+            font-weight: 700;
+            font-size: 26px;
+            color:#3D467F;
+            margin: 30px 30px 30px 40px
+          }
+        `}
         </style>
-      </GeneralNoNav>
+      </General>
     </Fragment>
   );
 };
@@ -146,7 +178,6 @@ const Course = () => {
 // }
 
 
-
 export default Course;
 // import React, { Fragment, useState, useEffect } from 'react'
 // import ProductCourse from '../../components/course/courseStore'
@@ -155,23 +186,23 @@ export default Course;
 // import General from '../../components/template/general'
 
 // const packages = () => {
-// 	const [show, setShow] = useState(false)
-// 	return (
-// 		<Fragment>
-// 			<General>
-// 				<div>
-// 					<h1>Test</h1>
-// 				</div>
-// 				<div>
-// 					<div style={{ margin: '10' }}>
-// 						<ProductCourse></ProductCourse>
-// 					</div>
-// 					<div>
-// 						<ProductPackage></ProductPackage>
-// 					</div>
-// 				</div>
-// 			</General>
-// 			<style jsx>{Styles}</style>
-// 		</Fragment>
-// 	)
+//  const [show, setShow] = useState(false)
+//  return (
+//    <Fragment>
+//      <General>
+//        <div>
+//          <h1>Test</h1>
+//        </div>
+//        <div>
+//          <div style={{ margin: '10' }}>
+//            <ProductCourse></ProductCourse>
+//          </div>
+//          <div>
+//            <ProductPackage></ProductPackage>
+//          </div>
+//        </div>
+//      </General>
+//      <style jsx>{Styles}</style>
+//    </Fragment>
+//  )
 // }

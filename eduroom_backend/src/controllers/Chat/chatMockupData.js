@@ -188,7 +188,6 @@ module.exports = {
 		return {
 			chatRoomID: 2,
 			chatRoomName: 'test4',
-			chatRoomProfile:'test.png',
             themeColor: {
                 sendColor:"#EB7DB1",
                 recieveColor:"#5B5B5B",

@@ -38,16 +38,15 @@ const ListPackage = props => {
                 <PackageRender
                     title={item.title}
                     price={item.price}
-                    instructor={item.instructor}
-                    index={index}
                     id={item.id}
+                    image={item.image}
                     infname={item.infname}
                     inlname={item.inlname}
-                    // owner={item.owner}
                     key={item.id}
                 ></PackageRender>
             );
         });
+        
         return (
             <div
                 style={{

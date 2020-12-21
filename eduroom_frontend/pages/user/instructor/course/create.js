@@ -17,6 +17,7 @@ const create = () => {
 		video: '',
 		videoPath: '',
 		subject: '',
+		price: '',
 		sections: [],
 	})
 	const [subjects, setSubjects] = useState([])
@@ -36,10 +37,6 @@ const create = () => {
 		}
 		fetchData()
 	}, [])
-	useEffect(() => {
-		// console.log('data is')
-		// console.log(data)
-	}, [data])
 	const renderPage = () => {
 		switch (page) {
 			case 1:
@@ -50,8 +47,7 @@ const create = () => {
 				return <Page3></Page3>
 		}
 	}
-	const getInfosPath = async (el,data) => {
-		console.log(el)
+	const getInfosPath = async (el, data) => {
 		let sections = data.sections
 		for (let i = 0; i < sections.length; i++) {
 			let section = sections[i]
@@ -68,21 +64,11 @@ const create = () => {
 		data.sections = sections
 		return data
 	}
-	const getBody = () => {
-		let body = { ...data }
-		delete body.picture
-		delete body.video
-		let newSections = body.sections.map((section, idx) => {
-			let newVideos = section.videos.map((video) => {
-				return { path: video.path, name: video.name }
-			})
-			
-		})
-	}
+	
 	const handleNext = async () => {
 		if (page === 3) {
 			//upload file to server
-			let newData = {...data}
+			let newData = { ...data }
 			const pictureFormData = new FormData()
 			pictureFormData.append('course-picture', newData.picture)
 			const pictureLink = await api.post('/api/instructor/upload/picture', pictureFormData)
@@ -93,15 +79,13 @@ const create = () => {
 			let videoLink = await api.post('/api/instructor/upload/sampleVideo', sampleVideoFormData)
 			newData.videoPath = videoLink.data[0].linkUrl
 
-			// console.log('newData is')
-			// console.log(newData)
-			newData = await getInfosPath('videos',newData)
-			newData = await getInfosPath('materials',newData)
+			newData = await getInfosPath('videos', newData)
+			newData = await getInfosPath('materials', newData)
 			console.log('after get path new data is')
 			console.log(newData)
 
 			const res = await api.post('/api/instructor/course', newData)
-			console.log('res is ',res.data)
+			console.log('res is ', res.data)
 			setData({ ...newData })
 		} else {
 			setPage(page + 1)
