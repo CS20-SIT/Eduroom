@@ -217,7 +217,7 @@ const EditForm = () => {
 							style={{width:'100%'}}
 							placeholder="Bio"
 							multiline
-							rows={4}
+							rows={10}
 							defaultValue={bio}
 							value={bio}
 							variant="outlined"
