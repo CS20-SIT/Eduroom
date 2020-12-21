@@ -1,12 +1,24 @@
-import React, { Fragment } from 'react'
+import React, { Fragment,useContext, useState } from 'react'
 import Image from 'next/image'
 import api from '../../api'
+import UserContext from '../../contexts/user/userContext'
+import AuthDialog from '../../components/landing/authDialog'
 const VerifyAccount = () => {
+	const userContext = useContext(UserContext)
+	const {user} = userContext
+	const [dialog,setDialog] = useState(false)
 	const handleResend = () => {
-		api.post('/api/auth/verify/resend')
+		if(user){
+		api.post('/api/auth/verify/resend').catch(()=>{})
+		} else {
+			setDialog(true)
+		}
 	}
 	return (
 		<Fragment>
+			{
+				dialog ? (<AuthDialog handleClick={()=>setDialog(false)}/>):null
+			}
 			<div className="verify-box" style={{backgroundImage:'url(/images/verify/verify-bg.svg)',width:'100vw',height:'100vh',position:'absolute',top:'0',left:'0',backgroundPosition:'center',backgroundSize:'auto',backgroundRepeat:'no-repeat'}}>
 				<div className="verify-text">Try again</div>
 				<div className="verify-image">
