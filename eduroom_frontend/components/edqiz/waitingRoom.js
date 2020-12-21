@@ -10,6 +10,8 @@ const Content = ({ id }) => {
   //mockup data
   const router = useRouter();
   const [kahoot_roomHistory, setHistory] = useState(null);
+  const [session, setSession] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await api.get('/api/kahoot/roomHistory');
@@ -20,8 +22,15 @@ const Content = ({ id }) => {
 
   const handleSubmit = async (body) => {
     const res = await api.post('/api/kahoot/roomHistory', body);
-    console.log(res.data);
+    setSession(res.data.sessionid)
   };
+
+  const handleCloseRoom = async (body) => {
+    if(session!=null){
+    const res = await api.post(`/api/kahoot/closeRoom/${session}`);
+    }
+  };
+
   const [player, setPlayer] = useState([]);
   const [pin, setPin] = useState(null);
   let temppin = 0;
@@ -46,9 +55,9 @@ const Content = ({ id }) => {
       }
     }
     setPin(temppin);
-    console.log('setPin', pin)
   }
   const setRoomOpen = (ppin) => {
+    handleCloseRoom(session)
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
@@ -62,12 +71,8 @@ const Content = ({ id }) => {
       path: "/kahoot",
     });
     const temp = [];
-    console.log('pinResponse', pin)
 
     socket.on("new-name", (namePlayer, pinTemp) => {
-      // if(pin!=null){
-      console.log(namePlayer, pinTemp, temppin)
-      // }
       temp.push([namePlayer, pinTemp]);
       if (temp[temp.length - 1][1] == pin) {
         player.push(temp[temp.length - 1][0]);
@@ -94,12 +99,9 @@ const Content = ({ id }) => {
     randomPin();
   }, [kahoot_roomHistory]);
 
-  //insert to the database
-  console.log('id', id, 'pin:', pin)
   useEffect(() => {
     if (pin != null) {
       const postStatus = { roomid: id.id, pin, isavailable: true }
-      console.log(postStatus);
       handleSubmit(postStatus);
     }
   }, [pin])

@@ -3,16 +3,16 @@ import GeneralNoNav from "../../../../../components/graderCreate/GraderCreateLay
 import GNav from "../../../../../components/graderCreate/GraderCreateLayout/Nav";
 import Gback from "../../../../../components/graderCreate/GraderCreateLayout/Background";
 import ConEdit from "../../../../../components/graderCreate/Contest/Create/CreateForm";
-
+import ProtectedAdminRoute from "../../../../../components/admin/protectedAdminRoute";
 const Info = () => {
   return (
-    <Fragment>
+    <ProtectedAdminRoute>
       <GeneralNoNav>
         <GNav> </GNav>
         <ConEdit />
         <Gback></Gback>
       </GeneralNoNav>
-    </Fragment>
+    </ProtectedAdminRoute>
   );
 };
 

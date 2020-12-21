@@ -1,30 +1,28 @@
-import Styles from '../../styles/package/pShop';
-import { useState, Fragment } from 'react';
+import Styles from '../../styles/package/pShop'
+import { useState, Fragment } from 'react'
+import Link from 'next/link'
 
-const Name = (props) => {
-    const[state,setState] = useState(false);
-    return (
-        <Fragment>
-        <div className="cardContainer">
-            <img src="/images/package/testCard.svg"></img>
-                    <div >
-                        <div className="container">
-
-                            <h1 className="text">
-                                {props.title}
-                            </h1>
-                            <div className="text">
-                                {props.price} $
-                            </div>
-                            <div className="text">
-                                {props.instructor}
-                            </div>                           
-                        </div>
-                    </div>
-        </div>
-    <style jsx>{Styles}</style>
-    </Fragment>
-    )
+const PackageRender = (props) => {
+	const [state, setState] = useState(false)
+	return (
+		<Fragment>
+			<Link href={`/package/${props.id}`}>
+				<div className="cardContainer">
+					<img src={props.image}></img>
+					<div>
+						<div className="container">
+							<h1 className="text">{props.title}</h1>
+							<div className="text">
+								{props.infname} {props.inlname}
+							</div>
+							<div className="text">${props.price}</div>
+						</div>
+					</div>
+				</div>
+			</Link>
+			<style jsx>{Styles}</style>
+		</Fragment>
+	)
 }
 
-export default Name
+export default PackageRender

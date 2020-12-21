@@ -11,6 +11,9 @@ import { useRouter } from "next/router";
 import api from '../../api';
 
 const Content = ({ id }) => {
+  const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+    path: "/kahoot",
+  });
   const router = useRouter();
   const [current, setCurrent] = useState(1);
   const [questionNumber, setquestionNumber] = useState(0);
@@ -19,8 +22,9 @@ const Content = ({ id }) => {
   const [answer, setAnswer] = useState('99');
   const [questionList, setQuestionList] = useState([])
   const [correct, setCorrrect] = useState([])
+  const [skip, setSkip] = useState(false);
 
-  const pin=router.query.id;
+  const pin = router.query.id;
 
   const handleChangeQuestionNumber = (val) => {
     setquestionNumber(val);
@@ -32,13 +36,18 @@ const Content = ({ id }) => {
   useEffect(() => {
     const fetchSession = async () => {
       let pin = router.query.id
-      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
-      // console.log('resdata', res.data)
+      const res = await api.get(`/api/kahoot/sessionidAfterStart/${pin}`);
       setSesstionID(res.data.sessionid)
+     
     };
     fetchSession();
 
   }, []);
+  const handleScoreFirstTime = async () => {
+    const postUpdateScore = { sessionid: sessionid, point: 0 }
+      console.log('postUpdateScore', postUpdateScore)
+      const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
+  };
   useEffect(() => {
     const fetchQuestion = async () => {
       const question = await api.get(`/api/kahoot/question/${sessionid}`);
@@ -46,14 +55,14 @@ const Content = ({ id }) => {
       answerAll.push(question.data.answerAll)
       correct.push(question.data.correct)
     };
-    if (sessionid != null)
+    if (sessionid != null){
       fetchQuestion();
-
+      handleScoreFirstTime()
+    }
   }, [sessionid]);
   useEffect(() => {
-    console.log('datalenght', data1.length)
     if (answerAll[0]) {
-      for (let i =0; i<data1.length; i++)  {
+      for (let i = 0; i < data1.length; i++) {
         let questionTemplate = {
           question: '',
           time: '',
@@ -78,7 +87,9 @@ const Content = ({ id }) => {
   }, [data1, answerAll]);
   useEffect(() => {
   }, [questionList])
- 
+
+
+
   const response = () => {
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
@@ -90,7 +101,7 @@ const Content = ({ id }) => {
       path: "/kahoot",
     });
     socket.on("new-questionNo", (question) => {
-     setquestionNumber(question)
+      setquestionNumber(question)
     });
   };
   const responseTime = (tempAnswer) => {
@@ -98,7 +109,7 @@ const Content = ({ id }) => {
       path: "/kahoot",
     });
     socket.on("sent-seconds", (timeTemp) => {
-      
+
       setTime(timeTemp);
       if (timeTemp == 0) {
         if (tempAnswer == questionList[questionNumber].correct) {
@@ -119,9 +130,9 @@ const Content = ({ id }) => {
       setAnswer('99')
       temp.push([isNext, pin, questionNo]);
       setNextQuestion(temp.slice());
-      let tempq=questionNumber
-      tempq+=1;
-      
+      let tempq = questionNumber
+      tempq += 1;
+
       goto(1);
     });
   };
@@ -138,12 +149,14 @@ const Content = ({ id }) => {
     });
     socket.emit("room", (router.query.id));
     socket.on("get-Nextquestion", (isNext, pin, questionNo) => {
-      if(questionNo<questionList.length){
-      setquestionNumber(questionNo)
-      if(isNext){
-        goto(1)
-      }
-      }else{
+      setAnswer('99')
+      setSkip(false)
+      if (questionNo < questionList.length) {
+        setquestionNumber(questionNo)
+        if (isNext) {
+          goto(1)
+        }
+      } else {
         goto(5);
       }
     })
@@ -151,6 +164,20 @@ const Content = ({ id }) => {
     getQuestionNo();
     responseTime(answer);
   }, [questionNumber]);
+
+  useEffect(() => {
+    socket.emit("room", (router.query.id));
+    socket.on("get-skip", (isSkip) => {
+      setSkip(true)
+    });
+  }, [answer])
+  useEffect(() => {
+    if (skip) {
+      if (answer === '99') {
+        goto(4);
+      }
+    }
+  }, [skip, answer])
   const goto = (val) => {
     setCurrent(val);
   };
@@ -174,25 +201,27 @@ const Content = ({ id }) => {
       case 2:
         return (
           <Page2
-          id={id.id}
+            id={id.id}
             goto={goto}
             data={questionList}
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
             responseNextQuestion={responseNextQuestion}
             answer={answer}
+
           />
         );
       case 3:
         return (
           <Page3
-          id={id.id}
+            id={id.id}
             goto={goto}
             data={questionList}
             questionNumber={questionNumber}
             ChangeQuestionNumber={handleChangeQuestionNumber}
             responseNextQuestion={responseNextQuestion}
             answer={answer}
+            setAnswer={setAnswer}
           />
         );
       case 4:
@@ -207,7 +236,7 @@ const Content = ({ id }) => {
             answer={answer}
           />
         );
-        case 5:
+      case 5:
         return (
           <Page5
             pin={id.id}
@@ -220,7 +249,7 @@ const Content = ({ id }) => {
           />
         );
     }
-  
+
   };
   return (
     <Fragment>
