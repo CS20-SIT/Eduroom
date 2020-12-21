@@ -6,10 +6,10 @@ import InsertEmoticonIcon from './icons/InsertEmoticonIcon'
 
 export default function chatRoomBottomBar(props) {
 	const enter = (e) => {
-			if (e.keyCode === 13) {
-				props.sendMessage()
-			}
+		if (e.keyCode === 13) {
+			props.sendMessage()
 		}
+	}
 
 	return (
 		<>
@@ -24,16 +24,21 @@ export default function chatRoomBottomBar(props) {
 					value={props.message}
 					onChange={(e) => {
 						props.setMessage(e.target.value)
-          }}
-          onKeyDown={(e)=>{
-            enter(e)
-          }}
+					}}
+					onKeyDown={(e) => {
+						enter(e)
+					}}
 					placeholder="Write here..."
 					inputProps={{ 'aria-label': 'description' }}
-          style={{ width: '50%' }}
-          autoComplete="off"
+					style={{ width: '50%' }}
+					autoComplete="off"
 				/>
-				<InsertEmoticonIcon style={{ marginLeft: 15, cursor: 'pointer' }} />
+				<div className="dropdown">
+				    <InsertEmoticonIcon style={{ marginLeft: 15, cursor: 'pointer' }} />
+					<div className="dropdown-content">
+						<p>Hello World!</p>
+					</div>
+				</div>
 				<SendIcon
 					style={{ marginLeft: 15, cursor: 'pointer' }}
 					id="button"
@@ -55,6 +60,30 @@ export default function chatRoomBottomBar(props) {
 					align-items: center;
 					z-index: 1;
 				}
+				.dropdown {
+					position: relative;
+					display: inline-block;
+				  }
+				  
+				  .dropdown-content {
+					display: none;
+					position: absolute;
+					background-color: #f5f5f5;
+					border-radius:10px 10px 0 10px;
+					width: 250px;
+					height:250px;
+					box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+					padding: 12px 16px;
+					!z-index: 1;
+					bottom: 100%; 
+					margin-bottom:10px;
+					right:0;
+					margin-right:5px;
+				  }
+				  
+				  .dropdown:hover .dropdown-content {
+					display: block;
+				  }
 			`}</style>
 		</>
 	)

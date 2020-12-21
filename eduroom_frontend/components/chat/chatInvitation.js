@@ -104,8 +104,8 @@ const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
 												Invited By : {el.invitor}
 											</p>
 										</div>
-										<AcceptIcon style={{ cursor: 'pointer', marginLeft: 'auto' }} onClick={()=>{acceptInvitation(el.invitaionid)}}/>
-										<CancelIcon style={{ cursor: 'pointer' }} onClick={()=>{declineInvitation(el.invitaionid)}}/>
+										<AcceptIcon style={{ cursor: 'pointer', marginLeft: 'auto' }} onClick={()=>{acceptInvitation(el.invitationid)}}/>
+										<CancelIcon style={{ cursor: 'pointer' }} onClick={()=>{declineInvitation(el.invitationid)}}/>
 									</div>
 								)
 							})}

@@ -17,7 +17,7 @@ export default function createChatRoom(props) {
 	const [searchResult, setSearchResult] = useState(null)
 	const [ignoreBlur,setIgnoreBlur] = useState(false)
 	const handleSelect = (el) =>{
-		if(!createGroupForm.members.some(user => user.userID === el.userID)){
+		if(!createGroupForm.members.some(user => user.userid == el.userid)&&el.userid != props.userProfile.userid){
 			setCreateGroupForm({...createGroupForm,members:[...createGroupForm.members,el]})
 		}
 		setSearchResult(null)
@@ -29,12 +29,14 @@ export default function createChatRoom(props) {
 	}
 	const sendCreateRoomForm = async () => {
 		var bodyFormData = new FormData();
-		bodyFormData.append('groupName',createGroupForm.groupName);
 		bodyFormData.append('profilePic', createGroupForm.profilePic);
 		const config = { headers: { 'Content-Type': 'multipart/form-data' }};
-		const res = await api.post(`/api/chat/createGroupChatMockup`,bodyFormData,config)
-		props.handleClose()
-
+		if(createGroupForm.groupName!=null&&createGroupForm.groupName!=""&&createGroupForm.members.length>=1){
+			api.post(`/api/chat/uploadpic`,bodyFormData,config).then(async(re)=>{
+				const res = await api.get(`/api/chat/createGroupChat`,{params:{profilepic:re.data.path,chatroomname:createGroupForm.groupName,members:createGroupForm.members}})
+			props.handleClose()
+			})
+		}
 	}
 	const uploadPic = (e) => {
 		setCreateGroupForm({ ...createGroupForm, profilePic: e.target.files[0] })
@@ -43,6 +45,9 @@ export default function createChatRoom(props) {
 		setSearchResult(null)
 		getSearchResult()
 	},[searchInput])
+	useEffect(()=>{
+		console.log(createGroupForm.members)
+	},[createGroupForm])
 
 	return (
 		<>
@@ -136,18 +141,18 @@ export default function createChatRoom(props) {
 							<div className="memberDiv">
 								<Avatar
 									style={{ width: 35, height: 35 }}
-									alt={el.userFirstName + ' ' + el.userLastName}
-									src={el.userProfile}
+									alt={el.userfirstName + ' ' + el.userlastName}
+									src={el.userprofile}
 								/>
 								<p className="memberName" style={{ color: '#7279A3' }}>
-									{el.userFirstName + ' ' + el.userLastName}
+									{el.userfirstname + ' ' + el.userlastname}
 								</p>
 								<CancelIcon
 									style={{ cursor: 'pointer', marginLeft: 'auto' }}
 									onClick={() => {
 										setCreateGroupForm({
 											...createGroupForm,
-											members: createGroupForm.members.filter((i) => i.userID !== el.userID),
+											members: createGroupForm.members.filter((i) => i.userid != el.userid),
 										})
 									}}
 								/>

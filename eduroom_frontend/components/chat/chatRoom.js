@@ -8,15 +8,15 @@ import style from '../../styles/chat/chat'
 import ChatRoomTopBar from './chatRoomTopBar'
 import ChatRoomBottomBar from './chatRoomBottomBar'
 import api from '../../api'
-import socketIOClient from "socket.io-client";
+import socketIOClient from 'socket.io-client'
 
-let socket;
+let socket
 export default function chatRoom(props) {
 	const [messageDivStyle, setMessageDivStyle] = useState({ marginTop: 60, marginBottom: 100, visibility: 'hidden' })
 	const chatRoom = props.chatRoom
 	const [scrollBarStyle, setScrollBarStyle] = useState('nochat')
 	const [message, setMessage] = useState(null)
-	let collapse = false
+	const [collapse,setCollapse] = useState(false)
 
 	const [smoothScroll, setSmoothScroll] = useState({
 		overflowY: 'scroll',
@@ -28,11 +28,11 @@ export default function chatRoom(props) {
 	})
 	const handleExpand = () => {
 		if (collapse == true) {
-			collapse = false
+			setCollapse(false)
 			chatRoom.setExpandChat({ width: 'calc(75% - 14px)', position: 'relative', marginLeft: 14 })
 			chatRoom.setExpandEdit({ display: 'none' })
 		} else {
-			collapse = true
+			setCollapse(true)
 			chatRoom.setExpandChat({ width: 'calc(50% - 14px)', position: 'relative', marginLeft: 14 })
 			chatRoom.setExpandEdit({ width: '25%' })
 		}
@@ -61,7 +61,7 @@ export default function chatRoom(props) {
 	}
 	const resendMessage = async (mess, index) => {
 		if (mess != '' && mess != null) {
-			const res = await api.get(`/api/chat/sendMessage`,{params:{message:mess,chatroomid:chatRoom.chatroomid}})
+			const res = await api.get(`/api/chat/sendMessage`, { params: { message: mess, chatroomid: chatRoom.chatroomid } })
 			if (res.data.success == true) {
 				props.getChatRoomDetail()
 			} else {
@@ -85,10 +85,11 @@ export default function chatRoom(props) {
 	}
 	const sendMessage = async () => {
 		if (message != '' && message != null) {
-			const res = await api.get(`/api/chat/sendMessage`,{params:{message:message,chatroomid:chatRoom.chatroomid}})
+			const res = await api.get(`/api/chat/sendMessage`, {
+				params: { message: message, chatroomid: chatRoom.chatroomid },
+			})
 			if (res.data.success == true) {
-				props.socket.emit('sendMessage',chatRoom.chatroomid)
-				props.getChatRoomDetail()
+				props.socket.emit('sendMessage', chatRoom.chatroomid)
 			} else {
 				props.chatRoomDetail.message.push({
 					system: false,
@@ -109,15 +110,7 @@ export default function chatRoom(props) {
 		}
 	}
 	useEffect(() => {
-		props.socket.emit('joinRoom',chatRoom.chatroomid)
-		props.socket.on('recieveMessage',()=>{
-		console.log('have got a new message')
-		props.getChatRoomDetail()	
-	})
 		scrollDown()
-		console.log('check')
-		console.log( props.userProfile)
-	
 	}, [])
 	useEffect(() => {
 		setScrollDownStyle({
@@ -145,11 +138,9 @@ export default function chatRoom(props) {
 				style={smoothScroll}
 			>
 				<ChatRoomTopBar
-					chatRoom={{
-						name: props.chatRoomDetail.chatroomname,
-						profilePic: props.chatRoomDetail.chatRoomProfile,
-						handleExpand: handleExpand,
-					}}
+					name={props.chatRoomDetail.chatroomname}
+					profilePic={props.chatRoomDetail.chatRoomProfile}
+					handleExpand={handleExpand}
 				/>
 				<div style={messageDivStyle}>
 					{props.chatRoomDetail.message.map((el) => {
@@ -160,7 +151,12 @@ export default function chatRoom(props) {
 								if (el.error == true) {
 									return (
 										<MessageError
-											message={{ text: el.message, color: props.chatRoomDetail.themeColor.sendcolor, index: el.index,reader:el.reader}}
+											message={{
+												text: el.message,
+												color: props.chatRoomDetail.themeColor.sendcolor,
+												index: el.index,
+												reader: el.reader,
+											}}
 											resendMessage={resendMessage}
 										/>
 									)
@@ -171,10 +167,12 @@ export default function chatRoom(props) {
 												text: el.message,
 												sentTime: el.sendtime,
 												color: props.chatRoomDetail.themeColor.sendcolor,
-												reader:el.reader,
-												messageid:el.messageid
+												reader: el.reader,
+												messageid: el.messageid,
 											}}
 											getChatRoomDetail={props.getChatRoomDetail}
+											chatRoomDetail={props.chatRoomDetail}
+											socket={props.socket}
 										/>
 									)
 								}
@@ -187,7 +185,7 @@ export default function chatRoom(props) {
 											color: props.chatRoomDetail.themeColor.recievecolor,
 											name: el.senderName,
 											profilePic: el.senderprofilepic,
-											reader:el.reader
+											reader: el.reader,
 										}}
 									/>
 								)
