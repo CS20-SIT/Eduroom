@@ -199,7 +199,7 @@ const UseCode = async (req, res, next) => {
 
 }
 
-module.exports = { Upload, CreateCodeForSale,GetDiscountFromCoupon , GetCodeType, UseCode } 
+module.exports = { } 
 const GetDataforTable = async (req, res, next) => {
     const data = await pool.query("select pcode, codetype from promotioncode;")
     const codeData = data.rows;
