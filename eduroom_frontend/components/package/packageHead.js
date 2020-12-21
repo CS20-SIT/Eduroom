@@ -52,6 +52,7 @@ const Package = (props) => {
 			)
 		}
 	}
+	
 	return (
 		<Fragment>
 			<div className="center">
@@ -72,18 +73,6 @@ const Package = (props) => {
 								<div className="old-price">{parseFloat(props.packages?.price).toFixed(2)}</div>
 								<div className="new-price">{props.packages?.oldprice}</div>
 							</div>
-
-							<Button
-								id="wishlist-btn"
-								style={{ marginRight: 20, backgroundColor: '#7B89DD', color: 'white', borderRadius: 10 }}
-								onClick={() => router.push('/user/wishlist')} // link to wishlist
-							>
-								wish list
-								<img
-									src="/images/package/Heart.svg"
-									style={{ width: 20, height: 20, marginLeft: 8, display: 'center' }}
-								/>
-							</Button>
 							{renderButton()}
 						</div>
 						<div style={{ display: 'flex', alignItems: 'center' }}>
