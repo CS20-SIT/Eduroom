@@ -38,10 +38,16 @@ const Content = ({ id }) => {
       let pin = router.query.id
       const res = await api.get(`/api/kahoot/sessionidAfterStart/${pin}`);
       setSesstionID(res.data.sessionid)
+     
     };
     fetchSession();
 
   }, []);
+  const handleScoreFirstTime = async () => {
+    const postUpdateScore = { sessionid: sessionid, point: 0 }
+      console.log('postUpdateScore', postUpdateScore)
+      const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
+  };
   useEffect(() => {
     const fetchQuestion = async () => {
       const question = await api.get(`/api/kahoot/question/${sessionid}`);
@@ -49,9 +55,10 @@ const Content = ({ id }) => {
       answerAll.push(question.data.answerAll)
       correct.push(question.data.correct)
     };
-    if (sessionid != null)
+    if (sessionid != null){
       fetchQuestion();
-
+      handleScoreFirstTime()
+    }
   }, [sessionid]);
   useEffect(() => {
     if (answerAll[0]) {
@@ -170,7 +177,7 @@ const Content = ({ id }) => {
         goto(4);
       }
     }
-  }, [skip,answer])
+  }, [skip, answer])
   const goto = (val) => {
     setCurrent(val);
   };
