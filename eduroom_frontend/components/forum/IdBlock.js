@@ -97,6 +97,7 @@ const IdBlock = () => {
 					handleClick={() => {
 						setDialog(false)
 					}}
+					path={'/forum/'+param}
 				/>
 			) : null}
 			<div className={classes.root}>
