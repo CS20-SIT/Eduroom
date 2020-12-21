@@ -93,6 +93,7 @@ const CreateComment = (props) => {
 					handleClick={() => {
 						setDialog(false)
 					}}
+					path={'/forum/'+props.id}
 				/>
 			) : null}
 			<div className={classes.root}>

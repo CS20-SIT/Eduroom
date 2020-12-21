@@ -47,7 +47,9 @@ exports.getStickers = async (req, res, next) => {
 // };
 exports.packStickerStore = async (req, res) => {
     try {
+        
         const id = req.params.id
+        console.log(id);
         const userId = req.user.id
         const coins = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}';`)
         const packSticker = await pool.query(`SELECT s.stickername, s.stickerimg, s.stickerprice,
@@ -175,11 +177,11 @@ exports.addReduceTransOwner = async (req, res) => {
         errorHandler(error, req, res);
     }
 }
-exports.checkStickerOwner = async (req, res) => {
-    try {
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
-        const stickerId = req.body.stickerid
-        const getStickerOwner = await pool.query(`SELECT * FROM sticker_owner WHERE 
+exports.checkStickerOwner =async (req,res) => {
+    try{
+        const userId=req.user.id
+        const stickerId= req.query.stickerid
+        const getStickerOwner= await pool.query(`SELECT * FROM sticker_owner WHERE 
         userid='${userId}' AND stickerid=${stickerId};`)
         if (getStickerOwner.rowCount === 0) {
             res.send({ sticker: 'not avaliable' })

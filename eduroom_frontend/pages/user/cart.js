@@ -31,11 +31,11 @@ const CartPage = () => {
 
 	useEffect(() => {
 		fetchCourse()
-	}, [courses])
+	}, [cartCourses])
 
 	useEffect(() => {
 		fetchPackages()
-	}, [packages])
+	}, [cartPackages])
 	const renderCourses = () => {
 		const arr = courses.map((course, idx) => {
 			return <CartElement data={course} key={idx}></CartElement>
