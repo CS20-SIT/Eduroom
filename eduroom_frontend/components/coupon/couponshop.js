@@ -1,17 +1,27 @@
-import React, { Fragment,useState } from 'react'
+import React, { Fragment,useState,useEffect } from 'react'
 import { useRouter } from 'next/router'
 import style from '../../styles/coupon/landingCoupon';
 import Image from 'next/image'
 import AllCouponCoin from './AllCouponCoin';
 import AllCouponFestival from './AllCouponFestival';
+import api from '../../api'
 
 
 const CouponShopJa = () => {
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 	  const res = await api.get('/api/coin/codeOfCoin');
+	// 	  setData(res.data);
+	// 	}
+	// 	fetchData()
+	//   }, [])
+
+	//const [data, setData] = useState([]);
 	// const click = () => {
     //         router.push('/coin-shop/StoreSticker');
     // };
 	
-  const data = [
+  const data1 = [
     { title: 'LEARN TO CODE WITH PYTHON', price: 30,owner:'Bill gates', id: 1 ,description:'Coupon discount 10% for course PYTHON' },
     { title: 'LEARN TO CODE WITH JAVA', price: 20,owner:'Donald gates', id: 2,description:'Coupon discount 20% for course JAVA' },
     { title: 'LEARN TO CODE WITH C++', price: 40,owner:'Trump gates', id: 3,description:'Coupon discount 15% for course C++' },
@@ -62,7 +72,7 @@ const data2 = [
 				<button className="btn" onClick={() => router.push('/user/MyCoupon')}>MY COUPON</button>
 			</div>
       <h1 className="color">FOR COIN</h1>
-      <AllCouponCoin item={data}></AllCouponCoin>
+      <AllCouponCoin item={data1}></AllCouponCoin>
 	  <h1 className="color">FESTIVAL COUPON</h1>
 	  <AllCouponFestival item={data2}></AllCouponFestival>
 
