@@ -47,6 +47,18 @@ const Page1 = (props) => {
 							})}
 						</select>
 					</div>
+
+					<div className="text">
+						<div className="title">Price</div>
+						<input
+							name="price"
+							className="textfield"
+							placeholder="Course Price"
+							type="number"
+							value={props.data.price}
+							onChange={(e) => props.handleData({ el: 'price', data: parseFloat(e.target.value) })}
+						></input>
+					</div>
 				</div>
 			</div>
 			<style jsx>{`

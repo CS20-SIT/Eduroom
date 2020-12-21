@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import LearningPath from '../../components/learningpath/LearningPath'
 import GeneralTemplate from '../../components/template/general'
-const Temp = () => {
+const LearningPathPage = () => {
 	return (
 		<Fragment>
 			<GeneralTemplate>
-				<LearningPath/>
+				<LearningPath />
 			</GeneralTemplate>
 			<style jsx>
 				{`
@@ -22,4 +22,4 @@ const Temp = () => {
 		</Fragment>
 	)
 }
-export default Temp
+export default LearningPathPage

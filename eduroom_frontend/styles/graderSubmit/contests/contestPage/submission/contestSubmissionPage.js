@@ -1,4 +1,4 @@
-import css from "styled-jsx/css"
+import css from 'styled-jsx/css'
 export default css`
 .main {
     display: flex;
@@ -33,5 +33,9 @@ export default css`
     height: 76%;
     border-right: 2px solid rgba(91, 91, 91, 0.1);
     border-bottom: 2px solid rgba(91, 91, 91, 0.1);
+  }
+  .submission-list-box {
+    height: 48.5vh;
+    overflow: auto;
   }
 `
