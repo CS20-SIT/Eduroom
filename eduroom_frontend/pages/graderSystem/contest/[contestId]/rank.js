@@ -1,26 +1,29 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import Box from '../../../../components/graderSubmit/Box'
 import Layout from '../../../../components/graderSubmit/Layout'
 import style from '../../../../styles/graderSubmit/contests/contestPage/rank/contestRankPage'
 import ContestLayout from '../../../../components/graderSubmit/contests/ContestLayout'
 import ContestRankList from '../../../../components/graderSubmit/contests/allList/ContestRankList'
+import api from '../../../../api'
 
-const contestRank = () => {
-	const [id, setId] = useState(null)
-	const router = useRouter()
+const contestRank = ({ contestId }) => {
+	const [data, setData] = useState([])
 	useEffect(() => {
-		const ID = router.query.id
-		setId(ID)
+		const GetData = async () => {
+			const res = await api.get('/api/grader/getContestRanking', { params: { contestId: contestId } })
+			setData(res.data)
+		}
+		GetData()
 	}, [])
 
+	console.log(data)
 	return (
 		<Fragment>
 			<Layout page="contest">
 				<div className="main">
 					<div className="size">
 						<Box>
-							<ContestLayout page="rank" id={id}>
+							<ContestLayout page="rank" id={contestId}>
 								<center>
 									<h2>Ranks</h2>
 								</center>
@@ -43,9 +46,17 @@ const contestRank = () => {
 											Total Score
 										</div>
 									</div>
-									<ContestRankList rank="1" name="Anya Eiyaaa" score="240" />
-									<ContestRankList rank="2" name="Vegete Kak" score="190" />
-									<ContestRankList rank="3" name="Fufu Kung" score="120" />
+									<div className="rank-list">
+										{data != null ? (
+											data.map((element, index, key) => {
+												return (
+													<ContestRankList rank={index + 1} name={element.displayname} score={element.totalscore} />
+												)
+											})
+										) : (
+											<div>None</div>
+										)}
+									</div>
 								</div>
 							</ContestLayout>
 						</Box>
@@ -56,4 +67,14 @@ const contestRank = () => {
 		</Fragment>
 	)
 }
+
+export async function getServerSideProps(ctx) {
+	try {
+		const contestId = ctx.query.contestId
+		return { props: { contestId } }
+	} catch (err) {
+		return { props: { contestId: '' } }
+	}
+}
+
 export default contestRank

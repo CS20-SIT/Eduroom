@@ -20,7 +20,7 @@ const ProblemCode = (props) => {
 			}
 			const res = await api.post('/api/grader/submission', body)
 			setData(res.data)
-			await sleep(5000)
+
 			try {
 				const result = await api.get('/api/grader/submission', {
 					params: {
@@ -36,12 +36,6 @@ const ProblemCode = (props) => {
 		} catch (e) {
 			return console.log(e.data)
 		}
-	}
-
-	function sleep(ms) {
-		return new Promise((resolve) => {
-			setTimeout(resolve, ms)
-		})
 	}
 
 	const colorize = (resultData) => {
