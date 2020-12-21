@@ -227,6 +227,17 @@ exports.createAdminEvent = async (req, res, next) => {
 			[title, startdate, enddate, starttime, endtime, detail, place, adminid]
 		)
 
+		//--------------------sendMail------------------------------
+		//getEmail
+		const tempMail = await pool.query("select distinct universityemail from user_student_verification ")
+
+	tempMail.rows.forEach((t) => {
+	  console.log(t)
+	  sendEmail({ email: t.universityemail, subject: title, message: detail, })
+	});
+
+		//----------------------------------------------------------
+
 		const event = data.rows[0]
 		res.status(200).json({
 			success: true,
