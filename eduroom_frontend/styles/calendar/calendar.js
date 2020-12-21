@@ -96,7 +96,7 @@ export default css`
   outline: none;
   position : absolute;
   cursor: pointer;
-  margin-left: 18rem;
+  left : 32%;
   z-index : 0;
   
 }
@@ -105,12 +105,12 @@ export default css`
   outline: none;
   cursor: pointer;
   position : absolute;
-  margin-left :51rem;
+  left : 66%;
   z-index:0;
 }
 .month{
   position : absolute;
-  left : 36rem;
+  left : 39%;
   z-index : 0;
 }
 
