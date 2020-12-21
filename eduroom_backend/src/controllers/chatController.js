@@ -238,8 +238,43 @@ const changeChatRoomName = async (req, res, next) => {
 	}
 }
 
+// const readMessage = async (req, res, next) => {
+// 	const chatroomid = 3
+// 	const userid = '236ce084-b742-4435-93c7-2e0d1eff1204'
+// 	const checkRead = await pool.query(`select messageid mid from chat_message where chatroomid = ${​​​​​​​chatroomid}​​​​​​​ and messageid not in(select messageid
+// 	  from chat_message_readtime)`)
+// 	while(checkRead != null){​​​​​​​
+// 	  const addRead = await pool.query(`insert into chat_message_readtime (messageid, userid, readtime, hide)
+// 	  values (${​​​​​​​checkRead.rows[0].mid}​​​​​​​,'${​​​​​​​userid}​​​​​​​',current_timestamp,false)`)
+// 	}​​​​​​​
+// 	const checkUserRead = await pool.query(`select messageid as mid from chat_message cm where  chatroomid = ${​​​​​​​chatroomid}​​​​​​​ and cm.messageid not in (
+// 	  select cmr.messageid from chat_message_readtime cmr where cm.userid='${​​​​​​​userid}​​​​​​​' and cmr.messageid in(
+// 		  select cm2.messageid mid from chat_message cm2 where chatroomid = ${​​​​​​​chatroomid}​​​​​​​))`)
+// 	while(checkUserRead.rows[0].mid != null){​​​​​​​
+// 	  const addRead = await pool.query(`insert into chat_message_readtime (messageid, userid, readtime, hide)
+// 	  values (${​​​​​​​checkUserRead.rows[0].mid}​​​​​​​,'${​​​​​​​userid}​​​​​​​',current_timestamp,false)`)
+// 	}​​​​​​​
+// 	res.status(200).json({​​​​​​​ success: true }​​​​​​​)
+//   }​​​​​​​
+
+const readMessage = async (req, res, next) =>{
+	const chatroomid = 3
+	const userid = '236ce084-b742-4435-93c7-2e0d1eff1204'
+	const checkRead = await pool.query(`select cm.messageid from chat_message cm where cm.messageid
+	not in (select messageid from chat_message_readtime cmrt where cmrt.userid = '${userid}')
+	and cm.chatroomid = ${chatroomid}`)
+
+		for(i = 0; i < checkRead.rows.length; i++){
+			const addRead = await pool.query(`insert into chat_message_readtime (messageid, userid, readtime, hide)
+			values(${checkRead.rows[i].messageid}, '${userid}', current_timestamp, false)`)
+		}
+
+	  res.status(200).json({ success: true })
+}
+
 module.exports = { getChatlist, 
   getGroupPicture, 
   inviteCreate, 
   deleteChatRoom,
-  getUserProfile}
+  getUserProfile,
+  readMessage}
