@@ -41,10 +41,23 @@ exports.getUserDetail = async (req, res, next) => {
 			}
 		}
 		if (result.rowCount > 0) {
+			const ac = (await pool.query(`SELECT nodeid, achieve_detail from achievement`)).rows
+			let achievement = []
+			for (let i = 0; i < ac.length; i++) {
+				let isAchieve = false
+				const isAchieveResult = await pool.query(
+					`SELECT nodeid from user_progress where nodeid = $1 and userid = $2`,
+					[ac[i].nodeid, userid]
+				)
+				if (isAchieveResult.rowCount > 0) {
+					isAchieve = true
+				}
+				achievement.push({ detail: ac[i].achieve_detail, isAchieve })
+			}
 			const all_xp = result.rows[0].xp
 			const level = Math.floor(all_xp / 100)
 			const xp = all_xp - level * 100
-			res.send({ xp, level, rank, numUser: all_rank.rowCount })
+			res.send({ xp, level, rank, numUser: all_rank.rowCount, achievement })
 		} else {
 			res.send({ xp: 0 })
 		}

@@ -41,7 +41,11 @@ const LearningPath = () => {
 		if (!user) return null
 		return (
 			<Fragment>
-				<UserBar user={{ level: user.level, trophy: user.rank, exp: user.xp }} numUser={user.numUser} />
+				<UserBar
+					user={{ level: user.level, trophy: user.rank, exp: user.xp }}
+					numUser={user.numUser}
+					achievement={user.achievement}
+				/>
 				<div className="learning-path">
 					<div className="learning">
 						{current ? <CurrentPath path={current} back={back} /> : <AllPath path={path} selectPath={selectPath} />}
