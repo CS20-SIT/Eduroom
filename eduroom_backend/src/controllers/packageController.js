@@ -47,7 +47,7 @@ exports.getPackage = async (req, res, next) => {
 	try {
 		const id = req.query.packageid
 		const data1 = await pool.query(`select p.packageid, packagename, i.instructorid,firstname,lastname ,p.discount,p.detail,p.image,sum(price)*((100-p.discount)/100) as price
-		, sum(price) as oldprice
+		, sum(price) as oldprice,cateid
 		from package p, instructor i,package_courses pc, course c, user_profile up
 		where p.instructorid=i.instructorid and p.packageid = pc.packageid and pc.courseid=c.courseid
 		  and i.userid = up.userid and p.packageid = $1
