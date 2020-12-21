@@ -522,6 +522,20 @@ const insertStudentAppointment = async (req, res, next) => {
 			insert into instructor_appointments(starttime, endtime, status, price, paymentdue, approvetime, ispaid, instructorid, headerid)
 			values('${startTime}', '${endTime}', null, ${price}, null, null, false, '${id}', '${headerId}') returning appointmentid;
 		`)
+
+		//Financial Team
+		await pool.query(`INSERT INTO financial_transaction(transactionid, amount, description)
+		VALUES (uuid_generate_v4(), ${price}, 'Instructor:Private Tutor - InstructorID:${id} - Time ${startTime} to ${endTime}');`)
+
+		const FinancialTeam_instructorID = await pool.query(`SELECT *
+		FROM financial_transaction
+		WHERE description = '%${id}%'`)
+
+		const FinancialTeam_transactionid = FinancialTeam_instructorID.rows[0].transactionid
+
+		await pool.query(`INSERT INTO transaction_instructor(transactionid, instructorid)
+		VALUES (${FinancialTeam_transactionid}, ${id})`)
+
 		const { appointmentid } = result.rows[0]
 
 		for (let i = 0; i < members.length; i++) {
