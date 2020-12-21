@@ -12,8 +12,8 @@ import api from "../../api";
 const AdList = props => {
     return (
         <div>
-            <div style={{ marginRight: 95 }} className="col-6">adid#{props.adid}  {props.amount}</div>
-           
+            <div style={{ marginLeft:'10%',marginBottom:'15px' }} className="col-6">adid#{props.adid} <a style={{marginLeft:'46%'}}></a>฿{props.amount} </div>
+            
             <style jsx>{style}</style>
         </div>
     )
@@ -41,8 +41,8 @@ const Checkout = () => {
         e.preventDefault()
         setOpen(false)
     }
-    const handleSubmit = () => {
-        console.log(type)
+    const handleSubmit = async () => {
+        
     }
     const [data, setData] = useState([]);
     const [total, setTotal] = useState([]);
@@ -76,7 +76,7 @@ const Checkout = () => {
                     <div className="checkout">Checkout</div>
                 </div>
 
-                {/* <div style={{ display: 'grid', justifyContent: 'center' }}> */}
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <div>
                         <div className="card">
                             <Grid container className="test">
@@ -168,7 +168,7 @@ const Checkout = () => {
                                         </div>
 
                                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                            {type == 'credit' ? <CreditBox /> : <PaypalBox />}
+                                            {type == 'credit' ? <CreditBox data={data} /> : <PaypalBox />}
                                         </div>
                                     </div>
                                 </Grid>
@@ -179,7 +179,7 @@ const Checkout = () => {
                                             <h1
                                                 style={{
                                                     fontSize: 20,
-                                                    marginLeft: 20,
+                                                    marginLeft: '36%',
                                                     fontWeight: 700,
                                                 }}
                                             >
@@ -194,19 +194,19 @@ const Checkout = () => {
                                                     margin: '10px 0px 10px 50px',
                                                 }}
                                             >
-                                                {arr}
+                                                
                                             </div>
 
                                             <div
                                                 style={{
                                                     display: 'flex',
-                                                    flexDirection: 'row',
+                                                    flexDirection: 'column',
                                                     justifyContent: 'center',
                                                 }}
                                             >
 
                                             </div>
-
+                                            {arr}
 
                                             <hr style={{ width: 300, marginBottom: 10 }}></hr>
 
@@ -222,7 +222,7 @@ const Checkout = () => {
                                                     Total
 												</div>
                                                 <div style={{ color: 'black' }} className="col-6">
-                                                    ฿500
+                                                    ฿{total}
 												</div>
                                             </div>
                                             <div className="text">
@@ -247,7 +247,7 @@ const Checkout = () => {
 
 
                 <style jsx>{style}</style>
-            {/* </div> */}
+            </div>
         </Fragment>
     )
 }

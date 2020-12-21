@@ -78,10 +78,9 @@ const Total = props => {
     const handleSubmit = async () => {
         const body = {
             adlist: props.listads
-
         }
         const response = await api.post('/api/ads/AddNewAdsBills', body)
-        console.log(response)
+        console.log("Ho"+response)
         router.push('/advertisement/adpayment/adconfirmpayment')
 
 
