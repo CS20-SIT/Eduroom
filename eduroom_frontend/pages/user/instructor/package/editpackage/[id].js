@@ -3,6 +3,7 @@ import GeneralTemplate from '../../../../../components/template/general';
 import style from '../../../../../styles/package/createpackage';
 import EditPackage from '../../../../../components/package/editPackage';
 import EditConfirm from '../../../../../components/package/editConfirm';
+import api from '../../../../../api'
 const EditPackagePage = (props) => {
   const [page, setPage] = useState(1);
   const [packages, setPackages] = useState(null)
@@ -14,8 +15,12 @@ const EditPackagePage = (props) => {
   const getPackage = async () => {
     const result = await api.get(`/api/package/getPackage?packageid=${props.id}`)
     setPackages(result.data.packages)
-    setCourseList(result.data.courseList)
     console.log(result)
+    const tempList = []
+    result.data.courseList.map(el=>{
+      tempList.push(el.courseid)
+    })
+    setCourseList(tempList)
   }
 
   const renderPage = () => {
