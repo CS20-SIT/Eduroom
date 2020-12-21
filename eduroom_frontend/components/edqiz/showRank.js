@@ -7,16 +7,19 @@ import Link from "next/link";
 const page3 = ({pin}) => {
   const [sessionid, setSesstionID] = useState(null);
   const [data, setData] = useState(null);
+  
   const fetchData = async () => {
-    // let pin = 9513;
-    console.log('pin',pin)
-    const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+    const res = await api.get(`/api/kahoot/sessionidAfterStart/${pin}`);
     setSesstionID(res.data.sessionid)
   };
+  const handleQuizClose = async (body) => {
+    if(sessionid!=null){
+    const res = await api.post(`/api/kahoot/checkQuizClose/${sessionid}`);
+    }
+  };
   const fetchDataRank = async () => {
-
-    if (sessionid != null) {
-      const res1 = await api.get(`/api/kahoot/getRankScore/${sessionid}`);
+    if (pin != null) {
+      const res1 = await api.get(`/api/kahoot/getRankScore/${pin}`);
       setData(res1.data)
     }
 
@@ -67,7 +70,9 @@ const page3 = ({pin}) => {
             <Grid item xs={4} >
             <Link href={`/edqiz/edqizList`}>
               <div className="buttonAREA">
-                <button className="button">GO TO EDQIZ LIST</button>
+                <button className="button"
+                 onClick={() => handleQuizClose()}
+                >GO TO EDQIZ LIST</button>
               </div>
               </Link>
             </Grid>

@@ -15,8 +15,8 @@ export default function chatRoomBottomBar(props) {
 		<>
 			<div className="bottomBar">
 				<Avatar
-					alt={props.userProfile.userFirstName + ' ' + props.userProfile.userLastName}
-					src={props.userProfile.profilePicture}
+					alt={props.userProfile.firstname + ' ' + props.userProfile.lastname}
+					src={props.userProfile.avatar}
 					style={{ marginTop: 4, marginRight: 15 }}
 				/>
 				<Input

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ListOfPackage from './listOfPackage';
 import api from '../../api';
+import Styles from '../../styles/package/pShop'
 
 const packages = () => {
     
@@ -13,9 +14,12 @@ const packages = () => {
         };
         fetchData();
     }, []);
+
     return (
-        <div>
+        <div className="package">
+            <div className="packageLanding" >Package in Eduroom</div>
             <ListOfPackage item={data}></ListOfPackage>
+            <style jsx>{Styles}</style>
         </div>
     );
 };

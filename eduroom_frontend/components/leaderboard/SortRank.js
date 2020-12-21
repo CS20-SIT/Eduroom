@@ -10,6 +10,7 @@ const SortRank = (props) => {
     const GetData = async () => {
       const result = await axios.get("/api/leaderboard");
       setData(result.data);
+      console.log(result.data);
     };
     GetData();
     console.log(data);

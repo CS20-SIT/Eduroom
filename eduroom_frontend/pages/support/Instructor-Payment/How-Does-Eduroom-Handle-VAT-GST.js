@@ -15,7 +15,7 @@ import {
   ThemeProvider,
   Link,
 } from "@material-ui/core";
-import Studentnav from "../../../components/support/studentsidenav";
+
 import HowDoesEduroomdo from '../../../components/support/instructorpayment/howdoeseduroom';
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
