@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ReadIcon from './icons/ReadIcon'
 import DotDotIcon from './icons/DotDotIcon'
 import api from '../../api'
+import moment from 'moment'
 
 export default function messageRight(props) {
 	const [dropReadDownStyle, setReadDropDownStyle] = useState({ visibility: 'hidden' })
@@ -10,6 +11,7 @@ export default function messageRight(props) {
 	const message = props.message
 	const unsend = async () =>{
 		const res = await api.get(`/api/chat/unsendMessage`,{params:{messageid:message.messageid}})
+		props.socket.emit('unsendMessage',props.chatRoomDetail.chatroomid)
 		props.getChatRoomDetail()
 	}
 	return (
@@ -79,7 +81,7 @@ export default function messageRight(props) {
 						}
 					})()}
 				</div>
-				<span style={{ marginRight: 50 }}>{message.sentTime}</span>
+				<span style={{ marginRight: 50 }}>{moment(message.sentTime).fromNow()}</span>
 			</div>
 			<style jsx>{`
 				.messageRight {

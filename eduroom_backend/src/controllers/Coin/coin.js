@@ -126,6 +126,7 @@ exports.showCoinOwner = async (req, res) => {
 exports.showStickerOwner = async (req, res) => {
     try {
         const userId = req.body.id
+        
         // const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
         const getOwnerSticker = await pool.query(`SELECT sticker_owner.stickerid,stickername,stickertype,stickerimg FROM sticker_owner
         JOIN sticker_all ON sticker_owner.stickerid = sticker_all.stickerid
