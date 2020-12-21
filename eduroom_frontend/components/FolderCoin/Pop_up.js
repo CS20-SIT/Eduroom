@@ -34,11 +34,11 @@ const text = () =>{
     };
     useEffect(()=>{
         const fetchData = async ()=>{
-            console.log(props.id);
             const res = await api.get(`/api/coin/stickers/${props.id}`);
             const check = await api.get('/api/coin/checkStickerOwner/',{params:{stickerid:props.id}});
             console.log(check.data)
-
+            console.log(res.data);
+            console.log(props.id);
             setData(res.data.stickers);
             setCoin(res.data.mycoins)
             setId(props.id);
