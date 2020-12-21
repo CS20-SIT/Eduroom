@@ -27,7 +27,7 @@ exports.item = [
 	{
 		icon: 'coupon',
 		text: 'Coupon',
-		link: '/admin/coupon',
+		link: '/admin/createcoupon',
 	},
 	{
 		icon: 'advertisement',

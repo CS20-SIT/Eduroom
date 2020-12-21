@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import Checkbox from '@material-ui/core/Checkbox'
 import ImageUpload from './ImageUpload'
 import VideoUpload from './VideoUpload'
 
@@ -19,6 +20,18 @@ const Page1 = (props) => {
 							type="text"
 							value={props.data.name}
 							onChange={(e) => props.handleData({ el: 'name', data: e.target.value })}
+						></input>
+					</div>
+
+					<div className="text">
+						<div className="title">Cours Description</div>
+						<input
+							name="description"
+							className="textfield"
+							placeholder="Course Description"
+							type="text"
+							value={props.data.description}
+							onChange={(e) => props.handleData({ el: 'description', data: e.target.value })}
 						></input>
 					</div>
 
@@ -58,6 +71,17 @@ const Page1 = (props) => {
 							value={props.data.price}
 							onChange={(e) => props.handleData({ el: 'price', data: parseFloat(e.target.value) })}
 						></input>
+					</div>
+					<div style={{ width: '400px', marginTop: '20px' }}>
+						<div style={{ display: 'flex', alignItems: 'center' }}>
+							<Checkbox
+								checked={props.data.haveCertificate}
+								color="primary"
+								inputProps={{ 'aria-label': 'secondary checkbox' }}
+								onChange={(e) => props.handleData({ el: 'haveCertificate', data: e.target.checked })}
+							/>
+							<span>Have certificate</span>
+						</div>
 					</div>
 				</div>
 			</div>

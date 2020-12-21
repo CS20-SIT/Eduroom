@@ -196,7 +196,7 @@ const searchEngine=(condition,orderby)=>{
 
             <div className="shadow searchCourse">
 			<i className="fas fa-search"></i>
-			<input className='font-quicksand input-tab rounded-sss font-normal-bold searchBox' type="text" placeholder="What do you want to learn?"  value={search} onChange={handleChangeSearch} onKeyUp={handleEnter}></input>
+			<input className='font-quicksand input-tab rounded-sss font-normal-bold searchBox' type="text" placeholder="Search Course"  value={search} onChange={handleChangeSearch} onKeyUp={handleEnter}></input>
 			</div>
 
 
