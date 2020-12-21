@@ -17,7 +17,7 @@ const Content = () => {
       <GeneralTemplate  >
         {
           dialog ? (
-            <AuthDialog handleClick={()=>{setDialog(false)}}/>
+            <AuthDialog handleClick={()=>{setDialog(false)}} path={'/edqiz'}/>
           ):null
         }
         
