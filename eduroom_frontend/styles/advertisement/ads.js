@@ -99,7 +99,7 @@ export default css`
   }
   .tab1 {
     
-    height: 730px;
+    height: auto;
     // background-image: url('/images/BG_Landing.svg');
   }
   .tab2 {
