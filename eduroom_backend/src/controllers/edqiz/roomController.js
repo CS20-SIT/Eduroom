@@ -178,6 +178,27 @@ exports.fetchScoreRank = async (req, res, next) => {
 			'SELECT userid from kahoot_roomhistoryplayer where sessionid=$1 order by rank desc fetch first 3 rows only;',
 			[sessionid]
 		)
+
+		const useridGetXP = await pool.query(
+			'SELECT userid from kahoot_roomhistoryplayer where sessionid=$1;',
+			[sessionid]
+		)
+		for (let index = 0; index < useridGetXP.rows.length; index++) {
+			const userId = useridGetXP.rows[index].userid
+			const getXP = await pool.query(`select totalxp,currentxp from user_xp where userid='${userId}';`)
+			let amountOfTotalXP = getXP.rows[0].totalxp
+			let amountOfcurrentxp = getXP.rows[0].currentxp
+			console.log('getXP',getXP)
+			console.log('getXPTotalXP', getXP.rows[0].totalxp)
+			console.log('getXPCurrentXP', getXP.rows[0].currentxp)
+
+			amountOfTotalXP += 100
+			amountOfcurrentxp+=100
+			await pool.query(`UPDATE user_xp SET totalxp=${amountOfTotalXP} ,currentxp=${amountOfcurrentxp} WHERE userid='${userId}';`)
+		
+		}
+
+
 		console.log('userid will get a score', useridWHOGetCoin.rows.length)
 		const coins = [15, 10, 5]
 		for (let index = 0; index < useridWHOGetCoin.rows.length; index++) {

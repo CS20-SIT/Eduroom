@@ -148,6 +148,39 @@ exports.verifyEmailController = async (req, res) => {
 	}
 }
 
+exports.resendVerify = async(req,res,next) => {
+	try {
+		const user = req.user;
+		if(user){
+			const userProfile = await pool.query("SELECT email FROM local_auth WHERE userid =$1",[user.id])
+			const verifyToken = crypto.randomBytes(20).toString('hex')
+			const checkVerify = await pool.query("SELECT token FROM user_verification WHERE userid=$1",[user.id])
+			if(checkVerify.rowCount > 0){
+				await pool.query("UPDATE  user_verification SET token =$1,starttime= current_timestamp, endtime= current_timestamp+ (120*interval '1 minute'), isverified = false WHERE userid =$2",[verifyToken,user.id])
+			} else {
+				const userVerificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
+				VALUES ('${userId}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + (120 * interval '1 minute'), '${verifyToken}', false)`
+				await pool.query(userVerificationCreationQuery)
+			}
+			const htmlMessage = verifyTemplate(verifyToken)
+			const emailOptions = {
+				email: userProfile.rows[0].email,
+				subject: 'Eduroom Email Verification',
+				htmlMessage,
+			}
+		
+			await sendEmail(emailOptions)
+			res.status(201).json({success:true})
+			return
+		} else {
+			return next(new ErrorResponse("Please login before resend verification",401))
+		}
+	} catch(err){
+		console.log(err)
+		return next(new ErrorResponse("Cannot Resend Verify Email",400))
+	}
+}
+
 exports.loginController = async (req, res) => {
 	try {
 		// {
