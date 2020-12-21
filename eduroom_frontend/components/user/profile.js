@@ -2,10 +2,13 @@ import React, { Fragment, useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
+import Styles from '../../styles/CoinStyles/coin-shop.module.css'
 import TextField from '@material-ui/core/TextField';
+import UserCourse from './courses'
 import { useRouter } from 'next/router'
 
 const Profile = () => {
+	const router = useRouter()
 	const userContext = useContext(UserContext)
 	const user = userContext.user
 	const [birth, setBirth] = useState(null)
@@ -89,10 +92,16 @@ const Profile = () => {
 						</textarea> */}
 						{/* <span>{user.bio ? user.bio : '-'}</span> */}
 					</div>
-					<Link href="/user/courses">
+					{/* <Link href="/user/courses">
 							<button className="btn">MyCourse</button>
-					</Link>
+					</Link> */}
+					
+							<button onClick={() => router.push('/coin-shop/History')} className={Styles.btnHistory2}>
+								Sticker History
+							</button>
+
 					{renderRegister()}
+					<UserCourse></UserCourse>
 				</div>
 				<style jsx>{styles}</style>
 			</div>
