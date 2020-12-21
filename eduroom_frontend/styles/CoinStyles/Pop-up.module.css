@@ -20,8 +20,8 @@ margin-left: 20%;
   /* padding-bottom: 20%; */
   /* border: 2px solid black;
   background-color: slategrey; */
-  width: 100%;
-  height: 83%;
+  width: 185px;
+  height: 200px;
 }
 .setPhotoMoney{
   position: relative;
@@ -97,6 +97,17 @@ margin-left: 20%;
   height:25%;
   margin: 15px 0px;
   padding:20px;
+}
+.picture:hover{
+  animation: wiggle 2s infinite ;
+}
+@keyframes wiggle {
+  0% {transform: rotate(0deg);}
+  10%{tansform:rotate(10deg)}
+  25% {transform: rotate(-10deg);}
+  50% {transform: rotate(20deg);}
+  75% {transform: rotate(-5deg);}
+  100% {transform: rotate(0deg);}
 }
 /* ว่างหน่อย NOTE */
 .right {
