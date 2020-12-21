@@ -219,11 +219,14 @@ getInvitationList : async (req, res, next) => {
     )
     res.status(200).json({ success: true })
   },
+
   unsendMessage : async (req, res, next) =>{
-    const messageID = req.query.messageid
+    const messageID = 5
+    const deleteReadtime = await pool.query(`delete from chat_message_readtime where messageid = ${messageID}`)
     const unsendMessage = await pool.query(`delete from chat_message where messageid = ${messageID}`)
     res.status(200).json({ success: true })
   },
+
   changeThemeColor : async (req, res, next) => {
     const chatroomid = req.query.chatroomid
     const userid = req.user.id
