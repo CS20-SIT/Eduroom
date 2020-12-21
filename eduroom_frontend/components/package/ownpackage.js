@@ -77,7 +77,7 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 				<div
 					className="center pdt-20"
 					onClick={() => {
-						router.push(`/user/instructor/package/${ownPackage.packageid}`)
+						router.push(`/package/${ownPackage.packageid}`)
 					}}
 				>
 					<div className="package">
@@ -95,7 +95,7 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 									</div>
 								</div>
 								<div className="pri-cat">
-									฿<span>{getPrice()}</span>
+									$<span>{getPrice()}</span>
 								</div>
 								<div>
 									<div className="pri-cat">Category: {ownPackage.cate_name}</div>
