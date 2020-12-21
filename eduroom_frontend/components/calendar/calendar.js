@@ -72,7 +72,7 @@ const Content = () => {
 				setEvent(res.data.data)
 				console.log(res.data.data)
 			})
-			.catch((err) => {})
+			.catch((err) => { })
 	}, [day])
 	//state chage 1 month per click
 	const addMonth = () => {
@@ -106,7 +106,7 @@ const Content = () => {
 					setInstructor(true)
 				}
 			})
-			.catch((err) => {})
+			.catch((err) => { })
 	}, [])
 
 	// ------------------code below----------------------//
@@ -140,15 +140,17 @@ const Content = () => {
 				<div className="month-size">
 					<Container>
 						<Grid container spacing={0}>
-							<div className="previous-m" onClick={minusMonth}>
-								{' '}
-								<Image alt="left-arrow" src="/images/createEvent/L.svg" width="30" height="30" />{' '}
-							</div>
+							<div className="headCalendar">
+								<div className="previous-m" onClick={minusMonth}>
+									{' '}
+									<Image alt="left-arrow" src="/images/createEvent/L.svg" width="30" height="30" />{' '}
+								</div>
 
-							<div className="month">{currentMonth + ' ' + currentYear}</div>
+								<div className="month">{currentMonth + ' ' + currentYear}</div>
 
-							<div className="forward-m" onClick={addMonth}>
-								<Image alt="right-arrow" src="/images/createEvent/R.svg" width="30" height="30" />
+								<div className="forward-m" onClick={addMonth}>
+									<Image alt="right-arrow" src="/images/createEvent/R.svg" width="30" height="30" />
+								</div>
 							</div>
 						</Grid>
 					</Container>
