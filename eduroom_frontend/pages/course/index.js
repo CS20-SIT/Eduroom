@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../styles/course/utils'
-import GeneralNoNav from '../../components/template/generalnonav'
 import General from '../../components/template/general'
 import Link from 'next/link'
 import SearchBar from '../../components/course/searchBar'
@@ -56,7 +55,7 @@ const Course = () => {
 
 						{/* <CourseCard/> */}
 						<div className="coursecard">Course on Eduroom</div>
-						<div className="text-center my-8">
+						<div className="text-center my-4">
 							{courseDes.map((e, index) => (
 								<Link href={`/course/${e.courseid}`}>
 									<div className="mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer">
@@ -91,6 +90,8 @@ const Course = () => {
 							padding-left: 15px;
 							font-size: 0.8rem;
 							width: 250px;
+							height: 2.4rem;
+							color: light-grey;
 						}
 						.categoryTab {
 							margin-top: 3rem;
@@ -106,7 +107,8 @@ const Course = () => {
 							font-weight: 700;
 							font-size: 26px;
 							color: #3d467f;
-							margin: 30px 30px 30px 40px;
+							margin: 30px 30px 30px 80px;
+							
 						}
 					`}
 				</style>

@@ -1,16 +1,25 @@
 import { Fragment } from 'react'
-const Course = ({ course }) => {
+import api from '../../../api'
+const Course = ({ course, fetchCourses }) => {
+	const deleteCourse = async () => {
+		try {
+			const body = { courseId: course.courseid }
+			await api.post('/api/instructor/deletecourse', body)
+			await fetchCourses()
+		} catch (err) {
+			console.log(err)
+		}
+	}
 	return (
 		<Fragment>
 			<div className="container">
 				<div style={{ display: 'flex' }}>
 					<img src={course.coursepicture} alt="course-img" width="150px" height="120px"></img>
-					<div style={{ marginLeft: '30px' }}>
-						<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+					<div style={{ marginLeft: '30px', width: '100%' }}>
+						<div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
 							<h2 style={{ margin: '0' }}>{course.coursename}</h2>
-							<div style={{margin: '7px 0 0 0'}}>
-								<i className="fas fa-edit icon"></i>
-								<i className="fas fa-trash icon"></i>
+							<div style={{ margin: '7px 0 0 0' }}>
+								<i className="fas fa-trash icon" onClick={deleteCourse}></i>
 							</div>
 						</div>
 						<div className="det">{course.coursedescription}</div>
@@ -28,12 +37,12 @@ const Course = ({ course }) => {
 				.det {
 					color: #858585;
 				}
-				.icon{
+				.icon {
 					color: #858585;
 					transition: 0.3s;
 					padding: 0 7px;
 				}
-				.icon:hover{
+				.icon:hover {
 					color: black;
 					transition: 0.3s;
 					cursor: pointer;
