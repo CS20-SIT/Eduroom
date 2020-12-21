@@ -10,7 +10,17 @@ const Header = ({ appointments, requestMode, renderIcon, setAID, setAppointment 
 		<Fragment>
 			{appointments[requestMode].map((a, i) => (
 				<div key={i} className="grid-container-body bg-white-faded shadow rounded-sm">
-					<div className="font-bold text-lg">
+					<div className="font-bold text-lg flex items-center">
+						<div
+							className="rounded-full bg-yellow"
+							style={{
+								width: 3.5 + 'rem',
+								height: 3.5 + 'rem',
+								marginRight: '1rem',
+								backgroundImage: 'url(' + a.avatar + ')',
+								backgroundSize: 'cover',
+							}}
+						></div>
 						{a.name}{' '}
 						{a.members.length > 0 ? <span className="mx-2 text-md text-secondary"> + {a.members.length}</span> : ''}
 					</div>
@@ -47,7 +57,7 @@ const Header = ({ appointments, requestMode, renderIcon, setAID, setAppointment 
 					width: 100%;
 					display: grid;
 					grid-template-columns: 2.5fr 1.25fr 1.75fr 1.25fr 0.5fr;
-					padding: 2rem;
+					padding: 1.5rem 2rem;
 					margin: 1rem 0;
 				}
 			`}</style>

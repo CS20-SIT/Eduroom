@@ -8,8 +8,8 @@ const studentFeedback = (props) => {
 			<Grid container spacing={3} variant="outlined" style={{}}>
 				<Grid item xs={4}>
 					<Grid item xs={6}>
-						<b style={{ fontSize: '64px', color: '#FB9CCB', display: 'block', marginLeft: '35%' }}>
-							{props.data.average}
+						<b style={{ fontSize: '64px', color: '#FB9CCB', display: 'block', marginLeft: '33%' }}>
+							{parseFloat(props.data.average).toFixed(1)}
 						</b>
 					</Grid>
 					<Grid item xs={6}>
