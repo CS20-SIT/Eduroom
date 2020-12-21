@@ -6,7 +6,7 @@ import {
 
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-import WhyWontthePDFLoad from "../../../components/support/Troubleshooting/WhyWontthePDFLoad";
+import WhyWontthePDFLoad from "../../../components/support/troubleshooting/WhyWontthePDFLoad";
 const courseinstandteaching = () => {
   return <Fragment>
     

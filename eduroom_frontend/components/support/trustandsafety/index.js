@@ -62,7 +62,7 @@ const Index = () => {
                
               
               <Grid container justify='flex-end'>
-              <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
+              <img src='/images/trustandsafety.svg' style={{marginRight:theme.spacing(8), width:'45%'}}></img>
               </Grid>
             </Paper>
           </Grid>

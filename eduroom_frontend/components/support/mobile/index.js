@@ -69,7 +69,7 @@ const Index = () => {
                 <Link href="/support/Mobile/How-to-Access-Resources-on-The-Eduroom-Android-App"><p>How to Access Resources on The Eduroom iOS App</p></Link>
               
               <Grid container justify='flex-end'>
-              <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
+              <img src='/images/mobile.svg' style={{marginRight:theme.spacing(8), width:'45%'}}></img>
               </Grid>
             </Paper>
           </Grid>

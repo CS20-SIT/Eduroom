@@ -8,7 +8,7 @@ import {
 
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-import DisablePushNotificationsoniOS from "../../../components/support/Mobile/DisablePushNotificationsoniOS";
+import DisablePushNotificationsoniOS from "../../../components/support/mobile/DisablePushNotificationsoniOS";
 const courseinstandteaching = () => {
   return <Fragment>
     

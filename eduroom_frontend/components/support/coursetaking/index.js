@@ -68,7 +68,7 @@ const Index = () => {
                 <Link href="/support/Course-Taking/Downloading-Course-Resources"><p>Downloading Course Resources</p></Link>
               
               <Grid container justify='flex-end'>
-              <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
+              <img src='/images/coursetaking.svg' style={{marginRight:theme.spacing(8), width:'45%'}}></img>
               </Grid>
             </Paper>
           </Grid>
