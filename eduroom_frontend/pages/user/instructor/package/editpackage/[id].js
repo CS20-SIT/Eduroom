@@ -24,7 +24,6 @@ const EditPackagePage = (props) => {
   }
   
 
-
   const renderPage = () => {
     if (page === 1) {
       return (
@@ -66,3 +65,5 @@ export async function getServerSideProps(ctx) {
   }
 }
 export default EditPackagePage;
+
+
