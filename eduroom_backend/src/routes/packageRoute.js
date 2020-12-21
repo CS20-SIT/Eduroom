@@ -6,9 +6,6 @@ const { uploadToGCSHandler } = require('../middleware/multer')
 const {
 	getCategories,
 	getPackage,
-	getCountCourseInPackage,
-	getCountCourseInstructor,
-	getCourseInPackage,
 	getAllPackage,
 	getCourseFromIds,
 	getPackagesFromIds,
@@ -20,11 +17,13 @@ const {
 	getCoursesOfCreatingPackage,
 	upload,
 	deletePackage,
+	editPackage
 } = require('../controllers/packageController')
 
 router.get('/categories', getCategories)
 router.post('/createPackage', jwtAuthenicate, isInstructor, createPackage)
 router.post('/delete/package', jwtAuthenicate, isInstructor, deletePackage)
+router.put('/:id', jwtAuthenicate, editPackage)
 router.get('/getPackage', getPackage)
 router.get('/getAllPackage',getAllPackage)
 router.get('/getCoursesOfCreatingPackage', getCoursesOfCreatingPackage)
