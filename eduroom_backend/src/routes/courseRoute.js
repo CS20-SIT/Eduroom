@@ -9,6 +9,8 @@ const {
 	getCourse,
 	getCategory,
 	searchCategory,
+	addCourseToWishlist,
+	removeCourseFromWishlist
 } = require('../controllers/courseControllers')
 
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
@@ -26,5 +28,9 @@ Router.get('/getCourse', getCourse)
 Router.get('/category', getCategory)
 
 Router.get('/categorySearch/:cataname', searchCategory)
+
+Router.post('/addCourseToWishlist', jwtAuthenicate, addCourseToWishlist)
+
+Router.post('/removeCourseFromWishlist', jwtAuthenicate, removeCourseFromWishlist)
 
 module.exports = Router

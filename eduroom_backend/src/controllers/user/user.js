@@ -1,9 +1,12 @@
 const bcrypt = require('bcryptjs')
 const errorHandler = require('../../middleware/error')
+const { uploadFile } = require('../../utils/cloudStorage')
 const pool = require('../../database/db')
 const ErrorResponse = require('../../utils/errorResponse')
+const { v4: uuidv4 } = require('uuid')
 const fs = require('fs')
 const path = require('path')
+const sharp = require('sharp')
 const puppeteer = require('puppeteer')
 const handlebars = require('handlebars')
 const dayjs = require('dayjs')
@@ -181,6 +184,19 @@ const Upload = async (req, res, next) => {
 	res.send(results)
 }
 
+const uploadAvatarPic = async (req, res) => {
+	const userId = req.user.id
+	const filePath = req.files[0].path
+	const optimizedFileName = `${uuidv4()}.png`
+	await sharp(filePath).resize({
+		height: 400,
+		width: 400
+	}).png().toFile(`${optimizedFileName}`)
+	const avatarURL = await uploadFile(optimizedFileName, `profile_pic/${optimizedFileName}`)
+	await pool.query(`UPDATE user_profile SET avatar = '${avatarURL}' WHERE userid = '${userId}';`)
+	res.status(201).send({avatarURL})
+}
+
 const checkPassword = async (req, res) => {
 	try {
 		const { password } = req.body
@@ -270,5 +286,6 @@ module.exports = {
 	getCertificate,
 	downloadCertificate,
 	postMycourse,
-	checkWishlist
+	checkWishlist,
+	uploadAvatarPic
 }
