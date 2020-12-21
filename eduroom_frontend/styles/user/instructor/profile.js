@@ -4,12 +4,12 @@ export default css`
 		margin: 10px 50px 0 50px;
 		display: flex;
 	}
-	.textNav{
+	.textNav {
 		color: black;
 		transition: 0.25s;
 		margin: 0 20px 0 0;
 	}
-	.textNav:hover{
+	.textNav:hover {
 		cursor: pointer;
 		color: #3d467f;
 		transition: 0.25s;
@@ -98,5 +98,27 @@ export default css`
 		opacity: 0.7;
 		transition: 0.3s;
 		cursor: pointer;
+	}
+	.edit:hover {
+		cursor: pointer;
+	}
+
+	.btn {
+		background: #3d467f;
+		border-radius: 15px;
+		color: white;
+		padding: 10px 15px;
+	}
+	.btn:hover {
+		cursor: pointer;
+	}
+
+	.textfield {
+		background: #eff0f6;
+		border-radius: 10px;
+		border: none;
+		color: #3d467f;
+		padding: 14px;
+		width: 100%;
 	}
 `
