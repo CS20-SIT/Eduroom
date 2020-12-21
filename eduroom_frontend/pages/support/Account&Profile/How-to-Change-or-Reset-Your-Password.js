@@ -10,7 +10,7 @@ import HowtoChangeorResetYourPassword from "../../../components/support/accounta
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

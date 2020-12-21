@@ -10,7 +10,7 @@ import KeepingYourAccountSecure from "../../../components/support/accountandprof
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

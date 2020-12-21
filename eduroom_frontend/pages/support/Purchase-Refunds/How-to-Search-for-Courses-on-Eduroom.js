@@ -13,7 +13,7 @@ import HowtoSearchforCoursesonEduroom from "../../../components/support/purchase
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

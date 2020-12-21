@@ -13,7 +13,7 @@ import ShoppingCartFAQ from "../../../components/support/purchaseandrefunds/Shop
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

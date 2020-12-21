@@ -12,7 +12,7 @@ import DisablePushNotificationsoniOS from "../../../components/support/mobile/Di
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

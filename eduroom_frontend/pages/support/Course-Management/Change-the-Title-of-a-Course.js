@@ -11,7 +11,7 @@ import ChangetheTitleofaCourse from "../../../components/support/coursemanagemen
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{
