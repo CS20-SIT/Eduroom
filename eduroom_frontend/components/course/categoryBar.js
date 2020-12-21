@@ -44,6 +44,10 @@ const CategoryBar = ({current}) => {
                     .categoryText{
                         display: flex;
                     }
+                    .categoryText:hover{
+                        color: pink;
+                    }
+                    
                     .categoryTab {
                         display:flex;
                         justify-content: center;
@@ -51,12 +55,15 @@ const CategoryBar = ({current}) => {
                     }
                     .general{
                         cursor: pointer;
-                        color: #535353;
                         margin: 0 1rem;
+                    }
+                    .general:hover{
+                        color: pink;
                     }
                     .bottomLine{
                         border-bottom: 2px solid #535353;
                     }
+                    
                     
                     `
                 }

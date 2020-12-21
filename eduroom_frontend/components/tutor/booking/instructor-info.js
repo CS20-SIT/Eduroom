@@ -7,7 +7,15 @@ const InstructorInfo = ({ instructor }) => {
 			{instructor && (
 				<div className="flex">
 					<div>
-						<div className="rounded-full bg-yellow" style={{ width: 4 + 'rem', height: 4 + 'rem' }}></div>
+						<div
+							className="rounded-full bg-yellow"
+							style={{
+								width: 4 + 'rem',
+								height: 4 + 'rem',
+								backgroundImage: 'url(' + instructor.avatar + ')',
+								backgroundSize: 'cover',
+							}}
+						></div>
 					</div>
 					<div className="flex flex-col mx-3">
 						<div className="flex">
