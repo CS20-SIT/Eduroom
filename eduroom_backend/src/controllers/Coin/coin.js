@@ -399,8 +399,8 @@ exports.getCodeListOfPublic = async (req, res) => {
 exports.buyCoupon = async (req, res) => {
     try{
 
-        // const userId = req.user.id
-        const userId= 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId = req.user.id
+        //const userId= 'db29433b-e05d-41ab-854b-b6f8023464f6'
         const ccid = req.body.ccid 
     
     
