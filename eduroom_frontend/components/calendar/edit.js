@@ -57,7 +57,6 @@ const edit = (props) => {
 				console.log(err)
 			})
 	}
-	const eventType = ['Course', 'Global']
 
 	return (
 		<Fragment>
@@ -100,12 +99,16 @@ const edit = (props) => {
 						) : null}
 					</div>
 
-					{/* ---------------------- ---------eventType------------------------------- */}
+					{/* ---------------------- ---------Course------------------------------- */}
 					<div>
-						<select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+						
+						<select defaultValue={data.courseid} className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+						<option Value={data.courseid} key={data.courseid}>
+										{data.coursename}
+									</option>
 							{courseList.map((course) => {
 								return (
-									<option value={course.courseid} key={course.courseid}>
+									<option Value={course.courseid} key={course.courseid}>
 										{course.coursename}
 									</option>
 								)
