@@ -1,17 +1,29 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useContext } from 'react';
 import Link from 'next/link';
 import style from '../../styles/admin/login'
 import Image from 'next/image'
 import InputText from '../utils/InputText'
+import AdminContext from '../../contexts/admin/adminContext'
+import {useRouter} from 'next/router'
 const Login = () => {
-  const [data,setData] = useState({email:{
-    label: 'Email',
-    name: 'email',
-    placeholder: 'Email',
+  const adminContext = useContext(AdminContext)
+  const {loginAdmin,admin,getAdminProfile} = adminContext
+  const router =useRouter()
+  useEffect(()=>{
+    if(admin){
+      router.push('/admin')
+    } else {
+      getAdminProfile()
+    }
+  },[admin])
+  const [data,setData] = useState({username:{
+    label: 'Username',
+    name: 'username',
+    placeholder: 'Username',
     error: false,
     type: 'text',
     value: '',
-    errorText: 'Email is Required'
+    errorText: 'Username is Required'
   },password:{
     label: 'Password',
     name: 'password',
@@ -46,7 +58,11 @@ const Login = () => {
       Object.keys(temp).map(el=>{
         formData[el] = temp[el].value;
       })
-      console.log(formData)
+      loginAdmin(formData,()=>{
+        router.push('/admin')
+      },()=>{
+        alert("Invalid username / password")
+      })
     }
     setData(temp)
   }

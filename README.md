@@ -17,7 +17,9 @@ Use localhost:3000 for seeing result
 For api you can use localhost:3000/api 
 Have fun on coding
 ```
-
+## FOR INTEGRATED TEST NEED TO CHANGE docker-compose.dev.yml 
+### NEXT_PUBLIC_ENTRYPOINT_URL from http://localhost to http://nginx 
+### After test please change back  
 ## Docker Compose
 
 
@@ -91,3 +93,4 @@ or
 ```
 npm run benchmark
 ```
+

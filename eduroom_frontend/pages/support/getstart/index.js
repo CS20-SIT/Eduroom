@@ -1,16 +1,17 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, Paper,Typography } from "@material-ui/core";
 import style from "../../../styles/forum/showForum";
-import GetStart from "../../../components/support/gettingstart"
+import GetStart from "../../../components/support/gettingstarted/gettingstart"
 import { useRouter } from "next/router";
 import GeneralNonav from "../../../components/template/generalnonav";
+import General from "../../../components/template/general";
 
 const create = () => {
     const router = useRouter();
 
     return (
         <Fragment>
-            <GeneralNonav img={'/images/newbg.svg'}>
+            <General>
             <div
                 style={{
                     display: "flex",
@@ -21,8 +22,6 @@ const create = () => {
             >
             <div id="nav">
                     <div className="top">
-                    <Link href='/support'><label>Eduroom Support
-                    </label></Link><label style={{marginLeft:'20px',marginRight:'20px'}}>&gt;</label><label>Getting Started</label>
                     <GetStart/>
                     </div>
                     
@@ -55,7 +54,7 @@ const create = () => {
           `}
                 </style>
                 </div>
-            </GeneralNonav>
+            </General>
         </Fragment>
     );
 };

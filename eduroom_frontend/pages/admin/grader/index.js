@@ -1,17 +1,20 @@
 import React, { Fragment } from "react";
-
-import GeneralNoNav from '../../../components/template/generalnonav';
-import GNav from "../../../components/graderCreate/Layout/gNav"
-import Landing from "../../../components/graderCreate/Landing/glanding";
+import ProtectedAdminRoute from "../../../components/admin/protectedAdminRoute";
+import GeneralNoNav from "../../../components/graderCreate/GraderCreateLayout/Sidebar";
+import GNav from "../../../components/graderCreate/GraderCreateLayout/Nav";
+import Landing from "../../../components/graderCreate/GraderCreateLanding/Landing";
 const LandPage = () => {
   return (
-    <Fragment>
-        
-        <GeneralNoNav>  <GNav></GNav><Landing /></GeneralNoNav>
+    <ProtectedAdminRoute>
+      <GeneralNoNav>
+        {" "}
+        <GNav></GNav>
+        <Landing />
+      </GeneralNoNav>
       {/* <GeneralTemplate>
        <Landing />
       </GeneralTemplate> */}
-    </Fragment>
+    </ProtectedAdminRoute>
   );
 };
 export default LandPage;

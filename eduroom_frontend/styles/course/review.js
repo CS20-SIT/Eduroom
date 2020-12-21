@@ -5,10 +5,10 @@ export default css`
                 background: white;
                 border-radius: 2vh;
                 width: 80vw;
-                height: 100vh;
+                height: 300vh;
                 margin-left: auto;
                 margin-right: auto;
-                margin-top: 2%;
+               
                 display: flex;
                 justify-content: start;
                 background-color: white;
@@ -20,4 +20,21 @@ export default css`
         border-radius:50%;
        
       }
+      .image-position{
+          position : absolute;
+          margin-top : 8rem;
+          margin-left : 10%;
+      }
+      .bg{
+        background-image:url('/images/big-bg.svg');
+        background-size : cover;
+      }
+      .myimgInPost{
+        width:79px;
+        height:79px;
+        object-fit:cover;
+        border-radius:50%;
+       
+      }
+    
 `

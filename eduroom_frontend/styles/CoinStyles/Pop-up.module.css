@@ -1,5 +1,120 @@
-.modal{
-    background-color: salmon;
-    width: 100px;
-    height: 50px;
+.title{
+  position: relative;
+  top: 30px;
+font-size: small;
+margin-left: 20%;
+/* background-color: red; */
 }
+.setPayment{
+    display: flex;
+    padding: 0px;
+    
+    /* background-color: blue; */
+}
+.showPhoto {
+  position: relative;
+  top: 10px;
+  left: 30px;
+  padding: 0%;
+  margin-right: 20% ;
+  /* padding-bottom: 20%; */
+  /* border: 2px solid black;
+  background-color: slategrey; */
+  width: 90%;
+  height: 90%;
+}
+.setPhotoMoney{
+  position: relative;
+  top: 20px;
+}
+.setMoney{
+  display: flex;
+  position: relative;
+  top: 20px;
+  left:60px;
+}
+.coinPhoto{
+  width: 20%;
+  margin: 10px;
+  /* border: 2px solid black; */
+}
+/* .setPhotoMoney .setMoney{
+  position: relative;
+  left: 50px;
+} */
+.btn {
+    /* margin-top: 50px; */
+    position: relative;
+    top: 20px;
+    padding: 5px 30px;
+    background-color: #a880f7;
+    border: none;
+    color: white;
+    display: inline-block;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 12px;
+    outline: none;
+}
+.disbtn {
+  /* margin-top: 50px; */
+  position: relative;
+  top: 20px;
+  padding: 5px 30px;
+  background-color: grey;
+  border: none;
+  opacity: 30%;
+  color: #000;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 12px;
+  outline: none;
+}
+.line{
+  position: relative;
+  left: 20px;
+  top:120px;
+  width:400px;
+  border-top: 1px solid rgb(197, 197, 197);
+}
+.line1{
+  position: relative;
+  left: 50px;
+  top: 80px;
+  width:400px;
+  border-top: 1px solid rgb(197, 197, 197);
+}
+.listSticker{
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  top: 150px;
+}
+.picture{
+  /* border: solid 2px black; */
+  width: 25%;
+  height:25%;
+  margin: 15px 0px;
+}
+/* ว่างหน่อย NOTE */
+.right {
+  padding: 50px;
+  height: 80vh;
+  width: 35vw;
+  margin: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  background-color: white;
+  border-radius: 5%;
+  position: relative;
+  overflow: scroll;
+}
+.box{
+  position: relative;
+  top: -5%;
+ 
+}
+
+
+

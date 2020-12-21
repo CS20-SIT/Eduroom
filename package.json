@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "docker-compose -f docker-compose.dev.yml up",
-    "clear" : "docker-compose -f docker-compose.dev.yml down",
+    "clear": "docker-compose -f docker-compose.dev.yml down",
     "benchmark": "cd eduroom_benchmark && npm start && cd .."
   },
   "author": "GGolfz",

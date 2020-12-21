@@ -1,155 +1,126 @@
-import React, { Fragment, useState } from 'react';
-import style from '../../styles/package/createpackage';
-import Selected from './selectedcourse';
-import Dialog from '@material-ui/core/Dialog';
-import { useRouter } from 'next/router';
+import React, { Fragment, useState, useEffect } from 'react'
+import style from '../../styles/package/createpackage'
+import SelectedCourses from './selectedCourses'
+import Dialog from '@material-ui/core/Dialog'
+import { useRouter } from 'next/router'
+import api from '../../api'
 
-const ConfirmPackage = (props) => {
-  const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const [type] = useState('created');
-  const handleOpenDialog = (e) => {
-    e.preventDefault();
-    setOpen(true);
-    handleSubmit();
-  };
-  const handleCloseDialog = (e) => {
-    e.preventDefault();
-    setOpen(false);
-  };
-  const handleSubmit = () => {
-    console.log(type);
-  };
-  return (
-    <Fragment>
-      <div style={{ backgroundColor: '#f4f5f7' }}>
-        <div className="package-header">Confirm Create</div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div className="container">
-            <div style={{ padding: '4% 25%' }}>
-              <div
-                style={{
-                  border: '1px solid black',
-                  padding: '30px 35px',
-                  width: '100%',
-                  height: '250px',
-                  marginBottom: '30px',
-                }}
-              >
-                image
-              </div>
-              <div className="subtitle">Name</div>
-              <div>{props.myPackage.name}</div>
-              <div
-                style={{
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  paddingBottom: '20px',
-                  color: '#5b5b5b',
-                }}
-              >
-                ฿<span>Price</span>
-              </div>
-              <div
-                style={{
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  paddingBottom: '25px',
-                  color: '#5b5b5b',
-                }}
-              >
-                Category
-              </div>
-              <div className="subtitle">Package Detail</div>
-              <div style={{ border: '1px solid white', marginBottom: '25px' }}>
-                <div>
-                  Non dolore minim et dolore ea qui cillum nisi cupidatat ea
-                  consectetur laborum. Esse aliquip tempor aliqua fugiat
-                  incididunt aliquip ut. Ea pariatur Lorem cillum officia
-                  excepteur laborum magna. Pariatur dolore voluptate magna
-                  exercitation adipisicing aliquip enim eiusmod sint consectetur
-                  aute commodo culpa. Velit mollit id nulla sunt fugiat elit et
-                  sunt enim irure nisi sint tempor. Consequat quis dolore
-                  aliquip sunt et ipsum commodo laborum eiusmod.
-                </div>
-              </div>
-              <div className="subtitle">Selected Courses</div>
-              <div
-                className="coursebox"
-                style={{ overflow: 'auto', height: '400px' }}
-              >
-                <div>
-                  <Selected />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          style={{
-            display: 'grid',
-            justifyContent: 'space-around',
-            gridTemplateColumns: '5% 50% 5%',
-            marginBottom: '5%',
-          }}
-        >
-          <div>
-            <button onClick={() => props.changePage(1)} className="backbutton">
-              <i className="fas fa-arrow-left"></i>
-            </button>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <button className="createbutton" onClick={handleOpenDialog}>
-              Confirm and Create
-            </button>
-          </div>
-          <div> </div>
+const ConfirmPackage = ({ myPackage, changePage }) => {
+	console.log(myPackage)
+	const [loading, setLoading] = useState(false)
+	const [courses, setCourses] = useState([])
+	const [totalPrice, setTotalPrice] = useState(null)
+	const [open, setOpen] = useState(false)
+	const router = useRouter()
+	const getTotalPrice = (total) => {
+		let price = parseFloat(total * ((100 - myPackage.discount) / 100)).toFixed(2)
+		return price
+	}
 
-          <Dialog open={open} onClose={handleCloseDialog}>
-            <div className="dialog">
-              <div className="indialog">
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    width: '108%',
-                  }}
-                >
-                  <button
-                    style={{
-                      backgroundColor: 'white',
-                      border: 'none',
-                      cursor: 'pointer',
-                      color: '#3D467F',
-                    }}
-                    onClick={() => router.push('/user/instructor/course')}
-                  >
-                    X
-                  </button>
-                </div>
-                <div>
-                  <img
-                    src="/images/package/createsuccess.svg"
-                    style={{ width: 200, height: 200 }}
-                  />
-                </div>
+	const handleOpenDialog = async (e) => {
+		await handleSubmit()
+		setOpen(true)
+	}
+	const fetchCourses = async () => {
+		const res = await api.get('/api/package/getCoursesOfCreatingPackage', {
+			params: { courseIds: myPackage.selectedCourses },
+		})
+		console.log(res.data)
+		setCourses(res.data.courses)
+		setTotalPrice(res.data.totalPrice)
+	}
+	useEffect(() => {
+		fetchCourses()
+	}, [])
+	useEffect(() => {
+		if (myPackage.pic) {
+			var reader = new FileReader()
+			reader.onload = function (e) {
+				document.getElementById('show-package-image-2').src = e.target.result
+			}
+			reader.readAsDataURL(myPackage.pic)
+		}
+	}, [myPackage.pic])
 
-                <div
-                  style={{
-                    fontSize: '28px',
-                    color: '#3D467F',
-                    paddingBottom: '15px',
-                  }}
-                >
-                  Create Package Successful !
-                </div>
-              </div>
-            </div>
-          </Dialog>
-        </div>
-      </div>
-      <style jsx>{style}</style>
-    </Fragment>
-  );
-};
-export default ConfirmPackage;
+	const handleSubmit = async () => {
+		setLoading(true)
+		const formData = new FormData()
+		formData.append('course-picture-1', myPackage.pic)
+		const pic = await api.post('/api/package/uploadPackagePic', formData)
+		const body = {
+			name: myPackage.name,
+			discount: myPackage.discount,
+			category: myPackage.category,
+			detail: myPackage.detail,
+			courses: myPackage.selectedCourses,
+			ispublic: false,
+			image: pic.data.linkUrl,
+		}
+		const res = await api.post('/api/package/createPackage', body)
+		setLoading(false)
+	}
+
+	return (
+		<Fragment>
+			<div>
+				<div className="package-header">CONFIRM CREATE</div>
+				<div className="container pd-4-15">
+					<div className="center">
+						<img src="" id="show-package-image-2" style={{ maxWidth: '100%', maxHeight: '235px' }} />
+					</div>
+					<div className="subtitle uppercase">{myPackage.name}</div>
+					<div className="price">
+						<div>
+							฿<span>{getTotalPrice(totalPrice)}</span>
+						</div>
+						<div style={{ marginLeft: '20px' }}>
+							(<span style={{ textDecoration: 'line-through' }}>฿{totalPrice}</span>)
+						</div>
+					</div>
+					<div className="category">{myPackage.categoryText}</div>
+					<div className="subtitle">Package Detail</div>
+					<div className="detail">{myPackage.detail}</div>
+					<div className="subtitle">Selected Courses</div>
+					<div className="coursebox box-cf">
+						<SelectedCourses courses={courses}></SelectedCourses>
+					</div>
+				</div>
+				<div className="cfbutton">
+					<div>
+						<button id="back-btn" className="backbutton" onClick={() => changePage(1)}>
+							<i className="fas fa-arrow-left"></i>
+						</button>
+					</div>
+					<div style={{ textAlign: 'center' }}>
+						<button
+							id="confirm-create-btn"
+							disabled={loading}
+							className={`createbutton mgb-10 ${loading ? 'disabled' : ''}`}
+							onClick={handleOpenDialog}
+						>
+							Confirm and Create
+						</button>
+					</div>
+					<div></div>
+				</div>
+			</div>
+			<Dialog open={open}>
+				<div className="dialog">
+					<div className="indialog">
+						<div className="dialog-buttonX">
+							<button id="close-btn" className="buttonX" onClick={() => router.push('/user/instructor/package')}>
+								X
+							</button>
+						</div>
+						<div>
+							<img src="/images/package/createsuccess.svg" style={{ width: 200, height: 200 }} />
+						</div>
+						<div className="text-dialog"> Create Package Successful !</div>
+					</div>
+				</div>
+			</Dialog>
+			<style jsx>{style}</style>
+		</Fragment>
+	)
+}
+export default ConfirmPackage

@@ -1,40 +1,68 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import EdqizText from "./edqizText";
 import style from "../../styles/edqiz/landing";
+import api from '../../api';
+import UserContext from '../../contexts/user/userContext';
+import AuthDialog from '../../components/landing/authDialog';
 const Content = () => {
-  
+
+  const userContext = useContext(UserContext)
+  const { user } = userContext;
+  const [dialog, setDialog] = useState(false);
+
   const [room, setPinRoom] = useState("");
   const router = useRouter();
-  
-  const mockData = [
-    { id: "1", pin: "3456" },
-    { id: "2", pin: "1234" },
-    { id: "3", pin: "2345" },
-    { id: "4", pin: "6789" },
-  ];
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api.get('/api/kahoot/roomHistory');
+      setData(res.data)
+    };
+    fetchData();
+  }, []);
+
   const checkPinIsValid = () => {
     let temp = 0;
-    for (let i = 0; i < mockData.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       temp++;
-      if (mockData[i].pin === room) {
-        console.log(mockData[i].pin == room)  
+      if (data[i].pin == room && data[i].isavailable == true) {
         router.push(`/edqiz/playPinRoomID/${room}`);
         break;
-      } else if ( temp === mockData.length && mockData[i].pin !== room) {
+      } else if (temp == data.length){
+        console.log('not valid')
         alert("ROOM IS NOT VALID");
         router.push('/edqiz');
       }
+
     }
   };
-  const pinEnter=(e)=>{
-    if(e.key=='Enter'){
-      checkPinIsValid();
+  const pinEnter = (e) => {
+    if (e.key == 'Enter') {
+      if (!user) {
+        setDialog(!dialog)
+      } else {
+        checkPinIsValid()
+        
+      }
     }
-   
+
+  }
+  const handleLike = (id, callback) => {
+    if (!user) {
+      setDialog(!dialog)
+    } else {
+      checkPinIsValid()
+      console.log('checkvalid')
+    }
   }
   return (
     <Fragment>
+      {
+        dialog ? (
+          <AuthDialog handleClick={() => { setDialog(false) }} />
+        ) : null
+      }
       <div className="landing">
         <div className="landing-content">
           <div className="col-12">
@@ -47,20 +75,20 @@ const Content = () => {
                 id="pinroom"
                 value={room}
                 onChange={(e) => setPinRoom(e.target.value)}
-                onKeyDown={(e)=>pinEnter(e)}
+                onKeyDown={(e) => pinEnter(e)}
                 name="firstname"
                 placeholder="GAME PIN.."
-              
+
               />
             </div>
             <div className="row">
-            
-                <button className="landing-button" type="submit"
-                 onClick={checkPinIsValid}
-                 >
-                  <span className="landing-button-text">ENTER</span>
-                </button>
-          
+
+              <button className="landing-button" type="submit"
+                onClick={() => handleLike()}>
+
+                <span className="landing-button-text">ENTER</span>
+              </button>
+
             </div>
           </div>
         </div>

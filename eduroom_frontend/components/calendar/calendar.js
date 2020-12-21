@@ -1,186 +1,193 @@
-import React, { Fragment, useState, useEffect } from "react";
-import Cell from "../../components/calendar/calendarCell";
-import HeadCell from "../../components/calendar/calendarHeader";
-import BlankCell from "../../components/calendar/calendarBlankCell";
+import React, { Fragment, useState, useEffect } from 'react'
+import Cell from '../../components/calendar/calendarCell'
+import HeadCell from '../../components/calendar/calendarHeader'
+import BlankCell from '../../components/calendar/calendarBlankCell'
+import ViewEvent from '../../components/calendar/viewEvent'
+import Image from 'next/image'
+import api from '../../api'
 // import { useRouter } from 'next/router';
-import style from "../../styles/calendar/calendar";
-import moment from "moment";
-import Link from "next/link";
-import {
-  Grid,
-  Container,
-  DialogContent,
-  Dialog,
-  DialogTitle,
-  Button,
-} from "@material-ui/core";
-import Popover from "@material-ui/core/Popover";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import style from '../../styles/calendar/calendar'
+import moment from 'moment'
+import Link from 'next/link'
+import { Grid, Container } from '@material-ui/core'
+import { useRouter } from 'next/router'
 
 const Content = () => {
-  // Pop-up-event
-  const useStyles = makeStyles((theme) => ({
-    typography: {
-      padding: theme.spacing(2),
-    },
-  }));
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+	const router = useRouter()
 
-  //Array of short names of the day.
-  //Mon Tue ...
-  const days = moment.weekdaysShort();
+	//Array of short names of the day.
+	//Mon Tue ...
+	const days = moment.weekdaysShort()
 
-  //change when click next or before month
-  const [day, setDay] = useState({
-    dateObject: moment(),
-  });
-  const [isToday, setIsToday] = useState(true);
-  //state chage 1 month per click
-  const addMonth = () => {
-    const dateObject = day.dateObject.add(1, "M");
-    setDay({ ...day, dateObject: dateObject });
-  };
+	//change when click next or before month
+	const [day, setDay] = useState({
+		dateObject: moment(),
+	})
+	const [currentDate, setCurrentDate] = useState(1)
+	const [currentMonth, setCurrentMonth] = useState('January')
+	const [currentMonthNo, setCurrentMonthNo] = useState(1)
+	const [currentYear, setCurrentYear] = useState(1970)
 
-  const minusMonth = () => {
-    const dateObject = day.dateObject.add(-1, "M");
-    setDay({ ...day, dateObject: dateObject });
-  };
+	const Today = new Date()
+	const TodayDate = Today.getDate()
+	const TodayMonth = Today.getMonth() + 1
+	const TodayYear = Today.getFullYear()
 
-  //return the first day of that month
-  // 0 = sun, 1 = mon , ... , 6 = sat
-  const firstDayOfMonth = () => {
-    let dateObj = day.dateObject;
-    let firstDay = moment(dateObj).startOf("month").format("d");
-    return firstDay;
-  };
+	const [eventDays, setEvent] = useState([])
+	const [daysInMonth, setDayInMonth] = useState([])
+	const [blank, setBlank] = useState([])
+	const [blankEnd, setBlankEnd] = useState([])
 
-  let count = 0;
+	useEffect(() => {
+		setCurrentDate(parseInt(day.dateObject.format('D')))
+		setCurrentMonth(day.dateObject.format('MMMM'))
+		setCurrentMonthNo(parseInt(day.dateObject.format('M')))
+		setCurrentYear(parseInt(day.dateObject.format('YYYY')))
+		let tempDay = []
+		let tempBlankend = []
+		let tempBlank = []
+		let count = 0
+		for (let i = 0; i < firstDayOfMonth(); i++) {
+			tempBlank.push('x')
+			count++
+		}
+		for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
+			tempDay.push(d)
+			count++
+		}
+		while (count < 42) {
+			tempBlankend.push('x')
+			count++
+		}
+		setDayInMonth(tempDay)
+		setBlank(tempBlank)
+		setBlankEnd(tempBlankend)
+		api
+			.get(
+				`/api/event/getEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(
+					day.dateObject.format('YYYY')
+				)}`
+			)
+			.then((res) => {
+				setEvent(res.data.data)
+				console.log(res.data.data)
+			})
+			.catch((err) => {})
+	}, [day])
+	//state chage 1 month per click
+	const addMonth = () => {
+		const dateObject = day.dateObject.add(1, 'M')
+		setDay({ ...day, dateObject: dateObject })
+	}
+	const minusMonth = () => {
+		const dateObject = day.dateObject.add(-1, 'M')
+		setDay({ ...day, dateObject: dateObject })
+	}
+	//return the first day of that month
+	// 0 = sun, 1 = mon , ... , 6 = sat
+	const firstDayOfMonth = () => {
+		let dateObj = day.dateObject
+		let firstDay = moment(dateObj).startOf('month').format('d')
+		return firstDay
+	}
 
-  //add black cell before the first day of the month
-  // i.e. first day is tuesday => fill blank in sunday and monday.
-  let blank = [];
-  for (let i = 0; i < firstDayOfMonth(); i++) {
-    blank.push("x");
-    count++;
-  }
+	console.log(eventDays)
 
-  //array of days in that month start from 1 to 28,29,30,31 (up to that month)
-  let daysInMonth = [];
-  for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
-    daysInMonth.push(d);
-    count++;
-  }
+	const [showDate, setShowDate] = useState(-1)
+	const [open, setOpen] = useState(false)
 
-  let blankEnd = [];
-  while(count<42){
-    blankEnd.push("x")
-    count++;
-  }
+	const [isInstructor, setInstructor] = useState(false)
 
-  console.log(blankEnd);
+	useEffect(() => {
+		api
+			.get('/api/auth/profile')
+			.then((res) => {
+				if (res.data.role == 'instructor') {
+					setInstructor(true)
+				}
+			})
+			.catch((err) => {})
+	}, [])
 
-  const Today = new Date();
-  const TodayDate = Today.getDate();
-  const TodayMonth = Today.getMonth() + 1;
-  const TodayYear = Today.getFullYear();
+	// ------------------code below----------------------//
+	return (
+		<Fragment>
+			<ViewEvent
+				open={open}
+				setOpen={setOpen}
+				showDate={showDate}
+				currentMonth={currentMonth}
+				currentMonthNo={currentMonthNo}
+				currentYear={currentYear}
+			/>
 
-  const currentDate = parseInt(day.dateObject.format("D"));
-  const currentMonth = day.dateObject.format("MMMM");
-  const currentMonthNo = parseInt(day.dateObject.format("M"));
-  const currentYear = parseInt(day.dateObject.format("YYYY"));
+			{/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
+			{/* {isInstructor ? (
+				<div className="createEvent">
+					<button
+						className="bt-createEvent"
+						onClick={() => {
+							router.push(`/event`)
+						}}
+					>
+						createEvent
+					</button>
+				</div>
+			) : null} */}
 
-  useEffect(() => {
-    isTodayInThisMonthAndYear();
-  });
+			{/* ------------------------------Calendar Header---------------------------------------- */}
+			<div className="month-color text-center">
+				<div className="month-size">
+					<Container>
+						<Grid container spacing={0}>
+							<div className="previous-m" onClick={minusMonth}>
+								{' '}
+								<Image alt="left-arrow" src="/images/createEvent/L.svg" width="30" height="30" />{' '}
+							</div>
 
-  const isTodayInThisMonthAndYear = () => {
-    if (TodayMonth === currentMonthNo && TodayYear === currentYear) {
-      setIsToday(true);
-    } else {
-      setIsToday(false);
-    }
-  };
+							<div className="month">{currentMonth + ' ' + currentYear}</div>
 
-  return (
-    <Fragment>
-      {/* Pop up event content */}
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        <Typography className={classes.typography}>This November.</Typography>
-      </Popover>
+							<div className="forward-m" onClick={addMonth}>
+								<Image alt="right-arrow" src="/images/createEvent/R.svg" width="30" height="30" />
+							</div>
+						</Grid>
+					</Container>
+				</div>
 
-      <div className="month-color text-center">
-        <div className="month-size">
-          <Container>
-            <Grid container spacing={0}>
-              <Grid item xs={2}></Grid>
-              <Grid item xs={1}>
-                <div className="previous-m" onClick={minusMonth}>
-                  {" "}
-                  &lt;{" "}
-                </div>
-              </Grid>
-              <Grid item xs={6} onClick={handleClick}>
-                {currentMonth + " " + currentYear}
-              </Grid>
-              <Grid item xs={1}>
-                <div className="forward-m" onClick={addMonth}>
-                  &gt;
-                </div>
-              </Grid>
-              <Grid item xs={2}></Grid>
-            </Grid>
-          </Container>
-        </div>
-        <div className="grid">
-          {days.map((dayName) => {
-            return <HeadCell head={dayName} />;
-          })}
+				{/* -------------------------------Fill Calendar Items------------------------------- */}
+				<div className="grid">
+					{days.map((dayName) => {
+						return <HeadCell head={dayName} />
+					})}
 
-          {blank.map((blank) => {
-            return <BlankCell Content={blank} />;
-          })}
+					{blank.map((blank) => {
+						return <BlankCell Content={blank} />
+					})}
 
-          {daysInMonth.map((day) => {
-            return <Cell TodayDate={TodayDate} isNow={isToday} Content={day} />;
-          })}
+					{daysInMonth.map((day) => {
+						return (
+							<Cell
+								events={eventDays}
+								isToday={TodayDate == day && TodayMonth == currentMonthNo && TodayYear == currentYear}
+								todayDate={TodayDate}
+								date={`${currentMonthNo}/${day}/${currentYear}`}
+								setOpen={setOpen}
+								Content={day}
+								setShowDate={setShowDate}
+							/>
+						)
+					})}
 
-          {blankEnd.map((blank) => {
-            return <BlankCell Content={blank} />;
-          })}
-
-          {/*  <div>
-                        <Link href="/event">
-                            <button className="addEvent-button">Add Event</button>
-                        </Link>
-                    </div> */}
-        </div>
-      </div>
-
-      <style jsx>{style}</style>
-    </Fragment>
-  );
-};
-export default Content;
+					{blankEnd.map((blank) => {
+						return <BlankCell Content={blank} />
+					})}
+				</div>
+			</div>
+			<div className="bg-calendar">
+				<Image alt="image" src="/images/createEvent/calendar.svg" width="700" height="600" />
+			</div>
+			<style jsx>{style}</style>
+		</Fragment>
+	)
+}
+export default Content

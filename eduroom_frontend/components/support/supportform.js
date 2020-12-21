@@ -16,21 +16,21 @@ import {
 } from "@material-ui/core";
 import api from "../../api";
 import GeneralNoNav from "../../components/template/generalnonav";
+import {useRouter} from 'next/router';
+
+
 
 const SupportForm = () => {
+
+  const router = useRouter();
   const [supportForm, setForm] = useState({
-    name: "",
-    username: "",
     email: "",
     title: "",
     content: "",
-    priority: "",
+    priority: 1,
     subCat: "",
-    cat: "",
   });
   const [alert, setAlert] = useState({
-    name: false,
-    username: false,
     email: false,
     title: false,
     content: false,
@@ -43,11 +43,6 @@ const SupportForm = () => {
     setForm({ ...supportForm, [e.target.name]: e.target.value });
   };
 
-  const Priority = [
-    "Immediate: Fix Immediately",
-    "Medium",
-    "Low: Not in priority until updated",
-  ];
   const Category = ["Account/Login Issues", "General", "Purchases", "etc."];
   const subCategory = {
     "Account/Login Issues": [
@@ -78,40 +73,36 @@ const SupportForm = () => {
   const [subCat, setSubCat] = useState([]);
   const handleSelect = (e) => {
     setSubCat(subCategory[e.target.value] ?? []);
-    setForm({ ...supportForm, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
-      
-      if (validator(),validateEmail()) {
-        api
-          .post("/api/support", {
-            name: supportForm.name,
-            username: supportForm.username,
-            email: supportForm.email,
-            title: supportForm.title,
-            content: supportForm.content,
-            priority: supportForm.priority,
-            cat: supportForm.cat,
-            subCat: supportForm.subCat,
-          })
-          .then((res) => {
-            console.log(res.data);
-          });
-      }
-      
-        if(validator()==true){
-          window.location.href="/support";
-        }
-      
-    
+    if ((validator(), validateEmail())) {
+      api
+        .post("/api/support/create", {
+          name: supportForm.name,
+          username: supportForm.username,
+          email: supportForm.email,
+          title: supportForm.title,
+          content: supportForm.content,
+          priority: supportForm.priority,
+          cat: supportForm.cat,
+          subCat: supportForm.subCat,
+        })
+        .then((res) => {
+          console.log(res.data);
+          router.push("/support ");
+        });
+    }else{
+      console.log("This is error");
+    }
   };
   const validateEmail = () => {
     const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([\t]*\r\n)?[\t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([\t]*\r\n)?[\t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
     if (expression.test(String(supportForm.email).toLowerCase())) {
-      setAlert({...alert,email:false});
-      check = false;
-    }else{
-      setAlert({...alert,email:true});
+      setAlert({ ...alert, email: false });
+      return true;
+    } else {
+      setAlert({ ...alert, email: true });
+      return false;
     }
   };
 
@@ -130,7 +121,6 @@ const SupportForm = () => {
     setAlert(temp);
     return check;
   };
-  
 
   const useStyles = makeStyles((theme) => ({
     page: {
@@ -179,47 +169,7 @@ const SupportForm = () => {
             <Paper className={classes.paper}>
               <form className={classes.form}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Typography variant="subtitle1">Your Name</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      name="name"
-                      fullWidth
-                      autoFocus
-                      type={"text"}
-                      variant="outlined"
-                      value={supportForm.name}
-                      onChange={handleChange}
-                      error={alert.name}
-                    />
-                    {alert.name ? (
-                      <span style={{ color: "red", fontSize: "0.8em" }}>
-                        name is required
-                      </span>
-                    ) : null}
-                  </Grid>
-
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="subtitle1">Your Username</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      name="username"
-                      fullWidth
-                      autoFocus
-                      variant="outlined"
-                      type={"text"}
-                      value={supportForm.username}
-                      onChange={handleChange}
-                      error={alert.username}
-                    />
-                    {alert.username ? (
-                      <span style={{ color: "red", fontSize: "0.8em" }}>
-                        username is required
-                      </span>
-                    ) : null}
-                  </Grid>
+                  
                   <Grid item xs={12} sm={12}>
                     <Typography variant="subtitle1">
                       Your Email Address
@@ -354,16 +304,13 @@ const SupportForm = () => {
                       fullWidth
                       variant="outlined"
                     >
-                      <MenuItem disabled value="default">
-                        --None--
-                      </MenuItem>
-                      {Priority.map((el) => {
-                        return (
-                          <MenuItem value={el} key={el}>
-                            {el}
-                          </MenuItem>
-                        );
-                      })}
+
+<MenuItem disabled value="default">
+            --None--
+          </MenuItem>
+          <MenuItem value={1}>Immediate: Fix Immediately</MenuItem>
+          <MenuItem value={2}>Medium</MenuItem>
+          <MenuItem value={3}>Low: Not in priority until updated</MenuItem>
                     </Select>
                     {alert.priority ? (
                       <span style={{ color: "red", fontSize: "0.8em" }}>
@@ -378,19 +325,15 @@ const SupportForm = () => {
                   alignItems="center"
                   justify="center"
                 >
-                  <Grid item xs={2} sm={2} alignItems="center">
+                  <Grid item xs={2} sm={2}>
                     <Button
                       style={{ width: "150px", height: "40px" }}
                       fullWidth
                       variant="contained"
                       color={"primary"}
                       onClick={handleSubmit}
-                      
-                      
                       className={classes.submit}
-                      
                     >
-                      
                       Submit
                     </Button>
                   </Grid>

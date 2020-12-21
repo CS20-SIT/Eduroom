@@ -23,6 +23,8 @@ jobs:
 
     # Setup gcloud CLI
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.3
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       with:
         service_account_key: ${{ secrets.GKE_SA_KEY }}
         project_id: ${{ secrets.GKE_PROJECT }}
@@ -54,9 +56,21 @@ jobs:
         run: docker-compose -f docker-compose.test.yml build
       - name: Test Eduroom Backend Image
         run: docker-compose -f docker-compose.test.yml run eduroom_backend
-      - name: Test Eduroom Grader Image
-        run: docker-compose -f docker-compose.test.yml run eduroom_grading_server
       - name: Test Eduroom Socket Chat Image
         run: docker-compose -f docker-compose.test.yml run eduroom_socket_chat
       - name: Test Eduroom Socket Kahoot Image
         run: docker-compose -f docker-compose.test.yml run eduroom_socket_kahoot
+#   prettier:
+#     runs-on: [self-hosted, linux, x64]
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+#       with:
+#         # Make sure the actual branch is checked out when running on pull requests
+#         ref: ${{ github.head_ref }}
+#     - name: Prettify code
+#       uses: creyD/prettier_action@v3.1
+# #       with:
+#         # This part is also where you can pass other options, for example:
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

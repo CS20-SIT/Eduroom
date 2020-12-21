@@ -4,70 +4,110 @@ import Grid from "@material-ui/core/Grid";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import socketIOClient from "socket.io-client";
+import api from '../../api';
 
 const Content = ({ id }) => {
   //mockup data
-  const [kahoot_roomHistory, setHistory] = useState([
-    { sessionID: "1", roomid: "1", pin: "1234", available: false },
-    { sessionID: "2", roomid: "2", pin: "3456", available: false },
-    { sessionID: "3", roomid: "5", pin: "4567", available: false },
-  ]);
-  const [pin, setPin] = useState("0");
+  const router = useRouter();
+  const [kahoot_roomHistory, setHistory] = useState(null);
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api.get('/api/kahoot/roomHistory');
+    };
+    fetchData();
+  }, []);
+
+
+  const handleSubmit = async (body) => {
+    const res = await api.post('/api/kahoot/roomHistory', body);
+    setSession(res.data.sessionid)
+  };
+
+  const handleCloseRoom = async (body) => {
+    if(session!=null){
+    const res = await api.post(`/api/kahoot/closeRoom/${session}`);
+    }
+  };
+
+  const [player, setPlayer] = useState([]);
+  const [pin, setPin] = useState(null);
   let temppin = 0;
   async function randomPin() {
-    // temppin=(Math.floor(Math.random() * 10000) + 1000);
-    temppin = 1234;
-    setPin(temppin);
+    temppin = await (Math.floor(Math.random() * 10000) + 1000);
+    // temppin = "12345";
 
-    //update query session room id avilable: true
-    kahoot_roomHistory.map((el, index) => {
-      if (kahoot_roomHistory[index].pin == temppin) {
-        if (kahoot_roomHistory[index].available == true) {
-          temppin = Math.floor(Math.random() * 10000) + 1000;
-          setPin(temppin);
+    let duplicate = true;
+    if (kahoot_roomHistory != null) {
+      while (duplicate) {
+        duplicate = false;
+        for (let i = 0; i < kahoot_roomHistory.length; i++) {
+          if (kahoot_roomHistory[i].pin == temppin) {
+            temppin = (Math.floor(Math.random() * 10000) + 1000);
+            duplicate = true;
+            break;
+          }
+        }
+        if (duplicate == false) {
+          break;
         }
       }
-    });
+    }
+    setPin(temppin);
   }
   const setRoomOpen = (ppin) => {
+    handleCloseRoom(session)
     const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
       path: "/kahoot",
     });
-    // console.log(ppin)
     socket.emit("set-openRoom", true, ppin);
   };
+  const [render, setRender] = useState();
 
-  useEffect(() => {
-    randomPin();
 
-  }, []);
+  const response = () => {
+    const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
+      path: "/kahoot",
+    });
+    const temp = [];
 
-  const router = useRouter();
-  // console.log(pinRandom)
-  const student = [
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-    { name: "NICKNAME" },
-  ];
-  const renderQuestion = () => {
-    return student.map((el, index) => {
+    socket.on("new-name", (namePlayer, pinTemp) => {
+      temp.push([namePlayer, pinTemp]);
+      if (temp[temp.length - 1][1] == pin) {
+        player.push(temp[temp.length - 1][0]);
+        setRender(namePlayer);
+      }
+    });
+  };
+  const renderStudent = () => {
+
+    return player.map((el, index) => {
       return (
-        <Grid
-          item
-          xs={4}
-          style={{ padding: "1vw", display: "flex", justifyContent: "center" }}
-        >
-          <div>{student[index].name}</div>
+        <Grid key={index} item xs={4} style={{ display: 'flex', justifyContent: 'center' }}>
+          <div >{el}</div>
         </Grid>
       );
     });
   };
+
+  useEffect(() => {
+    response();
+  }, [pin]);
+
+  useEffect(() => {
+    randomPin();
+  }, [kahoot_roomHistory]);
+
+  useEffect(() => {
+    if (pin != null) {
+      const postStatus = { roomid: id.id, pin, isavailable: true }
+      handleSubmit(postStatus);
+    }
+  }, [pin])
+
+
+
   return (
     <Fragment>
       <GeneralNoSide>
@@ -90,7 +130,7 @@ const Content = ({ id }) => {
                     alignItems: "center",
                   }}
                 >
-                  <button className="player">{student.length} players</button>
+                  <button className="player">{player.length} players</button>
                 </Grid>
                 <Grid item xs={4}>
                   <span className="text-title">
@@ -111,14 +151,19 @@ const Content = ({ id }) => {
                   }}
                 >
                   <Link href={`/edqiz/gamePlay/${pin}`}>
-                    <button className="startButton" onClick={()=>setRoomOpen(pin)}>start{">"}</button>
+                    <button
+                      className="startButton"
+                      onClick={() => setRoomOpen(pin)}
+                    >
+                      start{">"}
+                    </button>
                   </Link>
                 </Grid>
               </Grid>
               <br />
               <br />
               <div style={{ color: "#3D467F", fontWeight: 600 }}>
-                <Grid container>{renderQuestion()}</Grid>
+                <Grid container>{renderStudent()}</Grid>
                 <br />
               </div>
             </div>

@@ -20,6 +20,7 @@ const Content = ({mode}) => {
     image: null,
   }
   const [questionList, setQuestionList] = useState([questionTemplate])
+  // console.log('q',questionList)
   useEffect(() => {
     if (mode == 'edit'){
       setName("Test Edqiz");
@@ -152,6 +153,8 @@ const Content = ({mode}) => {
             image={image}
             changeDescription={handleChangeDescription}
             changeImage={handleChangeImage}
+            questionList={questionList}
+            name={name}
           />
         )
       case 5:

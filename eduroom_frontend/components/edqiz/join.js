@@ -1,12 +1,34 @@
-import React, { Fragment, useEffect,useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import style from "../../styles/edqiz/landing";
-
-
-
-const Page1 = ({ goto, mockData, change }) => {
- 
+import socketIOClient from "socket.io-client";
+import api from '../../api';
+const Page1 = ({ goto, mockData, change, name }) => {
   const router = useRouter();
+
+
+  const [sessionid, setSesstionID] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      let pin = router.query.room
+      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      console.log('resdata', res.data)
+      setSesstionID(res.data)
+
+    };
+    fetchData();
+  }, []);
+
+  const handlePlayere = async (body) => {
+    const nameforplay = { nameforplay: body }
+    console.log(nameforplay, 'nameforplay')
+    const res = await api.post('/api/kahoot/player', nameforplay);
+    const sessionTemp = sessionid
+    console.log(sessionTemp, 'sesstionIDTemp')
+    const resSession = await api.post('/api/kahoot/roomHistoryplayerFirstTime', sessionTemp);
+    console.log(resSession, 'session success')
+
+  };
   return (
     <Fragment>
       <div className="landing">
@@ -69,7 +91,7 @@ const Page1 = ({ goto, mockData, change }) => {
                 justifyContent: "center",
               }}
             >
-              FILL IN YOUR NAME :
+              FILL IN YOUR NAME
             </div>
             <div className="row">
               <input
@@ -77,11 +99,17 @@ const Page1 = ({ goto, mockData, change }) => {
                 id="fname"
                 name="firstname"
                 onChange={(e) => change(e.target.value)}
+
+                // {seeName()}
                 placeholder="fill in your name . ."
               />
             </div>
             <div className="row">
-              <button className="landing-button" onClick={() => goto(2)}>
+              <button
+                className="landing-button"
+                onClick={() => { goto(2); handlePlayere(name); }}
+              >
+
                 <span className="landing-button-text">JOIN GAME</span>
               </button>
             </div>

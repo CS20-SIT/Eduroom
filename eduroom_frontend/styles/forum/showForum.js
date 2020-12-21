@@ -32,8 +32,18 @@ export default css`
     width: auto;
   }
   .idblock{
-    padding: 0% 3% 2% 1%;
-    margin: 0% 4% 0% 4%;
+    padding: 1% 3% 2% 1%;
+    margin: 1% 4% 4% 4%;
     width: auto;
+  }
+  .backtoforum{
+    margin: 2%;
+    margin-top: 0%;
+    margin-left: 1%;
+  }
+  .backforroom{
+    margin: 1%;
+    margin-top: 0%;
+    margin-left: 7%;
   }
 `;

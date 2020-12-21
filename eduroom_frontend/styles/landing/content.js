@@ -1,18 +1,24 @@
-import css from 'styled-jsx/css'
+import css from 'styled-jsx/css';
 export default css`
   .landing {
-    width: 100%;
+    width: 95%;
+    height: 100vh;
     display: flex;
     justify-content: flex-end;
     padding: 2% 5% 0% 5%;
     cursor: default;
+    background-image: url('/images/BG_Landing.svg');
+    background-size:cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
   }
   .landing-img {
     width: 55%;
   }
   .landing-content {
     position: absolute;
-    left: 8%;
+    left: 5%;
     top: 24%;
     font-family: 'Quicksand', sans-serif;
   }
@@ -30,7 +36,7 @@ export default css`
     color: #5b5b5b;
   }
   .landing-button {
-    background: #FB9CCB;
+    background: #fb9ccb;
     border-radius: 25px;
     padding: 0.5rem 1.5rem;
     border: none;
@@ -48,4 +54,4 @@ export default css`
     font-size: 1.2em;
     font-family: 'Quicksand', sans-serif;
   }
-`
+`;

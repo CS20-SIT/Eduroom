@@ -37,7 +37,6 @@ const Temp = () => {
                             <br />
                             Sticker that's Prize for the people who has Ambition
                         </span>
-
                         <div className={Styles.posball2}>
                             <div className={Styles.balloon}></div>
                         </div>
@@ -57,7 +56,7 @@ const Temp = () => {
                                 <Button
                                     variant='outlined'
                                     color='primary'
-                                    size="large"
+                                    size='large'
                                     onClick={e => {
                                         clicks(e);
                                     }}
@@ -77,7 +76,9 @@ const Temp = () => {
                                             height: '89vh'
                                         }}
                                     >
-                                        <Daily onClose={()=>setOpen(false)}></Daily>
+                                        <Daily
+                                            onClose={() => setOpen(false)}
+                                        ></Daily>
                                     </DialogContent>
                                 </Dialog>
                             </Container>
