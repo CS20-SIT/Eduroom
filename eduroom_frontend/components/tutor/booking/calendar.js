@@ -12,6 +12,7 @@ const Calendar = ({ date, setDate, month, setMonth, year, setYear, times, setTim
 		let res = await api.get('/api/tutor/instructor/availability', {
 			params: { id, dates: `${year}-${month + 1}-${i}` },
 		})
+
 		setAvailability(res.data)
 	}
 	useEffect(() => {
