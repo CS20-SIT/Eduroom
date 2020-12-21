@@ -11,14 +11,16 @@ const CartPage = () => {
 	const [courses, setCourses] = useState([])
 	const [packages, setPackages] = useState([])
 	const fetchCourse = async () => {
+		const courses = getItems('course')
 		const res = await api.get('/api/package/coursesFromIds', {
-			params: { ids: cartCourses },
+			params: { ids: courses },
 		})
 		setCourses(res.data)
 	}
 	const fetchPackages = async () => {
+		const packages = getItems('package')
 		const res = await api.get('/api/package/packagesFromIds', {
-			params: { ids: cartPackages },
+			params: { ids: packages },
 		})
 		setPackages(res.data)
 	}
