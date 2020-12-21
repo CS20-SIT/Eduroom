@@ -69,7 +69,7 @@ const WishlistForm = (props) => {
 
 //       {/* Box of each course */}
 //       <div className="text-center my-10">
-//         {/* {courseDes.map((e, index) => ( */}
+        //  {/* {courseDes.map((e, index) => ( */}
 //           <Link href={`/course/${props.id}`}>
 //             <div className="mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer">
 //               <div className="w-full h-60">
@@ -84,7 +84,7 @@ const WishlistForm = (props) => {
 //               </div>
 //             </div>
 //           </Link>
-//         {/* ))} */}
+        //  {/* ))} */}
 //       </div>
 //     </div>
 //   </div>
