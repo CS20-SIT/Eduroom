@@ -97,6 +97,7 @@ export default css`
   position : absolute;
   cursor: pointer;
   margin-left: 18rem;
+  z-index : 0;
   
 }
 .forward-m {
@@ -105,10 +106,11 @@ export default css`
   cursor: pointer;
   position : absolute;
   margin-left :51rem;
+  z-index:0;
 }
 .month{
   position : absolute;
-  padding-left : 24rem;
+  left : 36rem;
   z-index : 0;
 }
 
