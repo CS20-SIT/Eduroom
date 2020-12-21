@@ -37,7 +37,6 @@ const EditForm = () => {
 	const [birth, setBirth] = useState(null)
 	const [bio, setBio] = useState(null)
 	const [avatar, setAvatar] = useState(null)
-	const [password,setPassword] = useState(null)
 
 	const [email,setEmail] = useState(null)
 	const [open,setOpen] = useState(false)
