@@ -6,6 +6,37 @@ const { grader } = require('../utils/graderAPI')
 const { base64ToString, stringToBase64 } = require('../utils/base64')
 const { getLanguageId, getSubmissionStatus } = require('../utils/grader')
 
+const sleep = (ms) => {
+	return new Promise(resolve =>  setTimeout(resolve, ms))
+}
+
+const getSubmissionUntilAllDone = async (tokens) => {
+	let resultPending = false 
+	let getSubmissionsResponse
+	do {
+		resultPending = false 
+		getSubmissionsResponse = await grader.get('/submissions/batch', {
+			params: {
+				base64_encoded: true,
+				tokens,
+			},
+		})
+		const testcaseNumber = getSubmissionsResponse.data.submissions.length
+		const {submissions} = getSubmissionsResponse.data
+		for(let i=0; i<testcaseNumber; i+=1){
+			if(submissions[i].status.id < 3){
+				resultPending = true
+			}
+		}
+		if(resultPending){
+			await sleep(2000)
+		}
+	}
+	while(resultPending)
+
+	return getSubmissionsResponse
+}
+
 exports.pingGrader = async (req, res) => {
 	const response = await grader.get('/about')
 	res.send(response.data)
@@ -115,7 +146,8 @@ exports.getSubmission = async (req, res) => {
 		const questionTypeQuery = await pool.query(
 			`SELECT ruletype, timelimit, memorylimit FROM questions INNER JOIN question_attempt qa on questions.id = qa.questionid WHERE qa.attemptid = ${attemptId} AND qa.userid = '${userId}' AND qa.status = 'Pending'`
 		)
-		if (questionTypeQuery.rowCount === 0) {
+
+		if (questionTypeQuery.rowCount === 0) { 
 			const err = {
 				statusCode: 400,
 				message: 'Question attempt is already checked',
@@ -125,12 +157,8 @@ exports.getSubmission = async (req, res) => {
 		const { ruletype, timelimit, memorylimit } = questionTypeQuery.rows[0]
 
 		// Send API of get batch submission to judge0
-		const getSubmissionsResponse = await grader.get('/submissions/batch', {
-			params: {
-				base64_encoded: true,
-				tokens,
-			},
-		})
+		const getSubmissionsResponse = await getSubmissionUntilAllDone(tokens)
+		
 
 		// Check submission result
 		const testcaseNumber = getSubmissionsResponse.data.submissions.length
@@ -213,13 +241,15 @@ exports.getSubmission = async (req, res) => {
 		)
 		await Promise.all(updateAttempPromise)
 
-		res.send({
+		return res.send({
 			score: totalScore,
 			status: overallStatus,
 			time: overallTime,
 			memory: overallMemory,
 		})
 	} catch (error) {
-		errorHandler(error, req, res)
+		return errorHandler(error, req, res)
 	}
 }
+
+
