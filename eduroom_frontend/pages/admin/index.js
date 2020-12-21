@@ -18,7 +18,6 @@ const Admin = () => {
 						<ActionList />
 						<div className="content-title">Support {"&"} Analysis</div>
                         <RowList/>
-                        <button onClick={logoutAdmin}>logout</button>
 					</div>
                     <div className="user">
                         <UserContent />

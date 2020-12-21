@@ -16,11 +16,11 @@ const CategoryItem = ({ content, current }) => {
                         text-align:center;
                         padding-bottom: 1rem; 
                     }
+                    .categoriesContent:hover{
+                        color: rgb(251,156,203);
+                    }
                     .bottomLine{
                         border-bottom: 2px solid #535353;
-                    }
-                    bottomLine:hover {
-                        color: pink;
                     }
                 `}
             </style>

@@ -45,7 +45,15 @@ const Tutor = () => {
 												setHoverIns(-1)
 											}}
 										>
-											<div className="rounded-full bg-yellow" style={{ width: 4 + 'rem', height: 4 + 'rem' }}></div>
+											<div
+												className="rounded-full bg-yellow"
+												style={{
+													width: 4 + 'rem',
+													height: 4 + 'rem',
+													backgroundImage: 'url(' + e.avatar + ')',
+													backgroundSize: 'cover',
+												}}
+											></div>
 											<div className="my-auto mx-4">
 												<div className="flex">
 													<div className="font-lato font-bold text-xl text-primary">{e.name}</div>
