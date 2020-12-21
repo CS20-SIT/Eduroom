@@ -4,7 +4,7 @@ import PackageHead from '../../../components/package/packageHead'
 import PackageDetail from '../../../components/package/packageDetail'
 import style from '../../../styles/package/detail'
 
-const Package = () => {
+const PackagePage = () => {
 	return (
 		<Fragment>
 			<General>
@@ -20,4 +20,4 @@ const Package = () => {
 		</Fragment>
 	)
 }
-export default Package
+export default PackagePage
