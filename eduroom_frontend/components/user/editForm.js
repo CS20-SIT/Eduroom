@@ -86,19 +86,25 @@ const EditForm = () => {
 	// 	} catch (err) {}
 	// }
 
+	const handleSubmit = async (body) => {
+		try {
+			const res = await api.post('/api/instructor/register', body)
+			console.log('success')
+			setLoading(false)
+			props.complete()
+		} catch (err) {}
+		setLoading(false)
+	}
+
 	const handleClick = async (e) => {
 		try {
-			console.log("1");
-			const myForm=new FormData();
-			console.log("1.1");
+			// let formData = { degree: data.degree.value, expert: data.expert.value, bio: data.bio.value }
+			const myForm = new FormData()
 			myForm.append('avatar',avatar);
-			console.log("1.2");
 			const res=await api.post('/api/user/upload/picture',myForm);
-			console.log("1.3");
-			// setAvatar(res.data[0].linkUrl);
-			console.log(res.data);
-			// handleSave();
-			console.log("1.4");
+			const avatar= res.data[0].linkUrl
+
+			handleSave();
 		} catch (err) {}
 	}
 
@@ -160,6 +166,11 @@ const EditForm = () => {
 		console.log(avatar);
 	}
 
+	const changePic = (e) => {
+		let newValue = e.target.files[0];
+		setAvatar(newValue);
+	}
+
 	return (
 		<Fragment>
 			<div className="container">
@@ -178,11 +189,9 @@ const EditForm = () => {
 								type={"file"}
 								placeholder={"attrach your avatar"}
 								inputProps={{'aria-label':'naked'}}
-								onChange={(e) => {
-									console.log(e.target.value);
-									setAvatar(e.target.value);
-								}}
+								onChange={changePic}
 							/>
+							
 					</div>
 					<div className="editInfo">
 						<div className="w-100 form-title">General Information</div>

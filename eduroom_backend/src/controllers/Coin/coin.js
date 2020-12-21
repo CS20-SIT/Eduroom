@@ -1,4 +1,3 @@
-const { jwtAuthenicate } = require('../../middleware/jwtAuthenticate');
 const pool = require('../../database/db');
 const errorHandler = require('../../middleware/error');
 const dayjs = require('dayjs')
@@ -49,7 +48,7 @@ exports.getStickers = async (req, res, next) => {
 exports.packStickerStore = async (req, res) => {
     try {
         const id = req.params.id
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId = req.user.id
         const coins = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}';`)
         const packSticker = await pool.query(`SELECT s.stickername, s.stickerimg, s.stickerprice,
         ps.stickernumber, ps.stickerimg FROM sticker_all s
@@ -77,7 +76,7 @@ exports.packStickerStore = async (req, res) => {
 exports.getDailyRewardStatus = async (req, res, next) => {
     try {
         const today = dayjs.utc().utcOffset(7).format('YYYY-MM-DD')
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId = req.user.id
         const getDate = await pool.query(`SELECT * FROM dailyreward_history WHERE userid='${userId}' AND date = '${today}';`)
         if (getDate.rowCount === 0) {
             res.send({ canGet: true })
@@ -92,7 +91,7 @@ exports.getDailyRewardStatus = async (req, res, next) => {
 exports.insertDailyReward = async (req, res) => {
     try {
         const coin = req.body.coin
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId = req.user.id
         const today = dayjs.utc().utcOffset(7).format('YYYY-MM-DD')
         const getDate = await pool.query(`SELECT * FROM dailyreward_history WHERE userid='${userId}' AND date = '${today}';`)
         console.log(getDate.rowCount);
@@ -114,7 +113,7 @@ exports.insertDailyReward = async (req, res) => {
 }
 exports.showCoinOwner = async (req, res) => {
     try {
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId = req.user.id
         const result = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}'`)
         res.send(
             result.rows[0]
@@ -125,8 +124,7 @@ exports.showCoinOwner = async (req, res) => {
 }
 exports.showStickerOwner = async (req, res) => {
     try {
-        const userId = req.body.id
-        // const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId = req.user.id
         const getOwnerSticker = await pool.query(`SELECT sticker_owner.stickerid,stickername,stickertype,stickerimg FROM sticker_owner
         JOIN sticker_all ON sticker_owner.stickerid = sticker_all.stickerid
         WHERE userid='${userId}';`)
@@ -179,7 +177,7 @@ exports.addReduceTransOwner = async (req, res) => {
 exports.checkStickerOwner =async (req,res) => {
     try{
         const userId='db29433b-e05d-41ab-854b-b6f8023464f6'
-        const stickerId= req.query.stickerid
+        const stickerId= req.body.stickerid
         const getStickerOwner= await pool.query(`SELECT * FROM sticker_owner WHERE 
         userid='${userId}' AND stickerid=${stickerId};`)
         if(getStickerOwner.rowCount === 0 ){
@@ -193,7 +191,7 @@ exports.checkStickerOwner =async (req,res) => {
 }
 exports.buySticker = async (req, res) => {
     try {
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId = req.user.id
         const stickerId = req.body.stickerId
         console.log(req.body)
         const getCoinSticker = await pool.query(`SELECT stickerprice FROM sticker_all WHERE stickerid=${stickerId};`)
@@ -230,7 +228,7 @@ exports.buySticker = async (req, res) => {
 }
 exports.checkCodeOwner = async (req,res) => {
     try{
-        const userId='db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId=req.user.id
         const pcode = req.body.pcode
         const getCodeFronOwner = await pool.query(`SELECT * FROM code_owner WHERE userid='${userId}' 
         AND pcode='${pcode}';`)
@@ -245,7 +243,7 @@ exports.checkCodeOwner = async (req,res) => {
 }
 exports.buyCoupon = async (req, res) => {
     try {
-        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const userId = req.user.id
         const pcode = req.body.pcode
         const getCodeList = await pool.query(`SELECT cl.coin_use FROM promotioncode p
         INNER JOIN code_list cl on p.coderef = cl.ccid WHERE pcode='${pcode}';`)
