@@ -3,19 +3,26 @@ export default css`
 .flex-container {
     display: flex;
     padding-left: 3%;
-    width: 95%;
+    width: 97%;
   }
   .flex-item {
     color: #5B5B5B;
     padding 5px 0;
     font-weight: 500;
   }
-  .accept {
-      color: #6FCF97;
-  }
-  .wrong {
-      color: #EB5757;
-  }
-  .partial {
-    color: #A27CEF;
-  }`
+  .a {
+		color: #6fcf97;
+	}
+	.pa, .pending {
+		color: #a27cef;
+	}
+	.re,
+	.wa {
+		color: #eb5757;
+	}
+	.tle,
+	.mle,
+	.ce {
+		color: #f3b496;
+	}
+  `

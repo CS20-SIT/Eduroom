@@ -3,43 +3,46 @@ import socketIOClient from "socket.io-client";
 import { useRouter } from "next/router";
 
 import Grid from "@material-ui/core/Grid";
-const Page3 = ({questionNumber,goto,answer,data,id}) => {
+const Page3 = ({questionNumber,goto,answer,data,id,setAnswer}) => {
   const router = useRouter();
-
   const socket = socketIOClient(process.env.NEXT_PUBLIC_KAHOOT_URL, {
     path: '/kahoot',
   });
   const [diff, setDiff] = useState(null);
+  const [skip, setSkip] = useState(false);
  
   useEffect(() => {
     socket.emit("room", (router.query.id));
-    // console.log('watiting',answer)
     socket.on('get-diff', (time) => {
       setDiff(time);
       if(time==0 && answer!=99){
         if(answer == data[questionNumber].correct){
         goto(2)
-        console.log('right timeup')
       }
         else{
           goto(4)
-        console.log('wrong timeup')
-
         }
       }
     });
-    socket.on("get-skip", (isSkip) => {
-      if ((isSkip || answer == data[questionNumber].correct)&&answer!=99) {
-        if (answer == data[questionNumber].correct) {
-          console.log(answer == data[questionNumber].correct,'skip');
-          goto(2);
-        } else {
-          goto(4);
-          console.log('wrong skip')
-        }
-      }
-    });
+   
   }, []);
+  useEffect(()=>{
+    socket.on("get-skip", (isSkip) => {
+      setSkip(true)
+    });
+  },[answer])
+  useEffect(()=>{
+    if(skip){
+      if (answer!=99) {
+        if (answer === data[questionNumber].correct) {
+          goto(2);
+        } else  if (answer !== data[questionNumber].correct) {
+          goto(4);
+        }
+       
+      }
+    }
+  },[questionNumber,skip])
   return (
     <Fragment>
       <Grid

@@ -15,7 +15,6 @@ const roomID = (props) => {
 	const GetData = async () => {
 		const result = await api.get(`/api/forum/room/${props.room}`)
 		setData(result.data.data)
-		console.log(result)
 	}
 	useEffect(() => {
 		GetData()
@@ -26,7 +25,6 @@ const roomID = (props) => {
 				getData()
 				callback()
 			}).catch(err=>{
-				console.log(err)
 			})
 		} else {
 			alert("Please Login Before Like na ja")
@@ -42,7 +40,6 @@ const roomID = (props) => {
 			display: 'flex',
 			flexDirection: 'column',
 			justifyContent: 'flexStart',
-			// textAlign: 'center',
 			margin: '15px',
 			color: theme.palette.text.secondary,
 		},

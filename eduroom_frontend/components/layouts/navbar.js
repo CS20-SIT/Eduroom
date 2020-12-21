@@ -15,7 +15,7 @@ const Navbar = ({ children, isProtected = false }) => {
 	const router = useRouter()
 
 	useEffect(() => {
-		getUser(router,isProtected)
+		getUser(router, isProtected)
 	}, [])
 
 	const getOp = () => {
@@ -28,22 +28,30 @@ const Navbar = ({ children, isProtected = false }) => {
 	const gotoProfile = () => {
 		router.push('/user')
 	}
+	const gotoMyCourse = () => {
+		router.push('/user/courses')
+	}
+	const gotoWishlist = () => {
+		router.push('/user/wishlist')
+	}
 
 	return (
 		<Fragment>
-			<AppBar position="sticky" style={{ background: `rgba(245, 245, 245, ${getOp()})` }} elevation={0}>
+			<AppBar position="sticky" style={{ background: `rgba(245, 245, 245, ${getOp()})`, zIndex: 1 }} elevation={0}>
 				<Toolbar>
 					<div className="navStyle">
-						<div style={{width:'50%'}}>{children}</div>
+						<div style={{ width: '50%' }}>{children}</div>
 						<div className="navDefault">
 							{user ? (
-								<div className="navItem" id="fav-btn">
+								<div className="navItem" onClick={gotoWishlist} id="fav-btn">
 									<i className="fas fa-heart"></i>
 								</div>
 							) : null}
-							<div className="navItem" id="cart-btn">
-								<i className="fas fa-shopping-cart" />
-							</div>
+							{user ? (
+								<div className="navItem" onClick={gotoMyCourse} id="cart-btn">
+									<i className="fas fa-shopping-cart" />
+								</div>
+							) : null}
 							{user ? (
 								<Fragment>
 									<div className="navItem" onClick={gotoProfile}>

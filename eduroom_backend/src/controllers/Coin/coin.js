@@ -124,7 +124,6 @@ exports.showCoinOwner = async (req, res) => {
 }
 exports.showStickerOwner = async (req, res) => {
     try {
-        // const userId = req.body.id
         const userId = req.user.id
         const getOwnerSticker = await pool.query(`SELECT sticker_owner.stickerid,stickername,stickertype,stickerimg FROM sticker_owner
         JOIN sticker_all ON sticker_owner.stickerid = sticker_all.stickerid
@@ -177,7 +176,7 @@ exports.addReduceTransOwner = async (req, res) => {
 }
 exports.checkStickerOwner =async (req,res) => {
     try{
-        const userId=req.user.id
+        const userId='db29433b-e05d-41ab-854b-b6f8023464f6'
         const stickerId= req.body.stickerid
         const getStickerOwner= await pool.query(`SELECT * FROM sticker_owner WHERE 
         userid='${userId}' AND stickerid=${stickerId};`)
@@ -194,6 +193,7 @@ exports.buySticker = async (req, res) => {
     try {
         const userId = req.user.id
         const stickerId = req.body.stickerId
+        console.log(req.body)
         const getCoinSticker = await pool.query(`SELECT stickerprice FROM sticker_all WHERE stickerid=${stickerId};`)
         if (getCoinSticker.rowCount === 0) {
             const error = {
