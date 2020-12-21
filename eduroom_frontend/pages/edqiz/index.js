@@ -9,9 +9,11 @@ const Content = () => {
   const [dialog,setDialog] = useState(false);
   useEffect(() => {
     if(!user){
-      setDialog(!dialog)
+      setDialog(true)
+    } else {
+      setDialog(false)
     }
-  }, [])
+  }, [user])
   return (
     <Fragment>
       <GeneralTemplate  >
