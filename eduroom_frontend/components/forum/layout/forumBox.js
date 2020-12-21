@@ -4,11 +4,11 @@ import ForumTag from './forumTag'
 import Icon from '../Icon'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-const ForumBox = ({ data,onLike }) => {
+const ForumBox = ({ data, onLike }) => {
 	const router = useRouter()
 	return (
 		<Fragment>
-			<div className="forumBox" >
+			<div className="forumBox">
 				<div
 					onClick={() => {
 						router.push(`/forum/${data.forumid}`)
@@ -20,15 +20,28 @@ const ForumBox = ({ data,onLike }) => {
 						<ForumTag tag={data.subtypename}></ForumTag>
 					</div>
 					<div className="forumDate">
-						{data.author} post {moment(data.posttime).fromNow()}''
+						{data.author} post {moment(data.posttime).fromNow()}
 					</div>
 				</div>
 				<div className="forumAction">
-					<div style={{display:'flex',alignItems:'center'}}><Icon type="like" isHover={data.is_like} clicked={(callback)=>{onLike(data.forumid,callback)}} /><div>{data.likes}</div></div>
-					<div style={{display:'flex',paddingLeft:'2%',alignItems:'center'}} onClick={() => {
-						router.push(`/forum/${data.forumid}`)
-					}}>
-						<Icon type="comment" /><div>{data.comments}</div>
+					<div style={{ display: 'flex', alignItems: 'center' }}>
+						<Icon
+							type="like"
+							isHover={data.is_like}
+							clicked={(callback) => {
+								onLike(data.forumid, callback)
+							}}
+						/>
+						<div>{data.likes}</div>
+					</div>
+					<div
+						style={{ display: 'flex', paddingLeft: '2%', alignItems: 'center' }}
+						onClick={() => {
+							router.push(`/forum/${data.forumid}`)
+						}}
+					>
+						<Icon type="comment" />
+						<div>{data.comments}</div>
 					</div>
 				</div>
 			</div>

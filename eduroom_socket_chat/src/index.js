@@ -13,19 +13,12 @@ const socketOptions = {
 const io = socketIO.listen(app, socketOptions);
 io.on('connection', (client) => {
 console.log('user connected');
-	client.on("joinRoom",(data)=>{
-		// join client to the room 
-		const {room} = data
-		client.join(room)
+	client.on("joinRoom",(room)=>{
+		//read message
+		client.join(room) //join room
 	})
-	client.on("sentMessage",(data)=>{
-		/* 
-		when client sent message it will emit notifyMessage to all client (for notify)
-		and also sent message to specific room (for user who are in the room)
-		*/
-		const {sender,message,room} = data
-		io.emit("notifyMessage",{sender,message,room})
-		io.to(room).emit('message',{sender,message,room})
+	client.on("sendMessage",(room)=>{
+		console.log(room)
+		io.in(room).emit('recieveMessage')
 	})
-
 });

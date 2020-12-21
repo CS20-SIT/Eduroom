@@ -7,13 +7,13 @@ import style from '../../../styles/graderSubmit/problems/problemLayout'
 const ProblemLayout = (props) => {
 	return (
 		<Fragment>
-			<ProblemNav page={props.page} id={props.id} />
+			<ProblemNav page={props.page} id={props.id} pageId={props.pageId} />
 			<div className="content">
 				<div className="question">
-					<ProblemQuestion id={props.id} contestId={props.contestId} />
+					<ProblemQuestion questionId={props.id} contestID={props.contestID} />
 				</div>
-				<div className="code">
-					<ProblemCode />
+				<div className="code-box">
+					<ProblemCode id={props.id} />
 				</div>
 			</div>
 			<style jsx>{style}</style>

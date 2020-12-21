@@ -111,7 +111,7 @@ const InstructorProfile = () => {
 					<h4 className="textNav" style={{ color: '#3d467f' }}>
 						Your Courses
 					</h4>
-					<Link href="/user/instructor/course/package">
+					<Link href="/user/instructor/package">
 						<h4 className="textNav">Package Management</h4>
 					</Link>
 					<Link href="/user/instructor/tutor/appointment">

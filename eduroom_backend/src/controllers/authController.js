@@ -78,6 +78,9 @@ exports.regisController = async (req, res) => {
         VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, $1, $1, '${defaultProfilePic}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
 		await pool.query(userProfileCreationQuery, [''])
 
+		// Insert new user to coin_owner
+		await pool.query(`INSERT INTO coin_owner (userid, amountofcoin) VALUES ('${userId}', 0);`)
+
 		// Create local_auth
 		const localAuthCreationQuery = `INSERT INTO local_auth (userid, email, password) 
                                         VALUES ('${userId}', '${user.email}', '${user.password}')`
@@ -142,6 +145,39 @@ exports.verifyEmailController = async (req, res) => {
 			message: error,
 		}
 		return errorHandler(err, req, res)
+	}
+}
+
+exports.resendVerify = async(req,res,next) => {
+	try {
+		const user = req.user;
+		if(user){
+			const userProfile = await pool.query("SELECT email FROM local_auth WHERE userid =$1",[user.id])
+			const verifyToken = crypto.randomBytes(20).toString('hex')
+			const checkVerify = await pool.query("SELECT token FROM user_verification WHERE userid=$1",[user.id])
+			if(checkVerify.rowCount > 0){
+				await pool.query("UPDATE  user_verification SET token =$1,starttime= current_timestamp, endtime= current_timestamp+ (120*interval '1 minute'), isverified = false WHERE userid =$2",[verifyToken,user.id])
+			} else {
+				const userVerificationCreationQuery = `INSERT INTO user_verification (userid, starttime, endtime, token, isverified)
+				VALUES ('${userId}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP + (120 * interval '1 minute'), '${verifyToken}', false)`
+				await pool.query(userVerificationCreationQuery)
+			}
+			const htmlMessage = verifyTemplate(verifyToken)
+			const emailOptions = {
+				email: userProfile.rows[0].email,
+				subject: 'Eduroom Email Verification',
+				htmlMessage,
+			}
+		
+			await sendEmail(emailOptions)
+			res.status(201).json({success:true})
+			return
+		} else {
+			return next(new ErrorResponse("Please login before resend verification",401))
+		}
+	} catch(err){
+		console.log(err)
+		return next(new ErrorResponse("Cannot Resend Verify Email",400))
 	}
 }
 
@@ -232,55 +268,79 @@ exports.googleCallbackController = async (req, res) => {
 }
 
 exports.adminRegisController = async (req, res) => {
-	const { username, password } = req.body
-	const existingAdmin = await pool.query(`SELECT adminid FROM admin_login WHERE username = '${username}';`)
-	if(existingAdmin.rowCount !== 0){
+	try {
+		const { username, password } = req.body
+		const existingAdmin = await pool.query(`SELECT adminid FROM admin_login WHERE username = '${username}';`)
+		if(existingAdmin.rowCount !== 0){
+			const err = {
+				statusCode: 400,
+				message: 'Username is used',
+			}
+			return errorHandler(err, req, res)
+		}
+		const adminId = uuidv4()
+		const hashedPassword = await bcrypt.hash(password, 10)
+		const insertAdminQuery = `INSERT INTO admin_login(adminid, username, password, firstname, lastname, displayname, avatar, role) 
+		VALUES ('${adminId}', '${username}', '${hashedPassword}', $1, $1, $1, $1, $1)`
+		await pool.query(insertAdminQuery, [''])
+
+		// const token = generateCookieAdminJWT(adminId)
+		// res.cookie('jwt', token)
+
+		res.status(201).send({ success: true })
+		// res.redirect(process.env.ENTRYPOINT_URL)
+	} catch (error) {
 		const err = {
-			statusCode: 400,
-			message: 'Username is used',
+			statusCode: 500,
+			message: error,
 		}
 		return errorHandler(err, req, res)
 	}
-	const adminId = uuidv4()
-	const hashedPassword = await bcrypt.hash(password, 10)
-	const insertAdminQuery = `INSERT INTO admin_login(adminid, username, password, firstname, lastname, displayname, avatar, role) 
-	VALUES ('${adminId}', '${username}', '${hashedPassword}', $1, $1, $1, $1, $1)`
-	await pool.query(insertAdminQuery, [''])
-
-	res.status(201).send({ success: true })
-
-	// const token = generateCookieAdminJWT(adminId)
-	// res.cookie('jwt', token)
-	// res.redirect(process.env.ENTRYPOINT_URL)
 }
 
 exports.adminLoginController = async (req, res) => {
-	const { username, password } = req.body
-	const existingAdmin = await pool.query(`SELECT adminid, password FROM admin_login WHERE username = '${username}';`)
-	if(existingAdmin.rowCount === 0) {
+	try {
+		const { username, password } = req.body
+		const existingAdmin = await pool.query(`SELECT adminid, password FROM admin_login WHERE username = '${username}';`)
+		if(existingAdmin.rowCount === 0) {
+			const err = {
+				statusCode: 400,
+				message: 'User does not exist',
+			}
+			return errorHandler(err, req, res)
+		}
+
+		const matchedPassword = await bcrypt.compare(password, existingAdmin.rows[0].password)
+		if(!matchedPassword){
+			const err = {
+				statusCode: 400,
+				message: 'Password is not correct',
+			}
+			return errorHandler(err, req, res)
+		}
+
+		const token = generateCookieAdminJWT(existingAdmin.rows[0].adminid)
+		res.cookie('jwt', token)
+		res.send({ success: true })
+	} catch (error) {
 		const err = {
-			statusCode: 400,
-			message: 'User does not exist',
+			statusCode: 500,
+			message: error,
 		}
 		return errorHandler(err, req, res)
 	}
-
-	const matchedPassword = await bcrypt.compare(password, existingAdmin.rows[0].password)
-	if(!matchedPassword){
-		const err = {
-			statusCode: 400,
-			message: 'Password is not correct',
-		}
-		return errorHandler(err, req, res)
-	}
-
-	const token = generateCookieAdminJWT(existingAdmin.rows[0].adminid)
-	res.cookie('jwt', token)
-	res.send({ success: true })
 }
 
 exports.adminProfileController = async (req, res) => {
-	const adminId = req.user.id
-	const admin = await pool.query(`SELECT displayname, firstname, lastname, avatar, role FROM admin_login WHERE adminid = '${adminId}';`)
-	res.send(admin.rows[0])
+	try {
+		const adminId = req.user.id
+		const admin = await pool.query(`SELECT displayname, firstname, lastname, avatar, role FROM admin_login WHERE adminid = '${adminId}';`)
+		res.send(admin.rows[0])	
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
 }

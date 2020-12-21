@@ -7,23 +7,19 @@ import AcceptIcon from './icons/AcceptIcon'
 import api from '../../api'
 
 export default function chatInvitation(props) {
-	const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
+const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
   const [invitations, setInvitations] = useState(null)
   const getInvitations = async () => {
-		const res = await api.get(`/api/chat/getInvitationListMockup`)
-		setInvitations(res.data)
-  }
-  const getInvitations2 = async () => {
-		const res = await api.get(`/api/chat/getInvitationListMockup2`)
+		const res = await api.get(`/api/chat/getInvitationList`)
 		setInvitations(res.data)
   }
   const acceptInvitation = async (id) => {
-		const res = await api.get(`/api/chat/acceptInvitationMockup`,{userID:id})
-		getInvitations2()
+		const res = await api.get(`/api/chat/acceptInvitation`,{params:{invitationid:id}})
+		getInvitations()
   }
   const declineInvitation = async (id) => {
-		const res = await api.get(`/api/chat/declineInvitationMockup`,{userID:id})
-		getInvitations2()
+		const res = await api.get(`/api/chat/declineInvitation`,{params:{invitationid:id}})
+		getInvitations()
   }
 	useEffect(() => {
 		getInvitations()
@@ -81,8 +77,8 @@ export default function chatInvitation(props) {
 									>
 										<Avatar
 											style={{ width: 35, height: 35, marginLeft: 14, marginRight: 14 }}
-											alt={el.chatRoomName}
-											src={el.profilePicture}
+											alt={el.chatroomname}
+											src={el.profilepicture}
 										/>
 										<div style={{ marginRight: 14, width: '150px' }}>
 											<h5
@@ -94,7 +90,7 @@ export default function chatInvitation(props) {
 													marginTop: 12,
 												}}
 											>
-												{el.chatRoomName}
+												{el.chatroomname}
 											</h5>
 											<p
 												style={{
@@ -108,8 +104,8 @@ export default function chatInvitation(props) {
 												Invited By : {el.invitor}
 											</p>
 										</div>
-										<AcceptIcon style={{ cursor: 'pointer', marginLeft: 'auto' }} onClick={()=>{acceptInvitation(el.invitaionID)}}/>
-										<CancelIcon style={{ cursor: 'pointer' }} onClick={()=>{declineInvitation(el.invitaionID)}}/>
+										<AcceptIcon style={{ cursor: 'pointer', marginLeft: 'auto' }} onClick={()=>{acceptInvitation(el.invitaionid)}}/>
+										<CancelIcon style={{ cursor: 'pointer' }} onClick={()=>{declineInvitation(el.invitaionid)}}/>
 									</div>
 								)
 							})}

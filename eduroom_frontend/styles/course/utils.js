@@ -661,5 +661,16 @@ export default css`
     width: 540px;
     // height: 400px;
   }
-  
+
+  .backIcon{
+    opacity: 1;
+    font-size: 25px;
+    transition: 0.25s;
+    padding: 20px;
+  }
+  .backIcon:hover{
+    opacity: 0.8;
+    transition: 0.25s;
+    cursor: pointer;
+  }
 `;

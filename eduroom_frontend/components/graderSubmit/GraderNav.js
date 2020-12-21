@@ -6,11 +6,11 @@ import api from '../../api'
 
 const GraderNav = (props) => {
 	const router = useRouter()
-	const [Data, setData] = useState([])
+	const [Data, setData] = useState('')
 
 	useEffect(() => {
 		const GetData = async () => {
-			let result = await api.get('api/auth/profile')
+			let result = await api.get('/api/auth/profile')
 			setData(result.data)
 		}
 		GetData()
@@ -48,7 +48,10 @@ const GraderNav = (props) => {
 					<div className="text" onClick={() => router.push('/user')}>
 						<span className="profile">
 							Profile
-							<img src={`${Data != null ? Data.avatar : null}`} style={{ borderRadius: '50%' }} />
+							<img
+								src={`${Data != '' ? Data.avatar : '../../images/graderSubmit/publicProfile.svg'}`}
+								style={{ borderRadius: '50%' }}
+							/>
 						</span>
 					</div>
 				</div>
