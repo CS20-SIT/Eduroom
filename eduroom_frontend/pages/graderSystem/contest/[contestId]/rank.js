@@ -16,7 +16,6 @@ const contestRank = ({ contestId }) => {
 		GetData()
 	}, [])
 
-	console.log(data)
 	return (
 		<Fragment>
 			<Layout page="contest">
@@ -30,8 +29,28 @@ const contestRank = ({ contestId }) => {
 								<div className="graphics">
 									<img src="../../../../images/graderSubmit/report_analysis.svg" />
 									<div className="graph-box">
-										<p>This is the graph :)</p>
-										<div className="actual-graph"></div>
+										<div className="actual-graph">
+											<div className="legend">
+												<div className="max">
+													<p>100%</p>
+												</div>
+												<div className="line"></div>
+												<div className="min">
+													<p>0%</p>
+												</div>
+											</div>
+											<div className="graph">
+												{data.map((element) => {
+													{
+														return (
+															<div className="eachBar" style={{ height: `${element.totalscore}%` }}>
+																{element.displayname.split(' ')[0]}
+															</div>
+														)
+													}
+												})}
+											</div>
+										</div>
 									</div>
 								</div>
 								<div className="submission-list">
