@@ -535,6 +535,9 @@ const insertStudentAppointment = async (req, res, next) => {
 		await pool.query(`INSERT INTO transaction_instructor(transactionid, instructorid)
 		VALUES (${FinancialTeam_transactionid}, ${id})`)
 
+		await pool.query(`INSERT INTO financial_revenue(transactionid, typeid, amount)
+		VALUES (${FinancialTeam_transactionid}, 2, ${price*0.1})`)
+
 		const { appointmentid } = result.rows[0]
 
 		for (let i = 0; i < members.length; i++) {
