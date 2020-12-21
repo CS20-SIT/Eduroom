@@ -1,30 +1,31 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import utils from '../../../styles/course/utils';
-import GeneralNoNav from '../../../components/template/generalnonav';
+import GeneralTemplate from '../../../components/template/general';
 import Link from 'next/link';
 import SearchBar from '../../../components/course/searchBar'
 import CategoryBar from '../../../components/course/categoryBar'
 import { useRouter } from 'next/router'
-import Name from '../../../components/course/courseRender'
+import Carousel from '../../../components/course/carousel'
 
 import api from '../../../api'
 
 const CourseCategory = (props) => {
+    const router = useRouter();
     const [data, setData] = useState([])
     const [category, setCategory] = useState([])
+    const [curCat, setCurCat] = useState('')
 
     useEffect(() => {
         GetData()
-    }, [])
+        getCategory()
+        setCurCat(props.category)
+    }, [props.category])
     const GetData = async () => {
         const result = await api.get(`/api/course/categorySearch/${props.category}`)
         setData(result.data.data)
         console.log(result)
     }
 
-    useEffect(() => {
-        getCategory()
-    }, [])
     const getCategory = async () => {
         const result = await api.get('/api/course/category')
         setCategory(result.data.category)
@@ -33,20 +34,21 @@ const CourseCategory = (props) => {
 
     return (
         <Fragment>
-            <GeneralNoNav>
+            <GeneralTemplate>
+            <Carousel />
                 <div className='bg'>
                     <div className='container-1'>
-
                         {/* Search bar and Categories select */}
                         <div className='text-center flex my-6 mx-search'>
                             <SearchBar />
-                            <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'>
+                            <select className='font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox'
+                                onChange={ e => router.push('/course/category/' + e.target.value)}>
                                 <option>
                                     Category
-              </option>
+                                </option>
                                 {category.map((el, idx) => {
                                     return (
-                                        <option>
+                                        <option value={el.value}>
                                             {el.cataname}
                                         </option>
                                     )
@@ -54,9 +56,9 @@ const CourseCategory = (props) => {
                             </select>
                         </div>
 
-                        <CategoryBar />
+                        <CategoryBar current={curCat}/>
 
-
+                        <div className="coursecard">Course on Eduroom</div>
                         {/* Box of each course */}
                         <div className='text-center my-8'>
                             {data.map((e, index) => (
@@ -90,6 +92,7 @@ const CourseCategory = (props) => {
             padding-left: 15px;
             font-size: 0.8rem;
             width: 250px;
+            height: 2.4rem;
           }
           .categoryTab{
 			margin-top: 3rem;
@@ -102,9 +105,16 @@ const CourseCategory = (props) => {
             margin-right: 5rem;
       
           }
+          .coursecard {
+            font-weight: 700;
+            font-size: 26px;
+            color: #3d467f;
+            margin: 30px 30px 30px 80px;
+            
+        }
         `}
                 </style>
-            </GeneralNoNav>
+            </GeneralTemplate>
         </Fragment>
     );
 };

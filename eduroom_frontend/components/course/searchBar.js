@@ -46,7 +46,8 @@ const SearchBar = () => {
 						margin-left: 0.7rem; 
 						border: none;
 						outlined: none;
-                        flex: 1;
+						flex: 1;
+						padding: 1.1rem 0;
                     }
 				`}
 			</style>

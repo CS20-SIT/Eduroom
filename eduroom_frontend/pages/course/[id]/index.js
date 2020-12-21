@@ -4,15 +4,18 @@ import GeneralNoNav from '../../../components/template/generalnonav'
 import Link from 'next/link'
 import api from '../../../api'
 import { getItems, isInCart, addToCart, removeFromCart } from '../../../utils/cart'
+import Review from '../../../components/course/review'
 
 const CourseID = ({ id }) => {
 	const [cart, setCart] = useState([])
 	const [course, setCourse] = useState(null)
 	const fetchCourse = async () => {
 		const res = await api.get('/api/course/getCourseFromID', { params: { courseID: id } })
+		console.log(res.data)
 		setCourse(res.data)
 	}
 	useEffect(() => {
+		window.scrollTo(0, 0)
 		fetchCourse()
 		setCart(getItems('course'))
 	}, [])
@@ -131,6 +134,7 @@ const CourseID = ({ id }) => {
 						</Link>
 					</div>
 					<div className="container">{renderCourse()}</div>
+					<Review type="course" id={id} />
 				</div>
 				<style jsx>{utils}</style>
 			</GeneralNoNav>
