@@ -47,20 +47,162 @@ exports.getCourseFromID = async (req, res, next) => {
 	}
 }
 exports.getCourseSectionPart = async (req, res) => {
-	console.log(req.body.courseID, 'rty')
 	try {
-		const { rows } = await pool.query(`SELECT * FROM course
-        join course_section cs on course.courseid = cs.courseid
-        join course_quiz cq on course.courseid = cq.courseid
-        join course_section_part_material cspm on course.courseid = cspm.courseid
-        WHERE course.courseid = '6714b449-03fe-41ae-9d91-60438d8ebf51'`)
+        const id = req.query.courseID;
+		if (!id) {
+			return next(new ErrorResponse('Unauthorize', 401))
+        }
+        
+        //select the id
+        let result = await pool.query(`select * from course where courseid = '${id}'`)
+        const courseDes = {id,courseName:'',section:[], }
+        courseDes.id = result.rows[0].courseid
+        courseDes.courseName = result.rows[0].coursename
 
-		if (!rows) res.status(404).send({ msg: 'Not Found' })
-		res.status(200).send(rows)
-	} catch (err) {
-		console.log(err.message)
-		res.status(400).send(err.message)
-	}
+        //select the section
+		result = await pool.query(
+			`SELECT * FROM course
+            join course_section cs on course.courseid = cs.courseid where course.courseid = '${id}'`
+        )
+        result.rows.map((e,i) => {
+            courseDes.section.push({
+                id:'',sectionName:'', time:'37' , questionNow:0 , choiceNow:[], ansChoice:[], submitValid:0, submitYet:0, part:[]
+            })
+            courseDes.section[i].id = e.sectionno
+            courseDes.section[i].time = e.sectionlength
+            courseDes.section[i].sectionName = e.sectionname
+        })
+
+        //Select the part
+        result = await pool.query(
+            `select * from course
+            join course_section cs on course.courseid = cs.courseid
+            join section_part sp on cs.courseid = sp.courseid and cs.sectionno = sp.sectionno
+            where course.courseid = '${id}'
+            order by partno`
+        )
+        courseDes.section.map((e,i) => {
+            let j=0
+            result.rows.map((e2,i2) =>{
+                if(e.id == e2.sectionno){
+                    e.part.push({
+                            id:'', partName:'', type:'', partDescript:'', src:'', questionNum:[]
+                        })
+                    e.part[j].id = e2.partno
+                    e.part[j].partName = e2.partname
+                    e.part[j].partDescript = e2.partdescription
+                    if(e2.partrole == "Video"){
+                        e.part[j].type= 1
+                    }
+                    if(e2.partrole == "Material"){
+                        e.part[j].type= 2
+                    }
+                    if(e2.partrole == "Quiz"){
+                        e.part[j].type= 3
+                        e.choiceNow.push(-1)
+                    }
+                    j++
+                }
+            })
+        })
+
+        // select part video
+        result = await pool.query(
+            `select * from course
+            join course_section cs on course.courseid = cs.courseid
+            join section_part sp on cs.courseid = sp.courseid and cs.sectionno = sp.sectionno
+            join course_section_part_video cspv on sp.courseid = cspv.courseid and sp.sectionno = cspv.sectionno and sp.partno = cspv.partno
+            where course.courseid = '${id}'`
+        )
+        courseDes.section.map((eSection,iSection) => {
+            eSection.part.map((ePart,iPart) =>{
+                result.rows.map((eResult,iResult) =>{
+                    if(ePart.id == eResult.partno){
+                        ePart.src = eResult.videopath
+                    }
+                })
+            })
+        })
+
+
+        // select part material
+        result = await pool.query(
+            `select * from course
+            join course_section cs on course.courseid = cs.courseid
+            join section_part sp on cs.courseid = sp.courseid and cs.sectionno = sp.sectionno
+            join course_section_part_material cspm on sp.courseid = cspm.courseid and sp.sectionno = cspm.sectionno and sp.partno = cspm.partno            
+            where course.courseid = '${id}'`
+        )
+        courseDes.section.map((eSection,iSection) => {
+            eSection.part.map((ePart,iPart) =>{
+                result.rows.map((eResult,iResult) =>{
+                    if(ePart.id == eResult.partno){
+                        ePart.src = eResult.materialpath
+                    }
+                })
+            })
+        })
+
+        // select quiz id
+        result = await pool.query(
+            `select * from course
+            join course_section cs on course.courseid = cs.courseid
+            join section_part sp on cs.courseid = sp.courseid and cs.sectionno = sp.sectionno
+            join course_quiz cq on sp.courseid = cq.courseid and sp.partno = cq.partno
+            join quiz_question qq on cq.quizid = qq.quizid
+            where course.courseid = '${id}'`
+        )
+        courseDes.section.map((eSection,iSection) => {
+            eSection.part.map((ePart,iPart) =>{
+                result.rows.map((eResult,iResult) =>{
+                    if(ePart.id == eResult.partno){
+                        ePart.questionNum.push({
+                            id: eResult.quizid,
+                            question: eResult.questionname,
+                            choice:[],
+                            answer:''
+                        })
+                    }
+                })
+            })
+        })
+
+        //select answer
+        result = await pool.query(
+            `select * from course
+            join course_section cs on course.courseid = cs.courseid
+            join section_part sp on cs.courseid = sp.courseid and cs.sectionno = sp.sectionno
+            join course_quiz cq on sp.courseid = cq.courseid and sp.partno = cq.partno
+            join quiz_question_choice qqc on cq.quizid = qqc.quizid
+            where course.courseid = '${id}'`
+        )
+        courseDes.section.map((eSection,iSection) => {
+            eSection.part.map((ePart,iPart) =>{
+                ePart.questionNum.map((eQuestionNum,iQuestionNum) => {
+                    result.rows.map((eResult,iResult) =>{
+                        if(eQuestionNum.id == eResult.quizid){
+                            eQuestionNum.choice.push(eResult.choicename)
+                            if(eResult.iscorrect == 1){
+                                eQuestionNum.answer = eResult.choiceno-1
+                                eSection.ansChoice.push(eQuestionNum.answer)
+                            }
+                        }
+                    })
+                })
+            })
+        })
+        courseDes.section.map((eSection,iSection) => {
+            eSection.part.map((ePart,iPart) =>{
+                ePart.id = ePart.id%10
+            })
+        })
+        if(!courseDes)
+            res.status(404).send({msg: 'Not Found'})
+        res.status(200).send(courseDes)
+    } catch(err) {
+        console.log(err.message);
+        res.status(400).send(err.message)
+    }
 }
 exports.searchCourse = async (req, res, next) => {
 	const search = req.body.search
