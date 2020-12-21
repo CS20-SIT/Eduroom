@@ -12,11 +12,9 @@ import {
 	Paper,
 	MenuItem,
 } from '@material-ui/core'
-import GeneralNoNav from '../../components/template/generalnonav'
 import TextField from '@material-ui/core/TextField'
 import api from '../../api'
-import Link from 'next/link'
-
+import {useRouter} from 'next/router'
 const CreateBlock = () => {
 	const [createForm, setForm] = useState({
 		title: '',
@@ -30,6 +28,7 @@ const CreateBlock = () => {
 		subcat: false,
 		content: false,
 	})
+	const router = useRouter()
 	useEffect(() => {
 		api.get('/api/forum/subcategory').then((res) => {
 			setCategory(res.data.category)
@@ -60,6 +59,7 @@ const CreateBlock = () => {
 					subcat: '',
 					content: '',
 				})
+				router.push('/forum')
 			})
 		}
 	}
@@ -214,7 +214,7 @@ const CreateBlock = () => {
 												className={classes.submit}
 												style={{ borderRadius: '23px' }}
 											>
-												<Link href="/forum">Submit</Link>
+												Submit
 											</Button>
 										</Grid>
 									</Grid>
