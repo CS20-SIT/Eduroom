@@ -10,7 +10,7 @@ import ClosingYourAccount from "../../../components/support/accountandprofile/Cl
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

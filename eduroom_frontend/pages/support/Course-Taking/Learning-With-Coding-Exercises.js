@@ -11,7 +11,7 @@ import LearningWithCodingExercises from "../../../components/support/coursetakin
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

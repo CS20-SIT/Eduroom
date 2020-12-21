@@ -11,7 +11,7 @@ import DownloadingCourseResources from "../../../components/support/coursetaking
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

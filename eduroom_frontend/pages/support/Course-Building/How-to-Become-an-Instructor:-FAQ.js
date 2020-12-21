@@ -11,7 +11,7 @@ import HowtoBecomeanInstructorFAQ from "../../../components/support/coursebuildi
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

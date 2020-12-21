@@ -10,7 +10,7 @@ import HowtoMarkorUnmarkLecturesasComplete from "../../../components/support/cou
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

@@ -12,7 +12,7 @@ import HowtoFindTheCourseURL from "../../../components/support/purchaseandrefund
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

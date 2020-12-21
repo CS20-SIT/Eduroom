@@ -12,7 +12,7 @@ import ManuallyMarkaLectureasCompleteoniOSDevices from "../../../components/supp
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

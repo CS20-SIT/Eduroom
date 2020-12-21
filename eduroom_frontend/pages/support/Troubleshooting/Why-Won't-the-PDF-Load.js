@@ -10,7 +10,7 @@ import WhyWontthePDFLoad from "../../../components/support/troubleshooting/WhyWo
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{

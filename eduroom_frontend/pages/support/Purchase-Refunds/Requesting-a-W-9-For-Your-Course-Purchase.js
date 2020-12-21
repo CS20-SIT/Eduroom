@@ -12,7 +12,7 @@ import RequestingaW9ForYourCoursePurchase from "../../../components/support/purc
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General >
+      <General img='/images/supforumbg.svg'>
         
             <div
                 style={{
