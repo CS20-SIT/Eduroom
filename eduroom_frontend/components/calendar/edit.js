@@ -1,5 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import style from '../../styles/calendar/calendar'
 import Image from 'next/image'
 import api from '../../api'
@@ -13,6 +19,13 @@ const edit = (props) => {
 	const handleClickOpen = () => {
 		setEditOpen(true)
 	}
+	const [submit, setSubmit] = useState(false);
+	const statusClose = () => {
+		setSubmit(false)
+		window.location.reload();
+	}
+
+
 	const [data, setData] = useState([])
 	const [eventInfo, setEventInfo] = useState(null)
 	useEffect(() => {
@@ -39,7 +52,7 @@ const edit = (props) => {
 				setCourseList(res.data.data)
 				// setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
 			})
-			.catch((err) => {})
+			.catch((err) => { })
 	}, [])
 
 	console.log(eventInfo)
@@ -50,14 +63,12 @@ const edit = (props) => {
 		api
 			.post('/api/event/eEvent', { ...eventInfo, id: props.id })
 			.then((res) => {
-				alert('success')
-				window.location.reload()
+				setSubmit(true)
 			})
 			.catch((err) => {
 				console.log(err)
 			})
 	}
-	const eventType = ['Course', 'Global']
 
 	return (
 		<Fragment>
@@ -100,12 +111,16 @@ const edit = (props) => {
 						) : null}
 					</div>
 
-					{/* ---------------------- ---------eventType------------------------------- */}
+					{/* ---------------------- ---------Course------------------------------- */}
 					<div>
-						<select className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+
+						<select defaultValue={data.courseid} className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+							<option Value={data.courseid} key={data.courseid}>
+								{data.coursename}
+							</option>
 							{courseList.map((course) => {
 								return (
-									<option value={course.courseid} key={course.courseid}>
+									<option Value={course.courseid} key={course.courseid}>
 										{course.coursename}
 									</option>
 								)
@@ -200,6 +215,23 @@ const edit = (props) => {
 							<a className="event-cancelText">CANCEL</a>
 						</button>
 					</div>
+
+					<Dialog open={submit}>
+						<DialogTitle>
+							<span>Success!</span>
+						</DialogTitle>
+						<DialogContent>
+							<DialogContentText>
+								<span> The Event have been Edited</span>
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={statusClose} color="primary" autoFocus>
+								<span>Ok</span>
+							</Button>
+						</DialogActions>
+					</Dialog>
+
 				</div>
 			</CSSTransition>
 

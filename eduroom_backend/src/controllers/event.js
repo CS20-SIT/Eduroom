@@ -17,7 +17,7 @@ exports.getEventbyDate = async (req, res, next) => {
 		const user = req.user
 		const events = []
 		const data1 = await pool.query(
-			'select coursename,title,startdate,enddate from course_event join user_mycourse  \
+			'select coursename,title,startdate,enddate,starttime,endtime from course_event join user_mycourse  \
    on course_event.courseid = user_mycourse.courseid and user_mycourse.userid = $2 join course on course_event.courseid = course.courseid where course_event.startdate <= $1\
   and course_event.enddate >= $1 \
   ',
@@ -64,6 +64,19 @@ exports.getEventInMonthYear = async (req, res, next) => {
 		const userid = await pool.query('select instructorid from instructor where userid = $1 and isverified = true', [
 			user.id,
 		])
+
+		const userCourse = await pool.query(
+			'SELECT startdate, enddate \
+       FROM course_event join user_mycourse on course_event.courseid = user_mycourse.courseid\
+       WHERE EXTRACT(MONTH FROM startdate) <= $1 AND EXTRACT(MONTH FROM enddate) >= $1\
+	   AND EXTRACT(YEAR FROM startdate) <= $2 AND EXTRACT(YEAR FROM enddate) >= $2\
+	   and userid = $3'
+			, [m, y,user.id]
+		)
+		events.push(...userCourse.rows)
+
+
+
 		if (userid.rowCount > 0) {
 			const instructorData = await pool.query(
 				'SELECT startdate, enddate \
@@ -215,6 +228,17 @@ exports.createAdminEvent = async (req, res, next) => {
 			'insert into global_event(title, startdate, enddate, starttime, endtime, detail, place, adminid)  values ($1,$2,$3,$4,$5,$6,$7,$8)',
 			[title, startdate, enddate, starttime, endtime, detail, place, adminid]
 		)
+
+		//--------------------sendMail------------------------------
+		//getEmail
+		const tempMail = await pool.query("select distinct universityemail from user_student_verification ")
+
+	tempMail.rows.forEach((t) => {
+	  console.log(t)
+	  sendEmail({ email: t.universityemail, subject: title, message: detail, })
+	});
+
+		//----------------------------------------------------------
 
 		const event = data.rows[0]
 		res.status(200).json({
