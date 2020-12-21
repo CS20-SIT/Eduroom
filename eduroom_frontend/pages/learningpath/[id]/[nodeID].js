@@ -10,7 +10,7 @@ const NodeQuestion = ({ id, nodeID }) => {
 			const res = await api.get('/api/learningpath/nodeType', { params: { nodeID: nodeID } })
 			setType(res.data.type)
 		} catch (err) {
-			console.log(err.data)
+			console.log(err)
 		}
 	}
 	useEffect(() => {
