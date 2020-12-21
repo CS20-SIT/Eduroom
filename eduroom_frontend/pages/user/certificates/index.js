@@ -3,7 +3,9 @@ import GeneralTemplate from '../../../components/template/general'
 import UserContext from '../../../contexts/user/userContext'
 import api from '../../../api'
 import CourseCert from '../../../components/user/courseCert'
+import AuthDialog from '../../../components/landing/authDialog'
 const Certificates = () => {
+	const [dialog, setDialog] = useState(false)
 	const userContext = useContext(UserContext)
 	const {user} = userContext
 	const [cerList, setCerList] = useState([])
@@ -13,10 +15,20 @@ const Certificates = () => {
 				console.log(res.data)
 				setCerList(res.data.data)
 			})
+		} else {
+			setDialog(true)
 		}
 	},[user])
 	return (
 		<Fragment>
+		{dialog ? (
+			<AuthDialog
+				handleClick={() => {
+					setDialog(false)
+				}}
+				path={'/forum'}
+			/>
+		) : null}
 			<GeneralTemplate>
 				<div className="cert-title">Certificate</div>
 				<div className="certificate-list">
