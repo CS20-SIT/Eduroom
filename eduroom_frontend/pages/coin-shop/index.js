@@ -26,7 +26,7 @@ const Temp = () => {
     };
     return (
         <Fragment>
-            <General>
+            <General isProtected={true}>
                 <div className={divClass}>
                     <div className={Styles.img}>
                         <span className={Styles.text}>
