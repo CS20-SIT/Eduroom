@@ -356,6 +356,7 @@ exports.getCodeListOfLPublic = async (req, res) => {
                 endtime: dayjs.utc().utcOffset(7).add(codelist.duration, 'day').format('YYYY-MM-DD'),
                 picture: codelist.picture,
                 minTotal: codelist.min_total,
+                isvisible : codelist.isvisible,
                 codelimit: codelist.codelimit
             }
         })
@@ -380,6 +381,7 @@ exports.getCodeListOfPublic = async (req, res) => {
                 endtime: dayjs.utc().utcOffset(7).add(codelist.duration, 'day').format('YYYY-MM-DD'),
                 picture: codelist.picture,
                 minTotal: codelist.min_total,
+                isvisible : codelist.isvisible,
                 codelimit: codelist.codelimit
             }
         })
@@ -389,4 +391,3 @@ exports.getCodeListOfPublic = async (req, res) => {
         errorHandler(error, req, res)
     }
 }
-

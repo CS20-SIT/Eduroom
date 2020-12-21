@@ -11,7 +11,6 @@ const CourseID = ({ id }) => {
 	const [course, setCourse] = useState(null)
 	const fetchCourse = async () => {
 		const res = await api.get('/api/course/getCourseFromID', { params: { courseID: id } })
-		console.log(res.data)
 		setCourse(res.data)
 	}
 	useEffect(() => {
@@ -54,17 +53,71 @@ const CourseID = ({ id }) => {
 								Remove from cart
 							</button>
 						) : (
-							<button
-								onClick={clickAddToCart}
-								className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer"
-							>
-								Add to cart
-							</button>
+							<Fragment>
+								<button
+									onClick={clickAddToCart}
+									className="text-md text-error font-quicksand bg-white border-red rounded-lg add-cart pointer"
+								>
+									Add to cart
+								</button>
+								{renderWishList()}
+							</Fragment>
 						)}
 					</span>
 					<span>
 						<button className="text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer">
 							Buy
+						</button>
+					</span>
+					<style jsx>{utils}</style>
+				</Fragment>
+			)
+		}
+	}
+	const clickAddToWishlist = async () => {
+		try {
+			const body = { courseid: id }
+			const res = await api.post('/api/course/addCourseToWishlist', body)
+			await fetchCourse()
+		} catch (err) {
+			console.log(err)
+		}
+	}
+	const clickRemoveFromWishlist = async () => {
+		try {
+			const body = { courseid: id }
+			const res = await api.post('/api/course/removeCourseFromWishlist', body)
+			await fetchCourse()
+		} catch (err) {
+			console.log(err)
+		}
+	}
+	const renderWishList = () => {
+		if (course.isWishlist) {
+			return (
+				<Fragment>
+					<span>
+						<button
+							className="text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer"
+							style={{ width: '150px' }}
+							onClick={clickRemoveFromWishlist}
+						>
+							Remove from wishlist
+						</button>
+					</span>
+					<style jsx>{utils}</style>
+				</Fragment>
+			)
+		} else {
+			return (
+				<Fragment>
+					<span>
+						<button
+							className="text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer"
+							style={{ width: '120px' }}
+							onClick={clickAddToWishlist}
+						>
+							Add to wishlist
 						</button>
 					</span>
 					<style jsx>{utils}</style>
@@ -79,6 +132,9 @@ const CourseID = ({ id }) => {
 				<div className="my-2">
 					<span className="text-xl text-navy font-quicksand">{course.coursename}</span>
 					{renderButtons()}
+
+					{/* {renderWishList()} */}
+
 					<span className="share-icon pointer">
 						<img
 							alt="shareIcon"
