@@ -132,9 +132,10 @@ exports.showCoinOwner = async (req, res) => {
 	}
 }
 exports.showStickerOwner = async (req, res) => {
-	try {
-		const userId = req.user.id
-		const getOwnerSticker = await pool.query(`SELECT sticker_owner.stickerid,stickername,stickertype,stickerimg FROM sticker_owner
+    try {
+        const userId = req.user.id
+        // const userId ='ff066805-bf79-440b-9d9d-5d94d5e3beb3'
+        const getOwnerSticker = await pool.query(`SELECT sticker_owner.stickerid,stickername,stickertype,stickerimg FROM sticker_owner
         JOIN sticker_all ON sticker_owner.stickerid = sticker_all.stickerid
         WHERE userid='${userId}';`)
 
@@ -285,6 +286,25 @@ exports.buyCoupon = async (req, res) => {
 		errorHandler(error, req, res)
 	}
 }
+exports.buyCoupon = async (req, res) => {
+    const userId = req.user.id
+    const ccid = req.body.ccid
+    const getCodeList = await pool.query(`SELECT coin_use,codelimit FROM code_list WHERE ccid=${ccid};`)
+    const coins = getCoinFromCodeList.rows[0].coin_use
+    const codeLimit = getCoinFromCodeList.rows[0].codelimit
+    if (getCodeList.rowCount === 0) {
+        const error = {
+            statusCode: 400,
+            massage: 'Code is not founded'
+        }
+        return errorHandler(error, req, res)
+    }else{
+        if (coins > 0 && codeLimit === 1) {
+            
+        }
+    }
+   
+}
 exports.getCoinFromEdqiz = async (req, res) => {
 	try {
 		const userIds = req.body
@@ -306,84 +326,75 @@ exports.getCoinFromEdqiz = async (req, res) => {
 	}
 }
 exports.getCodeListOfCoin = async (req, res) => {
-	try {
-		const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use>=1 AND codelimit=1;`)
-		const codeLists = result.rows
-		const temp = codeLists.map((codelist) => {
-			return {
-				id: codelist.ccid,
-				name: codelist.ccname,
-				description: codelist.description,
-				discount: codelist.discount,
-				coinUse: codelist.coin_use,
-				endtime: dayjs
-					.utc()
-					.utcOffset(7)
-					.add(codelist.duration, 'day')
-					.format('YYYY-MM-DD'),
-				picture: codelist.picture,
-				minTotal: codelist.min_total,
-				codelimit: codelist.codelimit,
-			}
-		})
-		console.log(temp)
-		res.status(200).json(temp)
-	} catch (error) {
-		errorHandler(error, req, res)
-	}
+    try {
+        const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use>=1 AND codelimit=1;`)
+        const codeLists = result.rows
+        const temp = codeLists.map(codelist => {
+            return {
+                id: codelist.ccid,
+                name: codelist.ccname,
+                description: codelist.description,
+                discount: codelist.discount,
+                coinUse: codelist.coin_use,
+                endtime: dayjs.utc().utcOffset(7).add(codelist.duration, 'day').format('YYYY-MM-DD'),
+                picture: codelist.picture,
+                minTotal: codelist.min_total,
+                isvisible : codelist.isvisible,
+                codelimit: codelist.codelimit
+            }
+        })
+        console.log(temp);
+        res.status(200).json(temp)
+    } catch (error) {
+        errorHandler(error, req, res)
+    }
 }
 exports.getCodeListOfLPublic = async (req, res) => {
-	try {
-		const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use=0 AND codelimit>=1;`)
-		const codeLists = result.rows
-		const temp = codeLists.map((codelist) => {
-			return {
-				id: codelist.ccid,
-				name: codelist.ccname,
-				description: codelist.description,
-				discount: codelist.discount,
-				coinUse: codelist.coin_use,
-				endtime: dayjs
-					.utc()
-					.utcOffset(7)
-					.add(codelist.duration, 'day')
-					.format('YYYY-MM-DD'),
-				picture: codelist.picture,
-				minTotal: codelist.min_total,
-				codelimit: codelist.codelimit,
-			}
-		})
-		console.log(temp)
-		res.status(200).json(temp)
-	} catch (error) {
-		errorHandler(error, req, res)
-	}
+    try {
+        const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use=0 AND codelimit>=1;`)
+        const codeLists = result.rows
+        const temp = codeLists.map(codelist => {
+            return {
+                id: codelist.ccid,
+                name: codelist.ccname,
+                description: codelist.description,
+                discount: codelist.discount,
+                coinUse: codelist.coin_use,
+                endtime: dayjs.utc().utcOffset(7).add(codelist.duration, 'day').format('YYYY-MM-DD'),
+                picture: codelist.picture,
+                minTotal: codelist.min_total,
+                isvisible : codelist.isvisible,
+                codelimit: codelist.codelimit
+            }
+        })
+        console.log(temp);
+        res.status(200).json(temp)
+    } catch (error) {
+        errorHandler(error, req, res)
+    }
 }
 
 exports.getCodeListOfPublic = async (req, res) => {
-	try {
-		const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use=0 AND codelimit=-1;`)
-		const codeLists = result.rows
-		const temp = codeLists.map((codelist) => {
-			return {
-				id: codelist.ccid,
-				name: codelist.ccname,
-				description: codelist.description,
-				discount: codelist.discount,
-				coinUse: codelist.coin_use,
-				endtime: dayjs
-					.utc()
-					.utcOffset(7)
-					.add(codelist.duration, 'day')
-					.format('YYYY-MM-DD'),
-				picture: codelist.picture,
-				minTotal: codelist.min_total,
-				codelimit: codelist.codelimit,
-			}
-		})
-		console.log(temp)
-		res.status(200).json(temp)
-	} catch (error) {
-		errorHandler(error, req, res)
-	}
+    try {
+        const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use=0 AND codelimit=-1;`)
+        const codeLists = result.rows
+        const temp = codeLists.map(codelist => {
+            return {
+                id: codelist.ccid,
+                name: codelist.ccname,
+                description: codelist.description,
+                discount: codelist.discount,
+                coinUse: codelist.coin_use,
+                endtime: dayjs.utc().utcOffset(7).add(codelist.duration, 'day').format('YYYY-MM-DD'),
+                picture: codelist.picture,
+                minTotal: codelist.min_total,
+                isvisible : codelist.isvisible,
+                codelimit: codelist.codelimit
+            }
+        })
+        console.log(temp);
+        res.status(200).json(temp)
+    } catch (error) {
+        errorHandler(error, req, res)
+    }
 }
