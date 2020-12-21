@@ -6,14 +6,12 @@ import api from '../../api'
 
 const EditPackage = (props, { index }) => {
 	const [image, setImage] = useState(null)
-	const router = useRouter()
-	const param = router.query.id || ''
 	const [editData, setEditData] = useState({
 		packagename: '',
 		discount: 0,
 		detail: '',
 		image: '',
-		cateid: 0,
+		cate_name: '',
 	})
 	const [selectCourse, setSelectCourse] = useState([])
 	useEffect(() => {
@@ -22,7 +20,7 @@ const EditPackage = (props, { index }) => {
 				packagename: props.packages.packagename,
 				discount: props.packages.discount,
 				detail: props.packages.detail,
-				cateid: props.packages.cateid,
+				cate_name: props.packages.cate_name,
 				image: props.packages.image,
 			})
 		}
@@ -30,6 +28,7 @@ const EditPackage = (props, { index }) => {
 	useEffect(() => {
 		setSelectCourse([...props.courseList])
 	}, [props.courseList])
+	
 	const handleSelectedCourses = (newSelected) => {
 		setSelectCourse([...newSelected])
 	}
@@ -53,12 +52,6 @@ const EditPackage = (props, { index }) => {
 	const discount = numDiscount.map((num) => {
 		return { label: num + '%', value: num }
 	})
-	const discountChange = (e) => {
-		props.setMyPackage({
-			...props.myPackage,
-			discount: parseInt(e.target.value),
-		})
-	}
 	const [categories, setCategories] = useState([])
 	const fetchCategories = async () => {
 		const res = await api.get('/api/package/categories')
@@ -67,22 +60,16 @@ const EditPackage = (props, { index }) => {
 	useEffect(() => {
 		fetchCategories()
 	}, [])
-	// const saveEdit = () => {
-	// 	api
-	// 		.put(`/api/forum/${data.forumid}`, { old: { content: data.content }, new: { ...editData } })
-	// 		.then((res) => {
-	// 			setData({ ...editData })
-	// 			setEdit(false)
-	// 			setEditData({ titlethread: '', content: '' })
-	// 		})
-	// 		.catch((err) => {
-	// 		})
-	// }
 	const handleChangeEdit = (e) => {
 		setEditData({ ...editData, [e.target.name]: e.target.value })
+		console.log(e.target.name)
+		console.log(e.target.value)
+
 	}
 	const handleClick = () => {
 		props.changePage(2)
+		props.setPackages(editData)
+		props.setSelectCourse()
 	}
 
 	return (
@@ -134,14 +121,14 @@ const EditPackage = (props, { index }) => {
 							</select>
 						</div>
 						<div>
-							<select name="category" onChange={handleChangeEdit} value={parseInt(editData?.cateid)}>
-								<option disabled value={0}>
+							<select name="category" onChange={handleChangeEdit} value={editData?.cate_name}>
+								<option disabled value=''>
 									Category
 								</option>
 
 								{categories.map((dis, idx) => {
 									return (
-										<option value={dis.value} key={idx}>
+										<option value={dis.label} key={idx}>
 											{dis.label}
 										</option>
 									)
@@ -149,8 +136,8 @@ const EditPackage = (props, { index }) => {
 							</select>
 						</div>
 						<div className="pdetail">
-							<textarea type="text" onChange={handleChangeEdit} name="detail" rows="4" style={{ resize: 'none' }}>
-								{editData?.content}
+							<textarea type="text" onChange={handleChangeEdit} name="detail" rows="4" style={{ resize: 'none' }}
+								value={editData?.detail}>
 							</textarea>
 						</div>
 					</div>

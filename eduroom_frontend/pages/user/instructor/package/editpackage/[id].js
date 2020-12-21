@@ -22,12 +22,15 @@ const EditPackagePage = (props) => {
     })
     setCourseList(tempList)
   }
+  
+
 
   const renderPage = () => {
     if (page === 1) {
       return (
         <EditPackage
           packages={packages}
+          setPackages={setPackages}
           courseList={courseList}
           changePage={(page) => setPage(page)}
         />
