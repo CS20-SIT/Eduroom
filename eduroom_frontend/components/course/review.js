@@ -34,10 +34,9 @@ const review = (props) => {
 							backgroundColor: '#7B89DD',
 						}}
 					/>
-					{reviewList.map(el => {
-						return(<PostedReviewBox data={el}/>)
+					{reviewList.map((el) => {
+						return <PostedReviewBox data={el} />
 					})}
-					
 				</div>
 			</div>
 			{/* <ShowComment data={data} id={props.id}/> */}

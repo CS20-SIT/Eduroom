@@ -30,7 +30,9 @@ const Content = (props) => {
 
     }, []);
 
-
+    const formatTime = (time) => {
+        return (time < 10 ? '0' : '') + time
+    }
 
     const [openEvent, setOpenEvent] = useState(false);
     /* const [isInstructor, setInstructor] = useState(false);
@@ -96,7 +98,7 @@ const Content = (props) => {
                                                 :
                                                 <div className="point" style={{ background: "#A880F7" }}></div>}
                                                 
-                                           <div className="detail">{row.hstart}:{row.mstart} - {row.hend}:{row.mend}</div>
+                                           <div className="detail">{formatTime(row.hstart)}:{formatTime(row.mstart)} - {formatTime(row.hend)}:{formatTime(row.mend)}</div>
                                            <div className="detail" style={{marginTop:".5rem"}}>{showDate} {currentMonth} - {row.enddate} {currentMonth}</div>
 </div>
                                         : "")
