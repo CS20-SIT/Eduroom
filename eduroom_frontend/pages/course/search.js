@@ -2,11 +2,11 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import utils from '../../styles/course/utils';
 import api from '../../api'
-import GeneralNonav from '../../components/template/generalnonav'
-import ForumBox from '../../components/forum/layout/forumBox'
+import GeneralTemplate from '../../components/template/general'
 import Link from 'next/link';
 import SearchBar from '../../components/course/searchBar'
 import CategoryBar from '../../components/course/categoryBar'
+import Carousel from '../../components/course/carousel'
 
 const Search = () => {
   const [data, setData] = useState([])
@@ -38,7 +38,8 @@ const Search = () => {
 
   return (
     <Fragment>
-      <GeneralNonav>
+      <GeneralTemplate>
+      <Carousel />
         <div className='bg'>
           <div className='container-1'>
             <div className='text-center flex my-6 mx-search'>
@@ -57,6 +58,7 @@ const Search = () => {
             </div>
 
             <CategoryBar />
+            <div className="coursecard">Course on Eduroom</div>
 
             {/* Box of each course */}
             <div className='text-center my-8'>
@@ -76,7 +78,7 @@ const Search = () => {
 
           </div>
         </div>
-      </GeneralNonav>
+      </GeneralTemplate>
       <style jsx>{utils}</style>
       <style jsx>
         {`
@@ -92,6 +94,7 @@ const Search = () => {
             padding-left: 15px;
             font-size: 0.8rem;
             width: 250px;
+            height: 2.4rem;
           }
           .categoryTab{
 			      margin-top: 3rem;
@@ -103,6 +106,13 @@ const Search = () => {
             margin-left: 5rem;
             margin-right: 5rem;
       
+          }
+          .coursecard {
+            font-weight: 700;
+            font-size: 26px;
+            color: #3d467f;
+            margin: 30px 30px 30px 80px;
+            
           }
         `}
       </style>
