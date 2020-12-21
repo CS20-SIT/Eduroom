@@ -3,8 +3,6 @@ import style from '../../../styles/graderSubmit/contests/contestPage/submission/
 import { format } from 'date-fns'
 
 const QuestionSubmission = (props) => {
-	console.log(props.status)
-
 	const colorize = (props) => {
 		if (props != null) {
 			switch (props.status.toLowerCase()) {
@@ -32,7 +30,7 @@ const QuestionSubmission = (props) => {
 
 	return (
 		<Fragment>
-			{props.time ? (
+			{props ? (
 				<div className="flex-container">
 					<div className="flex-item" style={{ flexBasis: '20%' }}>
 						{format(Date.parse(props.submitTime), 'P') + ' ' + format(Date.parse(props.submitTime), 'pp')}
