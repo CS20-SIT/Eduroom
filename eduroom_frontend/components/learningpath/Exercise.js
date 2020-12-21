@@ -37,12 +37,14 @@ const Exercise = ({ id, nodeID }) => {
 		setCorrect(text.toLowerCase() === learningPath.answer.toLowerCase())
 	}
 	const handleNext = async () => {
-		try {
-			const body = { nodeid: nodeID, score: 1 }
-			await api.post('/api/learningpath/completeNode', body)
-			router.push(`/learningpath/${id}/${learningPath.nextNode}`)
-		} catch (err) {
-			console.log(err)
+		if (correct) {
+			try {
+				const body = { nodeid: nodeID, score: 1,type: 'exercise' }
+				await api.post('/api/learningpath/completeNode', body)
+				router.push(`/learningpath/${id}/${learningPath.nextNode}`)
+			} catch (err) {
+				console.log(err)
+			}
 		}
 	}
 	const renderPage = () => {
