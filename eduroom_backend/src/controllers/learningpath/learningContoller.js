@@ -128,3 +128,35 @@ exports.getQuizByNodeId = async (req, res, next) => {
 		return next(new ErrorResponse(err, 500))
 	}
 }
+
+exports.completeNode = async (req, res, next) => {
+	try {
+		const userid = req.user.id
+		const { nodeid, score } = req.body
+		console.log(nodeid, score)
+		//check wheter this user already play this node
+		const old = await pool.query(`SELECT nodeid from user_progress where nodeid = $1 and userid = $2`, [
+			nodeid,
+			userid,
+		])
+		if (old.rowCount > 0) {
+			//update score of that node
+			await pool.query(`UPDATE user_progress SET score = $1 where nodeid = $2 and userid = $3`, [
+				score,
+				nodeid,
+				userid,
+			])
+		} else {
+			//insert progress
+			await pool.query(`INSERT INTO user_progress (userid,nodeid,progression,score) VALUES($1,$2,$3,$4)`, [
+				userid,
+				nodeid,
+				true,
+				score,
+			])
+		}
+		res.send({ success: true })
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
