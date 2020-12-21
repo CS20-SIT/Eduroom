@@ -3,7 +3,7 @@ const router = express.Router();
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
 
 const { getStickers, getDailyRewardStatus, showCoinOwner, showStickerOwner,
-    buySticker, getCoinFromEdqiz, packStickerStore, insertDailyReward, buyCoupon, checkCodeOwner, checkStickerOwner } = require('../controllers/Coin/coin');
+    buySticker, getCoinFromEdqiz, packStickerStore, insertDailyReward, buyCoupon, checkCodeOwner, checkStickerOwner,getCodeListOfCoin,getCodeListOfLPublic,getCodeListOfPublic } = require('../controllers/Coin/coin');
 // router.get('/packsticker',getStickerInPackage);
 router.get('/stickers', getStickers);   // ดัน
 router.get('/dailyReward', jwtAuthenicate, getDailyRewardStatus); //ดัน
@@ -16,4 +16,11 @@ router.post('/buySticker',jwtAuthenicate, buySticker)   // ดัน
 router.post('/buyCoupon',jwtAuthenicate, buyCoupon)    // ดัน
 router.post('/getCoinFromEdqiz', getCoinFromEdqiz) // ดัน
 router.post('/dailyReward', jwtAuthenicate, insertDailyReward)  // ดัน
+
+
+
+//Coupon
+router.get('/codesOfCoin',getCodeListOfCoin);
+router.get('/codesOfLPublic',getCodeListOfLPublic);
+router.get('/codesOfPublic',getCodeListOfPublic);
 module.exports = router;

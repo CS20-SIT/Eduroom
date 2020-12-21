@@ -90,7 +90,6 @@ const commentForPost = (props) => {
 						<TextField
 							id="outlined-full-width"
 							name="comment"
-							autoFocus
 							style={{ marginTop: 8 }}
 							placeholder="Add a comment ..."
 							fullWidth

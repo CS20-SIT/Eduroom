@@ -16,24 +16,26 @@ import {
 const userState = (props) => {
 	const initialState = { user: null, err: null }
 	const [state, dispatch] = useReducer(userReducer, initialState)
-	const registerUser = async (user, router) => {
+	const registerUser = async (user, router,path='/',handleSuccess=()=>{}) => {
 		try {
 			await api.post('/api/auth/register', user)
 			dispatch({ type: REGISTER_USER_SUCCESS, payload: true })
-			router.push('/')
+			handleSuccess()
+			router.push(path)
 		} catch (err) {
 			const error = err.response.data.error
 			dispatch({ type: REGISTER_USER_FAIL, payload: error })
 		}
 	}
 
-	const loginUser = async (body, router) => {
+	const loginUser = async (body, router,path='/',handleSuccess=()=>{}) => {
 		try {
 			const login = await api.post('/api/auth/login', body)
 			const user = await api.get('/api/auth/profile')
 			clearCart()
 			dispatch({ type: LOGIN_USER_SUCCESS, payload: user.data })
-			router.push('/')
+			handleSuccess()
+			router.push(path)
 		} catch (err) {
 			const error = err.response.data.error
 			dispatch({ type: LOGIN_USER_FAIL, payload: error })
