@@ -29,7 +29,6 @@ const Quizs = ({ id, nodeID }) => {
 		fetchData()
 	}, [])
 	const changeSelected = (newSelected) => {
-		console.log('new selected is ', newSelected)
 		setSelected([...newSelected])
 	}
 	const renderQuestion = () => {
@@ -42,6 +41,28 @@ const Quizs = ({ id, nodeID }) => {
 	const handleLeft = () => {
 		if (current !== 0) {
 			setCurrent(current - 1)
+		}
+	}
+	const getScore = () => {
+		let sum = 0
+		for (let i = 0; i < questions.length; i++) {
+			for (let j = 0; j < questions[i].choices.length; j++) {
+				const c = questions[i].choices[j]
+				if (c.iscorrect && selected[i] === j) {
+					sum++
+					break
+				}
+			}
+		}
+		return sum
+	}
+	const handleSubmit = async () => {
+		try {
+			setSubmit(true)
+			const body = { score: getScore(), nodeid: nodeID }
+			await api.post('/api/learningpath/completeNode', body)
+		} catch (err) {
+			console.log(err)
 		}
 	}
 	const renderButton = () => {
@@ -57,7 +78,7 @@ const Quizs = ({ id, nodeID }) => {
 		if (current === num - 1) {
 			rightButton = (
 				<Fragment>
-					<div className="submitBtn" onClick={() => setSubmit(true)}>
+					<div className="submitBtn" onClick={handleSubmit}>
 						Submit
 					</div>
 					<style jsx>{style}</style>
@@ -77,20 +98,7 @@ const Quizs = ({ id, nodeID }) => {
 			</Fragment>
 		)
 	}
-	const getScore = () => {
-		console.log(questions, selected)
-		let sum = 0
-		for (let i = 0; i < questions.length; i++) {
-			for (let j = 0; j < questions[i].choices.length; j++) {
-				const c = questions[i].choices[j]
-				if (c.iscorrect && selected[i] === j) {
-					sum++
-					break
-				}
-			}
-		}
-		return sum
-	}
+
 	const renderContent = () => {
 		if (submit) {
 			return (
