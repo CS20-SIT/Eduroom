@@ -3,7 +3,7 @@ const router = express.Router();
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate');
 const { uploadToGCSHandler } = require('../middleware/multer')
 
-const {getAdsTags,getTotalAdsPrice,getMyAds,getAllAds,addAds,getAdsType,getAdstoPay,Upload,deleteAds} = require("../controllers/advertisement/advertisementController");
+const {getAdsTags,getTotalAdsPrice,getMyAds,getAllAds,addAds,getAdsType,getAdstoPay,Upload,deleteAds,AddNewAdsBills,AddAdsTransaction} = require("../controllers/advertisement/advertisementController");
   router.get("/getAllAds",  getAllAds);
   router.get("/getAdsType",  getAdsType);
   router.get("/getAdsTags",  getAdsTags);
@@ -13,5 +13,7 @@ const {getAdsTags,getTotalAdsPrice,getMyAds,getAllAds,addAds,getAdsType,getAdsto
   router.post("/addAds",  jwtAuthenicate, addAds);
   router.post("/deleteAds",  jwtAuthenicate, deleteAds);
   router.post('/upload/picture', jwtAuthenicate,uploadToGCSHandler('ads/picture'), Upload)
+  router.post("/AddNewAdsBills",  jwtAuthenicate, AddNewAdsBills);
+  router.post("/AddAdsTransaction",  jwtAuthenicate, AddAdsTransaction);
 
   module.exports = router;
