@@ -37,7 +37,15 @@ const Rating = ({ reviews }) => {
 				{reviews[ratingSection].map((r, i) => (
 					<div key={i} className="py-4 px-8 my-6 rounded-sm shadow w-full">
 						<div className="flex">
-							<div className="profile--review"></div>
+							<div
+								className="profile--review"
+								style={{
+									width: 4 + 'rem',
+									height: 4 + 'rem',
+									backgroundImage: 'url(' + r.avatar + ')',
+									backgroundSize: 'cover',
+								}}
+							></div>
 							<div className="mx-4">
 								<div className="font-bold text-lg">{r.name}</div>
 								<div className="font-bold text-lg">
@@ -61,7 +69,6 @@ const Rating = ({ reviews }) => {
 					height: 4rem;
 					border-radius: 50%;
 					background-color: lightpink;
-					opacity: 0.4;
 				}
 			`}</style>
 		</Fragment>
