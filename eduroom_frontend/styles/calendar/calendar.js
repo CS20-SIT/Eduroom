@@ -94,9 +94,8 @@ export default css`
 .previous-m {
   border: none;
   outline: none;
-  position : absolute;
   cursor: pointer;
-  left : 32%;
+  padding-right:40px;
   z-index : 0;
   
 }
@@ -104,16 +103,20 @@ export default css`
   border: none;
   outline: none;
   cursor: pointer;
-  position : absolute;
-  left : 66%;
+  padding-left : 40px;
   z-index:0;
 }
 .month{
-  position : absolute;
-  left : 39%;
   z-index : 0;
 }
-
+.headCalendar{
+  width:100%;
+  display : flex;
+  flex-wrap :warp;
+  box-sizing:border-box;
+  align-items:center;
+  justify-content:center;
+}
 .d-calendar {
   width: 35vw;
   height: 65vh;
