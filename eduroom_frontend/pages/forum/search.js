@@ -7,14 +7,14 @@ import GeneralNonav from '../../components/template/generalnonav'
 import AuthDialog from '../../components/landing/authDialog'
 import UserContext from '../../contexts/user/userContext'
 const Search = () => {
-	const [dialog,setDialog] = useState(false)
+	const [dialog, setDialog] = useState(false)
 	const router = useRouter()
-    const [data, setData] = useState([])
+	const [data, setData] = useState([])
 	const search = router.query.q
 	const userContext = useContext(UserContext)
-	const {user} = userContext
+	const { user } = userContext
 	useEffect(() => {
-        getData(search)
+		getData(search)
 	}, [search])
 	const getData = (search) => {
 		api
@@ -32,9 +32,7 @@ const Search = () => {
 					getData(search)
 					callback()
 				})
-				.catch((err) => {
-					console.log(err)
-				})
+				.catch((err) => {})
 		} else {
 			setDialog(!dialog)
 		}
@@ -42,23 +40,25 @@ const Search = () => {
 	return (
 		<Fragment>
 			<GeneralNonav>
-				
-			{
-				dialog ? (
-					<AuthDialog handleClick={()=>{setDialog(false)}}/>
-				) :null
-			}
-				<div style={{background:'#F4F5F7'}}>
-				<ForumNav/>
-				<div className="forum-home">
-					{data.map((el, index) => {
-						return (
-							<Fragment key={index}>
-								<ForumBox data={el} onLike={handleLike} />
-							</Fragment>
-						)
-					})}
-				</div></div>
+				{dialog ? (
+					<AuthDialog
+						handleClick={() => {
+							setDialog(false)
+						}}
+					/>
+				) : null}
+				<div style={{ background: '#F4F5F7' }}>
+					<ForumNav />
+					<div className="forum-home">
+						{data.map((el, index) => {
+							return (
+								<Fragment key={index}>
+									<ForumBox data={el} onLike={handleLike} />
+								</Fragment>
+							)
+						})}
+					</div>
+				</div>
 			</GeneralNonav>
 			<style jsx>
 				{`

@@ -2,17 +2,15 @@ import React, { Fragment } from 'react'
 import CategoriesIcon from './categoriesIcon'
 
 const CategoriesBox = ({ content }) => {
-	
 	return (
 		<Fragment>
-			
-				<div className="categoriesBox">
-					<div className="categoriesIcon">
-						<CategoriesIcon type={content} />
-					</div>
-					<div className="categoriesContent">{content}</div>
+			<div className="categoriesBox">
+				<div className="categoriesIcon">
+					<CategoriesIcon type={content} />
 				</div>
-		
+				<div className="categoriesContent">{content}</div>
+			</div>
+
 			<style jsx>
 				{`
 					.categoriesBox {
@@ -24,11 +22,11 @@ const CategoriesBox = ({ content }) => {
 						display: flex;
 						flex-flow: column;
 						justify-content: center;
-                        align-items: center;
-                        cursor: pointer;
+						align-items: center;
+						cursor: pointer;
 					}
 					.categoriesContent {
-						text-align:center;
+						text-align: center;
 					}
 					.categoriesBox:hover {
 						background: rgba(255, 255, 255, 0.1);

@@ -11,6 +11,7 @@ const LearningPath = () => {
 		try {
 			const res = await api.get('/api/learningpath')
 			setPath(res.data.data)
+			console.log(res.data.data)
 		} catch (err) {
 			console.log(err)
 		}

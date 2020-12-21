@@ -4,6 +4,7 @@ import GeneralNoNav from '../../../components/template/generalnonav'
 import Link from 'next/link'
 import api from '../../../api'
 import { getItems, isInCart, addToCart, removeFromCart } from '../../../utils/cart'
+import Review from '../../../components/course/review'
 
 const CourseID = ({ id }) => {
 	const [cart, setCart] = useState([])
@@ -131,6 +132,7 @@ const CourseID = ({ id }) => {
 						</Link>
 					</div>
 					<div className="container">{renderCourse()}</div>
+					<Review type = "course" id={id} />
 				</div>
 				<style jsx>{utils}</style>
 			</GeneralNoNav>
