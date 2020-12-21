@@ -3,6 +3,12 @@ import CSSTransition from 'react-transition-group/CSSTransition'
 import style from '../../styles/calendar/calendar'
 import api from '../../api'
 import { useRouter } from 'next/router'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import Course from '../admin/layout/icons/course'
 
 const Content = (props) => {
@@ -17,6 +23,15 @@ const Content = (props) => {
 	const [stDate, setSTDate] = useState(year + '-' + monthNo + '-' + date)
 
 	// ---------------------createEvent---------------------------
+
+
+	const [submit, setSubmit] = useState(false);
+	const statusClose = () => {
+		setSubmit(false)
+		window.location.reload();
+	}
+
+
 	const [eventInfo, setEventInfo] = useState({
 		title: '',
 		description: '',
@@ -35,7 +50,7 @@ const Content = (props) => {
 				setCourseList(res.data.data)
 				// setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
 			})
-			.catch((err) => {})
+			.catch((err) => { })
 	}, [])
 
 	console.log()
@@ -51,8 +66,8 @@ const Content = (props) => {
 		api
 			.post('/api/event/createEvent', eventInfo)
 			.then((res) => {
-				alert('success')
-				window.location.reload()
+				setSubmit(true)
+				/* window.location.reload() */
 			})
 			.catch((err) => {
 				console.log(err)
@@ -110,7 +125,7 @@ const Content = (props) => {
 						<div>startDate</div>
 
 						<input
-							value={stDate}
+							value={eventInfo.startDate}
 							className="event-startDate"
 							onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
 							placeholder="Start date"
@@ -173,6 +188,25 @@ const Content = (props) => {
 							<a className="event-cancelText">CANCEL</a>
 						</button>
 					</div>
+
+					<Dialog open={submit}>
+						<DialogTitle>
+							<span>Success!</span>
+						</DialogTitle>
+						<DialogContent>
+							<DialogContentText>
+								<span> The Event have been created.</span>
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={statusClose} color="primary" autoFocus>
+								<span>Ok</span>
+							</Button>
+						</DialogActions>
+					</Dialog>
+
+
+
 				</div>
 			</CSSTransition>
 

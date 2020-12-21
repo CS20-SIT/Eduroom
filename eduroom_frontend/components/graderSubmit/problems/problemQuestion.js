@@ -27,7 +27,6 @@ const ProblemQuestion = (props) => {
 		}
 		GetData()
 	}, [])
-	console.log(testCaseData)
 	return (
 		<Fragment>
 			{data ? (

@@ -5,48 +5,51 @@ import AuthDialog from '../../landing/authDialog'
 import ForumBox from './forumBox'
 import UserContext from '../../../contexts/user/userContext'
 const HomeContent = () => {
-	const [dialog,setDialog] = useState(false)
+	const [dialog, setDialog] = useState(false)
 	const [forums, setForums] = useState([])
 	const userContext = useContext(UserContext)
-	const {user} = userContext
+	const { user } = userContext
 	useEffect(() => {
 		getData()
 	}, [])
-	const getData = ()=>{
+	const getData = () => {
 		api
 			.get('/api/forum')
 			.then((res) => {
-				console.log(res.data)
 				setForums(res.data.data)
 			})
-			.catch((err) => [console.log(err)])
+			.catch((err) => {})
 	}
-	const handleLike = (id,callback) => {
-		if(user){
-			api.post(`/api/forum/like/${id}`).then(res=>{
-				getData()
-				callback()
-			}).catch(err=>{
-				console.log(err)
-			})
+	const handleLike = (id, callback) => {
+		if (user) {
+			api
+				.post(`/api/forum/like/${id}`)
+				.then((res) => {
+					getData()
+					callback()
+				})
+				.catch((err) => {})
 		} else {
 			setDialog(!dialog)
 		}
 	}
 	return (
 		<Fragment>
-		{
-				dialog ? (
-					<AuthDialog handleClick={()=>{setDialog(false)}}/>
-				) :null
-			}
+			{dialog ? (
+				<AuthDialog
+					handleClick={() => {
+						setDialog(false)
+					}}
+					path={'/forum'}
+				/>
+			) : null}
 			<div className="forum-home">
 				<div className="home-title">CHOOSE ROOM</div>
 				<CategoriesSet />
 				{forums.map((el, index) => {
 					return (
 						<Fragment key={index}>
-							<ForumBox data={el} onLike={handleLike}/>
+							<ForumBox data={el} onLike={handleLike} />
 						</Fragment>
 					)
 				})}
