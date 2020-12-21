@@ -11,13 +11,10 @@ import SearchResult from '../chat/searchResult'
 import api from '../../api'
 
 export default function createChatRoom(props) {
-	const edit = props.edit
 	const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
 	const [createGroupForm, setCreateGroupForm] = useState({ profilePic: null, groupName: null, members: [] })
 	const [searchInput, setSearchInput] = useState(null)
 	const [searchResult, setSearchResult] = useState(null)
-	const [isFocus, setIsFocus] = useState(false)
-	const [isSelect, setIsSelect] = useState(false)
 	const [ignoreBlur,setIgnoreBlur] = useState(false)
 	const handleSelect = (el) =>{
 		if(!createGroupForm.members.some(user => user.userID === el.userID)){
@@ -26,7 +23,8 @@ export default function createChatRoom(props) {
 		setSearchResult(null)
 	}
 	const getSearchResult = async () => {
-		const res = await api.get(`/api/chat/getSearchResultMockup`)
+		setSearchResult(null)
+		const res = await api.get(`/api/chat/getSearchResult`,{params:{keyword:searchInput}})
 		setSearchResult(res.data)
 	}
 	const sendCreateRoomForm = async () => {
@@ -41,10 +39,11 @@ export default function createChatRoom(props) {
 	const uploadPic = (e) => {
 		setCreateGroupForm({ ...createGroupForm, profilePic: e.target.files[0] })
 	}
+	useEffect(()=>{
+		setSearchResult(null)
+		getSearchResult()
+	},[searchInput])
 
-	useEffect(() => {
-		console.log(createGroupForm)
-	}, [createGroupForm])
 	return (
 		<>
 			<div
@@ -105,13 +104,12 @@ export default function createChatRoom(props) {
 							marginLeft: 14,
 						}}
 						onFocus={() => {
-							setIsFocus(true)
 							getSearchResult()
 							setIgnoreBlur(false)
 						}}
 						onBlur={() => {
 							if(!ignoreBlur){
-							setIsFocus(false)
+							setIgnoreBlur(false)
 							setSearchResult(null)
 							}
 						}}

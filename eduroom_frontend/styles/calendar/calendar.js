@@ -95,23 +95,23 @@ export default css`
   border: none;
   outline: none;
   position : absolute;
-  background : #f4f5f7;
   cursor: pointer;
   margin-left: 18rem;
+  z-index : 0;
   
 }
 .forward-m {
   border: none;
   outline: none;
-  background : #f4f5f7;
   cursor: pointer;
   position : absolute;
   margin-left :51rem;
+  z-index:0;
 }
 .month{
   position : absolute;
-  padding-left : 24rem;
-  z-index : -1;
+  left : 36rem;
+  z-index : 0;
 }
 
 .d-calendar {
@@ -136,7 +136,7 @@ export default css`
   padding: 0.5rem;
   cursor: pointer; 
   font-weight: 800;
-  font-size : 28px;
+  font-size : 20px;
   color : #999999;
   z-index : 2;
 }
@@ -202,6 +202,9 @@ export default css`
   border-radius : 10px;
   
 }
+
+
+
 .title{
   color : #3d467f;
   font-weight : bold;
@@ -218,6 +221,34 @@ export default css`
   width : 8px;
   height: 8px;
 
+}
+.Cpoint{
+  border-radius : 50%;
+  width : 8px;
+  height: 8px;
+  position : absolute;
+  top:6rem;
+  left : 3rem;
+}
+.dot-course{
+  position : absolute;
+  top:5.55rem;
+  color : #3d467f;
+  left : 4rem;
+}
+.Gpoint{
+  border-radius : 50%;
+  width : 8px;
+  height: 8px;
+  position : absolute;
+  top:6rem;
+  left :8rem;
+}
+.dot-global{
+  position : absolute;
+  top:5.55rem;
+  left :9rem;
+  color : #3d467f;
 }
 
 
@@ -261,19 +292,19 @@ ul li::before {
 
 .bg-calendar{
 
-  position : absolute;
-  top : 60%;
-  left : 67%;
+  position : relative;
+  margin-left : 80%;
+  margin-top : -9%;
   z-index: 2; 
   
 }
 
 
-//------------------------------------------- dialog create event
+//------------------------------------------- dialog create event----------------------------------------------
 
 
 .D-create{
-  width: 35vw;
+  width: 45vw;
   height: 65vh;
   background-image: url('/images/createEvent/d-bg.svg');
   bacground-size : cover;
@@ -330,7 +361,7 @@ ul li::before {
   color : #969BBA;
 }
 .event-startDate{
-  width:70%;
+  width:85%;
   height:50px;
   margin-top : 0%;
   background-color:#EFF0F6;
@@ -363,7 +394,7 @@ ul li::before {
   color : #969BBA;
 }
 .event-endDate{
-  width:70%;
+  width:85%;
   height:50px;
   margin-top : 0%;
   background-color:#EFF0F6;
@@ -393,7 +424,7 @@ ul li::before {
   width:70%;
   height:50px;
   margin-left : 15%;
-  margin-top : 17%;
+  margin-top : 13%;
   background-color:#EFF0F6;
   border: 0px solid #A7ABC5;
   border-radius: 5px;
@@ -455,12 +486,12 @@ ul li::before {
 .confirmBT{
   position : absolute;
   margin-top: 3%;
-  left : 25%;
+  left : 32%;
 }
 .cancelBT{
   position : absolute;
   margin-top: 3%;
-  left : 50%;
+  left : 53%;
 }
 .d-close2{
   position: fixed;
@@ -474,6 +505,11 @@ ul li::before {
   
 }
 
+// ---------------------------------Edit-------------------------------------
+.edit{
+  float : right;
+  cursor : pointer;
+}
 
 
 

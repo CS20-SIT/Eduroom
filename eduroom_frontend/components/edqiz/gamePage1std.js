@@ -46,9 +46,7 @@ const Page1 = ({
   const [sessionid, setSesstionID] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-
-      console.log(pin, 'pin')
-      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      const res = await api.get(`/api/kahoot/sessionidAfterStart/${pin}`);
       setSesstionID(res.data.sessionid)
     };
     fetchData();
@@ -59,6 +57,7 @@ const Page1 = ({
     const sessionTemp = sessionid;
     const point = data[questionNumber].point;
     const postUpdateScore = { sessionid: sessionid, point: point }
+    console.log('postUpdateScore',postUpdateScore)
     const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
   };
 
@@ -73,19 +72,15 @@ const Page1 = ({
   }, [countPlayer]);
 
   const getSkip = () => {
-
-    console.log('answer', answer)
     socket.on("get-skip", (isSkip) => {
       console.log('getskip from page 1')
       if ((isSkip || answer == data[questionNumber].correct) && answer == 99) {
-
         console.log(answer == data[questionNumber].correct, 'skip');
         goto(4);
 
       }
     });
     setAnswer('99');
-    console.log('answer99', answer)
   }
 
   useEffect(() => {
@@ -95,7 +90,7 @@ const Page1 = ({
 
     }, []);
     sentMessage();
-    getSkip();
+    // getSkip();
     response();
   }, [answer]);
 

@@ -6,13 +6,13 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Fragment } from 'react'
 const BackForRoom = () => {
-  const router = useRouter()
-  const [location,setLocation] = useState('')
-  useEffect(()=>{
-    if(router.query.room){
-      setLocation(router.query.room);
-    }
-  },[])
+	const router = useRouter()
+	const [location, setLocation] = useState('')
+	useEffect(() => {
+		if (router.query.room) {
+			setLocation(router.query.room)
+		}
+	}, [])
 	const useStyles = makeStyles((theme) => ({
 		link: {
 			display: 'flex',
@@ -27,15 +27,17 @@ const BackForRoom = () => {
 	function handleClick(event) {
 		event.preventDefault()
 		console.info('You clicked a breadcrumb.')
-  }
+	}
 	const classes = useStyles()
 	return (
 		<Fragment>
-			<div style={{marginTop:'20px',marginButtom:'5px'}}>
+			<div style={{ marginTop: '20px', marginButtom: '5px' }}>
 				<Breadcrumbs>
 					<Link color="inherit" href="/forum" onClick={handleClick} className={classes.link}>
 						{/* <HomeIcon className={classes.icon} /> */}
-						<span style={{cursor:"pointer"}}><i className="fas fa-home"/>{' '}<span>forum</span></span>
+						<span style={{ cursor: 'pointer' }}>
+							<i className="fas fa-home" /> <span>forum</span>
+						</span>
 					</Link>
 					<Typography color="textPrimary" className={classes.link}>
 						{location}

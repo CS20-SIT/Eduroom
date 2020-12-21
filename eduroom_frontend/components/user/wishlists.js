@@ -13,7 +13,7 @@ const Wishlists = (props) => {
                 // remove={props.remove}
                 // index={index}
                 /////////////
-                user={item.userid}
+                // user={item.userid}
                 id={item.courseid}
                 title={item.coursename}
                 price={item.price}

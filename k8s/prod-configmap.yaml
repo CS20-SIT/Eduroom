@@ -7,7 +7,7 @@ data:
   ENTRYPOINT_URL: https://eduroom.cscms.me
   BACKEND_API: https://eduroom.cscms.me/api
   CLIENT_URL: https://eduroom.cscms.me
-  GRADER_URL: https://eduroom.cscms.me/grader
+  GRADER_URL: http://eduroom-grading-server-clusterip:3000
   CHAT_SERVER: https://eduroom.cscms.me/socket-chat # Path option is seted
   KAHOOT_URL: https://eduroom.cscms.me # Path option is seted
   # DB

@@ -208,7 +208,7 @@ const Edit = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <span style={sText}> Your announcement have been edited.</span>
+            <span style={sText}> Your announcement has been edited.</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
