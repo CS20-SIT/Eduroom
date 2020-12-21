@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import MyCourseForm from './myCourseForm'
 import Styles from '../../styles/user/wishlist.module.css';
+import GeneralNoNav from '../template/generalnonav'
 const MyCourses = (props) => {
   const list=()=>{
     const x=props.item.map((item,index)=>{
@@ -39,9 +40,11 @@ const MyCourses = (props) => {
   }
   return (
     <Fragment>
+      {/* <GeneralNoNav> */}
       <div className={Styles.div}>
         {list()}
         </div>
+        {/* </GeneralNoNav> */}
     </Fragment>
   )
 }
