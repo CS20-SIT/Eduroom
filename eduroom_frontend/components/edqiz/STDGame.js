@@ -36,7 +36,7 @@ const Content = ({ id }) => {
   useEffect(() => {
     const fetchSession = async () => {
       let pin = router.query.id
-      const res = await api.get(`/api/kahoot/sessionid/${pin}`);
+      const res = await api.get(`/api/kahoot/sessionidAfterStart/${pin}`);
       setSesstionID(res.data.sessionid)
     };
     fetchSession();
