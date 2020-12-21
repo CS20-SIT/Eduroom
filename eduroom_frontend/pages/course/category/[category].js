@@ -1,11 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import utils from '../../../styles/course/utils';
-import GeneralNoNav from '../../../components/template/generalnonav';
+import GeneralTemplate from '../../../components/template/general';
 import Link from 'next/link';
 import SearchBar from '../../../components/course/searchBar'
 import CategoryBar from '../../../components/course/categoryBar'
 import { useRouter } from 'next/router'
-import Name from '../../../components/course/courseRender'
 import Carousel from '../../../components/course/carousel'
 
 import api from '../../../api'
@@ -35,10 +34,10 @@ const CourseCategory = (props) => {
 
     return (
         <Fragment>
-            <GeneralNoNav>
+            <GeneralTemplate>
+            <Carousel />
                 <div className='bg'>
                     <div className='container-1'>
-                        <Carousel/>
                         {/* Search bar and Categories select */}
                         <div className='text-center flex my-6 mx-search'>
                             <SearchBar />
@@ -59,7 +58,7 @@ const CourseCategory = (props) => {
 
                         <CategoryBar current={curCat}/>
 
-
+                        <div className="coursecard">Course on Eduroom</div>
                         {/* Box of each course */}
                         <div className='text-center my-8'>
                             {data.map((e, index) => (
@@ -93,6 +92,7 @@ const CourseCategory = (props) => {
             padding-left: 15px;
             font-size: 0.8rem;
             width: 250px;
+            height: 2.4rem;
           }
           .categoryTab{
 			margin-top: 3rem;
@@ -105,9 +105,16 @@ const CourseCategory = (props) => {
             margin-right: 5rem;
       
           }
+          .coursecard {
+            font-weight: 700;
+            font-size: 26px;
+            color: #3d467f;
+            margin: 30px 30px 30px 80px;
+            
+        }
         `}
                 </style>
-            </GeneralNoNav>
+            </GeneralTemplate>
         </Fragment>
     );
 };
