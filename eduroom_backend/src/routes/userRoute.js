@@ -14,7 +14,9 @@ const {
 	getCertificate,
 	downloadCertificate,
 	postMycourse,
-	checkWishlist
+	checkWishlist,
+	updateLastvisitMyCourse,
+	updateFinishMyCourse
 } = require('../controllers/user/user')
 
 router.get('/getWishlist', jwtAuthenicate, getWishlist)
@@ -34,5 +36,7 @@ router.post('/certificate', jwtAuthenicate, downloadCertificate)
 router.post('/postMycourse', jwtAuthenicate, postMycourse)
 router.post('/checkWishlist', jwtAuthenicate, checkWishlist)
 
+router.patch('/updateLastvisitMyCourse', jwtAuthenicate, updateLastvisitMyCourse)
+router.patch('/updateFinishMyCourse', jwtAuthenicate, updateFinishMyCourse)
 
 module.exports = router

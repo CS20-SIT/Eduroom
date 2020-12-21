@@ -129,6 +129,40 @@ const postMycourse = async (req, res) => {
 	}
 }
 
+const updateLastvisitMyCourse = async (req, res) => {
+	try {
+		const user = req.user.id
+		const course = req.body.courseid
+		const updateUserQuery = `update user_mycourse set lastvisit=current_timestamp where userid='${user}' and courseid='${course}'`
+		console.log(updateUserQuery)
+		await pool.query(updateUserQuery)
+		res.send({ success: true })
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
+}
+
+const updateFinishMyCourse = async (req, res) => {
+	try {
+		const user = req.user.id
+		const course = req.body.courseid
+		const updateUserQuery = `update user_mycourse set finishtime=current_timestamp, isfinished=true where userid='${user}' and courseid='${course}'`
+		console.log(updateUserQuery)
+		await pool.query(updateUserQuery)
+		res.send({ success: true })
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
+}
+
 const getProfile = async (req, res) => {
 	try {
 		const user = req.user.id
@@ -224,7 +258,6 @@ const getCertificate = async (req, res, next) => {
 	return
 }
 
-
 const downloadCertificate = async (req, res, next) => {
 	const user = req.user
 	const courseid = req.body.courseid
@@ -270,5 +303,7 @@ module.exports = {
 	getCertificate,
 	downloadCertificate,
 	postMycourse,
-	checkWishlist
+	checkWishlist,
+	updateLastvisitMyCourse,
+	updateFinishMyCourse
 }
