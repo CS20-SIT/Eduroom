@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import General from '../../components/template/general'
 import CartElement from '../../components/payment/cart'
-import { getItems } from '../../utils/cart'
+import { getItems, removeFromCart } from '../../utils/cart'
 import api from '../../api'
 import style from '../../styles/course/cartStyle'
 
@@ -11,22 +11,27 @@ const CartPage = () => {
 	const [courses, setCourses] = useState([])
 	const [packages, setPackages] = useState([])
 	const fetchCourse = async () => {
+		const courses = getItems('course')
 		const res = await api.get('/api/package/coursesFromIds', {
-			params: { ids: cartCourses },
+			params: { ids: courses },
 		})
 		setCourses(res.data)
 	}
 	const fetchPackages = async () => {
+		const packages = getItems('package')
 		const res = await api.get('/api/package/packagesFromIds', {
-			params: { ids: cartPackages },
+			params: { ids: packages },
 		})
 		setPackages(res.data)
 	}
-	useEffect(() => {
+	const updateCart = () => {
 		const courses = getItems('course')
 		const packages = getItems('package')
 		setCartCourses(courses)
 		setCartPackages(packages)
+	}
+	useEffect(() => {
+		updateCart()
 	}, [])
 
 	useEffect(() => {
@@ -36,15 +41,21 @@ const CartPage = () => {
 	useEffect(() => {
 		fetchPackages()
 	}, [cartPackages])
+
+	const removeElement = (type, id) => {
+		removeFromCart(type, id)
+		updateCart()
+	}
+
 	const renderCourses = () => {
 		const arr = courses.map((course, idx) => {
-			return <CartElement data={course} key={idx}></CartElement>
+			return <CartElement data={course} key={idx} type="course" handleRemove={removeElement}></CartElement>
 		})
 		return arr
 	}
 	const renderPackages = () => {
 		const arr = packages.map((myPackage, idx) => {
-			return <CartElement data={myPackage} key={idx}></CartElement>
+			return <CartElement data={myPackage} key={idx} type="package" handleRemove={removeElement}></CartElement>
 		})
 		return arr
 	}
