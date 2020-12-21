@@ -47,7 +47,6 @@ exports.getStickers = async (req, res, next) => {
 exports.packStickerStore = async (req, res) => {
 	try {
 		const id = req.params.id
-		console.log(id)
 		const userId = req.user.id
 		const coins = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}';`)
 		const packSticker = await pool.query(`SELECT s.stickername, s.stickerimg, s.stickerprice,
@@ -191,11 +190,11 @@ exports.addReduceTransOwner = async (req, res) => {
 		errorHandler(error, req, res)
 	}
 }
-exports.checkStickerOwner = async (req, res) => {
-	try {
-		const userId = req.user.id
-		const stickerId = req.query.stickerid
-		const getStickerOwner = await pool.query(`SELECT * FROM sticker_owner WHERE 
+exports.checkStickerOwner =async (req,res) => {
+    try{
+        const userId=req.user.id
+        const stickerId= req.query.stickerid
+        const getStickerOwner= await pool.query(`SELECT * FROM sticker_owner WHERE 
         userid='${userId}' AND stickerid=${stickerId};`)
 		if (getStickerOwner.rowCount === 0) {
 			res.send({ sticker: 'not avaliable' })
@@ -257,40 +256,39 @@ exports.checkCodeOwner = async (req, res) => {
 		errorHandler(error, req, res)
 	}
 }
-exports.buyCoupon = async (req, res) => {
-	try {
-		const userId = req.user.id
-		const pcode = req.body.pcode
-		const getCodeList = await pool.query(`SELECT cl.coin_use FROM promotioncode p
-        INNER JOIN code_list cl on p.coderef = cl.ccid WHERE pcode='${pcode}';`)
-		if (getCodeList.rowCount === 0) {
-			const error = {
-				statusCode: 400,
-				massage: 'Code is not founded',
-			}
-			return errorHandler(error, req, res)
-		}
-		const codePrice = getCodeList.rows[0].coin_use
-		const getCoinOwner = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}'`)
-		let amountCoin = getCoinOwner.rows[0].amountofcoin
-		if (amountCoin >= codePrice) {
-			amountCoin -= codePrice
-			await pool.query(`UPDATE coin_owner SET amountofcoin=${amountCoin} WHERE userid='${userId}';`)
-			await pool.query(
-				`INSERT INTO coin_transaction(userid, date, amountofcointransaction) VALUES ('${userId}',current_timestamp, -${codePrice})`
-			)
-			await pool.query(`INSERT INTO  code_owner(pcode, userid, isused) VALUES ('${pcode}','${userId}',false);`)
-			res.status(201).send({ coin: amountCoin })
-		} else {
-			const error = {
-				statusCode: 400,
-				message: 'Coin is not enough',
-			}
-			errorHandler(error, req, res)
-		}
-	} catch (error) {
-		errorHandler(error, req, res)
-	}
+exports.buyCoupons = async (req, res) => {
+    try {
+        const userId = req.user.id
+        const ccid = req.body.ccid
+        const getCoinFromCodeList = await pool.query(`SELECT * FROM code_list WHERE ccid=${ccid};`)
+        if (getCodeList.rowCount === 0) {
+            const error = {
+                statusCode: 400,
+                massage: 'Code is not founded'
+            }
+            return errorHandler(error, req, res)
+        }
+        const codePrice = getCodeList.rows[0].coin_use
+        if (codePrice > 0) {
+            const getCoinOwner = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}'`)
+            let amountCoin = getCoinOwner.rows[0].amountofcoin;
+            if (amountCoin >= codePrice) {
+                amountCoin -= codePrice;
+                await pool.query(`UPDATE coin_owner SET amountofcoin=${amountCoin} WHERE userid='${userId}';`)
+                await pool.query(`INSERT INTO coin_transaction(userid, date, amountofcointransaction) VALUES ('${userId}',current_timestamp, -${codePrice})`)
+                await pool.query(`INSERT INTO  code_owner(pcode, userid, isused) VALUES ('${pcode}','${userId}',false);`)
+                res.status(201).send({ coin: amountCoin })
+            }
+        } else {
+            const error = {
+                statusCode: 400,
+                message: 'Coin is not enough'
+            }
+            errorHandler(error, req, res)
+        }
+    } catch (error) {
+        errorHandler(error, req, res)
+    }
 }
 exports.buyCoupon = async (req, res) => {
     const userId = req.user.id
@@ -345,7 +343,7 @@ exports.getCodeListOfCoin = async (req, res) => {
                 endtime: dayjs.utc().utcOffset(7).add(codelist.duration, 'day').format('YYYY-MM-DD'),
                 picture: codelist.picture,
                 minTotal: codelist.min_total,
-                isvisible : codelist.isvisible,
+                isvisible: codelist.isvisible,
                 codelimit: codelist.codelimit
             }
         })
@@ -369,7 +367,7 @@ exports.getCodeListOfLPublic = async (req, res) => {
                 endtime: dayjs.utc().utcOffset(7).add(codelist.duration, 'day').format('YYYY-MM-DD'),
                 picture: codelist.picture,
                 minTotal: codelist.min_total,
-                isvisible : codelist.isvisible,
+                isvisible: codelist.isvisible,
                 codelimit: codelist.codelimit
             }
         })
@@ -394,7 +392,7 @@ exports.getCodeListOfPublic = async (req, res) => {
                 endtime: dayjs.utc().utcOffset(7).add(codelist.duration, 'day').format('YYYY-MM-DD'),
                 picture: codelist.picture,
                 minTotal: codelist.min_total,
-                isvisible : codelist.isvisible,
+                isvisible: codelist.isvisible,
                 codelimit: codelist.codelimit
             }
         })
@@ -403,4 +401,81 @@ exports.getCodeListOfPublic = async (req, res) => {
     } catch (error) {
         errorHandler(error, req, res)
     }
+}
+exports.buyCoupon = async (req, res) => {
+    try{
+
+        const userId = req.user.id
+        //const userId= 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const ccid = req.body.ccid 
+    
+    
+        const getCodeList = await pool.query(`SELECT * FROM code_list WHERE ccid=${ccid};`)
+        const coins = getCodeList.rows[0].coin_use
+        const discountamount = getCodeList.rows[0].discount
+        const minTotal = getCodeList.rows[0].min_total
+        const codeLimit = getCodeList.rows[0].codelimit
+        const duration = getCodeList.rows[0].duration
+        const makeid = (length) => {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZbcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+        const pcode = makeid(10)
+        if (getCodeList.rowCount === 0) {
+            const error = {
+                statusCode: 400,
+                massage: 'Code is not founded'
+            }
+            return errorHandler(error, req, res)
+        } else {
+            if (coins > 0 && codeLimit === 1) {  //Coin
+                const getCoinOwner = await pool.query(`SELECT amountofcoin FROM coin_owner WHERE userid='${userId}'`)
+                let amountCoin = getCoinOwner.rows[0].amountofcoin;
+                if (amountCoin >= coins) {
+                    amountCoin -= coins;
+                    await pool.query(`UPDATE coin_owner SET amountofcoin=${amountCoin} WHERE userid='${userId}';`)
+                    await pool.query(`INSERT INTO coin_transaction(userid, date, amountofcointransaction) VALUES ('${userId}',current_timestamp, -${coins})`)
+                    await pool.query(`INSERT INTO promotioncode(pcode, starttime, expiretime, discountamount, mintotal, codetype, coderef)
+                    VALUES ('${pcode}',current_timestamp,current_timestamp+'${duration} day',${discountamount},${minTotal},'Private',${ccid});`)
+                    await pool.query(`INSERT INTO  code_owner(pcode, userid, isused) VALUES ('${pcode}','${userId}',false);`)
+                   
+                    res.status(201).send({ coin: amountCoin })
+                } else {
+                    const error = {
+                        statusCode: 400,
+                        message: 'Coin is not enough'
+                    }
+                    errorHandler(error, req, res)
+                }
+            }else if (coins===0 && codeLimit>=1 ){ //LPublic
+                await pool.query(`UPDATE code_list SET codelimit= codelimit-1 WHERE ccid=${ccid};`)
+                await pool.query(`INSERT INTO promotioncode(pcode, starttime, expiretime, discountamount, mintotal, codetype, coderef)
+                VALUES ('${pcode}',current_timestamp,current_timestamp+'${duration} day',${discountamount},${minTotal},'Lpublic',${ccid});`)
+                await pool.query(`INSERT INTO  code_owner(pcode, userid, isused) VALUES ('${pcode}','${userId}',false);`)
+                
+                res.status(201).send({ success: true})
+            }else if(coins === 0 && codeLimit === -1){
+                await pool.query(`INSERT INTO promotioncode(pcode, starttime, expiretime, discountamount, mintotal, codetype, coderef)
+                VALUES ('${pcode}',current_timestamp,current_timestamp+'${duration} day',${discountamount},${minTotal},'Public',${ccid});`)
+                await pool.query(`INSERT INTO  code_owner(pcode, userid, isused) VALUES ('${pcode}','${userId}',false);`)
+               
+                res.status(201).send({ success: true})
+            }else{
+                const error = {
+                    statusCode: 400,
+                    message: 'Code is not vaild'
+                }
+                errorHandler(error, req, res)
+            }
+          
+        }
+    }catch(error){
+        errorHandler(error,req,res)
+    }
+
 }

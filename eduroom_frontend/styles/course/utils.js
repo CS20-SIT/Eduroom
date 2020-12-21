@@ -145,7 +145,7 @@ export default css`
     background-size: cover;
   }
   .bg-little-grey {
-    background-color: #f7f7f7
+    background-color: #f4f5f7
   }
 
   /* Text Style */
@@ -173,6 +173,9 @@ export default css`
   }
   .rounded-md {
     border-radius: 20px;
+  }
+  .rounded-little-lg{
+    border-radius: 25px;
   }
   .rounded-lg {
     border-radius: 30px;
@@ -399,6 +402,12 @@ export default css`
   .mb-10 {
     margin-bottom: 4rem;
   }
+  .mt-1{
+    margin-top: 0.25rem;
+  }
+  .mt-4{
+    margin-top: 1rem;
+  }
   .mt-10 {
     margin-top: 4rem;
   }
@@ -481,6 +490,9 @@ export default css`
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
+  .pt-4 {
+    padding-top: 1rem;
+  }
   .pb-4 {
     padding-bottom: 1rem;
   }
@@ -497,6 +509,12 @@ export default css`
   // .hover-navy {
   //   hover: background-color: "#3d467f";
   // }
+  .hover-grey-bg-white {
+    background-color: #ffffff;
+  }
+  .hover-grey-bg-white:hover{ 
+    background-color: #f4f5f7;
+  }
 
 
 
