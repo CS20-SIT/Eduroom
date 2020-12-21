@@ -1,121 +1,114 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import Wishlists from '../../components/user/wishlists'
-import General from '../../components/template/generalnonav'
-import axios from 'axios'
+import React,{Fragment,useState,useEffect,useContext} from 'react';
+import Wishlists from '../../components/user/wishlists';
+import General from '../../components/template/general'
+import axios from 'axios';
+import api from '../../api';
+import { useRouter } from 'next/router'
+// import UserContext from '../../contexts/user/userContext'
+
+
+
 const Wishlist = () => {
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get('https://jsonplaceholder.typicode.com/albums')
-      setTotalList(res.data)
-      const result = res.data.slice(0, perPage)
-      setWishlist(result)
-      // console.log(res.datas);
+    // const user="08e9d239-b3f2-4db8-b29a-da99a314df92";
+    // const userContext = useContext(UserContext)
+    // const users = userContext.user.userid;
+    let con='';
+    let order='addtime desc';
+    useEffect(()=>{
+        const fetchData=async()=>{
+            try{
+                const res=await api.get('api/user/getWishlist', {
+                    params:{
+                        condition:'',
+                        orderby: 'addtime desc'
+                    }
+                  });
+                setTotalList(res.data);
+			} catch (err) {
+				router.push('/login')
+			}
+        }
+        fetchData();
+    },[]);
+    const router = useRouter()
+    const[totalList,setTotalList]=useState([]);
+    const del=(courseid)=>{
+        api.post('api/user/deleteWishlist', {
+            // data:{
+                courseid:courseid
+            // }
+        }).then(()=>{
+            // console.log(courseid+' '+con+' '+order);
+            searchEngine(con,order);
+        });
     }
-    fetchData()
-  }, [])
-  const [count, setCount] = useState(0)
-  const [totalList, setTotalList] = useState([])
-  const [wishlist, setWishlist] = useState([])
-  const perPage = 9
-  // const wishlist=[
-  //     {title:'TEST',price:100},
-  //     {title:'TEST2',price:300},
-  //     {title:'TEST3',price:200},
-  // ];
-  const del = (index) => {
-    // const temp=wishlist.slice();
-    // temp[index].id*=2;
-    // setWishlist(temp);
 
-    // const temp=wishlist.slice();
-    // temp.splice(index,1);
-    // setWishlist(temp);
+    const searchEngine=(condition,orderby)=>{
+        api.get('api/user/getWishlist', {
+            params:{
+                // userid:user,
+                condition: condition,
+                orderby: orderby
+            }
+        }).then((response)=>{
+            setTotalList(response.data);
+        });
+        con=condition;
+        order=orderby;
+    };
 
-    const temp = totalList.slice()
-    temp.splice(index + count, 1)
-    setTotalList(temp)
-    changeList(0)
+    // const user=()=>{
+    //     api.get('api/user/getWishlist', {
+    //         // params:{
+    //             // userid:user,
+    //             condition: condition,
+    //             orderby: orderby
+    //         // }
+    //     }).then((response)=>{
+    //         setTotalList(response.data);
+    //     });
+    //     con=condition;
+    //     order=orderby;
+    // };
 
-    // return console.log(wishlist[index].id,index);
-  }
-  const changeList = (num) => {
-    if (num > 0 && count + num < totalList.length) {
-      changeCount(num)
-    } else if (num < 0 && count + num >= 0) {
-      changeCount(num)
-    } else {
-      const temp = totalList.slice(count, count + perPage)
-      setWishlist(temp)
+    const searching=()=>{
+        let searchvalue=document.getElementById('search').value;
+        let sortvalue=document.getElementById('sort').value;
+
+        let search='';
+        if(searchvalue!==''){
+            search='and upper(coursename) like upper(\'%'+searchvalue+'%\')'
+        }
+
+        let sort;
+        switch(sortvalue){
+            case'add time':sort='addtime desc';break;
+            case'title':sort='coursename asc';break;
+            case'price':sort='price asc';break;
+        }
+
+        searchEngine(search,sort);
     }
-  }
-  const changeCount = (num) => {
-    setCount(count + num)
-    const temp = totalList.slice(count, count + perPage)
-    setWishlist(temp)
-  }
 
-  const sorting = () => {
-    let x = document.getElementById('sort').value
-    console.log(x)
-    console.log(totalList[0][x])
-    if (x == 'price') {
-      x = 'id'
-    }
-    const temp = totalList.sort((a, b) => {
-      if (b[x] >= a[x]) return -1
-      else if (b[x] < a[x]) return 1
-    })
-    // const temp=totalList.sort(
-    //     (a,b)=>{
-    //         let index=0;
-    //         while(true) {
-    //             if(b[sort[0][index]]>a[sort[0][index]]) return -1;
-    //             else if(b[sort[0][index]]<a[sort[0][index]]) return 1;
-    //             else{
-    //                 if(index<sort.length-1) index++;
-    //                 else return -1;
-    //             }
-    //         }
-    //     })
-    setTotalList(temp)
-    changeList(0)
-  }
-
-  return (
+    return (
     <Fragment>
-      <General>
-        <h1>Wishlist</h1>
-        Sort by
-        <select id="sort">
-          <option>title</option>
-          <option>price</option>
-        </select>
-        <button
-          onClick={() => {
-            sorting()
-          }}
-        >
-          Select
-        </button>
-        <br></br>
-        <button
-          onClick={() => {
-            changeList(-1 * perPage)
-          }}
-        >
-          Prev
-        </button>
-        <button
-          onClick={() => {
-            changeList(perPage)
-          }}
-        >
-          Next
-        </button>
-        {count}
-        <Wishlists item={wishlist} remove={del}></Wishlists>
-      </General>
+        <General>
+                <center>
+                <h1>Wishlist</h1>
+                
+                <input type="text" id="search" placeholder='Search course'></input>
+                <br></br>
+                Sort by
+                <select id='sort' >
+                    <option>add time</option>
+                    <option>title</option>
+                    <option>price</option>
+                </select>
+                <button onClick={()=>{searching()}}>Search</button>
+                </center>
+            <Wishlists item={totalList} remove={del}></Wishlists>
+        </General>
     </Fragment>
-  )
+    )
 }
 export default Wishlist

@@ -1,16 +1,22 @@
-import React, { Fragment } from "react"
-import Contests from "./ContestList"
-import style from "../../../styles/graderSubmit/contests/contestBox"
+import React, { Fragment } from 'react'
+import Contests from './ContestList'
+import style from '../../../styles/graderSubmit/contests/contestBox'
 
-const ContestBox = () => {
-  return (
-    <div>
-      <h2 style={{ color: "#5B5B5B", paddingTop: "20px" }}>CONTESTS</h2>
-      <div className="box">
-        <Contests />
-      </div>
-      <style jsx>{style}</style>
-    </div>
-  )
+const ContestBox = (props) => {
+	return (
+		<div>
+			<div className="box">
+				<Contests
+					id={props.id}
+					title={props.title}
+					description={props.description}
+					rule={props.rule}
+					starttime={props.starttime}
+					endtime={props.endtime}
+				/>
+			</div>
+			<style jsx>{style}</style>
+		</div>
+	)
 }
 export default ContestBox

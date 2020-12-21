@@ -1,40 +1,33 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/package/detail'
 import Button from '@material-ui/core/Button'
-import BestSeller from './bestSeller'
 import { useRouter } from 'next/router'
-const Package = () => {
+import api from '../../api'
+const Package = (props) => {
     const router = useRouter();
+
     return (
         <Fragment>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="center">
                 <div className="card">
                     <div style={{ display: 'flex' }}>
-                        <div className="col-6" style={{ width: 650, marginLeft: 30 }}>
-                            <h1 style={{ fontSize: 24, color: '#3D467F' }}>Coding with Python</h1>
-                            <div style={{ textAlign: 'justify', width: 500, marginBottom: 20 }}>Amet minim mollit non deserunt ullamco est sit
-                                     aliqua dolor do amet sint. Velit officia consequat </div>
-                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                <BestSeller />
-                                <div style={{ fontWeight: 500, marginLeft:10,color:'#3D467F' }}>3 course in this package</div>
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'row', marginBottom: 10,marginTop:10 }}>
-                                <div style={{ marginRight: 10 }}>Instructors</div>
-                                <div>Instructors Name</div>
-                            </div>
-                            <div style={{ marginBottom: 3, display: 'flex', alignItems: 'flex-start', flexDirection: 'row' }}>
-                                <img
-                                    src="/images/package/Time.svg"
-                                    style={{ width: 20, height: 20, marginRight: 10, display: 'center' }}
-                                />
-                                <div style={{ paddingBottom: 10 }}>last updated 21/10/2020</div>
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'row', marginBottom: 10 }}>
-                                <div style={{ marginRight: 30, fontSize: 30, fontWeight: 500 }}>฿1000</div>
-                                <div style={{ marginRight: 30, fontSize: 18, marginTop: 10, color: '#9593A0', textDecorationLine: 'line-through' }}>฿3500</div>
-                            </div>
+                        <div className="incard">
+                            <h1 className="title">{props.packages?.packagename}</h1>
+                            <div className="text2">{props.courseCount} courses in this package</div>
                             
-                            <Button style={{ marginRight: 10, backgroundColor: '#7B89DD', color: 'white', borderRadius: 10 }}
+                            <div className="instructor">
+                                <div style={{ marginRight: 10 }}>Instructor</div>
+                                <div>{`${props.packages?.firstname}` + "  " + `${props.packages?.lastname}`}</div>
+                            </div>
+                            <div className="last-update">
+                                <div style={{ paddingBottom: 10 }}></div>
+                            </div>
+                            <div className="price">
+                                <div className="old-price">{parseFloat(props.packages?.price).toFixed(2)}</div>
+                                <div className="new-price">{props.packages?.oldprice}</div>
+                            </div>
+
+                            <Button id="wishlist-btn" style={{ marginRight: 20, backgroundColor: '#7B89DD', color: 'white', borderRadius: 10 }}
                                 onClick={() => router.push("/user/wishlist")}// link to wishlist
                             >
                                 wish list
@@ -44,7 +37,7 @@ const Package = () => {
                                 />
                             </Button>
 
-                            <Button style={{ marginRight: 10, backgroundColor: '#3D467F', color: 'white', borderRadius: 10 }}
+                            <Button id="addtocart-btn" style={{ marginRight: 10, backgroundColor: '#3D467F', color: 'white', borderRadius: 10 }}
                                 onClick={() => router.push("/course")}// link to cart
                             > Add to cart
                                 <img
@@ -52,38 +45,26 @@ const Package = () => {
                                     style={{ width: 20, height: 20, marginLeft: 8, display: 'center' }}
                                 />
                             </Button>
+                           
 
-
-                            <Button style={{ marginRight: 10, backgroundColor: '#3D467F', color: 'white', borderRadius: 10 }}
-                                onClick={() => router.push("/course/id/paymentTest")}
-                            > Buy Now
-                                <img
-                                    src="/images/package/buyNow.svg"
-                                    style={{ width: 20, height: 20, marginLeft: 8, display: 'center' }}
-                                />
-                            </Button>
-                            
                         </div>
-
-                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <div className="col-6" style={{ display: 'felx', justifyContent: 'flex-end' }}>
-                                <img
-                                    src="/images/package/packagePic.svg"
-                                    style={{ width: 250, height: 250 }}
-                                />
-                            </div>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <img
+                                src={props.packages?.image}
+                                style={{ marginLeft: '40px', width: '20vw', height: '23vh', borderRadius: '10px' }}
+                            />
                         </div>
+                        
                     </div>
+
                 </div>
             </div>
 
-            <style jsx>
-                {
-                    style
-                }
-            </style>
+            <style jsx>{style}</style>
         </Fragment>
     )
 
 }
+
+
 export default Package;

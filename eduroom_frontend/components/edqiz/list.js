@@ -1,36 +1,42 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import EdqizText from "../edqiz/edqizText";
 import CardQuiz from "../edqiz/cardQuiz";
 import AddNewQuiz from "../edqiz/addNewQuiz";
 import Grid from "@material-ui/core/Grid";
-const Page1 = ({ data, goto, handleQuestionNumber,questionNumber,question }) => {
-  
+const Page1 = ({ data, goto, handleQuestionNumber, questionNumber }) => {
 
-  
+
+  console.log(data)
+  useEffect(() => {
+    console.log(data);
+  }, [data])
   const renderQuestion = () => {
-    return data.map((el, index) => {
-      return (
-        <CardQuiz
-          key={index}
-          question={question}
-          data={data}
-          id={questionNumber}
-          index={index}
-          quizname={data[index].quizname}
-          description={data[index].description}
-          goto={goto}
-          handleQuestionNumber={(val) => {
-            handleQuestionNumber(val);
-          }}
-        />
-      );
-    });
-  };
+
+    if (data != null) {
+
+      return data.map((el, index) => {
+        return (
+          <CardQuiz
+            key={index}
+            data={data}
+            id={questionNumber}
+            index={index}
+            quizname={data[index].name}
+            description={data[index].description}
+            goto={goto}
+            handleQuestionNumber={(val) => {
+              handleQuestionNumber(val);
+            }}
+          />
+        );
+      });
+    };
+  }
 
   return (
     <Fragment>
       <div className="landing">
-        <div style={{ marginTop: "5vh", width: "100vw" }}>
+        <div style={{ marginTop: "5vh" }}>
           <EdqizText type="list" />
         </div>
         <div className="title">
@@ -43,7 +49,7 @@ const Page1 = ({ data, goto, handleQuestionNumber,questionNumber,question }) => 
                 justifyContent: "center",
               }}
             >
-              <Grid container style={{display:'flex',justifyContent:'center'}}>
+              <Grid container style={{ display: 'flex', justifyContent: 'center' }}>
                 {renderQuestion()}
                 <AddNewQuiz />
               </Grid>
@@ -64,22 +70,21 @@ const Page1 = ({ data, goto, handleQuestionNumber,questionNumber,question }) => 
           display: flex;
           align-items: center;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-          justify-content: center;
+
           background: white;
           padding: 0px;
           transition: 0.3s;
-          width: 95vw;
+          width: 90vw;
           border-radius: 5vh;
-          padding: 20px;
         }
         .landing {
-          justify-content: center;
-          width: 100vw;
-          height: 100vh;
           background-image: url("/images/edqiz/create-bg.svg");
+          width: 95vw;
+          height: 100vh;
           background-repeat: no-repeat;
           background-size: cover;
-          overflow: auto;
+          position: absolute;
+          top: 0;
         }
       `}</style>
     </Fragment>

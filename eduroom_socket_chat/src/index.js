@@ -13,6 +13,12 @@ const socketOptions = {
 const io = socketIO.listen(app, socketOptions);
 io.on('connection', (client) => {
 console.log('user connected');
-
-
+	client.on("joinRoom",(room)=>{
+		//read message
+		client.join(room) //join room
+	})
+	client.on("sendMessage",(room)=>{
+		console.log(room)
+		io.in(room).emit('recieveMessage')
+	})
 });

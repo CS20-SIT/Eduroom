@@ -1,12 +1,28 @@
 import css from 'styled-jsx/css'
 export default css`
+
+
+.BGBG {
+    max-width: 100vw;
+    min-height: 100vh;
+    background-image: url('/images/package/payment.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 select{
     height: 40px;
     border-radius: 1.5vh;
 }
-// input{
-//     background-color: white;
-// }
+.checkout{
+    width: 70vw;
+    font-weight:700;
+    font-size: 30px;
+    color: #473F47;    
+    font=family: Lato;
+    display: flex;
+    justify-content: flex-start;
+    margin: 30px 0px 20px 0px;
+}
 .compay{
     display: flex;
     justify-content: center;
@@ -29,7 +45,7 @@ input[type='radio']:after {
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
     height: 180px;
    width: 90%;
-   background-color: #3D467F;
+   background-image: url('/images/package/recc.svg');
 }
 .p{
     margin-left: 20px;
@@ -39,30 +55,24 @@ input[type='radio']:after {
     display: flex;
     flexDirection: column;
     justify-content: center;
-
+    height: 10%;
 }
 .test{
     display: flex;
     justify-content: center;
-    border: black;
-    
+    border: black; 
 }
 
-.bg{
-    background-color: #F4F5F7;
-    height: 100%;
-    overflow-y: auto;
-}
 
 .card{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-            background: white;
+            background: rgba(255,255,255,0.7);
             border-radius: 2vh;
             width: 70vw;
-            height: 85vh;
-            padding-top: 1%;
-        
+            height: 70vh;
+            padding-top: 2%;
 }
+
 .CheckoutBar {
     display: flex;
     justify-content: start;
@@ -97,25 +107,20 @@ input[type='radio']:after {
 .text-title {
     font-family: 'Quicksand', sans-serif;
   }
-
-//   input,select {
-//     border: 1px solid #5B5B5B;
-//     padding: .50rem;
-//     border-radius: .5rem;
-//     outline:none;
-//     // background: white;
-//     // -webkit-appearance: none;
-// }
 .country{
     margin-bottom: 10px;
 }
+.whiteboxInput{
+    width:60%;
+    height: 37px;
+}
 .input-text {
     width: 100%;
-    font-size: 0.8em;
+    font-size: 15px;
     height: 35px;
     background-color: white;
     border : none; 
-    
+    color:#5B5B5B;
 }
 option{
     font-size: 0.7em;
@@ -132,6 +137,7 @@ option{
     width: 100%;
     height: auto;
     margin: 1.5% 1%;
+    color:#5B5B5B;
 }
 .inner-purple {
     display: flex;
@@ -144,8 +150,7 @@ option{
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
     height: 230px;
    width: 90%;
-   background-color: #3D467F;
-   
+   background-image: url('/images/package/recc.svg');
 }
 .name{
     height: 40px;
@@ -166,7 +171,9 @@ option{
    width: 70%;
    background-color: white;
    padding-top: 5%;
-   
+   display:flex;
+   flex-direction: column;
+   justify-content: center;
 }
 .text{
     font-size: 13px;
@@ -174,7 +181,7 @@ option{
     align-item: center;
     justify-content: center;
     textAlign: justify;
-    width:300;
+    width: 300;
     padding: 0px 20px;
     margin-bottom: 10%;
 }

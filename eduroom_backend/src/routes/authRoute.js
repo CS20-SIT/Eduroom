@@ -1,32 +1,34 @@
 const express = require('express')
 const passport = require('passport')
+
 const router = express.Router()
-const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
-const { getProfile, regisController, loginController, logoutController, verifyEmailController } = require('../controllers/authController')
-const { generateCookieJWT } = require('../utils/jwt')
+const { jwtAuthenicate, jwtAdminAuthenticate } = require('../middleware/jwtAuthenticate')
+const {
+	getProfile,
+	regisController,
+	loginController,
+	logoutController,
+	verifyEmailController,
+	googleCallbackController,
+	adminRegisController,
+	adminLoginController,
+	adminProfileController
+} = require('../controllers/authController')
 
 router.post('/login', loginController)
 router.post('/register', regisController)
 router.get('/verify/:token', verifyEmailController)
-router.get('/logout', logoutController)
+router.get('/logout', jwtAuthenicate, logoutController)
 
-router.get('/google', passport.authenticate('google', { scope: ['profile','email'], session: false }))
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], session: false }))
 
-router.get('/google/callback', passport.authenticate('google', {session: false}), (req, res) => {
-    console.log('Google Authen');
-    let user = {
-        displayName: req.user.displayName,
-        name: req.user.name.givenName,
-        email: req.user._json.email,
-        provider: req.user.provider }
-    console.log(user)
-    //TODO: Find or add user in db
-    const token = generateCookieJWT('userid' + user.name)
+router.get('/google/callback', passport.authenticate('google', { session: false }), googleCallbackController)
 
-    res.cookie('jwt', token)
-    res.redirect(process.env.CLIENT_URL)
-})
+router.get('/profile', jwtAuthenicate, getProfile)
 
-router.get('/profile', jwtAuthenicate , getProfile)
+router.post('/admin/register', adminRegisController)
+router.post('/admin/login', adminLoginController)
+router.get('/admin/profile', jwtAdminAuthenticate, adminProfileController)
+router.get('/admin/logout', jwtAdminAuthenticate, logoutController)
 
 module.exports = router

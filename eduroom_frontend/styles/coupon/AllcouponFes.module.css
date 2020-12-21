@@ -1,0 +1,23 @@
+.arrow {
+    border: solid 8px;
+    opacity: 1;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    color: black;
+    background-color: inherit;
+    font-size: 2em;
+    cursor: pointer;
+}
+.disable {
+    border: solid 8px;
+    opacity: 0.5;
+    background-color: inherit;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    font-size: 2em;
+}
+.container {
+	margin: 20px;
+}

@@ -16,7 +16,7 @@ import {
   Link,
 } from "@material-ui/core";
 import Studentnav from "../../../components/support/studentsidenav";
-import HowDoesEduroomWork from '../../../components/support/howDoesEduroomWork';
+import HowDoesEduroomWork from '../../../components/support/gettingstarted/howDoesEduroomWork';
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
 const courseinstandteaching = () => {

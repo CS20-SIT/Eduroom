@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'react';
 const InputText = ({
   label,
   name,
@@ -8,33 +8,31 @@ const InputText = ({
   value,
   error,
   errorText,
-  style
+  style,
 }) => {
-    const createStyle = {
-        padding:style?.padding??'0%',
-        margin:style?.margin??'0%'
-    }
-    
+  const createStyle = {
+    padding: style?.padding ?? '0%',
+    margin: style?.margin ?? '0%',
+  };
+
   return (
     <Fragment>
       <div className="input-text">
-        <label>
-          <span className="label-text">{label ?? ''}</span>
-          <input
-            className={error ? 'textfield error' : 'textfield'}
-            name={name ?? ''}
-            type={type ?? 'text'}
-            placeholder={placeholder ?? ''}
-            onChange={handleChange}
-            value={value}
-            style={createStyle}
-          />
-          {error ? (
-            <span className="error-text">
-              {errorText ?? placeholder + ' is Required'}
-            </span>
-          ) : null}
-        </label>
+        <span className="label-text">{label ?? ''}</span>
+        <input
+          className={error ? 'textfield error' : 'textfield'}
+          name={name ?? ''}
+          type={type ?? 'text'}
+          placeholder={placeholder ?? ''}
+          onChange={handleChange}
+          value={value}
+          style={createStyle}
+        />
+        {error ? (
+          <div className="error-text">
+            {errorText ?? placeholder + ' is Required'}
+          </div>
+        ) : null}
       </div>
       <style jsx>
         {`
@@ -49,13 +47,14 @@ const InputText = ({
             font-size: 0.8em;
             color: #ed3f14;
             font-weight: 500;
+            margin-bottom: 4px;
           }
           .textfield {
             background: #eff0f6;
             border-radius: 10px;
             width: 100%;
             border: none;
-            font-size: 1.1em;
+            font-size: 1em;
             color: #3d467f;
           }
           .textfield.error {
@@ -68,6 +67,6 @@ const InputText = ({
         `}
       </style>
     </Fragment>
-  )
-}
-export default InputText
+  );
+};
+export default InputText;
