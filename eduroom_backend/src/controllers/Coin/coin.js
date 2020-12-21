@@ -107,8 +107,8 @@ exports.insertDailyReward = async (req, res) => {
             res.status(400).send({ success: false })
         }
 
-    } catch(error) {
-            errorHandler(error, req, res)
+    } catch (error) {
+        errorHandler(error, req, res)
     }
 }
 exports.showCoinOwner = async (req, res) => {
@@ -174,19 +174,19 @@ exports.addReduceTransOwner = async (req, res) => {
         errorHandler(error, req, res);
     }
 }
-exports.checkStickerOwner =async (req,res) => {
-    try{
-        const userId='db29433b-e05d-41ab-854b-b6f8023464f6'
-        const stickerId= req.body.stickerid
-        const getStickerOwner= await pool.query(`SELECT * FROM sticker_owner WHERE 
+exports.checkStickerOwner = async (req, res) => {
+    try {
+        const userId = 'db29433b-e05d-41ab-854b-b6f8023464f6'
+        const stickerId = req.body.stickerid
+        const getStickerOwner = await pool.query(`SELECT * FROM sticker_owner WHERE 
         userid='${userId}' AND stickerid=${stickerId};`)
-        if(getStickerOwner.rowCount === 0 ){
-            res.send({sticker : 'not avaliable' })
-        }else{
-            res.send({sticker : 'avaliable'})
+        if (getStickerOwner.rowCount === 0) {
+            res.send({ sticker: 'not avaliable' })
+        } else {
+            res.send({ sticker: 'avaliable' })
         }
-    }catch(error){
-        errorHandler(error,req,res)
+    } catch (error) {
+        errorHandler(error, req, res)
     }
 }
 exports.buySticker = async (req, res) => {
@@ -226,19 +226,19 @@ exports.buySticker = async (req, res) => {
         errorHandler(error, req, res);
     }
 }
-exports.checkCodeOwner = async (req,res) => {
-    try{
-        const userId=req.user.id
+exports.checkCodeOwner = async (req, res) => {
+    try {
+        const userId = req.user.id
         const pcode = req.body.pcode
         const getCodeFronOwner = await pool.query(`SELECT * FROM code_owner WHERE userid='${userId}' 
         AND pcode='${pcode}';`)
-        if(getCodeFronOwner.rowCount === 0){
+        if (getCodeFronOwner.rowCount === 0) {
             res.send({ canGet: true })
-        }else{
-            res.send({ canGet: false})
+        } else {
+            res.send({ canGet: false })
         }
-    }catch(error){
-        errorHandler(error,req,res)
+    } catch (error) {
+        errorHandler(error, req, res)
     }
 }
 exports.buyCoupon = async (req, res) => {
@@ -247,10 +247,10 @@ exports.buyCoupon = async (req, res) => {
         const pcode = req.body.pcode
         const getCodeList = await pool.query(`SELECT cl.coin_use FROM promotioncode p
         INNER JOIN code_list cl on p.coderef = cl.ccid WHERE pcode='${pcode}';`)
-        if( getCodeList.rowCount ===0){
+        if (getCodeList.rowCount === 0) {
             const error = {
-                statusCode : 400,
-                massage: 'Code is not founded' 
+                statusCode: 400,
+                massage: 'Code is not founded'
             }
             return errorHandler(error, req, res)
         }
@@ -270,8 +270,8 @@ exports.buyCoupon = async (req, res) => {
             }
             errorHandler(error, req, res)
         }
-    } catch(error) {
-        errorHandler(error,req,res)
+    } catch (error) {
+        errorHandler(error, req, res)
     }
 }
 exports.getCoinFromEdqiz = async (req, res) => {
@@ -295,3 +295,74 @@ exports.getCoinFromEdqiz = async (req, res) => {
         errorHandler(error, req, res)
     }
 }
+exports.getCodeListOfCoin = async (req,res) => {
+    try{
+        const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use>=1 AND codelimit=1;`)
+        const codeLists =result.rows
+        const temp = codeLists.map(codelist => {
+            return {
+                id : codelist.ccid,
+                name : codelist.ccname,
+                description : codelist.description,
+                discount : codelist.discount,
+                coinUse : codelist.coin_use,
+                endtime : dayjs.utc().utcOffset(7).add(codelist.duration,'day').format('YYYY-MM-DD') ,
+                picture : codelist.picture,
+                minTotal : codelist.min_total,
+                codelimit : codelist.codelimit
+            }
+        }) 
+        console.log(temp);
+        res.status(200).json(temp)
+    }catch(error){
+        errorHandler(error,req,res)
+    }
+}
+exports.getCodeListOfLPublic = async (req,res) => {
+    try{
+        const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use=0 AND codelimit>=1;`)
+        const codeLists =result.rows
+        const temp = codeLists.map(codelist => {
+            return {
+                id : codelist.ccid,
+                name : codelist.ccname,
+                description : codelist.description,
+                discount : codelist.discount,
+                coinUse : codelist.coin_use,
+                endtime : dayjs.utc().utcOffset(7).add(codelist.duration,'day').format('YYYY-MM-DD') ,
+                picture : codelist.picture,
+                minTotal : codelist.min_total,
+                codelimit : codelist.codelimit
+            }
+        }) 
+        console.log(temp);
+        res.status(200).json(temp)
+    }catch(error){
+        errorHandler(error,req,res)
+    }
+}
+
+exports.getCodeListOfPublic = async (req,res) => {
+    try{
+        const result = await pool.query(`SELECT * FROM code_list WHERE isvisible=true AND coin_use=0 AND codelimit=-1;`)
+        const codeLists =result.rows
+        const temp = codeLists.map(codelist => {
+            return {
+                id : codelist.ccid,
+                name : codelist.ccname,
+                description : codelist.description,
+                discount : codelist.discount,
+                coinUse : codelist.coin_use,
+                endtime : dayjs.utc().utcOffset(7).add(codelist.duration,'day').format('YYYY-MM-DD') ,
+                picture : codelist.picture,
+                minTotal : codelist.min_total,
+                codelimit : codelist.codelimit
+            }
+        }) 
+        console.log(temp);
+        res.status(200).json(temp)
+    }catch(error){
+        errorHandler(error,req,res)
+    }
+}
+
