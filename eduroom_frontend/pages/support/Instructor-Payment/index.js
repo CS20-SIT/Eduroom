@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link, Paper, Typography } from '@material-ui/core'
 import style from '../../../styles/forum/showForum'
-import InstructorPayment from '../../../components/support/instructorpayment/instructorpayment'
+import Index from '../../../components/support/instructorpayment/index'
 import { useRouter } from 'next/router'
 import GeneralNonav from '../../../components/template/generalnonav'
 import General from '../../../components/template/general'
@@ -22,7 +22,7 @@ const create = () => {
 				>
 					<div id="nav">
 						<div className="top">
-							<InstructorPayment />
+							<Index />
 						</div>
 					</div>
 					<style jsx>{style}</style>

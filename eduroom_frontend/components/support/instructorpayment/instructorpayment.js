@@ -13,7 +13,7 @@ import {
   Link,
   fade,
 } from "@material-ui/core";
-import Studentnav from "../studentsidenav";
+import Instructornav from "../instructorsidenav";
 
 const InstructorPayment = () => {
   const theme = createMuiTheme({
@@ -33,7 +33,7 @@ const InstructorPayment = () => {
         </Grid>
         <Grid container>
           <Grid item xs={3}>
-            <Studentnav />
+            <Instructornav />
           </Grid>
 
           <Grid item xs={9}>
