@@ -58,7 +58,7 @@ const CheckoutDialog = ({ handleClick, courseList, packageList }) => {
 								<Country handleChange={(e) => setCountry(e.target.value)} />
 							</div>
 							<div style={{ width: '100%', paddingTop: '1rem' }}>
-								<CreditBox />
+								<CreditBox onSubmit={handleSubmit} />
 							</div>
 						</div>
 						<div className="paymentright">

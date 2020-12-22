@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import { useRouter } from 'next/router'
 
-const creditBox = () => {
+const creditBox = ({onSubmit}) => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
 	const [type, setType] = useState('credit')
@@ -199,7 +199,7 @@ const creditBox = () => {
 									width: 180,
 									height: 30,
 								}}
-								onClick={handleOpenDialog}
+								onClick={onSubmit}
 								// onClick={() => checkCreditCardDetail(),handleOpenDialog()}
 							>
 								Complete Payment
