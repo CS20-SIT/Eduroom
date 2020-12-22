@@ -132,7 +132,7 @@ const ConfirmEdit = ({ index,image, editData, selectCourse, handleChangePage }) 
 				<div className="dialog">
 					<div className="indialog">
 						<div className="right">
-							<button id="close-btn" className="buttonX" onClick={() => router.push('/user/instructor/course')}>
+							<button id="close-btn" className="buttonX" onClick={() => router.push('/user/instructor/package')}>
 								X
 							</button>
 						</div>
