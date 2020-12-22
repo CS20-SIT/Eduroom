@@ -66,9 +66,9 @@ const GetStart = () => {
               
                 <Link href="/support/getstart/Add-a-Course-to-Your-Wishlist"><p>Add a Course to Your Wishlist</p></Link>
                 <Link href="/support/getstart/System-Requirements"><p>System Requirement</p></Link>
-              <p>How to Preview And Compare Courses</p>
+              <Link href="/support/getstart/Lifetime-Access"><p>Lifetime Access</p></Link>
               <Grid container justify='flex-end'>
-              <img src='/images/it_support.svg' style={{marginRight:theme.spacing(8)}}></img>
+              <img src='/images/gettingstarted.svg' style={{marginRight:theme.spacing(8), width:'45%'}}></img>
               </Grid>
             </Paper>
           </Grid>

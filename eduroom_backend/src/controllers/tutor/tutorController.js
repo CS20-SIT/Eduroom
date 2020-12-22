@@ -139,7 +139,6 @@ const getInstructorInfo = async (req, res) => {
 
 		// ID : instructorID
 		const { id } = req.query
-		console.log('id', id)
 
 		const u = req.user.id
 		if (!u) {
@@ -537,22 +536,10 @@ const insertStudentAppointment = async (req, res, next) => {
 			return next(new ErrorResponse('Unauthorize', 401))
 		}
 		const { id, startTime, endTime, price, members } = req.body
-		// 	console.log(headerId)
-		// 	console.log(id, startTime, endTime, price, members)
-		// 	console.log(`
-		// 	insert into instructor_appointments(starttime, endtime, status, price, paymentdue, approvetime, ispaid, instructorid, headerid)
-		// 	values(${startTime}, ${endTime}, null, ${price}, null, null, false, ${id}, ${headerId}) returning appointmentid;
-		// `)
 
-		const result = await pool.query(`
-			insert into instructor_appointments(starttime, endtime, status, price, paymentdue, approvetime, ispaid, instructorid, headerid)
-			values('${startTime}', '${endTime}', null, ${price}, null, null, false, '${id}', '${headerId}') returning appointmentid;
-		`)
 		//Financial Team
-		// const test = await pool.query(`INSERT INTO financial_transaction(transactionid, amount, description)
-		// VALUES (${uuidv4()}, ${price}, 'Instructor:Private Tutor - InstructorID:${id} - Time ${startTime} to ${endTime}');`)
-		// 	.then(() => console.log('Success'))
-		// 	.catch(err => console.log(err.message))
+		// await pool.query(`INSERT INTO financial_transaction(transactionid, amount, description)
+		// VALUES (uuid_generate_v4(), ${price}, 'Instructor:Private Tutor - InstructorID:${id} - Time ${startTime} to ${endTime}');`)
 
 		// const FinancialTeam_instructorID = await pool.query(`SELECT *
 		// FROM financial_transaction
@@ -564,7 +551,13 @@ const insertStudentAppointment = async (req, res, next) => {
 		// VALUES (${FinancialTeam_transactionid}, ${id})`)
 
 		// await pool.query(`INSERT INTO financial_revenue(transactionid, typeid, amount)
-		// VALUES (${FinancialTeam_transactionid}, 2, ${price*0.1})`)
+		// VALUES (${FinancialTeam_transactionid}, 2, ${price * 0.1})`)
+
+		const result = await pool.query(`
+			insert into instructor_appointments(starttime, endtime, status, price, paymentdue, approvetime, ispaid, instructorid, headerid)
+			values('${startTime}', '${endTime}', null, ${price}, null, null, false, '${id}', '${headerId}') returning appointmentid;
+		`)
+		console.log(result.rows)
 
 		const { appointmentid } = result.rows[0]
 

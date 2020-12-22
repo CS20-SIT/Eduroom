@@ -21,7 +21,7 @@ const UserContent = () => {
 					<div className="user-admin">Admin</div>
 				</div>
 				<div className="event">
-					<div onClick={() => router.push('/admin/event')}>
+					<div onClick={() => router.push('/admin/calendar')}>
 						<i className="fas fa-calendar-alt" />
 						<span>Create Event</span>
 					</div>

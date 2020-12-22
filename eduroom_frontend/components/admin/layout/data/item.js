@@ -1,4 +1,4 @@
-exports.item = [
+exports.items = [
 	{
 		icon: 'analyze',
 		text: 'Analysis & Finance',
@@ -27,7 +27,7 @@ exports.item = [
 	{
 		icon: 'coupon',
 		text: 'Coupon',
-		link: '/admin/createcoupon',
+		link: '/admin/coupon',
 	},
 	{
 		icon: 'advertisement',
@@ -37,7 +37,7 @@ exports.item = [
 	{
 		icon: 'event',
 		text: 'Event',
-		link: '/admin/event',
+		link: '/admin/calendar',
 	},
 	{ 
         icon: 'setting', 
