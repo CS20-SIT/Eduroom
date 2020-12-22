@@ -47,9 +47,10 @@ export default function messageLeft(props) {
 								<>
 									<ReadIcon style={{ paddingTop: 5, marginLeft: 10 }} />
 									<div className="dropdown scroll" style={dropReadDownStyle}>
-										{message.reader.map((el) => {
+										{message.reader.map((el,i) => {
 											return(
 											<span
+											key={i}
 												style={{
 													fontSize: 12,
 													whiteSpace: 'nowrap',
@@ -81,6 +82,7 @@ export default function messageLeft(props) {
 					display: inline-block;
 				}
 				.dropdown {
+					!z-index:1
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;
@@ -92,6 +94,7 @@ export default function messageLeft(props) {
 					padding: 10px 10px 10px 10px;
 				}
 				.dropdown2 {
+					!z-index:1
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;

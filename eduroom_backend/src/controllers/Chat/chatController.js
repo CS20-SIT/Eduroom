@@ -22,19 +22,23 @@ module.exports={
   getChatlist : async (req, res, next) => {
     const userid = req.user.id
     const chatList = await pool.query(`select chat.chatroomid,
-      case when chat.roomname is not null or cr.chatroomid in (select chatroomid from chat_group)
-          then chat.roomname
-          else (select concat(firstname,concat(' ', lastname)) roomname from user_profile
-              join chat_roommember c on user_profile.userid = c.userid
-              where c.chatroomid = chat.chatroomid and c.userid <> '${userid}' and cr.chatroomid not in (select chatroomid from chat_group))
-              end
-          ,cm2.userid as sender, case when cm2.message is null then csm.message else cm2.message end, case when cm.sendtime is null then csm.sendtime else cm.sendtime end, hide from chat
-      left join (select chatroomid, max(sendtime) sendtime from chat_message group by chatroomid) cm on chat.chatroomid = cm.chatroomid
-      left join (select chatroomid, userid, message, sendtime from  chat_message ) cm2 on cm.chatroomid = cm2.chatroomid and cm.sendtime = cm2.sendtime
-      left join chat_roommember cr on chat.chatroomid = cr.chatroomid
-      left join (select chatroomid,max(sendtime) as sendtime ,message from chat_systemmessage group by chatroomid, message) csm on chat.chatroomid = csm.chatroomid 
-      where cr.userid = '${userid}'
-      order by hide,sendtime desc;`)
+    case when chat.roomname is not null or cr.chatroomid in (select chatroomid from chat_group)
+        then chat.roomname
+        else (select concat(firstname,concat(' ', lastname)) from user_profile
+            join chat_roommember c on user_profile.userid = c.userid
+            where  c.chatroomid = chat.chatroomid and c.userid <> '${userid}' and cr.chatroomid not in (select chatroomid from chat_group))
+            end as roomname
+        ,cm2.userid as sender, coalesce(cm2.message, cs.message) message, cm.sendtime, hide from chat
+left join chat_roommember cr on chat.chatroomid = cr.chatroomid
+left join (select chatroomid, sendtime, senderX  from (select chatroomid, max(sendtime) sendtime, 'User' as senderX  from chat_message group by chatroomid
+        union select chatroomid, max(sendtime) sendtime,'System' as senderX from chat_systemmessage group by chatroomid) cym
+where sendtime = (select max(cym2.sendtime) from (select chatroomid, max(sendtime) sendtime, 'User' as senderX  from chat_message group by chatroomid
+        union select chatroomid, max(sendtime) sendtime,'System' as senderX from chat_systemmessage group by chatroomid) cym2 group by cym2.chatroomid
+        having cym.chatroomid = cym2.chatroomid )) cm on chat.chatroomid = cm.chatroomid
+left join chat_message cm2 on cm.chatroomid = cm2.chatroomid and cm.sendtime = cm2.sendtime
+left join chat_systemmessage cs on chat.chatroomid = cs.chatroomid and cm.senderX = 'System' and cs.sendtime = cm.sendtime
+where cr.userid = '${userid}'
+order by hide, sendtime desc;`)
     res.send(chatList.rows)
   },
   getChatroomDetail : async (req, res, next) => {
@@ -71,6 +75,14 @@ module.exports={
         where c1.chatroomid = ${chatroomid} and up.userid = '${avataruserid}'`)
         const chatRoomProfile = await chatRoomProfilePic.rows[0].chatroomprofilepicture
         result = {...result, chatRoomProfile}
+    }else{
+      const chatRoomProfilePic = await pool.query
+    (`select case when exists(select picture
+      from chat
+      where chatroomid = ${chatroomid} and picture is not null) then c1.picture else '' end as chatRoomProfilePicture
+      from chat c1 where c1.chatroomid = ${chatroomid}`)
+      const chatRoomProfile = await chatRoomProfilePic.rows[0].chatroomprofilepicture
+    result = {...result, chatRoomProfile}
     }
   const checkChatGroup = await pool.query(
     `select case when exists(select * from chat_group where chatroomid = ${chatroomid}) then true else false end as isGroup;`
@@ -111,7 +123,7 @@ module.exports={
     const keyword = req.query.keyword
     const result = await pool.query(`select up.userid, firstname as userFirstname, lastname as userLastname,avatar as userProfile
     from user_profile up
-    where  (lower(firstname) like lower('${keyword}%') or lower(lastname) like lower('${keyword}%'))
+    where  (lower(firstname) like lower('${keyword}%') or lower(lastname) like lower('${keyword}%') or concat(concat(lower(firstname),' '),lower(lastname)) like lower('${keyword}%') )
     limit 15;`)
     const gsr = result.rows
     const users = { users: gsr }
@@ -141,6 +153,13 @@ module.exports={
       where chatroomid = ${chatroomid} and picture is not null) then c1.picture else avatar end as chatRoomProfilePicture
       from chat c1, user_profile up
       where c1.chatroomid = ${chatroomid} and up.userid = '${avataruserid}'`)
+    result = {...result, chatroomprofilepicture: chatRoomProfilePic.rows[0].chatroomprofilepicture}
+    }else{
+      const chatRoomProfilePic = await pool.query
+    (`select case when exists(select picture
+      from chat
+      where chatroomid = ${chatroomid} and picture is not null) then c1.picture else '' end as chatRoomProfilePicture
+      from chat c1 where c1.chatroomid = ${chatroomid}`)
     result = {...result, chatroomprofilepicture: chatRoomProfilePic.rows[0].chatroomprofilepicture}
     }
     res.send(result)
@@ -199,8 +218,7 @@ module.exports={
   declineInvitation : async (req,res,next)=>{
     const invitationID = req.query.invitationid
     const userID = req.user.id
-    console.log(invitationID)
-    console.log(userID)
+
     const invite = await pool.query(`delete from invite_invitees where invitationid = ${invitationID} and inviteeid = '${userID}'`)
     res.status(200).json({ success: true })
   },
@@ -219,8 +237,11 @@ module.exports={
     where crm.userid = up.userid and crm.userid = '${userID}' and chatroomid = ${chatroomid}`)
     const leave = await pool.query(`delete from chat_roommember
     where userid='${userID}' and chatroomid = ${chatroomid};`)
-    const setSystemMessage = await pool.query(`insert into chat_systemmessage(chatroomid,sendtime,message) values(${chatroomid},current_date,'${(username.rows[0]).name} Have Left the Group')`)
-    res.status(200).json({ success: true })
+    const checklast = await pool.query(`select case when exists (select * from chat_roommember where chatroomid = ${chatroomid} and userid <> '${userID}') then CAST(0 AS BIT) else CAST(1 AS BIT) end as checklast;`)
+    if(checklast.rows[0].checklast==false){
+      const setSystemMessage = await pool.query(`insert into chat_systemmessage(chatroomid,sendtime,message) values(${chatroomid},current_date,'${(username.rows[0]).name} Have Left the Group')`)
+      res.status(200).json({ success: true })
+    }
   },
   deleteChatRoom : async (req,res,next)=>{
     const chatroomid = req.query.chatroomid
@@ -245,9 +266,19 @@ module.exports={
     )
     res.status(200).json({ success: true })
   },
+  sendStickerMessage : async (req, res, next) =>{
+    const message = req.query.message
+    const chatroomid = req.query.chatroomid
+    const userid = req.user.id
+    const sendmes = await pool.query(
+      `insert into chat_message(message, sendtime, chatroomid, userid, issticker)
+      values ('${message}',current_timestamp,${chatroomid},'${userid}', true)`
+    )
+    res.status(200).json({ success: true })
+  },
 
   unsendMessage : async (req, res, next) =>{
-    const messageID = 5
+    const messageID = req.query.messageid
     const deleteReadtime = await pool.query(`delete from chat_message_readtime where messageid = ${messageID}`)
     const unsendMessage = await pool.query(`delete from chat_message where messageid = ${messageID}`)
     res.status(200).json({ success: true })
@@ -319,7 +350,6 @@ module.exports={
     const sysMess = await pool.query(`insert into chat_systemmessage (chatroomid, sendtime, message)
     values (${createChat.rows[0].cid},current_timestamp,'You Can Now Start the Conversation')`)
     res.status(200).json({ success: true })
-    console.log('Check')
   },
   readMessage : async (req, res, next) =>{
     const chatroomid = req.query.chatroomid
@@ -334,7 +364,6 @@ module.exports={
     res.status(200).json({ success:true })
   },
   changeChatRoomProfilePicture : async (req, res, next) =>{
-    console.log(req.query)
     const pic = req.query.profilepic
     const chatroomid = req.query.chatroomid
     const update = await pool.query(

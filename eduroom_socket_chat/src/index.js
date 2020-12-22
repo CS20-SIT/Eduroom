@@ -35,4 +35,13 @@ console.log('user connected');
 	client.on("changeProfilePic",(room)=>{
 		io.in(room).emit('recieveChangeProfilePic',room)
 	})
+	client.on("leaveChatRoom",(room)=>{
+		io.in(room).emit('recieveLeaveChatRoom',room)
+	})
+	client.on("deleteChatRoom",(room)=>{
+		io.in(room).emit('recieveDeleteChatRoom',room)
+	})
+	client.on("kickOut",(room)=>{
+		io.in(room).emit('recieveKickOut',room)
+	})
 });

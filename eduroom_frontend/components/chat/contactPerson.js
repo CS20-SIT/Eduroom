@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import api from '../../api'
 import DotDotIcon from './icons/DotDotIcon'
@@ -16,13 +16,6 @@ export default function chatContact(props) {
 	const [dropDownStyle, setDropDownStyle] = useState({ visibility: 'hidden'})
 	const [style, setStyle] = useState({})
 
-	const joinSocketRoom = () =>{
-		// const socket = socketIOClient(process.env.NEXT_PUBLIC_CHAT_SERVER, {
-		// 	path: "/socket-chat",
-		//   });
-		// socket.emit('joinRoom',contact.chatRoomID)
-	}
-
 	const getChatRoomProfilePicture = async () => {
 		api
 			.get(`/api/chat/getChatRoomProfile`, {
@@ -34,12 +27,15 @@ export default function chatContact(props) {
 	}
 	const clickDelete = async() =>{
 		const res = await api.get(`/api/chat/deleteChatroom`,{params:{chatroomid:contact.chatRoomID}})
-		props.setChatRoomDetail(null)
+		props.socket.emit("leaveRoom",contact.chatRoomID)
+		props.socket.emit("deleteChatRoom",contact.chatRoomID)
 		props.getChatList()
 	}
 	const clickLeave = async() =>{
+		props.getChatRoomDetail(null)
 		const res = await api.get(`/api/chat/leaveChatroom`,{params:{chatroomid:contact.chatRoomID}})
-		props.setChatRoomDetail(null)
+		props.socket.emit("leaveRoom",contact.chatRoomID)
+		props.socket.emit("leaveChatRoom",contact.chatRoomID)
 		props.getChatList()
 	}
 	const clickMute = async() =>{
@@ -65,7 +61,6 @@ export default function chatContact(props) {
 				onClick={() => {
 					if(!disableClick){
 						props.onClick()
-						joinSocketRoom()
 					}
 				}}
 				style={style}

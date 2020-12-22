@@ -28,6 +28,7 @@ router.post('/uploadpic',uploadToGCSHandler('chat_profile/'), chat.uploadPic) //
 router.get('/changeChatRoomProfilePicture',jwtAuthenicate,chat.changeChatRoomProfilePicture) //check
 router.get('/addChatRoomMember',jwtAuthenicate,chat.addChatRoomMember) //check
 router.get('/deleteMember',jwtAuthenicate,chat.deleteMember) //check
+router.get('/sendStickerMessage',jwtAuthenicate,chat.sendStickerMessage) //check
 
 
 
