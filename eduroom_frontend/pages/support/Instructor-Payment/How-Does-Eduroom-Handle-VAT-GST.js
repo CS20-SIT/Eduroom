@@ -19,7 +19,6 @@ import {
 import HowDoesEduroomdo from '../../../components/support/instructorpayment/howdoeseduroom';
 import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
-
 const whatDoesEduroomdo = () => {
 	return (
 		<Fragment>

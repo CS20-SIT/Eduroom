@@ -1,25 +1,43 @@
-import React, { Fragment, useState} from 'react'
+import React, { Fragment, useEffect,useState} from 'react'
 import style from '../../../styles/advertisement/ads'
 import { useRouter} from 'next/router';
 import {Link,Typography,InputBase, Paper, Grid,List} from '@material-ui/core'
-
+import api from '../../../api'
 
 
 
 const Content = () => {
   const router = useRouter();
-    return (
+  const [data, setData] = useState()
 
-       
+  useEffect(() => {
+    const fetchData = async () => {
+      const res1 = await api.get('/api/auth/profile')
+      const res2 = await api.get('/api/coupon/getUsedCodeList', {params : {id : res1.data.userid}});
+      setData(res2.data);
+    };
+    fetchData();
+  }, []);
+  
+    return (
         <div className="tab1">
         <Grid container spacing ={3}>
-        <Grid item xs ={4}>
-        <Paper style={{paddingLeft: "50px"}}>
-          <div style={{paddingLeft:"25px",paddingTop:"10px"}}><h2>coupon discount 10%</h2></div>
-          <img src="https://www.flaticon.com/svg/static/icons/svg/815/815252.svg" style={{width: 300 , heigth: 600, marginTop:"-50px"}}></img>
-          <div style={{paddingLeft:"130px", marginTop:"-30px",paddingBottom:"10px",color:"#A880F7"}}><h4>Used</h4></div>
-        </Paper>
-        </Grid>
+        {data != null ? 
+        data.map((element, key) => {
+          return (
+            <Grid item xs ={4} key={key}>
+              <Paper>
+                <center>
+                <div style={{paddingTop:"10px"}}><h2>{element.ccname}</h2></div>
+                <img src={element.picture} style={{width: '200px' , height: '200px', marginBottom : '3rem', objectFit: "cover"}}></img>
+                <div style={{ marginTop:"-30px",paddingBottom:"10px",color:"#A880F7"}}><center><h4>Used</h4></center></div>
+                </center>
+              </Paper>
+            </Grid>
+          )
+        })
+        : 
+        null } 
         </Grid>
          <style jsx>
          {style}

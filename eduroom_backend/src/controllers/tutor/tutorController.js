@@ -1,5 +1,6 @@
 const pool = require('../../database/db')
 const app = require('../../server')
+const { uuidv4 } = require('uuid')
 
 const ErrorResponse = require('../../utils/errorResponse')
 
@@ -138,7 +139,6 @@ const getInstructorInfo = async (req, res) => {
 
 		// ID : instructorID
 		const { id } = req.query
-		console.log('id', id)
 
 		const u = req.user.id
 		if (!u) {
@@ -536,32 +536,28 @@ const insertStudentAppointment = async (req, res, next) => {
 			return next(new ErrorResponse('Unauthorize', 401))
 		}
 		const { id, startTime, endTime, price, members } = req.body
-		// 	console.log(headerId)
-		// 	console.log(id, startTime, endTime, price, members)
-		// 	console.log(`
-		// 	insert into instructor_appointments(starttime, endtime, status, price, paymentdue, approvetime, ispaid, instructorid, headerid)
-		// 	values(${startTime}, ${endTime}, null, ${price}, null, null, false, ${id}, ${headerId}) returning appointmentid;
-		// `)
+
+		//Financial Team
+		// await pool.query(`INSERT INTO financial_transaction(transactionid, amount, description)
+		// VALUES (uuid_generate_v4(), ${price}, 'Instructor:Private Tutor - InstructorID:${id} - Time ${startTime} to ${endTime}');`)
+
+		// const FinancialTeam_instructorID = await pool.query(`SELECT *
+		// FROM financial_transaction
+		// WHERE description = '%${id}%'`)
+
+		// const FinancialTeam_transactionid = FinancialTeam_instructorID.rows[0].transactionid
+
+		// await pool.query(`INSERT INTO transaction_instructor(transactionid, instructorid)
+		// VALUES (${FinancialTeam_transactionid}, ${id})`)
+
+		// await pool.query(`INSERT INTO financial_revenue(transactionid, typeid, amount)
+		// VALUES (${FinancialTeam_transactionid}, 2, ${price * 0.1})`)
 
 		const result = await pool.query(`
 			insert into instructor_appointments(starttime, endtime, status, price, paymentdue, approvetime, ispaid, instructorid, headerid)
 			values('${startTime}', '${endTime}', null, ${price}, null, null, false, '${id}', '${headerId}') returning appointmentid;
 		`)
-		//Financial Team
-		await pool.query(`INSERT INTO financial_transaction(transactionid, amount, description)
-		VALUES (uuid_generate_v4(), ${price}, 'Instructor:Private Tutor - InstructorID:${id} - Time ${startTime} to ${endTime}');`)
-
-		const FinancialTeam_instructorID = await pool.query(`SELECT *
-		FROM financial_transaction
-		WHERE description = '%${id}%'`)
-
-		const FinancialTeam_transactionid = FinancialTeam_instructorID.rows[0].transactionid
-
-		await pool.query(`INSERT INTO transaction_instructor(transactionid, instructorid)
-		VALUES (${FinancialTeam_transactionid}, ${id})`)
-
-		await pool.query(`INSERT INTO financial_revenue(transactionid, typeid, amount)
-		VALUES (${FinancialTeam_transactionid}, 2, ${price*0.1})`)
+		console.log(result.rows)
 
 		const { appointmentid } = result.rows[0]
 

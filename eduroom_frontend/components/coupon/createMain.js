@@ -13,6 +13,7 @@ import style from '../../styles/advertisement/ads';
 import { useRouter } from 'next/router';
 
 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 500,
-    margin:"0% 5% 5% 5%",
+    margin:"5% 5% 5% 5%",
     padding:"1.5%",
     display:"flex"
     // backgroundRepeat: 'no-repeat',
@@ -69,7 +70,6 @@ export default function FullWidthTabs() {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, index) => {
     setValue(index);
-
   };
 
   
@@ -77,7 +77,7 @@ export default function FullWidthTabs() {
   return (
     <Fragment>
       {/* <div style={{backgroundColor:'#FFFFFF'}}> */}
-      <Paper style = {{margin:"0% 5% 0% 0%", padding:"1.5%", backgroundRepeat: 'no-repeat',
+      <Paper style = {{margin:"5% 5% 5% 5%", padding:"1.5%", backgroundRepeat: 'no-repeat',
  backgroundSize:'cover'}}>
      <div style={{backgroundColor:'#828282', height:'1.5px',marginTop:'46.4px',marginLeft:'2%',position:'absolute', width:'78%', opacity:'50%'}}></div>
         <Tabs
@@ -87,9 +87,8 @@ export default function FullWidthTabs() {
           textColor="secondary"
         >
           
-          <Tab label="Create code" style={{fontWeight:'1000'}} {...a11yProps(0)} />
-          <Tab label="Not activated code" style={{fontWeight:'1000'}} {...a11yProps(1)} />
-          <Tab label="Activated code" style={{fontWeight:'1000'}} {...a11yProps(2)} />   
+          <Tab label="Create coupon" style={{fontWeight:'1000'}} {...a11yProps(0)} />
+          <Tab label="List of coupon" style={{fontWeight:'1000'}} {...a11yProps(1)} />  
         </Tabs>
        
    
@@ -99,9 +98,6 @@ export default function FullWidthTabs() {
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Tab2/>
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-         <Tab3/>
         </TabPanel>
         </Paper>
         
