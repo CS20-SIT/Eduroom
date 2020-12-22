@@ -93,4 +93,82 @@ const Upload = async (req, res, next) => {
     })
     res.send(results)
 }
-module.exports = { getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds } 
+
+const AddNewAdsBills = async (req, res, next) => {
+    const adlist = req.body.adlist;
+    for(i = 0 ; i<adlist.length;i++){
+        await pool.query(
+            "insert into ad_payment(adid, receipt, datetime, amount, paymentstatus) values ($1,'',CURRENT_TIMESTAMP,$2,false);",
+            [adlist[i].adid,adlist[i].price]
+        )
+    }
+    
+    res.send({ success: true })
+}
+const AddAdsTransaction = async (req, res, next) => {
+    const adlist = req.body.adlist;
+    let description = new Array(adlist.length);
+    let transactionid = new Array(adlist.length);
+    for(i = 0 ; i<adlist.length;i++){
+         description[i] = 'Ads payment of ad id#'+adlist[i].adid;
+         transactionid[i] = await pool.query("select uuid_generate_v4() as id");
+         transactionid[i]=transactionid[i].rows[0].id
+         console.log(description[i])
+         console.log(transactionid[i])
+         console.log(adlist[i].amount)
+        await pool.query(
+            "insert into financial_transaction(transactionid, amount, description) values ($1,$2,$3)",
+            [transactionid[i],adlist[i].amount,description[i] ]
+        )
+        await pool.query(
+            "insert into transaction_ad(transactionid, adid) values ($1,$2)",
+            [transactionid[i],adlist[i].adid ]
+        )
+        await pool.query(
+            "update ad_payment set receipt = '/receiptimgpath' , datetime=CURRENT_TIMESTAMP , paymentstatus = true where adid = $1",
+            [adlist[i].adid]
+        )
+    }
+    
+    res.send({ success: true })
+}
+const getAdsToBills = async (req, res, next) => {
+    const ownerid = req.user.id;
+    const data = await pool.query("select ad_payment.adid,TRUNC(amount,2) as amount from ad_payment,ad where ad_payment.adid = ad.adid and ownerid = $1 and paymentstatus = false",
+        [ownerid])
+    const adsBill = data.rows;
+    res.send(adsBill);
+};
+
+const getBillAdsTotal = async (req, res, next) => {
+    const ownerid = req.user.id;
+    const data = await pool.query("select TRUNC(sum(amount),2) as totalprice from ad_payment,ad where ad_payment.adid = ad.adid and ownerid = $1 and paymentstatus = false",
+        [ownerid])
+    const totalBill = data.rows;
+    res.send(totalBill);
+};
+
+const getPaidWaitingAds = async (req, res, next) => {
+    const data = await pool.query("select ad.status,ad.adid,adstarttime,adexpiretime,ad.filelocation,ad.ownerid,firstname,lastname,contactemail,tagname from ad,ad_payment,ad_tag,ad_all_tag,user_profile where ad.adid = ad_payment.adid and ad_payment.paymentstatus = true and ad.status = 'Waiting' and userid = ownerid and ad_tag.adid = ad.adid and ad_all_tag.tagid = ad_tag.tagid")
+    const adslist = data.rows;
+    res.send(adslist);
+}
+
+const getPaidRejectedAds = async (req, res, next) => {
+    const data = await pool.query("select ad.status,ad.adid,adstarttime,adexpiretime,ad.filelocation,ad.ownerid,firstname,lastname,contactemail,tagname from ad,ad_payment,ad_tag,ad_all_tag,user_profile where ad.adid = ad_payment.adid and ad_payment.paymentstatus = true and ad.status = 'Rejected' and userid = ownerid and ad_tag.adid = ad.adid and ad_all_tag.tagid = ad_tag.tagid")
+    const adslist = data.rows;
+    res.send(adslist);
+}
+const getPaidApprovedAds = async (req, res, next) => {
+    const data = await pool.query("select ad.status,ad.adid,adstarttime,adexpiretime,ad.filelocation,ad.ownerid,firstname,lastname,contactemail,tagname from ad,ad_payment,ad_tag,ad_all_tag,user_profile where ad.adid = ad_payment.adid and ad_payment.paymentstatus = true and ad.status = 'Approved' and userid = ownerid and ad_tag.adid = ad.adid and ad_all_tag.tagid = ad_tag.tagid")
+    const adslist = data.rows;
+    res.send(adslist);
+}
+const getAdsDetail = async (req, res, next) => {
+const adid = req.query.adid
+const data = await pool.query("select ad.adid,adstarttime,adexpiretime,ad.filelocation,ad.ownerid,firstname,lastname,contactemail,tagname from ad,ad_tag,ad_all_tag,user_profile where   userid = ownerid and ad_tag.adid = ad.adid and ad_all_tag.tagid = ad_tag.tagid and ad.adid = $1",
+    [adid]);
+    const addetail = data.rows;
+    res.send(addetail);
+}
+module.exports = { getAdsDetail,getBillAdsTotal,getAdsToBills,AddNewAdsBills,AddAdsTransaction,getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds,getPaidWaitingAds, getPaidRejectedAds,getPaidApprovedAds } 
