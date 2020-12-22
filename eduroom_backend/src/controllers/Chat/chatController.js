@@ -315,20 +315,7 @@ order by hide, sendtime desc;`)
     res.status(200).json({ success: true })
     }
   },
-  changeChatRoomProfilePicture : async (req, res, next) =>{
-    const pic = '/.updates.png'
-    const chatroomid = req.query.chatroomid
-    const update = await pool.query(
-      `update chat
-      set picture = '${pic}'
-      where chatroomid = ${chatroomid}`
-    )
-    const systemmessage = await pool.query(
-      `insert into chat_systemmessage (chatroomid,sendtime,message)
-      values(${chatroomid},current_timestamp,'Chat room profile has been change')`
-    )
-      res.status(200).json({ success: true })
-  },
+
   createGroupChat : async (req,res,next) =>{
     const userid = req.user.id
     const picture = req.query.profilepic
