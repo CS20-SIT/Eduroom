@@ -14,8 +14,11 @@ const temp = (props) =>{
 				</DialogContent>
 			</Dialog>
         <div className="card">
+            <center>
             <img className="box" src={props.picture} style={{objectFit: "cover", height: "200px", width: "200px"}}/>
+            </center>
             <h1 className="title">{props.title}</h1>
+            <p className="description">{props.description}</p>
             <p>{props.owner}</p>
             <div>
                 <h3>Free</h3> 

@@ -17,7 +17,8 @@ const {
   gCodeById,
   gCodeList,
   gUsedCodeList,
-  gExpiredCodeList
+  gExpiredCodeList,
+  gPrivateCodeList
 
 } 
 = require("../controllers/coupon/couponController");
@@ -35,5 +36,6 @@ const {
   router.get('/getCodeList',  gCodeList);
   router.get('/getUsedCodeList',  gUsedCodeList);
   router.get('/getExpiredCodeList',  gExpiredCodeList);
+  router.get('/getPrivateCodeList',  gPrivateCodeList);
 
   module.exports = router;
