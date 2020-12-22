@@ -7,6 +7,18 @@ import api from '../../api'
 
 
 const Content = props => {
+  const handleSubmit = async () => {
+    const body = {
+        adid: data.adid,
+    }
+    const response = await api.post('/api/ads/deleteAds', body)
+    console.log(response)
+    handleClose()
+    window.location.reload(false);
+    window.scrollTo(0, 0);
+
+}
+  const [status,setstatus] = useState('');
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -76,28 +88,28 @@ const Content = props => {
           {data.tagname}
           </Grid>
           <Grid item xs={3}>
-          {data.adstarttime.substring(0,10)}
+          {data.adstarttime}
           </Grid>
           <Grid item xs={3}>
-          {data.adexpiretime.substring(0,10)}
+          {data.adexpiretime}
           </Grid>
         </Grid>
         <Grid container spacing={3} style={{marginLeft:"30%", marginTop:"5%"}}>
           <Grid item xs={6} > <button
                   className="Approve-button"
-                  //onClick={handleClick}
+                  onClick={setstatus('Approved'),console.log(status)}
                 >
                   <a className="ad-button-text">Approve</a>
                 </button></Grid>
                 <Grid item xs={6} style={{marginLeft:"-35%"}}> <button
                   className="Disapprove-button"
-                  //onClick={handleClick}
+                  onClick={setstatus('Rejected'),console.log(status)}
                 >
                   <a className="ad-button-text">Disapprove</a>
                 </button></Grid>
                 </Grid>
                 <div style={{marginTop:"5%"}}>
-                  <Link href="../../admin/advertisement">Back</Link></div>
+                  <Link href="../../advertisement/">Back</Link></div>
         </Paper>
          <style jsx>
          {style}
