@@ -8,7 +8,7 @@ import Lifetime from '../../../components/support/gettingstarted/lifetimeaccess'
 const lifetimeaccess = () => {
 	return (
 		<Fragment>
-			<General img="/images/supforumbg.svg">
+			<General>
 				<div
 					style={{
 						display: 'flex',
@@ -25,11 +25,19 @@ const lifetimeaccess = () => {
 							<Lifetime />
 						</div>
 					</div>
+					<img alt="background-img" src="/images/supforumbg.svg" className="background-img" />
 					<style jsx>{style}</style>
 					<style jsx>
 						{`
+							.background-img {
+								position: fixed;
+								bottom: 0;
+								width: 100vw;
+								z-index: 0;
+							}
 							#nav {
 								width: 100%;
+								z-index: 5;
 							}
 							.form {
 								display: flex;

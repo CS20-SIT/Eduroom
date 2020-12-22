@@ -132,7 +132,7 @@ exports.getQuizByNodeId = async (req, res, next) => {
 exports.completeNode = async (req, res, next) => {
 	try {
 		const userid = req.user.id
-		const { nodeid, score } = req.body
+		const { nodeid, score, type } = req.body
 		console.log(nodeid, score)
 		//check wheter this user already play this node
 		const old = await pool.query(`SELECT nodeid from user_progress where nodeid = $1 and userid = $2`, [
@@ -154,6 +154,25 @@ exports.completeNode = async (req, res, next) => {
 				true,
 				score,
 			])
+			let increaseScore = 50
+			if (type === 'quiz') increaseScore = 100
+			//check that there is an xp of this user
+			if (type === 'exercise' || score >= 3) {
+				console.log('will get', increaseScore)
+				const oldXpResult = await pool.query(`SELECT totalxp,currentxp from user_xp where userid = $1`, [
+					userid,
+				])
+				if (oldXpResult.rowCount === 0) {
+					await pool.query(`INSERT INTO user_xp (userid,totalxp,currentxp) VALUES($1,$2,$3)`, [userid, 0, 0])
+				}
+				let newTotalXp = oldXpResult.rows[0].totalxp + increaseScore
+				let newCurrentXp = oldXpResult.rows[0].currentxp + increaseScore
+				await pool.query(`UPDATE user_xp SET totalxp = $1, currentxp = $2 where userid = $3`, [
+					newTotalXp,
+					newCurrentXp,
+					userid,
+				])
+			}
 		}
 		res.send({ success: true })
 	} catch (err) {
