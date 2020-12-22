@@ -9,7 +9,7 @@ const AdminApproveInstructor = () => {
 	const [data, setData] = useState([])
 	const fetchData = async () => {
 		try {
-			const res = await api.get('/api/admin/instructor')
+			const res = await api.get('/api/admin/verifyInstructor')
 			setData(res.data)
 		} catch (err) {
 			console.log(err)

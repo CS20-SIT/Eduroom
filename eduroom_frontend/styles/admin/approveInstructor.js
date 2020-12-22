@@ -7,13 +7,19 @@ export default css`
 		background: #ffffff;
 		box-shadow: 0px 3px 10px #ebebeb;
 		border-radius: 20px;
+		display: flex;
+		padding: 20px;
+		align-items: center;
+		justify-content: space-between;
 	}
 
 	.approveBtn {
+		display: flex;
 		background: #3d467f;
 		border-radius: 20px;
 		padding: 10px 15px;
 		opacity: 1;
+		color: white;
 	}
 	.approveBtn:hover {
 		opacity: 0.75;
