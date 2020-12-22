@@ -329,6 +329,25 @@ const gCountQuestionByTag = async (req, res, next) => {
 	}
 }
 
+const gContestRanking = async (req, res, next) => {
+	try {
+		const contestId = req.query.contestId
+		const data = await pool.query(`
+		select count(score) as totalscore, displayname
+		from user_profile u, question_attempt qa, contest_question qc, contest c
+		where qa.userid = u.userid
+		and qa.questionid = qc.questionid
+		and conno = '${contestId}'
+		group by displayname
+		order by count(score) desc 
+		limit 5;`)
+		const ann = data.rows
+		res.send(ann)
+	} catch (err) {
+		return new ErrorResponse('ERROR', 400)
+	}
+}
+
 module.exports = {
 	gPreviewQuestions,
 	gPreviewContests,
@@ -350,4 +369,5 @@ module.exports = {
 	gQuestionDetail,
 	gQuestionSubmission,
 	gCountQuestionByTag,
+	gContestRanking,
 }

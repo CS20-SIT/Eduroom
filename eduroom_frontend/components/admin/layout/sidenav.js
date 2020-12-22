@@ -47,13 +47,8 @@ const AdminSideNav = () => {
 						position: fixed;
 						top: 0;
 						left: 0;
-<<<<<<< HEAD
-                        height: 100vh;
-                        justify-content:center;
-=======
 						height: 100vh;
 						justify-content: center;
->>>>>>> e04757bd17fc22d6aa2da00b697ba3edf0418b46
 					}
 					.item-list {
 						width: 100%;

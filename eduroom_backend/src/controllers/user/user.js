@@ -1,9 +1,12 @@
 const bcrypt = require('bcryptjs')
 const errorHandler = require('../../middleware/error')
+const { uploadFile } = require('../../utils/cloudStorage')
 const pool = require('../../database/db')
 const ErrorResponse = require('../../utils/errorResponse')
+const { v4: uuidv4 } = require('uuid')
 const fs = require('fs')
 const path = require('path')
+const sharp = require('sharp')
 const puppeteer = require('puppeteer')
 const handlebars = require('handlebars')
 const dayjs = require('dayjs')
@@ -20,9 +23,7 @@ const getWishlist = async (req, res) => {
 	try {
 		const user = req.user.id
 		const condition = req.query.condition
-		// const condition='';
 		const orderby = req.query.orderby
-		// const orderby='addtime desc';
 		const data = await pool.query(
 			'select w.userid,w.courseid,addtime,coursename,coursepicture,price,p.firstname,p.lastname ' +
 				'from user_wishlist w ' +
@@ -47,17 +48,33 @@ const getWishlist = async (req, res) => {
 	}
 }
 
+const checkWishlist = async (req, res) => {
+	try {
+		const user = req.user.id
+		const course = req.body.courseid
+		const data = await pool.query(
+			'select exists( '+
+			'select * from user_wishlist '+
+			'where (userid,courseid)=($1,$2)) as checkwishlist',
+			[user,course]
+		)
+		const ann = data.rows[0].checkwishlist
+		res.send(ann)
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
+}
+
 const getMycourse = async (req, res) => {
 	try {
 		const user = req.user.id
 		const finish = req.query.finish
 		const condition = req.query.condition
 		const orderby = req.query.orderby
-
-		// const user = '08e9d239-b3f2-4db8-b29a-da99a314df92'
-		// const condition = ''
-		// const orderby = 'addtime desc'
-
 		const data = await pool.query(
 			'select m.userid,m.courseid,addtime,lastvisit,isfinished,coursename,coursepicture,p.firstname,p.lastname ' +
 				'from user_mycourse m ' +
@@ -87,6 +104,58 @@ const deleteWishlist = async (req, res) => {
 		const course = req.body.courseid
 		const user = req.user.id
 		await pool.query('delete from user_wishlist where (userid,courseid)=($1,$2);', [user, course])
+		res.send({ success: true })
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
+}
+
+const postMycourse = async (req, res) => {
+	try {
+		const course = req.body.courseid
+		const user = req.user.id
+		await pool.query(
+		'insert into user_mycourse '+
+		'values '+
+		'($1,current_timestamp,current_timestamp,false,$2,current_timestamp);', [user, course])
+		res.send({ success: true })
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
+}
+
+const updateLastvisitMyCourse = async (req, res) => {
+	try {
+		const user = req.user.id
+		const course = req.body.courseid
+		const updateUserQuery = `update user_mycourse set lastvisit=current_timestamp where userid='${user}' and courseid='${course}'`
+		console.log(updateUserQuery)
+		await pool.query(updateUserQuery)
+		res.send({ success: true })
+	} catch (error) {
+		const err = {
+			statusCode: 500,
+			message: error,
+		}
+		return errorHandler(err, req, res)
+	}
+}
+
+const updateFinishMyCourse = async (req, res) => {
+	try {
+		const user = req.user.id
+		const course = req.body.courseid
+		const updateUserQuery = `update user_mycourse set finishtime=current_timestamp, isfinished=true where userid='${user}' and courseid='${course}'`
+		console.log(updateUserQuery)
+		await pool.query(updateUserQuery)
 		res.send({ success: true })
 	} catch (error) {
 		const err = {
@@ -149,6 +218,19 @@ const Upload = async (req, res, next) => {
 	res.send(results)
 }
 
+const uploadAvatarPic = async (req, res) => {
+	const userId = req.user.id
+	const filePath = req.files[0].path
+	const optimizedFileName = `${uuidv4()}.png`
+	await sharp(filePath).resize({
+		height: 400,
+		width: 400
+	}).png().toFile(`${optimizedFileName}`)
+	const avatarURL = await uploadFile(optimizedFileName, `profile_pic/${optimizedFileName}`)
+	await pool.query(`UPDATE user_profile SET avatar = '${avatarURL}' WHERE userid = '${userId}';`)
+	res.status(201).send({avatarURL})
+}
+
 const checkPassword = async (req, res) => {
 	try {
 		const { password } = req.body
@@ -191,7 +273,6 @@ const getCertificate = async (req, res, next) => {
 	res.status(200).json({ success: true, data: data.rows })
 	return
 }
-
 
 const downloadCertificate = async (req, res, next) => {
 	const user = req.user
@@ -237,4 +318,9 @@ module.exports = {
 	Upload,
 	getCertificate,
 	downloadCertificate,
+	postMycourse,
+	checkWishlist,
+	uploadAvatarPic,
+	updateLastvisitMyCourse,
+	updateFinishMyCourse
 }

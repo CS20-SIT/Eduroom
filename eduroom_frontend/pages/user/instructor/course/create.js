@@ -12,6 +12,7 @@ const create = () => {
 	const [page, setPage] = useState(1)
 	const [data, setData] = useState({
 		name: '',
+		description: '',
 		picture: '',
 		picturePath: '',
 		video: '',
@@ -19,6 +20,7 @@ const create = () => {
 		subject: '',
 		price: '',
 		sections: [],
+		haveCertificate: false
 	})
 	const [subjects, setSubjects] = useState([])
 	const router = useRouter()
@@ -64,7 +66,7 @@ const create = () => {
 		data.sections = sections
 		return data
 	}
-	
+
 	const handleNext = async () => {
 		if (page === 3) {
 			//upload file to server
@@ -87,6 +89,7 @@ const create = () => {
 			const res = await api.post('/api/instructor/course', newData)
 			console.log('res is ', res.data)
 			setData({ ...newData })
+			router.push('/user/instructor')
 		} else {
 			setPage(page + 1)
 		}

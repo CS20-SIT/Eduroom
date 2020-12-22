@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { jwtAuthenicate } = require('../middleware/jwtAuthenticate')
-const { uploadToGCSHandler } = require('../middleware/multer')
+const { uploadToGCSHandler, uploadToLocalHandler } = require('../middleware/multer')
 const {
 	getWishlist,
 	getMycourse,
@@ -12,7 +12,12 @@ const {
 	newPassword,
 	Upload,
 	getCertificate,
-	downloadCertificate
+	downloadCertificate,
+	postMycourse,
+	checkWishlist,
+	uploadAvatarPic,
+	updateLastvisitMyCourse,
+	updateFinishMyCourse
 } = require('../controllers/user/user')
 
 router.get('/getWishlist', jwtAuthenicate, getWishlist)
@@ -28,5 +33,13 @@ router.post('/upload/picture', jwtAuthenicate,uploadToGCSHandler('user/picture')
 
 router.get('/certificate', jwtAuthenicate, getCertificate)
 router.post('/certificate', jwtAuthenicate, downloadCertificate)
+
+router.post('/postMycourse', jwtAuthenicate, postMycourse)
+router.post('/checkWishlist', jwtAuthenicate, checkWishlist)
+
+router.post('/avatar', jwtAuthenicate, uploadToLocalHandler(), uploadAvatarPic)
+
+router.patch('/updateLastvisitMyCourse', jwtAuthenicate, updateLastvisitMyCourse)
+router.patch('/updateFinishMyCourse', jwtAuthenicate, updateFinishMyCourse)
 
 module.exports = router

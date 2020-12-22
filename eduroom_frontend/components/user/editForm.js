@@ -11,6 +11,7 @@ import {
 import {
 	Dialog,
 	DialogTitle,
+	DialogContent,
 	InputBase 
   } from '@material-ui/core';
 import { useRouter } from 'next/router'
@@ -36,7 +37,6 @@ const EditForm = () => {
 	const [birth, setBirth] = useState(null)
 	const [bio, setBio] = useState(null)
 	const [avatar, setAvatar] = useState(null)
-	const [password,setPassword] = useState(null)
 
 	const [email,setEmail] = useState(null)
 	const [open,setOpen] = useState(false)
@@ -115,7 +115,7 @@ const EditForm = () => {
 	const savePassword=async() => {
 		// console.log(oldPassword);
 		// return;
-		if(oldPassword!=''){
+		if(oldPassword!=''&&newPassword!=''){
 			const res=await api.post('api/user/getCheckPassword', {
 				password: oldPassword
 			})
@@ -130,7 +130,13 @@ const EditForm = () => {
 				setPasswordError('The current password are mismatch');
 			}
 		}else{
-			setPasswordError('Require current password');
+			if(oldPassword==''&&newPassword==''){
+				setPasswordError('Require current password and new password');
+			}else if(oldPassword==''){
+					setPasswordError('Require current password');
+			}else{
+					setPasswordError('Require new password');
+			}
 		}
 	}
 
@@ -210,7 +216,7 @@ const EditForm = () => {
 							style={{width:'100%'}}
 							placeholder="Bio"
 							multiline
-							rows={4}
+							rows={10}
 							defaultValue={bio}
 							value={bio}
 							variant="outlined"
@@ -265,6 +271,9 @@ const EditForm = () => {
 							</span>
 							<Dialog open={open}>
 								<DialogTitle>
+									Change Password
+								</DialogTitle>
+								<DialogContent style={{width:'400px',height:'350px'}}>
 									Current Password
 									<div className="w-100 textfield">
 										<TextField style={{ padding: '18px' }}
@@ -298,7 +307,7 @@ const EditForm = () => {
 										</button>
 									</span>
 									<div style={{color:'red'}}>{passwordError}</div>
-								</DialogTitle>
+								</DialogContent>
 							</Dialog>
 						</div>
 					</div>
