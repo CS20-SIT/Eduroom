@@ -3,7 +3,7 @@ export default css`
 	.content {
 		width: 100%;
 		margin-top: 2%;
-		height: 91%;
+		height: 86.6%;
 		display: flex;
 		justify-content: center;
 	}

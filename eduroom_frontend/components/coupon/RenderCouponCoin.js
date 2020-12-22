@@ -16,8 +16,11 @@ const temp = (props) => {
 				</DialogContent>
 			</Dialog>
 			<div className="card">
-				<img src="../../images/Coupon/Vector.svg" />
+				<center>
+				<img src={props.picture} style={{height: "200px", width: "200px"}}/>
+				</center>
 				<h1 className="title">{props.title}</h1>
+				<p className="description">{props.description}</p>
 				<p>{props.owner}</p>
 				<div>
 					<h3>

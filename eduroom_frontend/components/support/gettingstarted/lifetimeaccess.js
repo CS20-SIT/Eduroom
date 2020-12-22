@@ -68,18 +68,9 @@ const Lifetime = () => {
           </Grid>
 
           <Grid item xs={3}>
-            <h3>Other articles</h3>
-
-            <p>
-              <Link href="/support/getstart/How-Does-Eduroom-Work">
-                How does Eduroom work
-              </Link>
-            </p>
-            <p>How Does Udemy Work? FAQ</p>
-            <p>Add a Course to Your Wishlist</p>
-            <p>System Requirements</p>
-            <p>How to Preview And Compare Courses</p>
-            <div style={{ marginTop: theme.spacing(7), marginBottom: theme.spacing(3) }}>
+            
+            
+            <div style={{  marginBottom: theme.spacing(3) }}>
               <Studentnav />
              
             </div>
