@@ -56,7 +56,7 @@ const Page1 = ({
   const handleUpdateScore = async () => {
     const sessionTemp = sessionid;
     const point = data[questionNumber].point;
-    const postUpdateScore = { sessionid: sessionid, point: point }
+    const postUpdateScore = { sessionid: sessionid, point: ((point/data[questionNumber].time)*diff) }
     console.log('postUpdateScore',postUpdateScore)
     const res = await api.post('/api/kahoot/roomHistoryplayer', postUpdateScore);
   };
