@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ReadIcon from './icons/ReadIcon'
 import DotDotIcon from './icons/DotDotIcon'
 import api from '../../api'
+import moment from 'moment'
 
 export default function messageRight(props) {
 	const [dropReadDownStyle, setReadDropDownStyle] = useState({ visibility: 'hidden' })
@@ -10,6 +11,7 @@ export default function messageRight(props) {
 	const message = props.message
 	const unsend = async () =>{
 		const res = await api.get(`/api/chat/unsendMessage`,{params:{messageid:message.messageid}})
+		props.socket.emit('unsendMessage',props.chatRoomDetail.chatroomid)
 		props.getChatRoomDetail()
 	}
 	return (
@@ -60,9 +62,10 @@ export default function messageRight(props) {
 								<>
 									<ReadIcon style={{ paddingTop: 5, marginRight: 10 }} />
 									<div className="dropdown scroll" style={dropReadDownStyle}>
-										{message.reader.map((el) => {
+										{message.reader.map((el,i) => {
 											return(
 											<span
+											key={i}
 												style={{
 													fontSize: 12,
 													whiteSpace: 'nowrap',
@@ -79,7 +82,7 @@ export default function messageRight(props) {
 						}
 					})()}
 				</div>
-				<span style={{ marginRight: 50 }}>{message.sentTime}</span>
+				<span style={{ marginRight: 50 }}>{moment(message.sentTime).fromNow()}</span>
 			</div>
 			<style jsx>{`
 				.messageRight {
@@ -96,6 +99,7 @@ export default function messageRight(props) {
 					display: inline-block;
 				}
 				.dropdown {
+					!z-index:1
 					margin-right: 15px;
 					max-height: 150px;
 					position: absolute;
@@ -107,6 +111,7 @@ export default function messageRight(props) {
 					padding: 10px 10px 10px 10px;
 				}
 				.dropdown2 {
+					!z-index:1
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;

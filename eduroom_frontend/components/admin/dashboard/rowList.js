@@ -14,7 +14,7 @@ const RowList = () => {
 			title: 'Analysis',
 			subtitle: 'To analyze our service',
 			buttonText: 'See All',
-            url: '/admin/analyze'
+            url: 'https://app.powerbi.com/view?r=eyJrIjoiOTU2ODgyMjUtNGJlYS00ZTA0LWJmZWEtM2RmMTBkN2I4Mjc0IiwidCI6IjZmNDQzMmRjLTIwZDItNDQxZC1iMWRiLWFjMzM4MGJhNjMzZCIsImMiOjEwfQ%3D%3D'
 		},
 	]
 

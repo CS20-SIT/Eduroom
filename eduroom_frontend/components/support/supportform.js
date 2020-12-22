@@ -24,6 +24,7 @@ const SupportForm = () => {
 
   const router = useRouter();
   const [supportForm, setForm] = useState({
+    name: "",
     email: "",
     title: "",
     content: "",
@@ -31,6 +32,7 @@ const SupportForm = () => {
     subCat: "",
   });
   const [alert, setAlert] = useState({
+    name: false,
     email: false,
     title: false,
     content: false,
@@ -79,7 +81,6 @@ const SupportForm = () => {
       api
         .post("/api/support/create", {
           name: supportForm.name,
-          username: supportForm.username,
           email: supportForm.email,
           title: supportForm.title,
           content: supportForm.content,
@@ -169,7 +170,27 @@ const SupportForm = () => {
             <Paper className={classes.paper}>
               <form className={classes.form}>
                 <Grid container spacing={2}>
-                  
+                <Grid item xs={12} sm={12}>
+                    <Typography variant="subtitle1">
+                      Your Name
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      name="name"
+                      fullWidth
+                      autoFocus
+                      variant="outlined"
+                      value={supportForm.name}
+                      onChange={handleChange}
+                      error={alert.name}
+                    />
+                    {alert.email ? (
+                      <span style={{ color: "red", fontSize: "0.8em" }}>
+                        name is required
+                      </span>
+                    ) : null}
+                  </Grid>
                   <Grid item xs={12} sm={12}>
                     <Typography variant="subtitle1">
                       Your Email Address
