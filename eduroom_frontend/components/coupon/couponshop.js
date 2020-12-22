@@ -13,10 +13,10 @@ const CouponShopJa = () => {
 	const [publicData, setPublicData] = useState([])
 	useEffect(() => {
 		const fetchData = async () => {
-		//   const res = await api.get('/api/coin/codeOfCoin');
+		  const	res1 = await api.get('/api/coupon/getPrivateCodeList')
 		  const res2 = await api.get('/api/coin/codesOfLPublic');
 		  const res3 = await api.get('/api/coin/codesOfPublic');
-		//   setData(res.data);
+		  setPrivateData(res1.data);
 		  setPublicLimitedData(res2.data);
 		  setPublicData(res3.data);
 		}
@@ -53,8 +53,8 @@ const CouponShopJa = () => {
 				<input className="input" placeholder="ENTER COUPON" />
 				<button className="btn" onClick={() => router.push('/user/MyCoupon')}>MY COUPON</button>
 			</div>
-      {/* <h1 className="color">FOR COIN</h1>
-      <AllCouponCoin item={data1}></AllCouponCoin> */}
+      <h1 className="color">FOR COIN</h1>
+      <AllCouponCoin item={privateData}></AllCouponCoin>
 	  <h1 className="color">LIMITED FESTIVAL COUPON</h1>
 	  <AllCouponFestival item={publicLimitedData}></AllCouponFestival>
 	  <h1 className="color">FESTIVAL COUPON</h1>

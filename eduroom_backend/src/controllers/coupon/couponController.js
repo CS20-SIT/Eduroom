@@ -247,22 +247,10 @@ const gCodeById = async (req, res, next) => {
         from code_list cl, promotioncode pc
         where cl.ccid = pc.coderef
             and ccid = ${id}
+            and isvisible = true
         `)
         const codeData = data.rows[0];
         res.send(codeData);
-    } catch (err) {
-        return new ErrorResponse('Error', 400)
-    }
-}
-
-const gPrivateCode = async (req, res, next) => {
-    try {
-        const data = await pool.query(`select *
-        from code_list cl, promotioncode pc
-        where cl.ccid = pc.coderef
-            and codetype = 'Private'
-        `)
-        res.send(data.rows)
     } catch (err) {
         return new ErrorResponse('Error', 400)
     }
@@ -320,6 +308,19 @@ const gExpiredCodeList = async (req, res, next) => {
     }
 }
 
+const gPrivateCodeList = async (req, res, next) => {
+    try {
+        const data = await pool.query(`
+        SELECT *
+        FROM code_list
+        where coin_use > 0
+            and isvisible = true
+        `)
+        res.send(data.rows)
+    } catch (err) {
+        return new ErrorResponse('Error', 400)
+    }
+}
 
 module.exports = 
 { 
@@ -331,8 +332,8 @@ module.exports =
     UseCode,
     GetDiscountFromCoupon, 
     gCodeById,
-    gPrivateCode,
     gCodeList,
     gUsedCodeList,
-    gExpiredCodeList
+    gExpiredCodeList,
+    gPrivateCodeList
 } 

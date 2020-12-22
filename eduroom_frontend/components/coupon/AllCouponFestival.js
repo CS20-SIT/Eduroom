@@ -24,18 +24,17 @@ const temp = (props) => {
 			return Styles.arrow
 		}
 	}
-
 	const renderSlide = () => {
 		const nowSlide = props.item.slice(page * 3 - 3, page * 3)
 		const arr = nowSlide.map((item, index) => {
 			return (
 				<div>
 				<RenderCouponFes
-					title={item.description}
+					title={item.name}
 					price={item.coinUse}
 					index={index}
 					id={item.id}
-					owner={item.name}
+					owner={""}
 					description={item.description}
 					key={item.id}
 					picture={item.picture}
