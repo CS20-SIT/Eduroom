@@ -4,12 +4,13 @@ import CartElement from '../../components/payment/cart'
 import { getItems, removeFromCart } from '../../utils/cart'
 import api from '../../api'
 import style from '../../styles/course/cartStyle'
-
+import CheckoutDialog from '../../components/payment/checkoutDialog'
 const CartPage = () => {
 	const [cartCourses, setCartCourses] = useState([])
 	const [cartPackages, setCartPackages] = useState([])
 	const [courses, setCourses] = useState([])
 	const [packages, setPackages] = useState([])
+	const [dialog, setDialog] = useState(false)
 	const fetchCourse = async () => {
 		const courses = getItems('course')
 		const res = await api.get('/api/package/coursesFromIds', {
@@ -59,10 +60,18 @@ const CartPage = () => {
 		})
 		return arr
 	}
+	const handleCheckout = () => {
+		setDialog(true)
+	}
 	return (
 		<Fragment>
 			<General>
-				<div>
+				{
+					dialog ? (
+						<CheckoutDialog handleClick={()=>{setDialog(false)}} courseList={courses} packageList={packages}/>
+					) : null
+				}
+				<div className="cart">
 					<h1 className="header">Eduroom Cart</h1>
 					<div className="container">
 						<div className="element">
@@ -72,9 +81,33 @@ const CartPage = () => {
 							{renderPackages()}
 						</div>
 					</div>
+					<div className="chk-btn">
+						<div className="chk-btn-in" onClick={handleCheckout}>Checkout</div>
+					</div>
 				</div>
 			</General>
 			<style jsx>{`
+				.chk-btn {
+					display: flex;
+					justify-content: flex-end;
+					padding: 0rem 5rem;
+				}
+				.chk-btn-in {
+					background: #FB9CCB;
+					min-width: 150px;
+					padding: .75rem;
+					border-radius: 25px;
+					color: #fff;
+					font-weight: bold;
+					display: flex;
+					justify-content: center;
+					cursor: pointer;
+					text-transform: uppercase;
+				}
+				.cart {
+					display: flex;
+					flex-flow: column;
+				}
 				.header {
 					text-align: center;
 					color: #3d467f;
@@ -85,9 +118,10 @@ const CartPage = () => {
 				.container {
 					display: flex;
 					justify-content: center;
+					padding: 2rem 5rem;
 				}
 				.element {
-					width: 80%;
+					width: 100%;
 				}
 			`}</style>
 		</Fragment>
