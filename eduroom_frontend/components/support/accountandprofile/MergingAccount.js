@@ -52,17 +52,17 @@ const HowDoesEduroomdo = () => {
             </Paper>
           </Grid>
 
-                        <Grid item xs={3}>
-                            <h3>Other articles</h3>
+          <Grid item xs={3}>
+            
+            
+            <div style={{  marginBottom: theme.spacing(3) }}>
+              <Studentnav />
+             
+            </div>
 
-                            <div style={{  marginBottom: theme.spacing(3) }}>
-                                <Studentnav />
+            <Button variant='contained' style={{backgroundColor:'#FB9CCB', marginBottom:theme.spacing(10),marginLeft:theme.spacing(8.5),marginTop:theme.spacing(1)}} href="/support/create"><label style={{color:'#ffffff'}}>CONTACT US</label></Button>
 
-                            </div>
-
-                            <Button variant='contained' style={{ backgroundColor: '#FB9CCB', marginBottom: theme.spacing(10), marginLeft: theme.spacing(8.5), marginTop: theme.spacing(1) }} href="/support/create"><label style={{ color: '#ffffff' }}>CONTACT US</label></Button>
-
-                        </Grid>
+          </Grid>
                     </Grid>
                 </Grid>
     </Fragment>
