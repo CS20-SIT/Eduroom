@@ -14,11 +14,14 @@ const temp = (props) =>{
 				</DialogContent>
 			</Dialog>
         <div className="card">
-            <img className="box" src="../../images/Coupon/Group 218.svg"/>
+            <center>
+            <img className="box" src={props.picture} style={{objectFit: "cover", height: "200px", width: "200px"}}/>
+            </center>
             <h1 className="title">{props.title}</h1>
+            <p className="description">{props.description}</p>
             <p>{props.owner}</p>
             <div>
-                <h3>$ {props.price}</h3> 
+                <h3>Free</h3> 
                 
                 <button onClick={togglePop} className="coupon"><img className="tag" src="../../images/Coupon/Tag.svg" /> GET COUPON</button>
             </div>
