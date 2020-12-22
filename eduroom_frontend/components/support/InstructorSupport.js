@@ -13,6 +13,7 @@ import {
   Paper,
   createMuiTheme,
   ThemeProvider,
+  Link
 } from "@material-ui/core";
 import GeneralNoNav from "../../components/template/generalnonav";
 
@@ -38,17 +39,15 @@ const InstructorSupport = () => {
               backgroundColor: "#eff0f6",
             }}
             elevation={3}
-          >
+          ><Link href="/support/Instructor-Payment">
             <Button
               style={{ width: "260px", height: "220px" }}
               variant="outlined"
             >
               <Grid container sm={12}>
                 <Grid item sm={12}>
-                  <img
-                    src="https://www.flaticon.com/svg/static/icons/svg/584/584093.svg"
-                    style={{ height: "80px" }}
-                  />
+                <img src="/images/instructorpayments.svg"
+											style={{ height: '120px'}} />
                   <br></br>
                 </Grid>
                 <Grid item sm={12}>
@@ -56,6 +55,7 @@ const InstructorSupport = () => {
                 </Grid>
               </Grid>
             </Button>
+            </Link>
           </Paper>
         </Grid>
         <Grid item>
@@ -67,16 +67,15 @@ const InstructorSupport = () => {
             }}
             elevation={3}
           >
+            <Link href="/support/Selling&Promotion">
             <Button
               style={{ width: "260px", height: "220px" }}
               variant="outlined"
             >
               <Grid container sm={12}>
                 <Grid item sm={12}>
-                  <img
-                    src="https://www.flaticon.com/svg/static/icons/svg/1260/1260103.svg"
-                    style={{ height: "80px" }}
-                  />
+                <img src="/images/sellingandpromotion.svg"
+											style={{ height: '120px'}} />
                   <br></br>
                 </Grid>
                 <Grid item sm={12}>
@@ -84,6 +83,7 @@ const InstructorSupport = () => {
                 </Grid>
               </Grid>
             </Button>
+            </Link>
           </Paper>
         </Grid>
         <Grid item>
@@ -95,16 +95,15 @@ const InstructorSupport = () => {
             }}
             elevation={3}
           >
+            <Link href="/support/Quality-Standards">
             <Button
               style={{ width: "260px", height: "220px" }}
               variant="outlined"
             >
               <Grid container sm={12}>
                 <Grid item sm={12}>
-                  <img
-                    src="https://www.flaticon.com/svg/static/icons/svg/3685/3685014.svg"
-                    style={{ height: "80px" }}
-                  />
+                <img src="/images/qualitystandards.svg"
+											style={{ height: '120px'}} />
                   <br></br>
                 </Grid>
                 <Grid item sm={12}>
@@ -112,6 +111,7 @@ const InstructorSupport = () => {
                 </Grid>
               </Grid>
             </Button>
+            </Link>
           </Paper>
         </Grid>
       </Grid>
@@ -125,16 +125,15 @@ const InstructorSupport = () => {
             }}
             elevation={3}
           >
+            <Link href="/support/Course-Building">
             <Button
               style={{ width: "260px", height: "220px" }}
               variant="outlined"
             >
               <Grid container sm={12}>
                 <Grid item sm={12}>
-                  <img
-                    src="https://www.flaticon.com/svg/static/icons/svg/2904/2904859.svg"
-                    style={{ height: "80px" }}
-                  />
+                <img src="/images/coursebuilding.svg"
+											style={{ height: '120px'}} />
                   <br></br>
                 </Grid>
                 <Grid item sm={12}>
@@ -142,6 +141,7 @@ const InstructorSupport = () => {
                 </Grid>
               </Grid>
             </Button>
+            </Link>
           </Paper>
         </Grid>
         <Grid item>
@@ -153,16 +153,15 @@ const InstructorSupport = () => {
             }}
             elevation={3}
           >
+            <Link href="/support/Course-Management">
             <Button
               style={{ width: "260px", height: "220px" }}
               variant="outlined"
             >
               <Grid container sm={12}>
                 <Grid item sm={12}>
-                  <img
-                    src="https://www.flaticon.com/svg/static/icons/svg/3063/3063493.svg"
-                    style={{ height: "80px" }}
-                  />
+                <img src="/images/coursemanagement.svg"
+											style={{ height: '120px'}} />
                   <br></br>
                 </Grid>
                 <Grid item sm={12}>
@@ -170,6 +169,7 @@ const InstructorSupport = () => {
                 </Grid>
               </Grid>
             </Button>
+            </Link>
           </Paper>
         </Grid>
         <Grid item>
@@ -181,16 +181,15 @@ const InstructorSupport = () => {
             }}
             elevation={3}
           >
+            <Link href="/support/Trust&Safety">
             <Button
               style={{ width: "260px", height: "220px" }}
               variant="outlined"
             >
               <Grid container sm={12}>
                 <Grid item sm={12}>
-                  <img
-                    src="https://www.flaticon.com/svg/static/icons/svg/884/884553.svg"
-                    style={{ height: "80px" }}
-                  />
+                <img src="/images/trustandsafety.svg"
+											style={{ height: '120px'}} />
                   <br></br>
                 </Grid>
                 <Grid item sm={12}>
@@ -198,6 +197,7 @@ const InstructorSupport = () => {
                 </Grid>
               </Grid>
             </Button>
+            </Link>
           </Paper>
         </Grid>
       </Grid>

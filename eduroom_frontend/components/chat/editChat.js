@@ -14,7 +14,6 @@ import BlueInput from './blueInput'
 import AcceptIcon from './icons/AcceptIcon'
 import SearchResult from '../chat/searchResult'
 import api from '../../api'
-import { DeviceSignalCellularNull } from 'material-ui/svg-icons'
 
 export default function editChat(props) {
 	const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
@@ -26,6 +25,8 @@ export default function editChat(props) {
 	const [isFocus, setIsFocus] = useState(false)
 	const [isSelect, setIsSelect] = useState(false)
 	const [ignoreBlur, setIgnoreBlur] = useState(false)
+	const [chatRoomMembers, setChatRoomMembers] = useState(null)
+	const [changeMemberNickName, setChangeMemberNickName] = useState(Array(props.chatRoomDetail.membersID.length).fill(false))
 	const getSearchResult = async () => {
 		setSearchResult(null)
 		const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
@@ -34,29 +35,69 @@ export default function editChat(props) {
 	const edit = props.edit
 
 	const changeColor = async (l, r) => {
-		const res = await api.get(`/api/chat/changeThemeColor`, { params: { chatroomid: props.chatRoomDetail.chatroomid,sendcolor:r,recievecolor:l } })
+		const res = await api.get(`/api/chat/changeThemeColor`, {
+			params: { chatroomid: props.chatRoomDetail.chatroomid, sendcolor: r, recievecolor: l },
+		})
 		props.getChatRoomDetail()
+	}
+	const getChatRoomMembers = async () => {
+		let message = []
+		for (let i = 0; i < props.chatRoomDetail.membersID.length; i++) {
+			const res = await api.get(`/api/chat/getUserProfileFromID`, {
+				params: { userid: props.chatRoomDetail.membersID[i] },
+			})
+			message.push(res.data)
+		}
+		setChatRoomMembers(message)
 	}
 	const uploadPic = async (e) => {
-		setChangeImage(e.target.files[0])
 		var bodyFormData = new FormData()
-		bodyFormData.append('groupName', changeImage)
+		bodyFormData.append('profilePic', e.target.files[0])
 		const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-		const res = await api.get(`/api/chat/changeChatRoomProfilePictureMockup`, bodyFormData, config)
-		props.getChatRoomDetail()
+		api.post(`/api/chat/uploadpic`, bodyFormData, config).then(async (rs) => {
+			const res = await api.get(`/api/chat/changeChatRoomProfilePicture`, {
+				params: { profilepic: rs.data.path, chatroomid: props.chatRoomDetail.chatroomid },
+			})
+			props.socket.emit('changeProfilePic', props.chatRoomDetail.chatroomid)
+			props.getChatRoomDetail()
+			props.getChatList()
+		})
 	}
 	const editChatRoomName = async () => {
-		const res = await api.get(`/api/chat/changeChatRoomName`, { params:{roomname: roomName,chatroomid:props.chatRoomDetail.chatroomid}})
+		const res = await api.get(`/api/chat/changeChatRoomName`, {
+			params: { roomname: roomName, chatroomid: props.chatRoomDetail.chatroomid },
+		})
+		props.socket.emit('changeChatRoomName', props.chatRoomDetail.chatroomid)
 		props.getChatRoomDetail()
+		props.getChatList()
 	}
 	const handleSelect = async (el) => {
-		const res = await api.get(`/api/chat/addChatRoomMemberMockup`, { member: el.userID })
+		const res = await api.get(`/api/chat/addChatRoomMember`, {
+			params: { chatroomid: props.chatRoomDetail.chatroomid, member: el.userid },
+		})
 		props.getChatRoomDetail()
 		setSearchResult(null)
 	}
-	useEffect(() => {
-		console.log(changeImage)
-	}, [changeImage])
+	const deleteMember = async (el) => {
+		const res = await api.get(`/api/chat/deleteMember`, {
+			params: { chatroomid: props.chatRoomDetail.chatroomid, member: el.userid },
+		})
+		props.socket.emit("kickOut",props.chatRoomDetail.chatroomid)
+		props.getChatRoomDetail()
+	}
+	const clickDelete = async() =>{
+		props.socket.emit("leaveRoom",props.chatRoomDetail.chatroomid)
+		const res = await api.get(`/api/chat/deleteChatroom`,{params:{chatroomid:props.chatRoomDetail.chatroomid}})
+		props.socket.emit("deleteChatRoom",props.chatRoomDetail.chatroomid)
+		props.getChatList()
+	}
+	const clickLeave = async() =>{
+		props.getChatRoomDetail(null)
+		const res = await api.get(`/api/chat/leaveChatroom`,{params:{chatroomid:props.chatRoomDetail.chatroomid}})
+		props.socket.emit("leaveChatRoom",props.chatRoomDetail.chatroomid)
+		props.socket.emit("leaveRoom",props.chatRoomDetail.chatroomid)
+		props.getChatList()
+	}
 	useEffect(() => {
 		setChangeImage(null)
 		setChangeChatRoomName(false)
@@ -65,9 +106,10 @@ export default function editChat(props) {
 		setSearchResult(null)
 		getSearchResult()
 	}, [searchInput])
-	useEffect(()=>{
-		console.log(roomName)
-	},[roomName])
+	useEffect(() => {
+		getChatRoomMembers()
+	}, [])
+
 
 	return (
 		<>
@@ -182,110 +224,118 @@ export default function editChat(props) {
 							/>
 						</div>
 						<div onClick={() => changeColor('#5B5B5B', '#A27CEF')}>
-							<Colour color={{ color1: '#5B5B5B', color2: '#A27CEF' }} 
-							active={(() => {
-								if (
-									props.chatRoomDetail.themeColor.sendcolor == '#A27CEF' &&
-									props.chatRoomDetail.themeColor.recievecolor == '#5B5B5B'
-								) {
-									return true
-								} else {
-									return false
-								}
-							})()}
+							<Colour
+								color={{ color1: '#5B5B5B', color2: '#A27CEF' }}
+								active={(() => {
+									if (
+										props.chatRoomDetail.themeColor.sendcolor == '#A27CEF' &&
+										props.chatRoomDetail.themeColor.recievecolor == '#5B5B5B'
+									) {
+										return true
+									} else {
+										return false
+									}
+								})()}
 							/>
 						</div>
 						<div onClick={() => changeColor('#5B5B5B', '#F3B496')}>
-							<Colour color={{ color1: '#5B5B5B', color2: '#F3B496' }} 
-							active={(() => {
-								if (
-									props.chatRoomDetail.themeColor.sendcolor == '#F3B496' &&
-									props.chatRoomDetail.themeColor.recievecolor == '#5B5B5B'
-								) {
-									return true
-								} else {
-									return false
-								}
-							})()}
+							<Colour
+								color={{ color1: '#5B5B5B', color2: '#F3B496' }}
+								active={(() => {
+									if (
+										props.chatRoomDetail.themeColor.sendcolor == '#F3B496' &&
+										props.chatRoomDetail.themeColor.recievecolor == '#5B5B5B'
+									) {
+										return true
+									} else {
+										return false
+									}
+								})()}
 							/>
 						</div>
 						<div onClick={() => changeColor('#3D467F', '#8CC0EA')}>
-							<Colour color={{ color1: '#3D467F', color2: '#8CC0EA' }}
-							active={(() => {
-								if (
-									props.chatRoomDetail.themeColor.sendcolor == '#8CC0EA' &&
-									props.chatRoomDetail.themeColor.recievecolor == '#3D467F'
-								) {
-									return true
-								} else {
-									return false
-								}
-							})()}
+							<Colour
+								color={{ color1: '#3D467F', color2: '#8CC0EA' }}
+								active={(() => {
+									if (
+										props.chatRoomDetail.themeColor.sendcolor == '#8CC0EA' &&
+										props.chatRoomDetail.themeColor.recievecolor == '#3D467F'
+									) {
+										return true
+									} else {
+										return false
+									}
+								})()}
 							/>
 						</div>
 					</div>
-					<div
-						id="addMember"
-						style={{
-							display: 'inline-block',
-							position: 'relative',
-							width: '90%',
-							marginTop: 10,
-							marginBottom: 10,
-							marginLeft: 14,
-						}}
-						onFocus={() => {
-							setIsFocus(true)
-							getSearchResult()
-							setIgnoreBlur(false)
-						}}
-						onBlur={() => {
-							if (!ignoreBlur) {
-								setIsFocus(false)
-								setSearchResult(null)
-							}
-						}}
-					>
-						<AddMember input={searchInput} setInput={setSearchInput} getSearchResult={getSearchResult} />
-						{(() => {
-							if (!searchInput == null || !searchInput == '') {
+					{(() => {
+						if (props.chatRoomDetail.isgroup == true) {
+							return (
+								<div
+									id="addMember"
+									style={{
+										display: 'inline-block',
+										position: 'relative',
+										width: '90%',
+										marginTop: 10,
+										marginBottom: 10,
+										marginLeft: 14,
+									}}
+									onFocus={() => {
+										setIsFocus(true)
+										getSearchResult()
+										setIgnoreBlur(false)
+									}}
+									onBlur={() => {
+										if (!ignoreBlur) {
+											setIsFocus(false)
+											setSearchResult(null)
+										}
+									}}
+								>
+									<AddMember input={searchInput} setInput={setSearchInput} getSearchResult={getSearchResult} />
+									{(() => {
+										if (!searchInput == null || !searchInput == '') {
+											return (
+												<SearchResult
+													searchResult={searchResult}
+													setSearchResult={setSearchResult}
+													setIgnoreBlur={setIgnoreBlur}
+													handleSelect={handleSelect}
+												/>
+											)
+										}
+									})()}
+								</div>
+							)
+						} else {
+							return (
+								<span style={{ width: '100%' }}>
+									<h4 style={{ marginTop: 5, marginBottom: 5, marginLeft: 20 }}>Members</h4>
+								</span>
+							)
+						}
+					})()}
+					{chatRoomMembers &&
+						chatRoomMembers.map((el,k) => {
 								return (
-									<SearchResult
-										searchResult={searchResult}
-										setSearchResult={setSearchResult}
-										setIgnoreBlur={setIgnoreBlur}
-										handleSelect={handleSelect}
-									/>
+									<div key={k} className="memberDiv">
+										<Avatar style={{ width: 35, height: 35 }} alt={el.firstname + ' ' + el.lastname} src={el.avatar} />
+										<p className="memberName" style={{ color: '#7279A3' }}>
+											{el.firstname + ' ' + el.lastname}
+										</p>
+										<CancelIcon
+											style={{ cursor: 'pointer' }}
+											onClick={() => {
+												deleteMember(el)
+											}}
+										/>
+									</div>
 								)
-							}
-						})()}
-					</div>
-					<div className="memberDiv">
-						<Avatar style={{ width: 35, height: 35 }} alt="Krishadawut Olde Monnikhof" src="" />
-						<p className="memberName" style={{ color: '#7279A3' }}>
-							Krishadawut Olde Monnikhof
-						</p>
-						<CreateIcon style={{ marginLeft: 'auto', cursor: 'pointer' }} />
-						<CancelIcon style={{ cursor: 'pointer' }} />
-					</div>
-					<div className="memberDiv">
-						<Avatar style={{ width: 35, height: 35 }} alt="Krishadawut Olde Monnikhof" src="" />
-						<p className="memberName" style={{ color: '#7279A3' }}>
-							Krishadawut Olde Monnikhof
-						</p>
-						<CreateIcon style={{ marginLeft: 'auto', cursor: 'pointer' }} />
-						<CancelIcon style={{ cursor: 'pointer' }} />
-					</div>
-					<div className="memberDiv">
-						<Avatar style={{ width: 35, height: 35 }} alt="Krishadawut Olde Monnikhof" src="" />
-						<p className="memberName" style={{ color: '#7279A3' }}>
-							Krishadawut Olde Monnikhof
-						</p>
-						<CreateIcon style={{ marginLeft: 'auto', cursor: 'pointer' }} />
-						<CancelIcon style={{ cursor: 'pointer' }} />
-					</div>
-					<Leave />
-					<DeleteGroup />
+						})}
+					<Leave onClick={clickLeave}/>
+					<DeleteGroup onClick={clickDelete}/>
 				</div>
 			</div>
 			<style jsx>{style}</style>
