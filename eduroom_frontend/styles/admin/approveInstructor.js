@@ -11,6 +11,7 @@ export default css`
 		padding: 20px;
 		align-items: center;
 		justify-content: space-between;
+		margin-bottom: 20px;
 	}
 
 	.approveBtn {
