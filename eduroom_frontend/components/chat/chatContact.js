@@ -34,11 +34,13 @@ export default function chatContact(props) {
 	}
 	const clickSelectResult = async (el) => {
 		const res = await api.get(`/api/chat/selectSearchResult`, { params: { member: el.userid} })
-		props.getChatList()
 		if(res.data.chatroomid){
 			props.setSelectChat(res.data)
+			props.getChatList()
 		}else{
-			props.setSelectChat(props.chatList[0])
+			const res = await api.get(`/api/chat/getChatlist`)
+			props.setSelectChat(res.data[0])
+			props.getChatList()
 		}
 	}
 	const handleClickOpenNotification = () => {
@@ -58,7 +60,6 @@ export default function chatContact(props) {
 		clickSelectResult(el)
 	}
 	useEffect(() => {
-		props.getChatList()
 		getInvitations()
 	}, [])
 	useEffect(() => {
@@ -104,7 +105,7 @@ export default function chatContact(props) {
 					/>
 				}
 				<Dialog disableBackdropClick onClose={handleCloseNotification} open={openNotification}>
-					<ChatInvitation handleClose={handleCloseNotification} />
+					<ChatInvitation handleClose={handleCloseNotification} getChatList={props.getChatList} />
 				</Dialog>
 				<div
 					style={{
@@ -166,7 +167,7 @@ export default function chatContact(props) {
 						/>
 					</div>
 					<Dialog disableBackdropClick onClose={handleCloseCreateChat} open={openCreateChat}>
-						<CreateChatRoom handleClose={handleCloseCreateChat} />
+						<CreateChatRoom handleClose={handleCloseCreateChat} userProfile={userProfile} getChatList={props.getChatList}/>
 					</Dialog>
 					<div
 						style={{
@@ -180,7 +181,7 @@ export default function chatContact(props) {
 				<div style={{ marginLeft: 14 }}>
 					<h4 style={{ marginLeft: 14 }}>Chat</h4>
 					{props.chatList &&
-						props.chatList.map((el) => {
+						props.chatList.map((el,i) => {
 							if (el.roomname == null) {
 								return (
 									<ContactPerson
@@ -188,8 +189,8 @@ export default function chatContact(props) {
 										contact={{
 											chatRoomID: el.chatroomid,
 											name: el.firstname,
-											resentMessage: el.firstname + ': ' + el.message,
-											resentMessageDate: new Date(el.sendtime).getTime(),
+											resentMessage: 'Message: ' + el.message,
+											recentMessageDate: new Date(el.sendtime).getTime(),
 										}}
 										onClick={() => {
 											props.setSelectChat(el)
@@ -197,17 +198,18 @@ export default function chatContact(props) {
 										selectChat={props.selectChat}
 										getChatList={props.getChatList}
 										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
 									/>
 								)
-							} else {
+							} else if(el.message==null){
 								return (
 									<ContactPerson
 										key={el.chatroomid}
 										contact={{
 											chatRoomID: el.chatroomid,
 											name: el.roomname,
-											resentMessage: el.firstname + ': ' + el.message,
-											resentMessageDate: new Date(el.sendtime).getTime(),
+											resentMessage: 'Message: '  + el.message,
+											recentMessageDate: new Date(el.sendtime).getTime(),
 										}}
 										onClick={() => {
 											props.setSelectChat(el)
@@ -216,6 +218,48 @@ export default function chatContact(props) {
 										getChatList={props.getChatList}
 										setSelectChat={props.setSelectChat}
 										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
+									/>
+								)
+							}else if(el.sticker==true){
+								return (
+									<ContactPerson
+										key={el.chatroomid}
+										contact={{
+											chatRoomID: el.chatroomid,
+											name: el.roomname,
+											resentMessage: 'Message: Sticker',
+											recentMessageDate: new Date(el.sendtime).getTime(),
+										}}
+										onClick={() => {
+											props.setSelectChat(el)
+										}}
+										selectChat={props.selectChat}
+										getChatList={props.getChatList}
+										setSelectChat={props.setSelectChat}
+										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
+									/>
+								)
+							}
+							else{
+								return (
+									<ContactPerson
+										key={el.chatroomid}
+										contact={{
+											chatRoomID: el.chatroomid,
+											name: el.roomname,
+											resentMessage: 'Message: '  + el.message,
+											recentMessageDate: new Date(el.sendtime).getTime(),
+										}}
+										onClick={() => {
+											props.setSelectChat(el)
+										}}
+										selectChat={props.selectChat}
+										getChatList={props.getChatList}
+										setSelectChat={props.setSelectChat}
+										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
 									/>
 								)
 							}
