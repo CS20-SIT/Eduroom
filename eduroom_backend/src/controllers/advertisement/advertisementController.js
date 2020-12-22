@@ -99,7 +99,7 @@ const AddNewAdsBills = async (req, res, next) => {
     for(i = 0 ; i<adlist.length;i++){
         await pool.query(
             "insert into ad_payment(adid, receipt, datetime, amount, paymentstatus) values ($1,'',CURRENT_TIMESTAMP,$2,false);",
-            [adlist[i].adid,adlist[i].amount]
+            [adlist[i].adid,adlist[i].price]
         )
     }
     
