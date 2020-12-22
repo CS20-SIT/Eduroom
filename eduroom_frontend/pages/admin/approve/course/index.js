@@ -7,7 +7,7 @@ const AdminApproveCourse = () => {
 	const [courseList, setCourseList] = useState([])
 	const fetchData = () => {
 		api
-			.get('/api/admin/course/getAllCourse')
+			.get('/api/admin/approveCourse')
 			.then((res) => {
 				console.log(res.data)
 				setCourseList(res.data)
@@ -19,7 +19,7 @@ const AdminApproveCourse = () => {
 	}, [])
 	const handleApprove = (id) => {
 		api
-			.post('/api/admin/course/approve', { courseid: id })
+			.post('/api/admin/approveCourse', { courseId: id })
 			.then((res) => {
 				fetchData()
 			})
