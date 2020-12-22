@@ -24,5 +24,5 @@ router.get('/codesOfCoin',getCodeListOfCoin);
 router.get('/codesOfLPublic',getCodeListOfLPublic);
 router.get('/codesOfPublic',getCodeListOfPublic);
 
-router.post('/buyCoupon', jwtAuthenicate, buyCoupon)    // ดัน
+router.post('/buyCoupon', buyCoupon)    // ดัน
 module.exports = router;
