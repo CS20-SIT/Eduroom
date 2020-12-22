@@ -51,6 +51,7 @@ const CheckoutDialog = ({ handleClick, courseList, packageList }) => {
 		} else {
 			api.post('/api/user/checkout',{course:courseList,packages:packageList,price:prices}).then(
 				res=>{
+					console.log(res)
 					router.push('/user')
 				}
 			)
