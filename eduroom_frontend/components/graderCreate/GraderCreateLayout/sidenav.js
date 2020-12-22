@@ -3,7 +3,7 @@ import Item from '../../admin/layout/item'
 import Link from 'next/link'
 import style from '../../../styles/layout/sidebar'
 import Image from 'next/image'
-import { items } from '../../../components/admin/layout/data/item'
+import { item } from '../../../components/admin/layout/data/item'
 const SideNav = () => {
 	const [expand, setExpand] = useState(false)
 	const handleExpand = () => {
@@ -24,7 +24,7 @@ const SideNav = () => {
 					</div>
 				</Link>
 				<div className="side-nav-list" onMouseLeave={handleReduce}>
-					{items.map((el) => {
+					{item.map((el) => {
 						return <Item key={el.text} data={el} isExpand={expand} expand={handleExpand} reduce={handleReduce} />
 					})}
 				</div>
