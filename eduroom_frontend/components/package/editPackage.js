@@ -4,35 +4,10 @@ import style from '../../styles/package/createpackage'
 import { useRouter } from 'next/router'
 import api from '../../api'
 
-const EditPackage = (props, { index }) => {
-	const [image, setImage] = useState(null)
-	const router = useRouter()
-	const param = router.query.id || ''
-	const [editData, setEditData] = useState({
-		packagename: '',
-		discount: 0,
-		detail: '',
-		image: '',
-		cateid: 0,
-	})
-	const [selectCourse, setSelectCourse] = useState([])
-	useEffect(() => {
-		if (props.packages) {
-			setEditData({
-				packagename: props.packages.packagename,
-				discount: props.packages.discount,
-				detail: props.packages.detail,
-				cateid: props.packages.cateid,
-				image: props.packages.image,
-			})
-		}
-	}, [props.packages])
-	useEffect(() => {
-		setSelectCourse([...props.courseList])
-	}, [props.courseList])
-	const handleSelectedCourses = (newSelected) => {
-		setSelectCourse([...newSelected])
-	}
+const EditPackage = ({index,handleChangeEdit,handleSelectedCourses,handleUplaodFile,image,editData,selectCourse,handleChangePage }) => {
+	
+
+	
 	useEffect(() => {
 		if (image) {
 			var reader = new FileReader()
@@ -43,22 +18,11 @@ const EditPackage = (props, { index }) => {
 		}
 	}, [image])
 
-	const handleUplaodFile = (e) => {
-		let newValue = e.target.files[0]
-		let type = 'image'
-		console.log(newValue)
-		setImage(newValue)
-	}
+	
 	const numDiscount = [5, 10, 20, 30, 40, 50, 60, 70]
 	const discount = numDiscount.map((num) => {
 		return { label: num + '%', value: num }
 	})
-	const discountChange = (e) => {
-		props.setMyPackage({
-			...props.myPackage,
-			discount: parseInt(e.target.value),
-		})
-	}
 	const [categories, setCategories] = useState([])
 	const fetchCategories = async () => {
 		const res = await api.get('/api/package/categories')
@@ -67,22 +31,8 @@ const EditPackage = (props, { index }) => {
 	useEffect(() => {
 		fetchCategories()
 	}, [])
-	// const saveEdit = () => {
-	// 	api
-	// 		.put(`/api/forum/${data.forumid}`, { old: { content: data.content }, new: { ...editData } })
-	// 		.then((res) => {
-	// 			setData({ ...editData })
-	// 			setEdit(false)
-	// 			setEditData({ titlethread: '', content: '' })
-	// 		})
-	// 		.catch((err) => {
-	// 		})
-	// }
-	const handleChangeEdit = (e) => {
-		setEditData({ ...editData, [e.target.name]: e.target.value })
-	}
 	const handleClick = () => {
-		props.changePage(2)
+		handleChangePage(2)
 	}
 
 	return (
@@ -102,6 +52,12 @@ const EditPackage = (props, { index }) => {
 							{image ? (
 								<div>
 									<img src="" id={'show-image' + index} style={{ maxWidth: 420, maxHeight: 235 }} />
+								</div>
+							) : editData.image ? (
+								<div>
+									<div>
+										<img src={editData.image} alt="package-image" style={{ maxWidth: 420, maxHeight: 235 }} />
+									</div>
 								</div>
 							) : (
 								<div>
@@ -134,8 +90,8 @@ const EditPackage = (props, { index }) => {
 							</select>
 						</div>
 						<div>
-							<select name="category" onChange={handleChangeEdit} value={parseInt(editData?.cateid)}>
-								<option disabled value={0}>
+							<select name="category" onChange={handleChangeEdit} value={editData?.cateid}>
+								<option disabled value="">
 									Category
 								</option>
 
@@ -149,9 +105,14 @@ const EditPackage = (props, { index }) => {
 							</select>
 						</div>
 						<div className="pdetail">
-							<textarea type="text" onChange={handleChangeEdit} name="detail" rows="4" style={{ resize: 'none' }}>
-								{editData?.content}
-							</textarea>
+							<textarea
+								type="text"
+								onChange={handleChangeEdit}
+								name="detail"
+								rows="4"
+								style={{ resize: 'none' }}
+								value={editData?.detail}
+							></textarea>
 						</div>
 					</div>
 				</div>
@@ -171,5 +132,3 @@ const EditPackage = (props, { index }) => {
 	)
 }
 export default EditPackage
-
-// ERRORRR

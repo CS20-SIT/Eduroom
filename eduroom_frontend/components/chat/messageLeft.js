@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import ReadIcon from './icons/ReadIcon'
 import DotDotIcon from './icons/DotDotIcon'
+import moment from 'moment'
 
 export default function messageLeft(props) {
 	const [dropReadDownStyle, setReadDropDownStyle] = useState({ visibility: 'hidden' })
@@ -30,7 +31,7 @@ export default function messageLeft(props) {
 						<span style={{ fontSize: 18 }}>{message.text}</span>
 					</div>
 				</div>
-				<span>{message.sentTime}</span>
+				<span>{moment(message.sentTime).fromNow()}</span>
 				<div
 					style={{ position: 'relative', display: 'inline-block' }}
 					onMouseOver={() => {
@@ -46,9 +47,10 @@ export default function messageLeft(props) {
 								<>
 									<ReadIcon style={{ paddingTop: 5, marginLeft: 10 }} />
 									<div className="dropdown scroll" style={dropReadDownStyle}>
-										{message.reader.map((el) => {
+										{message.reader.map((el,i) => {
 											return(
 											<span
+											key={i}
 												style={{
 													fontSize: 12,
 													whiteSpace: 'nowrap',
@@ -80,6 +82,7 @@ export default function messageLeft(props) {
 					display: inline-block;
 				}
 				.dropdown {
+					!z-index:1
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;
@@ -91,6 +94,7 @@ export default function messageLeft(props) {
 					padding: 10px 10px 10px 10px;
 				}
 				.dropdown2 {
+					!z-index:1
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;

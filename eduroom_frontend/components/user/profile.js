@@ -83,7 +83,7 @@ const Profile = () => {
 						<TextField style={{ width: '100%' }}
 							disabled
 							multiline
-							rows={4}
+							rows={10}
 							defaultValue={user.bio ? user.bio : '-'}
 							inputProps={{ readOnly: true }}
 						/>
@@ -97,7 +97,7 @@ const Profile = () => {
 					</Link> */}
 					
 							<button onClick={() => router.push('/coin-shop/History')} className={Styles.btnHistory2}>
-								Sticker History
+								Sticker Owner
 							</button>
 
 					{renderRegister()}

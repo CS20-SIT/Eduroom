@@ -7,6 +7,7 @@ export default function deleteGroup(props) {
         margin: "auto 0 50px",
         cursor:'pointer',
       }}
+      onClick={props.onClick}
     >
       <div
         style={{

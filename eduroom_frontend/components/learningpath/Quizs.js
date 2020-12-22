@@ -59,7 +59,7 @@ const Quizs = ({ id, nodeID }) => {
 	const handleSubmit = async () => {
 		try {
 			setSubmit(true)
-			const body = { score: getScore(), nodeid: nodeID }
+			const body = { score: getScore(), nodeid: nodeID, type: 'quiz' }
 			await api.post('/api/learningpath/completeNode', body)
 		} catch (err) {
 			console.log(err)

@@ -231,18 +231,18 @@ const Content = () => {
 					</Grid>
 				</Grid>
 			</General>
-			<img
+			{/* <img
 				alt="register-img"
 				src="/images/eduroom_logo_box.svg"
 				width="1152"
 				height="558.6"
 				style={{
-					position: 'absolute',
+					position: 'relative',
 					left: '657px',
 					top: '153px',
 					opacity: 0.3,
 				}}
-			/>
+			/> */}
 			<style jsx>{style}</style>
 		</Fragment>
 	)
