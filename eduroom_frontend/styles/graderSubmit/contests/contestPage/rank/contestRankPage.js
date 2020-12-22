@@ -1,4 +1,4 @@
-import css from "styled-jsx/css"
+import css from 'styled-jsx/css'
 export default css`
 .main {
     display: flex;
@@ -61,5 +61,42 @@ export default css`
     border-right: 2px solid rgba(91, 91, 91, 0.1);
     border-bottom: 2px solid rgba(91, 91, 91, 0.1);
   }
-  
+  .actual-graph {
+    display: flex;
+    height: 90%;
+    width: 85%;
+    align-items: flex-end;
+  }
+  .graph {
+    display: flex;
+    height: 100%;
+    width: 95%;
+    align-items: flex-end;
+    justify-content: space-between;
+
+  }
+  .eachBar {
+    width: 16.5%;
+    background-color: #D5C1FC;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 5px 3px 0 3px;
+    color: #ffffff;
+    font-weight: bold;
+  }
+  .min, .max {
+    height: fit-content;
+    border-left: solid 1px #3D467F;
+  }
+  .legend {
+    text-align: center;
+  }
+  .line {
+    height: 24vh;
+    width: 1px;
+    background-color: #3D467F;
+  }
+  p {
+    margin-left: 5px;
+  }
 `

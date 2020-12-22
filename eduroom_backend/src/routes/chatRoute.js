@@ -3,15 +3,16 @@ const router = express.Router()
 const mockup = require('../controllers/Chat/chatMockupData')
 const chat = require('../controllers/Chat/chatController')
 const {jwtAuthenicate} = require('../middleware/jwtAuthenticate')
+const {uploadToGCSHandler} = require('../middleware/multer')
 
-router.get('/getChatlist', jwtAuthenicate,chat.getChatlist) //check
-router.get('/getInvitationList',jwtAuthenicate, chat.getInvitationList) //check
-router.get('/getSearchResult',jwtAuthenicate, chat.getSearchResult) //check
-router.get('/acceptInvitation',jwtAuthenicate, chat.acceptInvitation)  //check
-router.get('/declineInvitation',jwtAuthenicate,chat.declineInvitation) //check
-router.get('/getChatroomDetail',jwtAuthenicate,chat.getChatroomDetail) //check
-router.get('/getChatRoomProfile',jwtAuthenicate,chat.getChatRoomProfile) //check
-router.get('/selectSearchResult',jwtAuthenicate,chat.selectSearchResult) //check
+router.get('/getChatlist', jwtAuthenicate,chat.getChatlist) //check done
+router.get('/getInvitationList',jwtAuthenicate, chat.getInvitationList) //check done
+router.get('/getSearchResult',jwtAuthenicate, chat.getSearchResult) //check done
+router.get('/acceptInvitation',jwtAuthenicate, chat.acceptInvitation)  //check done
+router.get('/declineInvitation',jwtAuthenicate,chat.declineInvitation) //check done
+router.get('/getChatroomDetail',jwtAuthenicate,chat.getChatroomDetail) //check done
+router.get('/getChatRoomProfile',jwtAuthenicate,chat.getChatRoomProfile) //check done
+router.get('/selectSearchResult',jwtAuthenicate,chat.selectSearchResult) //check done
 router.get('/getUserProfile',jwtAuthenicate,chat.getUserProfile) //check
 router.get('/hideChatroom',jwtAuthenicate,chat.hideChatroom)  //check
 router.get('/leaveChatRoom',jwtAuthenicate,chat.leaveChatRoom) //check
@@ -20,6 +21,15 @@ router.get('/sendMessage',jwtAuthenicate,chat.sendMessage) //check
 router.get('/unsendMessage',jwtAuthenicate,chat.unsendMessage) //check
 router.get('/changeThemeColor',jwtAuthenicate,chat.changeThemeColor) //check
 router.get('/changeChatRoomName',jwtAuthenicate,chat.changeChatRoomName) //check
+router.get('/getUserProfileFromID',jwtAuthenicate,chat.getUserProfileFromID) //check
+router.get('/createGroupChat',jwtAuthenicate,chat.createGroupChat) //check
+router.get('/readMessage',jwtAuthenicate,chat.readMessage) //check
+router.post('/uploadpic',uploadToGCSHandler('chat_profile/'), chat.uploadPic) //check
+router.get('/changeChatRoomProfilePicture',jwtAuthenicate,chat.changeChatRoomProfilePicture) //check
+router.get('/addChatRoomMember',jwtAuthenicate,chat.addChatRoomMember) //check
+router.get('/deleteMember',jwtAuthenicate,chat.deleteMember) //check
+router.get('/sendStickerMessage',jwtAuthenicate,chat.sendStickerMessage) //check
+
 
 
 //Mockup

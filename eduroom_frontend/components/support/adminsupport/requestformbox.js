@@ -21,7 +21,7 @@ const RequestFormBox = ({ data }) => {
 						
 					</div>
 					<div className="forumDate">
-						{data.author} requested {moment(data.requesttime).fromNow()}
+						{data.name} requested {moment(data.requesttime).fromNow()}
 					</div>
 				</div>
 			</div>
