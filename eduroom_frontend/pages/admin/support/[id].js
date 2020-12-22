@@ -4,6 +4,8 @@ import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
 import BackButton from "../../../components/support/adminsupport/BackButton";
 import api from '../../../api';
+import ProtectedAdminRoute from '../../../components/admin/protectedAdminRoute'
+import AdminTemplate from '../../../components/admin/template/default'
 import CreateAnswer from "../../../components/support/adminsupport/answer"
 const AdminSupportID = (props) => {
 	console.log(props)
@@ -17,7 +19,8 @@ const AdminSupportID = (props) => {
 
 	return (
 		<Fragment>
-			<General>
+			<ProtectedAdminRoute>
+				<AdminTemplate>
 				<div
 					style={{
 						display: 'flex',
@@ -46,7 +49,8 @@ const AdminSupportID = (props) => {
 						`}
 					</style>
 				</div>
-			</General>
+				</AdminTemplate>
+				</ProtectedAdminRoute>
 		</Fragment>
 	)
 }

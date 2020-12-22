@@ -12,6 +12,7 @@ export default function leave(props) {
         margin: "10px 0 30px ",
         cursor:'pointer',
       }}
+      onClick={props.onClick}
     >
       <div
         style={{
