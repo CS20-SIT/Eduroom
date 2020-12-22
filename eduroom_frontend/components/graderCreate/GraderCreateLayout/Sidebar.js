@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import Header from "../../layouts/header";
-import SideNav from "../../layouts/sidenav/sidenav";
+import SideNav from "./sidenav";
 
 const GeneralNonav = (props) => {
   return (
