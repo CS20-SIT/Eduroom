@@ -18,14 +18,14 @@ const CheckoutDialog = ({ handleClick, courseList, packageList }) => {
 				price += i.price
 			}
 			setPrice(price)
-			console.log(price)
+			console.log(courseList)
+			console.log(packageList)
 		}
 	}, [courseList, packageList])
 	const handleAddCoupon = (coupon) => {
 		api
 			.get('/api/coupon/GetDiscountFromCoupon?pcode=' + coupon)
 			.then((res) => {
-				console.log(res.data)
 				setDiscount(res.data.discount[0].discountamount)
 				setCoupon(coupon)
 			})
@@ -34,12 +34,16 @@ const CheckoutDialog = ({ handleClick, courseList, packageList }) => {
 			})
 	}
 	const handleSubmit = () => {
-		const newPrice = prices * (100-discount)/100
-		api.post('/api/user/checkout',{course:cartCourses,packages:cartPackages,price:newPrice,coupon:coupon}).then(
-			res=>{
-				console.log(res.data)
-			}
-		)
+		api.post('/api/coupon/UseCode',{pcode:coupon}).then(res=>{
+			const newPrice = prices * (100-discount)/100
+			api.post('/api/user/checkout',{course:courseList,packages:packageList,price:newPrice}).then(
+				res=>{
+					alert("Buy Success")
+				}
+			)
+		}).catch(err=>{
+			alert(err)
+		})
 	}
 	return (
 		<Fragment>
