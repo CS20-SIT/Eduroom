@@ -2,7 +2,7 @@ exports.item = [
 	{
 		icon: 'analyze',
 		text: 'Analysis & Finance',
-		link: '/admin/analyze',
+		link: 'https://app.powerbi.com/view?r=eyJrIjoiOTU2ODgyMjUtNGJlYS00ZTA0LWJmZWEtM2RmMTBkN2I4Mjc0IiwidCI6IjZmNDQzMmRjLTIwZDItNDQxZC1iMWRiLWFjMzM4MGJhNjMzZCIsImMiOjEwfQ%3D%3D',
 	},
 	{
 		icon: 'instructor',

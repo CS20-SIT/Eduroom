@@ -1,5 +1,6 @@
 const pool = require('../../database/db')
 const app = require('../../server')
+const { uuidv4 } = require('uuid')
 
 const ErrorResponse = require('../../utils/errorResponse')
 
@@ -548,20 +549,22 @@ const insertStudentAppointment = async (req, res, next) => {
 			values('${startTime}', '${endTime}', null, ${price}, null, null, false, '${id}', '${headerId}') returning appointmentid;
 		`)
 		//Financial Team
-		await pool.query(`INSERT INTO financial_transaction(transactionid, amount, description)
-		VALUES (uuid_generate_v4(), ${price}, 'Instructor:Private Tutor - InstructorID:${id} - Time ${startTime} to ${endTime}');`)
+		// const test = await pool.query(`INSERT INTO financial_transaction(transactionid, amount, description)
+		// VALUES (${uuidv4()}, ${price}, 'Instructor:Private Tutor - InstructorID:${id} - Time ${startTime} to ${endTime}');`)
+		// 	.then(() => console.log('Success'))
+		// 	.catch(err => console.log(err.message))
 
-		const FinancialTeam_instructorID = await pool.query(`SELECT *
-		FROM financial_transaction
-		WHERE description = '%${id}%'`)
+		// const FinancialTeam_instructorID = await pool.query(`SELECT *
+		// FROM financial_transaction
+		// WHERE description = '%${id}%'`)
 
-		const FinancialTeam_transactionid = FinancialTeam_instructorID.rows[0].transactionid
+		// const FinancialTeam_transactionid = FinancialTeam_instructorID.rows[0].transactionid
 
-		await pool.query(`INSERT INTO transaction_instructor(transactionid, instructorid)
-		VALUES (${FinancialTeam_transactionid}, ${id})`)
+		// await pool.query(`INSERT INTO transaction_instructor(transactionid, instructorid)
+		// VALUES (${FinancialTeam_transactionid}, ${id})`)
 
-		await pool.query(`INSERT INTO financial_revenue(transactionid, typeid, amount)
-		VALUES (${FinancialTeam_transactionid}, 2, ${price*0.1})`)
+		// await pool.query(`INSERT INTO financial_revenue(transactionid, typeid, amount)
+		// VALUES (${FinancialTeam_transactionid}, 2, ${price*0.1})`)
 
 		const { appointmentid } = result.rows[0]
 
