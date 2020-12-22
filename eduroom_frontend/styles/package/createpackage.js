@@ -40,6 +40,9 @@ export default css`
 .pd-4-15 {
     padding: 4% 15%;
 }
+.pt{
+  padding-top: 30px;
+}
 input,select,textarea {
     border: 1px solid #A7ABC5;
     width: 100%;
