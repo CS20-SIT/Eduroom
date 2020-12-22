@@ -28,9 +28,9 @@ export default function searchResult(props) {
 							onMouseLeave={()=>{props.setIgnoreBlur(false);console.log('false')}}
 			>
 				{props.searchResult &&
-					props.searchResult.users.map((el) => {
+					props.searchResult.users.map((el,i) => {
 						return (
-							<div style={{display:'flex', alignItems:'center',width:'100%'}} className='searchItem' onClick={()=>{
+							<div key={i} style={{display:'flex', alignItems:'center',width:'100%'}} className='searchItem' onClick={()=>{
 								api.get(`/api/chat/selectSearchResultMockup`,{
 									params: {
 									  userID: el.userID

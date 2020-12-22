@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import KeyboardArrowDownIcon from './icons/KeyboardArrowDownIcon'
 import MessageRight from './messageRight'
 import MessageLeft from './messageLeft'
+import MessageStickerRight from './messageStickerRight'
+import MessageStickerLeft from './messageStickerLeft'
 import MessageError from './messageError'
 import MessageSystem from './messageSystem'
 import style from '../../styles/chat/chat'
@@ -143,14 +145,15 @@ export default function chatRoom(props) {
 					handleExpand={handleExpand}
 				/>
 				<div style={messageDivStyle}>
-					{props.chatRoomDetail.message.map((el) => {
+					{props.chatRoomDetail.message.map((el ,i) => {
 						if (el) {
 							if (el.system) {
-								return <MessageSystem message={el.message} />
+								return <MessageSystem key={i} message={el.message} />
 							} else if (el.senderid == props.userProfile.userid) {
 								if (el.error == true) {
 									return (
 										<MessageError
+										key={i}
 											message={{
 												text: el.message,
 												color: props.chatRoomDetail.themeColor.sendcolor,
@@ -161,8 +164,10 @@ export default function chatRoom(props) {
 										/>
 									)
 								} else {
-									return (
-										<MessageRight
+									if(el.sticker){
+										return(
+										<MessageStickerRight
+										key={i}
 											message={{
 												text: el.message,
 												sentTime: el.sendtime,
@@ -173,22 +178,53 @@ export default function chatRoom(props) {
 											getChatRoomDetail={props.getChatRoomDetail}
 											chatRoomDetail={props.chatRoomDetail}
 											socket={props.socket}
+										/>)
+									}else{
+										return (
+											<MessageRight
+											key={i}
+												message={{
+													text: el.message,
+													sentTime: el.sendtime,
+													color: props.chatRoomDetail.themeColor.sendcolor,
+													reader: el.reader,
+													messageid: el.messageid,
+												}}
+												getChatRoomDetail={props.getChatRoomDetail}
+												chatRoomDetail={props.chatRoomDetail}
+												socket={props.socket}
+											/>
+										)
+									}
+									}
+							} else {
+								if(el.sticker){
+									return(
+										<MessageStickerLeft
+											message={{
+												text: el.message,
+												sentTime: el.sendtime,
+												color: props.chatRoomDetail.themeColor.recievecolor,
+												name: el.senderName,
+												profilePic: el.senderprofilepic,
+												reader: el.reader,
+											}}
+										/>
+									)
+								}else{
+									return (
+										<MessageLeft
+											message={{
+												text: el.message,
+												sentTime: el.sendtime,
+												color: props.chatRoomDetail.themeColor.recievecolor,
+												name: el.senderName,
+												profilePic: el.senderprofilepic,
+												reader: el.reader,
+											}}
 										/>
 									)
 								}
-							} else {
-								return (
-									<MessageLeft
-										message={{
-											text: el.message,
-											sentTime: el.sendtime,
-											color: props.chatRoomDetail.themeColor.recievecolor,
-											name: el.senderName,
-											profilePic: el.senderprofilepic,
-											reader: el.reader,
-										}}
-									/>
-								)
 							}
 						}
 					})}
@@ -201,6 +237,8 @@ export default function chatRoom(props) {
 					message={message}
 					setMessage={setMessage}
 					sendMessage={sendMessage}
+					chatroomid={chatRoom.chatroomid}
+					socket={props.socket}
 				/>
 			</div>
 			<style jsx>{style}</style>

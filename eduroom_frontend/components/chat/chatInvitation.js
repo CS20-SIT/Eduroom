@@ -16,10 +16,12 @@ const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
   const acceptInvitation = async (id) => {
 		const res = await api.get(`/api/chat/acceptInvitation`,{params:{invitationid:id}})
 		getInvitations()
+		props.getChatList()
   }
   const declineInvitation = async (id) => {
 		const res = await api.get(`/api/chat/declineInvitation`,{params:{invitationid:id}})
 		getInvitations()
+		props.getChatList()
   }
 	useEffect(() => {
 		getInvitations()
@@ -66,9 +68,9 @@ const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
 					/>
 					<div>
 						{invitations &&
-							invitations.invitations.map((el) => {
+							invitations.invitations.map((el,i) => {
 								return (
-									<div
+									<div key={i}
 										style={{
 											display: 'flex',
 											alignItems: 'center',

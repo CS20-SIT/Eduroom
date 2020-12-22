@@ -105,7 +105,7 @@ export default function chatContact(props) {
 					/>
 				}
 				<Dialog disableBackdropClick onClose={handleCloseNotification} open={openNotification}>
-					<ChatInvitation handleClose={handleCloseNotification} />
+					<ChatInvitation handleClose={handleCloseNotification} getChatList={props.getChatList} />
 				</Dialog>
 				<div
 					style={{
@@ -167,7 +167,7 @@ export default function chatContact(props) {
 						/>
 					</div>
 					<Dialog disableBackdropClick onClose={handleCloseCreateChat} open={openCreateChat}>
-						<CreateChatRoom handleClose={handleCloseCreateChat} userProfile={userProfile} />
+						<CreateChatRoom handleClose={handleCloseCreateChat} userProfile={userProfile} getChatList={props.getChatList}/>
 					</Dialog>
 					<div
 						style={{
@@ -181,7 +181,7 @@ export default function chatContact(props) {
 				<div style={{ marginLeft: 14 }}>
 					<h4 style={{ marginLeft: 14 }}>Chat</h4>
 					{props.chatList &&
-						props.chatList.map((el) => {
+						props.chatList.map((el,i) => {
 							if (el.roomname == null) {
 								return (
 									<ContactPerson
@@ -198,6 +198,7 @@ export default function chatContact(props) {
 										selectChat={props.selectChat}
 										getChatList={props.getChatList}
 										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
 									/>
 								)
 							} else if(el.message==null){
@@ -217,9 +218,31 @@ export default function chatContact(props) {
 										getChatList={props.getChatList}
 										setSelectChat={props.setSelectChat}
 										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
 									/>
 								)
-							}else{
+							}else if(el.sticker==true){
+								return (
+									<ContactPerson
+										key={el.chatroomid}
+										contact={{
+											chatRoomID: el.chatroomid,
+											name: el.roomname,
+											resentMessage: 'Message: Sticker',
+											recentMessageDate: new Date(el.sendtime).getTime(),
+										}}
+										onClick={() => {
+											props.setSelectChat(el)
+										}}
+										selectChat={props.selectChat}
+										getChatList={props.getChatList}
+										setSelectChat={props.setSelectChat}
+										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
+									/>
+								)
+							}
+							else{
 								return (
 									<ContactPerson
 										key={el.chatroomid}
@@ -236,6 +259,7 @@ export default function chatContact(props) {
 										getChatList={props.getChatList}
 										setSelectChat={props.setSelectChat}
 										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
 									/>
 								)
 							}
