@@ -8,12 +8,12 @@ exports.item = [
 	{
 		icon: 'instructor',
 		text: 'Instructor Approve',
-		link: '/admin/instructor',
+		link: '/admin/approve/instructor',
 	},
 	{
 		icon: 'course',
 		text: 'Course Approve',
-		link: '/admin/course',
+		link: '/admin/approve/course',
 	},
 	{
 		icon: 'grader',
