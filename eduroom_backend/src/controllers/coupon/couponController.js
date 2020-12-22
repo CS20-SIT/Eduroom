@@ -89,16 +89,21 @@ const GetCodeType = async (req, res, next) => {
 }
 
 const GetDiscountFromCoupon = async (req, res, next) => {
-    const pcode = req.body.pcode;
+    const pcode = req.query.pcode;
     const data = await pool.query("select discountamount from promotioncode where  pcode =$1", [pcode])
     const codeDiscount = data.rows;
-    res.send(codeDiscount);
+    if(data.rowCount > 0){
+        res.status(200).json({success:true,discount:codeDiscount});
+
+    } else {
+        return next(new ErrorResponse("Coupon Not found",404))
+    }
 }
 
 const UseCode = async (req, res, next) => {
     try {
         const userid = req.user.id;
-        const pcode = req.body.pcode;
+        const pcode = req.query.pcode;
 
         const type = await pool.query("select codetype from promotioncode where  pcode =$1", [pcode])
         const codeType = type.rows[0].codetype;
