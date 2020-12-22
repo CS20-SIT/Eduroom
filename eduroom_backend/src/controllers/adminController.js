@@ -57,3 +57,45 @@ exports.editAdminProfilePic = async (req, res, next) => {
         return next(new ErrorResponse(error,500))
     }
 }
+
+
+exports.approveCourse = async (req, res, next) => {
+    try {
+        const {courseId} = req.body
+        await pool.query(`UPDATE course SET status = 'Approved' WHERE courseid = '${courseId}'`)
+        const courses = await pool.query(`SELECT * FROM course WHERE status = 'In_review'`)
+        res.send(courses.rows)
+    } catch (error) {
+        return next(new ErrorResponse(error,500))
+    }
+}
+
+exports.getInReviewCourse = async (req, res, next) => {
+    try {
+        const courses = await pool.query(`SELECT * FROM course WHERE status = 'In_review'`)
+        return res.send(courses.rows)
+    } catch (error) {
+        return next(new ErrorResponse(error,500))
+    }
+}
+
+exports.verifyInstructor = async (req, res, next) => {
+    const adminId = req.user.id
+    const {instructorId} = req.body
+    try {
+        await pool.query(`UPDATE instructor SET isverified = true, approveat = CURRENT_TIMESTAMP, approver = '${adminId}' WHERE instructorid = '${instructorId}';`)
+        const instructors = await pool.query(`SELECT * FROM instructor INNER JOIN user_profile up on instructor.userid = up.userid wHERE isverified = false`)
+        return res.send(instructors.rows)
+    } catch (error) {
+        return next(new ErrorResponse(error,500))
+    }
+}
+
+exports.getUnVerifiedInstructor = async (req, res, next) => {
+    try {
+        const instructors = await pool.query(`SELECT * FROM instructor INNER JOIN user_profile up on instructor.userid = up.userid wHERE isverified = false`)
+        return res.send(instructors.rows)
+    } catch (error) {
+        return next(new ErrorResponse(error,500))
+    }
+}
