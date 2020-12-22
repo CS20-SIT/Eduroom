@@ -1,13 +1,37 @@
-import React, { Fragment, useState} from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import style from '../../../styles/advertisement/ads'
-import { useRouter} from 'next/router';
-import {Link,Typography,InputBase, Paper, Grid,List} from '@material-ui/core'
+import { useRouter } from 'next/router';
+import { Link, Typography, InputBase, Paper, Grid, List } from '@material-ui/core'
+
+import api from '../../../api';
+import Table from './adTable';
 
 
 
 
 const Content = () => {
   const router = useRouter();
+  const [data, setData] = useState([]);
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
+  const [state, setState] = React.useState({
+    checkedA: true,
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await api.get('/api/ads/getPaidApprovedAds');
+      setData(res.data);
+    }
+    fetchData()
+  }, [])
+    const renderTable = () =>{
+      const arr = data.map((el,idx)=>{
+        return <Table item={el}></Table>
+      })
+      return arr
+    }
+    console.log(data);
     return (
 
        
@@ -16,11 +40,14 @@ const Content = () => {
         <div className="ad-ad-header" style={{marginLeft:"35%"}}><h2>List of Advertisement</h2></div>
         <div className="ad-ad-header"><h4>
         <Grid container spacing={3} style={{backgroundColor:"#EFF0F6"}}>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             Ad ID
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             Ad tag
+          </Grid>
+          <Grid item xs={2}>
+            Ad Detail
           </Grid>
           <Grid item xs={2}>
             start date
@@ -29,27 +56,14 @@ const Content = () => {
             expire date
           </Grid>
           <Grid item xs={2}>
-            Detail
+            Status
           </Grid>
         </Grid>        
         </h4></div>
-        <Grid container spacing={3}  style={{margin:"-2% 0% 0% 1%"}}>
-        <Grid item xs={3}>
-            Ad ID
-          </Grid>
-          <Grid item xs={3}>
-            Ad tag
-          </Grid>
-          <Grid item xs={2}>
-            start date
-          </Grid>
-          <Grid item xs={2}>
-            expire date
-          </Grid>
-          <Grid item xs={2} style={{marginLeft:"-1.5%"}}>
-            <Link href="../../admin/advertisement/adDetails">see detail..</Link>
-          </Grid>
-        </Grid>
+       
+      {renderTable()}
+     
+        
          <style jsx>
          {style}
        </style> 

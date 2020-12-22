@@ -148,4 +148,27 @@ const getBillAdsTotal = async (req, res, next) => {
     res.send(totalBill);
 };
 
-module.exports = { getBillAdsTotal,getAdsToBills,AddNewAdsBills,AddAdsTransaction,getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds } 
+const getPaidWaitingAds = async (req, res, next) => {
+    const data = await pool.query("select ad.status,ad.adid,adstarttime,adexpiretime,ad.filelocation,ad.ownerid,firstname,lastname,contactemail,tagname from ad,ad_payment,ad_tag,ad_all_tag,user_profile where ad.adid = ad_payment.adid and ad_payment.paymentstatus = true and ad.status = 'Waiting' and userid = ownerid and ad_tag.adid = ad.adid and ad_all_tag.tagid = ad_tag.tagid")
+    const adslist = data.rows;
+    res.send(adslist);
+}
+
+const getPaidRejectedAds = async (req, res, next) => {
+    const data = await pool.query("select ad.status,ad.adid,adstarttime,adexpiretime,ad.filelocation,ad.ownerid,firstname,lastname,contactemail,tagname from ad,ad_payment,ad_tag,ad_all_tag,user_profile where ad.adid = ad_payment.adid and ad_payment.paymentstatus = true and ad.status = 'Rejected' and userid = ownerid and ad_tag.adid = ad.adid and ad_all_tag.tagid = ad_tag.tagid")
+    const adslist = data.rows;
+    res.send(adslist);
+}
+const getPaidApprovedAds = async (req, res, next) => {
+    const data = await pool.query("select ad.status,ad.adid,adstarttime,adexpiretime,ad.filelocation,ad.ownerid,firstname,lastname,contactemail,tagname from ad,ad_payment,ad_tag,ad_all_tag,user_profile where ad.adid = ad_payment.adid and ad_payment.paymentstatus = true and ad.status = 'Approved' and userid = ownerid and ad_tag.adid = ad.adid and ad_all_tag.tagid = ad_tag.tagid")
+    const adslist = data.rows;
+    res.send(adslist);
+}
+const getAdsDetail = async (req, res, next) => {
+const adid = req.query.adid
+const data = await pool.query("select ad.adid,adstarttime,adexpiretime,ad.filelocation,ad.ownerid,firstname,lastname,contactemail,tagname from ad,ad_tag,ad_all_tag,user_profile where   userid = ownerid and ad_tag.adid = ad.adid and ad_all_tag.tagid = ad_tag.tagid and ad.adid = $1",
+    [adid]);
+    const addetail = data.rows;
+    res.send(addetail);
+}
+module.exports = { getAdsDetail,getBillAdsTotal,getAdsToBills,AddNewAdsBills,AddAdsTransaction,getAdsTags, getAllAds, addAds, getMyAds, getAdsType, getAdstoPay, Upload, getTotalAdsPrice,deleteAds,getPaidWaitingAds, getPaidRejectedAds,getPaidApprovedAds } 
