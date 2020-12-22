@@ -73,7 +73,7 @@ exports.approveCourse = async (req, res, next) => {
 
 exports.getInReviewCourse = async (req, res, next) => {
     try {
-        const courses = await pool.query(`SELECT * FROM course JOIN instructor ON course.ownerid = instructor.instructorid WHERE status = 'In_review' `)
+        const courses = await pool.query(`SELECT coursepicture,price,coursename,courseid,firstname,coursedescription,lastname,user_profile.avatar as avatar FROM course JOIN instructor ON course.ownerid = instructor.instructorid JOIN user_profile ON instructor.userid = user_profile.userid WHERE status = 'In_review' `)
         return res.send(courses.rows)
     } catch (error) {
         return next(new ErrorResponse(error,500))
