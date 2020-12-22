@@ -68,7 +68,7 @@ const ConfirmPackage = ({ myPackage, changePage }) => {
                     <div className="center">
                         <img src="" id="show-package-image-2" style={{ maxWidth: '100%', maxHeight: '235px' }} />
                     </div>
-                    <div className="subtitle uppercase">{myPackage.name}</div>
+                    <div className="subtitle uppercase pt">{myPackage.name}</div>
                     <div className="price">
                         <div>
                             ฿<span>{getTotalPrice(totalPrice)}</span>
