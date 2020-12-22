@@ -12,7 +12,7 @@ import UnrecognizedLectureFormat from "../../../components/support/mobile/Unreco
 const courseinstandteaching = () => {
   return <Fragment>
     
-      <General img='/images/supforumbg.svg'>
+      <General >
         
             <div
                 style={{
@@ -31,11 +31,19 @@ const courseinstandteaching = () => {
                     </div>
                         
                 </div>
+                <img alt="background-img" src="/images/supforumbg.svg" className="background-img" />
                 <style jsx>{style}</style>
                 <style jsx>
                     {`
+            .background-img {
+              position: fixed;
+              bottom: 0;
+              width: 100vw;
+              z-index: 0;
+            }
             #nav {
               width: 100%;
+              z-index: 5;
             }
             .form {
               display: flex;
@@ -53,8 +61,7 @@ const courseinstandteaching = () => {
               margin: 5%;
             }
             .top {
-
-                padding: 50px 70px 0px 70px;
+              padding: 50px 70px 0px 70px;
             }
           `}
                 </style>
