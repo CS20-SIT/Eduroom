@@ -306,6 +306,12 @@ const downloadCertificate = async (req, res, next) => {
 	}
 }
 
+const checkoutCourse = async (req,res,next) => {
+	const user = req.user
+	const course = req.body
+	const data = await pool.query("")
+}
+
 module.exports = {
 	test,
 	getWishlist,
@@ -322,5 +328,6 @@ module.exports = {
 	checkWishlist,
 	uploadAvatarPic,
 	updateLastvisitMyCourse,
-	updateFinishMyCourse
+	updateFinishMyCourse,
+	checkoutCourse
 }

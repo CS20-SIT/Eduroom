@@ -149,7 +149,7 @@ option{
     border-radius: 10px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
     height: 230px;
-   width: 90%;
+   width: 100%;
    background-image: url('/images/package/recc.svg');
 }
 .name{

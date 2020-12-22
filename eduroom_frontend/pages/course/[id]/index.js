@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import utils from '../../../styles/course/utils'
-import GeneralNoNav from '../../../components/template/generalnonav'
+import General from '../../../components/template/general'
 import Link from 'next/link'
 import api from '../../../api'
 import { getItems, isInCart, addToCart, removeFromCart } from '../../../utils/cart'
@@ -63,11 +63,6 @@ const CourseID = ({ id }) => {
 								{renderWishList()}
 							</Fragment>
 						)}
-					</span>
-					<span>
-						<button className="text-md text-white font-quicksand bg-error border-red rounded-lg buy pointer">
-							Buy
-						</button>
 					</span>
 					<style jsx>{utils}</style>
 				</Fragment>
@@ -182,7 +177,7 @@ const CourseID = ({ id }) => {
 
 	return (
 		<Fragment>
-			<GeneralNoNav>
+			<General>
 				<div className="bg-little-grey">
 					<div>
 						<Link href="/course">
@@ -193,7 +188,7 @@ const CourseID = ({ id }) => {
 					<Review type="course" id={id} />
 				</div>
 				<style jsx>{utils}</style>
-			</GeneralNoNav>
+			</General>
 		</Fragment>
 	)
 }
