@@ -11,7 +11,7 @@ const create = () => {
 
 	return (
 		<Fragment>
-			<General img='/images/supforumbg.svg'>
+			<General >
 				<div
 					style={{
 						display: 'flex',
