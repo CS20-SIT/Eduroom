@@ -9,9 +9,9 @@ export default function messageRight(props) {
 	const [dropDownStyle, setDropDownStyle] = useState({ visibility: 'hidden' })
 	const [dotDotStyle, setDotDotStyle] = useState({ visibility: 'hidden' })
 	const message = props.message
-	const unsend = async () =>{
-		const res = await api.get(`/api/chat/unsendMessage`,{params:{messageid:message.messageid}})
-		props.socket.emit('unsendMessage',props.chatRoomDetail.chatroomid)
+	const unsend = async () => {
+		const res = await api.get(`/api/chat/unsendMessage`, { params: { messageid: message.messageid } })
+		props.socket.emit('unsendMessage', props.chatRoomDetail.chatroomid)
 		props.getChatRoomDetail()
 	}
 	return (
@@ -26,7 +26,7 @@ export default function messageRight(props) {
 				}}
 			>
 				<div
-					style={{ position: 'relative', display: 'inline-block',cursor:'pointer' }}
+					style={{ position: 'relative', display: 'inline-block', cursor: 'pointer' }}
 					onMouseOver={() => {
 						setDropDownStyle({})
 					}}
@@ -44,7 +44,7 @@ export default function messageRight(props) {
 					</div>
 				</div>
 				<div className="messageRight">
-					<span style={{ fontSize: 18 }}>{message.text}</span>
+					<img src={message.text} style={{ width: 150, height: 150 }} />
 				</div>
 				<br />
 				<div
@@ -57,23 +57,23 @@ export default function messageRight(props) {
 					}}
 				>
 					{(() => {
-						if (message.reader && message.reader.length>0) {
+						if (message.reader && message.reader.length > 0) {
 							return (
 								<>
 									<ReadIcon style={{ paddingTop: 5, marginRight: 10 }} />
 									<div className="dropdown scroll" style={dropReadDownStyle}>
 										{message.reader.map((el,i) => {
-											return(
-											<span
-											key={i}
-												style={{
-													fontSize: 12,
-													whiteSpace: 'nowrap',
-												}}
-											>
-												{el}
-												<br />
-											</span>
+											return (
+												<span
+												key={i}
+													style={{
+														fontSize: 12,
+														whiteSpace: 'nowrap',
+													}}
+												>
+													{el}
+													<br />
+												</span>
 											)
 										})}
 									</div>
@@ -86,8 +86,7 @@ export default function messageRight(props) {
 			</div>
 			<style jsx>{`
 				.messageRight {
-					background-color: ${message.color};
-					color: white;
+					background-color: white;
 					border-radius: 10px 10px 0 10px;
 					padding-top: 10px;
 					padding-bottom: 10px;
