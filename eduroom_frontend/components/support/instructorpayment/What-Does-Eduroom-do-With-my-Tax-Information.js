@@ -16,7 +16,7 @@ import {
   Link,
   fade,
 } from "@material-ui/core";
-import Studentnav from "../studentsidenav";
+import Instructornav from "../instructorsidenav";
 
 const WhatDoesEduroomdo = () => {
   const theme = createMuiTheme();
@@ -26,7 +26,7 @@ const WhatDoesEduroomdo = () => {
         <Grid container>
           <Typography style={{ marginLeft: "20px" }}>
             {" "}
-            <h1>What Does Udemy do With my Tax Information (i.e. Withholding)?</h1>
+            <h1>What Does Eduroom do With my Tax Information (i.e. Withholding)?</h1>
           </Typography>
           <Grid item xs={9} style={{ paddingRight: "100px" }}>
             <Paper
@@ -72,7 +72,7 @@ const WhatDoesEduroomdo = () => {
             <p>System Requirements</p>
             <p>How to Preview And Compare Courses</p>
             <div style={{ marginTop: theme.spacing(7), marginBottom: theme.spacing(3) }}>
-              <Studentnav />
+              <Instructornav />
              
             </div>
 

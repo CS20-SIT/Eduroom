@@ -38,27 +38,27 @@ const Studentnav = () => {
         Getting Started
       </Button>
       <br></br>
-      <Button>
+      <Button href="/support/Account&Profile">
 
         Account/Profile
       </Button>
       <br></br>
-      <Button>
+      <Button href="/support/Troubleshooting">
 
         Troubleshooting
       </Button>
 <br></br>
-      <Button>
+      <Button href="/support/Course-Taking">
 
         Course Taking
       </Button>
       <br></br>
-      <Button>
+      <Button href="/support/Purchase-Refunds">
 
         Purchase/Refunds
       </Button>
       <br></br>
-      <Button>
+      <Button href="/support/Mobile">
 
         Mobile
       </Button>
