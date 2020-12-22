@@ -37,7 +37,7 @@ exports.item = [
 	{
 		icon: 'event',
 		text: 'Event',
-		link: '/admin/event',
+		link: '/admin/calendar',
 	},
 	{ 
         icon: 'setting', 
