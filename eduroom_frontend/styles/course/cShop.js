@@ -2,7 +2,7 @@ import css from "styled-jsx/css"
 
 export default css`
 img{
-  width:100%;
+    width:100%;
     height:60%;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -50,19 +50,20 @@ img{
     display:position;
   }
   .courseLanding{
-    margin-left:100px;
+    margin-left: 3%;
     font-weight: 700;
     font-size: 30px;
     color:#3D467F;
     margin-bottom:40px;
+    padding-top: 5%;
   }
   .course{
-    margin-left:60px;
-    margin-bottom:30px;
+    margin-left: 6%;
+    margin-bottom:5%;
   }
   .BG{
     background: #F9F7FE;
-    padding-bottom:20px;
+    padding-bottom: 7%;
   }
   .text2{
     color:#4E4B66;
