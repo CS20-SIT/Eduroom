@@ -195,6 +195,15 @@ DialogContent{
    color: white;
    borderRadius: 24;
    width:200;
+}.whitebox-ad{
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+    height: auto;
+   width: 70%;
+   background-color: white;
+   padding-top: 5%;
+   display:flex;
+   flex-direction: column;
+   justify-content: center;
 }
 
 `

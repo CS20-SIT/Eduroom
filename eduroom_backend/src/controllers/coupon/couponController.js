@@ -204,4 +204,141 @@ const UseCode = async (req, res, next) => {
 
 }
 
-module.exports = { Upload, CreateCodeForSale,GetDiscountFromCoupon , GetCodeType, UseCode } 
+module.exports = { } 
+const GetDataforTable = async (req, res, next) => {
+    const data = await pool.query("select pcode, codetype from promotioncode;")
+    const codeData = data.rows;
+    res.send(codeData);
+}
+
+const GetCoupon = async (req, res, next) => {
+    const data = await pool.query("SELECT ccname, isvisible, ccid, codelimit FROM code_list;")
+    const codeData = data.rows;
+    console.log(codeData)
+    res.send(codeData);
+}
+
+const GetCouponById = async (req, res, next) => {
+    const id = req.query.id
+    const data = await pool.query(`
+    select *
+    from code_list
+    where ccid = ${id}
+    `)
+    const codeData = data.rows;
+    res.send(codeData);
+}
+
+const updateStatus = async (req, res, next) => {
+    try {
+        const id = req.query.id
+        const boo = req.query.boo
+        await pool.query(`
+        update code_list
+        set isvisible = ${boo}
+        where ccid = ${id}
+        `)
+    res.send({ success: true, id, boo});
+    } catch (err) {
+        return new ErrorResponse('Error', 400)
+    }
+}
+
+const gCodeById = async (req, res, next) => {
+    try {
+        const id = req.query.id
+        const data = await pool.query(`
+        select pcode
+        from code_list cl, promotioncode pc
+        where cl.ccid = pc.coderef
+            and ccid = ${id}
+            and isvisible = true
+        `)
+        const codeData = data.rows[0];
+        res.send(codeData);
+    } catch (err) {
+        return new ErrorResponse('Error', 400)
+    }
+}
+
+
+const gCodeList = async (req, res, next) => {
+    try {
+        const id = req.query.id
+        const data = await pool.query(`
+        select pc.pcode, expiretime, ccname, isused, picture
+        from code_owner co, promotioncode pc, code_list cl
+        where co.pcode = pc.pcode
+            and pc.coderef = cl.ccid
+            and isused = false
+            and userid = '${id}'
+        `)
+        res.send(data.rows)
+    } catch (err) {
+        return new ErrorResponse('Error', 400)
+    }
+}
+
+const gUsedCodeList = async (req, res, next) => {
+    try {
+        const id = req.query.id
+        const data = await pool.query(`
+        select pc.pcode, expiretime, ccname, isused, picture
+        from code_owner co, promotioncode pc, code_list cl
+        where co.pcode = pc.pcode
+            and pc.coderef = cl.ccid
+            and isused = true
+            and userid = '${id}'
+        `)
+        res.send(data.rows)
+    } catch (err) {
+        return new ErrorResponse('Error', 400)
+    }
+}
+
+const gExpiredCodeList = async (req, res, next) => {
+    try {
+        const id = req.query.id
+        const data = await pool.query(`
+        select pc.pcode, expiretime, ccname, picture
+        from code_owner co, promotioncode pc, code_list cl
+        where co.pcode = pc.pcode
+            and pc.coderef = cl.ccid
+            and expiretime <= current_timestamp
+            and userid = '${id}'
+        `)
+        res.send(data.rows)
+    } catch (err) {
+        return new ErrorResponse('Error', 400)
+    }
+}
+
+const gPrivateCodeList = async (req, res, next) => {
+    try {
+        const data = await pool.query(`
+        SELECT *
+        FROM code_list
+        where coin_use > 0
+            and isvisible = true
+        `)
+        res.send(data.rows)
+    } catch (err) {
+        return new ErrorResponse('Error', 400)
+    }
+}
+
+module.exports = 
+{ 
+    Upload,CreateCodeForSale, 
+    GetCodeType,GetDataforTable, 
+    GetCoupon, 
+    GetCouponById, 
+    updateStatus,
+    UseCode,
+    GetDiscountFromCoupon, 
+    gCodeById,
+    gCodeList,
+    gUsedCodeList,
+    gExpiredCodeList,
+    gPrivateCodeList
+} 
