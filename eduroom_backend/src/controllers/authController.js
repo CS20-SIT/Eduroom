@@ -251,6 +251,9 @@ exports.googleCallbackController = async (req, res) => {
           VALUES ('${userId}', '${user.firstname}', '${user.lastname}', '1970-01-01', $1, $1, '${user.displayName}', $1, '${user.picture}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);`
 		await pool.query(userProfileCreationQuery, [''])
 
+		// Insert new user to coin_owner
+		await pool.query(`INSERT INTO coin_owner (userid, amountofcoin) VALUES ('${userId}', 0);`)
+
 		// Add user to OAuth
 		const oauthCreationQuery = `INSERT INTO oauth (email, token, userid) VALUES ('${user.email}', '', '${userId}')`
 		await pool.query(oauthCreationQuery)

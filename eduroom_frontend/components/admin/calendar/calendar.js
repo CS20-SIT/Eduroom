@@ -134,6 +134,7 @@ const Content = () => {
 				<div className="month-size">
 					<Container>
 						<Grid container spacing={0}>
+						<div className="headCalendar">
 							<div className="previous-m" onClick={minusMonth}>
 								{' '}
 								<Image alt="left-arrow" src="/images/createEvent/L.svg" width="30" height="30" />{' '}
@@ -143,6 +144,7 @@ const Content = () => {
 
 							<div className="forward-m" onClick={addMonth}>
 								<Image alt="right-arrow" src="/images/createEvent/R.svg" width="30" height="30" />
+							</div>
 							</div>
 						</Grid>
 					</Container>
