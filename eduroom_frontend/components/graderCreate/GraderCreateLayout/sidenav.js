@@ -17,6 +17,7 @@ const SideNav = () => {
 	return (
 		<Fragment>
 			<div id="side-nav">
+				
 				<Link href="/">
 					<div className={expand ? 'side-icon expand' : 'side-icon'}>
 						<Image src="/images/sidenav/eduroom_logo.svg" alt="eduroom_logo" width="41" height="46" />

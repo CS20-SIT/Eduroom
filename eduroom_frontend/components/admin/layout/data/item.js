@@ -1,4 +1,4 @@
-exports.item = [
+exports.items = [
 	{
 		icon: 'analyze',
 		text: 'Analysis & Finance',
