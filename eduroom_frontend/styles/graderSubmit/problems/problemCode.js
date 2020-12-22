@@ -3,7 +3,7 @@ export default css`
 	textarea {
 		font-family: monospace;
 		width: 39vw;
-		height: 63.5vh;
+		height: 60vh;
 		border: none;
 		resize: none;
 		padding-left: 35px;
@@ -27,6 +27,7 @@ export default css`
 
 	.butt {
 		height: 1.5rem;
+		margin-top: 1rem;
 		padding: 0 0.75rem;
 		background-color: #a27cef;
 		border: none;
@@ -41,6 +42,7 @@ export default css`
 		border: solid 1px #a27cef;
 	}
 	.status {
+		margin-top: 1rem;
 		margin-left: 0.75rem;
 		font-weight: bold;
 		padding: 6px;
