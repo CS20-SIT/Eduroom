@@ -1,8 +1,8 @@
-exports.item = [
+exports.items = [
 	{
 		icon: 'analyze',
 		text: 'Analysis & Finance',
-		link: '/admin/analyze',
+		link: 'https://app.powerbi.com/view?r=eyJrIjoiOTU2ODgyMjUtNGJlYS00ZTA0LWJmZWEtM2RmMTBkN2I4Mjc0IiwidCI6IjZmNDQzMmRjLTIwZDItNDQxZC1iMWRiLWFjMzM4MGJhNjMzZCIsImMiOjEwfQ%3D%3D',
 	},
 	{
 		icon: 'instructor',
@@ -27,7 +27,7 @@ exports.item = [
 	{
 		icon: 'coupon',
 		text: 'Coupon',
-		link: '/admin/createcoupon',
+		link: '/admin/coupon',
 	},
 	{
 		icon: 'advertisement',
@@ -37,7 +37,7 @@ exports.item = [
 	{
 		icon: 'event',
 		text: 'Event',
-		link: '/admin/event',
+		link: '/admin/calendar',
 	},
 	{ 
         icon: 'setting', 

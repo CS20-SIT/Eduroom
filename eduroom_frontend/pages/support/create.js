@@ -27,13 +27,20 @@ const create = () => {
                     </div>
                     <SupportForm />
                 </div>
-                <main></main>
+                <img alt="background-img" src="/images/supforumbg.svg" className="background-img" />
 
                 <style jsx>{style}</style>
                 <style jsx>
                     {`
+            .background-img {
+              position: fixed;
+              bottom: 0;
+              width: 100vw;
+              z-index: 0;
+            }
             #nav {
               width: 100%;
+              z-index: 5;
             }
             .form {
               display: flex;
@@ -51,8 +58,7 @@ const create = () => {
               margin: 5%;
             }
             .top {
-
-                padding: 50px 70px 0px 70px;
+              padding: 50px 70px 0px 70px;
             }
           `}
                 </style>
