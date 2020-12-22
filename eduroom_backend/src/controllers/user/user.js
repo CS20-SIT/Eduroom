@@ -321,8 +321,8 @@ const checkoutCourse = async (req, res, next) => {
 			)
 		}
 		for (let i of packages) {
-			const package = await pool.query('SELCET courseid FROM package_courses WHERE packageid =$1', [i.id])
-			for (let j of package.rows) {
+			const pack = await pool.query('SELCET courseid FROM package_courses WHERE packageid =$1', [i.id])
+			for (let j of pack.rows) {
 				await pool.query(
 					'INSERT INTO user_mycourse(userid,addtime,isfinished,courseid) VALUES($1,current_timestamp,false,$2)',
 					[user.id, j.packageid]
