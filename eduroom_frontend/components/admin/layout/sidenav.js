@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react'
 import Item from './item'
-import { items } from './data/item'
+import { item } from './data/item'
 import { useRouter } from 'next/router'
 import AdminContext from '../../../contexts/admin/adminContext'
 const AdminSideNav = () => {
@@ -23,7 +23,7 @@ const AdminSideNav = () => {
 					<img src="/images/sidenav/eduroom_logo.svg" alt="eduroom_logo" onClick={() => router.push('/admin')} />
 				</div>
 				<div className="item-list" onMouseLeave={handleReduce}>
-					{items?.map((el) => {
+					{item?.map((el) => {
 						return (
 							<Fragment key={el.text}>
 								<Item data={el} isExpand={isExpand} expand={handleExpand} />
