@@ -13,6 +13,7 @@ import {
   Paper,
   createMuiTheme,
   ThemeProvider,
+  fade
 } from "@material-ui/core";
 import api from "../../api";
 import GeneralNoNav from "../../components/template/generalnonav";
@@ -167,7 +168,8 @@ const SupportForm = () => {
             <Typography component="h1" variant="h3">
               Submit a Request
             </Typography>
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper}
+            style={{backgroundColor: fade("#ffffff", 0.7),}}>
               <form className={classes.form}>
                 <Grid container spacing={2}>
                 <Grid item xs={12} sm={12}>

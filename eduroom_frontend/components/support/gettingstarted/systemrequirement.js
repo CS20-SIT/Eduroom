@@ -80,20 +80,15 @@ const Systemrequirement = () => {
           </Grid>
 
           <Grid item xs={3}>
-            <h3>Other articles</h3>
-
-            <p>
-              <Link href="/support/getstart/How-Does-Eduroom-Work">
-                How does Eduroom work
-              </Link>
-            </p>
-            <p>How Does Udemy Work? FAQ</p>
-            <p>Add a Course to Your Wishlist</p>
-            <p>System Requirements</p>
-            <p>How to Preview And Compare Courses</p>
-            <div style={{ marginTop: "50px", marginBottom: "100px" }}>
+            
+            
+            <div style={{  marginBottom: theme.spacing(3) }}>
               <Studentnav />
+             
             </div>
+
+            <Button variant='contained' style={{backgroundColor:'#FB9CCB', marginBottom:theme.spacing(10),marginLeft:theme.spacing(8.5),marginTop:theme.spacing(1)}} href="/support/create"><label style={{color:'#ffffff'}}>CONTACT US</label></Button>
+
           </Grid>
         </Grid>
       </Grid>
