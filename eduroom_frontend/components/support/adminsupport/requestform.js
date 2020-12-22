@@ -6,10 +6,9 @@ import api from '../../../api'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import moment from 'moment'
-import UserContext from '../../../contexts/user/userContext'
+
 const IdBlock = () => {
-	const userContext = useContext(UserContext)
-	const { user } = userContext
+
 	const router = useRouter()
 	const [data, setData] = useState([])
 	const param = router.query.id || ''
@@ -56,7 +55,7 @@ const IdBlock = () => {
 										justifyContent: 'space-between',
 									}}
 								>
-										<div>
+										<div>	
 											<b>{data.title}</b>
 										</div>
 
@@ -66,7 +65,7 @@ const IdBlock = () => {
 
 								<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
 									<p>
-										{data.author} post in {moment(data.requesttime).fromNow()}
+										{data.name} post in {moment(data.requesttime).fromNow()}
 									</p>
 								</div>
 							</Paper>
