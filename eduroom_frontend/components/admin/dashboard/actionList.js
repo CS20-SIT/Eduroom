@@ -8,7 +8,7 @@ const ActionList = () => {
 			subtitle: 'To approve an instructor',
 			buttonText: 'Go Approve',
             buttonColor: '#FB9CCB',
-            url: '/admin/instructor'
+            url: '/admin/approve/instructor'
 		},
 		{
 			img: '/images/admin/course-approve.png',
@@ -16,7 +16,7 @@ const ActionList = () => {
 			subtitle: 'To approve the course',
 			buttonText: 'Go Approve',
 			buttonColor: '#A27CEF',
-            url: '/admin/course'
+            url: '/admin/approve/course'
 		},
 		{
 			img: '/images/admin/grader.png',
