@@ -36,16 +36,27 @@ const CheckoutDialog = ({ handleClick, courseList, packageList }) => {
 			})
 	}
 	const handleSubmit = () => {
-		api.post('/api/coupon/UseCode',{pcode:coupon}).then(res=>{
-			const newPrice = prices * (100-discount)/100
-			api.post('/api/user/checkout',{course:courseList,packages:packageList,price:newPrice}).then(
+		if(coupon!= ''){
+			api.post('/api/coupon/UseCode',{pcode:coupon}).then(res=>{
+				const newPrice = prices * (100-discount)/100
+				api.post('/api/user/checkout',{course:courseList,packages:packageList,price:newPrice}).then(
+					res=>{
+						router.push('/user')
+					}
+				)
+			}).catch(err=>{
+				alert(err)
+			})
+
+		} else {
+			api.post('/api/user/checkout',{course:courseList,packages:packageList,price:prices}).then(
 				res=>{
+					console.log(res)
 					router.push('/user')
 				}
 			)
-		}).catch(err=>{
-			alert(err)
-		})
+
+		}
 	}
 	return (
 		<Fragment>
@@ -58,7 +69,7 @@ const CheckoutDialog = ({ handleClick, courseList, packageList }) => {
 								<Country handleChange={(e) => setCountry(e.target.value)} />
 							</div>
 							<div style={{ width: '100%', paddingTop: '1rem' }}>
-								<CreditBox />
+								<CreditBox onSubmit={handleSubmit} />
 							</div>
 						</div>
 						<div className="paymentright">
