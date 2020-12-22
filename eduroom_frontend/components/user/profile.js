@@ -83,7 +83,7 @@ const Profile = () => {
 						<TextField style={{ width: '100%' }}
 							disabled
 							multiline
-							rows={4}
+							rows={10}
 							defaultValue={user.bio ? user.bio : '-'}
 							inputProps={{ readOnly: true }}
 						/>
