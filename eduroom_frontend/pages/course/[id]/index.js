@@ -27,6 +27,7 @@ const CourseID = ({ id }) => {
 		setCart(getItems('course'))
 	}
 	const renderButtons = () => {
+		console.log(course);
 		if (course.isOwn) {
 			return (
 				<Fragment>
