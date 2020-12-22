@@ -32,7 +32,7 @@ const ConfirmPackage = (props,{ changePage }) => {
         }
         const res = await api.post('/api/package/createPackage', body)
         setLoading(false)
-        changePage(2)
+        // changePage(2)
     }
 
 
