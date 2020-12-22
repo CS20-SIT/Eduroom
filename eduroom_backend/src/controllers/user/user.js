@@ -316,7 +316,7 @@ const checkoutCourse = async (req, res, next) => {
 	try {
 		for (let i of course) {
 			await pool.query(
-				'INSERT INTO user_mycourse(userid,addtime,isfinished,courseid) VALUES($1,current_timestamp,false,$2)',
+				'INSERT INTO user_mycourse(userid,addtime,lastvisit,isfinished,courseid) VALUES($1,current_timestamp,current_timestamp,false,$2)',
 				[user.id, i.id]
 			)
 		}
@@ -324,12 +324,14 @@ const checkoutCourse = async (req, res, next) => {
 			const pack = await pool.query('SELCET courseid FROM package_courses WHERE packageid =$1', [i.id])
 			for (let j of pack.rows) {
 				await pool.query(
-					'INSERT INTO user_mycourse(userid,addtime,isfinished,courseid) VALUES($1,current_timestamp,false,$2)',
+					'INSERT INTO user_mycourse(userid,addtime,lastvisit,isfinished,courseid) VALUES($1,current_timestamp,current_timestamp,false,$2)',
 					[user.id, j.packageid]
 				)
 			}
 		}
+		res.status(200).json({success:true})
 	} catch (err) {
+		console.log(err)
 		return next(new ErrorResponse('Cannot checkout', 400))
 	}
 }
