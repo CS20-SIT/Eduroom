@@ -97,7 +97,7 @@ const Profile = () => {
 					</Link> */}
 					
 							<button onClick={() => router.push('/coin-shop/History')} className={Styles.btnHistory2}>
-								Sticker History
+								Sticker Owner
 							</button>
 
 					{renderRegister()}
