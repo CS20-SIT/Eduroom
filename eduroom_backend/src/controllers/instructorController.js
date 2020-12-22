@@ -215,33 +215,33 @@ exports.DeleteCourse = async (req, res, next) => {
 		const courseId = req.body.courseId
 		const sections = await pool.query('SELECT sectionno from course_section where courseid = $1', [courseId])
 		const courseQuiz = await pool.query('SELECT quizid from course_quiz where courseid = $1', [courseId])
+		const coursePackage = await pool.query('SELECT packageid from package_courses where courseid = $1', [courseId])
 
 		for (i = 0; i < courseQuiz.rows.length; i++) {
 			const questionNo = await pool.query('SELECT questionno from quiz_question where quizid = $1', [
-				courseQuiz.rows[i],
+				courseQuiz.rows[i].quizid,
 			])
-
 			for (k = 0; k < questionNo.rows.length; k++) {
 				const choiceNo = await pool.query(
 					'SELECT choiceno from quiz_question_choice where quizid = $1 and questionno = $2',
-					[courseQuiz.rows[i], questionNo.rows[k]]
+					[courseQuiz.rows[i].quizid, questionNo.rows[k].questionno]
 				)
 
 				for (j = 0; j < choiceNo.rows.length; j++) {
 					await pool.query(
 						'DELETE from quiz_question_choice where quizid = $1 and questionno = $2 and choiceno = $3',
-						[courseQuiz.rows[i], questionNo.rows[k], choiceNo.rows[j]]
+						[courseQuiz.rows[i].quizid, questionNo.rows[k].questionno, choiceNo.rows[j].choiceno]
 					)
 				}
 
 				await pool.query('DELETE from quiz_question where quizid = $1 and questionno = $2', [
-					courseQuiz.rows[i],
-					questionNo.rows[k],
+					courseQuiz.rows[i].quizid,
+					questionNo.rows[k].questionno,
 				])
 			}
 
 			await pool.query('DELETE from course_quiz where quizid = $1 and courseid = $2', [
-				courseQuiz.rows[i],
+				courseQuiz.rows[i].quizid,
 				courseId,
 			])
 		}
@@ -269,14 +269,14 @@ exports.DeleteCourse = async (req, res, next) => {
 			for (k = 0; k < courseMaterial.rows.length; k++) {
 				await pool.query(
 					'DELETE from course_section_part_material where sectionno = $1 and courseid = $2 and partno = $3',
-					[sections.rows[i].sectionno, courseId, courseVideo.rows[k].partno]
+					[sections.rows[i].sectionno, courseId, courseMaterial.rows[k].partno]
 				)
 			}
 			for (k = 0; k < sectionPart.rows.length; k++) {
 				await pool.query('DELETE from section_part where sectionno = $1 and courseid = $2 and partno = $3', [
 					sections.rows[i].sectionno,
 					courseId,
-					courseVideo.rows[k].partno,
+					sectionPart.rows[k].partno,
 				])
 			}
 
@@ -285,9 +285,27 @@ exports.DeleteCourse = async (req, res, next) => {
 				courseId,
 			])
 		}
+		for (i = 0; i < coursePackage.rows.length; i++) {
+			await pool.query('DELETE from package_courses where courseid = $1 and packageid = $2', [
+				courseId,
+				coursePackage.rows[i].packageid,
+			])
+		}
 		await pool.query('DELETE from course_categories where courseid = $1', [courseId])
+		await pool.query(`DELETE from user_wishlist where courseid = $1`, [courseId])
 		await pool.query('DELETE from course where courseid = $1', [courseId])
 		res.send({ success: true })
+	} catch (err) {
+		return next(new ErrorResponse(err, 500))
+	}
+}
+
+exports.UpdateBio = async (req, res) => {
+	try {
+		const { bio } = req.body
+		const instructorid = req.user.instructor
+		await pool.query('UPDATE instructor SET biography = $1 where instructorid = $2', [bio, instructorid])
+		res.status(201).send({ success: true })
 	} catch (err) {
 		return next(new ErrorResponse(err, 500))
 	}
