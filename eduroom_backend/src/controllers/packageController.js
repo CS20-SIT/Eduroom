@@ -130,13 +130,14 @@ exports.getCourses = async (req, res, next) => {
 
 exports.getCoursesOfCreatingPackage = async (req, res, next) => {
     try {
-        const courseIds = req.query.courseIds
+        const courseList = req.body.selectCourse
         let courses = []
         let sum = 0
-        for (let i = 0; i < courseIds.length; i++) {
+        console.log(courseList)
+        for (let i = 0; i < courseList.length; i++) {
             const result = await pool.query(
                 'SELECT courseid, coursename, coursepicture, price from course where courseid = $1',
-                [courseIds[i]]
+                [courseList[i]]
             )
             if (result.rowCount) {
                 sum += parseFloat(result.rows[0].price)
@@ -145,7 +146,8 @@ exports.getCoursesOfCreatingPackage = async (req, res, next) => {
         }
         res.send({ courses, totalPrice: sum })
     } catch (err) {
-        return next(new ErrorResponse(err, 500))
+        console.log(err)
+        return next(new ErrorResponse(err, 400))
     }
 }
 
@@ -238,14 +240,20 @@ exports.getPackagesFromIds = async (req, res, next) => {
 
 exports.editPackage = async (req, res, next) => {
     const temp = req.body
+    console.log(temp)
     const packageid = req.params.id
     const user = req.user
     if (user) {
         await pool.query(
             `update package set packagename = $1, discount= $2, detail=$3,
         image = $4, cateid = $5 where packageid = $6`,
-            [temp.new.packagename, temp.new.discount, temp.new.detail, temp.new.image, temp.new.cateid, packageid]
+            [temp.packagename, temp.discount, temp.detail, temp.image, temp.cateid, packageid]
         )
+        await pool.query("DELETE FROM package_courses WHERE packageid =$1",[packageid])
+        const courseList = req.body.courses
+        for(let el of courseList){
+            pool.query("INSERT INTO package_courses(packageid,courseid) VALUES($1,$2)",[packageid,el])
+        }
         res.status(200).json({ success: true })
     } else {
         return next(new ErrorResponse('Unauthorize', 401))
