@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import Item from './item'
+import Item from '../../admin/layout/item'
 import Link from 'next/link'
 import style from '../../../styles/layout/sidebar'
 import Image from 'next/image'
