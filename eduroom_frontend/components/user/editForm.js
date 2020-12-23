@@ -74,9 +74,11 @@ const EditForm = () => {
 				const myForm = new FormData()
 				myForm.append('avatar',avatar);
 				const res=await api.post('/api/user/upload/picture',myForm);
-				const avatar= res.data[0].linkUrl
+				const temp = res.data[0].linkUrl
+				console.log(temp)
+				setAvatar(temp)
 
-				handleSaveApi();
+				handleSaveApi(temp);
 			}else{
 				if(firstname==""){
 					setFirstnameError("*require Firstname");
@@ -92,9 +94,9 @@ const EditForm = () => {
 		} catch (err) {}
 	}
 
-	const handleSaveApi = () => {
+	const handleSaveApi = (newAvatar) => {
 		api.patch('api/user/postEditProfile', {
-			avatar: avatar,
+			avatar: newAvatar,
 			firstname: firstname,
 			lastname: lastname,
 			birthdate: birth,

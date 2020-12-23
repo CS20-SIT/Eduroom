@@ -23,7 +23,7 @@ import style from "../../../styles/forum/showForum";
 import General from "../../../components/template/general";
 const whatDoesEduroomdo = () => {
   return <Fragment>
-      <General img='/images/supforumbg.svg'>
+      <General >
             <div
                 style={{
                     display: "flex",
@@ -41,31 +41,38 @@ const whatDoesEduroomdo = () => {
                     </div>
                     
                 </div>
+                <img alt="background-img" src="/images/supforumbg.svg" className="background-img" />
                 <style jsx>{style}</style>
                 <style jsx>
                     {`
-            #nav {
-              width: 100%;
-            }
-            .form {
-              display: flex;
-              text-align: center;
-            }
-            .sub {
-              display: flex;
-              width: 100%;
-              justify-content: center;
-            }
-            .inner {
-              width: 25%;
-            }
-            .paper {
-              margin: 5%;
-            }
-            .top {
-
-                padding: 50px 70px 0px 70px;
-            }
+                    .background-img {
+                      position: fixed;
+                      bottom: 0;
+                      width: 100vw;
+                      z-index: 0;
+                    }
+                    #nav {
+                      width: 100%;
+                      z-index: 5;
+                    }
+                    .form {
+                      display: flex;
+                      text-align: center;
+                    }
+                    .sub {
+                      display: flex;
+                      width: 100%;
+                      justify-content: center;
+                    }
+                    .inner {
+                      width: 25%;
+                    }
+                    .paper {
+                      margin: 5%;
+                    }
+                    .top {
+                      padding: 50px 70px 0px 70px;
+                    }
           `}
                 </style>
                 </div>

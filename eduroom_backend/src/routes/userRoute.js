@@ -17,7 +17,8 @@ const {
 	checkWishlist,
 	uploadAvatarPic,
 	updateLastvisitMyCourse,
-	updateFinishMyCourse
+	updateFinishMyCourse,
+	checkoutCourse
 } = require('../controllers/user/user')
 
 router.get('/getWishlist', jwtAuthenicate, getWishlist)
@@ -42,4 +43,5 @@ router.post('/avatar', jwtAuthenicate, uploadToLocalHandler(), uploadAvatarPic)
 router.patch('/updateLastvisitMyCourse', jwtAuthenicate, updateLastvisitMyCourse)
 router.patch('/updateFinishMyCourse', jwtAuthenicate, updateFinishMyCourse)
 
+router.post('/checkout',jwtAuthenicate,checkoutCourse)
 module.exports = router

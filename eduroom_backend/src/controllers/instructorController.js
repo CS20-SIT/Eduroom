@@ -124,7 +124,7 @@ exports.CreateCourse = async (req, res, next) => {
 				'English',
 				data.haveCertificate,
 				instructorId,
-				'Approved',
+				'In_review',
 				'/certpath',
 			]
 		)
