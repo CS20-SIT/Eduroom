@@ -16,7 +16,7 @@ const EditPackagePage = (props) => {
 		image: '',
 		cateid: '',
 	})
-	const [selectCourse, setSelectCourse] = useState([])
+	
   useEffect(() => {
     getPackage()
   }, [])
@@ -30,10 +30,13 @@ const EditPackagePage = (props) => {
 				image: packages.image,
 			})
 		}
-	}, [packages])
+  }, [packages])
+
+  const [selectCourse, setSelectCourse] = useState([])
 	useEffect(() => {
 		setSelectCourse([...courseList])
-	}, [courseList])
+  }, [courseList])
+  
   const getPackage = async () => {
     const result = await api.get(`/api/package/getPackage?packageid=${props.id}`)
     setPackages(result.data.packages)
@@ -43,6 +46,7 @@ const EditPackagePage = (props) => {
     })
     setCourseList(tempList)
   }
+
   const handleUplaodFile = (e) => {
 		let newValue = e.target.files[0]
 		let type = 'image'

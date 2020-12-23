@@ -59,18 +59,10 @@ const InstructorPaymentOverview = () => {
           </Grid>
 
           <Grid item xs={3}>
-            <h3>Other articles</h3>
-
-            <p>
-              <Link href="/support/getstart/Course-Instructors-and-Teaching-Assistants">
-                Course Instructors and Teaching Assistantsd
-              </Link>
-            </p>
-            <p>Add a Course to Your Wishlist</p>
-            <p>System Requirements</p>
-            <p>How to Preview And Compare Courses</p>
-            <div style={{ marginTop: theme.spacing(7), marginBottom: theme.spacing(3) }}>
-              <Instructornav />
+            
+            
+            <div style={{  marginBottom: theme.spacing(3) }}>
+            <Instructornav />
              
             </div>
 

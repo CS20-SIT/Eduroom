@@ -2,17 +2,18 @@ exports.item = [
 	{
 		icon: 'analyze',
 		text: 'Analysis & Finance',
-		link: '/admin/analyze',
+		link:
+			'https://app.powerbi.com/view?r=eyJrIjoiOTU2ODgyMjUtNGJlYS00ZTA0LWJmZWEtM2RmMTBkN2I4Mjc0IiwidCI6IjZmNDQzMmRjLTIwZDItNDQxZC1iMWRiLWFjMzM4MGJhNjMzZCIsImMiOjEwfQ%3D%3D',
 	},
 	{
 		icon: 'instructor',
 		text: 'Instructor Approve',
-		link: '/admin/instructor',
+		link: '/admin/approve/instructor',
 	},
 	{
 		icon: 'course',
 		text: 'Course Approve',
-		link: '/admin/course',
+		link: '/admin/approve/course',
 	},
 	{
 		icon: 'grader',
@@ -27,7 +28,7 @@ exports.item = [
 	{
 		icon: 'coupon',
 		text: 'Coupon',
-		link: '/admin/createcoupon',
+		link: '/admin/coupon',
 	},
 	{
 		icon: 'advertisement',
@@ -39,9 +40,9 @@ exports.item = [
 		text: 'Event',
 		link: '/admin/calendar',
 	},
-	{ 
-        icon: 'setting', 
-        text: 'Setting', 
-        link: '/admin/edit' 
-    },
+	{
+		icon: 'setting',
+		text: 'Setting',
+		link: '/admin/edit',
+	},
 ]

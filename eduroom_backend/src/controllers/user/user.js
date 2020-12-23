@@ -11,6 +11,7 @@ const puppeteer = require('puppeteer')
 const handlebars = require('handlebars')
 const dayjs = require('dayjs')
 const { certificateTemplate, certificateStyle } = require('../../utils/certTemplate')
+const { countReset } = require('console')
 
 const test = async (req, res) => {
 	const time = await pool.query('SELECT NOW()')
@@ -53,10 +54,8 @@ const checkWishlist = async (req, res) => {
 		const user = req.user.id
 		const course = req.body.courseid
 		const data = await pool.query(
-			'select exists( '+
-			'select * from user_wishlist '+
-			'where (userid,courseid)=($1,$2)) as checkwishlist',
-			[user,course]
+			'select exists( ' + 'select * from user_wishlist ' + 'where (userid,courseid)=($1,$2)) as checkwishlist',
+			[user, course]
 		)
 		const ann = data.rows[0].checkwishlist
 		res.send(ann)
@@ -119,9 +118,11 @@ const postMycourse = async (req, res) => {
 		const course = req.body.courseid
 		const user = req.user.id
 		await pool.query(
-		'insert into user_mycourse '+
-		'values '+
-		'($1,current_timestamp,current_timestamp,false,$2,current_timestamp);', [user, course])
+			'insert into user_mycourse ' +
+				'values ' +
+				'($1,current_timestamp,current_timestamp,false,$2,current_timestamp);',
+			[user, course]
+		)
 		res.send({ success: true })
 	} catch (error) {
 		const err = {
@@ -211,7 +212,7 @@ const editProfile = async (req, res) => {
 }
 
 const Upload = async (req, res, next) => {
-	const files = req.files;
+	const files = req.files
 	const results = files.map((file) => {
 		return { linkUrl: file.linkUrl, fieldname: file.fieldname }
 	})
@@ -222,13 +223,16 @@ const uploadAvatarPic = async (req, res) => {
 	const userId = req.user.id
 	const filePath = req.files[0].path
 	const optimizedFileName = `${uuidv4()}.png`
-	await sharp(filePath).resize({
-		height: 400,
-		width: 400
-	}).png().toFile(`${optimizedFileName}`)
+	await sharp(filePath)
+		.resize({
+			height: 400,
+			width: 400,
+		})
+		.png()
+		.toFile(`${optimizedFileName}`)
 	const avatarURL = await uploadFile(optimizedFileName, `profile_pic/${optimizedFileName}`)
 	await pool.query(`UPDATE user_profile SET avatar = '${avatarURL}' WHERE userid = '${userId}';`)
-	res.status(201).send({avatarURL})
+	res.status(201).send({ avatarURL })
 }
 
 const checkPassword = async (req, res) => {
@@ -288,21 +292,47 @@ const downloadCertificate = async (req, res, next) => {
 		const finishedDate = dayjs(cerData.finishdate).format('D MMMM YYYY')
 		const html = template({ ...cerData, finishdate: finishedDate })
 		const browser = await puppeteer.launch({
-			executablePath: process.env.PUPPETEER_EXEC_PATH, 
+			executablePath: process.env.PUPPETEER_EXEC_PATH,
 			args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
 			headless: true,
 		})
 		const page = await browser.newPage()
 		await page.goto(`data:text/html;charset=UTF-8,${html}`, { waitUntil: 'networkidle0' })
 		await page.addStyleTag({ content: certificateStyle })
-		const element = await page.$('#certificate');
-		const image  = await element.screenshot({type:'png'});
+		const element = await page.$('#certificate')
+		const image = await element.screenshot({ type: 'png' })
 		await browser.close()
-		var uri = 'data:image/png;base64,'+image.toString('base64')
+		var uri = 'data:image/png;base64,' + image.toString('base64')
 		res.set({ 'Content-Type': 'image/png' })
 		res.send(uri)
 	} else {
 		return next(new ErrorResponse('Certificate not found', 404))
+	}
+}
+
+const checkoutCourse = async (req, res, next) => {
+	const user = req.user
+	const { course, packages, price } = req.body
+	try {
+		for (let i of course) {
+			await pool.query(
+				'INSERT INTO user_mycourse(userid,addtime,lastvisit,isfinished,courseid) VALUES($1,current_timestamp,current_timestamp,false,$2)',
+				[user.id, i.id]
+			)
+		}
+		for (let i of packages) {
+			const pack = await pool.query('SELCET courseid FROM package_courses WHERE packageid =$1', [i.id])
+			for (let j of pack.rows) {
+				await pool.query(
+					'INSERT INTO user_mycourse(userid,addtime,lastvisit,isfinished,courseid) VALUES($1,current_timestamp,current_timestamp,false,$2)',
+					[user.id, j.packageid]
+				)
+			}
+		}
+		res.status(200).json({success:true})
+	} catch (err) {
+		console.log(err)
+		return next(new ErrorResponse('Cannot checkout', 400))
 	}
 }
 
@@ -322,5 +352,6 @@ module.exports = {
 	checkWishlist,
 	uploadAvatarPic,
 	updateLastvisitMyCourse,
-	updateFinishMyCourse
+	updateFinishMyCourse,
+	checkoutCourse,
 }

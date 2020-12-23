@@ -99,7 +99,7 @@ export default css`
   }
   .tab1 {
     
-    height: 730px;
+    height: auto;
     // background-image: url('/images/BG_Landing.svg');
   }
   .tab2 {
@@ -303,5 +303,13 @@ export default css`
     border: none;
     outline: none;
     transition: 0.25s;
+  }
+    .topic {
+      margin-left:10px;
+      font-size: 0.85em;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: bold;
+      color: #5B5B5B;
+    }
 `;
 5
