@@ -13,10 +13,14 @@ const contestOverview = ({ contestId }) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			const result = await api.get('/api/grader/getContestDetail', {
-				params: { contestId },
-			})
-			setData(result.data[0])
+			try {
+				const result = await api.get('/api/grader/getContestDetail', {
+					params: { contestId },
+				})
+				setData(result.data[0])
+			} catch (e) {
+				return console.log(e.data)
+			}
 		}
 		GetData()
 	}, [])
