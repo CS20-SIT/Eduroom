@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import api from '../../api'
 import DotDotIcon from './icons/DotDotIcon'
@@ -6,48 +6,53 @@ import MuteIcon from './icons/MuteIcon'
 import DeleteIcon from './icons/TrashBinIcon'
 import DirectionsRunIcon from './icons/DirectionsRunIcon'
 import moment from 'moment'
-import socketIOClient from "socket.io-client";
+import socketIOClient from 'socket.io-client'
 
 export default function chatContact(props) {
-	const [contact, setContact] = useState(props.contact)
 	const [chatRoomProfilePicture, setChatRoomProfilePicture] = useState(null)
-	const [disableClick,setDisableClick] = useState(false)
+	const [disableClick, setDisableClick] = useState(false)
 	const [dotdotStyle, setDotdotStyle] = useState({ visibility: 'hidden' })
-	const [dropDownStyle, setDropDownStyle] = useState({ visibility: 'hidden'})
+	const [dropDownStyle, setDropDownStyle] = useState({ visibility: 'hidden' })
 	const [style, setStyle] = useState({})
 
 	const getChatRoomProfilePicture = async () => {
 		api
 			.get(`/api/chat/getChatRoomProfile`, {
-				params:{chatroomid: contact.chatRoomID}
+				params: { chatroomid: props.chatRoomID },
 			})
 			.then((res) => {
 				setChatRoomProfilePicture(res.data)
 			})
 	}
-	const clickDelete = async() =>{
-		const res = await api.get(`/api/chat/deleteChatroom`,{params:{chatroomid:contact.chatRoomID}})
-		props.socket.emit("leaveRoom",contact.chatRoomID)
-		props.socket.emit("deleteChatRoom",contact.chatRoomID)
+	const clickDelete = async () => {
+		props.setChatRoomDetail(null)
+		const res = await api.get(`/api/chat/deleteChatroom`, { params: { chatroomid: props.chatRoomID } })
+		props.socket.emit('leaveRoom', props.chatRoomID)
+		props.socket.emit('leaveListRoom', props.chatRoomID)
+		props.socket.emit('deleteChatRoom', props.chatRoomID)
 		props.getChatList()
 	}
-	const clickLeave = async() =>{
-		props.getChatRoomDetail(null)
-		const res = await api.get(`/api/chat/leaveChatroom`,{params:{chatroomid:contact.chatRoomID}})
-		props.socket.emit("leaveRoom",contact.chatRoomID)
-		props.socket.emit("leaveChatRoom",contact.chatRoomID)
+	const clickLeave = async () => {
+		props.setChatRoomDetail(null)
+		const res = await api.get(`/api/chat/leaveChatroom`, { params: { chatroomid: props.chatRoomID } })
+		props.socket.emit('leaveRoom', props.chatRoomID)
+		props.socket.emit('leaveChatRoom', props.chatRoomID)
+		props.socket.emit('leaveListRoom', props.chatRoomID)
 		props.getChatList()
 	}
-	const clickMute = async() =>{
-		const res = await api.get(`/api/chat/hideChatroom`,{params:{chatroomid:contact.chatRoomID}})
+	const clickMute = async () => {
+		const res = await api.get(`/api/chat/hideChatroom`, { params: { chatroomid: props.chatRoomID, hide: !props.hide } })
 		props.setChatRoomDetail(null)
 		props.getChatList()
 	}
 	useEffect(() => {
 		getChatRoomProfilePicture()
+		props.socket.on('changeChatList', (room) => {
+			getChatRoomProfilePicture()
+		})
 	}, [])
 	useEffect(() => {
-		if (props.selectChat && props.selectChat.chatroomid == contact.chatRoomID) {
+		if (props.selectChat && props.selectChat.chatroomid == props.chatRoomID) {
 			setStyle({ backgroundColor: 'rgba(213, 193, 252, 0.1)' })
 		} else {
 			setStyle({})
@@ -59,7 +64,7 @@ export default function chatContact(props) {
 			<div
 				className="chatBox"
 				onClick={() => {
-					if(!disableClick){
+					if (!disableClick) {
 						props.onClick()
 					}
 				}}
@@ -79,14 +84,16 @@ export default function chatContact(props) {
 					}}
 				>
 					<Avatar
-						alt={contact.name}
+						alt={props.name}
 						src={chatRoomProfilePicture && chatRoomProfilePicture.chatroomprofilepicture}
 						style={{ margin: 15 }}
 					/>
 					<div>
-						<h5 style={{ display: 'inline' }}>{contact.name}</h5>
+						<h5 style={{ display: 'inline' }}>{props.roomname}</h5>
 						<br />
-						<span style={{ fontSize: 12 }}>{contact.resentMessage}</span>
+						<span style={{fontSize:12}}>
+							{props.resentMessage}
+						</span>
 					</div>
 				</div>
 				<div
@@ -95,7 +102,7 @@ export default function chatContact(props) {
 						paddingRight: 20,
 					}}
 				>
-					<p style={{ fontSize: 12 }}>{moment(contact.recentMessageDate).fromNow()}</p>
+					<p style={{ fontSize: 12 }}>{moment(props.recentMessageDate).fromNow()}</p>
 					<div
 						style={{ position: 'relative', display: 'inline-block' }}
 						onMouseOver={() => {
@@ -110,10 +117,27 @@ export default function chatContact(props) {
 						<DotDotIcon style={dotdotStyle} />
 						<div className="dropdown" style={dropDownStyle}>
 							<span className="row" onClick={clickMute}>
-								<MuteIcon />
-								<span className="sm" style={{ marginRight: 18 }}>
-									Mute
-								</span>
+								{(() => {
+									if (props.hide) {
+										return (
+											<>
+											<MuteIcon />
+											<span className="sm2" style={{ marginRight: 10}}>
+												Unmute
+											</span>
+											</>
+										)
+									} else {
+										return (
+											<>
+											<MuteIcon/>
+											<span className="sm" style={{ marginRight: 18 }}>
+												Mute
+											</span>
+											</>
+										)
+									}
+								})()}
 							</span>
 							<span className="row" onClick={clickLeave}>
 								<br />
@@ -124,7 +148,7 @@ export default function chatContact(props) {
 							</span>
 							<span className="row" onClick={clickDelete}>
 								<br />
-								<DeleteIcon style={{marginLeft: 5 }}/>
+								<DeleteIcon style={{ marginLeft: 5 }} />
 								<span className="sm" style={{ marginRight: 12 }}>
 									Delete
 								</span>
@@ -158,6 +182,11 @@ export default function chatContact(props) {
 					font-size: 12px;
 					color: white;
 					margin-left: 13px;
+				}
+				.sm2 {
+					font-size: 12px;
+					color: white;
+					margin-left: 5px;
 				}
 				.row:hover {
 					opacity: 0.5;

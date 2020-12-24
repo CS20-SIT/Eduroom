@@ -83,7 +83,7 @@ export default function messageLeft(props) {
 					display: inline-block;
 				}
 				.dropdown {
-					!z-index:1
+					z-index:2 !important;
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;
@@ -95,7 +95,7 @@ export default function messageLeft(props) {
 					padding: 10px 10px 10px 10px;
 				}
 				.dropdown2 {
-					!z-index:1
+					z-index:2 !important;
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;
