@@ -90,6 +90,7 @@ export default css`
   }
   .legend {
     text-align: center;
+    padding-right: 10px;
   }
   .line {
     height: 24vh;
