@@ -10,9 +10,12 @@ const Announcement = ({ id }) => {
 	const [data, setData] = useState(null)
 	useEffect(() => {
 		const GetData = async () => {
-			const result = await api.get('/api/grader/getAnnouncementById', { params: { id } })
-			setData(result.data[0])
-			console.log(result.data[0])
+			try {
+				const result = await api.get('/api/grader/getAnnouncementById', { params: { id } })
+				setData(result.data[0])
+			} catch (e) {
+				return console.log(e.data)
+			}
 		}
 		GetData()
 	}, [])
