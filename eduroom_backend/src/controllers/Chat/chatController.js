@@ -383,6 +383,7 @@ order by hide, sendtime desc;`)
   },
 
   createGroupChat : async (req,res,next) =>{
+    try{
     const userid = req.user.id
     const picture = req.query.profilepic
     const chatRoomName = req.query.chatroomname
@@ -403,7 +404,10 @@ order by hide, sendtime desc;`)
     const sysMess = await pool.query(`insert into chat_systemmessage (chatroomid, sendtime, message)
     values (${createChat.rows[0].cid},current_timestamp,'You Can Now Start the Conversation')`)
     res.status(200).json({ success: true })
-	},
+	}  catch (error) {
+    res.status(200).json({ success: false,error:error })
+  }
+},
 	readMessage: async (req, res, next) => {
     try {
       const chatroomid = req.query.chatroomid
