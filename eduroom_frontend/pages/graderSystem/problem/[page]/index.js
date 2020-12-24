@@ -19,35 +19,55 @@ const Problems = ({ page }) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			const questionsQuery = await api.get('/api/grader/getPreviewQuestion', { params: { offset: page - 1 } })
-			const countQuery = await api.get('/api/grader/CountAllQuestion')
-			const tagsQuery = await api.get('/api/grader/getQuestionTag')
-			setQuestionsData(questionsQuery.data)
-			setCountData(countQuery.data.count)
-			setTagsData(tagsQuery.data)
+			try {
+				const questionsQuery = await api.get('/api/grader/getPreviewQuestion', { params: { offset: (page - 1) * 10 } })
+				const countQuery = await api.get('/api/grader/CountAllQuestion')
+				const tagsQuery = await api.get('/api/grader/getQuestionTag')
+				setQuestionsData(questionsQuery.data)
+				setCountData(countQuery.data.count)
+				setTagsData(tagsQuery.data)
+			} catch (e) {
+				return console.log(e.data)
+			}
 		}
 		GetData()
 	}, [page])
 
 	useEffect(() => {
 		const GetTag = async () => {
-			if (tag) {
-				const tagQuery = await api.get(`api/grader/getQuestionByTag`, { params: { tag: tag } })
-				setQuestionsData(tagQuery.data)
-			} else {
-				const questionsQuery = await api.get('/api/grader/getPreviewQuestion', { params: { offset: page - 1 } })
-				setQuestionsData(questionsQuery.data)
+			try {
+				if (tag) {
+					const tagQuery = await api.get(`/api/grader/getQuestionByTag`, { params: { tag: tag } })
+					setQuestionsData(tagQuery.data)
+				} else {
+					const questionsQuery = await api.get('/api/grader/getPreviewQuestion', {
+						params: { offset: (page - 1) * 10 },
+					})
+					setQuestionsData(questionsQuery.data)
+				}
+			} catch (e) {
+				return console.log(e.data)
 			}
 		}
+
 		const GetCount = async () => {
-			if (tag) {
-				const questionTagQuery = await api.get(`api/grader/getCountQuestionByTag`, { params: { tag: tag } })
-				setCountData(questionTagQuery.data)
-			} else {
-				const countQuery = await api.get('/api/grader/CountAllQuestion')
-				setCountData(countQuery.data)
+			try {
+				if (tag) {
+					const questionTagQuery = await api.get(`/api/grader/getCountQuestionByTag`, {
+						params: { tag: tag, offset: page - 1 },
+					})
+					setCountData(questionTagQuery.data.count)
+				}
+				if (tag == null) {
+					const countQuery = await api.get('/api/grader/CountAllQuestion')
+					setCountData(countQuery.data.count)
+					console.log(countData)
+				}
+			} catch (e) {
+				return console.log(e.data)
 			}
 		}
+
 		GetTag()
 		GetCount()
 	}, [tag])
@@ -84,19 +104,21 @@ const Problems = ({ page }) => {
 								</div>
 							</Box>
 							<div className="list-of-pages">
-								<Paginations
-									startPage={startPage}
-									numData={countData}
-									page={page}
-									setPage={(newPage) => {
-										router.push(`/graderSystem/problem/${newPage}`)
-									}}
-									mxDataPerPage={1}
-									numPagination={4}
-									setStartPage={(newPage) => {
-										setStartPage(newPage)
-									}}
-								/>
+								{countData != null ? (
+									<Paginations
+										startPage={startPage}
+										numData={countData}
+										page={page}
+										setPage={(newPage) => {
+											router.push(`/graderSystem/problem/${newPage}`)
+										}}
+										mxDataPerPage={10}
+										numPagination={4}
+										setStartPage={(newPage) => {
+											setStartPage(newPage)
+										}}
+									/>
+								) : null}
 							</div>
 						</div>
 					</div>
@@ -110,8 +132,10 @@ const Problems = ({ page }) => {
 											<Tag
 												tagName="tag"
 												name={element.tagname}
-												key={key}
-												changeTag={(tag) => setTag(tag)}
+												changeTag={(tag) => {
+													setTag(tag)
+													router.push(`/graderSystem/problem/1`)
+												}}
 												currentTag={tag}
 												key={key}
 											/>
