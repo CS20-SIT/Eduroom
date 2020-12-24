@@ -11,13 +11,17 @@ const OI = ({ type }) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			let result = []
-			if (type === 'oi') {
-				result = await api.get('/api/grader/getOIRankingTopSix')
-				setData(result.data)
-			} else if (type === 'acm') {
-				result = await api.get('/api/grader/getACMRankingTopSix')
-				setData(result.data)
+			try {
+				let result = []
+				if (type === 'oi') {
+					result = await api.get('/api/grader/getOIRankingTopSix')
+					setData(result.data)
+				} else if (type === 'acm') {
+					result = await api.get('/api/grader/getACMRankingTopSix')
+					setData(result.data)
+				}
+			} catch (e) {
+				return console.log(e.data)
 			}
 		}
 		GetData()

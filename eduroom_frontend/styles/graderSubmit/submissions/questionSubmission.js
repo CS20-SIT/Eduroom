@@ -11,7 +11,7 @@ export default css`
     height: 80%;
   }
   h2 {
-    color: #5b5b5b;
+    color: #3D467F;
     padding: 30px 0;
     margin-bottom: 0;
   }
@@ -35,7 +35,6 @@ export default css`
       color: #828282;
       width: 95%;
       text-align: center;
-
   }
   .submission-list-box {
     height: 50vh;
