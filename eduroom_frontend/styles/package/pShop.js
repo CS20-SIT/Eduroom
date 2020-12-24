@@ -36,14 +36,14 @@ export default css`
     
   }
   .packageLanding{
-    margin-left:100px;
+    margin-left: 3%;
     font-weight: 700;
     font-size: 30px;
     color:#3D467F;
-    margin-bottom:10px;
+    margin-bottom:40px;
     margin-top :30px;
   }
   .package{
-   margin-left: 60px;
+   margin-left: 6%;
   }
 `

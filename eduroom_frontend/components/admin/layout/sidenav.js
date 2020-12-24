@@ -23,7 +23,7 @@ const AdminSideNav = () => {
 					<img src="/images/sidenav/eduroom_logo.svg" alt="eduroom_logo" onClick={() => router.push('/admin')} />
 				</div>
 				<div className="item-list" onMouseLeave={handleReduce}>
-					{item.map((el) => {
+					{item?.map((el) => {
 						return (
 							<Fragment key={el.text}>
 								<Item data={el} isExpand={isExpand} expand={handleExpand} />

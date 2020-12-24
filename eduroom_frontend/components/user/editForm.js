@@ -37,7 +37,6 @@ const EditForm = () => {
 	const [birth, setBirth] = useState(null)
 	const [bio, setBio] = useState(null)
 	const [avatar, setAvatar] = useState(null)
-	const [password,setPassword] = useState(null)
 
 	const [email,setEmail] = useState(null)
 	const [open,setOpen] = useState(false)
@@ -75,9 +74,11 @@ const EditForm = () => {
 				const myForm = new FormData()
 				myForm.append('avatar',avatar);
 				const res=await api.post('/api/user/upload/picture',myForm);
-				const avatar= res.data[0].linkUrl
+				const temp = res.data[0].linkUrl
+				console.log(temp)
+				setAvatar(temp)
 
-				handleSaveApi();
+				handleSaveApi(temp);
 			}else{
 				if(firstname==""){
 					setFirstnameError("*require Firstname");
@@ -93,9 +94,9 @@ const EditForm = () => {
 		} catch (err) {}
 	}
 
-	const handleSaveApi = () => {
+	const handleSaveApi = (newAvatar) => {
 		api.patch('api/user/postEditProfile', {
-			avatar: avatar,
+			avatar: newAvatar,
 			firstname: firstname,
 			lastname: lastname,
 			birthdate: birth,
@@ -217,7 +218,7 @@ const EditForm = () => {
 							style={{width:'100%'}}
 							placeholder="Bio"
 							multiline
-							rows={4}
+							rows={10}
 							defaultValue={bio}
 							value={bio}
 							variant="outlined"

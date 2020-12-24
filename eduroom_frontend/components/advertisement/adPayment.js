@@ -12,6 +12,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 const Total = props => {
+    const router = useRouter();
+    const handleSubmit = async () => {
+        const body = {
+            adlist : props.listads
+        }
+        console.log(body);
+        const response = await api.post('/api/ads/AddNewAdsBills', body)
+        console.log(response)
+        router.push('/advertisement/adpayment/adconfirmpayment')
+       
+
+    }
     return (
         <div>
             <Paper style={{ margin: '5% 5% 5% 25%', height: '150px', width: '45%', padding: '17px', paddingTop: '15px', position: 'absolute', background: 'rgba(255, 255, 255, 0.7)', borderRadius: '10px' }}>
@@ -29,7 +41,7 @@ const Total = props => {
                         <a className="ad-description">Numbers of ads: {props.numberOfads}</a>
                     </Grid>
                     <Grid item xs style={{ marginLeft: '40%' }}>
-                        <button className="ad-check-out-button"><a className="ad-check-out-button-text">Check Out</a></button>
+                        <button className="ad-check-out-button" onClick={handleSubmit}><a className="ad-check-out-button-text">Check Out</a></button>
                     </Grid>
                 </Grid>
             </Paper>
@@ -154,7 +166,7 @@ const Content = () => {
                             width: "17%"
                         }}>create new ADs</Paper></Link>
                         {arr}
-                        <Total totalPrice={total}
+                        <Total totalPrice={total} listads={data}
                             numberOfads={count}></Total>
                         <div style={{ backgroundImage: "url('/images/ads/shopping.svg')", backgroundSize: 'auto', height: '1200px', width: '800px', backgroundRepeat: 'no-repeat', marginLeft: '40%' }}></div>
                     </div>

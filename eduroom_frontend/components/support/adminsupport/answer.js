@@ -18,7 +18,10 @@ import TextField from "@material-ui/core/TextField";
 import api from "../../../api";
 import UserContext from '../../../contexts/user/userContext'
 import AuthDialog from '../../../components/landing/authDialog'
+import {useRouter} from 'next/router';
+
 const CreateAnswer = (props) => {
+  const router = useRouter();
   const userContext = useContext(UserContext)
   const {user} = userContext
   const [dialog,setDialog] = useState(false)
@@ -39,20 +42,15 @@ const CreateAnswer = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validator()) {
-      console.log(createAnswer);
-      if(user){
-        
+      console.log(createAnswer);     
       api.post("/api/support", createAnswer).then((res) => {
         console.log(res);
         setAnswer({
           answer: "",
-        });
+        })
         props.GetData();
-        //router.push("/forum");
+        router.push("/admin/support ");
       });
-      }else{
-        setDialog(!dialog)
-      }
     } else {
       console.log("Please write your answer");
     }
@@ -100,11 +98,7 @@ const CreateAnswer = (props) => {
   });
   return (
     <Fragment>
-      {
-				dialog ? (
-					<AuthDialog handleClick={()=>{setDialog(false)}}/>
-				) :null
-			}
+      
           <div className={classes.root}>
             <Grid container spacing={3} variant="outlined">
               <Grid item xs={12}>

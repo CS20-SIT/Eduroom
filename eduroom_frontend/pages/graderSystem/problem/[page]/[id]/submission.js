@@ -9,19 +9,29 @@ import ProblemNav from '../../../../../components/graderSubmit/problems/ProblemN
 const Submission = ({ id, page }) => {
 	const [data, setdata] = useState([])
 	const [userData, setUserData] = useState([])
+	const [userState, setUserState] = useState(false)
 
 	useEffect(() => {
 		const GetData = async () => {
-			const userQuery = await api.get('/api/auth/profile')
-			setUserData(userQuery.data)
+			try {
+				const userQuery = await api.get('/api/auth/profile')
+				setUserData(userQuery.data)
 
-			const result = await api.get('/api/grader/getQuestionSubmission', {
-				params: { questionId: id, userId: userQuery.data.userid },
-			})
-			setdata(result.data)
+				if (userData != null) {
+					setUserState(true)
+				}
+
+				const result = await api.get('/api/grader/getQuestionSubmission', {
+					params: { questionId: id, userId: userQuery.data.userid },
+				})
+				setdata(result.data)
+			} catch (e) {
+				return console.log(e.data)
+			}
 		}
 		GetData()
-	}, [])
+	}, [userState])
+
 	return (
 		<Fragment>
 			<Layout page="problem">
@@ -55,19 +65,23 @@ const Submission = ({ id, page }) => {
 								</div>
 								<div className="submission-list-box">
 									{data != null ? (
-										data.map((element, key) => {
-											return (
-												<QuestionSubmissionList
-													submitTime={element.whentime}
-													status={element.status}
-													score={element.score}
-													time={element.time}
-													memory={element.memory}
-													author={element.displayname}
-													key={key}
-												/>
-											)
-										})
+										userState == false ? (
+											<div className="none">Please log in before viewing your submissions!!!</div>
+										) : (
+											data.map((element, key) => {
+												return (
+													<QuestionSubmissionList
+														submitTime={element.whentime}
+														status={element.status}
+														score={element.score}
+														time={element.time}
+														memory={element.memory}
+														author={element.displayname}
+														key={key}
+													/>
+												)
+											})
+										)
 									) : (
 										<div className="none">None</div>
 									)}

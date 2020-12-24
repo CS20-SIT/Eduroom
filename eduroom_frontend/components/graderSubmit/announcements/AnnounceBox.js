@@ -7,8 +7,12 @@ const AnnounceBox = () => {
 	const [data, setData] = useState([])
 	useEffect(() => {
 		const GetData = async () => {
-			const result = await api.get('/api/grader/getAnnouncement')
-			setData(result.data)
+			try {
+				const result = await api.get('/api/grader/getAnnouncement')
+				setData(result.data)
+			} catch (e) {
+				return console.log(e.data)
+			}
 		}
 		GetData()
 	}, [])

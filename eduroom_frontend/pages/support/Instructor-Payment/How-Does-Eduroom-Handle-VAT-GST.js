@@ -1,24 +1,24 @@
 import Head from 'next/head'
 import React, { Fragment, useState, useEffect, useContext } from 'react'
 import {
-	Container,
-	Button,
-	TextField,
-	Grid,
-	Typography,
-	CssBaseline,
-	makeStyles,
-	Select,
-	MenuItem,
-	Paper,
-	createMuiTheme,
-	ThemeProvider,
-	Link,
-} from '@material-ui/core'
-import Studentnav from '../../../components/support/studentsidenav'
-import HowDoesEduroomdo from '../../../components/support/instructorpayment/howdoeseduroom'
-import style from '../../../styles/forum/showForum'
-import General from '../../../components/template/general'
+  Container,
+  Button,
+  TextField,
+  Grid,
+  Typography,
+  CssBaseline,
+  makeStyles,
+  Select,
+  MenuItem,
+  Paper,
+  createMuiTheme,
+  ThemeProvider,
+  Link,
+} from "@material-ui/core";
+
+import HowDoesEduroomdo from '../../../components/support/instructorpayment/howdoeseduroom';
+import style from "../../../styles/forum/showForum";
+import General from "../../../components/template/general";
 const whatDoesEduroomdo = () => {
 	return (
 		<Fragment>
