@@ -526,5 +526,27 @@ order by hide, sendtime desc;`)
     } catch (error) {
       res.status(200).json({ success: false,error:error })
     }
-	},
+  },
+  changeChatRoomName : async (req, res, next) => {
+    try {
+      const roomname = req.query.roomname
+    const chatroomid = req.query.chatroomid
+    if(roomname == null || roomname == ""){
+      res.status(200).json({ success : false})
+    } else {
+    const update = await pool.query(
+    `update chat
+    set roomname = '${roomname}'
+    where chatroomid = ${chatroomid};`
+    )
+    const systemmessage = await pool.query(
+      `insert into chat_systemmessage (chatroomid,sendtime,message)
+      values(${chatroomid},current_timestamp,'Chat Room Name Have Been Change to ${roomname}')`
+    )
+    res.status(200).json({ success: true })
+    }
+    } catch (error) {
+      res.status(200).json({ success: false,error:error })
+    }
+  }
 }
