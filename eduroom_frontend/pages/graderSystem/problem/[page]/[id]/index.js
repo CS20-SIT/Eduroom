@@ -3,11 +3,8 @@ import Box from '../../../../../components/graderSubmit/Box'
 import Layout from '../../../../../components/graderSubmit/Layout'
 import style from '../../../../../styles/graderSubmit/problems/problemSolvePage'
 import ProblemLayout from '../../../../../components/graderSubmit/problems/ProblemLayout'
-import { useRouter } from 'next/router'
 
 const ProblemID = ({ id, page }) => {
-	console.log(id)
-
 	return (
 		<Fragment>
 			<Layout page="problem">

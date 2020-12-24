@@ -2,9 +2,9 @@ module.exports = {
 	getUserProfileMockup: (userID) => {
 		return {
 			userID: userID,
-            userFirstName: 'Krishadawut',
-            userLastName: 'Olde Monnikhof',
-            userNickName: 'jimmy',
+			userFirstName: 'Krishadawut',
+			userLastName: 'Olde Monnikhof',
+			userNickName: 'jimmy',
 			profilePicture: 'test.png',
 		}
 	},
@@ -15,28 +15,28 @@ module.exports = {
 				firstName: 'John',
 				roomname: 'test4',
 				message: 'Hello this is test',
-				sendtime: "10/24/2020",
+				sendtime: '10/24/2020',
 			},
 			{
 				chatroomid: 2,
 				firstname: 'John',
 				roomname: 'test4',
 				message: 'Hello this is test',
-				sendtime: "12/09/2020",
+				sendtime: '12/09/2020',
 			},
 			{
 				chatroomid: 3,
 				firstname: 'John',
 				roomname: 'test4',
 				message: 'Hello this is test',
-				sendtime: "12/14/2020",
+				sendtime: '12/14/2020',
 			},
 			{
 				chatroomid: 4,
 				firstname: 'John',
 				roomname: 'test4',
 				message: 'Hello this is test',
-				sendtime: "12/08/2020",
+				sendtime: '12/08/2020',
 			},
 			{
 				chatroomid: 5,
@@ -125,7 +125,7 @@ module.exports = {
 			],
 		}
 	},
-	selectSearchResultMockup:(userID)=>{
+	selectSearchResultMockup: (userID) => {
 		return {
 			success: true,
 		}
@@ -177,28 +177,28 @@ module.exports = {
 		return {
 			success: true,
 		}
-    },
-    hideChatRoomMockup: (chatRoomID,userID) => {
-        return {
+	},
+	hideChatRoomMockup: (chatRoomID, userID) => {
+		return {
 			success: true,
 		}
-    },
-	chatRoomDetailMockup: (chatRoomID,userID) => {
-        //add column "status" in to chatRoomMember  (if member are kickout it will be invalid or if the chat room is deleted all member will be invalid(chatRoomProlfilePic, chatMessage, systemMessage, stickerMessage))
+	},
+	chatRoomDetailMockup: (chatRoomID, userID) => {
+		//add column "status" in to chatRoomMember  (if member are kickout it will be invalid or if the chat room is deleted all member will be invalid(chatRoomProlfilePic, chatMessage, systemMessage, stickerMessage))
 		return {
 			chatRoomID: 2,
 			chatRoomName: 'test4',
-            themeColor: {
-                sendColor:"#EB7DB1",
-                recieveColor:"#5B5B5B",
-            },
-            membersID: [435,346,2342,67876],
+			themeColor: {
+				sendColor: '#EB7DB1',
+				recieveColor: '#5B5B5B',
+			},
+			membersID: [435, 346, 2342, 67876],
 			messages: [
 				{
-                    system: true,
-                    sticker: false,
+					system: true,
+					sticker: false,
 					message: 'Test4 Have Joined the Chat',
-                    //if sticker "path:'test.png' instead of message"
+					//if sticker "path:'test.png' instead of message"
 					sendTime: '13:50',
 					reader: [
 						{
@@ -216,14 +216,14 @@ module.exports = {
 					],
 				},
 				{
-                    system: false,
-                    sticker: false,
+					system: false,
+					sticker: false,
 					messageID: 23,
 					senderID: 213124,
 					message: 'Hello Tom',
 					senderName: 'test4',
 					senderProfilePic: 'test.png',
-                    //if sticker "path:'test.png' instead of message"
+					//if sticker "path:'test.png' instead of message"
 					sendTime: '13:50',
 					reader: [
 						{
@@ -241,14 +241,14 @@ module.exports = {
 					],
 				},
 				{
-                    system: false,
-                    sticker: false,
+					system: false,
+					sticker: false,
 					messageID: 23,
-                    senderID: 23432,
+					senderID: 23432,
 					message: 'Hello Tom',
 					senderName: 'Krishadawut',
 					senderProfilePic: 'test.png',
-                    //if sticker "path:'test.png' instead of message"
+					//if sticker "path:'test.png' instead of message"
 					sendTime: '13:50',
 					reader: [
 						{
@@ -266,10 +266,10 @@ module.exports = {
 					],
 				},
 				{
-                    system: true,
-                    sticker: false,
+					system: true,
+					sticker: false,
 					message: 'Krishadawut Have Left the Chat',
-                    //if sticker "path:'test.png' instead of message"
+					//if sticker "path:'test.png' instead of message"
 					sendTime: '13:50',
 					reader: [
 						{
@@ -287,14 +287,14 @@ module.exports = {
 					],
 				},
 				{
-                    system: false,
-                    sticker: false,
+					system: false,
+					sticker: false,
 					messageID: 23,
 					senderID: 213124,
 					senderName: 'test4',
 					message: 'Hello Tom',
 					senderProfilePic: 'test.png',
-                    //if sticker "path:'test.png' instead of message"
+					//if sticker "path:'test.png' instead of message"
 					sendTime: '13:50',
 					reader: [
 						{
@@ -313,90 +313,89 @@ module.exports = {
 				},
 			],
 		}
-    },
-    hideMessageMockup: (userID,MessageID)=>{
-        return {
+	},
+	hideMessageMockup: (userID, MessageID) => {
+		return {
 			success: true,
 		}
-    },
-    deleteMessageMockup: (userID,MessageID)=>{
-        return {
+	},
+	deleteMessageMockup: (userID, MessageID) => {
+		return {
 			success: true,
 		}
-    },
-    sendMessageMockup: (userID,chatRoomID,message)=>{
-        return {
+	},
+	sendMessageMockup: (userID, chatRoomID, message) => {
+		return {
 			success: false,
 		}
-    },
-    sendStickerMockup: (userID,chatRoomID,stickerID)=>{
-        return {
+	},
+	sendStickerMockup: (userID, chatRoomID, stickerID) => {
+		return {
 			success: true,
 		}
-    },
-    getStickerListMockup:(userID)=>{
-        return{
-            stickers:[
-                {
-                    stickerID: 1,
-                    stickerName: 'Fruit',
-                    stickerType: 'Fruit',
-                    stickerPath: 'test.png'
-                },
-                {
-                    stickerID: 1,
-                    stickerName: 'Fruit',
-                    stickerType: 'Fruit',
-                    stickerPath: 'test.png'
-                },
-                {
-                    stickerID: 1,
-                    stickerName: 'Fruit',
-                    stickerType: 'Fruit',
-                    stickerPath: 'test.png'
-                }
-            ]
-        }
-    },
-    changeChatRoomProfilePictureMockup:(chatRoomID,Picture)=>{
-        return {
+	},
+	getStickerListMockup: (userID) => {
+		return {
+			stickers: [
+				{
+					stickerID: 1,
+					stickerName: 'Fruit',
+					stickerType: 'Fruit',
+					stickerPath: 'test.png',
+				},
+				{
+					stickerID: 1,
+					stickerName: 'Fruit',
+					stickerType: 'Fruit',
+					stickerPath: 'test.png',
+				},
+				{
+					stickerID: 1,
+					stickerName: 'Fruit',
+					stickerType: 'Fruit',
+					stickerPath: 'test.png',
+				},
+			],
+		}
+	},
+	changeChatRoomProfilePictureMockup: (chatRoomID, Picture) => {
+		return {
 			success: true,
 		}
-    },
-    changeChatRoomNameMockup:(chatRoomID,name)=>{
-        return {
+	},
+	changeChatRoomNameMockup: (chatRoomID, name) => {
+		return {
 			success: true,
 		}
-    },
-    changeThemeColorMockup:(chatRoomID,userID,senderColor,recieverColor)=>{
-        return {
+	},
+	changeThemeColorMockup: (chatRoomID, userID, senderColor, recieverColor) => {
+		return {
 			success: true,
 		}
-    },
-    addChatRoomMemberMockup:(chatRoomID,InvitorID,InviteeID)=>{
-        return {
+	},
+	addChatRoomMemberMockup: (chatRoomID, InvitorID, InviteeID) => {
+		return {
 			success: true,
 		}
-    },
-    changeMemberNicknameMockup:(chatRoomID,changerID,userID,nickName)=>{
-        return {
+	},
+	changeMemberNicknameMockup: (chatRoomID, changerID, userID, nickName) => {
+		return {
 			success: true,
 		}
-    },
-    deleteMemberMockup:(chatRoomID,deleterID,userID)=>{
-        return {
+	},
+	deleteMemberMockup: (chatRoomID, deleterID, userID) => {
+		return {
 			success: true,
 		}
-    },
-    leaveChatRoomMockup:(chatRoomID,userID)=>{
-        return {
+	},
+	leaveChatRoomMockup: (chatRoomID, userID) => {
+		return {
 			success: true,
 		}
-    },
-    deleteChatRoomMockup:(chatRoomID)=>{
-        return {
+	},
+	deleteChatRoomMockup: (chatRoomID) => {
+		return {
 			success: true,
 		}
-    }
-
+	},
 }
