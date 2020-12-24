@@ -66,6 +66,17 @@ export default css`
 		width: 20px;
 		height: 20px;
 	}
+	.block {
+		height: 1.5rem;
+		margin-top: 1rem;
+		padding: 0 0.75rem;
+		background-color: #828282;
+		border: none;
+		color: #ffffff;
+		font-weight: bold;
+		font-size: 0.875rem;
+		border-radius: 5px;
+	}
 
 	// Animation
 	@keyframes anima1 {

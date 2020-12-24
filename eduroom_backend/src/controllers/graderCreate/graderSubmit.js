@@ -316,13 +316,15 @@ const gQuestionSubmission = async (req, res, next) => {
 const gCountQuestionByTag = async (req, res, next) => {
 	try {
 		const tag = req.query.tag
+		const offset = req.query.offset
 		const data = await pool.query(`
 		select  count(*)
 		from tags t, questiontag qt, questions q
 		where t.tagid = qt.tagid
     		and q.id = qt.questionid
-    		and t.tagname = '${tag}';`)
-		const ann = data.rows
+			and t.tagname = '${tag}'
+		offset ${offset} limit 10;`)
+		const ann = data.rows[0]
 		res.send(ann)
 	} catch (err) {
 		return new ErrorResponse('ERROR', 400)

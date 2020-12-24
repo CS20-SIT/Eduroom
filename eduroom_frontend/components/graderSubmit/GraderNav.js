@@ -10,11 +10,15 @@ const GraderNav = (props) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			let result = await api.get('/api/auth/profile')
-			setData(result.data)
+			try {
+				let result = await api.get('/api/auth/profile')
+				setData(result.data)
+			} catch (e) {
+				return console.log(e.data)
+			}
 		}
 		GetData()
-	}, [])
+	}, [Data])
 
 	const menus = [
 		{ text: 'Home', link: '/graderSystem', page: 'home' },
@@ -45,11 +49,11 @@ const GraderNav = (props) => {
 					)
 				})}
 				<div className="link">
-					<div className="text" onClick={() => router.push('/user')}>
+					<div className="text" onClick={() => router.push(`${Data != '' ? '/user' : '/'}`)}>
 						<span className="profile">
 							Profile
 							<img
-								src={`${Data != '' ? Data.avatar : '../../images/graderSubmit/publicProfile.svg'}`}
+								src={`${Data != '' ? Data.avatar : '/../../images/graderSubmit/publicProfile.svg'}`}
 								style={{ borderRadius: '50%' }}
 							/>
 						</span>
