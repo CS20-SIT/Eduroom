@@ -10,7 +10,7 @@ import NotificationIcon from './icons/NotificationIcon'
 import ChatInvitation from '../chat/chatInvitation'
 import SearchResult from '../chat/searchResult'
 import api from '../../api'
-import socketIOClient from "socket.io-client";
+import socketIOClient from 'socket.io-client'
 
 export default function chatContact(props) {
 	const [contact, setContact] = useState(props.contact)
@@ -33,13 +33,11 @@ export default function chatContact(props) {
 		setSearchResult(res.data)
 	}
 	const clickSelectResult = async (el) => {
-		const res = await api.get(`/api/chat/selectSearchResult`, { params: { member: el.userid} })
-		if(res.data.chatroomid){
+		const res = await api.get(`/api/chat/selectSearchResult`, { params: { member: el.userid } })
+		if (res.data.chatroomid) {
 			props.setSelectChat(res.data)
 			props.getChatList()
-		}else{
-			const res = await api.get(`/api/chat/getChatlist`)
-			props.setSelectChat(res.data[0])
+		} else {
 			props.getChatList()
 		}
 	}
@@ -122,9 +120,7 @@ export default function chatContact(props) {
 						alt={userProfile && userProfile.firstname + ' ' + userProfile.lastname}
 						src={userProfile && userProfile.avatar}
 					/>
-					<h4 style={{ textAlign: 'center' }}>
-						{userProfile && userProfile.firstname + ' ' + userProfile.lastname}
-					</h4>
+					<h4 style={{ textAlign: 'center' }}>{userProfile && userProfile.firstname + ' ' + userProfile.lastname}</h4>
 					<div
 						style={{
 							display: 'flex',
@@ -167,7 +163,11 @@ export default function chatContact(props) {
 						/>
 					</div>
 					<Dialog disableBackdropClick onClose={handleCloseCreateChat} open={openCreateChat}>
-						<CreateChatRoom handleClose={handleCloseCreateChat} userProfile={userProfile} getChatList={props.getChatList}/>
+						<CreateChatRoom
+							handleClose={handleCloseCreateChat}
+							userProfile={userProfile}
+							getChatList={props.getChatList}
+						/>
 					</Dialog>
 					<div
 						style={{
@@ -181,17 +181,17 @@ export default function chatContact(props) {
 				<div style={{ marginLeft: 14 }}>
 					<h4 style={{ marginLeft: 14 }}>Chat</h4>
 					{props.chatList &&
-						props.chatList.map((el,i) => {
+						props.chatList.map((el, i) => {
 							if (el.roomname == null) {
 								return (
 									<ContactPerson
 										key={el.chatroomid}
-										contact={{
-											chatRoomID: el.chatroomid,
-											name: el.firstname,
-											resentMessage: 'Message: ' + el.message,
-											recentMessageDate: new Date(el.sendtime).getTime(),
-										}}
+										chatRoomID={el.chatroomid}
+										roomname={el.roomname}
+										name={el.firstname}
+										hide={el.hide}
+										resentMessage={'Message: ' + el.message}
+										recentMessageDate={new Date(el.sendtime).getTime()}
 										onClick={() => {
 											props.setSelectChat(el)
 										}}
@@ -201,36 +201,16 @@ export default function chatContact(props) {
 										socket={props.socket}
 									/>
 								)
-							} else if(el.message==null){
+							} else if (el.message == null) {
 								return (
 									<ContactPerson
 										key={el.chatroomid}
-										contact={{
-											chatRoomID: el.chatroomid,
-											name: el.roomname,
-											resentMessage: 'Message: '  + el.message,
-											recentMessageDate: new Date(el.sendtime).getTime(),
-										}}
-										onClick={() => {
-											props.setSelectChat(el)
-										}}
-										selectChat={props.selectChat}
-										getChatList={props.getChatList}
-										setSelectChat={props.setSelectChat}
-										setChatRoomDetail={props.setChatRoomDetail}
-										socket={props.socket}
-									/>
-								)
-							}else if(el.sticker==true){
-								return (
-									<ContactPerson
-										key={el.chatroomid}
-										contact={{
-											chatRoomID: el.chatroomid,
-											name: el.roomname,
-											resentMessage: 'Message: Sticker',
-											recentMessageDate: new Date(el.sendtime).getTime(),
-										}}
+										chatRoomID={el.chatroomid}
+										name={el.firstname}
+										hide={el.hide}
+										roomname={el.roomname}
+										resentMessage={'Message: ' + el.message}
+										recentMessageDate={new Date(el.sendtime).getTime()}
 										onClick={() => {
 											props.setSelectChat(el)
 										}}
@@ -241,17 +221,36 @@ export default function chatContact(props) {
 										socket={props.socket}
 									/>
 								)
-							}
-							else{
+							} else if (el.sticker == true) {
 								return (
 									<ContactPerson
 										key={el.chatroomid}
-										contact={{
-											chatRoomID: el.chatroomid,
-											name: el.roomname,
-											resentMessage: 'Message: '  + el.message,
-											recentMessageDate: new Date(el.sendtime).getTime(),
+										chatRoomID={el.chatroomid}
+										name={el.firstname}
+										hide={el.hide}
+										roomname={el.roomname}
+										resentMessage={'Message: ' + el.message}
+										recentMessageDate={new Date(el.sendtime).getTime()}
+										onClick={() => {
+											props.setSelectChat(el)
 										}}
+										selectChat={props.selectChat}
+										getChatList={props.getChatList}
+										setSelectChat={props.setSelectChat}
+										setChatRoomDetail={props.setChatRoomDetail}
+										socket={props.socket}
+									/>
+								)
+							} else {
+								return (
+									<ContactPerson
+										key={el.chatroomid}
+										chatRoomID={el.chatroomid}
+										name={el.firstname}
+										roomname={el.roomname}
+										hide={el.hide}
+										resentMessage={'Message: ' + el.message}
+										recentMessageDate={new Date(el.sendtime).getTime()}
 										onClick={() => {
 											props.setSelectChat(el)
 										}}

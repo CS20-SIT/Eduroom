@@ -86,15 +86,18 @@ export default function editChat(props) {
 		props.getChatRoomDetail()
 	}
 	const clickDelete = async() =>{
-		props.socket.emit("leaveRoom",props.chatRoomDetail.chatroomid)
+		props.setChatRoomDetail(null)
 		const res = await api.get(`/api/chat/deleteChatroom`,{params:{chatroomid:props.chatRoomDetail.chatroomid}})
+		props.socket.emit("leaveRoom",props.chatRoomDetail.chatroomid)
+		props.socket.emit("leaveListRoom",props.chatRoomDetail.chatroomid)
 		props.socket.emit("deleteChatRoom",props.chatRoomDetail.chatroomid)
 		props.getChatList()
 	}
 	const clickLeave = async() =>{
-		props.getChatRoomDetail(null)
+		props.setChatRoomDetail(null)
 		const res = await api.get(`/api/chat/leaveChatroom`,{params:{chatroomid:props.chatRoomDetail.chatroomid}})
 		props.socket.emit("leaveChatRoom",props.chatRoomDetail.chatroomid)
+		props.socket.emit("leaveListRoom",props.chatRoomDetail.chatroomid)
 		props.socket.emit("leaveRoom",props.chatRoomDetail.chatroomid)
 		props.getChatList()
 	}
