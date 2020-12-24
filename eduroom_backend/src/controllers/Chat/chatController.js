@@ -400,6 +400,9 @@ order by hide, sendtime desc;`)
 				const invite = await pool.query(`insert into invite_invitees (invitationid, inviteeid)
       values (${createInvitation.rows[0].ivid},'${member.userid}');`)
     }
+    const sysMess = await pool.query(`insert into chat_systemmessage (chatroomid, sendtime, message)
+    values (${createChat.rows[0].cid},current_timestamp,'You Can Now Start the Conversation')`)
+    res.status(200).json({ success: true })
 	},
 	readMessage: async (req, res, next) => {
     try {
