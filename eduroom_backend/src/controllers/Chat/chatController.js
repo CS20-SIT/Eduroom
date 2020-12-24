@@ -1,4 +1,5 @@
 const pool = require('../../database/db')
+
 module.exports = {
 	getUserProfile: async (req, res, next) => {
     try {
@@ -388,15 +389,15 @@ order by hide, sendtime desc;`)
     const members = req.query.members
     const createChat = await pool.query(`insert into chat (chatroomid, picture, roomname, date)
     values (default,'${picture}','${chatRoomName}',current_date) returning chatroomid as cid;`)
-    const setChatGroup = await pool.query(`insert into chat_group (chatroomid)
+			const setChatGroup = await pool.query(`insert into chat_group (chatroomid)
     values (${createChat.rows[0].cid})`)
-    const createInvitation = await pool.query(`insert into chat_invitation (invitationid, date, chatroomid, invitor_id)
+			const createInvitation = await pool.query(`insert into chat_invitation (invitationid, date, chatroomid, invitor_id)
     values (default,current_date,${createChat.rows[0].cid},'${userid}') returning invitationid as ivid`)
-    const adduser = await pool.query(`insert into chat_roommember(chatroomid, userid, nickname, sender_color, receiver_color, hide)
+			const adduser = await pool.query(`insert into chat_roommember(chatroomid, userid, nickname, sender_color, receiver_color, hide)
     values (${createChat.rows[0].cid},'${userid}',null,'#EB7DB1','#5B5B5B',false)`)
-    for(i = 0;i<members.length;i++){
-      const member = JSON.parse(members[i])
-      const invite = await pool.query(`insert into invite_invitees (invitationid, inviteeid)
+			for (i = 0; i < members.length; i++) {
+				const member = JSON.parse(members[i])
+				const invite = await pool.query(`insert into invite_invitees (invitationid, inviteeid)
       values (${createInvitation.rows[0].ivid},'${member.userid}');`)
     }
 	},
