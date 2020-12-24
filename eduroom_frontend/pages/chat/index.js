@@ -19,7 +19,8 @@ export default function Chat() {
 	const [oldChatRoom, setOldChatRoom] = useState([])
 	const [chatRoomDetail, setChatRoomDetail] = useState(null)
 	const [userProfile, setUserProfile] = useState(null)
-	const [chatList, setChatList] = useState(null)
+	const [chatList, setChatList] = useState([])
+	const [oldChatList,setOldChatList] = useState(null)
 	const userContext = useContext(UserContext)
 	const { user } = userContext
 	const [dialog, setDialog] = useState(false)
@@ -31,9 +32,26 @@ export default function Chat() {
 		}
 	}, [user])
 	const getChatList = async () => {
+		if(chatList){
+			setOldChatList(chatList)
+		}
 		const res = await api.get(`/api/chat/getChatlist`)
 		setChatList(res.data)
 	}
+	useEffect(()=>{
+		if(chatList){
+			for(let i=0;i<chatList.length;i++){
+				socket.emit('joinListRoom', chatList[i].chatroomid)
+			}
+		}
+	},[chatList])
+	useEffect(()=>{
+		if(oldChatList){
+			for(let i=0;i<oldChatList.length;i++){
+				socket.emit('leaveListRoom', oldChatList[i].chatroomid)
+			}
+		}
+	},[oldChatList])
 	const [expand, setExpand] = useState({
 		width: 'calc(75% - 14px)',
 		position: 'relative',
@@ -78,40 +96,39 @@ export default function Chat() {
 			socket.on('recieveMessage', (room) => {
 				setReadMessage(room)
 				getChatRoomDetail(room)
-				getChatList()
 			})
 			socket.on('recieveUnsendMessage', (room) => {
 				getChatRoomDetail(room)
-				getChatList()
 			})
 			socket.on('recieveChangeChatRoomName', (room) => {
 				getChatRoomDetail(room)
-				getChatList()
 			})
 			socket.on('recieveChangeProfilePic', (room) => {
 				getChatRoomDetail(room)
-				getChatList()
 			})
 			socket.on('recieveLeaveChatRoom', (room) => {
-				setTimeout(function () {
-					getChatRoomDetail(room)
-					getChatList()
-				}, 1000)
+				chatList.map((el)=>{
+					if(el.chatroomid==room){
+						getChatRoomDetail(room)
+					}
+				})
 			})
 			socket.on('recieveDeleteChatRoom', (room) => {
+				socket.emit('leaveListRoom', room)
 				socket.emit('leaveRoom', room)
 				setChatRoomDetail(null)
-				getChatList()
 			})
 			socket.on('recieveReadMessage', (room) => {
-				getChatList()
 				setTimeout(function () {
 					getChatRoomDetail(room)
 				}, 1000)
 			})
 			socket.on('recieveKickOut', (room) => {
 				setChatRoomDetail(null)
+				socket.emit('leaveListRoom', room)
 				socket.emit('leaveRoom', room)
+			})
+			socket.on('changeChatList', (room) => {
 				getChatList()
 			})
 		}
@@ -132,7 +149,6 @@ export default function Chat() {
 	}, [oldChatRoom])
 	useEffect(() => {
 		if (chatRoomDetail != null) {
-			getChatList()
 			setMessageLeftColor(chatRoomDetail.themeColor.recievecolor)
 			setMessageRightColor(chatRoomDetail.themeColor.sendcolor)
 		}
@@ -209,6 +225,7 @@ export default function Chat() {
 										}}
 										chatRoomDetail={chatRoomDetail}
 										getChatRoomDetail={getChatRoomDetail}
+										setChatRoomDetail={setChatRoomDetail}
 										getChatList={getChatList}
 										setChatList={setChatList}
 										socket={socket}
@@ -223,8 +240,3 @@ export default function Chat() {
 	)
 }
 
-// You need to implement backend first to get all chat room and
-// you should implement sending message and store in backend
-// after you finish all you implement socket in same function that call backend api
-// in the then of api.post().then() to ensure that backend need to success before
-// we sent notify and [id].js you can delete it :)
