@@ -12,8 +12,8 @@ const StudentSupport = () => {
 								<Grid container sm={12}>
 									<Grid item sm={12}>
 										<img
-											src="https://www.flaticon.com/svg/static/icons/svg/2164/2164598.svg"
-											style={{ height: '80px' }}
+											src="/images/gettingstarted.svg"
+											style={{ height: '120px' }}
 										/>
 										<br></br>
 									</Grid>
@@ -27,12 +27,13 @@ const StudentSupport = () => {
 				</Grid>
 				<Grid item>
 					<Paper style={{ width: '260px', height: '220px', backgroundColor: '#eff0f6' }} elevation={3}>
+					<Link href="/support/Account&Profile">
 						<Button style={{ width: '260px', height: '220px' }} variant="outlined">
 							<Grid container sm={12}>
 								<Grid item sm={12}>
 									<img
-										src="https://www.flaticon.com/svg/static/icons/svg/2521/2521782.svg"
-										style={{ height: '80px' }}
+										src="/images/accountandprofile.svg"
+										style={{ height: '120px' }}
 									/>
 									<br></br>
 								</Grid>
@@ -41,16 +42,18 @@ const StudentSupport = () => {
 								</Grid>
 							</Grid>
 						</Button>
+						</Link>
 					</Paper>
 				</Grid>
 				<Grid item>
 					<Paper style={{ width: '260px', height: '220px', backgroundColor: '#eff0f6' }} elevation={3}>
+					<Link href="/support/Troubleshooting">
 						<Button style={{ width: '260px', height: '220px' }} variant="outlined">
 							<Grid container sm={12}>
 								<Grid item sm={12}>
 									<img
-										src="https://www.flaticon.com/svg/static/icons/svg/2920/2920249.svg"
-										style={{ height: '80px' }}
+										src="/images/troubleshooting.svg"
+										style={{ height: '120px' }}
 									/>
 									<br></br>
 								</Grid>
@@ -59,16 +62,19 @@ const StudentSupport = () => {
 								</Grid>
 							</Grid>
 						</Button>
+						</Link>
 					</Paper>
 				</Grid>
 			</Grid>
 			<Grid container spacing={7} justify="center">
 				<Grid item>
 					<Paper style={{ width: '260px', height: '220px', backgroundColor: '#eff0f6' }} elevation={3}>
+					<Link href="/support/Course-Taking">
 						<Button style={{ width: '260px', height: '220px' }} variant="outlined">
 							<Grid container sm={12}>
 								<Grid item sm={12}>
-									<img src="https://www.flaticon.com/svg/static/icons/svg/182/182321.svg" style={{ height: '80px' }} />
+									<img src="/images/coursetaking.svg"
+											style={{ height: '120px' }} />
 									<br></br>
 								</Grid>
 								<Grid item sm={12}>
@@ -76,14 +82,17 @@ const StudentSupport = () => {
 								</Grid>
 							</Grid>
 						</Button>
+						</Link>
 					</Paper>
 				</Grid>
 				<Grid item>
 					<Paper style={{ width: '260px', height: '220px', backgroundColor: '#eff0f6' }} elevation={3}>
+					<Link href="/support/Purchase-Refunds">
 						<Button style={{ width: '260px', height: '220px' }} variant="outlined">
 							<Grid container sm={12}>
 								<Grid item sm={12}>
-									<img src="https://www.flaticon.com/svg/static/icons/svg/846/846023.svg" style={{ height: '80px' }} />
+									<img src="/images/purchaseandrefunds.svg"
+											style={{ height: '120px'}} />
 									<br></br>
 								</Grid>
 								<Grid item sm={12}>
@@ -91,14 +100,17 @@ const StudentSupport = () => {
 								</Grid>
 							</Grid>
 						</Button>
+						</Link>
 					</Paper>
 				</Grid>
 				<Grid item>
 					<Paper style={{ width: '260px', height: '220px', backgroundColor: '#eff0f6' }} elevation={3}>
+					<Link href="/support/Mobile">
 						<Button style={{ width: '260px', height: '220px' }} variant="outlined">
 							<Grid container sm={12}>
 								<Grid item sm={12}>
-									<img src="https://www.flaticon.com/svg/static/icons/svg/977/977411.svg" style={{ height: '80px' }} />
+									<img src="/images/mobile.svg"
+											style={{ height: '120px'}} />
 									<br></br>
 								</Grid>
 								<Grid item sm={12}>
@@ -106,6 +118,7 @@ const StudentSupport = () => {
 								</Grid>
 							</Grid>
 						</Button>
+						</Link>
 					</Paper>
 				</Grid>
 			</Grid>

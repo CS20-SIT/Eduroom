@@ -125,10 +125,10 @@ const CourseIDLesson = ({ id }) => {
 
                         {/* Videos / Materials / Quiz */}
                         <div className={`${partType == 1 ? "inline-block":"hidden"}`}>
-                            {/* <iframe className="" width="700" height="450" src={srcc}></iframe> */}
-                            <video width="700" height="450" controls>
+                            <iframe className="" width="700" height="450" src={courseDes.section[secBG].part[part].src}></iframe>
+                            {/* <video width="700" height="450" controls>
                                 <source src={courseDes.section[secBG].part[part].src} type="video/mp4"></source>
-                            </video>
+                            </video> */}
 
                             <div className="my-8 font-quicksand text-secondary mx-2 text-lg">{courseDes.section[secBG].part[part].partDescript}</div>
                         </div>

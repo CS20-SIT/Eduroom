@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import style from "../../styles/course/paymentPage";
 
-const country = () => {
+const country = ({handleChange}) => {
   return (
     <Fragment>
       <select
@@ -9,8 +9,7 @@ const country = () => {
         name="country"
         class="form-control"
         style={{
-          width: "410px",
-          height:"43px",
+          width:'100%',
           backgroundColor: "white",
           border: "0px solid",
           cursor: "pointer",
@@ -20,6 +19,7 @@ const country = () => {
           fontSize:'16px',
           borderRadius: '1.5vh'
         }}
+        handleChange={handleChange}
         className="country"
       >
         <option value="default" disabled selected>

@@ -46,9 +46,10 @@ exports.getCourseFromID = async (req, res, next) => {
 		return next(new ErrorResponse(err, 500))
 	}
 }
-exports.getCourseSectionPart = async (req, res) => {
+exports.getCourseSectionPart = async (req, res, next) => {
 	try {
         const id = req.query.courseID;
+        console.log(id);
 		if (!id) {
 			return next(new ErrorResponse('Unauthorize', 401))
         }
@@ -66,7 +67,7 @@ exports.getCourseSectionPart = async (req, res) => {
         )
         result.rows.map((e,i) => {
             courseDes.section.push({
-                id:'',sectionName:'', time:'37' , questionNow:0 , choiceNow:[], ansChoice:[], submitValid:0, submitYet:0, part:[]
+                id:'',sectionName:'', time:'37' , questionNow:0 , choiceNow:[], ansChoice:[], submitValid:0, submitYet:0, nQ:0, part:[]
             })
             courseDes.section[i].id = e.sectionno
             courseDes.section[i].time = e.sectionlength
@@ -152,20 +153,31 @@ exports.getCourseSectionPart = async (req, res) => {
             join quiz_question qq on cq.quizid = qq.quizid
             where course.courseid = '${id}'`
         )
+        let temp3=[]
         courseDes.section.map((eSection,iSection) => {
             eSection.part.map((ePart,iPart) =>{
+                let temp2 = 0, oldPartNum = -1
                 result.rows.map((eResult,iResult) =>{
+                    if(oldPartNum == eResult.partno){
+                        temp2++
+                    }
+                    else{
+                        oldPartNum = eResult.partno
+                        temp3.push(temp2)
+                    }
                     if(ePart.id == eResult.partno){
+                        eSection.nQ++
                         ePart.questionNum.push({
                             id: eResult.quizid,
                             question: eResult.questionname,
-                            choice:[],
-                            answer:''
+                            choice:['','','',''],
+                            answer:'',
                         })
                     }
                 })
             })
         })
+        console.log(temp3)
 
         //select answer
         result = await pool.query(
@@ -176,6 +188,25 @@ exports.getCourseSectionPart = async (req, res) => {
             join quiz_question_choice qqc on cq.quizid = qqc.quizid
             where course.courseid = '${id}'`
         )
+        const temp = []
+        const n = []
+        result.rows.map((eResult,iResult) => {
+            let have = 0
+            temp.map((eTemp,iTemp) => {
+                    if(eTemp.id == eResult.quizid){
+                        have+=1
+                    }
+                    else{
+                        n[iTemp]+=1
+                    }
+                })
+            if(have == 0){
+                temp.push(eResult.quizid)
+                n.push(1)
+            }
+            
+        })
+        console.log(n)
         courseDes.section.map((eSection,iSection) => {
             eSection.part.map((ePart,iPart) =>{
                 ePart.questionNum.map((eQuestionNum,iQuestionNum) => {

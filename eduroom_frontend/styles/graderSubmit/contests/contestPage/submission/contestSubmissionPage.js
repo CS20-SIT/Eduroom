@@ -38,4 +38,9 @@ export default css`
     height: 48.5vh;
     overflow: auto;
   }
+  .none {
+    color: #828282;
+    width: 95%;
+    text-align: center;
+}
 `

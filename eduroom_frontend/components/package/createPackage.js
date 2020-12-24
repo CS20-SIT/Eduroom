@@ -30,7 +30,10 @@ const CreatePackage = (props) => {
 			reader.readAsDataURL(props.myPackage.pic)
 		}
 	}, [props.myPackage.pic])
+	
 	const handleSelectedCourses = (newSelected) => {
+		console.log(newSelected)
+		console.log('hello')
 		props.setMyPackage({ ...props.myPackage, selectedCourses: newSelected })
 	}
 	const handleUplaodFile = (e) => {
@@ -67,7 +70,7 @@ const CreatePackage = (props) => {
 	const handleClick = (e) => {
 		props.changePage(2)
 	}
-
+	
 	const validator = () => {
 		if (
 			props.myPackage.name == '' ||
@@ -85,6 +88,7 @@ const CreatePackage = (props) => {
 			return true
 		}
 	}
+	console.log(props.myPackage.selectedCourses)
 	useEffect(() => {
 		validator()
 	}, [props.myPackage])

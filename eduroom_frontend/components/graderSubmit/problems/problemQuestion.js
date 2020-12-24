@@ -8,22 +8,26 @@ const ProblemQuestion = (props) => {
 
 	useEffect(() => {
 		const GetData = async () => {
-			if (props.contestID === undefined) {
-				const result = await api.get('/api/grader/getQuestionDetail', {
+			try {
+				if (props.contestID === undefined) {
+					const result = await api.get('/api/grader/getQuestionDetail', {
+						params: { id: props.questionId },
+					})
+					setData(result.data[0])
+				} else {
+					const result = await api.get('/api/grader/getContestQuestionDetail', {
+						params: { id: props.questionId, contestId: props.contestID },
+					})
+
+					setData(result.data[0])
+				}
+				const testCaseResult = await api.get('/api/grader/getQuestionTestCase', {
 					params: { id: props.questionId },
 				})
-				setData(result.data[0])
-			} else {
-				const result = await api.get('/api/grader/getContestQuestionDetail', {
-					params: { id: props.questionId, contestId: props.contestID },
-				})
-
-				setData(result.data[0])
+				setTestCaseData(testCaseResult.data)
+			} catch (e) {
+				return console.log(e.data)
 			}
-			const testCaseResult = await api.get('/api/grader/getQuestionTestCase', {
-				params: { id: props.questionId },
-			})
-			setTestCaseData(testCaseResult.data)
 		}
 		GetData()
 	}, [])

@@ -60,6 +60,17 @@ margin-left:25%;
     z-index: 1000000000;
 
 }
+.code-box {
+    align-item: center;
+}
+.code-free {
+    width: fit-content;
+    padding: 0.5rem 2rem;
+    background-color: #FB9CCB;
+    border-radius: 30px;
+    font-weight: bold;
+    color: #ffffff;
+}
 
 
 
