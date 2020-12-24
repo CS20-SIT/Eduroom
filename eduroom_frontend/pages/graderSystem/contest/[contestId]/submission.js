@@ -8,16 +8,27 @@ import api from '../../../../api'
 
 const contestSubmission = ({ contestId }) => {
 	const [data, setData] = useState([])
+	const [userState, setUserState] = useState(false)
 
 	useEffect(() => {
 		const GetData = async () => {
-			const result = await api.get('/api/grader/getContestSubmission', {
-				params: { contestId },
-			})
-			setData(result.data)
+			try {
+				const userQuery = await api.get('/api/auth/profile')
+				setUserData(userQuery.data)
+
+				if (userData != null) {
+					setUserState(true)
+				}
+				const result = await api.get('/api/grader/getContestSubmission', {
+					params: { contestId },
+				})
+				setData(result.data)
+			} catch (e) {
+				return console.log(e.data)
+			}
 		}
 		GetData()
-	}, [])
+	}, [userState])
 
 	return (
 		<Fragment>
@@ -55,21 +66,25 @@ const contestSubmission = ({ contestId }) => {
 									</div>
 									<div className="submission-list-box">
 										{data ? (
-											data.map((element, key) => {
-												return (
-													<ContestSubmissionList
-														submitTime={element.whentime}
-														time={element.time}
-														author={element.displayname}
-														memory={element.memory}
-														score={element.score}
-														status={element.status}
-														problem={element.conquestionno}
-														language={element.language}
-														key={key}
-													/>
-												)
-											})
+											userState == false ? (
+												<div className="none">Please log in before viewing the submissions!!!</div>
+											) : (
+												data.map((element, key) => {
+													return (
+														<ContestSubmissionList
+															submitTime={element.whentime}
+															time={element.time}
+															author={element.displayname}
+															memory={element.memory}
+															score={element.score}
+															status={element.status}
+															problem={element.conquestionno}
+															language={element.language}
+															key={key}
+														/>
+													)
+												})
+											)
 										) : (
 											<div className="none">None</div>
 										)}

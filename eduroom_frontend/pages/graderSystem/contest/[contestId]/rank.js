@@ -8,10 +8,17 @@ import api from '../../../../api'
 
 const contestRank = ({ contestId }) => {
 	const [data, setData] = useState([])
+	let countRank = 1
 	useEffect(() => {
 		const GetData = async () => {
-			const res = await api.get('/api/grader/getContestRanking', { params: { contestId: contestId } })
-			setData(res.data)
+			try {
+				const res = await api.get('/api/grader/getContestRanking', { params: { contestId: contestId } })
+				setData(res.data)
+
+				countRank = res.data.length
+			} catch (e) {
+				return console.log(e.data)
+			}
 		}
 		GetData()
 	}, [])
@@ -32,18 +39,21 @@ const contestRank = ({ contestId }) => {
 										<div className="actual-graph">
 											<div className="legend">
 												<div className="max">
-													<p>100%</p>
+													<p>MAX</p>
 												</div>
 												<div className="line"></div>
 												<div className="min">
-													<p>0%</p>
+													<p>0</p>
 												</div>
 											</div>
 											<div className="graph">
 												{data.map((element) => {
 													{
 														return (
-															<div className="eachBar" style={{ height: `${element.totalscore}%` }}>
+															<div
+																className="eachBar"
+																style={{ height: `${countRank == 1 ? `100%` : element.totalscore + `%`}` }}
+															>
 																{element.displayname.split(' ')[0]}
 															</div>
 														)
