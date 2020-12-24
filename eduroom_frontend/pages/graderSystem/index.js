@@ -10,11 +10,15 @@ const Home = () => {
 	const [data, setData] = useState([])
 
 	useEffect(() => {
-		const GetData = async () => {
-			const result = await api.get('api/grader/getHomePreviewContest')
-			setData(result.data)
+		try {
+			const GetData = async () => {
+				const result = await api.get('api/grader/getHomePreviewContest')
+				setData(result.data)
+			}
+			GetData()
+		} catch (err) {
+			throw err.message
 		}
-		GetData()
 	}, [])
 
 	return (

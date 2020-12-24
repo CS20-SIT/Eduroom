@@ -7,6 +7,7 @@ const ProblemCode = (props) => {
 	const [resultData, setResultData] = useState('')
 	const [code, setCode] = useState('')
 	const [loading, setLoading] = useState(false)
+	const [user, setUser] = useState(true)
 
 	const handleSubmit = async () => {
 		try {
@@ -78,7 +79,20 @@ const ProblemCode = (props) => {
 		}
 	}
 
-	useEffect(() => {}, [])
+	useEffect(() => {
+		const GetData = async () => {
+			try {
+				const result = await api.get('/api/auth/profile')
+
+				if (result.data != null) {
+					setUser(false)
+				}
+			} catch (e) {
+				return console.log(e.data)
+			}
+		}
+		GetData()
+	}, [user])
 
 	return (
 		<Fragment>
@@ -115,7 +129,8 @@ const ProblemCode = (props) => {
 									alert('PlEaSe InPuT yOuR cOdE bEfOrE sUbMiT!')
 							  }
 					}
-					className="butt"
+					className={user === true ? 'block' : 'butt'}
+					disabled={user}
 				>
 					Submit
 				</button>
