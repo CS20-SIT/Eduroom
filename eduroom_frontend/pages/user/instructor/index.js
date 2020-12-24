@@ -1,21 +1,25 @@
 import Link from 'next/link'
 import General from '../../../components/template/general'
-import React, { Fragment, useState, useContext, useEffect } from 'react'
+import { Fragment, useState, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Courses from '../../../components/user/instructor/Courses'
 import CreateCourseButton from '../../../components/user/instructor/CreateCourseButton'
 import UserContext from '../../../contexts/user/userContext'
 import styles from '../../../styles/user/instructor/profile'
 import api from '../../../api'
+import Dialog from '@material-ui/core/Dialog'
 
 const InstructorProfile = () => {
 	const userContext = useContext(UserContext)
 	const user = userContext.user
+	const [open, setOpen] = useState(false)
 	const [instructor, setInstructor] = useState(null)
+	const [bio, setBio] = useState(null)
 	const router = useRouter()
 	const fetchInstructor = async () => {
 		try {
 			const res = await api.get('/api/instructor/profileDetail')
+			setBio(res.data.bio)
 			setInstructor(res.data)
 		} catch (err) {
 			router.push('/user')
@@ -69,6 +73,17 @@ const InstructorProfile = () => {
 			</Fragment>
 		)
 	}
+	const handleEdit = async () => {
+		try {
+			const body = { bio }
+			const res = await api.post('/api/instructor/updateBio', body)
+			console.log(res.data)
+			await fetchInstructor()
+			setOpen(false)
+		} catch (err) {
+			console.log(err)
+		}
+	}
 	const renderPage = () => {
 		if (!user || !instructor) {
 			return null
@@ -84,7 +99,7 @@ const InstructorProfile = () => {
 						<div style={{ color: 'white', padding: '20px 40px' }}>
 							<div style={{ display: 'flex', marginTop: '20px' }}>
 								<h1 style={{ margin: '0' }}>Instructor</h1>
-								<i style={{ margin: '15px 0 0 20px' }} className="fas fa-edit"></i>
+								<i style={{ margin: '15px 0 0 20px' }} className="fas fa-edit edit" onClick={() => setOpen(true)}></i>
 							</div>
 							<h1>Profile</h1>
 						</div>
@@ -125,6 +140,17 @@ const InstructorProfile = () => {
 					</Link>
 				</div>
 				{renderPage()}
+				<Dialog onClose={() => setOpen(false)} aria-labelledby="simple-dialog-title" open={open}>
+					<div style={{ padding: '30px 50px', width: '600px' }}>
+						<h1>Edit your biography</h1>
+						<input className="textfield" type="text" value={bio} onChange={(e) => setBio(e.target.value)}></input>
+						<div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+							<div className="btn" onClick={handleEdit}>
+								Submit
+							</div>
+						</div>
+					</div>
+				</Dialog>
 				<style jsx>{styles}</style>
 			</General>
 		</Fragment>
