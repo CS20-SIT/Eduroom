@@ -11,6 +11,7 @@ spec:
       labels:
         app: eduroom-frontend-deployment
     spec:
+      restartPolicy: Always
       containers:
       - name: eduroom-frontend-deployment
         image: asia.gcr.io/macbigduck/eduroom-frontend

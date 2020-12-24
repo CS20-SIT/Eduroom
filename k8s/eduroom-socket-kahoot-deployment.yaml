@@ -11,6 +11,7 @@ spec:
       labels:
         app: eduroom-socket-kahoot-deployment
     spec:
+      restartPolicy: Always
       containers:
       - name: eduroom-socket-kahoot-deployment
         image: asia.gcr.io/macbigduck/eduroom-socket-kahoot
