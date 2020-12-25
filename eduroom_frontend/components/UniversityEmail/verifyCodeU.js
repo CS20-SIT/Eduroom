@@ -33,10 +33,7 @@ const Content = () => {
     e.preventDefault();
     if (validator()) {
       console.log(createForm);
-      api.post("/api/forum/create", createForm).then((res) => {
-        console.log(res);
-        // router.push("/forum");
-      });
+      api.post("/api/forum/create", createForm).catch(err=>{})
     } else {
       console.log("This form is not valid");
     }

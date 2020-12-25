@@ -3,12 +3,12 @@ import Country from './country'
 import CreditBox from './creditBox'
 import SummaryBox from './summaryBox'
 import api from '../../api'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 const CheckoutDialog = ({ handleClick, courseList, packageList }) => {
 	const [country, setCountry] = useState('')
 	const [prices, setPrice] = useState(0)
 	const [discount, setDiscount] = useState(0)
-	const [coupon,setCoupon] = useState('')
+	const [coupon, setCoupon] = useState('')
 	const router = useRouter()
 	useEffect(() => {
 		if (courseList && packageList) {
@@ -36,26 +36,26 @@ const CheckoutDialog = ({ handleClick, courseList, packageList }) => {
 			})
 	}
 	const handleSubmit = () => {
-		if(coupon!= ''){
-			api.post('/api/coupon/UseCode',{pcode:coupon}).then(res=>{
-				const newPrice = prices * (100-discount)/100
-				api.post('/api/user/checkout',{course:courseList,packages:packageList,price:newPrice}).then(
-					res=>{
+		if (coupon != '') {
+			api
+				.post('/api/coupon/UseCode', { pcode: coupon })
+				.then((res) => {
+					const newPrice = (prices * (100 - discount)) / 100
+					api.post('/api/user/checkout', { course: courseList, packages: packageList, price: newPrice }).then((res) => {
 						router.push('/user')
-					}
-				)
-			}).catch(err=>{
-				alert(err)
-			})
-
+					})
+				})
+				.catch((err) => {
+					alert(err)
+				})
 		} else {
-			api.post('/api/user/checkout',{course:courseList,packages:packageList,price:prices}).then(
-				res=>{
+			api
+				.post('/api/user/checkout', { course: courseList, packages: packageList, price: prices })
+				.then((res) => {
 					console.log(res)
 					router.push('/user')
-				}
-			)
-
+				})
+				.catch((err) => {})
 		}
 	}
 	return (

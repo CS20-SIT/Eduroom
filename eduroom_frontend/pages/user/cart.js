@@ -12,18 +12,22 @@ const CartPage = () => {
 	const [packages, setPackages] = useState([])
 	const [dialog, setDialog] = useState(false)
 	const fetchCourse = async () => {
-		const courses = getItems('course')
-		const res = await api.get('/api/package/coursesFromIds', {
-			params: { ids: courses },
-		})
-		setCourses(res.data)
+		try {
+			const courses = getItems('course')
+			const res = await api.get('/api/package/coursesFromIds', {
+				params: { ids: courses },
+			})
+			setCourses(res.data)
+		} catch (err) {}
 	}
 	const fetchPackages = async () => {
-		const packages = getItems('package')
-		const res = await api.get('/api/package/packagesFromIds', {
-			params: { ids: packages },
-		})
-		setPackages(res.data)
+		try {
+			const packages = getItems('package')
+			const res = await api.get('/api/package/packagesFromIds', {
+				params: { ids: packages },
+			})
+			setPackages(res.data)
+		} catch (err) {}
 	}
 	const updateCart = () => {
 		const courses = getItems('course')
@@ -66,11 +70,15 @@ const CartPage = () => {
 	return (
 		<Fragment>
 			<General>
-				{
-					dialog ? (
-						<CheckoutDialog handleClick={()=>{setDialog(false)}} courseList={courses} packageList={packages}/>
-					) : null
-				}
+				{dialog ? (
+					<CheckoutDialog
+						handleClick={() => {
+							setDialog(false)
+						}}
+						courseList={courses}
+						packageList={packages}
+					/>
+				) : null}
 				<div className="cart">
 					<h1 className="header">Eduroom Cart</h1>
 					<div className="container">
@@ -82,7 +90,9 @@ const CartPage = () => {
 						</div>
 					</div>
 					<div className="chk-btn">
-						<div className="chk-btn-in" onClick={handleCheckout}>Checkout</div>
+						<div className="chk-btn-in" onClick={handleCheckout}>
+							Checkout
+						</div>
 					</div>
 				</div>
 			</General>
@@ -93,9 +103,9 @@ const CartPage = () => {
 					padding: 0rem 5rem;
 				}
 				.chk-btn-in {
-					background: #FB9CCB;
+					background: #fb9ccb;
 					min-width: 150px;
-					padding: .75rem;
+					padding: 0.75rem;
 					border-radius: 25px;
 					color: #fff;
 					font-weight: bold;

@@ -20,7 +20,7 @@ const create = () => {
 		subject: '',
 		price: '',
 		sections: [],
-		haveCertificate: false
+		haveCertificate: false,
 	})
 	const [subjects, setSubjects] = useState([])
 	const router = useRouter()
@@ -50,46 +50,50 @@ const create = () => {
 		}
 	}
 	const getInfosPath = async (el, data) => {
-		let sections = data.sections
-		for (let i = 0; i < sections.length; i++) {
-			let section = sections[i]
-			for (let j = 0; j < section[el].length; j++) {
-				let element = section[el][j].data
-				let formData = new FormData()
-				formData.append(el, element)
-				let res = await api.post(`/api/instructor/upload/${el}`, formData)
-				const link = res.data[0].linkUrl
-				section[el][j].path = link
+		try {
+			let sections = data.sections
+			for (let i = 0; i < sections.length; i++) {
+				let section = sections[i]
+				for (let j = 0; j < section[el].length; j++) {
+					let element = section[el][j].data
+					let formData = new FormData()
+					formData.append(el, element)
+					let res = await api.post(`/api/instructor/upload/${el}`, formData)
+					const link = res.data[0].linkUrl
+					section[el][j].path = link
+				}
+				sections[i] = section
 			}
-			sections[i] = section
-		}
-		data.sections = sections
-		return data
+			data.sections = sections
+			return data
+		} catch (err) {}
+		return ''
 	}
 
 	const handleNext = async () => {
 		if (page === 3) {
-			//upload file to server
-			let newData = { ...data }
-			const pictureFormData = new FormData()
-			pictureFormData.append('course-picture', newData.picture)
-			const pictureLink = await api.post('/api/instructor/upload/picture', pictureFormData)
-			newData.picturePath = pictureLink.data[0].linkUrl
+			try {
+				let newData = { ...data }
+				const pictureFormData = new FormData()
+				pictureFormData.append('course-picture', newData.picture)
+				const pictureLink = await api.post('/api/instructor/upload/picture', pictureFormData)
+				newData.picturePath = pictureLink.data[0].linkUrl
 
-			const sampleVideoFormData = new FormData()
-			sampleVideoFormData.append('course-picture', newData.video)
-			let videoLink = await api.post('/api/instructor/upload/sampleVideo', sampleVideoFormData)
-			newData.videoPath = videoLink.data[0].linkUrl
+				const sampleVideoFormData = new FormData()
+				sampleVideoFormData.append('course-picture', newData.video)
+				let videoLink = await api.post('/api/instructor/upload/sampleVideo', sampleVideoFormData)
+				newData.videoPath = videoLink.data[0].linkUrl
 
-			newData = await getInfosPath('videos', newData)
-			newData = await getInfosPath('materials', newData)
-			console.log('after get path new data is')
-			console.log(newData)
+				newData = await getInfosPath('videos', newData)
+				newData = await getInfosPath('materials', newData)
+				console.log('after get path new data is')
+				console.log(newData)
 
-			const res = await api.post('/api/instructor/course', newData)
-			console.log('res is ', res.data)
-			setData({ ...newData })
-			router.push('/user/instructor')
+				const res = await api.post('/api/instructor/course', newData)
+				console.log('res is ', res.data)
+				setData({ ...newData })
+				router.push('/user/instructor')
+			} catch (err) {}
 		} else {
 			setPage(page + 1)
 		}

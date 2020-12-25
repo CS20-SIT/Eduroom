@@ -23,44 +23,43 @@ const Appointment = () => {
 	const now = '' + today.getFullYear() + (today.getMonth() + 1) + today.getDate()
 
 	const post = async (score, desc) => {
-		// console.log(reviewModal)
-		await api.post('/api/tutor/appointment/review', {
-			id: reviewModal,
-			score,
-			desc,
-		})
+		try {
+			await api.post('/api/tutor/appointment/review', {
+				id: reviewModal,
+				score,
+				desc,
+			})
+		} catch (err) {}
 	}
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await api.get('/api/tutor/student/appointments')
-			const appointment = res.data.appointments
-			// Categorize ( not implemented yet )
-			const approved = appointment.filter((e) => {
-				return e.isAgree == 'Approved'
-			})
-			const rejected = appointment.filter((e) => {
-				return e.isAgree == 'Rejected'
-			})
-			const pending = appointment.filter((e) => {
-				return e.isAgree == 'Pending'
-			})
-			// Sorting Whole Data
-			appointment.sort((a, b) => {
-				var nameA = a.isAgree.toUpperCase() // ignore upper and lowercase
-				var nameB = b.isAgree.toUpperCase() // ignore upper and lowercase
-				if (nameA < nameB) {
-					return -1
-				}
-				if (nameA > nameB) {
-					return 1
-				}
-				return 0
-			})
-			const tmp = [appointment, approved, rejected, pending]
-			// console.log(tmp)
-
-			setAppointments(tmp)
+			try {
+				const res = await api.get('/api/tutor/student/appointments')
+				const appointment = res.data.appointments
+				const approved = appointment.filter((e) => {
+					return e.isAgree == 'Approved'
+				})
+				const rejected = appointment.filter((e) => {
+					return e.isAgree == 'Rejected'
+				})
+				const pending = appointment.filter((e) => {
+					return e.isAgree == 'Pending'
+				})
+				appointment.sort((a, b) => {
+					var nameA = a.isAgree.toUpperCase() // ignore upper and lowercase
+					var nameB = b.isAgree.toUpperCase() // ignore upper and lowercase
+					if (nameA < nameB) {
+						return -1
+					}
+					if (nameA > nameB) {
+						return 1
+					}
+					return 0
+				})
+				const tmp = [appointment, approved, rejected, pending]
+				setAppointments(tmp)
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])

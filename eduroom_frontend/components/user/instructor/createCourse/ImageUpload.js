@@ -2,24 +2,11 @@ import React, { Fragment, useState, useEffect } from 'react'
 import api from '../../../../api'
 
 const Upload = ({ index, handleData, data }) => {
-	// useEffect(() => {
-	// 	if (image) {
-	// 		var reader = new FileReader()
-	// 		reader.onload = function (e) {
-	// 			document.getElementById('show-image' + index).src = e.target.result
-	// 		}
-	// 		reader.readAsDataURL(image)
-	// 	}
-	// }, [image])
 	const handleUplaodFile = async (e) => {
 		let newValue = e.target.files[0]
 		handleData({ el: 'picture', data: newValue })
 		const formData = new FormData()
 		formData.append('course-picture-1', newValue)
-		// formData.append('course-picture-2', newValue)
-		// const res = await api.post('/api/instructor/upload/picture', formData)
-		// console.log(res.data)
-		// handleData({ el: 'picturePath', data: res.data.linkUrl })
 	}
 	const getLabel = () => {
 		return data.picture ? data.picture.name : 'Choose Picture'

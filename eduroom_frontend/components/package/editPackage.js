@@ -4,10 +4,16 @@ import style from '../../styles/package/createpackage'
 import { useRouter } from 'next/router'
 import api from '../../api'
 
-const EditPackage = ({index,handleChangeEdit,handleSelectedCourses,handleUplaodFile,image,editData,selectCourse,handleChangePage }) => {
-	
-
-	
+const EditPackage = ({
+	index,
+	handleChangeEdit,
+	handleSelectedCourses,
+	handleUplaodFile,
+	image,
+	editData,
+	selectCourse,
+	handleChangePage,
+}) => {
 	useEffect(() => {
 		if (image) {
 			var reader = new FileReader()
@@ -18,15 +24,16 @@ const EditPackage = ({index,handleChangeEdit,handleSelectedCourses,handleUplaodF
 		}
 	}, [image])
 
-	
 	const numDiscount = [5, 10, 20, 30, 40, 50, 60, 70]
 	const discount = numDiscount.map((num) => {
 		return { label: num + '%', value: num }
 	})
 	const [categories, setCategories] = useState([])
 	const fetchCategories = async () => {
-		const res = await api.get('/api/package/categories')
-		setCategories(res.data)
+		try {
+			const res = await api.get('/api/package/categories')
+			setCategories(res.data)
+		} catch (err) {}
 	}
 	useEffect(() => {
 		fetchCategories()
