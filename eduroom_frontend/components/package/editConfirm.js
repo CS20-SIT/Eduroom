@@ -5,7 +5,7 @@ import Dialog from '@material-ui/core/Dialog'
 import { useRouter } from 'next/router'
 import api from '../../api'
 
-const ConfirmEdit = ({ index,image, editData, selectCourse, handleChangePage }) => {
+const ConfirmEdit = ({ index, image, editData, selectCourse, handleChangePage }) => {
 	const [loading, setLoading] = useState(false)
 	const [courses, setCourses] = useState([])
 	const [totalPrice, setTotalPrice] = useState(0)
@@ -19,39 +19,41 @@ const ConfirmEdit = ({ index,image, editData, selectCourse, handleChangePage }) 
 	}
 
 	const handleSubmit = async () => {
-        setLoading(true)
-        let imgUrl = editData.image
-        if(image){
-            const formData = new FormData()
-            formData.append('course-picture-1', image)
-            const imageRes = await api.post('/api/package/uploadPackagePic', formData)
-            imgUrl = imageRes.data.linkUrl
-            const body = {
-                packagename: editData.packagename,
-                discount: editData.discount,
-                cateid: editData.cateid,
-                detail: editData.detail,
-                courses: selectCourse,
-                ispublic: false,
-                image: imgUrl,
-            }
-            const res = await api.put(`/api/package/${param}`,body)
-            setLoading(false)
-            handleChangePage(2)
-        } else {
-            const body = {
-                packagename: editData.packagename,
-                discount: editData.discount,
-                cateid: editData.cateid,
-                detail: editData.detail,
-                courses: selectCourse,
-                ispublic: false,
-                image: imgUrl,
-            }
-            const res = await api.put(`/api/package/${param}`,body)
-            setLoading(false)
-            handleChangePage(2)
-        }
+		try {
+			setLoading(true)
+			let imgUrl = editData.image
+			if (image) {
+				const formData = new FormData()
+				formData.append('course-picture-1', image)
+				const imageRes = await api.post('/api/package/uploadPackagePic', formData)
+				imgUrl = imageRes.data.linkUrl
+				const body = {
+					packagename: editData.packagename,
+					discount: editData.discount,
+					cateid: editData.cateid,
+					detail: editData.detail,
+					courses: selectCourse,
+					ispublic: false,
+					image: imgUrl,
+				}
+				const res = await api.put(`/api/package/${param}`, body)
+				setLoading(false)
+				handleChangePage(2)
+			} else {
+				const body = {
+					packagename: editData.packagename,
+					discount: editData.discount,
+					cateid: editData.cateid,
+					detail: editData.detail,
+					courses: selectCourse,
+					ispublic: false,
+					image: imgUrl,
+				}
+				const res = await api.put(`/api/package/${param}`, body)
+				setLoading(false)
+				handleChangePage(2)
+			}
+		} catch (err) {}
 	}
 
 	const handleOpenDialog = async (e) => {
@@ -60,17 +62,18 @@ const ConfirmEdit = ({ index,image, editData, selectCourse, handleChangePage }) 
 	}
 
 	const fetchCourses = () => {
-		console.log(selectCourse)
-		api.post('/api/package/getCoursesOfCreatingPackage', { selectCourse }).then((res) => {
-			setCourses(res.data.courses)
-			setTotalPrice(res.data.totalPrice)
-			console.log(res.data)
-		})
+		try {
+			api.post('/api/package/getCoursesOfCreatingPackage', { selectCourse }).then((res) => {
+				setCourses(res.data.courses)
+				setTotalPrice(res.data.totalPrice)
+				console.log(res.data)
+			})
+		} catch (err) {}
 	}
 	useEffect(() => {
 		fetchCourses()
-    }, [])
-    useEffect(() => {
+	}, [])
+	useEffect(() => {
 		if (image) {
 			var reader = new FileReader()
 			reader.onload = function (e) {

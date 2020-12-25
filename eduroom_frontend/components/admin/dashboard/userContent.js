@@ -5,9 +5,11 @@ const UserContent = () => {
 	const router = useRouter()
 	const [user, setUser] = useState({ avatar: '', displayname: '' })
 	useEffect(() => {
-		api.get('/api/auth/admin/profile').then((res) => {
-			setUser(res.data)
-		})
+		try {
+			api.get('/api/auth/admin/profile').then((res) => {
+				setUser(res.data)
+			})
+		} catch (err) {}
 	}, [])
 	return (
 		<Fragment>
@@ -52,8 +54,8 @@ const UserContent = () => {
 						display: flex;
 						padding-top: 1rem;
 						align-items: center;
-                        flex-flow: column;
-                        cursor: default;
+						flex-flow: column;
+						cursor: default;
 					}
 					.user-displayname {
 						font-size: 1.3em;
@@ -89,8 +91,8 @@ const UserContent = () => {
 						font-weight: 600;
 						width: 80%;
 						border-radius: 25px;
-                        text-align: center;
-                        cursor:pointer;
+						text-align: center;
+						cursor: pointer;
 					}
 					.event div span {
 						margin-left: 8px;

@@ -7,22 +7,28 @@ import AcceptIcon from './icons/AcceptIcon'
 import api from '../../api'
 
 export default function chatInvitation(props) {
-const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
-  const [invitations, setInvitations] = useState(null)
-  const getInvitations = async () => {
-		const res = await api.get(`/api/chat/getInvitationList`)
-		setInvitations(res.data)
-  }
-  const acceptInvitation = async (id) => {
-		const res = await api.get(`/api/chat/acceptInvitation`,{params:{invitationid:id}})
-		getInvitations()
-		props.getChatList()
-  }
-  const declineInvitation = async (id) => {
-		const res = await api.get(`/api/chat/declineInvitation`,{params:{invitationid:id}})
-		getInvitations()
-		props.getChatList()
-  }
+	const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
+	const [invitations, setInvitations] = useState(null)
+	const getInvitations = async () => {
+		try {
+			const res = await api.get(`/api/chat/getInvitationList`)
+			setInvitations(res.data)
+		} catch (err) {}
+	}
+	const acceptInvitation = async (id) => {
+		try {
+			const res = await api.get(`/api/chat/acceptInvitation`, { params: { invitationid: id } })
+			getInvitations()
+			props.getChatList()
+		} catch (err) {}
+	}
+	const declineInvitation = async (id) => {
+		try {
+			const res = await api.get(`/api/chat/declineInvitation`, { params: { invitationid: id } })
+			getInvitations()
+			props.getChatList()
+		} catch (err) {}
+	}
 	useEffect(() => {
 		getInvitations()
 	}, [])
@@ -68,9 +74,10 @@ const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
 					/>
 					<div>
 						{invitations &&
-							invitations.invitations.map((el,i) => {
+							invitations.invitations.map((el, i) => {
 								return (
-									<div key={i}
+									<div
+										key={i}
 										style={{
 											display: 'flex',
 											alignItems: 'center',
@@ -106,8 +113,18 @@ const [scrollBarStyle, setscrollBarStyle] = useState('nochat')
 												Invited By : {el.invitor}
 											</p>
 										</div>
-										<AcceptIcon style={{ cursor: 'pointer', marginLeft: 'auto' }} onClick={()=>{acceptInvitation(el.invitationid)}}/>
-										<CancelIcon style={{ cursor: 'pointer' }} onClick={()=>{declineInvitation(el.invitationid)}}/>
+										<AcceptIcon
+											style={{ cursor: 'pointer', marginLeft: 'auto' }}
+											onClick={() => {
+												acceptInvitation(el.invitationid)
+											}}
+										/>
+										<CancelIcon
+											style={{ cursor: 'pointer' }}
+											onClick={() => {
+												declineInvitation(el.invitationid)
+											}}
+										/>
 									</div>
 								)
 							})}

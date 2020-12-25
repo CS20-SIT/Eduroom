@@ -5,8 +5,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import { useRouter } from 'next/router'
-import api from "../../../api";
-const creditBox = props => {
+import api from '../../../api'
+const creditBox = (props) => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
 	const [type, setType] = useState('credit')
@@ -34,15 +34,14 @@ const creditBox = props => {
 		e.preventDefault()
 		setOpen(false)
 	}
-	const handleSubmit = async  () => {
-		const body = {
-            adlist: props.data
-		}
-		console.log(body)
-        const response = await api.post('/api/ads/AddAdsTransaction', body)
-        console.log("Ho"+response)
-        router.push('/advertisement/adpayment/adconfirmpayment')
-		console.log(type)
+	const handleSubmit = async () => {
+		try {
+			const body = {
+				adlist: props.data,
+			}
+			const response = await api.post('/api/ads/AddAdsTransaction', body)
+			router.push('/advertisement/adpayment/adconfirmpayment')
+		} catch (err) {}
 	}
 	useEffect(() => {
 		console.log(type)
@@ -75,8 +74,8 @@ const creditBox = props => {
 	const handleChange = (e) => {
 		e.preventDefault()
 		setForm({ ...createForm, [e.target.name]: e.target.value })
-  }
-  const handleChangeMonth = (e) => {
+	}
+	const handleChangeMonth = (e) => {
 		e.preventDefault()
 		setForm({ ...createForm, [e.target.month]: e.target.value })
 	}

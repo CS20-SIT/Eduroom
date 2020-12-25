@@ -18,7 +18,7 @@ export default function chatRoom(props) {
 	const chatRoom = props.chatRoom
 	const [scrollBarStyle, setScrollBarStyle] = useState('nochat')
 	const [message, setMessage] = useState(null)
-	const [collapse,setCollapse] = useState(false)
+	const [collapse, setCollapse] = useState(false)
 
 	const [smoothScroll, setSmoothScroll] = useState({
 		overflowY: 'scroll',
@@ -62,54 +62,60 @@ export default function chatRoom(props) {
 		setMessageDivStyle({ marginTop: 60, marginBottom: 100 })
 	}
 	const resendMessage = async (mess, index) => {
-		if (mess != '' && mess != null) {
-			const res = await api.get(`/api/chat/sendMessage`, { params: { message: mess, chatroomid: chatRoom.chatroomid } })
-			if (res.data.success == true) {
-				props.getChatRoomDetail()
-			} else {
-				props.chatRoomDetail.message.push({
-					system: false,
-					sticker: false,
-					error: true,
-					index: props.chatRoomDetail.message.length,
-					messageid: null,
-					senderid: props.userProfile.userid,
-					message: mess,
-					sendername: props.userProfile.userfirstname,
-					senderprofilepicture: props.userProfile.avatar,
-					sendtime: null,
-					reader: [],
+		try {
+			if (mess != '' && mess != null) {
+				const res = await api.get(`/api/chat/sendMessage`, {
+					params: { message: mess, chatroomid: chatRoom.chatroomid },
 				})
+				if (res.data.success == true) {
+					props.getChatRoomDetail()
+				} else {
+					props.chatRoomDetail.message.push({
+						system: false,
+						sticker: false,
+						error: true,
+						index: props.chatRoomDetail.message.length,
+						messageid: null,
+						senderid: props.userProfile.userid,
+						message: mess,
+						sendername: props.userProfile.userfirstname,
+						senderprofilepicture: props.userProfile.avatar,
+						sendtime: null,
+						reader: [],
+					})
+				}
+				props.chatRoomDetail.message[index] = null
+				scrollDown()
 			}
-			props.chatRoomDetail.message[index] = null
-			scrollDown()
-		}
+		} catch (err) {}
 	}
 	const sendMessage = async () => {
-		if (message != '' && message != null) {
-			const res = await api.get(`/api/chat/sendMessage`, {
-				params: { message: message, chatroomid: chatRoom.chatroomid },
-			})
-			if (res.data.success == true) {
-				props.socket.emit('sendMessage', chatRoom.chatroomid)
-			} else {
-				props.chatRoomDetail.message.push({
-					system: false,
-					sticker: false,
-					error: true,
-					messageid: null,
-					index: props.chatRoomDetail.message.length,
-					senderid: props.userProfile.userid,
-					message: message,
-					sendername: props.userProfile.firstname,
-					senderprofilepic: props.userProfile.avatar,
-					sendtime: null,
-					reader: [],
+		try {
+			if (message != '' && message != null) {
+				const res = await api.get(`/api/chat/sendMessage`, {
+					params: { message: message, chatroomid: chatRoom.chatroomid },
 				})
+				if (res.data.success == true) {
+					props.socket.emit('sendMessage', chatRoom.chatroomid)
+				} else {
+					props.chatRoomDetail.message.push({
+						system: false,
+						sticker: false,
+						error: true,
+						messageid: null,
+						index: props.chatRoomDetail.message.length,
+						senderid: props.userProfile.userid,
+						message: message,
+						sendername: props.userProfile.firstname,
+						senderprofilepic: props.userProfile.avatar,
+						sendtime: null,
+						reader: [],
+					})
+				}
+				setMessage('')
+				scrollDown()
 			}
-			setMessage('')
-			scrollDown()
-		}
+		} catch (err) {}
 	}
 	useEffect(() => {
 		scrollDown()
@@ -145,7 +151,7 @@ export default function chatRoom(props) {
 					handleExpand={handleExpand}
 				/>
 				<div style={messageDivStyle}>
-					{props.chatRoomDetail.message.map((el ,i) => {
+					{props.chatRoomDetail.message.map((el, i) => {
 						if (el) {
 							if (el.system) {
 								return <MessageSystem key={i} message={el.message} />
@@ -153,7 +159,7 @@ export default function chatRoom(props) {
 								if (el.error == true) {
 									return (
 										<MessageError
-										key={i}
+											key={i}
 											message={{
 												text: el.message,
 												color: props.chatRoomDetail.themeColor.sendcolor,
@@ -164,25 +170,26 @@ export default function chatRoom(props) {
 										/>
 									)
 								} else {
-									if(el.sticker){
-										return(
-										<MessageStickerRight
-										key={i}
-											message={{
-												text: el.message,
-												sentTime: el.sendtime,
-												color: props.chatRoomDetail.themeColor.sendcolor,
-												reader: el.reader,
-												messageid: el.messageid,
-											}}
-											getChatRoomDetail={props.getChatRoomDetail}
-											chatRoomDetail={props.chatRoomDetail}
-											socket={props.socket}
-										/>)
-									}else{
+									if (el.sticker) {
+										return (
+											<MessageStickerRight
+												key={i}
+												message={{
+													text: el.message,
+													sentTime: el.sendtime,
+													color: props.chatRoomDetail.themeColor.sendcolor,
+													reader: el.reader,
+													messageid: el.messageid,
+												}}
+												getChatRoomDetail={props.getChatRoomDetail}
+												chatRoomDetail={props.chatRoomDetail}
+												socket={props.socket}
+											/>
+										)
+									} else {
 										return (
 											<MessageRight
-											key={i}
+												key={i}
 												message={{
 													text: el.message,
 													sentTime: el.sendtime,
@@ -196,10 +203,10 @@ export default function chatRoom(props) {
 											/>
 										)
 									}
-									}
+								}
 							} else {
-								if(el.sticker){
-									return(
+								if (el.sticker) {
+									return (
 										<MessageStickerLeft
 											message={{
 												text: el.message,
@@ -211,7 +218,7 @@ export default function chatRoom(props) {
 											}}
 										/>
 									)
-								}else{
+								} else {
 									return (
 										<MessageLeft
 											message={{

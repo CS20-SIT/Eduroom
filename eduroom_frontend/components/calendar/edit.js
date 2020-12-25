@@ -19,23 +19,24 @@ const edit = (props) => {
 	const handleClickOpen = () => {
 		setEditOpen(true)
 	}
-	const [submit, setSubmit] = useState(false);
+	const [submit, setSubmit] = useState(false)
 	const statusClose = () => {
 		setSubmit(false)
-		window.location.reload();
+		window.location.reload()
 	}
-
 
 	const [data, setData] = useState([])
 	const [eventInfo, setEventInfo] = useState(null)
 	useEffect(() => {
 		const GetData = async () => {
-			const result1 = await api.get('/api/event/getEvent', {
-				params: {
-					id: props.id,
-				},
-			})
-			setEventInfo(result1.data[0])
+			try {
+				const result1 = await api.get('/api/event/getEvent', {
+					params: {
+						id: props.id,
+					},
+				})
+				setEventInfo(result1.data[0])
+			} catch (err) {}
 		}
 		GetData()
 	}, [])
@@ -49,7 +50,7 @@ const edit = (props) => {
 				setCourseList(res.data.data)
 				// setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
 			})
-			.catch((err) => { })
+			.catch((err) => {})
 	}, [])
 
 	console.log(eventInfo)
@@ -108,8 +109,11 @@ const edit = (props) => {
 
 					{/* ---------------------- ---------Course------------------------------- */}
 					<div>
-
-					<select defaultValue={eventInfo?.courseid} className="event-type" onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}>
+						<select
+							defaultValue={eventInfo?.courseid}
+							className="event-type"
+							onChange={(e) => setEventInfo({ ...eventInfo, courseid: e.target.value })}
+						>
 							{courseList.map((course) => {
 								return (
 									<option Value={course.courseid} key={course.courseid}>
@@ -223,7 +227,6 @@ const edit = (props) => {
 							</Button>
 						</DialogActions>
 					</Dialog>
-
 				</div>
 			</CSSTransition>
 

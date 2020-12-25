@@ -11,6 +11,7 @@ spec:
       labels:
         app: eduroom-socket-chat-deployment
     spec:
+      restartPolicy: Always
       containers:
       - name: eduroom-socket-chat-deployment
         image: asia.gcr.io/macbigduck/eduroom-socket-chat

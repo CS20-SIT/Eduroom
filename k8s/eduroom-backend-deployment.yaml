@@ -11,6 +11,7 @@ spec:
       labels:
         app: eduroom-backend-deployment
     spec:
+      restartPolicy: Always
       volumes:
         - name: pg-cloud-sql-sa
           secret:

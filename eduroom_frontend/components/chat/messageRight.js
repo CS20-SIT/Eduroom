@@ -9,10 +9,12 @@ export default function messageRight(props) {
 	const [dropDownStyle, setDropDownStyle] = useState({ visibility: 'hidden' })
 	const [dotDotStyle, setDotDotStyle] = useState({ visibility: 'hidden' })
 	const message = props.message
-	const unsend = async () =>{
-		const res = await api.get(`/api/chat/unsendMessage`,{params:{messageid:message.messageid}})
-		props.socket.emit('unsendMessage',props.chatRoomDetail.chatroomid)
-		props.getChatRoomDetail()
+	const unsend = async () => {
+		try {
+			const res = await api.get(`/api/chat/unsendMessage`, { params: { messageid: message.messageid } })
+			props.socket.emit('unsendMessage', props.chatRoomDetail.chatroomid)
+			props.getChatRoomDetail()
+		} catch (err) {}
 	}
 	return (
 		<div>
@@ -26,7 +28,7 @@ export default function messageRight(props) {
 				}}
 			>
 				<div
-					style={{ position: 'relative', display: 'inline-block',cursor:'pointer' }}
+					style={{ position: 'relative', display: 'inline-block', cursor: 'pointer' }}
 					onMouseOver={() => {
 						setDropDownStyle({})
 					}}
@@ -57,23 +59,23 @@ export default function messageRight(props) {
 					}}
 				>
 					{(() => {
-						if (message.reader && message.reader.length>0) {
+						if (message.reader && message.reader.length > 0) {
 							return (
 								<>
 									<ReadIcon style={{ paddingTop: 5, marginRight: 10 }} />
 									<div className="dropdown scroll" style={dropReadDownStyle}>
-										{message.reader.map((el,i) => {
-											return(
-											<span
-											key={i}
-												style={{
-													fontSize: 12,
-													whiteSpace: 'nowrap',
-												}}
-											>
-												{el}
-												<br />
-											</span>
+										{message.reader.map((el, i) => {
+											return (
+												<span
+													key={i}
+													style={{
+														fontSize: 12,
+														whiteSpace: 'nowrap',
+													}}
+												>
+													{el}
+													<br />
+												</span>
 											)
 										})}
 									</div>
@@ -99,7 +101,7 @@ export default function messageRight(props) {
 					display: inline-block;
 				}
 				.dropdown {
-					z-index:2 !important;
+					z-index: 2 !important;
 					margin-right: 15px;
 					max-height: 150px;
 					position: absolute;
@@ -111,7 +113,7 @@ export default function messageRight(props) {
 					padding: 10px 10px 10px 10px;
 				}
 				.dropdown2 {
-					z-index:2 !important;
+					z-index: 2 !important;
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;

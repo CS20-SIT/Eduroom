@@ -23,9 +23,11 @@ export default function createChatRoom(props) {
 		setSearchResult(null)
 	}
 	const getSearchResult = async () => {
-		setSearchResult(null)
-		const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
-		setSearchResult(res.data)
+		try {
+			setSearchResult(null)
+			const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
+			setSearchResult(res.data)
+		} catch (err) {}
 	}
 	const sendCreateRoomForm = async () => {
 		if (createGroupForm.profilePic != null) {
@@ -33,32 +35,39 @@ export default function createChatRoom(props) {
 			bodyFormData.append('profilePic', createGroupForm.profilePic)
 			const config = { headers: { 'Content-Type': 'multipart/form-data' } }
 			if (createGroupForm.groupName != null && createGroupForm.groupName != '' && createGroupForm.members.length >= 1) {
-				api.post(`/api/chat/uploadpic`, bodyFormData, config).then(async (re) => {
-					const res = await api.get(`/api/chat/createGroupChat`, {
-						params: {
-							profilepic: re.data.path,
-							chatroomname: createGroupForm.groupName,
-							members: createGroupForm.members,
-						},
+				api
+					.post(`/api/chat/uploadpic`, bodyFormData, config)
+					.then(async (re) => {
+						try {
+							const res = await api.get(`/api/chat/createGroupChat`, {
+								params: {
+									profilepic: re.data.path,
+									chatroomname: createGroupForm.groupName,
+									members: createGroupForm.members,
+								},
+							})
+							props.handleClose()
+							props.getChatList()
+						} catch (err) {}
 					})
-					props.handleClose()
-					props.getChatList()
-				})
+					.catch((err) => {})
 			}
 		} else if (
 			createGroupForm.groupName != null &&
 			createGroupForm.groupName != '' &&
 			createGroupForm.members.length >= 1
 		) {
-			const res = await api.get(`/api/chat/createGroupChat`, {
-				params: {
-					profilepic: '',
-					chatroomname: createGroupForm.groupName,
-					members: createGroupForm.members,
-				},
-			})
-			props.handleClose()
-			props.getChatList()
+			try {
+				const res = await api.get(`/api/chat/createGroupChat`, {
+					params: {
+						profilepic: '',
+						chatroomname: createGroupForm.groupName,
+						members: createGroupForm.members,
+					},
+				})
+				props.handleClose()
+				props.getChatList()
+			} catch (err) {}
 		}
 	}
 	const uploadPic = (e) => {
@@ -159,7 +168,7 @@ export default function createChatRoom(props) {
 							}
 						})()}
 					</div>
-					{createGroupForm.members.map((el,i) => {
+					{createGroupForm.members.map((el, i) => {
 						return (
 							<div key={i} className="memberDiv">
 								<Avatar
