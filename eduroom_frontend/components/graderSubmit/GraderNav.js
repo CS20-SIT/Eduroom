@@ -18,7 +18,7 @@ const GraderNav = (props) => {
 			}
 		}
 		GetData()
-	}, [Data])
+	}, [])
 
 	const menus = [
 		{ text: 'Home', link: '/graderSystem', page: 'home' },
