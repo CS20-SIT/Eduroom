@@ -8,14 +8,13 @@ import api from '../../../../api'
 
 const contestRank = ({ contestId }) => {
 	const [data, setData] = useState([])
-	let countRank = 1
+	let [countRank,setCountRank] = useState(1)
 	useEffect(() => {
 		const GetData = async () => {
 			try {
 				const res = await api.get('/api/grader/getContestRanking', { params: { contestId: contestId } })
 				setData(res.data)
-
-				countRank = res.data.length
+				setCountRank(res.data.length)
 			} catch (e) {
 				return console.log(e.data)
 			}
