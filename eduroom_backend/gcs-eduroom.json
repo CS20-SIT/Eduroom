@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "eduroom",
+  "private_key_id": "c65c3b65d5f82c8c65fbf6985ea979f42d684a69",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCzrxNS8xF6fSLh\nviduKmmYzIM4qyWka9LtXrDDH+krLPsKi/QLoi9HQZgK0YwzEvIa3V2rx5ZfHx30\nquwkTB9YSQqfooaN4fUH27RioPP+IkYfQJBFScuh3D1F5UI8FGUHJLNJDeQn/pI3\n43iPcpOv65TAxQhyMdoHirXWeXGWRaTghieHA+vWYJ62GmleobjQeZN9X12ldpLr\nYgo7Beu53cX+nOksdbZc9VREA7n8eWftXJHxWzpgXf/BViJQiO8N1lgoYkuGK1yg\nheKw/yUDnIy3oXEwUFA4qUOLFQDH0fkP1LEdWgENPajvEBxI5CGo88oQK3kDzTw/\n94KcCVS/AgMBAAECggEALRbCTR7kpG2RWr9qSplG/UpYpVhBLmTGPb10ssonqydy\n6X8cIu00WvepTRGvUkOvUDF7Z3dCkyUOUc6wSh12AiP2D//rLuBkKfAmcFd+UqfM\nG9yKN3DgsgG/uHHisIvXnDbH7I2ZUrXtgCvLHYf9ang90C/BQlKjKSBUJ/k6mR/9\nuVl3dteDwVOmXCnntRISnBRDi25ptglFkQ6/wWdwYAmiB644FtPtHpYZnSXJrNXC\naX0VM7go6EnRjUih3Y14a3aEi90qNtaCzdXmWWCZrh8TOKK7NoTBwOPtL4+UKmyB\nBEa78iTrdgC0B1dSpy8qwSBN1NAYQrHnFtOgWxYnuQKBgQDrR3MnKQMjxm4evUfr\naBxDuH7MZoTZI2u0rOVVAIeSVsjfQkGNEsXvLkt1MvYMjWCFyefJ4DCpQg0SwAFD\nacFqRu69C3tnb7z6blrmLk+jqDCw5B/IYvFKcm4c3UEFZ9HTTXWqF8G66oZAZJxP\ni3jwEZIiNeCg99voGtDplbpEeQKBgQDDgjA7BmcLZ95ki+wT5IucdYtfpXmjCOlW\nDgoAM9X4ErAfTr2yhnMzmm1wVndelGFRi2jotpYpOFz+DItb8eGB6ew0p9SLZ6Ny\novvDJrIaoT+82m0zEYGrZH5ZzME0gxXBO9lKpRmJgErUwEqoTGiCaoqCw3cTP+TB\nF4rP/qJk9wKBgAiPANFb3JFgloDnwcX+c4jDHVmyIQMFFtXrtCvzaPsZzRTSBDBt\njmW0+Wm6ANlUCz7SqWvei+acUH1uHp2lKzQCgIy/7i1FE0rI2OWmqZ76b0sAAWf4\nsW5T202RftwDes6E8tLNKm7yOQ/+mPEL0cpp2TcFXrZ8TbOTxiW5HJ2BAoGBAKz6\nArI2d/UfcSSEp9rx2pQTa7y0K2qT996rjS2gry9NWYZZpHzPeB2wBCPgXLzRi0ka\njzdWVIUj2SLs9l/jIiJPVS1BUEwG5hYHHbkMA4iMIlh06SjF1HRP9Xp+LnLHh/fv\ne9EPQgjl+U9C0ssUz2KT4PjQ+AmP/lTY/3gHUqcBAoGAQ3qJ9o4AmN2PWxLjSbug\nMtV2PYwh7/1YHzN/jDv3zm3iZy9zd4+vAHfOSxGCKqHM2AYniSXoH42Olu7rTyK6\nl5ZVQ7rAU5XKHISgzFgnSw5d5BG+e6SEMRyORbg0WB1UopwKX5JTqJs4Ol/WFEJ0\n2rf9AzhieHoDdolf3g52WUo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "eduroom-development@eduroom.iam.gserviceaccount.com",
+  "client_id": "107213032341041302749",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/eduroom-development%40eduroom.iam.gserviceaccount.com"
+}
