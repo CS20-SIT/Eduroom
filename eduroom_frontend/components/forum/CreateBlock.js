@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
 import api from '../../api'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 const CreateBlock = () => {
 	const [createForm, setForm] = useState({
 		title: '',
@@ -30,10 +30,12 @@ const CreateBlock = () => {
 	})
 	const router = useRouter()
 	useEffect(() => {
-		api.get('/api/forum/subcategory').then((res) => {
-			setCategory(res.data.category)
-			setSubCategory(res.data.subcategory)
-		})
+		try {
+			api.get('/api/forum/subcategory').then((res) => {
+				setCategory(res.data.category)
+				setSubCategory(res.data.subcategory)
+			})
+		} catch (err) {}
 	}, [])
 
 	const handleChange = (e) => {
@@ -52,15 +54,17 @@ const CreateBlock = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		if (validator()) {
-			api.post('/api/forum/create', createForm).then((res) => {
-				setForm({
-					title: '',
-					cat: '',
-					subcat: '',
-					content: '',
+			try {
+				api.post('/api/forum/create', createForm).then((res) => {
+					setForm({
+						title: '',
+						cat: '',
+						subcat: '',
+						content: '',
+					})
+					router.push('/forum')
 				})
-				router.push('/forum')
-			})
+			} catch (err) {}
 		}
 	}
 	const validator = () => {

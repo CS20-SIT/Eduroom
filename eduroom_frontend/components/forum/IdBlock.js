@@ -24,8 +24,10 @@ const IdBlock = () => {
 	})
 	const GetData = async () => {
 		if (param != '') {
-			const result = await api.get(`/api/forum/${param}`)
-			setData(result.data.data.forum)
+			try {
+				const result = await api.get(`/api/forum/${param}`)
+				setData(result.data.data.forum)
+			} catch (err) {}
 		}
 	}
 	useEffect(() => {
@@ -59,8 +61,7 @@ const IdBlock = () => {
 				setEdit(false)
 				setEditData({ titlethread: '', content: '' })
 			})
-			.catch((err) => {
-			})
+			.catch((err) => {})
 	}
 	const handleChangeEdit = (e) => {
 		setEditData({ ...editData, [e.target.name]: e.target.value })
@@ -73,8 +74,7 @@ const IdBlock = () => {
 					GetData()
 					callback()
 				})
-				.catch((err) => {
-				})
+				.catch((err) => {})
 		} else {
 			setDialog(!dialog)
 		}
@@ -85,8 +85,7 @@ const IdBlock = () => {
 			.then((res) => {
 				router.push('/forum')
 			})
-			.catch((err) => {
-			})
+			.catch((err) => {})
 	}
 	const classes = useStyles()
 
@@ -97,7 +96,7 @@ const IdBlock = () => {
 					handleClick={() => {
 						setDialog(false)
 					}}
-					path={'/forum/'+param}
+					path={'/forum/' + param}
 				/>
 			) : null}
 			<div className={classes.root}>

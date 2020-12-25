@@ -14,9 +14,10 @@ const CreatePackage = (props) => {
 	const [categories, setCategories] = useState([])
 	const [error, setError] = useState(true)
 	const fetchCategories = async () => {
-		const res = await api.get('/api/package/categories')
-		console.log(res.data)
-		setCategories(res.data)
+		try {
+			const res = await api.get('/api/package/categories')
+			setCategories(res.data)
+		} catch (err) {}
 	}
 	useEffect(() => {
 		fetchCategories()
@@ -30,7 +31,7 @@ const CreatePackage = (props) => {
 			reader.readAsDataURL(props.myPackage.pic)
 		}
 	}, [props.myPackage.pic])
-	
+
 	const handleSelectedCourses = (newSelected) => {
 		console.log(newSelected)
 		console.log('hello')
@@ -70,7 +71,7 @@ const CreatePackage = (props) => {
 	const handleClick = (e) => {
 		props.changePage(2)
 	}
-	
+
 	const validator = () => {
 		if (
 			props.myPackage.name == '' ||
