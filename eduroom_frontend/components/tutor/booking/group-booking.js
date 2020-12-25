@@ -8,23 +8,25 @@ const GroupBooking = ({ setBookingGroup, students, setStudents, focus, setFocus,
 	const [members, setMembers] = useState([])
 
 	const typingMember = async (e) => {
-		const key = e.target.value
-		if (key.length == 0) {
-			setMembers([])
-			return
-		}
+		try {
+			const key = e.target.value
+			if (key.length == 0) {
+				setMembers([])
+				return
+			}
 
-		const res = await api.get('/api/tutor/utils/id', {
-			params: {
-				name: key,
-				iid,
-			},
-		})
-		const mockup = res.data.students
-		const filtered = mockup.filter((x) => {
-			return x.name.toLowerCase().includes(key.toLowerCase())
-		})
-		setMembers(filtered)
+			const res = await api.get('/api/tutor/utils/id', {
+				params: {
+					name: key,
+					iid,
+				},
+			})
+			const mockup = res.data.students
+			const filtered = mockup.filter((x) => {
+				return x.name.toLowerCase().includes(key.toLowerCase())
+			})
+			setMembers(filtered)
+		} catch (err) {}
 	}
 
 	return (

@@ -7,14 +7,16 @@ import api from '../../../api'
 
 const BookingInfo = ({ bookingGroup, setBookingGroup, instructor, times, date, month, year, students }) => {
 	const post = async (id, startTime, endTime, price, members) => {
-		const res = await api.post('/api/tutor/student/appointments', {
-			id,
-			startTime,
-			endTime,
-			price,
-			members,
-		})
-		console.log(res)
+		try {
+			const res = await api.post('/api/tutor/student/appointments', {
+				id,
+				startTime,
+				endTime,
+				price,
+				members,
+			})
+			console.log(res)
+		} catch (err) {}
 	}
 	return (
 		<Fragment>

@@ -1,150 +1,144 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import Link from 'next/link'
 
-
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import {
-	Dialog,
-	DialogTitle,
-	DialogContent,
-	InputBase 
-  } from '@material-ui/core';
+import 'date-fns'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import { Dialog, DialogTitle, DialogContent, InputBase } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import styles from '../../styles/user/profile'
-import api from '../../api';
+import api from '../../api'
 
-
-import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField'
 // import TextField from './utils/textfield'
 import Select from './utils/select'
 import Textarea from './utils/textarea'
 
 const EditForm = () => {
-	const [firstnameError,setFirstnameError] = useState(null)
-	const [lastnameError,setLastnameError] = useState(null)
-	const [passwordError,setPasswordError] = useState(null)
+	const [firstnameError, setFirstnameError] = useState(null)
+	const [lastnameError, setLastnameError] = useState(null)
+	const [passwordError, setPasswordError] = useState(null)
 
-	const [newPassword,setNewPassword] = useState('')
-	const [oldPassword,setOldPassword] = useState('')
+	const [newPassword, setNewPassword] = useState('')
+	const [oldPassword, setOldPassword] = useState('')
 
-	const [firstname,setFirstname] = useState(null)
-	const [lastname,setLastname] = useState(null)
+	const [firstname, setFirstname] = useState(null)
+	const [lastname, setLastname] = useState(null)
 	const [birth, setBirth] = useState(null)
 	const [bio, setBio] = useState(null)
 	const [avatar, setAvatar] = useState(null)
 
-	const [email,setEmail] = useState(null)
-	const [open,setOpen] = useState(false)
+	const [email, setEmail] = useState(null)
+	const [open, setOpen] = useState(false)
 	const router = useRouter()
 
 	useEffect(() => {
-        const fetchData=async()=>{
-			try{
-				const res=await api.get('api/user/getProfile');
-				
-				setFirstname(res.data.firstname);
-				setLastname(res.data.lastname);
-				setBio(res.data.bio);
-				setAvatar(res.data.avatar);
-				setEmail(res.data.email);
+		const fetchData = async () => {
+			try {
+				const res = await api.get('api/user/getProfile')
+
+				setFirstname(res.data.firstname)
+				setLastname(res.data.lastname)
+				setBio(res.data.bio)
+				setAvatar(res.data.avatar)
+				setEmail(res.data.email)
 
 				const d = new Date(res.data.birthdate)
-				setBirth(getDate(d.getDate(),d.getMonth()+1,d.getFullYear()));
+				setBirth(getDate(d.getDate(), d.getMonth() + 1, d.getFullYear()))
 			} catch (err) {
 				router.push('/login')
 			}
-        }
-        fetchData();
+		}
+		fetchData()
 	}, [])
 
-	const getDate=(d,m,y)=>{
-        if((''+m).length<2) m='0'+m;
-		if((''+d).length<2) d='0'+d;
-		return ""+y+"-"+m+"-"+d;
+	const getDate = (d, m, y) => {
+		if (('' + m).length < 2) m = '0' + m
+		if (('' + d).length < 2) d = '0' + d
+		return '' + y + '-' + m + '-' + d
 	}
 
 	const handleSave = async (e) => {
 		try {
-			if(firstname!=""&&lastname!=""){
+			if (firstname != '' && lastname != '') {
 				const myForm = new FormData()
-				myForm.append('avatar',avatar);
-				const res=await api.post('/api/user/upload/picture',myForm);
+				myForm.append('avatar', avatar)
+				const res = await api.post('/api/user/upload/picture', myForm)
 				const temp = res.data[0].linkUrl
 				console.log(temp)
 				setAvatar(temp)
 
-				handleSaveApi(temp);
-			}else{
-				if(firstname==""){
-					setFirstnameError("*require Firstname");
-				}else{
-					setFirstnameError("");
+				handleSaveApi(temp)
+			} else {
+				if (firstname == '') {
+					setFirstnameError('*require Firstname')
+				} else {
+					setFirstnameError('')
 				}
-				if(lastname==""){
-					setLastnameError("*require Lastname");
-				}else{
-					setLastnameError("");
+				if (lastname == '') {
+					setLastnameError('*require Lastname')
+				} else {
+					setLastnameError('')
 				}
 			}
 		} catch (err) {}
 	}
 
 	const handleSaveApi = (newAvatar) => {
-		api.patch('api/user/postEditProfile', {
-			avatar: newAvatar,
-			firstname: firstname,
-			lastname: lastname,
-			birthdate: birth,
-			bio: bio
-		}).then(()=>{
-			router.push('/user');
-		});
+		api
+			.patch('api/user/postEditProfile', {
+				avatar: newAvatar,
+				firstname: firstname,
+				lastname: lastname,
+				birthdate: birth,
+				bio: bio,
+			})
+			.then(() => {
+				router.push('/user')
+			})
 	}
 
 	const handleCancel = () => {
 		router.push('/user')
 	}
 	const handleOpen = () => {
-		setOpen(!open);
-		setPasswordError('');
+		setOpen(!open)
+		setPasswordError('')
 	}
 
-	const savePassword=async() => {
+	const savePassword = async () => {
 		// console.log(oldPassword);
 		// return;
-		if(oldPassword!=''&&newPassword!=''){
-			const res=await api.post('api/user/getCheckPassword', {
-				password: oldPassword
+		if (oldPassword != '' && newPassword != '') {
+			const res = await api.post('api/user/getCheckPassword', {
+				password: oldPassword,
 			})
-			if(res.data.match){
-				setPasswordError(null);
-				const res=await api.patch('api/user/postNewPassword', {
-					password: newPassword
-				}).then((e)=>{
-					handleOpen();
-				});
-			}else{
-				setPasswordError('The current password are mismatch');
+			if (res.data.match) {
+				setPasswordError(null)
+				const res = await api
+					.patch('api/user/postNewPassword', {
+						password: newPassword,
+					})
+					.then((e) => {
+						handleOpen()
+					})
+			} else {
+				setPasswordError('The current password are mismatch')
 			}
-		}else{
-			if(oldPassword==''&&newPassword==''){
-				setPasswordError('Require current password and new password');
-			}else if(oldPassword==''){
-					setPasswordError('Require current password');
-			}else{
-					setPasswordError('Require new password');
+		} else {
+			if (oldPassword == '' && newPassword == '') {
+				setPasswordError('Require current password and new password')
+			} else if (oldPassword == '') {
+				setPasswordError('Require current password')
+			} else {
+				setPasswordError('Require new password')
 			}
 		}
 	}
 
 	const changePic = (e) => {
-		let newValue = e.target.files[0];
-		setAvatar(newValue);
+		let newValue = e.target.files[0]
+		setAvatar(newValue)
 	}
 
 	return (
@@ -154,7 +148,7 @@ const EditForm = () => {
 					<div className="editImage">
 						<div className="uploadImage">
 							<img src={avatar} className="avatar" width="200px" height="200px"></img>
-							
+
 							{/* <i className="fas fa-camera"></i> */}
 						</div>
 						<InputBase
@@ -162,90 +156,102 @@ const EditForm = () => {
 							name="imgLocation"
 							fullwidth
 							autofocus
-							type={"file"}
-							placeholder={"attrach your avatar"}
-							inputProps={{'aria-label':'naked'}}
+							type={'file'}
+							placeholder={'attrach your avatar'}
+							inputProps={{ 'aria-label': 'naked' }}
 							onChange={changePic}
 						/>
 					</div>
 					<div className="editInfo">
 						<div className="w-100 form-title">General Information</div>
 						<div className="w-50 pr-1 textfield">
-							<TextField style={{ padding: '18px' }}  className="w-50 pr-1 textfield"
-							placeholder="Firstname"
-							value={firstname}
-							defaultValue={firstname}
-							onChange={(e) => {
-								setFirstname(e.target.value);
-							}}
+							<TextField
+								style={{ padding: '18px' }}
+								className="w-50 pr-1 textfield"
+								placeholder="Firstname"
+								value={firstname}
+								defaultValue={firstname}
+								onChange={(e) => {
+									setFirstname(e.target.value)
+								}}
 							/>
 						</div>
 						<div className="w-50 pr-1 textfield">
-							<TextField style={{ padding: '18px' }}  className="w-50 pr-1 textfield"
-							placeholder="Lastname"
-							value={lastname}
-							defaultValue={lastname}
-							onChange={(e) => {
-								console.log('sdsd');
-								setLastname(e.target.value);
-							}}
+							<TextField
+								style={{ padding: '18px' }}
+								className="w-50 pr-1 textfield"
+								placeholder="Lastname"
+								value={lastname}
+								defaultValue={lastname}
+								onChange={(e) => {
+									console.log('sdsd')
+									setLastname(e.target.value)
+								}}
 							/>
 						</div>
-						<span style={{color:'red'}} className="w-50 pr-1">{firstnameError}</span>
-						<span style={{color:'red'}} className="w-50 pr-1">{lastnameError}</span>
+						<span style={{ color: 'red' }} className="w-50 pr-1">
+							{firstnameError}
+						</span>
+						<span style={{ color: 'red' }} className="w-50 pr-1">
+							{lastnameError}
+						</span>
 
-						<div style={{width:'100%'}} className="textfield">
-						<MuiPickersUtilsProvider utils={DateFnsUtils} >
-								<KeyboardDatePicker style={{width:'100%'}} className="textfield"
-								placeholder="Date Of Birthdate"
-								disableToolbar
-								variant="inline"
-								format="dd/MM/yyyy"
-								margin="normal"
-								value={birth}
-								onChange={(e) => {
-									const d = new Date(e);
-									setBirth(getDate(d.getDate(),d.getMonth()+1,d.getFullYear()));
-								}}
-								KeyboardButtonProps={{
-									'aria-label': 'change date',
-								}}
+						<div style={{ width: '100%' }} className="textfield">
+							<MuiPickersUtilsProvider utils={DateFnsUtils}>
+								<KeyboardDatePicker
+									style={{ width: '100%' }}
+									className="textfield"
+									placeholder="Date Of Birthdate"
+									disableToolbar
+									variant="inline"
+									format="dd/MM/yyyy"
+									margin="normal"
+									value={birth}
+									onChange={(e) => {
+										const d = new Date(e)
+										setBirth(getDate(d.getDate(), d.getMonth() + 1, d.getFullYear()))
+									}}
+									KeyboardButtonProps={{
+										'aria-label': 'change date',
+									}}
 								/>
-						</MuiPickersUtilsProvider>
+							</MuiPickersUtilsProvider>
 						</div>
 						<div className="w-100 textfield">
-						<TextField
-							style={{width:'100%'}}
-							placeholder="Bio"
-							multiline
-							rows={10}
-							defaultValue={bio}
-							value={bio}
-							variant="outlined"
-							onChange={(e) => {
-								setBio(e.target.value);
-							}}
-						/>
+							<TextField
+								style={{ width: '100%' }}
+								placeholder="Bio"
+								multiline
+								rows={10}
+								defaultValue={bio}
+								value={bio}
+								variant="outlined"
+								onChange={(e) => {
+									setBio(e.target.value)
+								}}
+							/>
 						</div>
 
 						<div className="w-100 form-title">Personal Information</div>
 						<div className="w-100 textfield">
-							<TextField style={{ padding: '18px' }}
+							<TextField
+								style={{ padding: '18px' }}
 								disabled
 								placeholder="Email"
 								value={email}
 								defaultValue={email}
 								inputProps={{ readOnly: true }}
-								/>
+							/>
 						</div>
 						<div className="w-100 textfield">
-							<TextField style={{ padding: '18px' }}
+							<TextField
+								style={{ padding: '18px' }}
 								type="password"
 								placeholder="Change Password"
 								inputProps={{ readOnly: true }}
 								defaultValue={''}
 								onClick={handleOpen}
-								/>
+							/>
 						</div>
 						{/* <div className="w-100">
 							<TextField style={{ padding: '18px' }} placeholder="Phone number" />
@@ -260,7 +266,7 @@ const EditForm = () => {
 								]}
 							/>
 						</div> */}
-						<div className="w-100" style={{display:'flex',justifyContent:'center'}}>
+						<div className="w-100" style={{ display: 'flex', justifyContent: 'center' }}>
 							<span className="pr-1">
 								<button className="user-edit-button" onClick={handleSave}>
 									<a className="user-edit-button-text">Confirm</a>
@@ -272,31 +278,31 @@ const EditForm = () => {
 								</button>
 							</span>
 							<Dialog open={open}>
-								<DialogTitle>
-									Change Password
-								</DialogTitle>
-								<DialogContent style={{width:'400px',height:'350px'}}>
+								<DialogTitle>Change Password</DialogTitle>
+								<DialogContent style={{ width: '400px', height: '350px' }}>
 									Current Password
 									<div className="w-100 textfield">
-										<TextField style={{ padding: '18px' }}
+										<TextField
+											style={{ padding: '18px' }}
 											type="password"
 											placeholder="Current Password"
 											defaultValue={oldPassword}
 											onChange={(e) => {
-												setOldPassword(e.target.value);
+												setOldPassword(e.target.value)
 											}}
-											/>
+										/>
 									</div>
 									New Password
 									<div className="w-100 textfield">
-										<TextField style={{ padding: '18px' }}
+										<TextField
+											style={{ padding: '18px' }}
 											type="password"
 											placeholder="New Password"
 											defaultValue={newPassword}
 											onChange={(e) => {
-												setNewPassword(e.target.value);
+												setNewPassword(e.target.value)
 											}}
-											/>
+										/>
 									</div>
 									<span className="pr-1">
 										<button className="user-edit-button" onClick={savePassword}>
@@ -308,44 +314,44 @@ const EditForm = () => {
 											<a className="user-cancel-button-text">Cancel</a>
 										</button>
 									</span>
-									<div style={{color:'red'}}>{passwordError}</div>
+									<div style={{ color: 'red' }}>{passwordError}</div>
 								</DialogContent>
 							</Dialog>
 						</div>
 					</div>
 				</div>
 			</div>
-			
+
 			<style jsx>
 				{`
-					          div.input-text {
-								text-align: start;
-							  }
-							  .label-text {
-								font-size: 1.1em;
-								font-weight: 500;
-							  }
-							  .error-text {
-								font-size: 0.8em;
-								color: #ed3f14;
-								font-weight: 500;
-								margin-bottom: 4px;
-							  }
-							  .textfield {
-								background: #eff0f6;
-								border-radius: 10px;
-								width: 100%;
-								border: none;
-								font-size: 1em;
-								color: #3d467f;
-							  }
-							  .textfield.error {
-								border: 1px solid #ed3f14;
-							  }
-							  .textfield ::placeholder {
-								color: #3d467f;
-								opacity: 0.75;
-							  }
+					div.input-text {
+						text-align: start;
+					}
+					.label-text {
+						font-size: 1.1em;
+						font-weight: 500;
+					}
+					.error-text {
+						font-size: 0.8em;
+						color: #ed3f14;
+						font-weight: 500;
+						margin-bottom: 4px;
+					}
+					.textfield {
+						background: #eff0f6;
+						border-radius: 10px;
+						width: 100%;
+						border: none;
+						font-size: 1em;
+						color: #3d467f;
+					}
+					.textfield.error {
+						border: 1px solid #ed3f14;
+					}
+					.textfield ::placeholder {
+						color: #3d467f;
+						opacity: 0.75;
+					}
 
 					.user-edit-button {
 						background: #fb9ccb;

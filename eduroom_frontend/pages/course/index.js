@@ -17,8 +17,10 @@ const Course = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			let res = await api.get('/api/course/getAllCourse')
-			setCourseDes(res.data)
+			try {
+				let res = await api.get('/api/course/getAllCourse')
+				setCourseDes(res.data)
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])
@@ -27,8 +29,10 @@ const Course = () => {
 		getCategory()
 	}, [])
 	const getCategory = async () => {
-		const result = await api.get('/api/course/category')
-		setCategory(result.data.category)
+		try {
+			const result = await api.get('/api/course/category')
+			setCategory(result.data.category)
+		} catch (err) {}
 	}
 
 	return (
@@ -108,7 +112,6 @@ const Course = () => {
 							font-size: 26px;
 							color: #3d467f;
 							margin: 30px 30px 30px 80px;
-							
 						}
 					`}
 				</style>

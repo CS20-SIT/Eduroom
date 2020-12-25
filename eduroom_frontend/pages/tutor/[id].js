@@ -13,37 +13,38 @@ import BookingInfo from '../../components/tutor/booking/booking-info'
 import BackgroundDrop from '../../components/tutor/booking/background-drop'
 
 const Instructor = ({ id }) => {
-	// console.log(id)
 	const [instructor, setInstructor] = useState(null)
 	const [reviews, setReviews] = useState(null)
 	useEffect(() => {
 		const fetchData = async () => {
-			let res = await api.get('/api/tutor/instructor/info', { params: { id } })
-			setInstructor(res.data.instructor)
-			res = await api.get('/api/tutor/instructor/review', { params: { id } })
-			let review = res.data.rating
-			var sortable = []
-			for (var r in review) {
-				sortable.push([r, review[r]])
-			}
-			sortable.sort(function (a, b) {
-				return a[1].score - b[1].score
-			})
-			const highReview = []
-			const lowReview = []
-			const latestReview = []
-			for (let i = 0; i < sortable.length; i++) {
-				lowReview.push(sortable[i][1])
-				highReview.push(sortable[sortable.length - i - 1][1])
-			}
-			sortable.sort(function (a, b) {
-				return a[1].date - b[1].date
-			})
-			for (let i = 0; i < sortable.length; i++) {
-				latestReview.push(sortable[sortable.length - i - 1][1])
-			}
-			const tmp = [highReview, lowReview, latestReview]
-			setReviews(tmp)
+			try {
+				let res = await api.get('/api/tutor/instructor/info', { params: { id } })
+				setInstructor(res.data.instructor)
+				res = await api.get('/api/tutor/instructor/review', { params: { id } })
+				let review = res.data.rating
+				var sortable = []
+				for (var r in review) {
+					sortable.push([r, review[r]])
+				}
+				sortable.sort(function (a, b) {
+					return a[1].score - b[1].score
+				})
+				const highReview = []
+				const lowReview = []
+				const latestReview = []
+				for (let i = 0; i < sortable.length; i++) {
+					lowReview.push(sortable[i][1])
+					highReview.push(sortable[sortable.length - i - 1][1])
+				}
+				sortable.sort(function (a, b) {
+					return a[1].date - b[1].date
+				})
+				for (let i = 0; i < sortable.length; i++) {
+					latestReview.push(sortable[sortable.length - i - 1][1])
+				}
+				const tmp = [highReview, lowReview, latestReview]
+				setReviews(tmp)
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])

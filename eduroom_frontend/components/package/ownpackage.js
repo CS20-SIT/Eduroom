@@ -24,17 +24,21 @@ const Ownpackage = ({ ownPackage, fetchPackages }) => {
 	}
 
 	const handleDelete = async (e) => {
-		setLoading(true)
-		await api.post('/api/package/delete/package', { packageid: ownPackage.packageid })
-		await fetchPackages()
-		setLoading(false)
-		setOpen(false)
+		try {
+			setLoading(true)
+			await api.post('/api/package/delete/package', { packageid: ownPackage.packageid })
+			await fetchPackages()
+			setLoading(false)
+			setOpen(false)
+		} catch (err) {}
 	}
 
 	const handlePublish = async (e) => {
-		e.stopPropagation()
-		await api.post('/api/package/publishPackage', { packageid: ownPackage.packageid })
-		fetchPackages()
+		try {
+			e.stopPropagation()
+			await api.post('/api/package/publishPackage', { packageid: ownPackage.packageid })
+			fetchPackages()
+		} catch (err) {}
 	}
 
 	const renderEdit = () => {

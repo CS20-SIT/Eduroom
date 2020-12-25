@@ -8,8 +8,10 @@ import api from '../../../../api'
 const Index = () => {
 	const [packages, setPackages] = useState(null)
 	const fetchPackages = async () => {
-		const res = await api.get('/api/package/getInstructorPackage')
-		setPackages(res.data)
+		try {
+			const res = await api.get('/api/package/getInstructorPackage')
+			setPackages(res.data)
+		} catch (err) {}
 	}
 	useEffect(() => {
 		fetchPackages()

@@ -8,16 +8,17 @@ import { useRouter } from 'next/router'
 import moment from 'moment'
 
 const IdBlock = () => {
-
 	const router = useRouter()
 	const [data, setData] = useState([])
 	const param = router.query.id || ''
 	const GetData = async () => {
-		if (param != '') {
-			const result = await api.get(`/api/support/${param}`)
-			console.log(result.data.data)
-			setData(result.data.data)
-		}
+		try {
+			if (param != '') {
+				const result = await api.get(`/api/support/${param}`)
+				console.log(result.data.data)
+				setData(result.data.data)
+			}
+		} catch (err) {}
 	}
 	useEffect(() => {
 		GetData()
@@ -55,13 +56,12 @@ const IdBlock = () => {
 										justifyContent: 'space-between',
 									}}
 								>
-										<div>	
-											<b>{data.title}</b>
-										</div>
-
+									<div>
+										<b>{data.title}</b>
+									</div>
 								</div>
 
-									<div>{data.description}</div>
+								<div>{data.description}</div>
 
 								<div style={{ marginTop: '25px', fontSize: '13px', color: '#5b5b5b' }}>
 									<p>
