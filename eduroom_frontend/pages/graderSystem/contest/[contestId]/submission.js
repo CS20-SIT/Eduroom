@@ -14,9 +14,8 @@ const contestSubmission = ({ contestId }) => {
 		const GetData = async () => {
 			try {
 				const userQuery = await api.get('/api/auth/profile')
-				setUserData(userQuery.data)
-
-				if (userData != null) {
+				setUserState(userQuery.data)
+				if (userState != null) {
 					setUserState(true)
 				}
 				const result = await api.get('/api/grader/getContestSubmission', {
@@ -24,11 +23,11 @@ const contestSubmission = ({ contestId }) => {
 				})
 				setData(result.data)
 			} catch (e) {
-				return console.log(e.data)
+				return console.log(e)
 			}
 		}
 		GetData()
-	}, [userState])
+	}, [])
 
 	return (
 		<Fragment>
