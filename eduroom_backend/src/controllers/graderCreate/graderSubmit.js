@@ -304,7 +304,7 @@ const gQuestionSubmission = async (req, res, next) => {
    		from question_attempt qa, user_profile up
 		where qa.userid = up.userid
       		and questionid = ${questionId}
-			  and qa.userid='${userId}'
+			  and qa.userid='${userId}' order by whentime desc
 		limit 100`)
 		const ann = data.rows
 		res.send(ann)
