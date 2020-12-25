@@ -37,15 +37,16 @@ const CreateComment = (props) => {
 		e.preventDefault()
 		if (validator()) {
 			if (user) {
-				api.post('/api/forum/comment', createForm).then((res) => {
-					setForm({ ...createForm, comment: '' })
-					props.GetData()
-					//router.push("/forum");
-				})
+				try {
+					api.post('/api/forum/comment', createForm).then((res) => {
+						setForm({ ...createForm, comment: '' })
+						props.GetData()
+					})
+				} catch (err) {}
 			} else {
 				setDialog(!dialog)
 			}
-		} 
+		}
 	}
 	const validator = () => {
 		let keys = Object.keys(createForm)
@@ -93,7 +94,7 @@ const CreateComment = (props) => {
 					handleClick={() => {
 						setDialog(false)
 					}}
-					path={'/forum/'+props.id}
+					path={'/forum/' + props.id}
 				/>
 			) : null}
 			<div className={classes.root}>

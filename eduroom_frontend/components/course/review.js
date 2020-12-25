@@ -11,14 +11,19 @@ const review = (props) => {
 		rates: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
 	})
 	useEffect(() => {
-		api.get(`/api/review?type=${props.type}&id=${props.id}`).then((res) => {
-			setReviewList(res.data.data)
-			setFeedback({ average: res.data.average, count: res.data.count, rates: res.data.rates })
-		})
+		try {
+			api.get(`/api/review?type=${props.type}&id=${props.id}`).then((res) => {
+				setReviewList(res.data.data)
+				setFeedback({ average: res.data.average, count: res.data.count, rates: res.data.rates })
+			})
+		} catch (err) {}
 	}, [])
 	return (
 		<Fragment>
-			<div className="box" style={{ display: 'flex', flexFlow: 'column', background: 'rgba(255,255,255,.7)' ,marginTop: '-5rem'}}>
+			<div
+				className="box"
+				style={{ display: 'flex', flexFlow: 'column', background: 'rgba(255,255,255,.7)', marginTop: '-5rem' }}
+			>
 				<CommentForPost type={props.type} id={props.id} />
 				<div style={{ paddingLeft: '2%' }}>
 					<StudentFeedback data={feedback} />
@@ -38,7 +43,7 @@ const review = (props) => {
 					})}
 				</div>
 			</div>
-			<div style={{paddingTop: '3rem'}} />
+			<div style={{ paddingTop: '3rem' }} />
 			{/* <ShowComment data={data} id={props.id}/> */}
 			{/* <ShowComment /> */}
 

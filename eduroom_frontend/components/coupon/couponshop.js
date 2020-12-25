@@ -1,11 +1,10 @@
-import React, { Fragment,useState,useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import style from '../../styles/coupon/landingCoupon';
+import style from '../../styles/coupon/landingCoupon'
 import Image from 'next/image'
-import AllCouponCoin from './AllCouponCoin';
-import AllCouponFestival from './AllCouponFestival';
+import AllCouponCoin from './AllCouponCoin'
+import AllCouponFestival from './AllCouponFestival'
 import api from '../../api'
-
 
 const CouponShopJa = () => {
 	const [privateData, setPrivateData] = useState([])
@@ -13,26 +12,26 @@ const CouponShopJa = () => {
 	const [publicData, setPublicData] = useState([])
 	useEffect(() => {
 		const fetchData = async () => {
-		  const	res1 = await api.get('/api/coupon/getPrivateCodeList')
-		  const res2 = await api.get('/api/coin/codesOfLPublic');
-		  const res3 = await api.get('/api/coin/codesOfPublic');
-		  setPrivateData(res1.data);
-		  setPublicLimitedData(res2.data);
-		  setPublicData(res3.data);
+			try {
+				const res1 = await api.get('/api/coupon/getPrivateCodeList')
+				const res2 = await api.get('/api/coin/codesOfLPublic')
+				const res3 = await api.get('/api/coin/codesOfPublic')
+				setPrivateData(res1.data)
+				setPublicLimitedData(res2.data)
+				setPublicData(res3.data)
+			} catch (err) {}
 		}
 		fetchData()
-	  }, [])
+	}, [])
 
-	const [data, setData] = useState([]);
+	const [data, setData] = useState([])
 	const click = () => {
-            router.push('/coin-shop/StoreSticker');
-    };
-	
+		router.push('/coin-shop/StoreSticker')
+	}
 
 	const router = useRouter()
 	return (
 		<Fragment>
-
 			<div className="landing">
 				<div className="landing-content">
 					<div className="landing-header">
@@ -51,21 +50,22 @@ const CouponShopJa = () => {
 			</div>
 			<div className="box">
 				<input className="input" placeholder="ENTER COUPON" />
-				<button className="btn" onClick={() => router.push('/user/MyCoupon')}>MY COUPON</button>
+				<button className="btn" onClick={() => router.push('/user/MyCoupon')}>
+					MY COUPON
+				</button>
 			</div>
-      <h1 className="color">FOR COIN</h1>
-      <AllCouponCoin item={privateData}></AllCouponCoin>
-	  <h1 className="color">LIMITED FESTIVAL COUPON</h1>
-	  <AllCouponFestival item={publicLimitedData}></AllCouponFestival>
-	  <h1 className="color">FESTIVAL COUPON</h1>
-	  <AllCouponFestival item={publicData}></AllCouponFestival>
+			<h1 className="color">FOR COIN</h1>
+			<AllCouponCoin item={privateData}></AllCouponCoin>
+			<h1 className="color">LIMITED FESTIVAL COUPON</h1>
+			<AllCouponFestival item={publicLimitedData}></AllCouponFestival>
+			<h1 className="color">FESTIVAL COUPON</h1>
+			<AllCouponFestival item={publicData}></AllCouponFestival>
 
 			<style jsx>{style}</style>
 		</Fragment>
 	)
 }
 export default CouponShopJa
-
 
 //   const data1 = [
 //     { title: 'LEARN TO CODE WITH PYTHON', price: 30,owner:'Bill gates', id: 1 ,description:'Coupon discount 10% for course PYTHON' },
