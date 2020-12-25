@@ -17,8 +17,9 @@ const content = () => {
 	})
 	const createEvent = async () => {}
 	const handleCreate = (e) => {
-		console.log(eventInfo)
-		api.post('/api/event/createEvent', eventInfo)
+		try {
+			api.post('/api/event/createEvent', eventInfo)
+		} catch (err) {}
 	}
 
 	const validator = () => {}

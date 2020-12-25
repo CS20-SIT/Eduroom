@@ -6,15 +6,16 @@ const temp = (props) => {
 	const [data, setData] = useState(false)
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await api.get('/api/coin/dailyReward')
-			// const get = await api.post('/api/coin/dailyReward')
-			setData(res.data.canGet)
-			console.log(res.data.canGet)
-			if (res.data.canGet === false) {
-				setDisbale(true)
-			} else {
-				setDisbale(false)
-			}
+			try {
+				const res = await api.get('/api/coin/dailyReward')
+				setData(res.data.canGet)
+				console.log(res.data.canGet)
+				if (res.data.canGet === false) {
+					setDisbale(true)
+				} else {
+					setDisbale(false)
+				}
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])
@@ -57,28 +58,27 @@ const temp = (props) => {
 	}, [])
 
 	const click = async () => {
-		if (disable) return
-		console.log(data)
-		console.log(deg)
-		const randDeg = Math.floor(Math.random() * (6 + 1))
-		let getNum = (randDeg + 2) % 6
-		if (getNum == 0) getNum = 6
-		console.log(getNum)
-		setTimeout(() => {
-			setNum(getNum)
-		}, 4000)
-		setTimeout(() => {
-			setNext(false)
-		}, 4000)
-		setDisbale(true)
-		setMyStyle({
-			width: '100%',
-			height: '100%',
-			transform: `rotate(${deg[randDeg]}deg)`,
-			transition: 'all 6s cubic-bezier(0, 0.99, 0.44, 0.99)',
-		})
-		const res = await api.post('/api/coin/dailyReward/',{coin:getNum} )
-		console.log(res.data)
+		try {
+			if (disable) return
+			const randDeg = Math.floor(Math.random() * (6 + 1))
+			let getNum = (randDeg + 2) % 6
+			if (getNum == 0) getNum = 6
+			console.log(getNum)
+			setTimeout(() => {
+				setNum(getNum)
+			}, 4000)
+			setTimeout(() => {
+				setNext(false)
+			}, 4000)
+			setDisbale(true)
+			setMyStyle({
+				width: '100%',
+				height: '100%',
+				transform: `rotate(${deg[randDeg]}deg)`,
+				transition: 'all 6s cubic-bezier(0, 0.99, 0.44, 0.99)',
+			})
+			const res = await api.post('/api/coin/dailyReward/', { coin: getNum })
+		} catch (err) {}
 	}
 	const renderText = () => {
 		if (change === true || data === false) {

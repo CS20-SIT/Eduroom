@@ -9,12 +9,16 @@ const Courses = (props) => {
 	const [courses, setCourses] = useState([])
 	const [numCourses, setNumCourses] = useState(0)
 	const fetchNumCourses = async () => {
-		const res = await api.get('/api/package/numCourses')
-		setNumCourses(res.data.count)
+		try {
+			const res = await api.get('/api/package/numCourses')
+			setNumCourses(res.data.count)
+		} catch (err) {}
 	}
 	const fetchCourses = async () => {
-		const res = await api.get('/api/package/courses', { params: { page: pagination, mxData: 3 } })
-		setCourses(res.data)
+		try {
+			const res = await api.get('/api/package/courses', { params: { page: pagination, mxData: 3 } })
+			setCourses(res.data)
+		} catch (err) {}
 	}
 
 	useEffect(() => {
