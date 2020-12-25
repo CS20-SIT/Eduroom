@@ -10,8 +10,10 @@ import api from '../../api'
 const ForumID = (props) => {
 	const [data, setData] = useState([])
 	const GetData = async () => {
-		const result = await api.get(`/api/forum/${props.id}`)
-		setData(result.data.data.comment)
+		try {
+			const result = await api.get(`/api/forum/${props.id}`)
+			setData(result.data.data.comment)
+		} catch (err) {}
 	}
 	useEffect(() => {
 		GetData()

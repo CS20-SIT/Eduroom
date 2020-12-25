@@ -11,23 +11,27 @@ import UserContext from '../../../contexts/user/userContext'
 const roomID = (props) => {
 	const [data, setData] = useState([])
 	const userContext = useContext(UserContext)
-	const {user} = userContext
+	const { user } = userContext
 	const GetData = async () => {
-		const result = await api.get(`/api/forum/room/${props.room}`)
-		setData(result.data.data)
+		try {
+			const result = await api.get(`/api/forum/room/${props.room}`)
+			setData(result.data.data)
+		} catch (err) {}
 	}
 	useEffect(() => {
 		GetData()
 	}, [])
-	const handleLike = (id,callback) => {
-		if(user){
-			api.post(`/api/forum/like/${id}`).then(res=>{
-				getData()
-				callback()
-			}).catch(err=>{
-			})
+	const handleLike = (id, callback) => {
+		if (user) {
+			api
+				.post(`/api/forum/like/${id}`)
+				.then((res) => {
+					getData()
+					callback()
+				})
+				.catch((err) => {})
 		} else {
-			alert("Please Login Before Like na ja")
+			alert('Please Login Before Like na ja')
 		}
 	}
 	const router = useRouter()

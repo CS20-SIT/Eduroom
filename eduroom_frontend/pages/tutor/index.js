@@ -15,8 +15,10 @@ const Tutor = () => {
 	const [instructors, setInstructors] = useState(null)
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await api.get('/api/tutor/instructor/list')
-			setInstructors(res.data)
+			try {
+				const res = await api.get('/api/tutor/instructor/list')
+				setInstructors(res.data)
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])
@@ -78,16 +80,4 @@ const Tutor = () => {
 		</Fragment>
 	)
 }
-
-// export async function getServerSideProps(context) {
-// 	try {
-// 		// const res = await api.get('https://panjs.com/ywc18.json')
-// 		const res = await api.get('http://localhost:5000/api/tutor/instructor/test')
-// 		const instructors = res.data
-// 		console.log(res.data)
-// 		return { props: { instructors } }
-// 	} catch (err) {
-// 		return { props: { instructors: '' } }
-// 	}
-// }
 export default Tutor

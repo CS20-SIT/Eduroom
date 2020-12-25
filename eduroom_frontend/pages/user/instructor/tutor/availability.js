@@ -23,30 +23,32 @@ const Availability = () => {
 	])
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await api.get('/api/tutor/instructor/availabilities')
-			setTimeSections(res.data.availabilities)
-			setCost(res.data.price)
-			let tmp = [...res.data.availabilities]
-			let tmpTable = [...table]
-			for (let x = 0; x < 5; x++) {
-				let c = 0
-				if (tmp[x][0] || tmp[x][0] == 0) tmpTable[x][c].push(tmp[x][0])
-				for (let y = 0; y < tmp[x].length - 1; y++) {
-					if (tmp[x][y] + 1 != tmp[x][y + 1]) {
-						c++
+			try {
+				const res = await api.get('/api/tutor/instructor/availabilities')
+				setTimeSections(res.data.availabilities)
+				setCost(res.data.price)
+				let tmp = [...res.data.availabilities]
+				let tmpTable = [...table]
+				for (let x = 0; x < 5; x++) {
+					let c = 0
+					if (tmp[x][0] || tmp[x][0] == 0) tmpTable[x][c].push(tmp[x][0])
+					for (let y = 0; y < tmp[x].length - 1; y++) {
+						if (tmp[x][y] + 1 != tmp[x][y + 1]) {
+							c++
+						}
+						tmpTable[x][c].push(tmp[x][y + 1])
 					}
-					tmpTable[x][c].push(tmp[x][y + 1])
 				}
-			}
-			tmp = [...timeSlots]
-			for (let z = 0; z < 5; z++) {
-				tmpTable[z].forEach((x, i) => {
-					x.forEach((y) => {
-						tmp[z][y] = gridSections[z] + i
+				tmp = [...timeSlots]
+				for (let z = 0; z < 5; z++) {
+					tmpTable[z].forEach((x, i) => {
+						x.forEach((y) => {
+							tmp[z][y] = gridSections[z] + i
+						})
 					})
-				})
-			}
-			setTable(tmpTable)
+				}
+				setTable(tmpTable)
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])
@@ -54,8 +56,10 @@ const Availability = () => {
 	const [timeSections, setTimeSections] = useState(null)
 
 	const updateData = async (availabilities, price) => {
-		const res = await api.post('/api/tutor/instructor/availabilities', { availabilities, price })
-		location.reload()
+		try {
+			const res = await api.post('/api/tutor/instructor/availabilities', { availabilities, price })
+			location.reload()
+		} catch (err) {}
 	}
 
 	const calc = (t) => {

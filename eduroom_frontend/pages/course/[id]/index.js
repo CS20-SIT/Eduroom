@@ -10,8 +10,10 @@ const CourseID = ({ id }) => {
 	const [cart, setCart] = useState([])
 	const [course, setCourse] = useState(null)
 	const fetchCourse = async () => {
-		const res = await api.get('/api/course/getCourseFromID', { params: { courseID: id } })
-		setCourse(res.data)
+		try {
+			const res = await api.get('/api/course/getCourseFromID', { params: { courseID: id } })
+			setCourse(res.data)
+		} catch (err) {}
 	}
 	useEffect(() => {
 		window.scrollTo(0, 0)
@@ -27,7 +29,7 @@ const CourseID = ({ id }) => {
 		setCart(getItems('course'))
 	}
 	const renderButtons = () => {
-		console.log(course);
+		console.log(course)
 		if (course.isOwn) {
 			return (
 				<Fragment>

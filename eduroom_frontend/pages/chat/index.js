@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid'
-import React, { useState,useContext,useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import ChatRoom from '../../components/chat/chatRoom'
 import ChatContact from '../../components/chat/chatContact'
 import EditChat from '../../components/chat/editChat'
@@ -20,7 +20,7 @@ export default function Chat() {
 	const [chatRoomDetail, setChatRoomDetail] = useState(null)
 	const [userProfile, setUserProfile] = useState(null)
 	const [chatList, setChatList] = useState([])
-	const [oldChatList,setOldChatList] = useState(null)
+	const [oldChatList, setOldChatList] = useState(null)
 	const userContext = useContext(UserContext)
 	const { user } = userContext
 	const [dialog, setDialog] = useState(false)
@@ -32,26 +32,28 @@ export default function Chat() {
 		}
 	}, [user])
 	const getChatList = async () => {
-		if(chatList){
-			setOldChatList(chatList)
-		}
-		const res = await api.get(`/api/chat/getChatlist`)
-		setChatList(res.data)
+		try {
+			if (chatList) {
+				setOldChatList(chatList)
+			}
+			const res = await api.get(`/api/chat/getChatlist`)
+			setChatList(res.data)
+		} catch (err) {}
 	}
-	useEffect(()=>{
-		if(chatList){
-			for(let i=0;i<chatList.length;i++){
+	useEffect(() => {
+		if (chatList) {
+			for (let i = 0; i < chatList.length; i++) {
 				socket.emit('joinListRoom', chatList[i].chatroomid)
 			}
 		}
-	},[chatList])
-	useEffect(()=>{
-		if(oldChatList){
-			for(let i=0;i<oldChatList.length;i++){
+	}, [chatList])
+	useEffect(() => {
+		if (oldChatList) {
+			for (let i = 0; i < oldChatList.length; i++) {
 				socket.emit('leaveListRoom', oldChatList[i].chatroomid)
 			}
 		}
-	},[oldChatList])
+	}, [oldChatList])
 	const [expand, setExpand] = useState({
 		width: 'calc(75% - 14px)',
 		position: 'relative',
@@ -61,26 +63,35 @@ export default function Chat() {
 		display: 'none',
 	})
 	const setReadMessage = (room) => {
-		api.get(`/api/chat/readMessage`, { params: { chatroomid: room } })
+		api.get(`/api/chat/readMessage`, { params: { chatroomid: room } }).catch((err) => {})
 	}
 	const getChatRoomDetail = (room) => {
 		if (room) {
-			api.get(`/api/chat/getChatroomDetail`, { params: { chatroomid: room } }).then((res) => {
-				setChatRoomDetail(res.data)
-			})
+			api
+				.get(`/api/chat/getChatroomDetail`, { params: { chatroomid: room } })
+				.then((res) => {
+					setChatRoomDetail(res.data)
+				})
+				.catch((err) => {})
 		} else if (selectChat.chatroomid != null) {
-			api.get(`/api/chat/getChatroomDetail`, { params: { chatroomid: selectChat.chatroomid } }).then((res) => {
-				setChatRoomDetail(null)
-				setChatRoomDetail(res.data)
-			})
+			api
+				.get(`/api/chat/getChatroomDetail`, { params: { chatroomid: selectChat.chatroomid } })
+				.then((res) => {
+					setChatRoomDetail(null)
+					setChatRoomDetail(res.data)
+				})
+				.catch((err) => {})
 		} else {
 			setChatRoomDetail(null)
 		}
 	}
 	const getUserProfileInfo = async () => {
-		api.get(`/api/chat/getUserProfile`).then((res) => {
-			setUserProfile(res.data)
-		})
+		api
+			.get(`/api/chat/getUserProfile`)
+			.then((res) => {
+				setUserProfile(res.data)
+			})
+			.catch((err) => {})
 	}
 	useEffect(() => {
 		getChatList()
@@ -107,8 +118,8 @@ export default function Chat() {
 				getChatRoomDetail(room)
 			})
 			socket.on('recieveLeaveChatRoom', (room) => {
-				chatList.map((el)=>{
-					if(el.chatroomid==room){
+				chatList.map((el) => {
+					if (el.chatroomid == room) {
 						getChatRoomDetail(room)
 					}
 				})
@@ -239,4 +250,3 @@ export default function Chat() {
 		</>
 	)
 }
-

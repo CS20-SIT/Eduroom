@@ -14,11 +14,13 @@ const Package = (props) => {
 		getPackage()
 	}, [])
 	const getPackage = async () => {
-		const result = await api.get(`/api/package/getPackage?packageid=${props.id}`)
-		setPackages(result.data.packages)
-		setCourseCount(result.data.courseCount)
-		serCourseList(result.data.courseList)
-		setInstructorList(result.data.instructorList)
+		try {
+			const result = await api.get(`/api/package/getPackage?packageid=${props.id}`)
+			setPackages(result.data.packages)
+			setCourseCount(result.data.courseCount)
+			serCourseList(result.data.courseList)
+			setInstructorList(result.data.instructorList)
+		} catch (err) {}
 	}
 	const renderPage = () => {
 		if (!packages) return null

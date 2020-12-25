@@ -35,13 +35,7 @@ const Content = () => {
     domainName: ""
   }); 
   const handleSubmit = (e) => {
-      console.log(createinfo);
-      // api.post("/api/registerUemail", createinfo).then((res) => {
-      //   console.log(res);
-      //   router.push("/registerUemail");
-      //   console.log("PASSPUSH");
-      // });
-      
+      console.log("Submitted");
   };
   const classes = useStyles();
   const [checked, setChecked] = React.useState(true);

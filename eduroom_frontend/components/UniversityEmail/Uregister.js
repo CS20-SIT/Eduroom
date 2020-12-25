@@ -68,12 +68,13 @@ const Content = () => {
 	const [checked, setChecked] = useState(false)
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await api.get('/api/udiscount/ulist')
-			console.log(res.data)
-			if (!unmounted) {
-				setItems(res.data.map(({ universitydomain }) => ({ label: universitydomain, value: universitydomain })))
-				setLoading(false)
-			}
+			try {
+				const res = await api.get('/api/udiscount/ulist')
+				if (!unmounted) {
+					setItems(res.data.map(({ universitydomain }) => ({ label: universitydomain, value: universitydomain })))
+					setLoading(false)
+				}
+			} catch (err) {}
 		}
 		fetchData()
 		return () => {
@@ -101,12 +102,14 @@ const Content = () => {
 	})
 
 	const handleSubmit = async (e) => {
-		const body = {
-			localPart: createinfo.localPart,
-			domainName: value,
-		}
-		await api.post('/api/udiscount/registerUemail', body)
-		router.push('/universityemail/verifycodesent')
+		try {
+			const body = {
+				localPart: createinfo.localPart,
+				domainName: value,
+			}
+			await api.post('/api/udiscount/registerUemail', body)
+			router.push('/universityemail/verifycodesent')
+		} catch (err) {}
 	}
 	const classes = useStyles()
 	const handleChange = (e) => {

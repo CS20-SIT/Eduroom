@@ -9,8 +9,10 @@ const temp = () => {
 	const [data, setData] = useState([])
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await api.get('/api/coin/stickerOwner')
-			setData(res.data)
+			try {
+				const res = await api.get('/api/coin/stickerOwner')
+				setData(res.data)
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])
