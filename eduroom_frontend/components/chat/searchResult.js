@@ -34,7 +34,7 @@ export default function searchResult(props) {
 								api.get(`/api/chat/selectSearchResultMockup`,{
 									params: {
 									  userID: el.userID
-									}}).then(props.handleSelect(el))
+									}}).then(props.handleSelect(el)).catch(err=>{})
 							}} >
 								<Avatar
 									style={{ width: 30, height: 30, marginLeft: 7, marginRight: -7 }}

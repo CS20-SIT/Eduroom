@@ -26,80 +26,100 @@ export default function editChat(props) {
 	const [isSelect, setIsSelect] = useState(false)
 	const [ignoreBlur, setIgnoreBlur] = useState(false)
 	const [chatRoomMembers, setChatRoomMembers] = useState(null)
-	const [changeMemberNickName, setChangeMemberNickName] = useState(Array(props.chatRoomDetail.membersID.length).fill(false))
+	const [changeMemberNickName, setChangeMemberNickName] = useState(
+		Array(props.chatRoomDetail.membersID.length).fill(false)
+	)
 	const getSearchResult = async () => {
-		setSearchResult(null)
-		const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
-		setSearchResult(res.data)
+		try {
+			setSearchResult(null)
+			const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
+			setSearchResult(res.data)
+		} catch (err) {}
 	}
 	const edit = props.edit
 
 	const changeColor = async (l, r) => {
-		const res = await api.get(`/api/chat/changeThemeColor`, {
-			params: { chatroomid: props.chatRoomDetail.chatroomid, sendcolor: r, recievecolor: l },
-		})
-		props.getChatRoomDetail()
+		try {
+			const res = await api.get(`/api/chat/changeThemeColor`, {
+				params: { chatroomid: props.chatRoomDetail.chatroomid, sendcolor: r, recievecolor: l },
+			})
+			props.getChatRoomDetail()
+		} catch (err) {}
 	}
 	const getChatRoomMembers = async () => {
 		let message = []
 		for (let i = 0; i < props.chatRoomDetail.membersID.length; i++) {
-			const res = await api.get(`/api/chat/getUserProfileFromID`, {
-				params: { userid: props.chatRoomDetail.membersID[i] },
-			})
-			message.push(res.data)
+			try {
+				const res = await api.get(`/api/chat/getUserProfileFromID`, {
+					params: { userid: props.chatRoomDetail.membersID[i] },
+				})
+				message.push(res.data)
+			} catch (err) {}
 		}
 		setChatRoomMembers(message)
 	}
 	const uploadPic = async (e) => {
-		var bodyFormData = new FormData()
-		bodyFormData.append('profilePic', e.target.files[0])
-		const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-		api.post(`/api/chat/uploadpic`, bodyFormData, config).then(async (rs) => {
-			const res = await api.get(`/api/chat/changeChatRoomProfilePicture`, {
-				params: { profilepic: rs.data.path, chatroomid: props.chatRoomDetail.chatroomid },
-			})
-			props.socket.emit('changeProfilePic', props.chatRoomDetail.chatroomid)
-			props.getChatRoomDetail()
-			props.getChatList()
-		})
+		try {
+			var bodyFormData = new FormData()
+			bodyFormData.append('profilePic', e.target.files[0])
+			const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+			api.post(`/api/chat/uploadpic`, bodyFormData, config).then(async (rs) => {
+				const res = await api.get(`/api/chat/changeChatRoomProfilePicture`, {
+					params: { profilepic: rs.data.path, chatroomid: props.chatRoomDetail.chatroomid },
+				})
+				props.socket.emit('changeProfilePic', props.chatRoomDetail.chatroomid)
+				props.getChatRoomDetail()
+				props.getChatList()
+			}).catch(err=>{})
+		} catch (err) {}
 	}
 	const editChatRoomName = async () => {
-		const res = await api.get(`/api/chat/changeChatRoomName`, {
-			params: { roomname: roomName, chatroomid: props.chatRoomDetail.chatroomid },
-		})
-		props.socket.emit('changeChatRoomName', props.chatRoomDetail.chatroomid)
-		props.getChatRoomDetail()
-		props.getChatList()
+		try {
+			const res = await api.get(`/api/chat/changeChatRoomName`, {
+				params: { roomname: roomName, chatroomid: props.chatRoomDetail.chatroomid },
+			})
+			props.socket.emit('changeChatRoomName', props.chatRoomDetail.chatroomid)
+			props.getChatRoomDetail()
+			props.getChatList()
+		} catch (err) {}
 	}
 	const handleSelect = async (el) => {
-		const res = await api.get(`/api/chat/addChatRoomMember`, {
-			params: { chatroomid: props.chatRoomDetail.chatroomid, member: el.userid },
-		})
-		props.getChatRoomDetail()
-		setSearchResult(null)
+		try {
+			const res = await api.get(`/api/chat/addChatRoomMember`, {
+				params: { chatroomid: props.chatRoomDetail.chatroomid, member: el.userid },
+			})
+			props.getChatRoomDetail()
+			setSearchResult(null)
+		} catch (err) {}
 	}
 	const deleteMember = async (el) => {
-		const res = await api.get(`/api/chat/deleteMember`, {
-			params: { chatroomid: props.chatRoomDetail.chatroomid, member: el.userid },
-		})
-		props.socket.emit("kickOut",props.chatRoomDetail.chatroomid)
-		props.getChatRoomDetail()
+		try {
+			const res = await api.get(`/api/chat/deleteMember`, {
+				params: { chatroomid: props.chatRoomDetail.chatroomid, member: el.userid },
+			})
+			props.socket.emit('kickOut', props.chatRoomDetail.chatroomid)
+			props.getChatRoomDetail()
+		} catch (err) {}
 	}
-	const clickDelete = async() =>{
-		props.setChatRoomDetail(null)
-		const res = await api.get(`/api/chat/deleteChatroom`,{params:{chatroomid:props.chatRoomDetail.chatroomid}})
-		props.socket.emit("leaveRoom",props.chatRoomDetail.chatroomid)
-		props.socket.emit("leaveListRoom",props.chatRoomDetail.chatroomid)
-		props.socket.emit("deleteChatRoom",props.chatRoomDetail.chatroomid)
-		props.getChatList()
+	const clickDelete = async () => {
+		try {
+			props.setChatRoomDetail(null)
+			const res = await api.get(`/api/chat/deleteChatroom`, { params: { chatroomid: props.chatRoomDetail.chatroomid } })
+			props.socket.emit('leaveRoom', props.chatRoomDetail.chatroomid)
+			props.socket.emit('leaveListRoom', props.chatRoomDetail.chatroomid)
+			props.socket.emit('deleteChatRoom', props.chatRoomDetail.chatroomid)
+			props.getChatList()
+		} catch (err) {}
 	}
-	const clickLeave = async() =>{
-		props.setChatRoomDetail(null)
-		const res = await api.get(`/api/chat/leaveChatroom`,{params:{chatroomid:props.chatRoomDetail.chatroomid}})
-		props.socket.emit("leaveChatRoom",props.chatRoomDetail.chatroomid)
-		props.socket.emit("leaveListRoom",props.chatRoomDetail.chatroomid)
-		props.socket.emit("leaveRoom",props.chatRoomDetail.chatroomid)
-		props.getChatList()
+	const clickLeave = async () => {
+		try {
+			props.setChatRoomDetail(null)
+			const res = await api.get(`/api/chat/leaveChatroom`, { params: { chatroomid: props.chatRoomDetail.chatroomid } })
+			props.socket.emit('leaveChatRoom', props.chatRoomDetail.chatroomid)
+			props.socket.emit('leaveListRoom', props.chatRoomDetail.chatroomid)
+			props.socket.emit('leaveRoom', props.chatRoomDetail.chatroomid)
+			props.getChatList()
+		} catch (err) {}
 	}
 	useEffect(() => {
 		setChangeImage(null)
@@ -112,7 +132,6 @@ export default function editChat(props) {
 	useEffect(() => {
 		getChatRoomMembers()
 	}, [])
-
 
 	return (
 		<>
@@ -321,24 +340,24 @@ export default function editChat(props) {
 						}
 					})()}
 					{chatRoomMembers &&
-						chatRoomMembers.map((el,k) => {
-								return (
-									<div key={k} className="memberDiv">
-										<Avatar style={{ width: 35, height: 35 }} alt={el.firstname + ' ' + el.lastname} src={el.avatar} />
-										<p className="memberName" style={{ color: '#7279A3' }}>
-											{el.firstname + ' ' + el.lastname}
-										</p>
-										<CancelIcon
-											style={{ cursor: 'pointer' }}
-											onClick={() => {
-												deleteMember(el)
-											}}
-										/>
-									</div>
-								)
+						chatRoomMembers.map((el, k) => {
+							return (
+								<div key={k} className="memberDiv">
+									<Avatar style={{ width: 35, height: 35 }} alt={el.firstname + ' ' + el.lastname} src={el.avatar} />
+									<p className="memberName" style={{ color: '#7279A3' }}>
+										{el.firstname + ' ' + el.lastname}
+									</p>
+									<CancelIcon
+										style={{ cursor: 'pointer' }}
+										onClick={() => {
+											deleteMember(el)
+										}}
+									/>
+								</div>
+							)
 						})}
-					<Leave onClick={clickLeave}/>
-					<DeleteGroup onClick={clickDelete}/>
+					<Leave onClick={clickLeave} />
+					<DeleteGroup onClick={clickDelete} />
 				</div>
 			</div>
 			<style jsx>{style}</style>

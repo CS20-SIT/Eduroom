@@ -27,6 +27,7 @@ const edit = (props) => {
     const [eventInfo, setEventInfo] = useState(null)
     useEffect(() => {
         const GetData = async () => {
+            try{
             const result1 = await api.get("/api/event/getAdminEvent",
                 {
                     params: {
@@ -36,7 +37,7 @@ const edit = (props) => {
             console.log('data is ', result1.data[0])
             setData(result1.data[0]);
             setEventInfo(result1.data[0]);
-
+            } catch(err){}
         };
         GetData();
 
@@ -49,9 +50,6 @@ const edit = (props) => {
 
     console.log(eventInfo);
     const handleCreate = (e) => {
-        console.log('info is')
-        console.log(eventInfo);
-        // if (validator()) {
         api.post("/api/event/eAdminEvent", { ...eventInfo, id: props.id }).then(
             (res) => {
                 setSubmit(true)
@@ -60,8 +58,6 @@ const edit = (props) => {
         ).catch(err => {
             console.log(err);
         })
-
-
     };
     const eventType = ['Course', 'Global']
 

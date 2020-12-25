@@ -17,15 +17,16 @@ const Instructor = ({ data, fetchData }) => {
 		<Fragment>
 			<div className="box">
 				<div>
-					<h2>{data.firstname} {data.lastname}</h2>
+					<h2>
+						{data.firstname} {data.lastname}
+					</h2>
 					<p>{data.bio}</p>
 				</div>
 				<div>
-				<div className="approveBtn" onClick={handleApprove}>
-					Approve
+					<div className="approveBtn" onClick={handleApprove}>
+						Approve
+					</div>
 				</div>
-				</div>
-				
 			</div>
 			<style jsx>{style}</style>
 		</Fragment>
