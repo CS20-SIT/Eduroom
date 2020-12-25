@@ -7,8 +7,10 @@ const packages = () => {
 	const [data, setData] = useState([])
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await api.get('/api/package/getAllPackage')
-			setData(res.data)
+			try {
+				const res = await api.get('/api/package/getAllPackage')
+				setData(res.data)
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])

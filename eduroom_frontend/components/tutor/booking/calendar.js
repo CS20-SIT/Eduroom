@@ -9,18 +9,22 @@ const Calendar = ({ date, setDate, month, setMonth, year, setYear, times, setTim
 
 	const [availability, setAvailability] = useState(null)
 	const fetchTimes = async (i) => {
-		let res = await api.get('/api/tutor/instructor/availability', {
-			params: { id, dates: `${year}-${month + 1}-${i}` },
-		})
+		try {
+			let res = await api.get('/api/tutor/instructor/availability', {
+				params: { id, dates: `${year}-${month + 1}-${i}` },
+			})
 
-		setAvailability(res.data)
+			setAvailability(res.data)
+		} catch (err) {}
 	}
 	useEffect(() => {
 		const fetchData = async () => {
-			let res = await api.get('/api/tutor/instructor/availability', {
-				params: { id, dates: `${year}-${month + 1}-${date}` },
-			})
-			setAvailability(res.data)
+			try {
+				let res = await api.get('/api/tutor/instructor/availability', {
+					params: { id, dates: `${year}-${month + 1}-${date}` },
+				})
+				setAvailability(res.data)
+			} catch (err) {}
 		}
 		fetchData()
 		return () => {

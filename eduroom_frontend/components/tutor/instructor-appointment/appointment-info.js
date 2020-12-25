@@ -9,10 +9,12 @@ import api from '../../../api'
 
 const Appointment = ({ AID, setAID, appointment }) => {
 	const post = async (id, status) => {
-		await api.post('/api/tutor/instructor/appointments', {
-			id,
-			status,
-		})
+		await api
+			.post('/api/tutor/instructor/appointments', {
+				id,
+				status,
+			})
+			.catch((err) => {})
 	}
 
 	return (

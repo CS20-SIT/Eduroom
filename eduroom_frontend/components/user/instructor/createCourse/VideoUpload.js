@@ -7,9 +7,6 @@ const Upload = ({ index, handleData, data }) => {
 		handleData({ el: 'video', data: newValue })
 		const formData = new FormData()
 		formData.append('course-sample-video', newValue)
-		// const res = await api.post('/api/instructor/upload/sampleVideo', formData)
-		// console.log(res.data)
-		// handleData({ el: 'videoPath', data: res.data.linkUrl })
 	}
 
 	const getLabel = () => {

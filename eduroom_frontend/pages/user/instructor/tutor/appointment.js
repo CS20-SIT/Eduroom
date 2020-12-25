@@ -11,28 +11,28 @@ import RequestMode from '../../../../components/tutor/instructor-appointment/req
 import TableHeader from '../../../../components/tutor/instructor-appointment/table-header'
 
 const Appointment = () => {
-	//   console.log(appointments[0]);
-
 	const [appointments, setAppointments] = useState(null)
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await api.get('/api/tutor/instructor/appointments')
+			try {
+				const res = await api.get('/api/tutor/instructor/appointments')
 
-			const { appointment } = res.data
-			const approved = appointment.filter((e) => {
-				return e.status == 'Approved'
-			})
-			const rejected = appointment.filter((e) => {
-				return e.status == 'Rejected'
-			})
-			const pending = appointment.filter((e) => {
-				return e.status == 'Pending'
-			})
+				const { appointment } = res.data
+				const approved = appointment.filter((e) => {
+					return e.status == 'Approved'
+				})
+				const rejected = appointment.filter((e) => {
+					return e.status == 'Rejected'
+				})
+				const pending = appointment.filter((e) => {
+					return e.status == 'Pending'
+				})
 
-			const tmp = [appointment, pending, approved, rejected]
-			console.log(tmp)
+				const tmp = [appointment, pending, approved, rejected]
+				console.log(tmp)
 
-			setAppointments(tmp)
+				setAppointments(tmp)
+			} catch (err) {}
 		}
 		fetchData()
 	}, [])
