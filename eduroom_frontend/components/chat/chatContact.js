@@ -24,22 +24,28 @@ export default function chatContact(props) {
 	const [invitations, setInvitations] = useState(null)
 
 	const getInvitations = async () => {
-		const res = await api.get(`/api/chat/getInvitationList`)
-		setInvitations(res.data)
+		try {
+			const res = await api.get(`/api/chat/getInvitationList`)
+			setInvitations(res.data)
+		} catch (err) {}
 	}
 	const getSearchResult = async () => {
-		setSearchResult(null)
-		const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
-		setSearchResult(res.data)
+		try {
+			setSearchResult(null)
+			const res = await api.get(`/api/chat/getSearchResult`, { params: { keyword: searchInput } })
+			setSearchResult(res.data)
+		} catch (err) {}
 	}
 	const clickSelectResult = async (el) => {
-		const res = await api.get(`/api/chat/selectSearchResult`, { params: { member: el.userid } })
-		if (res.data.chatroomid) {
-			props.setSelectChat(res.data)
-			props.getChatList()
-		} else {
-			props.getChatList()
-		}
+		try {
+			const res = await api.get(`/api/chat/selectSearchResult`, { params: { member: el.userid } })
+			if (res.data.chatroomid) {
+				props.setSelectChat(res.data)
+				props.getChatList()
+			} else {
+				props.getChatList()
+			}
+		} catch (err) {}
 	}
 	const handleClickOpenNotification = () => {
 		setOpenNotification(true)

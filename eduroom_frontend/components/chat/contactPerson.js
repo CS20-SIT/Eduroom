@@ -25,25 +25,33 @@ export default function chatContact(props) {
 			})
 	}
 	const clickDelete = async () => {
-		props.setChatRoomDetail(null)
-		const res = await api.get(`/api/chat/deleteChatroom`, { params: { chatroomid: props.chatRoomID } })
-		props.socket.emit('leaveRoom', props.chatRoomID)
-		props.socket.emit('leaveListRoom', props.chatRoomID)
-		props.socket.emit('deleteChatRoom', props.chatRoomID)
-		props.getChatList()
+		try {
+			props.setChatRoomDetail(null)
+			const res = await api.get(`/api/chat/deleteChatroom`, { params: { chatroomid: props.chatRoomID } })
+			props.socket.emit('leaveRoom', props.chatRoomID)
+			props.socket.emit('leaveListRoom', props.chatRoomID)
+			props.socket.emit('deleteChatRoom', props.chatRoomID)
+			props.getChatList()
+		} catch (err) {}
 	}
 	const clickLeave = async () => {
-		props.setChatRoomDetail(null)
-		const res = await api.get(`/api/chat/leaveChatroom`, { params: { chatroomid: props.chatRoomID } })
-		props.socket.emit('leaveRoom', props.chatRoomID)
-		props.socket.emit('leaveChatRoom', props.chatRoomID)
-		props.socket.emit('leaveListRoom', props.chatRoomID)
-		props.getChatList()
+		try {
+			props.setChatRoomDetail(null)
+			const res = await api.get(`/api/chat/leaveChatroom`, { params: { chatroomid: props.chatRoomID } })
+			props.socket.emit('leaveRoom', props.chatRoomID)
+			props.socket.emit('leaveChatRoom', props.chatRoomID)
+			props.socket.emit('leaveListRoom', props.chatRoomID)
+			props.getChatList()
+		} catch (err) {}
 	}
 	const clickMute = async () => {
-		const res = await api.get(`/api/chat/hideChatroom`, { params: { chatroomid: props.chatRoomID, hide: !props.hide } })
-		props.setChatRoomDetail(null)
-		props.getChatList()
+		try {
+			const res = await api.get(`/api/chat/hideChatroom`, {
+				params: { chatroomid: props.chatRoomID, hide: !props.hide },
+			})
+			props.setChatRoomDetail(null)
+			props.getChatList()
+		} catch (err) {}
 	}
 	useEffect(() => {
 		getChatRoomProfilePicture()
@@ -91,9 +99,7 @@ export default function chatContact(props) {
 					<div>
 						<h5 style={{ display: 'inline' }}>{props.roomname}</h5>
 						<br />
-						<span style={{fontSize:12}}>
-							{props.resentMessage}
-						</span>
+						<span style={{ fontSize: 12 }}>{props.resentMessage}</span>
 					</div>
 				</div>
 				<div
@@ -121,19 +127,19 @@ export default function chatContact(props) {
 									if (props.hide) {
 										return (
 											<>
-											<MuteIcon />
-											<span className="sm2" style={{ marginRight: 10}}>
-												Unmute
-											</span>
+												<MuteIcon />
+												<span className="sm2" style={{ marginRight: 10 }}>
+													Unmute
+												</span>
 											</>
 										)
 									} else {
 										return (
 											<>
-											<MuteIcon/>
-											<span className="sm" style={{ marginRight: 18 }}>
-												Mute
-											</span>
+												<MuteIcon />
+												<span className="sm" style={{ marginRight: 18 }}>
+													Mute
+												</span>
 											</>
 										)
 									}

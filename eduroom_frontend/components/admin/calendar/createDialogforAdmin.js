@@ -8,179 +8,162 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import style from '../../../styles/calendar/calendar'
 import api from '../../../api'
-import { useRouter } from "next/router";
-
-
+import { useRouter } from 'next/router'
 
 const Content = (props) => {
-    const router = useRouter();
-    const openEvent = props.openEvent
-    const setOpenEvent = props.setOpenEvent
-    // ---------------------createEvent---------------------------
+	const router = useRouter()
+	const openEvent = props.openEvent
+	const setOpenEvent = props.setOpenEvent
+	// ---------------------createEvent---------------------------
 
+	const [submit, setSubmit] = useState(false)
+	const statusClose = () => {
+		setSubmit(false)
+		window.location.reload()
+	}
+	const [eventInfo, setEventInfo] = useState({
+		title: '',
+		description: '',
+		startDate: '',
+		endDate: '',
+		startTime: '',
+		endTime: '',
+		place: '',
+	})
+	const handleCreate = (e) => {
+		console.log(eventInfo)
+		api
+			.post('/api/event/createAdminEvent', eventInfo)
+			.then((res) => {
+				setSubmit(true)
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+	}
+	return (
+		<Fragment>
+			<CSSTransition
+				mountOnEnter
+				unmountOnExit
+				in={openEvent}
+				timeout={{ enter: 700, exit: 100 }}
+				classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
+			>
+				<div className="D-create">
+					<div style={{ height: '10%' }}></div>
+					<div className="text-create">Create Event</div>
 
-    const [submit, setSubmit] = useState(false);
-    const statusClose = () => {
-        setSubmit(false)
-        window.location.reload();
-    }
-    const [eventInfo, setEventInfo] = useState({
-        title: '',
-        description: '',
-        startDate: '',
-        endDate: '',
-        startTime: '',
-        endTime: '',
-        place: '',
-    })
-    const handleCreate = (e) => {
+					{/* -------------------------------eventtitle------------------------------- */}
+					<div>
+						<input
+							className="event-title"
+							onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
+							placeholder="Event Title"
+							style={{ height: '50px' }}
+						></input>
+					</div>
 
-        console.log(eventInfo);
-        // if (validator()) {
-        api.post("/api/event/createAdminEvent", eventInfo).then(
-            (res) => {
-                setSubmit(true)
+					{/* ---------------------- ---------eventdescript------------------------------- */}
+					<div>
+						<input
+							className="event-detail"
+							onChange={(e) => setEventInfo({ ...eventInfo, description: e.target.value })}
+							placeholder="Description"
+							style={{ height: '50px' }}
+						></input>
+					</div>
+					{/* ---------------------- ---------time------------------------------- */}
 
-            }
-        ).catch(err => {
-            console.log(err);
-        })/*  {
-            title: eventInfo.title,
-            description: eventInfo.description,
-            startDate: eventInfo.startDate,
-            endDate: eventInfo.endDate,
-            startTime: eventInfo.startTime,
-            endTime: eventInfo.endTime,
-            place: eventInfo.place,
-          });  */
-        // }
-    };
-    return (
-        <Fragment>
-            <CSSTransition
-                mountOnEnter
-                unmountOnExit
-                in={openEvent}
-                timeout={{ enter: 700, exit: 100 }}
-                classNames={{ enterActive: 'fade-in', exitActive: 'fade-out' }}
-            >
-                <div className="D-create">
-                    <div style={{ height: '10%' }}></div>
-                    <div className="text-create">Create Event</div>
+					<div className="startdate">
+						<div>startDate</div>
 
-                    {/* -------------------------------eventtitle------------------------------- */}
-                    <div>
-                        <input
-                            className="event-title"
-                            onChange={(e) => setEventInfo({ ...eventInfo, title: e.target.value })}
-                            placeholder="Event Title"
-                            style={{ height: '50px' }}
-                        ></input>
-                    </div>
+						<input
+							defaultValue={props.year + '-' + props.monthNo + '-' + props.date}
+							className="event-startDate"
+							onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
+							placeholder="Start date"
+							type="date"
+						></input>
+					</div>
 
+					<div className="startTime">
+						<div>startTime</div>
+						<input
+							className="event-startTime"
+							onChange={(e) => setEventInfo({ ...eventInfo, startTime: e.target.value })}
+							placeholder="Start Time"
+							type="Time"
+						></input>
+					</div>
 
+					<div className="enddate">
+						<div>endDate</div>
+						<input
+							className="event-startDate"
+							onChange={(e) => setEventInfo({ ...eventInfo, endDate: e.target.value })}
+							placeholder="end date"
+							type="date"
+						></input>
+					</div>
 
+					<div className="endtime">
+						<div>endTime</div>
+						<input
+							className="event-endTime"
+							onChange={(e) => setEventInfo({ ...eventInfo, endTime: e.target.value })}
+							placeholder="end Time"
+							type="time"
+						></input>
+					</div>
 
-                    {/* ---------------------- ---------eventdescript------------------------------- */}
-                    <div>
-                        <input
-                            className="event-detail"
-                            onChange={(e) => setEventInfo({ ...eventInfo, description: e.target.value })}
-                            placeholder="Description"
-                            style={{ height: '50px' }}
-                        ></input>
-                    </div>
-                    {/* ---------------------- ---------time------------------------------- */}
+					{/* -------------------------------place------------------------------- */}
+					<div>
+						<input
+							className="event-place"
+							onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
+							placeholder="Event Place"
+							style={{ height: '50px' }}
+						></input>
+					</div>
 
-                    <div className="startdate">
-                        <div>startDate</div>
+					<div className="confirmBT">
+						<button className="event-confirm" onClick={handleCreate}>
+							<a className="event-confirmText">CONFIRM</a>
+						</button>
+					</div>
+					<div
+						className="cancelBT"
+						onClick={() => {
+							setOpenEvent(false)
+						}}
+					>
+						<button className="event-cancel">
+							<a className="event-cancelText">CANCEL</a>
+						</button>
+					</div>
 
-                        <input
-                            defaultValue={props.year + "-" + props.monthNo + "-" + props.date}
-                            className="event-startDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startDate: e.target.value })}
-                            placeholder="Start date"
-                            type="date"
-                        ></input>
-                    </div>
+					<Dialog open={submit}>
+						<DialogTitle>
+							<span>Success!</span>
+						</DialogTitle>
+						<DialogContent>
+							<DialogContentText>
+								<span> The Event have been created.</span>
+							</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={statusClose} color="primary" autoFocus>
+								<span>Ok</span>
+							</Button>
+						</DialogActions>
+					</Dialog>
+				</div>
+			</CSSTransition>
 
-                    <div className="startTime">
-                        <div>startTime</div>
-                        <input
-                            className="event-startTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, startTime: e.target.value })}
-                            placeholder="Start Time"
-                            type="Time"
-                        ></input>
-                    </div>
-
-                    <div className="enddate">
-                        <div>endDate</div>
-                        <input
-                            className="event-startDate"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endDate: e.target.value })}
-                            placeholder="end date"
-                            type="date"
-                        ></input>
-                    </div>
-
-                    <div className="endtime">
-                        <div>endTime</div>
-                        <input
-                            className="event-endTime"
-                            onChange={(e) => setEventInfo({ ...eventInfo, endTime: e.target.value })}
-                            placeholder="end Time"
-                            type="time"
-                        ></input>
-                    </div>
-
-                    {/* -------------------------------place------------------------------- */}
-                    <div>
-                        <input
-                            className="event-place"
-                            onChange={(e) => setEventInfo({ ...eventInfo, place: e.target.value })}
-                            placeholder="Event Place"
-                            style={{ height: '50px' }}
-                        ></input>
-                    </div>
-
-                    <div className="confirmBT">
-                        <button className="event-confirm" onClick={handleCreate} >
-                            <a className="event-confirmText">CONFIRM</a>
-                        </button>
-                    </div>
-                    <div
-                        className="cancelBT"
-                        onClick={() => {
-                            setOpenEvent(false)
-                        }}
-                    >
-                        <button className="event-cancel">
-                            <a className="event-cancelText">CANCEL</a>
-                        </button>
-                    </div>
-
-                    <Dialog open={submit}>
-                        <DialogTitle>
-                            <span>Success!</span>
-                        </DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <span> The Event have been created.</span>
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={statusClose} color="primary" autoFocus>
-                                <span>Ok</span>
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                </div>
-            </CSSTransition>
-
-            <style jsx>{style}</style>
-            <style jsx>
-                {`
+			<style jsx>{style}</style>
+			<style jsx>
+				{`
 					.fade-in {
 						animation: fade-in 0.3s forwards;
 					}
@@ -204,8 +187,8 @@ const Content = (props) => {
 						}
 					}
 				`}
-            </style>
-        </Fragment>
-    )
+			</style>
+		</Fragment>
+	)
 }
 export default Content

@@ -6,41 +6,49 @@ import InsertEmoticonIcon from './icons/InsertEmoticonIcon'
 import api from '../../api'
 
 export default function chatRoomBottomBar(props) {
-	const[sticker, setSticker] = useState(null)
-	const[result,setResult] = useState(null)
-	const[show,setShow] = useState({visibility:'hidden'})
+	const [sticker, setSticker] = useState(null)
+	const [result, setResult] = useState(null)
+	const [show, setShow] = useState({ visibility: 'hidden' })
 	const enter = (e) => {
 		if (e.keyCode === 13) {
 			props.sendMessage()
 		}
 	}
 	const sendStickerMessage = async (mes) => {
-		if (mes != '' && mes != null) {
-			const res = await api.get(`/api/chat/sendStickerMessage`, {
-				params: { message: mes, chatroomid: props.chatroomid},
-			})
-			if (res.data.success == true) {
-				props.socket.emit('sendMessage', props.chatroomid)
+		try {
+			if (mes != '' && mes != null) {
+				const res = await api.get(`/api/chat/sendStickerMessage`, {
+					params: { message: mes, chatroomid: props.chatroomid },
+				})
+				if (res.data.success == true) {
+					props.socket.emit('sendMessage', props.chatroomid)
+				}
 			}
-		}
+		} catch (err) {}
 	}
 	const getSticker = async () => {
-		const res = await api.get(`/api/coin/stickerOwner`)
-		setSticker(res.data)
+		try {
+			const res = await api.get(`/api/coin/stickerOwner`)
+			setSticker(res.data)
+		} catch (err) {}
 	}
-	const getResultSelect = async (id)=>{
-		let get;
-		let result = await sticker.some((a) => {if(a.stickerid==id){get=a}})
+	const getResultSelect = async (id) => {
+		let get
+		let result = await sticker.some((a) => {
+			if (a.stickerid == id) {
+				get = a
+			}
+		})
 		setResult(get)
 	}
 	useEffect(() => {
 		getSticker()
 	}, [])
-	useEffect(()=>{
-		if(sticker!=null && sticker.length>0){
+	useEffect(() => {
+		if (sticker != null && sticker.length > 0) {
 			getResultSelect(sticker[0].stickerid)
 		}
-	},[sticker])
+	}, [sticker])
 	return (
 		<>
 			<div className="bottomBar">
@@ -63,19 +71,41 @@ export default function chatRoomBottomBar(props) {
 					style={{ width: '50%' }}
 					autoComplete="off"
 				/>
-				<div className="dropdown" onMouseOver={()=>{setShow({})}} onMouseLeave={()=>{setShow({visibility:'hidden'})}}>
-					<InsertEmoticonIcon style={{ marginLeft: 15, cursor: 'pointer' }}/>
+				<div
+					className="dropdown"
+					onMouseOver={() => {
+						setShow({})
+					}}
+					onMouseLeave={() => {
+						setShow({ visibility: 'hidden' })
+					}}
+				>
+					<InsertEmoticonIcon style={{ marginLeft: 15, cursor: 'pointer' }} />
 					<div className="dropdown-content" style={show}>
-						<div className="scroll" style={{ height: '100%', width: '80', display: 'inline-block',backgroundColor:'#EBEBEB',marginRight:5}}>
-							{sticker!=null&&sticker.length>0 &&
-								sticker.map((el,i) => {
-									if(show){
+						<div
+							className="scroll"
+							style={{
+								height: '100%',
+								width: '80',
+								display: 'inline-block',
+								backgroundColor: '#EBEBEB',
+								marginRight: 5,
+							}}
+						>
+							{sticker != null &&
+								sticker.length > 0 &&
+								sticker.map((el, i) => {
+									if (show) {
 										return (
-											<div key={i} className="item" style={{ width: 45, height: 45, margin: 0 ,padding:10,cursor: 'pointer'}} onClick={()=>{getResultSelect(el.stickerid)}}>
-												<img
-													src={el.stickerimg}
-													style={{ width: '100%', height: '100%',margin:5}}
-												/>
+											<div
+												key={i}
+												className="item"
+												style={{ width: 45, height: 45, margin: 0, padding: 10, cursor: 'pointer' }}
+												onClick={() => {
+													getResultSelect(el.stickerid)
+												}}
+											>
+												<img src={el.stickerimg} style={{ width: '100%', height: '100%', margin: 5 }} />
 											</div>
 										)
 									}
@@ -83,14 +113,18 @@ export default function chatRoomBottomBar(props) {
 						</div>
 						<div className="scroll" style={{ height: '100%', width: 'calc(100% - 65px)', display: 'inline-block' }}>
 							{result &&
-								result.stickers.map((el,i) => {
-									if(show){
+								result.stickers.map((el, i) => {
+									if (show) {
 										return (
-											<div key={i} className="item" style={{ width: 52, height: 52, display: 'inline-block',padding:10,cursor: 'pointer' }} onClick={()=>{sendStickerMessage(el.stickerimg)}}>
-												<img
-													src={el.stickerimg}
-													style={{ width: '100%', height: '100%' }}
-												/>
+											<div
+												key={i}
+												className="item"
+												style={{ width: 52, height: 52, display: 'inline-block', padding: 10, cursor: 'pointer' }}
+												onClick={() => {
+													sendStickerMessage(el.stickerimg)
+												}}
+											>
+												<img src={el.stickerimg} style={{ width: '100%', height: '100%' }} />
 											</div>
 										)
 									}
@@ -158,11 +192,10 @@ export default function chatRoomBottomBar(props) {
 				.scroll::-webkit-scrollbar-corner {
 					background-color: transparent;
 				}
-				.item:hover{
-					opacity:0.5;
+				.item:hover {
+					opacity: 0.5;
 				}
 			`}</style>
 		</>
 	)
-
 }
