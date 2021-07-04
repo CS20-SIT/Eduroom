@@ -39,8 +39,8 @@ const Profile = () => {
 		if (!user || !birth || !joined) return null
 		return (
 			<div className="profile-container">
-				<div style={{ marginRight: '40px' }}>
-					<img src={user.avatar} className="avatar" width="200px" height="200px"></img>
+				<div style={{ marginRight: '2rem' }}>
+					<img src={user.avatar} className="avatar" width="160px" height="160px"></img>
 				</div>
 				<div style={{ width: '100%' }}>
 					<div className="head">
@@ -88,14 +88,7 @@ const Profile = () => {
 							defaultValue={user.bio ? user.bio : '-'}
 							inputProps={{ readOnly: true }}
 						/>
-						{/* <textarea rows="4" cols="50" readonly>
-							{user.bio ? user.bio : '-'}
-						</textarea> */}
-						{/* <span>{user.bio ? user.bio : '-'}</span> */}
 					</div>
-					{/* <Link href="/user/courses">
-							<button className="btn">MyCourse</button>
-					</Link> */}
 
 					<button onClick={() => router.push('/coin-shop/History')} className={Styles.btnHistory2}>
 						Sticker Owner
