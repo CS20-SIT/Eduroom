@@ -14,7 +14,7 @@ env:
 jobs:
   setup-build-frontend:
     name: Setup and Build Frontend
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: '1'
     steps:
