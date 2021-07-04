@@ -13,7 +13,7 @@ env:
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
-    runs-on: [self-hosted, linux, x64]
+    runs-on: [linux, x64]
 #     env:
 #       DOCKER_BUILDKIT: '1'
     steps:
