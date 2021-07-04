@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import Node from './Node'
 const NodeList = ({ nodes }) => {
 	const renderNode = () => {
-		if(!nodes) return null
+		if (!nodes) return null
 		let sortedNodes = sortNode(nodes)
 		return sortedNodes.map((el, index) => {
 			return <Node key={index} node={el} isLeft={index % 2 == 0} />

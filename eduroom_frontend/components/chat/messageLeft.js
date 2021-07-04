@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import ReadIcon from './icons/ReadIcon'
 import DotDotIcon from './icons/DotDotIcon'
@@ -42,23 +42,23 @@ export default function messageLeft(props) {
 					}}
 				>
 					{(() => {
-						if (message.reader && message.reader.length>0) {
+						if (message.reader && message.reader.length > 0) {
 							return (
 								<>
 									<ReadIcon style={{ paddingTop: 5, marginLeft: 10 }} />
 									<div className="dropdown scroll" style={dropReadDownStyle}>
-										{message.reader.map((el,i) => {
-											return(
-											<span
-											key={i}
-												style={{
-													fontSize: 12,
-													whiteSpace: 'nowrap',
-												}}
-											>
-												{el}
-												<br />
-											</span>
+										{message.reader.map((el, i) => {
+											return (
+												<span
+													key={i}
+													style={{
+														fontSize: 12,
+														whiteSpace: 'nowrap',
+													}}
+												>
+													{el}
+													<br />
+												</span>
 											)
 										})}
 									</div>
@@ -82,7 +82,7 @@ export default function messageLeft(props) {
 					display: inline-block;
 				}
 				.dropdown {
-					z-index:2 !important;
+					z-index: 2 !important;
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;
@@ -94,7 +94,7 @@ export default function messageLeft(props) {
 					padding: 10px 10px 10px 10px;
 				}
 				.dropdown2 {
-					z-index:2 !important;
+					z-index: 2 !important;
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;

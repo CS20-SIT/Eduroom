@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef, useContext } from 'react'
+import { Fragment, useState, useEffect, useRef, useContext } from 'react'
 import NavContext from '../contexts/landing/navContext'
 
 const Container = (props) => {

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Link from 'next/link'
 
 import utils from '../../styles/tutor/utils'

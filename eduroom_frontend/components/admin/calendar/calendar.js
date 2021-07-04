@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Cell from '../../../components/admin/calendar/calendarCell'
 import HeadCell from '../../../components/calendar/calendarHeader'
 import BlankCell from '../../../components/calendar/calendarBlankCell'
@@ -33,36 +33,40 @@ const Content = () => {
 	const TodayMonth = Today.getMonth() + 1
 	const TodayYear = Today.getFullYear()
 
-  const [eventDays, setEvent] = useState([])
-  const [daysInMonth,setDayInMonth] = useState([])
-  const [blank,setBlank] = useState([])
-  const [blankEnd,setBlankEnd] = useState([])
+	const [eventDays, setEvent] = useState([])
+	const [daysInMonth, setDayInMonth] = useState([])
+	const [blank, setBlank] = useState([])
+	const [blankEnd, setBlankEnd] = useState([])
 	useEffect(() => {
 		setCurrentDate(parseInt(day.dateObject.format('D')))
 		setCurrentMonth(day.dateObject.format('MMMM'))
 		setCurrentMonthNo(parseInt(day.dateObject.format('M')))
-    setCurrentYear(parseInt(day.dateObject.format('YYYY')))
-    let tempDay = []
-    let tempBlankend = []
-    let tempBlank = []
-    let count = 0
-    for (let i = 0; i < firstDayOfMonth(); i++) {
-      tempBlank.push('x')
-      count++
-    }
-    for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
-      tempDay.push(d)
-      count++
-    }
-    while (count < 42) {
-      tempBlankend.push('x')
-      count++
-    }
-    setDayInMonth(tempDay)
-    setBlank(tempBlank)
-    setBlankEnd(tempBlankend)
+		setCurrentYear(parseInt(day.dateObject.format('YYYY')))
+		let tempDay = []
+		let tempBlankend = []
+		let tempBlank = []
+		let count = 0
+		for (let i = 0; i < firstDayOfMonth(); i++) {
+			tempBlank.push('x')
+			count++
+		}
+		for (let d = 1; d <= day.dateObject.daysInMonth(); d++) {
+			tempDay.push(d)
+			count++
+		}
+		while (count < 42) {
+			tempBlankend.push('x')
+			count++
+		}
+		setDayInMonth(tempDay)
+		setBlank(tempBlank)
+		setBlankEnd(tempBlankend)
 		api
-			.get(`/api/event/getAdminEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(day.dateObject.format('YYYY'))}`)
+			.get(
+				`/api/event/getAdminEventInMonthYear?m=${parseInt(day.dateObject.format('M'))}&y=${parseInt(
+					day.dateObject.format('YYYY')
+				)}`
+			)
 			.then((res) => {
 				setEvent(res.data.data)
 			})
@@ -85,8 +89,6 @@ const Content = () => {
 		return firstDay
 	}
 
-
-
 	const [showDate, setShowDate] = useState(-1)
 	const [open, setOpen] = useState(false)
 
@@ -105,7 +107,6 @@ const Content = () => {
 	// ------------------code below----------------------//
 	return (
 		<Fragment>
-
 			<ViewEvent
 				open={open}
 				setOpen={setOpen}
@@ -117,7 +118,7 @@ const Content = () => {
 
 			{/* ------------------------------Create Event on main Calendar Page---------------------------------------- */}
 			{/* {isInstructor ? ( */}
-				{/* <div className="createEvent">
+			{/* <div className="createEvent">
 					<button
 						className="bt-createEvent"
 						onClick={() => {
@@ -134,17 +135,17 @@ const Content = () => {
 				<div className="month-size">
 					<Container>
 						<Grid container spacing={0}>
-						<div className="headCalendar">
-							<div className="previous-m" onClick={minusMonth}>
-								{' '}
-								<Image alt="left-arrow" src="/images/createEvent/L.svg" width="30" height="30" />{' '}
-							</div>
+							<div className="headCalendar">
+								<div className="previous-m" onClick={minusMonth}>
+									{' '}
+									<Image alt="left-arrow" src="/images/createEvent/L.svg" width="30" height="30" />{' '}
+								</div>
 
-							<div className="month">{currentMonth + ' ' + currentYear}</div>
+								<div className="month">{currentMonth + ' ' + currentYear}</div>
 
-							<div className="forward-m" onClick={addMonth}>
-								<Image alt="right-arrow" src="/images/createEvent/R.svg" width="30" height="30" />
-							</div>
+								<div className="forward-m" onClick={addMonth}>
+									<Image alt="right-arrow" src="/images/createEvent/R.svg" width="30" height="30" />
+								</div>
 							</div>
 						</Grid>
 					</Container>

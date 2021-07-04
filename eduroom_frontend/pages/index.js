@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import GeneralTemplate from '../components/template/general'
 import LandingContent from '../components/landing/content'
 import Package from '../components/package/packageStore'

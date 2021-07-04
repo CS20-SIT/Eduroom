@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react'
+import { Fragment, useState, useContext, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import style from '../../styles/landing/login'
 import UserContext from '../../contexts/user/userContext'
 import { validateEmail } from '../../utils/validate'
-const LoginBox = ({path='/',handleSuccess=()=>{}}) => {
+const LoginBox = ({ path = '/', handleSuccess = () => {} }) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [emailError, setEmailError] = useState('')
@@ -40,7 +40,9 @@ const LoginBox = ({path='/',handleSuccess=()=>{}}) => {
 		} else {
 			const body = { email, password }
 			setLoading(true)
-			await loginUser(body, router,path,()=>{handleSuccess()})
+			await loginUser(body, router, path, () => {
+				handleSuccess()
+			})
 			setLoading(false)
 			setPasswordError(userContext.err)
 		}

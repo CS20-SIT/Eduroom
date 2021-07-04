@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import { useReducer } from 'react'
 import adminReducer from './adminReducer'
 import AdminContext from './adminContext'
 import api from '../../api'
@@ -48,7 +48,7 @@ const adminState = (props) => {
 				admin: state.admin,
 				loginAdmin,
 				getAdminProfile,
-				logoutAdmin
+				logoutAdmin,
 			}}
 		>
 			{props.children}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import style from '../../styles/chat/chat'
 import Avatar from '@material-ui/core/Avatar'
 import CancelIcon from './icons/CancelIcon'

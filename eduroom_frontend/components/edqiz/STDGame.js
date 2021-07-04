@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Page1 from './gamePage1std'
 import Page2 from './correctAnswer'
 import Page3 from './gamePage2std'

@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid'
-import React, { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import ChatRoom from '../../components/chat/chatRoom'
 import ChatContact from '../../components/chat/chatContact'
 import EditChat from '../../components/chat/editChat'

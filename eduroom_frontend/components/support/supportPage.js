@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import React, { Fragment, useState } from 'react'
-import { Button, Grid, makeStyles, Link,Typography } from '@material-ui/core'
+import { Fragment, useState } from 'react'
+import { Button, Grid, makeStyles, Link, Typography } from '@material-ui/core'
 import General from '../../components/template/general'
 import StudentSupport from '../support/studentSupport'
 import InstructorSupport from '../support/InstructorSupport'
@@ -30,10 +30,9 @@ const SupportPage = () => {
 	return (
 		<Fragment>
 			<General>
-
-				<img src="/images/HowCanWeHelpYou.svg" style={{ height: '100%'}}></img>
+				<img src="/images/HowCanWeHelpYou.svg" style={{ height: '100%' }}></img>
 				<div>
-					<Grid container spacing={2} style={{marginTop:'3%'}}>
+					<Grid container spacing={2} style={{ marginTop: '3%' }}>
 						<Grid item sm={12}>
 							<Grid container justify="center" spacing={4}>
 								<Grid item>
@@ -46,12 +45,24 @@ const SupportPage = () => {
 										<h2>Instructor</h2>
 									</Button>
 								</Grid>
-								
 							</Grid>
-							<Grid item sm={12}><Typography style={{marginLeft:'18%',marginBottom:'2%',marginTop:'3%'}}><h2>Select a topic to search for help</h2></Typography></Grid>
-							{showResultsInstructor ? <InstructorSupport /> : <StudentSupport />}</Grid>
-							<Typography style={{marginLeft:'60%',marginBottom:'2%',marginTop:'3%'}}><h2>or you can</h2></Typography>
-						<Button variant='contained' style={{ backgroundColor: '#FB9CCB',height:'8%',width:'11%',marginTop:'4.5%',marginLeft:'2%'}} href="/support/create"><label style={{ color: '#ffffff' }}>CONTACT US</label></Button>
+							<Grid item sm={12}>
+								<Typography style={{ marginLeft: '18%', marginBottom: '2%', marginTop: '3%' }}>
+									<h2>Select a topic to search for help</h2>
+								</Typography>
+							</Grid>
+							{showResultsInstructor ? <InstructorSupport /> : <StudentSupport />}
+						</Grid>
+						<Typography style={{ marginLeft: '60%', marginBottom: '2%', marginTop: '3%' }}>
+							<h2>or you can</h2>
+						</Typography>
+						<Button
+							variant="contained"
+							style={{ backgroundColor: '#FB9CCB', height: '8%', width: '11%', marginTop: '4.5%', marginLeft: '2%' }}
+							href="/support/create"
+						>
+							<label style={{ color: '#ffffff' }}>CONTACT US</label>
+						</Button>
 					</Grid>
 				</div>
 			</General>

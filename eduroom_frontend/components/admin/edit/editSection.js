@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import EditProfile from './editProfile'
 import EditPassword from './editPassword'
 const EditSection = ({ type, open, handleToggle, profiles }) => {

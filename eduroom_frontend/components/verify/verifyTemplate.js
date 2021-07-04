@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 
 // This component is only html template that use for send mail :)
 
@@ -11,7 +11,12 @@ const VerifyTemplate = () => {
 					<img src="https://eduroom.cscms.me/images/verify/verify_sent.svg" alt="verify-image" />
 				</div>
 				<div className="verify-head">Verify your email address</div>
-				<div className="verify-text">Welcome to <a href="https://eduroom.cscms.me" style={{color:'#FB9CCB'}}>eduroom.cscms.me</a></div>
+				<div className="verify-text">
+					Welcome to{' '}
+					<a href="https://eduroom.cscms.me" style={{ color: '#FB9CCB' }}>
+						eduroom.cscms.me
+					</a>
+				</div>
 				<div className="verify-text">Please click the button below to comfirm </div>
 				<div className="verify-text">your email address and activate your account.</div>
 				<div className="ver-btn">

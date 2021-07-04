@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react'
+import { Fragment, useState, useContext, useEffect } from 'react'
 import style from '../../styles/universityEmail/Uregister'
 import { withStyles, InputBase, Link, MenuItem, Select, Paper, Grid, FormControl, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -61,9 +61,9 @@ const Content = () => {
 	const router = useRouter()
 
 	let unmounted = false
-	const [loading, setLoading] = React.useState(true)
-	const [items, setItems] = React.useState([])
-	const [value, setValue] = React.useState('mail.kmutt.ac.th')
+	const [loading, setLoading] = useState(true)
+	const [items, setItems] = useState([])
+	const [value, setValue] = useState('mail.kmutt.ac.th')
 	const [btn, setBtn] = useState(false)
 	const [checked, setChecked] = useState(false)
 	useEffect(() => {

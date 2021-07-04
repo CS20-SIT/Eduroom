@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
 import Styles from '../../styles/CoinStyles/coin-shop.module.css'
-import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField'
 import UserCourse from './courses'
 import { useRouter } from 'next/router'
 
@@ -49,14 +49,14 @@ const Profile = () => {
 						</h1>
 						<div style={{ marginTop: '20px' }}>
 							<Link href="/user/edit">
-							<div className="edit">
-								<Link href="/user/edit">
-									<h2 className="editText" style={{ margin: '0' }}>
-										Edit
-									</h2>
-								</Link>
-								<i className="fas fa-edit edit-icon" style={{ marginTop: '7px' }}></i>
-							</div>
+								<div className="edit">
+									<Link href="/user/edit">
+										<h2 className="editText" style={{ margin: '0' }}>
+											Edit
+										</h2>
+									</Link>
+									<i className="fas fa-edit edit-icon" style={{ marginTop: '7px' }}></i>
+								</div>
 							</Link>
 						</div>
 					</div>
@@ -80,7 +80,8 @@ const Profile = () => {
 
 					<div className="topic">
 						<p className="header">Bio</p>
-						<TextField style={{ width: '100%' }}
+						<TextField
+							style={{ width: '100%' }}
 							disabled
 							multiline
 							rows={10}
@@ -95,10 +96,10 @@ const Profile = () => {
 					{/* <Link href="/user/courses">
 							<button className="btn">MyCourse</button>
 					</Link> */}
-					
-							<button onClick={() => router.push('/coin-shop/History')} className={Styles.btnHistory2}>
-								Sticker Owner
-							</button>
+
+					<button onClick={() => router.push('/coin-shop/History')} className={Styles.btnHistory2}>
+						Sticker Owner
+					</button>
 
 					{renderRegister()}
 					<UserCourse></UserCourse>

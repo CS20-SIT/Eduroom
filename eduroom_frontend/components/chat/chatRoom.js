@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import KeyboardArrowDownIcon from './icons/KeyboardArrowDownIcon'
 import MessageRight from './messageRight'
 import MessageLeft from './messageLeft'

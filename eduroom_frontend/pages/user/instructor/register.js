@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react'
-import { useRouter } from 'next/router';
+import { Fragment, useState, useEffect, useContext } from 'react'
+import { useRouter } from 'next/router'
 import General from '../../../components/template/general'
 import api from '../../../api'
 import Register from '../../../components/user/instructor/Register'
@@ -8,13 +8,13 @@ import AlreadyBeInstructor from '../../../components/user/instructor/AlreadyBeIn
 
 const InstructorRegister = () => {
 	const [user, setUser] = useState(null)
-	const router = useRouter();
+	const router = useRouter()
 	const fetchUSer = async () => {
 		try {
 			const res = await api.get('/api/instructor/profile')
 			setUser(res.data)
 		} catch (err) {
-			router.push('/login');
+			router.push('/login')
 		}
 	}
 

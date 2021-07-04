@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import GeneralTemplate from '../../../../../components/template/general'
 import style from '../../../../../styles/package/createpackage'
 import EditPackage from '../../../../../components/package/editPackage'

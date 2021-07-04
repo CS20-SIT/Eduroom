@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import style from '../../styles/universityEmail/Uregister'
 import { Link, Typography, InputBase, Paper, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -67,7 +67,7 @@ const Content = () => {
 		verifyCode: '',
 	})
 	const classes = useStyles()
-	const [checked, setChecked] = React.useState(true)
+	const [checked, setChecked] = useState(true)
 	const handleChange = (e) => {
 		e.preventDefault()
 		setinfo({ ...createinfo, [e.target.name]: e.target.value })

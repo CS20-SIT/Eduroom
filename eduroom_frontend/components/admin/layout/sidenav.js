@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import Item from './item'
 import { item } from './data/item'
 import { useRouter } from 'next/router'
@@ -32,7 +32,7 @@ const AdminSideNav = () => {
 					})}
 				</div>
 				<div onClick={logoutAdmin}>
-					<Item data={{ text: 'Sign Out', icon: 'exit'}} isExpand={isExpand} expand={handleExpand} />
+					<Item data={{ text: 'Sign Out', icon: 'exit' }} isExpand={isExpand} expand={handleExpand} />
 				</div>
 			</div>
 			<style jsx>

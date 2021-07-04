@@ -1,13 +1,13 @@
-import React, { Fragment } from "react"
-import style from "../../styles/graderSubmit/box"
+import { Fragment } from 'react'
+import style from '../../styles/graderSubmit/box'
 
 const Box = (props) => {
-  return (
-    <Fragment>
-      <div className="box">{props.children}</div>
-      <style jsx>{style}</style>
-    </Fragment>
-  )
+	return (
+		<Fragment>
+			<div className="box">{props.children}</div>
+			<style jsx>{style}</style>
+		</Fragment>
+	)
 }
 
 export default Box

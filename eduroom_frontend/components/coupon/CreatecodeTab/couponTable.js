@@ -1,5 +1,5 @@
 import { Grid, Link } from '@material-ui/core'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Switch from '@material-ui/core/Switch'
 import api from '../../../api'
 

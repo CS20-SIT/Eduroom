@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { useRouter } from 'next/router'
 const RowCard = ({ title, subtitle, buttonText, img, url }) => {
 	const router = useRouter()
@@ -12,10 +12,12 @@ const RowCard = ({ title, subtitle, buttonText, img, url }) => {
 					<div className="row-card-subtitle">{subtitle}</div>
 				</div>
 				<div className="row-card-button">
-                    {url.includes('http') ? <button onClick={() => location.href=url}>{buttonText}</button>:
-                    <button onClick={() => router.push(url)}>{buttonText
-                    }
-                    </button>}</div>
+					{url.includes('http') ? (
+						<button onClick={() => (location.href = url)}>{buttonText}</button>
+					) : (
+						<button onClick={() => router.push(url)}>{buttonText}</button>
+					)}
+				</div>
 			</div>
 			<style jsx>
 				{`

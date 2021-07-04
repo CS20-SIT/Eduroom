@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import IdBlock from '../../../components/support/adminsupport/requestform'
 import style from '../../../styles/forum/showForum'
 import General from '../../../components/template/general'

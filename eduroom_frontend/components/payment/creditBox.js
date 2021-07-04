@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import style from '../../styles/course/paymentPage'
 import Button from '@material-ui/core/Button'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import { useRouter } from 'next/router'
 
-const creditBox = ({onSubmit}) => {
+const creditBox = ({ onSubmit }) => {
 	const router = useRouter()
 	const [open, setOpen] = useState(false)
 	const [type, setType] = useState('credit')
@@ -68,8 +68,8 @@ const creditBox = ({onSubmit}) => {
 	const handleChange = (e) => {
 		e.preventDefault()
 		setForm({ ...createForm, [e.target.name]: e.target.value })
-  }
-  const handleChangeMonth = (e) => {
+	}
+	const handleChangeMonth = (e) => {
 		e.preventDefault()
 		setForm({ ...createForm, [e.target.month]: e.target.value })
 	}

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import style from '../../../styles/advertisement/ads'
 import { useRouter } from 'next/router'
 import { Link, Typography, InputBase, Paper, Grid, List } from '@material-ui/core'
@@ -12,7 +12,7 @@ const Content = () => {
 	const handleChange = (event) => {
 		setState({ ...state, [event.target.name]: event.target.checked })
 	}
-	const [state, setState] = React.useState({
+	const [state, setState] = useState({
 		checkedA: true,
 	})
 	useEffect(() => {

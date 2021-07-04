@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import Header from '../../layouts/header'
 import AdminSideNav from '../layout/sidenav'
 const AdminTemplate = (props) => {
@@ -18,7 +18,7 @@ const AdminTemplate = (props) => {
 						top: 0;
 						left: 5%;
 						height: 100vh;
-                        width: 95vw;
+						width: 95vw;
 					}
 				`}
 			</style>

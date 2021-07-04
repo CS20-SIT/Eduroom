@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import Analyze from './analyze'
 import Course from './course'
 import Grader from './grader'

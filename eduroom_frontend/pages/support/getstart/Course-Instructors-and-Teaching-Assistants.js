@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { Fragment, useState, useEffect, useContext } from 'react'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import {
 	Container,
 	Button,

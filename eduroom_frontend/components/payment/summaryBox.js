@@ -1,18 +1,18 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 
-const SumamryBox = ({discount,price,addCoupon}) => {
-	const [coupon,setCoupon] = useState('')
+const SumamryBox = ({ discount, price, addCoupon }) => {
+	const [coupon, setCoupon] = useState('')
 
 	return (
 		<Fragment>
 			<div className="summaryBox">
 				<div style={{ fontSize: '1.2em', fontWeight: '600' }}>Summary</div>
 				<div style={{ padding: '.5rem' }}>
-					<div style={{ display: 'flex', width: '100%', paddingBottom:'1rem' }}>
+					<div style={{ display: 'flex', width: '100%', paddingBottom: '1rem' }}>
 						<div style={{ width: '80%' }}>Original Price</div>
 						<div style={{ width: '20%' }}>{price}</div>
 					</div>
-					<div style={{ display: 'flex', width: '100%',height:'100%', paddingBottom:'1rem' }}>
+					<div style={{ display: 'flex', width: '100%', height: '100%', paddingBottom: '1rem' }}>
 						<div style={{ width: '80%' }}>
 							<input
 								style={{
@@ -23,7 +23,9 @@ const SumamryBox = ({discount,price,addCoupon}) => {
 								}}
 								type="text"
 								placeholder="Enter coupon code"
-								onChange={(e)=>{setCoupon(e.target.value)}}
+								onChange={(e) => {
+									setCoupon(e.target.value)
+								}}
 							/>
 						</div>
 						<div style={{ width: '20%' }}>
@@ -38,26 +40,32 @@ const SumamryBox = ({discount,price,addCoupon}) => {
 									alignItems: 'center',
 									justifyContent: 'center',
 								}}
-								onClick={()=>{addCoupon(coupon)}}
+								onClick={() => {
+									addCoupon(coupon)
+								}}
 							>
 								Apply
 							</div>
 						</div>
 					</div>
-					<div style={{ display: 'flex', width: '100%', paddingBottom:'1rem' }}>
+					<div style={{ display: 'flex', width: '100%', paddingBottom: '1rem' }}>
 						<div style={{ width: '80%' }}>Coupon</div>
 						<div style={{ width: '20%' }}>-{discount}%</div>
 					</div>
-					<div style={{ display: 'flex', width: '100%', paddingBottom:'1rem' }}>
+					<div style={{ display: 'flex', width: '100%', paddingBottom: '1rem' }}>
 						<div style={{ width: '80%' }}>Coupon Discount</div>
-						<div style={{ width: '20%' }}>{price*discount/100}</div>
+						<div style={{ width: '20%' }}>{(price * discount) / 100}</div>
 					</div>
-                    <hr/>
-					<div style={{ display: 'flex', width: '100%', paddingBottom:'1rem' }}>
+					<hr />
+					<div style={{ display: 'flex', width: '100%', paddingBottom: '1rem' }}>
 						<div style={{ width: '80%' }}>Total</div>
-						<div style={{ width: '20%' }}>{price-price*(100-discount)/100}</div>
+						<div style={{ width: '20%' }}>{price - (price * (100 - discount)) / 100}</div>
 					</div>
-                    <div style={{wordWrap:'break-word'}}>Eduroom is required by law to collect applicable<br/> transaction taxesfor purchases made in certain<br/>  tax jurisdictions.</div>
+					<div style={{ wordWrap: 'break-word' }}>
+						Eduroom is required by law to collect applicable
+						<br /> transaction taxesfor purchases made in certain
+						<br /> tax jurisdictions.
+					</div>
 				</div>
 			</div>
 			<style jsx>

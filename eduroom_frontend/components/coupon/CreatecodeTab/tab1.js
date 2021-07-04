@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import style from '../../../styles/advertisement/ads'
 import { useRouter } from 'next/router'
 import { withStyles, InputBase, Link, MenuItem, Select, Paper, Grid, FormControl } from '@material-ui/core'
@@ -57,11 +57,11 @@ const useStyles = makeStyles({
 
 const Content = () => {
 	let unmounted = false
-	const [showCoinPrice, setshowCoinPrice] = React.useState(false)
-	const [showUseLimit, setshowUseLimit] = React.useState(false)
-	const [loading, setLoading] = React.useState(true)
-	const [typeItems, setTypeItems] = React.useState([])
-	const [couponType, setcouponType] = React.useState('Public')
+	const [showCoinPrice, setshowCoinPrice] = useState(false)
+	const [showUseLimit, setshowUseLimit] = useState(false)
+	const [loading, setLoading] = useState(true)
+	const [typeItems, setTypeItems] = useState([])
+	const [couponType, setcouponType] = useState('Public')
 	const router = useRouter()
 	const classes = useStyles()
 	const [couponInfo, setcouponInfo] = useState({

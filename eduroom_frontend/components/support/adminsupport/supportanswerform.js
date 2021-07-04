@@ -1,9 +1,5 @@
-import React, { Fragment, useContext } from 'react'
+import { Fragment, useContext } from 'react'
 const IdBlock = () => {
-	return (
-		<Fragment>
-			
-		</Fragment>
-	)
+	return <Fragment></Fragment>
 }
 export default IdBlock

@@ -1,6 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 
-const EvidenceUpload = ({ index, handleData, data,label }) => {
+const EvidenceUpload = ({ index, handleData, data, label }) => {
 	const getLabel = () => {
 		return data ? data.name : label
 	}

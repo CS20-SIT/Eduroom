@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import General from '../../../components/template/general'
 import ForumHome from '../../../components/support/adminsupport/requestformHome'
 import ProtectedAdminRoute from '../../../components/admin/protectedAdminRoute'
@@ -8,10 +8,9 @@ const RequestForm = () => {
 		<Fragment>
 			<ProtectedAdminRoute>
 				<AdminTemplate>
-				<ForumHome/>
+					<ForumHome />
 				</AdminTemplate>
-				</ProtectedAdminRoute>
-				
+			</ProtectedAdminRoute>
 		</Fragment>
 	)
 }

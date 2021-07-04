@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Page1 from './gamePage1'
 import Page2 from './gamePage2'
 import Page3 from './showRank'
@@ -37,14 +37,12 @@ const Content = ({ id }) => {
 	}, [])
 	useEffect(() => {
 		const fetchQuestion = async () => {
-
-      try{
-			const question = await api.get(`/api/kahoot/question/${sessionid}`)
-			setData(question.data.question.rows)
-			answerAll.push(question.data.answerAll)
-			correct.push(question.data.correct)
-
-      } catch(err){}
+			try {
+				const question = await api.get(`/api/kahoot/question/${sessionid}`)
+				setData(question.data.question.rows)
+				answerAll.push(question.data.answerAll)
+				correct.push(question.data.correct)
+			} catch (err) {}
 		}
 		if (sessionid != null) fetchQuestion()
 	}, [sessionid])

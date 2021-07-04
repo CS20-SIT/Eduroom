@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import TextField from './textfield'
 import api from '../../../api'
 const EditPassword = ({ handleClose }) => {
@@ -20,7 +20,7 @@ const EditPassword = ({ handleClose }) => {
 		api
 			.post('/api/admin/editPassword', editValue)
 			.then((res) => {
-                setAlert('')
+				setAlert('')
 				handleClose()
 			})
 			.catch((err) => {
@@ -60,11 +60,11 @@ const EditPassword = ({ handleClose }) => {
 						flex-flow: column;
 						justify-content: center;
 						padding-top: 1rem;
-                    }
-                    .alert {
-                        font-size:0.8em;
-                        color: #ed3f14;
-                    }
+					}
+					.alert {
+						font-size: 0.8em;
+						color: #ed3f14;
+					}
 					.editpassword-btn-div {
 						display: flex;
 						justify-content: center;

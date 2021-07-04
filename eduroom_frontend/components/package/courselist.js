@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import style from '../../styles/package/createpackage'
 
 const Courselist = ({ course }) => {

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import style from '../../../styles/graderSubmit/announcements/announcement'
 import { useRouter } from 'next/router'
 import { format } from 'date-fns'

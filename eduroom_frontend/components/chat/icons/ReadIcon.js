@@ -1,10 +1,15 @@
-import React from 'react'
-
 export default function ReadIcon(props) {
 	return (
 		<>
-			<svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={props.onClick}
-				style={props.style}>
+			<svg
+				width="22"
+				height="16"
+				viewBox="0 0 22 16"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+				onClick={props.onClick}
+				style={props.style}
+			>
 				<path
 					fillRule="evenodd"
 					clipRule="evenodd"

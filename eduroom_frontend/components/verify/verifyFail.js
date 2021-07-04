@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import Image from 'next/image'
 import api from '../../api'
 import UserContext from '../../contexts/user/userContext'

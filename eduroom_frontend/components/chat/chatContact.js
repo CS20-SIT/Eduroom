@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import SearchChat from '../chat/searchChat'
 import ContactPerson from '../chat/contactPerson'

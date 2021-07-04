@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import CommentForPost from './commentForPost'
 import StudentFeedback from './studentFeedback'
 import PostedReviewBox from './postedReviewBox'

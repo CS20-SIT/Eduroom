@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import Contests from './ContestList'
 import style from '../../../styles/graderSubmit/contests/contestBox'
 

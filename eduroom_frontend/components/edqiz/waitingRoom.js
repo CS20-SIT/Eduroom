@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import GeneralNoSide from '../../components/template/generalnoside'
 import Grid from '@material-ui/core/Grid'
 import Link from 'next/link'

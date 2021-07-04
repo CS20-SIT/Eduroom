@@ -1,4 +1,3 @@
-import React from 'react'
 import style from '../../../styles/graderSubmit/contests/contestList'
 import { useRouter } from 'next/router'
 import Link from 'next/link'

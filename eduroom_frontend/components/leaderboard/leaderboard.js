@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import api from '../../api'
 import Rank from './rank'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 const LeaderBoard = ({ mini }) => {
 	const [data, setData] = useState([])
-	const router = useRouter() 
+	const router = useRouter()
 	useState(() => {
 		api
 			.get('/api/leaderboard')
@@ -22,7 +22,7 @@ const LeaderBoard = ({ mini }) => {
 	return (
 		<Fragment>
 			<div className="leader-title">
-				<span style={{marginRight:'.3rem'}}>
+				<span style={{ marginRight: '.3rem' }}>
 					<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
 							d="M33.9316 28.9044V31.5909C33.9316 32.2415 33.4043 32.7689 32.7537 32.7689H7.24585C6.59521 32.7689 6.06787 32.2415 6.06787 31.5909V28.9044H33.9316Z"
@@ -34,14 +34,23 @@ const LeaderBoard = ({ mini }) => {
 						/>
 					</svg>
 				</span>
-				<span style={{marginLeft:'.3rem'}}>LEADERBOARD</span>
+				<span style={{ marginLeft: '.3rem' }}>LEADERBOARD</span>
 			</div>
 			{data.map((el, index) => {
 				return <Rank key={index + 1} mini={mini} data={{ ...el, rank: index + 1 }} />
 			})}
-            <div style={{color:'#E5E5E5',fontWeight:'bold',textDecorationLine: 'underline',cursor:'pointer',textAlign:'center'}} onClick={() => router.push('/leaderboard')}>
-                View All
-            </div>
+			<div
+				style={{
+					color: '#E5E5E5',
+					fontWeight: 'bold',
+					textDecorationLine: 'underline',
+					cursor: 'pointer',
+					textAlign: 'center',
+				}}
+				onClick={() => router.push('/leaderboard')}
+			>
+				View All
+			</div>
 			<style jsx>
 				{`
 					.leader-title {

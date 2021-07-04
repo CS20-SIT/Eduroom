@@ -1,12 +1,9 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 const Course = ({ mainColor, subColor }) => {
 	return (
 		<Fragment>
 			<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path
-					d="M7.14795 8.05581L12.5002 10.1966L17.8524 8.05581L12.5002 5.91504L7.14795 8.05581Z"
-					fill={subColor}
-				/>
+				<path d="M7.14795 8.05581L12.5002 10.1966L17.8524 8.05581L12.5002 5.91504L7.14795 8.05581Z" fill={subColor} />
 				<path
 					d="M8.83789 10.3107V12.0009L12.5 13.4658L16.1621 12.0009V10.3105L12.5 11.7756L8.83789 10.3107Z"
 					fill={subColor}

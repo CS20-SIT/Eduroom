@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import style from '../../styles/calendar/calendar'
 import api from '../../api'
@@ -24,13 +24,11 @@ const Content = (props) => {
 
 	// ---------------------createEvent---------------------------
 
-
-	const [submit, setSubmit] = useState(false);
+	const [submit, setSubmit] = useState(false)
 	const statusClose = () => {
 		setSubmit(false)
-		window.location.reload();
+		window.location.reload()
 	}
-
 
 	const [eventInfo, setEventInfo] = useState({
 		title: '',
@@ -50,7 +48,7 @@ const Content = (props) => {
 				setCourseList(res.data.data)
 				// setEventInfo({ ...eventInfo, courseid: courseList[0].courseid })
 			})
-			.catch((err) => { })
+			.catch((err) => {})
 	}, [])
 
 	console.log()
@@ -204,9 +202,6 @@ const Content = (props) => {
 							</Button>
 						</DialogActions>
 					</Dialog>
-
-
-
 				</div>
 			</CSSTransition>
 

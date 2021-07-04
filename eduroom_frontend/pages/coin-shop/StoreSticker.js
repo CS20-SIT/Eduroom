@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Product_Sticker from '../../components/FolderCoin/Sticker_Store'
 import Styles from '../../styles/CoinStyles/coin-shop.module.css'
 import General from '../../components/template/general'
@@ -33,10 +33,8 @@ const Temp = () => {
 						>
 							TestPopup
 						</button> */}
-						
 					</div>
 				</div>
-				
 			</General>
 		</Fragment>
 	)

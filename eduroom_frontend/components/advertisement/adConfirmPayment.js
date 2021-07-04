@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, forwardRef } from 'react'
 import style from '../../styles/advertisement/ads'
 import {
 	Button,
@@ -82,7 +82,7 @@ const useStyles = makeStyles({
 	},
 })
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />
 })
 const Total = (props) => {
@@ -136,7 +136,7 @@ const Total = (props) => {
 	)
 }
 const Box = (props) => {
-	const [open, setOpen] = React.useState(false)
+	const [open, setOpen] = useState(false)
 	const handleClickOpen = () => {
 		setOpen(true)
 	}

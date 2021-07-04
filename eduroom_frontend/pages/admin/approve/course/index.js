@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import api from '../../../../api'
 import Course from '../../../../components/admin/course/course.js'
 import ProtectedAdminRoute from '../../../../components/admin/protectedAdminRoute'
@@ -29,11 +29,12 @@ const AdminApproveCourse = () => {
 		<Fragment>
 			<ProtectedAdminRoute>
 				<AdminTemplate>
-					<div style={{padding:'2rem 5rem'}}>
-					<div style={{fontSize:'1.5em',fontWeight:'bold',marginBottom:'2rem'}}>Course Approve</div>
-					{courseList.map((el) => {
-						return <Course data={el} handleApprove={handleApprove}/>
-					})}</div>
+					<div style={{ padding: '2rem 5rem' }}>
+						<div style={{ fontSize: '1.5em', fontWeight: 'bold', marginBottom: '2rem' }}>Course Approve</div>
+						{courseList.map((el) => {
+							return <Course data={el} handleApprove={handleApprove} />
+						})}
+					</div>
 				</AdminTemplate>
 			</ProtectedAdminRoute>
 		</Fragment>

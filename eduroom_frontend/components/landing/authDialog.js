@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import LoginBox from './loginBox'
 import RegisterBox from './registerBox'
 
-const AuthDialog = ({ handleClick,path='/' }) => {
+const AuthDialog = ({ handleClick, path = '/' }) => {
 	const [page, setPage] = useState('login')
 	const getStyle = (text) => {
 		if (page == text) {
@@ -51,7 +51,7 @@ const AuthDialog = ({ handleClick,path='/' }) => {
 							<Fragment>
 								<div style={{ display: 'flex', flexFlow: 'column', width: '95%' }}>
 									<div style={{ fontSize: '1.8em', fontWeight: 'bold', color: '#3D467F' }}>SIGN IN</div>
-									<RegisterBox path={path} handleSuccess={handleClick}/>
+									<RegisterBox path={path} handleSuccess={handleClick} />
 								</div>
 							</Fragment>
 						)}

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import GraderNavbar from './GraderNav'
 import SideNav from '../layouts/sidenav/sidenav'
 

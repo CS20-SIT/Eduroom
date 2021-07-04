@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import RowCard from './rowCard'
 const RowList = () => {
 	const data = [
@@ -7,14 +7,14 @@ const RowList = () => {
 			title: 'Support',
 			subtitle: 'To support the user',
 			buttonText: 'Go Support',
-            url: '/admin/support'
+			url: '/admin/support',
 		},
 		{
 			img: '/images/admin/analyze.png',
 			title: 'Analysis',
 			subtitle: 'To analyze our service',
 			buttonText: 'See All',
-            url: 'https://app.powerbi.com/view?r=eyJrIjoiOTU2ODgyMjUtNGJlYS00ZTA0LWJmZWEtM2RmMTBkN2I4Mjc0IiwidCI6IjZmNDQzMmRjLTIwZDItNDQxZC1iMWRiLWFjMzM4MGJhNjMzZCIsImMiOjEwfQ%3D%3D'
+			url: 'https://app.powerbi.com/view?r=eyJrIjoiOTU2ODgyMjUtNGJlYS00ZTA0LWJmZWEtM2RmMTBkN2I4Mjc0IiwidCI6IjZmNDQzMmRjLTIwZDItNDQxZC1iMWRiLWFjMzM4MGJhNjMzZCIsImMiOjEwfQ%3D%3D',
 		},
 	]
 
@@ -23,13 +23,7 @@ const RowList = () => {
 			<div className="row-list">
 				{data.map((el) => {
 					return (
-						<RowCard
-							img={el.img}
-							title={el.title}
-							subtitle={el.subtitle}
-							buttonText={el.buttonText}
-                            url={el.url}
-						/>
+						<RowCard img={el.img} title={el.title} subtitle={el.subtitle} buttonText={el.buttonText} url={el.url} />
 					)
 				})}
 			</div>
@@ -37,7 +31,7 @@ const RowList = () => {
 				{`
 					.row-list {
 						padding: 1rem 3rem;
-                    }
+					}
 				`}
 			</style>
 		</Fragment>

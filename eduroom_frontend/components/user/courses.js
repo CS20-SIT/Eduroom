@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import General from '../../components/template/general'
 import api from '../../api'
 import { useRouter } from 'next/router'

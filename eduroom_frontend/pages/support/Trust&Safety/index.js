@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Link, Paper, Typography } from '@material-ui/core'
 import style from '../../../styles/forum/showForum'
 import Index from '../../../components/support/trustandsafety/index'

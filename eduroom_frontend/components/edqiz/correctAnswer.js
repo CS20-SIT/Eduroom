@@ -1,47 +1,38 @@
-import React, { Fragment, useEffect } from "react";
+import { Fragment, useEffect } from 'react'
 
-import Grid from "@material-ui/core/Grid";
-const Page2 = ({ responseNextQuestion, questionNumber,id,data }) => {
-  useEffect(() => {
-    responseNextQuestion();
-  }, []);
-  return (
-    <Fragment>
-      <Grid
-        container
-        style={{ height: "7vh", display: "flex", alignItems: "center" }}
-      >
-        <Grid item xs={2}>
-          <div className="question">question : {questionNumber+1}</div>
-        </Grid>
-        <Grid item xs={4}></Grid>
-        <Grid item xs={6}>
-  <div className="pin">PIN:{id}</div>
-        </Grid>
-      </Grid>
-      <div className="main">
-        <i
-          className="fas fa-check"
-          style={{ color: "white", fontSize: "10vw" }}
-        ></i>
-        <span className="correct">correct!</span>
-      </div>
-      <Grid
-        container
-        style={{ height: "7vh", display: "flex", alignItems: "center" }}
-      >
-        <Grid item xs={2}>
-          <div className="question">Points</div>
-        </Grid>
-        <Grid item xs={4}></Grid>
-        <Grid item xs={6}>
-          <div className="pin" style={{ color: "#F39AC4" }}>
-            {data[questionNumber].point}
-          </div>
-        </Grid>
-      </Grid>
-      <style>
-        {`
+import Grid from '@material-ui/core/Grid'
+const Page2 = ({ responseNextQuestion, questionNumber, id, data }) => {
+	useEffect(() => {
+		responseNextQuestion()
+	}, [])
+	return (
+		<Fragment>
+			<Grid container style={{ height: '7vh', display: 'flex', alignItems: 'center' }}>
+				<Grid item xs={2}>
+					<div className="question">question : {questionNumber + 1}</div>
+				</Grid>
+				<Grid item xs={4}></Grid>
+				<Grid item xs={6}>
+					<div className="pin">PIN:{id}</div>
+				</Grid>
+			</Grid>
+			<div className="main">
+				<i className="fas fa-check" style={{ color: 'white', fontSize: '10vw' }}></i>
+				<span className="correct">correct!</span>
+			</div>
+			<Grid container style={{ height: '7vh', display: 'flex', alignItems: 'center' }}>
+				<Grid item xs={2}>
+					<div className="question">Points</div>
+				</Grid>
+				<Grid item xs={4}></Grid>
+				<Grid item xs={6}>
+					<div className="pin" style={{ color: '#F39AC4' }}>
+						{data[questionNumber].point}
+					</div>
+				</Grid>
+			</Grid>
+			<style>
+				{`
         .font{
             color:white;
             font-size:1rem;
@@ -80,8 +71,8 @@ const Page2 = ({ responseNextQuestion, questionNumber,id,data }) => {
         }
         
                     `}
-      </style>
-    </Fragment>
-  );
-};
-export default Page2;
+			</style>
+		</Fragment>
+	)
+}
+export default Page2

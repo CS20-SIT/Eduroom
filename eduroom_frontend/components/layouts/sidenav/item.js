@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Icon from './icons/landing'
 import style from '../../../styles/layout/sidebar'
 import { useRouter } from 'next/router'

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import Wishlists from '../../components/user/wishlists'
 import General from '../../components/template/general'
 import api from '../../api'

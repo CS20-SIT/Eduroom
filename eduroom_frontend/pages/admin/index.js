@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import { Fragment, useContext } from 'react'
 import ProtectedAdminRoute from '../../components/admin/protectedAdminRoute'
 import AdminTemplate from '../../components/admin/template/default'
 import AdminContext from '../../contexts/admin/adminContext'
@@ -12,42 +12,41 @@ const Admin = () => {
 		<Fragment>
 			<ProtectedAdminRoute>
 				<AdminTemplate>
-                    <div className="dashboard">
-					<div className="content">
-						<div className="content-title">Dashboard</div>
-						<ActionList />
-						<div className="content-title">Support {"&"} Analysis</div>
-                        <RowList/>
+					<div className="dashboard">
+						<div className="content">
+							<div className="content-title">Dashboard</div>
+							<ActionList />
+							<div className="content-title">Support {'&'} Analysis</div>
+							<RowList />
+						</div>
+						<div className="user">
+							<UserContent />
+						</div>
 					</div>
-                    <div className="user">
-                        <UserContent />
-                    </div></div>
 				</AdminTemplate>
 			</ProtectedAdminRoute>
-            <style jsx>
-                {
-                    `
-                    .dashboard {
-                        display:flex;
-                    }
-                    .user {
-                        width: 20%;
-                        background: #fff;
-                    }
-                    .content{
-                        width: 80%;
-                        padding: 3%;
-                    }
-                    .content-title {
-                        text-tranform: uppercase;
-                        font-size: 2em;
-                        font-weight:bold;
-                        color: #3D467F;
+			<style jsx>
+				{`
+					.dashboard {
+						display: flex;
+					}
+					.user {
+						width: 20%;
+						background: #fff;
+					}
+					.content {
+						width: 80%;
+						padding: 3%;
+					}
+					.content-title {
+						text-tranform: uppercase;
+						font-size: 2em;
+						font-weight: bold;
+						color: #3d467f;
 						padding: 1rem 3rem;
-                    }
-                    `
-                }
-            </style>
+					}
+				`}
+			</style>
 		</Fragment>
 	)
 }

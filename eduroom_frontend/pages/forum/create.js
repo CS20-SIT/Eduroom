@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import style from '../../styles/forum/showForum'
 import CreateBlock from '../../components/forum/CreateBlock'
 import GeneralNoNav from '../../components/template/generalnonav'

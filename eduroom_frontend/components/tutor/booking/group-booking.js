@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import utils from '../../../styles/tutor/utils'
 
 import api from '../../../api'

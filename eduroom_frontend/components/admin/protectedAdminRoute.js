@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react'
+import { Fragment, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import AdminContext from '../../contexts/admin/adminContext'
 const ProtectedAdminRoute = ({ children }) => {

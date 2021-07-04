@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/advertisement/ads'
 import {
 	withStyles,
@@ -72,11 +72,11 @@ const Content = () => {
 	let unmounted = false
 	const classes = useStyles()
 	const router = useRouter()
-	const [typeItems, setTypeItems] = React.useState([])
-	const [tagItems, setTagsItems] = React.useState([])
-	const [adType, setAdType] = React.useState('Vertical Image')
-	const [adTag, setAdTag] = React.useState('Education')
-	const [loading, setLoading] = React.useState(true)
+	const [typeItems, setTypeItems] = useState([])
+	const [tagItems, setTagsItems] = useState([])
+	const [adType, setAdType] = useState('Vertical Image')
+	const [adTag, setAdTag] = useState('Education')
+	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
 		const fetchData = async () => {

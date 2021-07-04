@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import GeneralTemplate from '../../../../components/template/general'
 import style from '../../../../styles/package/content'
 import Link from 'next/link'
