@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { useRouter } from 'next/router'
 const CreateButton = () => {
 	const router = useRouter()

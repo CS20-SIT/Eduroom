@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import CreateEventDialog from '../../components/calendar/createEventDialog'
 import Edit from '../../components/calendar/edit'
 import CSSTransition from 'react-transition-group/CSSTransition'

@@ -1,28 +1,35 @@
-import React, { Fragment, useEffect, useState} from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import utils from '../../styles/course/utils'
 import { useRouter } from 'next/router'
 const SearchBar = () => {
 	const router = useRouter()
 	const [search, setSearch] = useState('')
-	const searchVal = router.query.q;
-	useEffect(()=>{
-		if(searchVal){
+	const searchVal = router.query.q
+	useEffect(() => {
+		if (searchVal) {
 			setSearch(searchVal)
 		}
-	},[searchVal])
-	const handleChangeSearch = (e)=>{
+	}, [searchVal])
+	const handleChangeSearch = (e) => {
 		setSearch(e.target.value)
 	}
-	const handleEnter = (e)=>{
-		if(e.key == 'Enter'){
-			router.push(`/course/search?q=${search}`);
+	const handleEnter = (e) => {
+		if (e.key == 'Enter') {
+			router.push(`/course/search?q=${search}`)
 		}
 	}
 	return (
 		<Fragment>
 			<div className="shadow searchCourse">
-			<i className="fas fa-search"></i>
-			<input className='font-quicksand input-tab rounded-sss font-normal-bold searchBox' type="text" placeholder="What do you want to learn?"  value={search} onChange={handleChangeSearch} onKeyUp={handleEnter}></input>
+				<i className="fas fa-search"></i>
+				<input
+					className="font-quicksand input-tab rounded-sss font-normal-bold searchBox"
+					type="text"
+					placeholder="What do you want to learn?"
+					value={search}
+					onChange={handleChangeSearch}
+					onKeyUp={handleEnter}
+				></input>
 			</div>
 			<style jsx>{utils}</style>
 			<style jsx>
@@ -32,7 +39,7 @@ const SearchBar = () => {
 						padding-left: 1rem;
 						border-radius: 5px;
 						display: flex;
-                        align-items: center;
+						align-items: center;
 						flex: 1;
 						width: 600px;
 						margin-right: 1.5rem;
@@ -43,15 +50,14 @@ const SearchBar = () => {
 					}
 					.searchBox {
 						background: none;
-						margin-left: 0.7rem; 
+						margin-left: 0.7rem;
 						border: none;
 						outlined: none;
 						flex: 1;
 						padding: 1.1rem 0;
-                    }
+					}
 				`}
 			</style>
-			
 		</Fragment>
 	)
 }

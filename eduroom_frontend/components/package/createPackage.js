@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Courses from './courses'
 import api from '../../api'
 import style from '../../styles/package/createpackage'

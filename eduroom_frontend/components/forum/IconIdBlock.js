@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 
 const IconIdBlock = ({ type }) => {
 	const [hover, setHover] = useState(false)

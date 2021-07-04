@@ -1,14 +1,13 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import moment from 'moment'
 import RequestFormTag from './requestformtag'
-
 
 import { useRouter } from 'next/router'
 const RequestFormBox = ({ data }) => {
 	const router = useRouter()
 	return (
 		<Fragment>
-			<div className="forumBox" >
+			<div className="forumBox">
 				<div
 					onClick={() => {
 						router.push(`/admin/support/${data.ticketid}`)
@@ -18,7 +17,6 @@ const RequestFormBox = ({ data }) => {
 					<div className="forumTag">
 						<RequestFormTag tag={data.typename}></RequestFormTag>
 						<RequestFormTag tag={data.subname}></RequestFormTag>
-						
 					</div>
 					<div className="forumDate">
 						{data.name} requested {moment(data.requesttime).fromNow()}
@@ -58,4 +56,4 @@ const RequestFormBox = ({ data }) => {
 	)
 }
 
-export default RequestFormBox;
+export default RequestFormBox

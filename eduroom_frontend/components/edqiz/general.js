@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import Navbar from '../layouts/navbar'
 import Header from '../layouts/header'
 import SideNav from '../layouts/sidenav/sidenav'
@@ -10,7 +10,7 @@ const General = (props) => {
 			<div>
 				<SideNav />
 				<div id="content">
-					<Navbar isProtected={props.isProtected ?? false}/>
+					<Navbar isProtected={props.isProtected ?? false} />
 					<div>
 						<main>{props.children}</main>
 					</div>

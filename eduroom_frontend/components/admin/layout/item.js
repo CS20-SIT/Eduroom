@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Icon from './icons/icons'
 import Link from 'next/link'
 const Item = ({ data, isExpand, expand }) => {

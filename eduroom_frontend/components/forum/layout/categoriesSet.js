@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import CategoriesBox from './categoriesBox'
 import { useRouter } from 'next/router'
 import api from '../../../api'

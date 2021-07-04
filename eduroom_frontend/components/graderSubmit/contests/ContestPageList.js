@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import style from '../../../styles/graderSubmit/contests/contestPageList'
 import { useRouter } from 'next/router'
 import { compareAsc, format } from 'date-fns'

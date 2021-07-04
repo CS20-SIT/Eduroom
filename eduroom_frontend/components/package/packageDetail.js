@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import style from '../../styles/package/detail'
 import Instructors from '../../components/package/instructorCard'
 import { useRouter } from 'next/router'

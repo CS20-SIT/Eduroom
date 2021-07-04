@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 const Rank = ({ data, mini }) => {
 	const specialRank = () => {
 		if (data.rank == 1) {
@@ -14,7 +14,7 @@ const Rank = ({ data, mini }) => {
 	return (
 		<Fragment>
 			<div className={'rank ' + specialRank()}>
-				<div style={{ width: `${mini ? '30%':'10%'}` }}>{data.rank}</div>
+				<div style={{ width: `${mini ? '30%' : '10%'}` }}>{data.rank}</div>
 				<div style={{ width: `${mini ? '70%' : '30%'}` }}>{data.displayname}</div>
 				{mini ? null : (
 					<Fragment>
@@ -32,8 +32,8 @@ const Rank = ({ data, mini }) => {
 						margin: 0.5rem;
 						color: #828282;
 						padding: 0rem 1rem;
-                        align-items: center;
-                        font-weight:bold;
+						align-items: center;
+						font-weight: bold;
 					}
 					.rank.gold {
 						background: #ffc745;

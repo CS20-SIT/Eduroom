@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import ReadIcon from './icons/ReadIcon'
 import DotDotIcon from './icons/DotDotIcon'
@@ -28,8 +28,7 @@ export default function messageLeft(props) {
 				<div style={{ marginBottom: 0, marginTop: 15 }}>{message.name}</div>
 				<div style={{ textAlign: 'left', width: '100%' }}>
 					<div className="messageLeft">
-							<img src={message.text} style={{ width: 150, height: 150 }} />
-				
+						<img src={message.text} style={{ width: 150, height: 150 }} />
 					</div>
 				</div>
 				<span>{moment(message.sentTime).fromNow()}</span>
@@ -48,10 +47,10 @@ export default function messageLeft(props) {
 								<>
 									<ReadIcon style={{ paddingTop: 5, marginLeft: 10 }} />
 									<div className="dropdown scroll" style={dropReadDownStyle}>
-										{message.reader.map((el,i) => {
+										{message.reader.map((el, i) => {
 											return (
 												<span
-												key={i}
+													key={i}
 													style={{
 														fontSize: 12,
 														whiteSpace: 'nowrap',
@@ -83,7 +82,7 @@ export default function messageLeft(props) {
 					display: inline-block;
 				}
 				.dropdown {
-					z-index:2 !important;
+					z-index: 2 !important;
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;
@@ -95,7 +94,7 @@ export default function messageLeft(props) {
 					padding: 10px 10px 10px 10px;
 				}
 				.dropdown2 {
-					z-index:2 !important;
+					z-index: 2 !important;
 					max-height: 150px;
 					position: absolute;
 					background-color: #f5f5f5;

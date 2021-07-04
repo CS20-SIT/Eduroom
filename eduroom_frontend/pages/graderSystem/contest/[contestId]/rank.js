@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Box from '../../../../components/graderSubmit/Box'
 import Layout from '../../../../components/graderSubmit/Layout'
 import style from '../../../../styles/graderSubmit/contests/contestPage/rank/contestRankPage'
@@ -8,7 +8,7 @@ import api from '../../../../api'
 
 const contestRank = ({ contestId }) => {
 	const [data, setData] = useState([])
-	let [countRank,setCountRank] = useState(1)
+	let [countRank, setCountRank] = useState(1)
 	useEffect(() => {
 		const GetData = async () => {
 			try {

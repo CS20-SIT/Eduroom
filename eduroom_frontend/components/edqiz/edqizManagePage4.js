@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import EdquizPagination from './edqizPagination'
 import style from '../../styles/edqiz/managePage'
 import InputText from '../utils/InputText'

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import api from '../../api'
 import DotDotIcon from './icons/DotDotIcon'

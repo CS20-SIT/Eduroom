@@ -1,5 +1,5 @@
-import React,{Fragment} from 'react'
+import { Fragment } from 'react'
 const UserChangePassword = () => {
-    return <Fragment></Fragment>
+	return <Fragment></Fragment>
 }
 export default UserChangePassword

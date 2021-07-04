@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import style from '../../../../styles/user/instructor/createCourse/create'
 
-const MaterialUpload = ({material,sectionIndex, index, handleData}) => {
+const MaterialUpload = ({ material, sectionIndex, index, handleData }) => {
 	const handleUplaodFile = (e) => {
-    let newValue = e.target.files[0]
-    handleData(newValue)
+		let newValue = e.target.files[0]
+		handleData(newValue)
 	}
 
-  const getLabel = () => {
-    console.log('material is ',material)
+	const getLabel = () => {
+		console.log('material is ', material)
 		return material.data ? material.data.name : 'Choose pdf file'
 	}
 

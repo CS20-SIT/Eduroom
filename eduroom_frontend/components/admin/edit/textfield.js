@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 const TextField = ({ placeholder, value, handleChange, name, type = 'text' }) => {
 	return (
 		<Fragment>
@@ -21,7 +21,7 @@ const TextField = ({ placeholder, value, handleChange, name, type = 'text' }) =>
 						border: none;
 						outline: none;
 						margin-bottom: 0.75rem;
-						width:100%;
+						width: 100%;
 					}
 				`}
 			</style>

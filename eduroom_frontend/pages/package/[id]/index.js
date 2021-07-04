@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import General from '../../../components/template/general'
 import PackageHead from '../../../components/package/packageHead'
 import PackageDetail from '../../../components/package/packageDetail'

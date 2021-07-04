@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Head from 'next/head'
 import style from '../../styles/graderSubmit/home'
 import AnnounceBox from '../../components/graderSubmit/announcements/AnnounceBox'

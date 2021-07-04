@@ -1,8 +1,8 @@
-// import React, { Fragment } from 'react'
-import Link from 'next/link';
-import Card from '@material-ui/core/Card';
-import Styles from '../../styles/user/wishlistForm.module.css';
-import CardContent from '@material-ui/core/CardContent';
+// import  { Fragment } from 'react'
+import Link from 'next/link'
+import Card from '@material-ui/core/Card'
+import Styles from '../../styles/user/wishlistForm.module.css'
+import CardContent from '@material-ui/core/CardContent'
 
 ///
 // import Link from 'next/link';
@@ -12,48 +12,48 @@ import CardContent from '@material-ui/core/CardContent';
 
 import Image from 'next/image'
 
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import utils from '../../styles/course/utils'
 import GeneralNoNav from '../../components/template/generalnonav'
 import SearchBar from '../../components/course/searchBar'
 
 // import Image from 'next/image'
 const MyCourseForm = (props) => {
-    // console.log(props.test);
-    const checkComplete=(boolean)=>{
-        if(boolean) return 'Completed';
-        else return 'Incompleted';
-    }
-  return (
-    // <Fragment>
-    //   <div className={Styles.cardContainer}>
-    //   <Card>
-    //   <CardContent>
-    //     <div  className={Styles.cardContainer}>
-    //     <div className={Styles.container}>
-    //       <Link href={`../../course/${props.id}`}>
-    //           <span>
-    //               <img src={props.picture} width="200" height="200"/>
-    //               <div>Title: {props.title}</div>
-    //               <div>Teach By: {props.ownerF} {props.ownerL}</div>
-    //               <div>Status: {checkComplete(props.isCompleted)}</div>
-    //           </span>
-    //       </Link>
-    //     </div>
-    //     </div>
-    //     </CardContent>
-    //     </Card>
-    //     </div>
-    // </Fragment>
+	// console.log(props.test);
+	const checkComplete = (boolean) => {
+		if (boolean) return 'Completed'
+		else return 'Incompleted'
+	}
+	return (
+		// <Fragment>
+		//   <div className={Styles.cardContainer}>
+		//   <Card>
+		//   <CardContent>
+		//     <div  className={Styles.cardContainer}>
+		//     <div className={Styles.container}>
+		//       <Link href={`../../course/${props.id}`}>
+		//           <span>
+		//               <img src={props.picture} width="200" height="200"/>
+		//               <div>Title: {props.title}</div>
+		//               <div>Teach By: {props.ownerF} {props.ownerL}</div>
+		//               <div>Status: {checkComplete(props.isCompleted)}</div>
+		//           </span>
+		//       </Link>
+		//     </div>
+		//     </div>
+		//     </CardContent>
+		//     </Card>
+		//     </div>
+		// </Fragment>
 
-    //////////
+		//////////
 
-    <Fragment>
-{/* <GeneralNoNav> */}
-  {/* <div className="bg-little-grey">
+		<Fragment>
+			{/* <GeneralNoNav> */}
+			{/* <div className="bg-little-grey">
     <div className="container"> */}
-      {/* Search bar and Categories select */}
-      {/* <div className="text-center flex my-6">
+			{/* Search bar and Categories select */}
+			{/* <div className="text-center flex my-6">
         <SearchBar />
         <select
           className="font-quicksand font-normal-bold cate-tab bg-white pointer rounded-sss shadow text-grey cateBox"
@@ -66,7 +66,7 @@ const MyCourseForm = (props) => {
         </select>
       </div> */}
 
-                {/* id={item.courseid}
+			{/* id={item.courseid}
                 title={item.coursename}
                 key={item.courseid}
                 isCompleted={item.isfinished}
@@ -77,11 +77,11 @@ const MyCourseForm = (props) => {
                 ownerF={item.firstname}
                 ownerL={item.lastname}
                 lastvisit={item.lastvisit} */}
-      
-      {/* Box of each course */}
-      {/* <div className="text-center my-10"> */}
-        {/* {courseDes.map((e, index) => ( */}
-          {/* <Link href={`/course/${props.id}`}>
+
+			{/* Box of each course */}
+			{/* <div className="text-center my-10"> */}
+			{/* {courseDes.map((e, index) => ( */}
+			{/* <Link href={`/course/${props.id}`}>
             <div className="mx-6 my-6 box-1 bg-white inline-block shadow rounded-sm pointer">
               <div className="w-full h-60">
                 <img className="pic-1" alt="python" src={`${props.picture}`} width="100%" height="100%"></img>
@@ -95,8 +95,8 @@ const MyCourseForm = (props) => {
               </div>
             </div>
           </Link> */}
-          {/* ))} */}
-      {/* </div>
+			{/* ))} */}
+			{/* </div>
     </div>
   </div>
   <style jsx>{utils}</style>
@@ -113,15 +113,13 @@ const MyCourseForm = (props) => {
     }
   `}</style> */}
 
-
-
-      <div className="container">
+			<div className="container">
 				<div style={{ display: 'flex' }}>
 					<img src={props.picture} alt="course-img" width="150px" height="120px"></img>
 					<div style={{ marginLeft: '30px' }}>
 						<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 							<h2 style={{ margin: '0' }}>{props.title}</h2>
-							<div style={{margin: '7px 0 0 0'}}>
+							<div style={{ margin: '7px 0 0 0' }}>
 								<i className="fas fa-edit icon"></i>
 								<i className="fas fa-trash icon"></i>
 							</div>
@@ -141,21 +139,20 @@ const MyCourseForm = (props) => {
 				.det {
 					color: #858585;
 				}
-				.icon{
+				.icon {
 					color: #858585;
 					transition: 0.3s;
 					padding: 0 7px;
 				}
-				.icon:hover{
+				.icon:hover {
 					color: black;
 					transition: 0.3s;
 					cursor: pointer;
 				}
 			`}</style>
 
-
-{/* </GeneralNoNav> */}
-</Fragment>
-  )
+			{/* </GeneralNoNav> */}
+		</Fragment>
+	)
 }
 export default MyCourseForm

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import style from '../../styles/edqiz/landing'
 import socketIOClient from 'socket.io-client'

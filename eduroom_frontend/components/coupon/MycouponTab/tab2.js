@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import style from '../../../styles/advertisement/ads'
 import { useRouter } from 'next/router'
 import { Link, Typography, InputBase, Paper, Grid, List } from '@material-ui/core'

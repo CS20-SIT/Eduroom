@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import Navbar from '../layouts/navbar'
 import Header from '../layouts/header'
 import SideNav from '../layouts/sidenav/sidenav'
@@ -10,7 +10,7 @@ const General = (props) => {
 			<div>
 				<SideNav />
 				<div id="content">
-					<Navbar isProtected={props.isProtected ?? false}/>
+					<Navbar isProtected={props.isProtected ?? false} />
 					<div style={{ paddingLeft: '5%' }}>
 						<main>{props.children}</main>
 					</div>
@@ -24,7 +24,7 @@ const General = (props) => {
 						top: 0;
 						z-index: 20;
 						min-height: 100vh;
-						background: #F4F5F7;
+						background: #f4f5f7;
 					}
 					.background-img {
 						position: fixed;

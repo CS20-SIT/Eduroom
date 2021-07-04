@@ -1,5 +1,5 @@
-import React,{Fragment} from 'react'
+import { Fragment } from 'react'
 const CourseIDHome = () => {
-    return <Fragment></Fragment>
+	return <Fragment></Fragment>
 }
 export default CourseIDHome

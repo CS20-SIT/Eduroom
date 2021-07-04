@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Country from './country'
 import CreditBox from './creditBox'
 import SummaryBox from './summaryBox'

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Item from './item'
 import Link from 'next/link'
 import style from '../../../styles/layout/sidebar'

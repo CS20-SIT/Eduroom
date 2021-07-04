@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import TextField from './textfield'
 import api from '../../../api'
 const EditProfile = (props) => {

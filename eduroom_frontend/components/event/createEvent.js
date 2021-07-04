@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { Fragment, useState, useEffect, useRef } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import style from '../../styles/event/event'
 import { Button, Grid, Container, TextField } from '@material-ui/core'
 import { KeyboardTimePicker } from '@material-ui/pickers'

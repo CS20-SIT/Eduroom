@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import { useReducer } from 'react'
 import userReducer from './userReducer'
 import UserContext from './userContext'
 import { clearCart } from '../../utils/cart'
@@ -16,7 +16,7 @@ import {
 const userState = (props) => {
 	const initialState = { user: null, err: null }
 	const [state, dispatch] = useReducer(userReducer, initialState)
-	const registerUser = async (user, router,path='/',handleSuccess=()=>{}) => {
+	const registerUser = async (user, router, path = '/', handleSuccess = () => {}) => {
 		try {
 			await api.post('/api/auth/register', user)
 			dispatch({ type: REGISTER_USER_SUCCESS, payload: true })
@@ -28,7 +28,7 @@ const userState = (props) => {
 		}
 	}
 
-	const loginUser = async (body, router,path='/',handleSuccess=()=>{}) => {
+	const loginUser = async (body, router, path = '/', handleSuccess = () => {}) => {
 		try {
 			const login = await api.post('/api/auth/login', body)
 			const user = await api.get('/api/auth/profile')

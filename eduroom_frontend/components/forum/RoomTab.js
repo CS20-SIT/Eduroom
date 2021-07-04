@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
@@ -27,7 +27,7 @@ const RoomTab = () => {
 	const classes = useStyles()
 	function FormRow() {
 		return (
-			<React.Fragment>
+			<Fragment>
 				<Grid item xs={2} className="button" onClick={handleClick} variant="outlined">
 					<Paper
 						elevation={0}
@@ -105,7 +105,7 @@ const RoomTab = () => {
 						<div style={{ paddingTop: '6px', fontSize: '0.8em', fontWeight: '600' }}>ROOM7</div>
 					</Paper>
 				</Grid>
-			</React.Fragment>
+			</Fragment>
 		)
 	}
 

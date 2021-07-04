@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 const Icon = ({ type, isHover, changeHover = true, isPointer = true, clicked = () => {} }) => {
 	const [hover, setHover] = useState(isHover)
 	const handleClick = () => {

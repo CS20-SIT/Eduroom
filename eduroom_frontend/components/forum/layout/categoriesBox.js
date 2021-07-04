@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import CategoriesIcon from './categoriesIcon'
 
 const CategoriesBox = ({ content }) => {

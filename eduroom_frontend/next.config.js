@@ -3,4 +3,7 @@ module.exports = {
 		locales: ['en', 'th'],
 		defaultLocale: 'en',
 	},
+	eslint: {
+		ignoreDuringBuilds: true,
+	},
 }

@@ -1,28 +1,36 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import style from '../../styles/CoinStyles/balloon'
 const Balloon = () => {
-    const randomNumber = (start,end) => {
-        let width = end - start;
-        return Math.floor(Math.random() * 100) % width + start;
+	const randomNumber = (start, end) => {
+		let width = end - start
+		return (Math.floor(Math.random() * 100) % width) + start
 	}
-	const randomColor = (color)=>{
-		return Math.floor(Math.random()*color)
+	const randomColor = (color) => {
+		return Math.floor(Math.random() * color)
 	}
-	const r = randomColor(255);
-	const g = randomColor(255);
-	const b = randomColor(255);
+	const r = randomColor(255)
+	const g = randomColor(255)
+	const b = randomColor(255)
 	return (
 		<Fragment>
 			<div className="box">
-			<div className="balloon" style={{left:randomNumber(0,90)+'vw',backgroundColor:'rgb('+`${r},${g},${b}`+')',boxShadow:'inset -7px -3px 10px'+' rgb('+`${r},${g},${b}`+')' , top:randomNumber(20,90)+'vh',animationDuration: randomNumber(5,25)+'s',animationTimingFunction: `${randomNumber(1,2) % 2 == 0 ? 'ease-in' : 'ease-out'}`}}></div>
+				<div
+					className="balloon"
+					style={{
+						left: randomNumber(0, 90) + 'vw',
+						backgroundColor: 'rgb(' + `${r},${g},${b}` + ')',
+						boxShadow: 'inset -7px -3px 10px' + ' rgb(' + `${r},${g},${b}` + ')',
+						top: randomNumber(20, 90) + 'vh',
+						animationDuration: randomNumber(5, 25) + 's',
+						animationTimingFunction: `${randomNumber(1, 2) % 2 == 0 ? 'ease-in' : 'ease-out'}`,
+					}}
+				></div>
 			</div>
-			<style jsx>
-				{style}
-			</style>
+			<style jsx>{style}</style>
 		</Fragment>
 	)
 }
-export default Balloon;
+export default Balloon
 
 // const temp = () => {
 // 	function random(num) {

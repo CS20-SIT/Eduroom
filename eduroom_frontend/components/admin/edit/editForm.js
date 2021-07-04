@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import EditSection from './editSection'
 import api from '../../../api'
 const EditForm = () => {

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import style from '../../styles/calendar/calendar'
 const Content = (props) => {
 	//   const router = useRouter();

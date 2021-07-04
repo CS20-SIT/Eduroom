@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import api from '../../api'
 import GeneralTemplate from '../../components/template/general'
 import VerificationSuccess from '../../components/verify/verifySuccess'
@@ -20,11 +20,7 @@ const Token = ({ token }) => {
 	return (
 		<Fragment>
 			<GeneralTemplate>
-				{status == 'Verification Success' ? (
-					<VerificationSuccess />
-				) : (
-					<VerificationFail />
-				)}
+				{status == 'Verification Success' ? <VerificationSuccess /> : <VerificationFail />}
 			</GeneralTemplate>
 		</Fragment>
 	)

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import NodeList from './NodeList'
 import api from '../../api'
@@ -19,7 +19,7 @@ const CurrentPath = ({ path, back }) => {
 	const renderNodes = () => {
 		if (!nodes) {
 			return (
-				<div style={{textAlign:'center'}}>
+				<div style={{ textAlign: 'center' }}>
 					<CircularProgress></CircularProgress>
 				</div>
 			)

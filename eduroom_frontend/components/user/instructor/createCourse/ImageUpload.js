@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import api from '../../../../api'
 
 const Upload = ({ index, handleData, data }) => {

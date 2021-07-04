@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Item from '../../admin/layout/item'
 import Link from 'next/link'
 import style from '../../../styles/layout/sidebar'
@@ -17,7 +17,6 @@ const SideNav = () => {
 	return (
 		<Fragment>
 			<div id="side-nav">
-				
 				<Link href="/">
 					<div className={expand ? 'side-icon expand' : 'side-icon'}>
 						<Image src="/images/sidenav/eduroom_logo.svg" alt="eduroom_logo" width="41" height="46" />

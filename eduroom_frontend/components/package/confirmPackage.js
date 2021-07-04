@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/package/createpackage'
 import SelectedCourses from './selectedCourses'
 import Dialog from '@material-ui/core/Dialog'

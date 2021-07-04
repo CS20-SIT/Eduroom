@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import style from '../../../styles/graderSubmit/problems/problemQuestion'
 import api from '../../../api'
 

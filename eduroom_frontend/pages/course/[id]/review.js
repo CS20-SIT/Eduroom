@@ -1,19 +1,18 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import Review from '../../../components/course/review'
 import GeneralNoNav from '../../../components/template/generalnonav'
-import style from "../../../styles/course/review";
+import style from '../../../styles/course/review'
 const review = (props) => {
-    return(
-    <Fragment>  
-        <GeneralNoNav>
-            <div className="bg">
-                <Review type = "course" id={props.id}/>
-
-            </div>
-        </GeneralNoNav>     
-        <style jsx>{style}</style>
-    </Fragment>
-    )
+	return (
+		<Fragment>
+			<GeneralNoNav>
+				<div className="bg">
+					<Review type="course" id={props.id} />
+				</div>
+			</GeneralNoNav>
+			<style jsx>{style}</style>
+		</Fragment>
+	)
 }
 export async function getServerSideProps(ctx) {
 	try {

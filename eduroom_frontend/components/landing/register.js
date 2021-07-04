@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import style from '../../styles/landing/register'
 import Image from 'next/image'
 import RegisterBox from './registerBox'

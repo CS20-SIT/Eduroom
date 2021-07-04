@@ -1,12 +1,12 @@
-import React,{Fragment} from 'react'
+import { Fragment } from 'react'
 const Temp = () => {
-    return <Fragment>
-        <div>
-            Coin
-
-            <button>Details</button>
-        </div>
-
-    </Fragment>
+	return (
+		<Fragment>
+			<div>
+				Coin
+				<button>Details</button>
+			</div>
+		</Fragment>
+	)
 }
 export default Temp

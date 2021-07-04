@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import ActionCard from './actionCard'
 const ActionList = () => {
 	const data = [
@@ -7,8 +7,8 @@ const ActionList = () => {
 			title: 'Instructor Approve',
 			subtitle: 'To approve an instructor',
 			buttonText: 'Go Approve',
-            buttonColor: '#FB9CCB',
-            url: '/admin/approve/instructor'
+			buttonColor: '#FB9CCB',
+			url: '/admin/approve/instructor',
 		},
 		{
 			img: '/images/admin/course-approve.png',
@@ -16,7 +16,7 @@ const ActionList = () => {
 			subtitle: 'To approve the course',
 			buttonText: 'Go Approve',
 			buttonColor: '#A27CEF',
-            url: '/admin/approve/course'
+			url: '/admin/approve/course',
 		},
 		{
 			img: '/images/admin/grader.png',
@@ -24,7 +24,7 @@ const ActionList = () => {
 			subtitle: 'To create questions and contest',
 			buttonText: 'Go create',
 			buttonColor: '#F3B496',
-            url: '/admin/grader'
+			url: '/admin/grader',
 		},
 		{
 			img: '/images/admin/ads-approve.png',
@@ -32,7 +32,7 @@ const ActionList = () => {
 			subtitle: 'To approve an Ads',
 			buttonText: 'Go Approve',
 			buttonColor: '#FB9CCB',
-            url: '/admin/advertisement'
+			url: '/admin/advertisement',
 		},
 		{
 			img: '/images/admin/coupon-management.png',
@@ -40,7 +40,7 @@ const ActionList = () => {
 			subtitle: 'To manage the coupon',
 			buttonText: 'Go Manage',
 			buttonColor: '#FB9CCB',
-            url: '/admin/coupon'
+			url: '/admin/coupon',
 		},
 	]
 	const [current, setCurrent] = useState(0)
@@ -49,7 +49,7 @@ const ActionList = () => {
 		<Fragment>
 			<div className="action-list">
 				{current > 0 ? (
-					<div className="arrow left" onClick={()=>setCurrent(current-1)}>
+					<div className="arrow left" onClick={() => setCurrent(current - 1)}>
 						<i className="fas fa-angle-left" />
 					</div>
 				) : null}
@@ -60,13 +60,13 @@ const ActionList = () => {
 							title={el.title}
 							subtitle={el.subtitle}
 							buttonText={el.buttonText}
-                            buttonColor={el.buttonColor}
-                            url={el.url}
+							buttonColor={el.buttonColor}
+							url={el.url}
 						/>
 					)
 				})}
 				{current + 3 < data.length ? (
-					<div className="arrow right" onClick={()=>setCurrent(current+1)}>
+					<div className="arrow right" onClick={() => setCurrent(current + 1)}>
 						<i className="fas fa-angle-right" />
 					</div>
 				) : null}
@@ -76,30 +76,30 @@ const ActionList = () => {
 					.action-list {
 						width: 100%;
 						padding: 1rem 3rem;
-                        grid-gap: 2.5rem;
-                        position: relative;
+						grid-gap: 2.5rem;
+						position: relative;
 						display: grid;
 						grid-template-columns: repeat(3, 1fr);
-                    }
-                    .arrow {
-                        position: absolute;
-                        top: 40%;
-                        color: #FB9CCB7C;
-                        display:flex;
-                        justify-content:center;
-                        align-items:center;
-                        font-size: 3em;
-                        font-size: bold;
-                        cursor: pointer;
-                        width: 60px;
-                        height: 60px;
-                    }
-                    .arrow.left {
-                        left: -1%;
-                    }
-                    .arrow.right {
-                        right: -1%
-                    }
+					}
+					.arrow {
+						position: absolute;
+						top: 40%;
+						color: #fb9ccb7c;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						font-size: 3em;
+						font-size: bold;
+						cursor: pointer;
+						width: 60px;
+						height: 60px;
+					}
+					.arrow.left {
+						left: -1%;
+					}
+					.arrow.right {
+						right: -1%;
+					}
 				`}
 			</style>
 		</Fragment>

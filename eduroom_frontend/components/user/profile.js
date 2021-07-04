@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import UserContext from '../../contexts/user/userContext'
 import styles from '../../styles/user/profile'
 import Styles from '../../styles/CoinStyles/coin-shop.module.css'
-import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField'
 import UserCourse from './courses'
 import { useRouter } from 'next/router'
 
@@ -39,8 +39,8 @@ const Profile = () => {
 		if (!user || !birth || !joined) return null
 		return (
 			<div className="profile-container">
-				<div style={{ marginRight: '40px' }}>
-					<img src={user.avatar} className="avatar" width="200px" height="200px"></img>
+				<div style={{ marginRight: '2rem' }}>
+					<img src={user.avatar} className="avatar" width="160px" height="160px"></img>
 				</div>
 				<div style={{ width: '100%' }}>
 					<div className="head">
@@ -49,14 +49,14 @@ const Profile = () => {
 						</h1>
 						<div style={{ marginTop: '20px' }}>
 							<Link href="/user/edit">
-							<div className="edit">
-								<Link href="/user/edit">
-									<h2 className="editText" style={{ margin: '0' }}>
-										Edit
-									</h2>
-								</Link>
-								<i className="fas fa-edit edit-icon" style={{ marginTop: '7px' }}></i>
-							</div>
+								<div className="edit">
+									<Link href="/user/edit">
+										<h2 className="editText" style={{ margin: '0' }}>
+											Edit
+										</h2>
+									</Link>
+									<i className="fas fa-edit edit-icon" style={{ marginTop: '7px' }}></i>
+								</div>
 							</Link>
 						</div>
 					</div>
@@ -80,25 +80,19 @@ const Profile = () => {
 
 					<div className="topic">
 						<p className="header">Bio</p>
-						<TextField style={{ width: '100%' }}
+						<TextField
+							style={{ width: '100%' }}
 							disabled
 							multiline
 							rows={10}
 							defaultValue={user.bio ? user.bio : '-'}
 							inputProps={{ readOnly: true }}
 						/>
-						{/* <textarea rows="4" cols="50" readonly>
-							{user.bio ? user.bio : '-'}
-						</textarea> */}
-						{/* <span>{user.bio ? user.bio : '-'}</span> */}
 					</div>
-					{/* <Link href="/user/courses">
-							<button className="btn">MyCourse</button>
-					</Link> */}
-					
-							<button onClick={() => router.push('/coin-shop/History')} className={Styles.btnHistory2}>
-								Sticker Owner
-							</button>
+
+					<button onClick={() => router.push('/coin-shop/History')} className={Styles.btnHistory2}>
+						Sticker Owner
+					</button>
 
 					{renderRegister()}
 					<UserCourse></UserCourse>

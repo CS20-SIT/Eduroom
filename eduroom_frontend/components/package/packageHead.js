@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import style from '../../styles/package/detail'
 import Button from '@material-ui/core/Button'
 import { useRouter } from 'next/router'
@@ -52,7 +52,7 @@ const Package = (props) => {
 			)
 		}
 	}
-	
+
 	return (
 		<Fragment>
 			<div className="center">

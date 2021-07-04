@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import Payment from '../../components/payment/paymentDetail'
 import General from '../../components/template/generalnonav'
 import style from '../../styles/course/paymentPage'

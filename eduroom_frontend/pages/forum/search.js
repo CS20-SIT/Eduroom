@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useContext } from 'react'
+import { Fragment, useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import ForumBox from '../../components/forum/layout/forumBox'
 import api from '../../api'
@@ -45,7 +45,7 @@ const Search = () => {
 						handleClick={() => {
 							setDialog(false)
 						}}
-						path={'/forum/search?q='+search}
+						path={'/forum/search?q=' + search}
 					/>
 				) : null}
 				<div style={{ background: '#F4F5F7' }}>

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'

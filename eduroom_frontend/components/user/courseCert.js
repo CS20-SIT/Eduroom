@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Certificate from './certificate'
 import api from '../../api'
 const CourseCert = (props) => {

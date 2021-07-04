@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import style from '../../styles/chat/chat'
 import Avatar from '@material-ui/core/Avatar'
 import CancelIcon from './icons/CancelIcon'
@@ -20,25 +20,40 @@ export default function searchResult(props) {
 					width: '100%',
 					marginTop: 2,
 					borderRadius: 5,
-					zIndex:1,
+					zIndex: 1,
 					maxHeight: 140,
 					overflowY: 'scroll',
 				}}
-				onMouseOver={()=>{props.setIgnoreBlur(true); console.log('true')}} 
-							onMouseLeave={()=>{props.setIgnoreBlur(false);console.log('false')}}
+				onMouseOver={() => {
+					props.setIgnoreBlur(true)
+					console.log('true')
+				}}
+				onMouseLeave={() => {
+					props.setIgnoreBlur(false)
+					console.log('false')
+				}}
 			>
 				{props.searchResult &&
-					props.searchResult.users.map((el,i) => {
+					props.searchResult.users.map((el, i) => {
 						return (
-							<div key={i} style={{display:'flex', alignItems:'center',width:'100%'}} className='searchItem' onClick={()=>{
-								api.get(`/api/chat/selectSearchResultMockup`,{
-									params: {
-									  userID: el.userID
-									}}).then(props.handleSelect(el)).catch(err=>{})
-							}} >
+							<div
+								key={i}
+								style={{ display: 'flex', alignItems: 'center', width: '100%' }}
+								className="searchItem"
+								onClick={() => {
+									api
+										.get(`/api/chat/selectSearchResultMockup`, {
+											params: {
+												userID: el.userID,
+											},
+										})
+										.then(props.handleSelect(el))
+										.catch((err) => {})
+								}}
+							>
 								<Avatar
 									style={{ width: 30, height: 30, marginLeft: 7, marginRight: -7 }}
-									alt={el.userfirstname+" "+el.userlastname}
+									alt={el.userfirstname + ' ' + el.userlastname}
 									src={el.userprofile}
 								/>
 								<div className="searchResult">
@@ -53,7 +68,7 @@ export default function searchResult(props) {
 											whiteSpace: 'nowrap',
 										}}
 									>
-										{el.userfirstname+" "+el.userlastname}
+										{el.userfirstname + ' ' + el.userlastname}
 									</p>
 									<p
 										style={{

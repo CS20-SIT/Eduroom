@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useContext } from 'react'
+import { Fragment, useEffect, useState, useContext } from 'react'
 import CategoriesSet from './categoriesSet'
 import api from '../../../api'
 import AuthDialog from '../../landing/authDialog'

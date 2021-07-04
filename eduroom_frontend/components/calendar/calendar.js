@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import Cell from '../../components/calendar/calendarCell'
 import HeadCell from '../../components/calendar/calendarHeader'
 import BlankCell from '../../components/calendar/calendarBlankCell'
@@ -72,7 +72,7 @@ const Content = () => {
 				setEvent(res.data.data)
 				console.log(res.data.data)
 			})
-			.catch((err) => { })
+			.catch((err) => {})
 	}, [day])
 	//state chage 1 month per click
 	const addMonth = () => {
@@ -106,7 +106,7 @@ const Content = () => {
 					setInstructor(true)
 				}
 			})
-			.catch((err) => { })
+			.catch((err) => {})
 	}, [])
 
 	// ------------------code below----------------------//

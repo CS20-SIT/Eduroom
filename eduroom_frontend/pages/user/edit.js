@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import General from '../../components/template/general'
 import EditForm from '../../components/user/editForm'
 

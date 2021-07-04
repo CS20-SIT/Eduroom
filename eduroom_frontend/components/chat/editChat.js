@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import style from '../../styles/chat/chat'
 import Avatar from '@material-ui/core/Avatar'
 import Colour from './colour'
@@ -63,14 +63,17 @@ export default function editChat(props) {
 			var bodyFormData = new FormData()
 			bodyFormData.append('profilePic', e.target.files[0])
 			const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-			api.post(`/api/chat/uploadpic`, bodyFormData, config).then(async (rs) => {
-				const res = await api.get(`/api/chat/changeChatRoomProfilePicture`, {
-					params: { profilepic: rs.data.path, chatroomid: props.chatRoomDetail.chatroomid },
+			api
+				.post(`/api/chat/uploadpic`, bodyFormData, config)
+				.then(async (rs) => {
+					const res = await api.get(`/api/chat/changeChatRoomProfilePicture`, {
+						params: { profilepic: rs.data.path, chatroomid: props.chatRoomDetail.chatroomid },
+					})
+					props.socket.emit('changeProfilePic', props.chatRoomDetail.chatroomid)
+					props.getChatRoomDetail()
+					props.getChatList()
 				})
-				props.socket.emit('changeProfilePic', props.chatRoomDetail.chatroomid)
-				props.getChatRoomDetail()
-				props.getChatList()
-			}).catch(err=>{})
+				.catch((err) => {})
 		} catch (err) {}
 	}
 	const editChatRoomName = async () => {
